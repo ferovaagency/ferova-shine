@@ -7,59 +7,67 @@
 
 @layer base {
   :root {
-    /* Core Brand Colors */
-    --background: 0 0% 100%;
-    --foreground: 0 0% 0%;
+    /* Dark theme color palette - Accessibility compliant */
+    --bg: 220 13% 4%; /* #0B0B0C - main background */
+    --surface: 220 11% 7%; /* #111214 - surface/card background */
+    --text: 0 0% 100%; /* #FFFFFF - main text */
+    --muted: 220 8% 78%; /* #C7C9CC - muted text */
+    --gold: 45 61% 44%; /* #B68E2C - accessible gold */
+    --gold-contrast: 220 15% 11%; /* #1A1B1E - text on gold backgrounds */
+    --white: 0 0% 100%; /* #FFFFFF */
     
-    /* Gold accent - #C9A227 */
-    --gold: 47 66% 46%;
-    --gold-light: 47 66% 56%;
-    --gold-dark: 47 66% 36%;
+    /* Core Brand Colors */
+    --background: var(--bg);
+    --foreground: var(--text);
+    
+    /* Gold system - accessible colors */
+    --gold-light: 45 61% 54%;
+    --gold-dark: 45 61% 34%;
     
     /* Glassmorphism backgrounds */
     --glass-white: 0 0% 100%;
     --glass-black: 0 0% 0%;
-    --glass-border: 0 0% 90%;
+    --glass-border: 0 0% 100%;
     
     /* Card system */
-    --card: 0 0% 100%;
-    --card-foreground: 0 0% 0%;
-    --card-glass: 0 0% 100%;
+    --card: var(--surface);
+    --card-foreground: var(--text);
+    --card-glass: var(--surface);
     
     /* Interactive elements */
-    --primary: 47 66% 46%;
-    --primary-foreground: 0 0% 100%;
-    --primary-hover: 47 66% 40%;
+    --primary: var(--gold);
+    --primary-foreground: var(--gold-contrast);
+    --primary-hover: 45 61% 50%;
     
-    --secondary: 0 0% 8%;
-    --secondary-foreground: 0 0% 100%;
-    --secondary-hover: 0 0% 15%;
+    --secondary: var(--surface);
+    --secondary-foreground: var(--text);
+    --secondary-hover: 220 11% 10%;
     
     /* Neutral palette */
-    --muted: 0 0% 96%;
-    --muted-foreground: 0 0% 40%;
-    --subtle: 0 0% 98%;
+    --muted-bg: var(--surface);
+    --muted-foreground: var(--muted);
+    --subtle: 220 11% 9%;
     
     /* Borders and inputs */
-    --border: 0 0% 90%;
-    --border-subtle: 0 0% 95%;
-    --input: 0 0% 98%;
-    --ring: 47 66% 46%;
+    --border: 220 11% 15%;
+    --border-subtle: 220 11% 12%;
+    --input: 220 11% 15%;
+    --ring: var(--gold);
     
     /* Shadows */
-    --shadow-soft: 0 4px 24px -1px rgb(0 0 0 / 0.08);
-    --shadow-medium: 0 8px 32px -4px rgb(0 0 0 / 0.12);
-    --shadow-strong: 0 20px 64px -12px rgb(0 0 0 / 0.20);
-    --shadow-gold: 0 8px 32px -4px hsl(47 66% 46% / 0.2);
+    --shadow-soft: 0 4px 24px -1px rgb(0 0 0 / 0.4);
+    --shadow-medium: 0 8px 32px -4px rgb(0 0 0 / 0.6);
+    --shadow-strong: 0 20px 64px -12px rgb(0 0 0 / 0.8);
+    --shadow-gold: 0 8px 32px -4px hsl(45 61% 44% / 0.3);
     
     /* Gradients */
-    --gradient-gold: linear-gradient(135deg, hsl(47 66% 46%), hsl(47 66% 56%));
-    --gradient-subtle: linear-gradient(180deg, hsl(0 0% 100%), hsl(0 0% 98%));
-    --gradient-dark: linear-gradient(135deg, hsl(0 0% 0%), hsl(0 0% 8%));
+    --gradient-gold: linear-gradient(135deg, hsl(45 61% 44%), hsl(45 61% 54%));
+    --gradient-subtle: linear-gradient(180deg, hsl(220 13% 4%), hsl(220 11% 7%));
+    --gradient-dark: linear-gradient(135deg, hsl(220 13% 4%), hsl(220 11% 7%));
     
     /* Glassmorphism effects */
     --glass-backdrop: blur(20px);
-    --glass-border-gold: 1px solid hsl(47 66% 46% / 0.2);
+    --glass-border-gold: 1px solid hsl(45 61% 44% / 0.2);
     
     /* Animation variables */
     --transition-fast: all 0.15s cubic-bezier(0.4, 0, 0.2, 1);
@@ -114,26 +122,26 @@
 }
 
 @layer components {
-  /* Glass card component */
+  /* Glass card component - Dark theme */
   .glass-card {
-    @apply backdrop-blur-sm bg-white/90 border border-white/20;
+    @apply backdrop-blur-sm bg-white/5 border border-white/10;
     box-shadow: var(--shadow-soft);
   }
 
   .glass-card-dark {
-    @apply backdrop-blur-sm bg-black/90 border border-black/20;
+    @apply backdrop-blur-sm bg-black/40 border border-black/20;
   }
 
   /* Premium button variants */
   .btn-gold {
-    @apply bg-gradient-to-r from-gold to-gold-light text-white font-semibold px-8 py-4 rounded-xl;
+    @apply bg-gradient-to-r from-gold to-gold-light text-gold-contrast font-semibold px-8 py-4 rounded-xl;
     @apply hover:shadow-lg transition-all duration-300 hover:scale-[1.02] hover:from-gold-dark hover:to-gold;
     box-shadow: var(--shadow-gold);
   }
 
   .btn-outline-gold {
     @apply border-2 border-gold text-gold font-semibold px-8 py-4 rounded-xl bg-transparent;
-    @apply hover:bg-gold hover:text-white transition-all duration-300 hover:scale-[1.02];
+    @apply hover:bg-gold hover:text-gold-contrast transition-all duration-300 hover:scale-[1.02];
   }
 
   .btn-secondary-dark {

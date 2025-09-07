@@ -23,18 +23,19 @@ export default {
         background: "hsl(var(--background))",
         foreground: "hsl(var(--foreground))",
         
-        // Brand colors
+        // Brand colors - Dark theme
         gold: {
           DEFAULT: "hsl(var(--gold))",
           light: "hsl(var(--gold-light))",
           dark: "hsl(var(--gold-dark))",
+          contrast: "hsl(var(--gold-contrast))",
         },
         
-        // Glass system
+        // Glass system - Dark theme
         glass: {
-          white: "hsl(var(--glass-white) / 0.9)",
-          black: "hsl(var(--glass-black) / 0.9)",
-          border: "hsl(var(--glass-border) / 0.2)",
+          white: "hsl(var(--glass-white) / 0.05)",
+          black: "hsl(var(--glass-black) / 0.4)",
+          border: "hsl(var(--glass-border) / 0.1)",
         },
         
         primary: {

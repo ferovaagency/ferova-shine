@@ -1,5 +1,6 @@
 import Header from '@/components/layout/Header';
 import Footer from '@/components/layout/Footer';
+import ChatWidget from '@/components/ui/chat-widget';
 import HeroSection from '@/components/sections/HeroSection';
 import BenefitsSection from '@/components/sections/BenefitsSection';
 import ProcessSection from '@/components/sections/ProcessSection';
@@ -20,6 +21,7 @@ const Index = () => {
         <CtaSection lang="es" />
       </main>
       <Footer currentLang="es" />
+      <ChatWidget lang="es" />
     </>
   );
 };
