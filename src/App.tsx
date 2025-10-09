@@ -10,6 +10,7 @@ import SeoEcommerce from "./pages/SeoEcommerce";
 import DiseneoWeb from "./pages/DiseneoWeb";
 import CasosDeExito from "./pages/CasosDeExito";
 import SobreNosotros from "./pages/SobreNosotros";
+import SobreMariaFer from "./pages/SobreMariaFer";
 
 const queryClient = new QueryClient();
 
@@ -27,6 +28,7 @@ const App = () => (
           <Route path="/servicios/diseno-web" element={<DiseneoWeb lang="es" />} />
           <Route path="/casos-de-exito" element={<CasosDeExito lang="es" />} />
           <Route path="/sobre-nosotros" element={<SobreNosotros lang="es" />} />
+          <Route path="/sobre-maria-fer" element={<SobreMariaFer lang="es" />} />
           
           {/* English Routes */}
           <Route path="/en" element={<Index />} />
@@ -35,6 +37,7 @@ const App = () => (
           <Route path="/en/services/web-design" element={<DiseneoWeb lang="en" />} />
           <Route path="/en/case-studies" element={<CasosDeExito lang="en" />} />
           <Route path="/en/about-us" element={<SobreNosotros lang="en" />} />
+          <Route path="/en/about-maria-fer" element={<SobreMariaFer lang="en" />} />
           
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
