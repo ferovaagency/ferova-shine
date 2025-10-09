@@ -431,51 +431,112 @@ const SobreMariaFer = ({ lang = 'es' }: SobreMariaFerProps) => {
       </header>
 
       {/* Hero Section */}
-      <section id="inicio" className="pt-32 pb-20 bg-white">
-        <div className="max-w-7xl mx-auto px-6 md:px-8">
-          <div className="grid md:grid-cols-2 gap-12 items-center">
+      <section id="inicio" className="pt-24 md:pt-32 pb-12 md:pb-20 bg-white">
+        <div className="max-w-7xl mx-auto px-4 md:px-6 lg:px-8">
+          {/* Mobile: Photo First */}
+          <div className="flex justify-center mb-8 md:hidden">
+            <div className="w-48 h-48 rounded-2xl overflow-hidden border-4 shadow-xl" style={{ borderColor: '#C0930E' }}>
+              <img 
+                src="/img/maria-fer.jpg" 
+                alt="Maria Fer Calderón" 
+                className="w-full h-full object-cover"
+                onError={(e) => {
+                  e.currentTarget.src = '/placeholder.svg';
+                }}
+              />
+            </div>
+          </div>
+
+          <div className="grid md:grid-cols-2 gap-8 md:gap-12 items-start md:items-center">
             {/* Left Column - Content */}
             <div>
-              <h1 className="text-5xl md:text-6xl font-bold mb-4" style={{ color: '#541014' }}>
+              <h1 className="text-3xl md:text-5xl lg:text-6xl font-bold mb-3 md:mb-4 text-center md:text-left" style={{ color: '#541014' }}>
                 {t.hero.name}
               </h1>
-              <p className="text-xl text-neutral-700 mb-8 leading-relaxed">
+              <p className="text-base md:text-xl text-neutral-700 mb-6 md:mb-8 leading-relaxed text-center md:text-left">
                 {t.hero.subtitle}
               </p>
               
+              {/* Contact & Social Links - Prominent */}
+              <div className="mb-6 md:mb-8 p-4 md:p-6 rounded-2xl bg-neutral-50 border border-neutral-200">
+                <p className="text-sm font-semibold text-neutral-600 mb-3 text-center md:text-left">
+                  {lang === 'es' ? 'Contacto directo' : 'Direct contact'}
+                </p>
+                
+                {/* Contact buttons */}
+                <div className="flex flex-col sm:flex-row gap-2 mb-4">
+                  <a
+                    href="https://wa.me/57XXXXXXXXXX?text=Hola%20Maria%20Fer%2C%20me%20gustaría%20hablar%20contigo."
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="flex-1 bg-[#C0930E] text-black rounded-full px-4 py-2.5 font-semibold shadow-sm hover:opacity-90 transition-all inline-flex items-center justify-center gap-2 text-sm"
+                  >
+                    <MessageCircle size={18} />
+                    WhatsApp
+                  </a>
+                  <a
+                    href="mailto:contacto@ferova.agency"
+                    className="flex-1 border-2 border-[#2F2D56] text-[#2F2D56] rounded-full px-4 py-2.5 font-semibold hover:bg-neutral-100 transition-all inline-flex items-center justify-center gap-2 text-sm"
+                  >
+                    <Mail size={18} />
+                    Email
+                  </a>
+                  <a
+                    href="https://calendly.com/tu-enlace"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="flex-1 border-2 border-[#C0930E] text-[#C0930E] rounded-full px-4 py-2.5 font-semibold hover:bg-[#C0930E]/10 transition-all inline-flex items-center justify-center gap-2 text-sm"
+                  >
+                    <Calendar size={18} />
+                    {lang === 'es' ? 'Agendar' : 'Schedule'}
+                  </a>
+                </div>
+
+                {/* Social Media */}
+                <div className="flex justify-center md:justify-start gap-3">
+                  <a
+                    href="https://www.linkedin.com/in/mariafer-calderon"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="p-2.5 bg-white rounded-full border border-neutral-200 hover:border-[#C0930E] hover:bg-[#C0930E]/10 transition-all"
+                    aria-label="LinkedIn"
+                  >
+                    <Linkedin size={20} style={{ color: '#541014' }} />
+                  </a>
+                  <a
+                    href="https://www.instagram.com/ferova.agency"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="p-2.5 bg-white rounded-full border border-neutral-200 hover:border-[#C0930E] hover:bg-[#C0930E]/10 transition-all"
+                    aria-label="Instagram"
+                  >
+                    <Instagram size={20} style={{ color: '#541014' }} />
+                  </a>
+                  <a
+                    href="https://twitter.com/ferova_agency"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="p-2.5 bg-white rounded-full border border-neutral-200 hover:border-[#C0930E] hover:bg-[#C0930E]/10 transition-all"
+                    aria-label="X (Twitter)"
+                  >
+                    <Twitter size={20} style={{ color: '#541014' }} />
+                  </a>
+                </div>
+              </div>
+
               {/* Bullets */}
-              <div className="space-y-3 mb-8">
+              <div className="space-y-2 md:space-y-3">
                 {t.hero.bullets.map((bullet, index) => (
-                  <div key={index} className="flex items-center gap-3">
-                    <CheckCircle size={20} style={{ color: '#C0930E' }} />
-                    <span className="text-neutral-700">{bullet}</span>
+                  <div key={index} className="flex items-center gap-2 md:gap-3">
+                    <CheckCircle size={18} className="flex-shrink-0" style={{ color: '#C0930E' }} />
+                    <span className="text-sm md:text-base text-neutral-700">{bullet}</span>
                   </div>
                 ))}
               </div>
-
-              {/* CTAs */}
-              <div className="flex flex-col sm:flex-row gap-4">
-                <a
-                  href="https://wa.me/57XXXXXXXXXX?text=Hola%20Maria%20Fer%2C%20me%20gustaría%20hablar%20contigo."
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="bg-[#C0930E] text-black rounded-full px-6 py-3 font-semibold shadow-md hover:opacity-90 focus:ring-2 focus:ring-[#C0930E]/40 transition-all inline-flex items-center justify-center gap-2"
-                >
-                  <MessageCircle size={20} />
-                  {t.hero.primaryCta}
-                </a>
-                <a
-                  href="mailto:contacto@ferova.agency"
-                  className="border-2 border-[#2F2D56] text-[#2F2D56] rounded-full px-6 py-3 font-semibold hover:bg-neutral-100 transition-all inline-flex items-center justify-center gap-2"
-                >
-                  <Mail size={20} />
-                  {t.hero.secondaryCta}
-                </a>
-              </div>
             </div>
 
-            {/* Right Column - Photo */}
-            <div className="flex justify-center">
+            {/* Right Column - Photo (Desktop only) */}
+            <div className="hidden md:flex justify-center">
               <div className="w-full max-w-md aspect-square rounded-2xl overflow-hidden border-4 shadow-xl" style={{ borderColor: '#C0930E' }}>
                 <img 
                   src="/img/maria-fer.jpg" 
@@ -494,22 +555,22 @@ const SobreMariaFer = ({ lang = 'es' }: SobreMariaFerProps) => {
       <WaveSeparator color="white" />
 
       {/* About Section */}
-      <section id="sobre-mi" className="py-20 bg-neutral-50">
-        <div className="max-w-4xl mx-auto px-6 md:px-8">
-          <h2 className="text-4xl font-bold mb-8 text-center" style={{ color: '#541014' }}>
+      <section id="sobre-mi" className="py-12 md:py-20 bg-neutral-50">
+        <div className="max-w-4xl mx-auto px-4 md:px-6 lg:px-8">
+          <h2 className="text-3xl md:text-4xl font-bold mb-6 md:mb-8 text-center" style={{ color: '#541014' }}>
             {t.about.title}
           </h2>
-          <p className="text-lg text-neutral-700 leading-relaxed mb-12 text-center">
+          <p className="text-base md:text-lg text-neutral-700 leading-relaxed mb-8 md:mb-12 text-center px-4">
             {t.about.description}
           </p>
           
           {/* Values */}
-          <div className="grid md:grid-cols-3 gap-6">
+          <div className="grid md:grid-cols-3 gap-4 md:gap-6">
             {t.about.values.map((value, index) => (
-              <Card key={index} className="border-neutral-200 shadow-md hover:shadow-lg transition-shadow">
-                <CardContent className="p-6 text-center">
-                  <value.icon size={32} className="mx-auto mb-4" style={{ color: '#C0930E' }} />
-                  <p className="text-neutral-700 font-medium">{value.text}</p>
+              <Card key={index} className="border-neutral-200 shadow-sm hover:shadow-md transition-shadow">
+                <CardContent className="p-4 md:p-6 text-center">
+                  <value.icon size={28} className="mx-auto mb-3 md:mb-4" style={{ color: '#C0930E' }} />
+                  <p className="text-sm md:text-base text-neutral-700 font-medium">{value.text}</p>
                 </CardContent>
               </Card>
             ))}
@@ -520,25 +581,25 @@ const SobreMariaFer = ({ lang = 'es' }: SobreMariaFerProps) => {
       <WaveSeparator color="white" flip />
 
       {/* Services Section */}
-      <section id="servicios" className="py-20 bg-white">
-        <div className="max-w-7xl mx-auto px-6 md:px-8">
-          <h2 className="text-4xl font-bold mb-12 text-center" style={{ color: '#541014' }}>
+      <section id="servicios" className="py-12 md:py-20 bg-white">
+        <div className="max-w-7xl mx-auto px-4 md:px-6 lg:px-8">
+          <h2 className="text-3xl md:text-4xl font-bold mb-8 md:mb-12 text-center" style={{ color: '#541014' }}>
             {t.services.title}
           </h2>
           
-          <div className="grid md:grid-cols-3 gap-8 mb-12">
+          <div className="grid md:grid-cols-3 gap-4 md:gap-8 mb-8 md:mb-12">
             {t.services.items.map((service, index) => (
-              <Card key={index} className="rounded-2xl border-neutral-200 shadow-md hover:shadow-xl transition-shadow">
-                <CardContent className="p-6">
-                  <h3 className="text-xl font-bold mb-3" style={{ color: '#2F2D56' }}>
+              <Card key={index} className="rounded-xl md:rounded-2xl border-neutral-200 shadow-sm hover:shadow-lg transition-shadow">
+                <CardContent className="p-4 md:p-6">
+                  <h3 className="text-lg md:text-xl font-bold mb-2 md:mb-3" style={{ color: '#2F2D56' }}>
                     {service.title}
                   </h3>
-                  <p className="text-neutral-700 mb-6 leading-relaxed">
+                  <p className="text-sm md:text-base text-neutral-700 mb-4 md:mb-6 leading-relaxed">
                     {service.description}
                   </p>
                   <Link
                     to={service.link}
-                    className="inline-flex items-center gap-2 text-[#C0930E] font-semibold hover:underline"
+                    className="inline-flex items-center gap-2 text-[#C0930E] font-semibold hover:underline text-sm md:text-base"
                   >
                     {service.cta}
                     <ArrowRight size={16} />
@@ -551,7 +612,7 @@ const SobreMariaFer = ({ lang = 'es' }: SobreMariaFerProps) => {
           <div className="text-center">
             <Link
               to="/servicios"
-              className="bg-[#C0930E] text-black rounded-full px-8 py-4 font-semibold shadow-md hover:opacity-90 focus:ring-2 focus:ring-[#C0930E]/40 transition-all inline-block"
+              className="bg-[#C0930E] text-black rounded-full px-6 md:px-8 py-3 md:py-4 font-semibold shadow-md hover:opacity-90 focus:ring-2 focus:ring-[#C0930E]/40 transition-all inline-block text-sm md:text-base"
             >
               {t.services.allServices}
             </Link>
@@ -561,42 +622,41 @@ const SobreMariaFer = ({ lang = 'es' }: SobreMariaFerProps) => {
 
       <WaveSeparator color="white" />
 
-      {/* Banners Section */}
-      <section id="anuncios" className="py-20" style={{ backgroundColor: '#541014' }}>
-        <div className="max-w-7xl mx-auto px-6 md:px-8">
-          <h2 className="text-4xl font-bold mb-4 text-center text-white">
-            {t.banners.title}
-          </h2>
-          <p className="text-neutral-200 text-center mb-12">
-            {t.banners.note}
-          </p>
+      {/* Banners Section - Subtle */}
+      <section id="anuncios" className="py-12 md:py-16 bg-neutral-50">
+        <div className="max-w-7xl mx-auto px-4 md:px-6 lg:px-8">
+          <div className="text-center mb-6">
+            <p className="text-xs md:text-sm text-neutral-500 mb-1">
+              {t.banners.note}
+            </p>
+          </div>
 
-          <div className="space-y-8">
-            {/* Banner 1 - Horizontal */}
-            <div className="relative rounded-2xl overflow-hidden shadow-xl">
-              <div className="aspect-[4/1] bg-neutral-800 flex items-center justify-center">
-                <div className="text-center">
-                  <p className="text-white text-sm mb-2">{t.banners.sponsored}</p>
-                  <p className="text-neutral-400">Banner 1200×300 - Espacio publicitario</p>
+          <div className="space-y-4 md:space-y-6">
+            {/* Banner 1 - Horizontal (Mobile optimized) */}
+            <div className="relative rounded-xl overflow-hidden shadow-sm border border-neutral-200">
+              <div className="aspect-[16/5] md:aspect-[4/1] bg-gradient-to-br from-neutral-100 to-neutral-50 flex items-center justify-center">
+                <div className="text-center p-4">
+                  <p className="text-xs text-neutral-400 mb-1">{t.banners.sponsored}</p>
+                  <p className="text-xs md:text-sm text-neutral-500">{lang === 'es' ? 'Espacio publicitario' : 'Ad space'}</p>
                 </div>
               </div>
             </div>
 
-            {/* Banners 2 & 3 - Vertical */}
-            <div className="grid md:grid-cols-2 gap-8">
-              <div className="relative rounded-2xl overflow-hidden shadow-xl">
-                <div className="aspect-[1/2] bg-neutral-800 flex items-center justify-center">
-                  <div className="text-center">
-                    <p className="text-white text-sm mb-2">{t.banners.sponsored}</p>
-                    <p className="text-neutral-400">Banner 300×600</p>
+            {/* Banners 2 & 3 - Mobile: Single column, Desktop: Two columns */}
+            <div className="grid md:grid-cols-2 gap-4 md:gap-6">
+              <div className="relative rounded-xl overflow-hidden shadow-sm border border-neutral-200">
+                <div className="aspect-[16/9] md:aspect-[1/2] bg-gradient-to-br from-neutral-100 to-neutral-50 flex items-center justify-center">
+                  <div className="text-center p-4">
+                    <p className="text-xs text-neutral-400 mb-1">{t.banners.sponsored}</p>
+                    <p className="text-xs md:text-sm text-neutral-500">{lang === 'es' ? 'Espacio publicitario' : 'Ad space'}</p>
                   </div>
                 </div>
               </div>
-              <div className="relative rounded-2xl overflow-hidden shadow-xl">
-                <div className="aspect-[1/2] bg-neutral-800 flex items-center justify-center">
-                  <div className="text-center">
-                    <p className="text-white text-sm mb-2">{t.banners.sponsored}</p>
-                    <p className="text-neutral-400">Banner 300×600</p>
+              <div className="relative rounded-xl overflow-hidden shadow-sm border border-neutral-200">
+                <div className="aspect-[16/9] md:aspect-[1/2] bg-gradient-to-br from-neutral-100 to-neutral-50 flex items-center justify-center">
+                  <div className="text-center p-4">
+                    <p className="text-xs text-neutral-400 mb-1">{t.banners.sponsored}</p>
+                    <p className="text-xs md:text-sm text-neutral-500">{lang === 'es' ? 'Espacio publicitario' : 'Ad space'}</p>
                   </div>
                 </div>
               </div>
@@ -608,19 +668,19 @@ const SobreMariaFer = ({ lang = 'es' }: SobreMariaFerProps) => {
       <WaveSeparator color="white" flip />
 
       {/* Results Section */}
-      <section className="py-20" style={{ backgroundColor: '#2F2D56' }}>
-        <div className="max-w-7xl mx-auto px-6 md:px-8">
-          <h2 className="text-4xl font-bold mb-12 text-center text-white">
+      <section className="py-12 md:py-20" style={{ backgroundColor: '#2F2D56' }}>
+        <div className="max-w-7xl mx-auto px-4 md:px-6 lg:px-8">
+          <h2 className="text-3xl md:text-4xl font-bold mb-8 md:mb-12 text-center text-white">
             {t.results.title}
           </h2>
           
-          <div className="grid md:grid-cols-4 gap-8 mb-12">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-8 mb-8 md:mb-12">
             {t.results.kpis.map((kpi, index) => (
-              <div key={index} className="text-center">
-                <div className="text-5xl font-bold mb-2" style={{ color: '#C0930E' }}>
+              <div key={index} className="text-center p-4 md:p-0">
+                <div className="text-3xl md:text-5xl font-bold mb-1 md:mb-2" style={{ color: '#C0930E' }}>
                   {kpi.value}
                 </div>
-                <p className="text-white text-lg">{kpi.label}</p>
+                <p className="text-white text-xs md:text-lg">{kpi.label}</p>
               </div>
             ))}
           </div>
@@ -628,7 +688,7 @@ const SobreMariaFer = ({ lang = 'es' }: SobreMariaFerProps) => {
           <div className="text-center">
             <Link
               to="/casos-de-exito"
-              className="inline-flex items-center gap-2 text-[#C0930E] font-semibold text-lg hover:underline"
+              className="inline-flex items-center gap-2 text-[#C0930E] font-semibold text-base md:text-lg hover:underline"
             >
               {t.results.cta}
               <ArrowRight size={20} />
@@ -640,23 +700,23 @@ const SobreMariaFer = ({ lang = 'es' }: SobreMariaFerProps) => {
       <WaveSeparator color="white" />
 
       {/* Testimonials Section */}
-      <section id="testimonios" className="py-20 bg-white">
-        <div className="max-w-4xl mx-auto px-6 md:px-8">
-          <h2 className="text-4xl font-bold mb-12 text-center" style={{ color: '#541014' }}>
+      <section id="testimonios" className="py-12 md:py-20 bg-white">
+        <div className="max-w-4xl mx-auto px-4 md:px-6 lg:px-8">
+          <h2 className="text-3xl md:text-4xl font-bold mb-8 md:mb-12 text-center" style={{ color: '#541014' }}>
             {t.testimonials.title}
           </h2>
 
           <div className="relative">
-            <Card className="rounded-2xl border-neutral-200 shadow-lg">
-              <CardContent className="p-8 md:p-12">
-                <p className="text-xl text-neutral-700 leading-relaxed mb-8 italic">
+            <Card className="rounded-xl md:rounded-2xl border-neutral-200 shadow-lg">
+              <CardContent className="p-6 md:p-12">
+                <p className="text-base md:text-xl text-neutral-700 leading-relaxed mb-6 md:mb-8 italic">
                   "{t.testimonials.items[currentTestimonial].text}"
                 </p>
                 <div>
-                  <p className="font-bold text-lg" style={{ color: '#2F2D56' }}>
+                  <p className="font-bold text-base md:text-lg" style={{ color: '#2F2D56' }}>
                     {t.testimonials.items[currentTestimonial].author}
                   </p>
-                  <p className="text-neutral-600">
+                  <p className="text-sm md:text-base text-neutral-600">
                     {t.testimonials.items[currentTestimonial].role} · {t.testimonials.items[currentTestimonial].company}
                   </p>
                 </div>
@@ -664,25 +724,25 @@ const SobreMariaFer = ({ lang = 'es' }: SobreMariaFerProps) => {
             </Card>
 
             {/* Navigation Arrows */}
-            <div className="flex justify-center gap-4 mt-8">
+            <div className="flex justify-center gap-3 md:gap-4 mt-6 md:mt-8">
               <button
                 onClick={prevTestimonial}
-                className="p-3 rounded-full bg-neutral-100 hover:bg-neutral-200 transition-colors focus:ring-2 focus:ring-[#C0930E]/40"
+                className="p-2 md:p-3 rounded-full bg-neutral-100 hover:bg-neutral-200 transition-colors focus:ring-2 focus:ring-[#C0930E]/40"
                 aria-label="Previous testimonial"
               >
-                <ChevronLeft size={24} style={{ color: '#541014' }} />
+                <ChevronLeft size={20} className="md:w-6 md:h-6" style={{ color: '#541014' }} />
               </button>
               <button
                 onClick={nextTestimonial}
-                className="p-3 rounded-full bg-neutral-100 hover:bg-neutral-200 transition-colors focus:ring-2 focus:ring-[#C0930E]/40"
+                className="p-2 md:p-3 rounded-full bg-neutral-100 hover:bg-neutral-200 transition-colors focus:ring-2 focus:ring-[#C0930E]/40"
                 aria-label="Next testimonial"
               >
-                <ChevronRight size={24} style={{ color: '#541014' }} />
+                <ChevronRight size={20} className="md:w-6 md:h-6" style={{ color: '#541014' }} />
               </button>
             </div>
 
             {/* Dots indicator */}
-            <div className="flex justify-center gap-2 mt-6">
+            <div className="flex justify-center gap-2 mt-4 md:mt-6">
               {t.testimonials.items.map((_, index) => (
                 <button
                   key={index}
@@ -701,15 +761,15 @@ const SobreMariaFer = ({ lang = 'es' }: SobreMariaFerProps) => {
       <WaveSeparator color="white" />
 
       {/* Blog Section */}
-      <section id="contenido" className="py-20 bg-neutral-50">
-        <div className="max-w-7xl mx-auto px-6 md:px-8">
-          <h2 className="text-4xl font-bold mb-12 text-center" style={{ color: '#541014' }}>
+      <section id="contenido" className="py-12 md:py-20 bg-neutral-50">
+        <div className="max-w-7xl mx-auto px-4 md:px-6 lg:px-8">
+          <h2 className="text-3xl md:text-4xl font-bold mb-8 md:mb-12 text-center" style={{ color: '#541014' }}>
             {t.blog.title}
           </h2>
 
-          <div className="grid md:grid-cols-3 gap-8 mb-12">
+          <div className="grid md:grid-cols-3 gap-4 md:gap-8 mb-8 md:mb-12">
             {t.blog.posts.map((post, index) => (
-              <Card key={index} className="rounded-2xl border-neutral-200 shadow-md hover:shadow-xl transition-shadow overflow-hidden">
+              <Card key={index} className="rounded-xl md:rounded-2xl border-neutral-200 shadow-sm hover:shadow-lg transition-shadow overflow-hidden">
                 <div className="aspect-video bg-neutral-200">
                   <img 
                     src={post.image} 
@@ -717,12 +777,12 @@ const SobreMariaFer = ({ lang = 'es' }: SobreMariaFerProps) => {
                     className="w-full h-full object-cover"
                   />
                 </div>
-                <CardContent className="p-6">
-                  <p className="text-sm text-neutral-500 mb-2">{post.date}</p>
-                  <h3 className="text-xl font-bold mb-3" style={{ color: '#2F2D56' }}>
+                <CardContent className="p-4 md:p-6">
+                  <p className="text-xs md:text-sm text-neutral-500 mb-2">{post.date}</p>
+                  <h3 className="text-base md:text-xl font-bold mb-2 md:mb-3" style={{ color: '#2F2D56' }}>
                     {post.title}
                   </h3>
-                  <p className="text-neutral-700 leading-relaxed">
+                  <p className="text-sm md:text-base text-neutral-700 leading-relaxed">
                     {post.excerpt}
                   </p>
                 </CardContent>
@@ -733,7 +793,7 @@ const SobreMariaFer = ({ lang = 'es' }: SobreMariaFerProps) => {
           <div className="text-center">
             <Link
               to="/blog"
-              className="bg-[#C0930E] text-black rounded-full px-8 py-4 font-semibold shadow-md hover:opacity-90 focus:ring-2 focus:ring-[#C0930E]/40 transition-all inline-block"
+              className="bg-[#C0930E] text-black rounded-full px-6 md:px-8 py-3 md:py-4 font-semibold shadow-md hover:opacity-90 focus:ring-2 focus:ring-[#C0930E]/40 transition-all inline-block text-sm md:text-base"
             >
               {t.blog.cta}
             </Link>
@@ -744,41 +804,41 @@ const SobreMariaFer = ({ lang = 'es' }: SobreMariaFerProps) => {
       <WaveSeparator color="white" flip />
 
       {/* Contact Section */}
-      <section id="contacto" className="py-20" style={{ backgroundColor: '#541014' }}>
-        <div className="max-w-7xl mx-auto px-6 md:px-8">
-          <h2 className="text-4xl font-bold mb-12 text-center text-white">
+      <section id="contacto" className="py-12 md:py-20" style={{ backgroundColor: '#541014' }}>
+        <div className="max-w-7xl mx-auto px-4 md:px-6 lg:px-8">
+          <h2 className="text-3xl md:text-4xl font-bold mb-8 md:mb-12 text-center text-white">
             {t.contact.title}
           </h2>
 
-          <div className="grid md:grid-cols-2 gap-12">
+          <div className="grid md:grid-cols-2 gap-8 md:gap-12">
             {/* Quick Links Column */}
             <div>
-              <h3 className="text-2xl font-bold mb-8 text-white">
+              <h3 className="text-xl md:text-2xl font-bold mb-6 md:mb-8 text-white">
                 {t.contact.quickLinks.title}
               </h3>
               
-              <div className="space-y-4">
+              <div className="space-y-3 md:space-y-4">
                 <a
                   href="https://wa.me/57XXXXXXXXXX"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="flex items-center gap-4 p-4 bg-white/10 rounded-xl hover:bg-white/20 transition-colors"
+                  className="flex items-center gap-3 md:gap-4 p-3 md:p-4 bg-white/10 rounded-xl hover:bg-white/20 transition-colors"
                 >
-                  <MessageCircle size={32} className="text-white" />
+                  <MessageCircle size={28} className="flex-shrink-0 text-white" />
                   <div>
-                    <p className="text-white font-semibold">{t.contact.quickLinks.whatsapp}</p>
-                    <p className="text-neutral-200 text-sm">+57 XXX XXX XXXX</p>
+                    <p className="text-white font-semibold text-sm md:text-base">{t.contact.quickLinks.whatsapp}</p>
+                    <p className="text-neutral-200 text-xs md:text-sm">+57 XXX XXX XXXX</p>
                   </div>
                 </a>
 
                 <a
                   href="mailto:contacto@ferova.agency"
-                  className="flex items-center gap-4 p-4 bg-white/10 rounded-xl hover:bg-white/20 transition-colors"
+                  className="flex items-center gap-3 md:gap-4 p-3 md:p-4 bg-white/10 rounded-xl hover:bg-white/20 transition-colors"
                 >
-                  <Mail size={32} className="text-white" />
+                  <Mail size={28} className="flex-shrink-0 text-white" />
                   <div>
-                    <p className="text-white font-semibold">{t.contact.quickLinks.email}</p>
-                    <p className="text-neutral-200 text-sm">contacto@ferova.agency</p>
+                    <p className="text-white font-semibold text-sm md:text-base">{t.contact.quickLinks.email}</p>
+                    <p className="text-neutral-200 text-xs md:text-sm">contacto@ferova.agency</p>
                   </div>
                 </a>
 
@@ -786,43 +846,43 @@ const SobreMariaFer = ({ lang = 'es' }: SobreMariaFerProps) => {
                   href="https://calendly.com/tu-enlace"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="flex items-center gap-4 p-4 bg-white/10 rounded-xl hover:bg-white/20 transition-colors"
+                  className="flex items-center gap-3 md:gap-4 p-3 md:p-4 bg-white/10 rounded-xl hover:bg-white/20 transition-colors"
                 >
-                  <Calendar size={32} className="text-white" />
+                  <Calendar size={28} className="flex-shrink-0 text-white" />
                   <div>
-                    <p className="text-white font-semibold">{t.contact.quickLinks.calendly}</p>
-                    <p className="text-neutral-200 text-sm">Reserva un espacio</p>
+                    <p className="text-white font-semibold text-sm md:text-base">{t.contact.quickLinks.calendly}</p>
+                    <p className="text-neutral-200 text-xs md:text-sm">Reserva un espacio</p>
                   </div>
                 </a>
 
                 {/* Social Links */}
-                <div className="flex gap-4 pt-4">
+                <div className="flex gap-3 md:gap-4 pt-2 md:pt-4">
                   <a
                     href="https://www.linkedin.com/in/mariafer-calderon"
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="p-3 bg-white/10 rounded-full hover:bg-white/20 transition-colors"
+                    className="p-2.5 md:p-3 bg-white/10 rounded-full hover:bg-white/20 transition-colors"
                     aria-label="LinkedIn"
                   >
-                    <Linkedin size={24} className="text-white" />
+                    <Linkedin size={20} className="md:w-6 md:h-6 text-white" />
                   </a>
                   <a
                     href="https://www.instagram.com/ferova.agency"
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="p-3 bg-white/10 rounded-full hover:bg-white/20 transition-colors"
+                    className="p-2.5 md:p-3 bg-white/10 rounded-full hover:bg-white/20 transition-colors"
                     aria-label="Instagram"
                   >
-                    <Instagram size={24} className="text-white" />
+                    <Instagram size={20} className="md:w-6 md:h-6 text-white" />
                   </a>
                   <a
                     href="https://twitter.com/ferova_agency"
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="p-3 bg-white/10 rounded-full hover:bg-white/20 transition-colors"
+                    className="p-2.5 md:p-3 bg-white/10 rounded-full hover:bg-white/20 transition-colors"
                     aria-label="X (Twitter)"
                   >
-                    <Twitter size={24} className="text-white" />
+                    <Twitter size={20} className="md:w-6 md:h-6 text-white" />
                   </a>
                 </div>
               </div>
@@ -830,9 +890,9 @@ const SobreMariaFer = ({ lang = 'es' }: SobreMariaFerProps) => {
 
             {/* Form Column */}
             <div>
-              <form className="space-y-6">
+              <form className="space-y-4 md:space-y-6">
                 <div>
-                  <label htmlFor="name" className="block text-white font-medium mb-2">
+                  <label htmlFor="name" className="block text-white font-medium mb-2 text-sm md:text-base">
                     {t.contact.form.name}
                   </label>
                   <input
@@ -840,13 +900,13 @@ const SobreMariaFer = ({ lang = 'es' }: SobreMariaFerProps) => {
                     id="name"
                     name="name"
                     required
-                    className="w-full px-4 py-3 rounded-lg border-2 border-white/20 bg-white/10 text-white placeholder-neutral-300 focus:border-[#C0930E] focus:ring-2 focus:ring-[#C0930E]/40 transition-colors"
+                    className="w-full px-3 md:px-4 py-2.5 md:py-3 rounded-lg border-2 border-white/20 bg-white/10 text-white placeholder-neutral-300 focus:border-[#C0930E] focus:ring-2 focus:ring-[#C0930E]/40 transition-colors text-sm md:text-base"
                     placeholder="Tu nombre"
                   />
                 </div>
 
                 <div>
-                  <label htmlFor="email" className="block text-white font-medium mb-2">
+                  <label htmlFor="email" className="block text-white font-medium mb-2 text-sm md:text-base">
                     {t.contact.form.email}
                   </label>
                   <input
@@ -854,13 +914,13 @@ const SobreMariaFer = ({ lang = 'es' }: SobreMariaFerProps) => {
                     id="email"
                     name="email"
                     required
-                    className="w-full px-4 py-3 rounded-lg border-2 border-white/20 bg-white/10 text-white placeholder-neutral-300 focus:border-[#C0930E] focus:ring-2 focus:ring-[#C0930E]/40 transition-colors"
+                    className="w-full px-3 md:px-4 py-2.5 md:py-3 rounded-lg border-2 border-white/20 bg-white/10 text-white placeholder-neutral-300 focus:border-[#C0930E] focus:ring-2 focus:ring-[#C0930E]/40 transition-colors text-sm md:text-base"
                     placeholder="tu@email.com"
                   />
                 </div>
 
                 <div>
-                  <label htmlFor="message" className="block text-white font-medium mb-2">
+                  <label htmlFor="message" className="block text-white font-medium mb-2 text-sm md:text-base">
                     {t.contact.form.message}
                   </label>
                   <textarea
@@ -868,27 +928,27 @@ const SobreMariaFer = ({ lang = 'es' }: SobreMariaFerProps) => {
                     name="message"
                     required
                     rows={5}
-                    className="w-full px-4 py-3 rounded-lg border-2 border-white/20 bg-white/10 text-white placeholder-neutral-300 focus:border-[#C0930E] focus:ring-2 focus:ring-[#C0930E]/40 transition-colors resize-none"
+                    className="w-full px-3 md:px-4 py-2.5 md:py-3 rounded-lg border-2 border-white/20 bg-white/10 text-white placeholder-neutral-300 focus:border-[#C0930E] focus:ring-2 focus:ring-[#C0930E]/40 transition-colors resize-none text-sm md:text-base"
                     placeholder="Cuéntame sobre tu proyecto..."
                   />
                 </div>
 
-                <div className="flex items-start gap-3">
+                <div className="flex items-start gap-2 md:gap-3">
                   <input
                     type="checkbox"
                     id="consent"
                     name="consent"
                     required
-                    className="mt-1 w-5 h-5 rounded border-white/20 bg-white/10 text-[#C0930E] focus:ring-2 focus:ring-[#C0930E]/40"
+                    className="mt-1 w-4 h-4 md:w-5 md:h-5 flex-shrink-0 rounded border-white/20 bg-white/10 text-[#C0930E] focus:ring-2 focus:ring-[#C0930E]/40"
                   />
-                  <label htmlFor="consent" className="text-sm text-neutral-200">
+                  <label htmlFor="consent" className="text-xs md:text-sm text-neutral-200">
                     {t.contact.form.consent}
                   </label>
                 </div>
 
                 <button
                   type="submit"
-                  className="w-full bg-[#C0930E] text-black rounded-full px-6 py-4 font-semibold shadow-md hover:opacity-90 focus:ring-2 focus:ring-[#C0930E]/40 transition-all"
+                  className="w-full bg-[#C0930E] text-black rounded-full px-6 py-3 md:py-4 font-semibold shadow-md hover:opacity-90 focus:ring-2 focus:ring-[#C0930E]/40 transition-all text-sm md:text-base"
                 >
                   {t.contact.form.submit}
                 </button>
