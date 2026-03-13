@@ -47,27 +47,31 @@ const Servicios = ({ lang = 'es' }: ServiciosProps) => {
 
         <section className="py-20 md:py-28">
           <div className="container mx-auto px-4 md:px-6">
-            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-6xl mx-auto">
+            <StaggerContainer className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-6xl mx-auto">
               {services.map((s, i) => (
-                <Link key={i} to={s.href} className="glass-card p-8 hover:border-gold/30 transition-all duration-300 hover:-translate-y-1 group block">
-                  <div className="w-14 h-14 rounded-2xl flex items-center justify-center mb-6" style={{ background: 'hsla(45, 86%, 40%, 0.1)' }}>
-                    <s.icon className="w-7 h-7 text-gold" />
-                  </div>
-                  <h3 className="text-xl font-display font-bold mb-3 text-foreground">{s.title}</h3>
-                  <p className="text-muted-foreground text-sm leading-relaxed mb-6">{s.description}</p>
-                  <ul className="space-y-2 mb-6">
-                    {s.features.map((f, j) => (
-                      <li key={j} className="flex items-center gap-2 text-sm text-muted-foreground">
-                        <CheckCircle className="w-3.5 h-3.5 text-gold flex-shrink-0" /> {f}
-                      </li>
-                    ))}
-                  </ul>
-                  <span className="inline-flex items-center gap-1 text-gold text-sm font-semibold group-hover:gap-2 transition-all">
-                    {lang === 'es' ? 'Ver detalles' : 'View details'} <ArrowRight className="w-4 h-4" />
-                  </span>
-                </Link>
+                <StaggerItem key={i}>
+                  <ScaleOnHover>
+                    <Link to={s.href} className="glass-card p-8 hover:border-gold/30 transition-all duration-300 group block h-full">
+                      <div className="w-14 h-14 rounded-2xl flex items-center justify-center mb-6 bg-gold/10">
+                        <s.icon className="w-7 h-7 text-gold" />
+                      </div>
+                      <h3 className="text-xl font-display font-bold mb-3 text-foreground">{s.title}</h3>
+                      <p className="text-muted-foreground text-sm leading-relaxed mb-6">{s.description}</p>
+                      <ul className="space-y-2 mb-6">
+                        {s.features.map((f, j) => (
+                          <li key={j} className="flex items-center gap-2 text-sm text-muted-foreground">
+                            <CheckCircle className="w-3.5 h-3.5 text-gold flex-shrink-0" /> {f}
+                          </li>
+                        ))}
+                      </ul>
+                      <span className="inline-flex items-center gap-1 text-gold text-sm font-semibold group-hover:gap-2 transition-all">
+                        {lang === 'es' ? 'Ver detalles' : 'View details'} <ArrowRight className="w-4 h-4" />
+                      </span>
+                    </Link>
+                  </ScaleOnHover>
+                </StaggerItem>
               ))}
-            </div>
+            </StaggerContainer>
           </div>
         </section>
 
