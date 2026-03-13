@@ -206,7 +206,7 @@ const Index = ({ lang = 'es' }: IndexProps) => {
         </section>
 
         {/* Comparison Table */}
-        <section className="py-20 md:py-28 relative" style={{ background: 'hsl(243, 28%, 14%)' }}>
+        <section className="py-20 md:py-28 relative bg-surface">
           <div className="container mx-auto px-4 md:px-6">
             <AnimatedSection className="text-center mb-16">
               <h2 className="text-3xl md:text-4xl lg:text-5xl font-display font-bold mb-4">{t.compTitle}</h2>
