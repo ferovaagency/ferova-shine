@@ -6,14 +6,47 @@ import { Link } from 'react-router-dom';
 import {
   Zap, Shield, Search, BarChart3, ArrowRight, CheckCircle2,
   XCircle, Rocket, Star, ChevronLeft, ChevronRight,
-  Code2, TrendingUp, Palette, Tag, GraduationCap, MessageCircle
+  Code2, TrendingUp, Palette, Tag, GraduationCap, MessageCircle,
+  Target, Handshake, FileText, Eye, Users, Lightbulb, BookOpen
 } from 'lucide-react';
 import { AnimatedSection, StaggerContainer, StaggerItem, ScaleOnHover, PageTransition } from '@/components/ui/motion';
-import { motion } from 'framer-motion';
+import { motion, useMotionValue, useTransform, animate } from 'framer-motion';
+import { useEffect, useRef } from 'react';
 
 interface IndexProps {
   lang?: 'es' | 'en';
 }
+
+/* Animated counter component */
+const AnimatedCounter = ({ value, suffix = '', prefix = '' }: { value: number; suffix?: string; prefix?: string }) => {
+  const count = useMotionValue(0);
+  const rounded = useTransform(count, (v) => Math.round(v));
+  const ref = useRef<HTMLSpanElement>(null);
+  const [display, setDisplay] = useState(0);
+
+  useEffect(() => {
+    const unsub = rounded.on('change', (v) => setDisplay(v));
+    return unsub;
+  }, [rounded]);
+
+  useEffect(() => {
+    const node = ref.current;
+    if (!node) return;
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          animate(count, value, { duration: 2, ease: 'easeOut' });
+          observer.disconnect();
+        }
+      },
+      { threshold: 0.3 }
+    );
+    observer.observe(node);
+    return () => observer.disconnect();
+  }, [count, value]);
+
+  return <span ref={ref}>{prefix}{display}{suffix}</span>;
+};
 
 const Index = ({ lang = 'es' }: IndexProps) => {
   const [currentTestimonial, setCurrentTestimonial] = useState(0);
@@ -23,7 +56,7 @@ const Index = ({ lang = 'es' }: IndexProps) => {
     heroTitle2: 'Alto Rendimiento',
     heroTitle3: 'para E-commerce',
     heroSub: 'Más rápidas que WordPress. Más seguras. Mejor SEO. Diseñadas para convertir visitantes en clientes.',
-    ctaPrimary: 'Ver planes y precios',
+    ctaPrimary: 'Agendar Asesoría',
     ctaSecondary: 'Escríbenos por WhatsApp',
     benefitsTitle: '¿Por qué una Web App?',
     benefitsSub: 'Las Web Apps modernas superan a WordPress en cada métrica que importa.',
@@ -54,12 +87,26 @@ const Index = ({ lang = 'es' }: IndexProps) => {
       { icon: Tag, title: 'Descuentos en Herramientas', desc: 'Accede a herramientas premium a precios especiales.', href: '/servicios/descuentos-herramientas' },
       { icon: GraduationCap, title: 'Asesorías de Marketing', desc: 'Consultoría estratégica para escalar tu negocio.', href: '/servicios/asesorias-marketing' },
     ],
-    statsTitle: 'Resultados que hablan',
+    statsTitle: 'Resultados que hablan por Ferova Agency',
     stats: [
-      { value: '+95%', label: 'Aumento tráfico orgánico' },
-      { value: '+128%', label: 'Más ingresos orgánicos' },
-      { value: '< 1s', label: 'Tiempo de carga promedio' },
-      { value: '32', label: 'Keywords en Top 3' },
+      { value: 95, suffix: '%', prefix: '+', label: 'Tráfico Orgánico' },
+      { value: 50, suffix: '%', prefix: '+', label: 'Ingresos Orgánicos' },
+      { value: 30, suffix: '%', prefix: '+', label: 'Nuevos Clientes' },
+      { value: 13, suffix: '', prefix: '', label: 'Marcas Impactadas' },
+    ],
+    statsNote: '*Datos basados en implementaciones de los últimos 12 meses.',
+    diffTitle: 'Lo que hace diferente a Ferova Agency',
+    diffSub: 'No creemos en soluciones genéricas. Trabajamos con estrategias personalizadas; ganamos si tú ganas.',
+    differentiators: [
+      { icon: Target, title: 'Modelo basado en resultados', desc: 'Nuestro éxito se mide por el tuyo. Alineamos nuestros objetivos con los de tu negocio.' },
+      { icon: Lightbulb, title: 'Estrategias personalizadas', desc: 'Cada e-commerce es único. Diseñamos planes a la medida de tus necesidades.' },
+      { icon: FileText, title: 'Reportes transparentes', desc: 'Sin letra pequeña. Reportes claros con métricas que entiendes y que importan.' },
+    ],
+    whyTitle: 'Por qué elegir a Ferova Agency',
+    whyItems: [
+      { icon: Users, title: 'Involucramiento total', desc: 'Trabajamos como una extensión de tu equipo, con dedicación completa a cada proyecto.' },
+      { icon: Handshake, title: 'Aliados estratégicos', desc: 'Más que proveedores, somos socios en tu crecimiento digital.' },
+      { icon: Eye, title: 'Transparencia sin tecnicismos', desc: 'Comunicación clara y directa. Entenderás cada decisión y cada resultado.' },
     ],
     testimonialsTitle: 'Lo que dicen nuestros clientes',
     testimonials: [
@@ -67,9 +114,9 @@ const Index = ({ lang = 'es' }: IndexProps) => {
       { name: 'Andrés P.', role: 'Director E-commerce', text: 'El equipo de Ferova entiende el e-commerce como nadie. Su enfoque en datos y resultados nos dio confianza desde el día uno.' },
       { name: 'Laura G.', role: 'Fundadora, Cosmética Natural', text: 'Ya no me preocupo por hackeos ni plugins. Mi tienda está segura y carga al instante. Recomendadísimos.' },
     ],
-    ctaTitle: '¿Listo para dejar WordPress atrás?',
-    ctaSub: 'Escríbenos por WhatsApp y descubre cuánto puede crecer tu tienda online.',
-    ctaBtn: 'Escríbenos por WhatsApp',
+    ctaTitle: '¿Listo para hacer crecer tu e-commerce?',
+    ctaSub: 'Agenda una asesoría gratuita y descubre cuánto puede crecer tu tienda online.',
+    ctaBtn: 'Agendar Asesoría',
     ctaLink: 'Ver planes',
     viewAll: 'Ver todos los servicios',
   } : {
@@ -77,7 +124,7 @@ const Index = ({ lang = 'es' }: IndexProps) => {
     heroTitle2: 'Web Apps',
     heroTitle3: 'for E-commerce',
     heroSub: 'Faster than WordPress. More secure. Better SEO. Designed to convert visitors into customers.',
-    ctaPrimary: 'See plans & pricing',
+    ctaPrimary: 'Book a Consultation',
     ctaSecondary: 'Message us on WhatsApp',
     benefitsTitle: 'Why a Web App?',
     benefitsSub: 'Modern Web Apps outperform WordPress in every metric that matters.',
@@ -108,25 +155,43 @@ const Index = ({ lang = 'es' }: IndexProps) => {
       { icon: Tag, title: 'Tool Discounts', desc: 'Access premium tools at special prices.', href: '/en/services/tool-discounts' },
       { icon: GraduationCap, title: 'Marketing Consulting', desc: 'Strategic consulting to scale your business.', href: '/en/services/marketing-consulting' },
     ],
-    statsTitle: 'Results that speak',
+    statsTitle: 'Results that speak for Ferova Agency',
     stats: [
-      { value: '+95%', label: 'Organic traffic increase' },
-      { value: '+128%', label: 'More organic revenue' },
-      { value: '< 1s', label: 'Average load time' },
-      { value: '32', label: 'Keywords in Top 3' },
+      { value: 95, suffix: '%', prefix: '+', label: 'Organic Traffic' },
+      { value: 50, suffix: '%', prefix: '+', label: 'Organic Revenue' },
+      { value: 30, suffix: '%', prefix: '+', label: 'New Clients' },
+      { value: 13, suffix: '', prefix: '', label: 'Brands Impacted' },
+    ],
+    statsNote: '*Data based on implementations from the last 12 months.',
+    diffTitle: 'What makes Ferova Agency different',
+    diffSub: "We don't believe in generic solutions. We work with personalized strategies; we win if you win.",
+    differentiators: [
+      { icon: Target, title: 'Results-based model', desc: 'Our success is measured by yours. We align our goals with your business.' },
+      { icon: Lightbulb, title: 'Personalized strategies', desc: 'Every e-commerce is unique. We design plans tailored to your needs.' },
+      { icon: FileText, title: 'Transparent reports', desc: 'No fine print. Clear reports with metrics you understand and that matter.' },
+    ],
+    whyTitle: 'Why choose Ferova Agency',
+    whyItems: [
+      { icon: Users, title: 'Total involvement', desc: 'We work as an extension of your team, with complete dedication to each project.' },
+      { icon: Handshake, title: 'Strategic allies', desc: 'More than providers, we are partners in your digital growth.' },
+      { icon: Eye, title: 'Transparency without jargon', desc: 'Clear and direct communication. You will understand every decision and every result.' },
     ],
     testimonialsTitle: 'What our clients say',
     testimonials: [
-      { name: 'Carolina M.', role: 'CEO, Fashion Store', text: 'Since migrating to Ferova\'s Web App, our sales doubled in 4 months. Site speed is incredible.' },
-      { name: 'Andrés P.', role: 'E-commerce Director', text: 'Ferova\'s team understands e-commerce like no one. Their data-driven approach gave us confidence from day one.' },
+      { name: 'Carolina M.', role: 'CEO, Fashion Store', text: "Since migrating to Ferova's Web App, our sales doubled in 4 months. Site speed is incredible." },
+      { name: 'Andrés P.', role: 'E-commerce Director', text: "Ferova's team understands e-commerce like no one. Their data-driven approach gave us confidence from day one." },
       { name: 'Laura G.', role: 'Founder, Natural Cosmetics', text: 'No more worrying about hacks or plugins. My store is secure and loads instantly. Highly recommended.' },
     ],
-    ctaTitle: 'Ready to leave WordPress behind?',
-    ctaSub: 'Message us on WhatsApp and discover how much your online store can grow.',
-    ctaBtn: 'Message us on WhatsApp',
+    ctaTitle: 'Ready to grow your e-commerce?',
+    ctaSub: 'Book a free consultation and discover how much your online store can grow.',
+    ctaBtn: 'Book a Consultation',
     ctaLink: 'See plans',
     viewAll: 'View all services',
   };
+
+  const whatsappUrl = 'https://wa.me/17865787671?text=' + encodeURIComponent(
+    lang === 'es' ? 'Hola Ferova, quiero agendar una asesoría.' : 'Hi Ferova, I want to book a consultation.'
+  );
 
   return (
     <PageTransition>
@@ -140,7 +205,7 @@ const Index = ({ lang = 'es' }: IndexProps) => {
               <AnimatedSection delay={0}>
                 <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-gold/20 bg-gold/5 text-gold text-sm font-medium mb-8">
                   <Rocket className="w-4 h-4" />
-                  {lang === 'es' ? 'SEO para Ecommerce · La nueva era' : 'E-commerce SEO · The new era'}
+                  {lang === 'es' ? 'Agencia Boutique de SEO para Ecommerce' : 'Boutique E-commerce SEO Agency'}
                 </div>
               </AnimatedSection>
               <AnimatedSection delay={0.1}>
@@ -157,21 +222,21 @@ const Index = ({ lang = 'es' }: IndexProps) => {
               </AnimatedSection>
               <AnimatedSection delay={0.3}>
                 <div className="flex flex-col sm:flex-row gap-4 justify-center">
+                  <motion.a
+                    whileHover={{ scale: 1.05 }}
+                    whileTap={{ scale: 0.97 }}
+                    href={whatsappUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="btn-gold text-center flex items-center justify-center gap-2"
+                  >
+                    <MessageCircle className="w-5 h-5" />
+                    {t.ctaPrimary}
+                  </motion.a>
                   <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.97 }}>
-                    <Link to={lang === 'es' ? '/precios' : '/en/pricing'} className="btn-gold text-center block">
-                      {t.ctaPrimary}
+                    <Link to={lang === 'es' ? '/contacto' : '/en/contact'} className="btn-outline-gold text-center block">
+                      {lang === 'es' ? 'Ver planes y precios' : 'See plans & pricing'}
                     </Link>
-                  </motion.div>
-                  <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.97 }}>
-                    <a
-                      href="https://wa.me/17865787671?text=Hola%20Ferova%2C%20quiero%20saber%20más%20sobre%20sus%20servicios."
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="btn-outline-gold text-center flex items-center justify-center gap-2"
-                    >
-                      <MessageCircle className="w-5 h-5" />
-                      {t.ctaSecondary}
-                    </a>
                   </motion.div>
                 </div>
               </AnimatedSection>
@@ -192,7 +257,7 @@ const Index = ({ lang = 'es' }: IndexProps) => {
                 <StaggerItem key={i}>
                   <ScaleOnHover>
                     <div className="glass-card p-6 md:p-8 hover:border-gold/30 transition-all duration-300 group h-full">
-                      <div className="w-12 h-12 rounded-xl flex items-center justify-center mb-5" style={{ background: 'hsla(45, 86%, 40%, 0.1)' }}>
+                      <div className="w-12 h-12 rounded-xl flex items-center justify-center mb-5 bg-gold/10">
                         <b.icon className="w-6 h-6 text-gold" />
                       </div>
                       <h3 className="text-lg font-display font-semibold mb-2 text-foreground">{b.title}</h3>
@@ -236,7 +301,7 @@ const Index = ({ lang = 'es' }: IndexProps) => {
                       >
                         <td className="py-4 px-4 md:px-6 text-sm font-medium text-foreground">{row[0]}</td>
                         <td className="py-4 px-4 md:px-6 text-sm">
-                          <span className="flex items-center gap-2 text-red-400">
+                          <span className="flex items-center gap-2 text-destructive">
                             <XCircle className="w-4 h-4 flex-shrink-0" /> {row[1]}
                           </span>
                         </td>
@@ -266,7 +331,7 @@ const Index = ({ lang = 'es' }: IndexProps) => {
                 <StaggerItem key={i}>
                   <ScaleOnHover>
                     <Link to={s.href} className="glass-card p-8 hover:border-gold/30 transition-all duration-300 group block h-full">
-                      <div className="w-14 h-14 rounded-2xl flex items-center justify-center mb-6" style={{ background: 'hsla(45, 86%, 40%, 0.1)' }}>
+                      <div className="w-14 h-14 rounded-2xl flex items-center justify-center mb-6 bg-gold/10">
                         <s.icon className="w-7 h-7 text-gold" />
                       </div>
                       <h3 className="text-xl font-display font-semibold mb-3 text-foreground">{s.title}</h3>
@@ -287,27 +352,75 @@ const Index = ({ lang = 'es' }: IndexProps) => {
           </div>
         </section>
 
-        {/* Stats */}
-        <section className="py-20 md:py-28 relative" style={{ background: 'linear-gradient(135deg, hsla(356, 68%, 20%, 0.1), hsla(45, 86%, 40%, 0.05))' }}>
+        {/* Stats — Social Proof */}
+        <section className="py-20 md:py-28 relative bg-surface">
           <div className="container mx-auto px-4 md:px-6">
             <AnimatedSection>
-              <h2 className="text-3xl md:text-4xl font-display font-bold text-center mb-16">{t.statsTitle}</h2>
+              <h2 className="text-3xl md:text-4xl lg:text-5xl font-display font-bold text-center mb-16">
+                {t.statsTitle}
+              </h2>
             </AnimatedSection>
             <StaggerContainer className="grid grid-cols-2 lg:grid-cols-4 gap-6 max-w-4xl mx-auto">
               {t.stats.map((s, i) => (
                 <StaggerItem key={i}>
                   <div className="text-center p-6">
-                    <motion.div
-                      className="text-4xl md:text-5xl font-display font-bold text-gradient-gold mb-2"
-                      initial={{ scale: 0.5, opacity: 0 }}
-                      whileInView={{ scale: 1, opacity: 1 }}
-                      viewport={{ once: true }}
-                      transition={{ type: 'spring', stiffness: 200, delay: i * 0.1 }}
-                    >
-                      {s.value}
-                    </motion.div>
+                    <div className="text-4xl md:text-5xl font-display font-bold text-gradient-gold mb-2">
+                      <AnimatedCounter value={s.value} suffix={s.suffix} prefix={s.prefix} />
+                    </div>
                     <div className="text-muted-foreground text-sm">{s.label}</div>
                   </div>
+                </StaggerItem>
+              ))}
+            </StaggerContainer>
+            <AnimatedSection delay={0.4}>
+              <p className="text-center text-muted-foreground text-xs mt-8">{t.statsNote}</p>
+            </AnimatedSection>
+          </div>
+        </section>
+
+        {/* Differentiators */}
+        <section className="py-20 md:py-28">
+          <div className="container mx-auto px-4 md:px-6">
+            <AnimatedSection className="text-center mb-16">
+              <h2 className="text-3xl md:text-4xl lg:text-5xl font-display font-bold mb-4">{t.diffTitle}</h2>
+              <p className="text-muted-foreground text-lg max-w-2xl mx-auto italic">{t.diffSub}</p>
+            </AnimatedSection>
+            <StaggerContainer className="grid md:grid-cols-3 gap-8 max-w-5xl mx-auto">
+              {t.differentiators.map((d, i) => (
+                <StaggerItem key={i}>
+                  <ScaleOnHover>
+                    <div className="glass-card p-8 text-center hover:border-gold/30 transition-all h-full">
+                      <div className="w-16 h-16 rounded-2xl flex items-center justify-center mx-auto mb-6 bg-gold/10">
+                        <d.icon className="w-8 h-8 text-gold" />
+                      </div>
+                      <h3 className="text-xl font-display font-semibold mb-3 text-foreground">{d.title}</h3>
+                      <p className="text-muted-foreground text-sm leading-relaxed">{d.desc}</p>
+                    </div>
+                  </ScaleOnHover>
+                </StaggerItem>
+              ))}
+            </StaggerContainer>
+          </div>
+        </section>
+
+        {/* Why Choose Ferova */}
+        <section className="py-20 md:py-28 bg-surface">
+          <div className="container mx-auto px-4 md:px-6">
+            <AnimatedSection className="text-center mb-16">
+              <h2 className="text-3xl md:text-4xl lg:text-5xl font-display font-bold mb-4">{t.whyTitle}</h2>
+            </AnimatedSection>
+            <StaggerContainer className="grid md:grid-cols-3 gap-8 max-w-5xl mx-auto">
+              {t.whyItems.map((w, i) => (
+                <StaggerItem key={i}>
+                  <ScaleOnHover>
+                    <div className="glass-card p-8 hover:border-wine/30 transition-all h-full">
+                      <div className="w-14 h-14 rounded-2xl flex items-center justify-center mb-6 bg-wine/10">
+                        <w.icon className="w-7 h-7 text-wine-light" />
+                      </div>
+                      <h3 className="text-xl font-display font-semibold mb-3 text-foreground">{w.title}</h3>
+                      <p className="text-muted-foreground text-sm leading-relaxed">{w.desc}</p>
+                    </div>
+                  </ScaleOnHover>
                 </StaggerItem>
               ))}
             </StaggerContainer>
@@ -336,7 +449,7 @@ const Index = ({ lang = 'es' }: IndexProps) => {
                     ))}
                   </div>
                   <p className="text-foreground text-lg md:text-xl leading-relaxed mb-8 italic">
-                    "{t.testimonials[currentTestimonial].text}"
+                    &ldquo;{t.testimonials[currentTestimonial].text}&rdquo;
                   </p>
                   <div>
                     <p className="font-display font-semibold text-foreground">{t.testimonials[currentTestimonial].name}</p>
@@ -388,7 +501,7 @@ const Index = ({ lang = 'es' }: IndexProps) => {
                 <motion.a
                   whileHover={{ scale: 1.05 }}
                   whileTap={{ scale: 0.97 }}
-                  href="https://wa.me/17865787671?text=Hola%20Ferova%2C%20quiero%20saber%20más%20sobre%20sus%20servicios."
+                  href={whatsappUrl}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="btn-gold text-center flex items-center justify-center gap-2"
