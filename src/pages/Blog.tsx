@@ -73,9 +73,16 @@ const blogPosts = {
 
 const Blog = ({ lang = 'es' }: Props) => {
   const posts = blogPosts[lang];
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const timer = setTimeout(() => setLoading(false), 600);
+    return () => clearTimeout(timer);
+  }, []);
 
   return (
     <>
+      <ReadingProgress />
       <Header currentLang={lang} />
       <main className="pt-20">
         <section className="py-20 md:py-28 text-center relative grid-pattern">
