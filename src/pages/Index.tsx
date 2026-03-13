@@ -86,6 +86,7 @@ const Index = ({ lang = 'es' }: IndexProps) => {
       { icon: Palette, title: 'Diseño de Logos', desc: 'Identidad visual única que representa tu marca.', href: '/servicios/diseno-logos' },
       { icon: Tag, title: 'Descuentos en Herramientas', desc: 'Accede a herramientas premium a precios especiales.', href: '/servicios/descuentos-herramientas' },
       { icon: GraduationCap, title: 'Asesorías de Marketing', desc: 'Consultoría estratégica para escalar tu negocio.', href: '/servicios/asesorias-marketing' },
+      { icon: Linkedin, title: 'Optimización de LinkedIn', desc: 'Potencia tu marca personal con un perfil optimizado.', href: '/servicios/optimizacion-linkedin' },
     ],
     statsTitle: 'Resultados que hablan por Ferova Agency',
     stats: [
