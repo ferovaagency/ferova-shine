@@ -98,7 +98,13 @@ const Blog = ({ lang = 'es' }: Props) => {
         <section className="py-20 md:py-28">
           <div className="container mx-auto px-4 md:px-6">
             <div className="max-w-4xl mx-auto space-y-8">
-              {posts.map((post, i) => (
+              {loading ? (
+                <>
+                  <SkeletonBlogCard />
+                  <SkeletonBlogCard />
+                  <SkeletonBlogCard />
+                </>
+              ) : posts.map((post, i) => (
                 <Link
                   key={i}
                   to={`${lang === 'es' ? '/blog' : '/en/blog'}/${post.slug}`}
