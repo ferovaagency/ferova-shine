@@ -134,7 +134,7 @@ const Index = ({ lang = 'es' }: IndexProps) => {
       <main>
         {/* Hero */}
         <section className="relative min-h-screen flex items-center pt-20 overflow-hidden grid-pattern">
-          <div className="absolute inset-0" style={{ background: 'radial-gradient(ellipse at 30% 50%, hsla(356, 68%, 20%, 0.1) 0%, transparent 60%), radial-gradient(ellipse at 70% 20%, hsla(45, 86%, 40%, 0.06) 0%, transparent 50%)' }} />
+          <div className="absolute inset-0" style={{ background: 'radial-gradient(ellipse at 30% 50%, hsla(356, 68%, 20%, 0.08) 0%, transparent 60%), radial-gradient(ellipse at 70% 20%, hsla(45, 86%, 40%, 0.05) 0%, transparent 50%)' }} />
           <div className="container mx-auto px-4 md:px-6 relative z-10">
             <div className="max-w-4xl mx-auto text-center">
               <AnimatedSection delay={0}>
