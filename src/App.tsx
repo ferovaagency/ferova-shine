@@ -18,6 +18,7 @@ import Precios from "./pages/Precios";
 import Contacto from "./pages/Contacto";
 import Blog from "./pages/Blog";
 import BlogPost from "./pages/BlogPost";
+import Recursos from "./pages/Recursos";
 
 const queryClient = new QueryClient();
 
@@ -43,6 +44,7 @@ const App = () => (
           <Route path="/contacto" element={<Contacto lang="es" />} />
           <Route path="/blog" element={<Blog lang="es" />} />
           <Route path="/blog/:slug" element={<BlogPost lang="es" />} />
+          <Route path="/recursos" element={<Recursos lang="es" />} />
 
           {/* English Routes */}
           <Route path="/en" element={<Index lang="en" />} />
@@ -59,6 +61,7 @@ const App = () => (
           <Route path="/en/contact" element={<Contacto lang="en" />} />
           <Route path="/en/blog" element={<Blog lang="en" />} />
           <Route path="/en/blog/:slug" element={<BlogPost lang="en" />} />
+          <Route path="/en/resources" element={<Recursos lang="en" />} />
 
           <Route path="*" element={<NotFound />} />
         </Routes>

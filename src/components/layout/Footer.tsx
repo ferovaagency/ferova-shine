@@ -70,7 +70,7 @@ const Footer = ({ currentLang = 'es' }: FooterProps) => {
         <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-8">
           <div className="col-span-2 md:col-span-4 lg:col-span-2">
             <Link to={currentLang === 'es' ? '/' : '/en'}>
-              <img src={logoImg} alt="Ferova Agency" className="h-16 w-auto brightness-0 invert" />
+              <img src={logoImg} alt="Ferova Agency" className="h-16 w-auto" style={{ filter: 'brightness(0) invert(1) sepia(1) saturate(5) hue-rotate(15deg)' }} />
             </Link>
             <p className="text-muted-foreground text-sm mt-3 max-w-xs">{d.tagline}</p>
             <div className="mt-4 space-y-2 text-sm text-muted-foreground">
