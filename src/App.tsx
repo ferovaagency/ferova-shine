@@ -12,6 +12,7 @@ import PautaDigital from "./pages/PautaDigital";
 import DisenoLogos from "./pages/DisenoLogos";
 import DescuentosHerramientas from "./pages/DescuentosHerramientas";
 import AsesoriasMarketing from "./pages/AsesoriasMarketing";
+import OptimizacionLinkedin from "./pages/OptimizacionLinkedin";
 import CasosDeExito from "./pages/CasosDeExito";
 import CasoDetalle from "./pages/CasoDetalle";
 import Precios from "./pages/Precios";
@@ -19,6 +20,7 @@ import Contacto from "./pages/Contacto";
 import Blog from "./pages/Blog";
 import BlogPost from "./pages/BlogPost";
 import Recursos from "./pages/Recursos";
+import SobreNosotros from "./pages/SobreNosotros";
 
 const queryClient = new QueryClient();
 
@@ -38,6 +40,7 @@ const App = () => (
           <Route path="/servicios/diseno-logos" element={<DisenoLogos lang="es" />} />
           <Route path="/servicios/descuentos-herramientas" element={<DescuentosHerramientas lang="es" />} />
           <Route path="/servicios/asesorias-marketing" element={<AsesoriasMarketing lang="es" />} />
+          <Route path="/servicios/optimizacion-linkedin" element={<OptimizacionLinkedin lang="es" />} />
           <Route path="/precios" element={<Precios lang="es" />} />
           <Route path="/casos-de-exito" element={<CasosDeExito lang="es" />} />
           <Route path="/casos-de-exito/:id" element={<CasoDetalle lang="es" />} />
@@ -45,6 +48,7 @@ const App = () => (
           <Route path="/blog" element={<Blog lang="es" />} />
           <Route path="/blog/:slug" element={<BlogPost lang="es" />} />
           <Route path="/recursos" element={<Recursos lang="es" />} />
+          <Route path="/nosotros" element={<SobreNosotros lang="es" />} />
 
           {/* English Routes */}
           <Route path="/en" element={<Index lang="en" />} />
@@ -55,6 +59,7 @@ const App = () => (
           <Route path="/en/services/logo-design" element={<DisenoLogos lang="en" />} />
           <Route path="/en/services/tool-discounts" element={<DescuentosHerramientas lang="en" />} />
           <Route path="/en/services/marketing-consulting" element={<AsesoriasMarketing lang="en" />} />
+          <Route path="/en/services/linkedin-optimization" element={<OptimizacionLinkedin lang="en" />} />
           <Route path="/en/pricing" element={<Precios lang="en" />} />
           <Route path="/en/case-studies" element={<CasosDeExito lang="en" />} />
           <Route path="/en/case-studies/:id" element={<CasoDetalle lang="en" />} />
@@ -62,6 +67,7 @@ const App = () => (
           <Route path="/en/blog" element={<Blog lang="en" />} />
           <Route path="/en/blog/:slug" element={<BlogPost lang="en" />} />
           <Route path="/en/resources" element={<Recursos lang="en" />} />
+          <Route path="/en/about" element={<SobreNosotros lang="en" />} />
 
           <Route path="*" element={<NotFound />} />
         </Routes>

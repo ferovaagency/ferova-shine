@@ -7,7 +7,7 @@ import {
   Zap, Shield, Search, BarChart3, ArrowRight, CheckCircle2,
   XCircle, Rocket, Star, ChevronLeft, ChevronRight,
   Code2, TrendingUp, Palette, Tag, GraduationCap, MessageCircle,
-  Target, Handshake, FileText, Eye, Users, Lightbulb, BookOpen
+  Target, Handshake, FileText, Eye, Users, Lightbulb, BookOpen, Linkedin
 } from 'lucide-react';
 import { AnimatedSection, StaggerContainer, StaggerItem, ScaleOnHover, PageTransition } from '@/components/ui/motion';
 import { motion, useMotionValue, useTransform, animate } from 'framer-motion';
@@ -86,6 +86,7 @@ const Index = ({ lang = 'es' }: IndexProps) => {
       { icon: Palette, title: 'Diseño de Logos', desc: 'Identidad visual única que representa tu marca.', href: '/servicios/diseno-logos' },
       { icon: Tag, title: 'Descuentos en Herramientas', desc: 'Accede a herramientas premium a precios especiales.', href: '/servicios/descuentos-herramientas' },
       { icon: GraduationCap, title: 'Asesorías de Marketing', desc: 'Consultoría estratégica para escalar tu negocio.', href: '/servicios/asesorias-marketing' },
+      { icon: Linkedin, title: 'Optimización de LinkedIn', desc: 'Potencia tu marca personal con un perfil optimizado.', href: '/servicios/optimizacion-linkedin' },
     ],
     statsTitle: 'Resultados que hablan por Ferova Agency',
     stats: [
@@ -154,6 +155,7 @@ const Index = ({ lang = 'es' }: IndexProps) => {
       { icon: Palette, title: 'Logo Design', desc: 'Unique visual identity that represents your brand.', href: '/en/services/logo-design' },
       { icon: Tag, title: 'Tool Discounts', desc: 'Access premium tools at special prices.', href: '/en/services/tool-discounts' },
       { icon: GraduationCap, title: 'Marketing Consulting', desc: 'Strategic consulting to scale your business.', href: '/en/services/marketing-consulting' },
+      { icon: Linkedin, title: 'LinkedIn Optimization', desc: 'Boost your personal brand with an optimized profile.', href: '/en/services/linkedin-optimization' },
     ],
     statsTitle: 'Results that speak for Ferova Agency',
     stats: [
