@@ -2,94 +2,57 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Ferova Agency Design System - Premium black, white, gold aesthetic */
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600;700;800&display=swap');
 
 @layer base {
   :root {
-    /* Dark theme color palette - Accessibility compliant */
-    --bg: 220 13% 4%; /* #0B0B0C - main background */
-    --surface: 220 11% 7%; /* #111214 - surface/card background */
-    --text: 0 0% 100%; /* #FFFFFF - main text */
-    --muted: 220 8% 78%; /* #C7C9CC - muted text */
-    --gold: 45 61% 44%; /* #B68E2C - accessible gold */
-    --gold-contrast: 220 15% 11%; /* #1A1B1E - text on gold backgrounds */
-    --white: 0 0% 100%; /* #FFFFFF */
-    
-    /* Core Brand Colors */
+    /* Futuristic Dark Blue + Neon palette */
+    --bg: 228 60% 10%;
+    --surface: 230 55% 14%;
+    --text: 0 0% 100%;
+    --muted: 220 21% 61%;
+    --neon-cyan: 187 100% 50%;
+    --neon-purple: 251 100% 69%;
+    --neon-blue: 217 91% 60%;
+    --deep-blue: 228 60% 10%;
+
     --background: var(--bg);
     --foreground: var(--text);
-    
-    /* Gold system - accessible colors */
-    --gold-light: 45 61% 54%;
-    --gold-dark: 45 61% 34%;
-    
-    /* Glassmorphism backgrounds */
-    --glass-white: 0 0% 100%;
-    --glass-black: 0 0% 0%;
-    --glass-border: 0 0% 100%;
-    
-    /* Card system */
+
     --card: var(--surface);
     --card-foreground: var(--text);
-    --card-glass: var(--surface);
-    
-    /* Interactive elements */
-    --primary: var(--gold);
-    --primary-foreground: var(--gold-contrast);
-    --primary-hover: 45 61% 50%;
-    
+
+    --primary: var(--neon-cyan);
+    --primary-foreground: 228 60% 10%;
+
     --secondary: var(--surface);
     --secondary-foreground: var(--text);
-    --secondary-hover: 220 11% 10%;
-    
-    /* Neutral palette */
+
     --muted-bg: var(--surface);
     --muted-foreground: var(--muted);
-    --subtle: 220 11% 9%;
-    
-    /* Borders and inputs */
-    --border: 220 11% 15%;
-    --border-subtle: 220 11% 12%;
-    --input: 220 11% 15%;
-    --ring: var(--gold);
-    
-    /* Shadows */
-    --shadow-soft: 0 4px 24px -1px rgb(0 0 0 / 0.4);
-    --shadow-medium: 0 8px 32px -4px rgb(0 0 0 / 0.6);
-    --shadow-strong: 0 20px 64px -12px rgb(0 0 0 / 0.8);
-    --shadow-gold: 0 8px 32px -4px hsl(45 61% 44% / 0.3);
-    
-    /* Gradients */
-    --gradient-gold: linear-gradient(135deg, hsl(45 61% 44%), hsl(45 61% 54%));
-    --gradient-subtle: linear-gradient(180deg, hsl(220 13% 4%), hsl(220 11% 7%));
-    --gradient-dark: linear-gradient(135deg, hsl(220 13% 4%), hsl(220 11% 7%));
-    
-    /* Glassmorphism effects */
-    --glass-backdrop: blur(20px);
-    --glass-border-gold: 1px solid hsl(45 61% 44% / 0.2);
-    
-    /* Animation variables */
-    --transition-fast: all 0.15s cubic-bezier(0.4, 0, 0.2, 1);
-    --transition-smooth: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-    --transition-slow: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
-    
+
+    --accent: var(--neon-purple);
+    --accent-foreground: 0 0% 100%;
+
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 0 0% 100%;
+
+    --border: 230 40% 20%;
+    --input: 230 40% 20%;
+    --ring: var(--neon-cyan);
+
+    --popover: var(--surface);
+    --popover-foreground: var(--text);
+
     --radius: 0.75rem;
 
     --sidebar-background: 0 0% 98%;
-
     --sidebar-foreground: 240 5.3% 26.1%;
-
     --sidebar-primary: 240 5.9% 10%;
-
     --sidebar-primary-foreground: 0 0% 98%;
-
     --sidebar-accent: 240 4.8% 95.9%;
-
     --sidebar-accent-foreground: 240 5.9% 10%;
-
     --sidebar-border: 220 13% 91%;
-
     --sidebar-ring: 217.2 91.2% 59.8%;
   }
 }
@@ -100,74 +63,74 @@
   }
 
   body {
-    @apply bg-background text-foreground font-sans antialiased;
+    @apply bg-background text-foreground antialiased;
     font-family: 'Inter', system-ui, -apple-system, sans-serif;
   }
 
   h1, h2, h3, h4, h5, h6 {
-    @apply font-semibold tracking-tight;
-  }
-
-  h1 {
-    @apply text-4xl md:text-5xl lg:text-6xl;
-  }
-
-  h2 {
-    @apply text-3xl md:text-4xl lg:text-5xl;
-  }
-
-  h3 {
-    @apply text-2xl md:text-3xl;
+    font-family: 'Space Grotesk', system-ui, sans-serif;
+    @apply font-bold tracking-tight;
   }
 }
 
 @layer components {
-  /* Glass card component - Dark theme */
   .glass-card {
-    @apply backdrop-blur-sm bg-white/5 border border-white/10;
-    box-shadow: var(--shadow-soft);
+    @apply backdrop-blur-xl border rounded-2xl;
+    background: hsla(230, 55%, 14%, 0.6);
+    border-color: hsla(230, 40%, 30%, 0.3);
   }
 
-  .glass-card-dark {
-    @apply backdrop-blur-sm bg-black/40 border border-black/20;
+  .neon-glow {
+    box-shadow: 0 0 20px hsla(187, 100%, 50%, 0.15), 0 0 60px hsla(187, 100%, 50%, 0.05);
   }
 
-  /* Premium button variants */
-  .btn-gold {
-    @apply bg-gradient-to-r from-gold to-gold-light text-gold-contrast font-semibold px-8 py-4 rounded-xl;
-    @apply hover:shadow-lg transition-all duration-300 hover:scale-[1.02] hover:from-gold-dark hover:to-gold;
-    box-shadow: var(--shadow-gold);
+  .neon-glow-purple {
+    box-shadow: 0 0 20px hsla(251, 100%, 69%, 0.15), 0 0 60px hsla(251, 100%, 69%, 0.05);
   }
 
-  .btn-outline-gold {
-    @apply border-2 border-gold text-gold font-semibold px-8 py-4 rounded-xl bg-transparent;
-    @apply hover:bg-gold hover:text-gold-contrast transition-all duration-300 hover:scale-[1.02];
+  .btn-neon {
+    @apply font-semibold px-8 py-4 rounded-full transition-all duration-300;
+    background: linear-gradient(135deg, hsl(187 100% 50%), hsl(217 91% 60%));
+    color: hsl(228 60% 10%);
+    box-shadow: 0 4px 20px hsla(187, 100%, 50%, 0.3);
   }
 
-  .btn-secondary-dark {
-    @apply bg-secondary text-secondary-foreground font-semibold px-8 py-4 rounded-xl;
-    @apply hover:bg-secondary-hover transition-all duration-300 hover:scale-[1.02];
-    box-shadow: var(--shadow-medium);
+  .btn-neon:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 30px hsla(187, 100%, 50%, 0.4);
   }
 
-  /* Wave separator */
-  .wave-separator {
-    @apply absolute inset-x-0 overflow-hidden;
-    height: 100px;
+  .btn-neon:focus-visible {
+    @apply outline-none ring-2 ring-offset-2;
+    ring-color: hsl(187 100% 50%);
+    ring-offset-color: hsl(228 60% 10%);
   }
 
-  .wave-separator svg {
-    @apply w-full h-full;
+  .btn-outline-neon {
+    @apply font-semibold px-8 py-4 rounded-full transition-all duration-300 bg-transparent;
+    border: 2px solid hsl(187 100% 50%);
+    color: hsl(187 100% 50%);
   }
 
-  /* Diagonal separators */
-  .diagonal-separator {
-    @apply absolute inset-x-0 overflow-hidden;
-    height: 80px;
-    transform: skewY(-2deg);
+  .btn-outline-neon:hover {
+    background: hsla(187, 100%, 50%, 0.1);
+    transform: translateY(-2px);
   }
 
-  /* Animations */
+  .text-gradient-neon {
+    background: linear-gradient(135deg, hsl(187 100% 50%), hsl(251 100% 69%));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .text-gradient-blue {
+    background: linear-gradient(135deg, hsl(187 100% 50%), hsl(217 91% 60%));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
   .animate-fade-up {
     animation: fadeUp 0.6s ease-out forwards;
   }
@@ -176,70 +139,17 @@
     animation: fadeIn 0.4s ease-out forwards;
   }
 
-  .animate-slide-up {
-    animation: slideUp 0.5s ease-out forwards;
-  }
-
-  /* Hover effects */
-  .hover-lift {
-    @apply transition-transform duration-300 hover:-translate-y-2;
-  }
-
-  .hover-glow {
-    @apply transition-all duration-300;
-  }
-
-  .hover-glow:hover {
-    box-shadow: 0 0 30px hsl(47 66% 46% / 0.3);
-  }
-
-  /* Custom scrollbar */
-  .custom-scrollbar::-webkit-scrollbar {
-    width: 8px;
-  }
-
-  .custom-scrollbar::-webkit-scrollbar-track {
-    @apply bg-subtle;
-    border-radius: 4px;
-  }
-
-  .custom-scrollbar::-webkit-scrollbar-thumb {
-    @apply bg-muted-foreground/30 hover:bg-muted-foreground/50;
-    border-radius: 4px;
-  }
-
-  /* Text gradients */
-  .text-gradient-gold {
-    background: var(--gradient-gold);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
+  .grid-pattern {
+    background-image: 
+      linear-gradient(hsla(187, 100%, 50%, 0.03) 1px, transparent 1px),
+      linear-gradient(90deg, hsla(187, 100%, 50%, 0.03) 1px, transparent 1px);
+    background-size: 60px 60px;
   }
 }
 
-@layer utilities {
-  /* Custom shadows */
-  .shadow-soft { box-shadow: var(--shadow-soft); }
-  .shadow-medium { box-shadow: var(--shadow-medium); }
-  .shadow-strong { box-shadow: var(--shadow-strong); }
-  .shadow-gold { box-shadow: var(--shadow-gold); }
-  
-  /* Custom gradients */
-  .bg-gradient-gold { background: var(--gradient-gold); }
-  .bg-gradient-subtle { background: var(--gradient-subtle); }
-  .bg-gradient-dark { background: var(--gradient-dark); }
-}
-
-/* Keyframes */
 @keyframes fadeUp {
-  from {
-    opacity: 0;
-    transform: translateY(30px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
+  from { opacity: 0; transform: translateY(30px); }
+  to { opacity: 1; transform: translateY(0); }
 }
 
 @keyframes fadeIn {
@@ -247,13 +157,12 @@
   to { opacity: 1; }
 }
 
-@keyframes slideUp {
-  from {
-    opacity: 0;
-    transform: translateY(50px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
+@keyframes float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-10px); }
+}
+
+@keyframes pulse-neon {
+  0%, 100% { box-shadow: 0 0 20px hsla(187, 100%, 50%, 0.2); }
+  50% { box-shadow: 0 0 40px hsla(187, 100%, 50%, 0.4); }
 }
