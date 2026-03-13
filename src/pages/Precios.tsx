@@ -2,118 +2,347 @@ import { useState } from 'react';
 import Header from '@/components/layout/Header';
 import Footer from '@/components/layout/Footer';
 import ChatWidget from '@/components/ui/chat-widget';
-import { Link } from 'react-router-dom';
-import { Check, Zap, Building2, ShoppingCart, Crown, ArrowRight, MessageCircle } from 'lucide-react';
+import { AnimatedSection, StaggerContainer, StaggerItem, ScaleOnHover, PageTransition } from '@/components/ui/motion';
+import { Check, X, Clock, Zap, MapPin, Palette, ArrowRight, MessageCircle, Timer, Stethoscope, Map, Paintbrush } from 'lucide-react';
+import { useToast } from '@/hooks/use-toast';
 
 interface Props { lang?: 'es' | 'en'; }
 
-const plans = {
-  es: [
-    { name: 'Express SaaS', icon: Zap, desc: 'Ideal para emprendedores que quieren una Web App rápida y lista.', monthly: { cop: 450000, usd: 115 }, annual: { cop: 4320000, usd: 1104 }, features: ['Web App de 5 páginas', 'Diseño responsive', 'SEO básico on-page', 'Hosting incluido', 'SSL incluido', 'Soporte por email'], cta: 'Empezar ahora', popular: false },
-    { name: 'Business Pro', icon: Building2, desc: 'Para negocios que necesitan más funcionalidades y personalización.', monthly: { cop: 850000, usd: 215 }, annual: { cop: 8160000, usd: 2064 }, features: ['Web App hasta 15 páginas', 'Diseño personalizado', 'SEO avanzado', 'Blog integrado', 'Formularios avanzados', 'Analytics & reporting', 'Soporte prioritario'], cta: 'Empezar ahora', popular: true },
-    { name: 'Full Commerce', icon: ShoppingCart, desc: 'E-commerce completo con todas las integraciones necesarias.', monthly: { cop: 1500000, usd: 380 }, annual: { cop: 14400000, usd: 3648 }, features: ['Tienda online completa', 'Pasarelas de pago', 'Inventario y pedidos', 'SEO para e-commerce', 'Email marketing setup', 'Integraciones API', 'Soporte 24/7', 'Capacitación incluida'], cta: 'Empezar ahora', popular: false },
-    { name: 'Elite Custom', icon: Crown, desc: 'Proyecto a medida con arquitectura y estrategia personalizada.', monthly: { cop: null, usd: null }, annual: { cop: null, usd: null }, features: ['Arquitectura a medida', 'Diseño exclusivo UX/UI', 'Desarrollo full-stack', 'Estrategia SEO integral', 'Integraciones enterprise', 'Project manager dedicado', 'SLA garantizado', 'Consultoría estratégica'], cta: 'Contactar', popular: false },
-  ],
-  en: [
-    { name: 'Express SaaS', icon: Zap, desc: 'Ideal for entrepreneurs who want a fast, ready-to-go Web App.', monthly: { cop: 450000, usd: 115 }, annual: { cop: 4320000, usd: 1104 }, features: ['5-page Web App', 'Responsive design', 'Basic on-page SEO', 'Hosting included', 'SSL included', 'Email support'], cta: 'Get started', popular: false },
-    { name: 'Business Pro', icon: Building2, desc: 'For businesses needing more features and customization.', monthly: { cop: 850000, usd: 215 }, annual: { cop: 8160000, usd: 2064 }, features: ['Up to 15-page Web App', 'Custom design', 'Advanced SEO', 'Integrated blog', 'Advanced forms', 'Analytics & reporting', 'Priority support'], cta: 'Get started', popular: true },
-    { name: 'Full Commerce', icon: ShoppingCart, desc: 'Complete e-commerce with all necessary integrations.', monthly: { cop: 1500000, usd: 380 }, annual: { cop: 14400000, usd: 3648 }, features: ['Complete online store', 'Payment gateways', 'Inventory & orders', 'E-commerce SEO', 'Email marketing setup', 'API integrations', '24/7 support', 'Training included'], cta: 'Get started', popular: false },
-    { name: 'Elite Custom', icon: Crown, desc: 'Tailored project with custom architecture and strategy.', monthly: { cop: null, usd: null }, annual: { cop: null, usd: null }, features: ['Custom architecture', 'Exclusive UX/UI design', 'Full-stack development', 'Comprehensive SEO strategy', 'Enterprise integrations', 'Dedicated project manager', 'Guaranteed SLA', 'Strategic consulting'], cta: 'Contact us', popular: false },
-  ],
-};
+interface Plan {
+  icon: React.ElementType;
+  name: string;
+  tagline: string;
+  priceUsd: number;
+  priceCop: number;
+  recurring?: string;
+  includes: { icon: React.ElementType; text: string }[];
+  excludes: string[];
+  cta: string;
+  ctaLink: string;
+  urgency?: string;
+  popular?: boolean;
+}
+
+interface Category {
+  title: string;
+  plans: Plan[];
+}
 
 const Precios = ({ lang = 'es' }: Props) => {
-  const [isAnnual, setIsAnnual] = useState(true);
   const [currency, setCurrency] = useState<'cop' | 'usd'>('usd');
+  const { toast } = useToast();
 
-  const t = lang === 'es' ? {
-    title: 'Planes y Precios', sub: 'Elige el plan perfecto para tu negocio.', monthly: 'Mensual', annual: 'Anual', save: 'Ahorra 20%', mo: '/mes', yr: '/año', custom: 'Personalizado', popular: 'Más popular',
-    faq: 'Preguntas frecuentes', faqs: [
-      { q: '¿Puedo cambiar de plan?', a: 'Sí, puedes actualizar o cambiar tu plan en cualquier momento.' },
-      { q: '¿Qué incluye el hosting?', a: 'Hosting en servidores de alta velocidad con CDN global, SSL y backups automáticos.' },
-      { q: '¿Ofrecen reembolsos?', a: 'Sí, ofrecemos garantía de devolución de 30 días.' },
-    ],
-  } : {
-    title: 'Plans & Pricing', sub: 'Choose the perfect plan for your business.', monthly: 'Monthly', annual: 'Annual', save: 'Save 20%', mo: '/mo', yr: '/yr', custom: 'Custom', popular: 'Most popular',
-    faq: 'FAQ', faqs: [
-      { q: 'Can I change my plan?', a: 'Yes, you can upgrade or change your plan at any time.' },
-      { q: 'What does hosting include?', a: 'High-speed servers with global CDN, SSL, and automatic backups.' },
-      { q: 'Do you offer refunds?', a: 'Yes, we offer a 30-day money-back guarantee.' },
-    ],
+  const handleCta = (link: string) => {
+    window.open(link, '_blank', 'noopener,noreferrer');
+    toast({
+      title: lang === 'es' ? '¡Confirmado!' : 'Confirmed!',
+      description: lang === 'es'
+        ? '¡Cita confirmada! En Ferova Agency estamos listos para empezar.'
+        : 'Appointment confirmed! At Ferova Agency we are ready to start.',
+    });
   };
 
-  const currentPlans = plans[lang];
-  const formatPrice = (amount: number | null) => {
-    if (amount === null) return t.custom;
+  const formatPrice = (amount: number) => {
     if (currency === 'cop') return new Intl.NumberFormat('es-CO', { style: 'currency', currency: 'COP', maximumFractionDigits: 0 }).format(amount);
-    return new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(amount);
+    return new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD', maximumFractionDigits: 0 }).format(amount);
+  };
+
+  const categories: Category[] = lang === 'es' ? [
+    {
+      title: 'Asesorías Virtuales',
+      plans: [
+        {
+          icon: Timer,
+          name: 'Asesoría Express',
+          tagline: '¿Llevas días dando vueltas a un problema? Ferova Agency entra en tu negocio para eliminar el ruido y darte la respuesta exacta.',
+          priceUsd: 35,
+          priceCop: 140000,
+          includes: [
+            { icon: Zap, text: 'Diagnóstico rápido (30 min)' },
+            { icon: Stethoscope, text: 'Solución a 1 bloqueo específico' },
+            { icon: Clock, text: 'Grabación de la sesión' },
+          ],
+          excludes: ['Implementación técnica', 'Seguimiento posterior', 'Plan estratégico completo'],
+          cta: 'Agendar mi espacio',
+          ctaLink: 'https://wa.link/asesoria30',
+        },
+        {
+          icon: Stethoscope,
+          name: 'Asesoría Impacto',
+          tagline: 'No es una charla, es una cirugía a tu estrategia. Ferova Agency audita y reconstruye tu hoja de ruta para que traiga dinero.',
+          priceUsd: 55,
+          priceCop: 220000,
+          includes: [
+            { icon: Zap, text: 'Auditoría de estrategia (60 min)' },
+            { icon: ArrowRight, text: 'Plan de acción inmediato' },
+            { icon: Palette, text: 'Guía de herramientas recomendadas' },
+          ],
+          excludes: ['Implementación técnica', 'Gestión de campañas', 'Diseño de activos'],
+          cta: 'Hablar con un Consultor',
+          ctaLink: 'https://wa.link/asesoria60',
+          popular: true,
+        },
+      ],
+    },
+    {
+      title: 'SEO Especializado',
+      plans: [
+        {
+          icon: Map,
+          name: 'SEO & GEO Local',
+          tagline: 'Si no estás en el mapa, no existes. Ferova Agency convierte tu perfil de Google en una máquina de atraer clientes.',
+          priceUsd: 150,
+          priceCop: 600000,
+          recurring: '/mes',
+          includes: [
+            { icon: MapPin, text: 'Optimización de Google Business Profile' },
+            { icon: Zap, text: 'Estrategia de 5 keywords locales' },
+            { icon: Stethoscope, text: 'Auditoría de visibilidad local' },
+          ],
+          excludes: ['Pauta publicitaria (Ads)', 'Creación de contenido para redes', 'Diseño web'],
+          cta: 'Iniciar Optimización',
+          ctaLink: 'https://wa.link/seogeo',
+          urgency: 'Solo 3 cupos disponibles por mes para garantizar resultados.',
+        },
+      ],
+    },
+    {
+      title: 'Branding',
+      plans: [
+        {
+          icon: Paintbrush,
+          name: 'Branding Essential',
+          tagline: 'Tu marca es lo que dicen de ti cuando no estás. Ferova Agency crea una identidad que proyecta autoridad y profesionalismo.',
+          priceUsd: 150,
+          priceCop: 600000,
+          includes: [
+            { icon: Palette, text: 'Logo principal + variaciones' },
+            { icon: Zap, text: 'Paleta de colores + tipografía' },
+            { icon: ArrowRight, text: 'Archivos editables (AI/SVG)' },
+          ],
+          excludes: ['Registro legal de marca', 'Manual de marca extendido', 'Papelería corporativa'],
+          cta: 'Completar Briefing',
+          ctaLink: 'https://wa.link/branding',
+        },
+      ],
+    },
+  ] : [
+    {
+      title: 'Virtual Consulting',
+      plans: [
+        {
+          icon: Timer,
+          name: 'Express Consulting',
+          tagline: 'Been going back and forth on a problem? Ferova Agency steps into your business to cut the noise and give you the exact answer.',
+          priceUsd: 35,
+          priceCop: 140000,
+          includes: [
+            { icon: Zap, text: 'Quick diagnosis (30 min)' },
+            { icon: Stethoscope, text: 'Solution to 1 specific blocker' },
+            { icon: Clock, text: 'Session recording' },
+          ],
+          excludes: ['Technical implementation', 'Follow-up', 'Full strategic plan'],
+          cta: 'Book my spot',
+          ctaLink: 'https://wa.link/asesoria30',
+        },
+        {
+          icon: Stethoscope,
+          name: 'Impact Consulting',
+          tagline: 'It\'s not a chat, it\'s surgery on your strategy. Ferova Agency audits and rebuilds your roadmap to bring in revenue.',
+          priceUsd: 55,
+          priceCop: 220000,
+          includes: [
+            { icon: Zap, text: 'Strategy audit (60 min)' },
+            { icon: ArrowRight, text: 'Immediate action plan' },
+            { icon: Palette, text: 'Recommended tools guide' },
+          ],
+          excludes: ['Technical implementation', 'Campaign management', 'Asset design'],
+          cta: 'Talk to a Consultant',
+          ctaLink: 'https://wa.link/asesoria60',
+          popular: true,
+        },
+      ],
+    },
+    {
+      title: 'Specialized SEO',
+      plans: [
+        {
+          icon: Map,
+          name: 'SEO & GEO Local',
+          tagline: 'If you\'re not on the map, you don\'t exist. Ferova Agency turns your Google profile into a client-attracting machine.',
+          priceUsd: 150,
+          priceCop: 600000,
+          recurring: '/mo',
+          includes: [
+            { icon: MapPin, text: 'Google Business Profile optimization' },
+            { icon: Zap, text: '5 local keyword strategy' },
+            { icon: Stethoscope, text: 'Local visibility audit' },
+          ],
+          excludes: ['Ad spend (Ads)', 'Social media content', 'Web design'],
+          cta: 'Start Optimization',
+          ctaLink: 'https://wa.link/seogeo',
+          urgency: 'Only 3 spots available per month to guarantee results.',
+        },
+      ],
+    },
+    {
+      title: 'Branding',
+      plans: [
+        {
+          icon: Paintbrush,
+          name: 'Branding Essential',
+          tagline: 'Your brand is what people say about you when you\'re not in the room. Ferova Agency creates an identity that projects authority.',
+          priceUsd: 150,
+          priceCop: 600000,
+          includes: [
+            { icon: Palette, text: 'Main logo + variations' },
+            { icon: Zap, text: 'Color palette + typography' },
+            { icon: ArrowRight, text: 'Editable files (AI/SVG)' },
+          ],
+          excludes: ['Legal trademark registration', 'Extended brand manual', 'Corporate stationery'],
+          cta: 'Complete Briefing',
+          ctaLink: 'https://wa.link/branding',
+        },
+      ],
+    },
+  ];
+
+  const t = lang === 'es' ? {
+    title: 'Planes y Precios',
+    sub: 'Servicios diseñados para impulsar tu negocio con estrategia, claridad y resultados medibles.',
+    noInclude: 'No incluye:',
+    oneTime: 'Pago único',
+    faq: 'Preguntas frecuentes',
+    faqs: [
+      { q: '¿Cómo agendo una asesoría?', a: 'Al hacer clic en el botón, serás redirigido a WhatsApp donde coordinaremos fecha y hora.' },
+      { q: '¿El SEO Local es un pago mensual?', a: 'Sí, el servicio de SEO & GEO Local es una suscripción mensual para mantener tu posicionamiento activo.' },
+      { q: '¿Qué formatos recibo en Branding?', a: 'Recibes archivos editables en AI y SVG, además de versiones PNG y JPG para uso digital.' },
+      { q: '¿Ofrecen reembolsos?', a: 'Sí, ofrecemos garantía de satisfacción en todos nuestros servicios.' },
+    ],
+  } : {
+    title: 'Plans & Pricing',
+    sub: 'Services designed to drive your business with strategy, clarity and measurable results.',
+    noInclude: 'Does not include:',
+    oneTime: 'One-time payment',
+    faq: 'FAQ',
+    faqs: [
+      { q: 'How do I book a consultation?', a: 'Clicking the button redirects you to WhatsApp where we\'ll coordinate date and time.' },
+      { q: 'Is Local SEO a monthly payment?', a: 'Yes, SEO & GEO Local is a monthly subscription to keep your positioning active.' },
+      { q: 'What formats do I receive in Branding?', a: 'You receive editable AI and SVG files, plus PNG and JPG versions for digital use.' },
+      { q: 'Do you offer refunds?', a: 'Yes, we offer a satisfaction guarantee on all our services.' },
+    ],
   };
 
   return (
-    <>
+    <PageTransition>
       <Header currentLang={lang} />
       <main className="pt-20">
+        {/* Hero */}
         <section className="py-20 md:py-28 text-center relative grid-pattern">
           <div className="absolute inset-0" style={{ background: 'radial-gradient(ellipse at 50% 30%, hsla(45, 86%, 40%, 0.06), transparent 60%)' }} />
           <div className="container mx-auto px-4 md:px-6 relative z-10">
-            <h1 className="text-4xl md:text-5xl lg:text-6xl font-display font-bold mb-6">{t.title}</h1>
-            <p className="text-muted-foreground text-lg max-w-xl mx-auto mb-10">{t.sub}</p>
+            <AnimatedSection>
+              <h1 className="text-4xl md:text-5xl lg:text-6xl font-display font-bold mb-6">{t.title}</h1>
+              <p className="text-muted-foreground text-lg max-w-2xl mx-auto mb-10">{t.sub}</p>
+            </AnimatedSection>
 
-            <div className="flex flex-col sm:flex-row items-center justify-center gap-6 mb-16">
-              <div className="flex items-center gap-3 p-1 rounded-full border border-border">
-                <button onClick={() => setIsAnnual(false)} className={`px-5 py-2 rounded-full text-sm font-medium transition-all ${!isAnnual ? 'bg-gold text-primary-foreground' : 'text-muted-foreground hover:text-foreground'}`}>{t.monthly}</button>
-                <button onClick={() => setIsAnnual(true)} className={`px-5 py-2 rounded-full text-sm font-medium transition-all flex items-center gap-2 ${isAnnual ? 'bg-gold text-primary-foreground' : 'text-muted-foreground hover:text-foreground'}`}>
-                  {t.annual}
-                  <span className="text-xs px-2 py-0.5 rounded-full" style={{ background: 'hsla(356, 68%, 20%, 0.3)', color: 'hsl(356, 68%, 35%)' }}>{t.save}</span>
-                </button>
-              </div>
-              <div className="flex items-center gap-1 p-1 rounded-full border border-border">
-                <button onClick={() => setCurrency('usd')} className={`px-4 py-2 rounded-full text-sm font-medium transition-all ${currency === 'usd' ? 'bg-wine/20 text-wine-light' : 'text-muted-foreground'}`}>USD</button>
-                <button onClick={() => setCurrency('cop')} className={`px-4 py-2 rounded-full text-sm font-medium transition-all ${currency === 'cop' ? 'bg-wine/20 text-wine-light' : 'text-muted-foreground'}`}>COP</button>
-              </div>
-            </div>
-
-            <div className="grid md:grid-cols-2 xl:grid-cols-4 gap-6 max-w-7xl mx-auto">
-              {currentPlans.map((plan, i) => {
-                const price = isAnnual ? plan.annual[currency] : plan.monthly[currency];
-                return (
-                  <div key={i} className={`glass-card p-8 text-left relative transition-all duration-300 hover:-translate-y-1 ${plan.popular ? 'border-gold/50 gold-glow' : ''}`}>
-                    {plan.popular && (
-                      <div className="absolute -top-3 left-1/2 -translate-x-1/2 px-4 py-1 rounded-full text-xs font-semibold bg-gold text-primary-foreground">{t.popular}</div>
-                    )}
-                    <div className="w-12 h-12 rounded-xl flex items-center justify-center mb-4" style={{ background: 'hsla(45, 86%, 40%, 0.1)' }}>
-                      <plan.icon className="w-6 h-6 text-gold" />
-                    </div>
-                    <h3 className="text-xl font-display font-bold mb-2">{plan.name}</h3>
-                    <p className="text-muted-foreground text-sm mb-6">{plan.desc}</p>
-                    <div className="mb-6">
-                      {price !== null ? (
-                        <><span className="text-3xl font-display font-bold text-foreground">{formatPrice(price)}</span><span className="text-muted-foreground text-sm">{isAnnual ? t.yr : t.mo}</span></>
-                      ) : (
-                        <span className="text-3xl font-display font-bold text-gradient-gold">{t.custom}</span>
-                      )}
-                    </div>
-                    <ul className="space-y-3 mb-8">
-                      {plan.features.map((f, j) => (
-                        <li key={j} className="flex items-start gap-2 text-sm text-muted-foreground"><Check className="w-4 h-4 text-gold flex-shrink-0 mt-0.5" />{f}</li>
-                      ))}
-                    </ul>
-                    <button
-                      className={`w-full py-3 rounded-full font-semibold text-sm transition-all duration-300 ${plan.popular ? 'btn-gold !px-0' : 'border border-border text-foreground hover:border-gold/50 hover:text-gold'}`}
-                      onClick={() => {
-                        if (price === null) {
-                          window.open('https://wa.me/17865787671?text=Hola%20Ferova%2C%20quiero%20info%20sobre%20el%20plan%20Elite%20Custom.', '_blank');
-                        }
-                        // TODO: Connect to Lemon Squeezy
-                      }}
-                    >{plan.cta}</button>
-                  </div>
-                );
-              })}
+            {/* Currency toggle */}
+            <div className="flex items-center justify-center gap-1 p-1 rounded-full border border-border w-fit mx-auto">
+              <button onClick={() => setCurrency('usd')} className={`px-5 py-2 rounded-full text-sm font-medium transition-all ${currency === 'usd' ? 'bg-gold text-primary-foreground' : 'text-muted-foreground hover:text-foreground'}`}>USD</button>
+              <button onClick={() => setCurrency('cop')} className={`px-5 py-2 rounded-full text-sm font-medium transition-all ${currency === 'cop' ? 'bg-gold text-primary-foreground' : 'text-muted-foreground hover:text-foreground'}`}>COP</button>
             </div>
           </div>
         </section>
 
+        {/* Categories */}
+        {categories.map((cat, ci) => (
+          <section key={ci} className="py-16 md:py-20">
+            <div className="container mx-auto px-4 md:px-6">
+              <AnimatedSection>
+                <h2 className="text-3xl md:text-4xl font-display font-bold text-center mb-14">{cat.title}</h2>
+              </AnimatedSection>
+
+              <StaggerContainer className={`grid gap-8 max-w-5xl mx-auto ${cat.plans.length === 1 ? 'max-w-lg' : cat.plans.length === 2 ? 'md:grid-cols-2' : 'md:grid-cols-3'}`}>
+                {cat.plans.map((plan, pi) => {
+                  const IconComp = plan.icon;
+                  return (
+                    <StaggerItem key={pi}>
+                      <ScaleOnHover>
+                        <div className={`glass-card p-8 relative h-full flex flex-col transition-all duration-300 ${plan.popular ? 'border-gold/50 gold-glow' : ''}`}>
+                          {plan.popular && (
+                            <div className="absolute -top-3 left-1/2 -translate-x-1/2 px-4 py-1 rounded-full text-xs font-semibold bg-gold text-primary-foreground">
+                              {lang === 'es' ? 'Recomendado' : 'Recommended'}
+                            </div>
+                          )}
+
+                          {/* Icon */}
+                          <div className="w-14 h-14 rounded-2xl flex items-center justify-center mb-5" style={{ background: 'hsla(45, 86%, 40%, 0.1)' }}>
+                            <IconComp className="w-7 h-7 text-gold" />
+                          </div>
+
+                          {/* Name & tagline */}
+                          <h3 className="text-2xl font-display font-bold mb-3 text-foreground">{plan.name}</h3>
+                          <p className="text-muted-foreground text-sm leading-relaxed mb-6">{plan.tagline}</p>
+
+                          {/* Price */}
+                          <div className="mb-6">
+                            <span className="text-4xl font-display font-bold text-foreground">{formatPrice(currency === 'usd' ? plan.priceUsd : plan.priceCop)}</span>
+                            <span className="text-muted-foreground text-sm ml-1">{plan.recurring || (lang === 'es' ? '/ pago único' : '/ one-time')}</span>
+                          </div>
+
+                          {/* Urgency */}
+                          {plan.urgency && (
+                            <div className="mb-6 px-3 py-2 rounded-lg text-xs font-semibold flex items-center gap-2" style={{ background: 'hsla(356, 68%, 20%, 0.15)', color: 'hsl(356, 68%, 55%)' }}>
+                              <Clock className="w-3.5 h-3.5" />
+                              {plan.urgency}
+                            </div>
+                          )}
+
+                          {/* Includes */}
+                          <ul className="space-y-3 mb-6 flex-1">
+                            {plan.includes.map((item, ii) => {
+                              const ItemIcon = item.icon;
+                              return (
+                                <li key={ii} className="flex items-start gap-3 text-sm text-foreground">
+                                  <ItemIcon className="w-4 h-4 text-gold flex-shrink-0 mt-0.5" />
+                                  {item.text}
+                                </li>
+                              );
+                            })}
+                          </ul>
+
+                          {/* Excludes */}
+                          <div className="mb-8 pt-4 border-t border-border">
+                            <p className="text-xs font-semibold text-muted-foreground mb-2">{t.noInclude}</p>
+                            <ul className="space-y-1.5">
+                              {plan.excludes.map((ex, ei) => (
+                                <li key={ei} className="flex items-center gap-2 text-xs text-muted-foreground">
+                                  <X className="w-3 h-3 flex-shrink-0 opacity-50" />
+                                  {ex}
+                                </li>
+                              ))}
+                            </ul>
+                          </div>
+
+                          {/* CTA */}
+                          <button
+                            onClick={() => handleCta(plan.ctaLink)}
+                            className={`w-full py-3.5 rounded-full font-semibold text-sm transition-all duration-300 flex items-center justify-center gap-2 ${plan.popular ? 'btn-gold !px-0' : 'border border-gold/40 text-gold hover:bg-gold hover:text-primary-foreground'}`}
+                          >
+                            <MessageCircle className="w-4 h-4" />
+                            {plan.cta}
+                          </button>
+                        </div>
+                      </ScaleOnHover>
+                    </StaggerItem>
+                  );
+                })}
+              </StaggerContainer>
+            </div>
+          </section>
+        ))}
+
+        {/* FAQ */}
         <section className="py-20 md:py-28" style={{ background: 'hsl(243, 28%, 14%)' }}>
           <div className="container mx-auto px-4 md:px-6">
             <h2 className="text-3xl md:text-4xl font-display font-bold text-center mb-16" style={{ color: 'hsl(0, 0%, 95%)' }}>{t.faq}</h2>
@@ -133,7 +362,7 @@ const Precios = ({ lang = 'es' }: Props) => {
       </main>
       <Footer currentLang={lang} />
       <ChatWidget lang={lang} />
-    </>
+    </PageTransition>
   );
 };
 
