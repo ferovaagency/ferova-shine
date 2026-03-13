@@ -1,7 +1,8 @@
 import { useState } from 'react';
 import { Menu, X, Globe, MessageCircle } from 'lucide-react';
 import { Link, useLocation } from 'react-router-dom';
-import logoImg from '@/assets/ferova-logo.png';
+import logoDark from '@/assets/ferova-logo-dark.png';
+import logoLight from '@/assets/ferova-logo.png';
 
 interface HeaderProps {
   currentLang?: 'es' | 'en';
@@ -34,11 +35,13 @@ const Header = ({ currentLang = 'es' }: HeaderProps) => {
   const langSwitch = { es: { code: 'EN', href: '/en' }, en: { code: 'ES', href: '/' } };
 
   return (
-    <header className="fixed top-0 left-0 right-0 z-50 backdrop-blur-xl border-b" style={{ background: 'hsla(243, 31%, 10%, 0.9)', borderColor: 'hsla(243, 20%, 30%, 0.3)' }}>
+    <header className="fixed top-0 left-0 right-0 z-50 backdrop-blur-xl border-b border-border/50 bg-background/90">
       <div className="container mx-auto px-4 md:px-6">
         <div className="flex items-center justify-between h-16 md:h-20">
           <Link to={currentLang === 'es' ? '/' : '/en'} className="flex-shrink-0">
-            <img src={logoImg} alt="Ferova Agency" className="h-12 md:h-14 w-auto" style={{ filter: 'brightness(0) invert(1) sepia(1) saturate(5) hue-rotate(15deg)' }} />
+            {/* Dark logo for light backgrounds, light/gold logo for dark backgrounds */}
+            <img src={logoDark} alt="Ferova Agency" className="h-12 md:h-14 w-auto dark:hidden" />
+            <img src={logoLight} alt="Ferova Agency" className="h-12 md:h-14 w-auto hidden dark:block" style={{ filter: 'brightness(0) invert(1) sepia(1) saturate(5) hue-rotate(15deg)' }} />
           </Link>
 
           <nav className="hidden lg:flex items-center gap-6">

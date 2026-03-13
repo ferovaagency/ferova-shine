@@ -115,9 +115,15 @@
 
 @layer components {
   .glass-card {
-    @apply backdrop-blur-xl border rounded-2xl;
-    background: hsla(243, 28%, 18%, 0.6);
-    border-color: hsla(243, 20%, 30%, 0.3);
+    @apply backdrop-blur-xl border rounded-2xl bg-card;
+    border-color: hsl(var(--border));
+  }
+
+  @media (prefers-color-scheme: dark) {
+    .glass-card {
+      background: hsla(243, 28%, 18%, 0.6);
+      border-color: hsla(243, 20%, 30%, 0.3);
+    }
   }
 
   .gold-glow {
