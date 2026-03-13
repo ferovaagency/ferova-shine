@@ -7,7 +7,7 @@ import {
   Zap, Shield, Search, BarChart3, ArrowRight, CheckCircle2,
   XCircle, Rocket, Star, ChevronLeft, ChevronRight,
   Code2, TrendingUp, Palette, Tag, GraduationCap, MessageCircle,
-  Target, Handshake, FileText, Eye, Users, Lightbulb, BookOpen
+  Target, Handshake, FileText, Eye, Users, Lightbulb, BookOpen, Linkedin
 } from 'lucide-react';
 import { AnimatedSection, StaggerContainer, StaggerItem, ScaleOnHover, PageTransition } from '@/components/ui/motion';
 import { motion, useMotionValue, useTransform, animate } from 'framer-motion';
