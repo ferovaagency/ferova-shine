@@ -155,6 +155,7 @@ const Index = ({ lang = 'es' }: IndexProps) => {
       { icon: Palette, title: 'Logo Design', desc: 'Unique visual identity that represents your brand.', href: '/en/services/logo-design' },
       { icon: Tag, title: 'Tool Discounts', desc: 'Access premium tools at special prices.', href: '/en/services/tool-discounts' },
       { icon: GraduationCap, title: 'Marketing Consulting', desc: 'Strategic consulting to scale your business.', href: '/en/services/marketing-consulting' },
+      { icon: Linkedin, title: 'LinkedIn Optimization', desc: 'Boost your personal brand with an optimized profile.', href: '/en/services/linkedin-optimization' },
     ],
     statsTitle: 'Results that speak for Ferova Agency',
     stats: [
