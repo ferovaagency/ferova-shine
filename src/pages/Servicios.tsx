@@ -78,16 +78,16 @@ const Servicios = ({ lang = 'es' }: ServiciosProps) => {
         {/* CTA */}
         <section className="py-20 md:py-28" style={{ background: 'hsl(243, 28%, 14%)' }}>
           <div className="container mx-auto px-4 md:px-6 text-center">
-            <h2 className="text-3xl md:text-4xl font-display font-bold mb-6">
+            <h2 className="text-3xl md:text-4xl font-display font-bold mb-6" style={{ color: 'hsl(0, 0%, 95%)' }}>
               {lang === 'es' ? '¿Listo para impulsar tu e-commerce?' : 'Ready to boost your e-commerce?'}
             </h2>
-            <p className="text-muted-foreground text-lg max-w-xl mx-auto mb-10">
+            <p className="text-lg max-w-xl mx-auto mb-10" style={{ color: 'hsl(0, 0%, 70%)' }}>
               {lang === 'es' ? 'Escríbenos y diseñamos la estrategia perfecta para tu negocio.' : 'Contact us and we\'ll design the perfect strategy for your business.'}
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <a href="https://wa.me/17865787671" target="_blank" rel="noopener noreferrer" className="btn-gold flex items-center justify-center gap-2">
+              <a href="https://wa.me/17865787671?text=Hola%20Ferova%2C%20quiero%20agendar%20una%20asesoría." target="_blank" rel="noopener noreferrer" className="btn-gold flex items-center justify-center gap-2">
                 <MessageCircle className="w-5 h-5" />
-                WhatsApp
+                {lang === 'es' ? 'Agendar Asesoría' : 'Book Consultation'}
               </a>
               <Link to={lang === 'es' ? '/contacto' : '/en/contact'} className="btn-outline-gold text-center">
                 {lang === 'es' ? 'Formulario de contacto' : 'Contact form'}
