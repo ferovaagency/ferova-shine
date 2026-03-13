@@ -106,7 +106,7 @@ const Contacto = ({ lang = 'es' }: Props) => {
                   <div className="w-12 h-12 rounded-xl flex items-center justify-center" style={{ background: 'hsla(45, 86%, 40%, 0.1)' }}>
                     <MapPin className="w-6 h-6 text-gold" />
                   </div>
-                  <div><p className="font-display font-semibold text-foreground">{t.location}</p></div>
+                  <div><p className="font-display font-semibold text-foreground">Bogotá, Colombia · Brasil · Estados Unidos</p></div>
                 </div>
               </div>
             </div>
