@@ -8,6 +8,8 @@ import {
   XCircle, Rocket, Star, ChevronLeft, ChevronRight,
   Code2, TrendingUp, Palette, Tag, GraduationCap, MessageCircle
 } from 'lucide-react';
+import { AnimatedSection, StaggerContainer, StaggerItem, ScaleOnHover, PageTransition } from '@/components/ui/motion';
+import { motion } from 'framer-motion';
 
 interface IndexProps {
   lang?: 'es' | 'en';
@@ -127,7 +129,7 @@ const Index = ({ lang = 'es' }: IndexProps) => {
   };
 
   return (
-    <>
+    <PageTransition>
       <Header currentLang={lang} />
       <main>
         {/* Hero */}
@@ -135,32 +137,44 @@ const Index = ({ lang = 'es' }: IndexProps) => {
           <div className="absolute inset-0" style={{ background: 'radial-gradient(ellipse at 30% 50%, hsla(356, 68%, 20%, 0.1) 0%, transparent 60%), radial-gradient(ellipse at 70% 20%, hsla(45, 86%, 40%, 0.06) 0%, transparent 50%)' }} />
           <div className="container mx-auto px-4 md:px-6 relative z-10">
             <div className="max-w-4xl mx-auto text-center">
-              <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-gold/20 bg-gold/5 text-gold text-sm font-medium mb-8 animate-fade-up">
-                <Rocket className="w-4 h-4" />
-                {lang === 'es' ? 'SEO para Ecommerce · La nueva era' : 'E-commerce SEO · The new era'}
-              </div>
-              <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-display font-bold leading-tight mb-6 animate-fade-up" style={{ animationDelay: '0.1s' }}>
-                {t.heroTitle1}{' '}
-                <span className="text-gradient-gold">{t.heroTitle2}</span>
-                <br />{t.heroTitle3}
-              </h1>
-              <p className="text-lg md:text-xl text-muted-foreground max-w-2xl mx-auto mb-10 animate-fade-up" style={{ animationDelay: '0.2s' }}>
-                {t.heroSub}
-              </p>
-              <div className="flex flex-col sm:flex-row gap-4 justify-center animate-fade-up" style={{ animationDelay: '0.3s' }}>
-                <Link to={lang === 'es' ? '/precios' : '/en/pricing'} className="btn-gold text-center">
-                  {t.ctaPrimary}
-                </Link>
-                <a
-                  href="https://wa.me/17865787671?text=Hola%20Ferova%2C%20quiero%20saber%20más%20sobre%20sus%20servicios."
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="btn-outline-gold text-center flex items-center justify-center gap-2"
-                >
-                  <MessageCircle className="w-5 h-5" />
-                  {t.ctaSecondary}
-                </a>
-              </div>
+              <AnimatedSection delay={0}>
+                <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-gold/20 bg-gold/5 text-gold text-sm font-medium mb-8">
+                  <Rocket className="w-4 h-4" />
+                  {lang === 'es' ? 'SEO para Ecommerce · La nueva era' : 'E-commerce SEO · The new era'}
+                </div>
+              </AnimatedSection>
+              <AnimatedSection delay={0.1}>
+                <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-display font-bold leading-tight mb-6">
+                  {t.heroTitle1}{' '}
+                  <span className="text-gradient-gold">{t.heroTitle2}</span>
+                  <br />{t.heroTitle3}
+                </h1>
+              </AnimatedSection>
+              <AnimatedSection delay={0.2}>
+                <p className="text-lg md:text-xl text-muted-foreground max-w-2xl mx-auto mb-10">
+                  {t.heroSub}
+                </p>
+              </AnimatedSection>
+              <AnimatedSection delay={0.3}>
+                <div className="flex flex-col sm:flex-row gap-4 justify-center">
+                  <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.97 }}>
+                    <Link to={lang === 'es' ? '/precios' : '/en/pricing'} className="btn-gold text-center block">
+                      {t.ctaPrimary}
+                    </Link>
+                  </motion.div>
+                  <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.97 }}>
+                    <a
+                      href="https://wa.me/17865787671?text=Hola%20Ferova%2C%20quiero%20saber%20más%20sobre%20sus%20servicios."
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="btn-outline-gold text-center flex items-center justify-center gap-2"
+                    >
+                      <MessageCircle className="w-5 h-5" />
+                      {t.ctaSecondary}
+                    </a>
+                  </motion.div>
+                </div>
+              </AnimatedSection>
             </div>
           </div>
           <div className="absolute bottom-0 left-0 right-0 h-32" style={{ background: 'linear-gradient(to top, hsl(243, 31%, 10%), transparent)' }} />
@@ -169,151 +183,195 @@ const Index = ({ lang = 'es' }: IndexProps) => {
         {/* Benefits */}
         <section className="py-20 md:py-28 relative">
           <div className="container mx-auto px-4 md:px-6">
-            <div className="text-center mb-16">
+            <AnimatedSection className="text-center mb-16">
               <h2 className="text-3xl md:text-4xl lg:text-5xl font-display font-bold mb-4">{t.benefitsTitle}</h2>
               <p className="text-muted-foreground text-lg max-w-xl mx-auto">{t.benefitsSub}</p>
-            </div>
-            <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
+            </AnimatedSection>
+            <StaggerContainer className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
               {t.benefits.map((b, i) => (
-                <div key={i} className="glass-card p-6 md:p-8 hover:border-gold/30 transition-all duration-300 hover:-translate-y-1 group">
-                  <div className="w-12 h-12 rounded-xl flex items-center justify-center mb-5" style={{ background: 'hsla(45, 86%, 40%, 0.1)' }}>
-                    <b.icon className="w-6 h-6 text-gold" />
-                  </div>
-                  <h3 className="text-lg font-display font-semibold mb-2 text-foreground">{b.title}</h3>
-                  <p className="text-muted-foreground text-sm leading-relaxed">{b.desc}</p>
-                </div>
+                <StaggerItem key={i}>
+                  <ScaleOnHover>
+                    <div className="glass-card p-6 md:p-8 hover:border-gold/30 transition-all duration-300 group h-full">
+                      <div className="w-12 h-12 rounded-xl flex items-center justify-center mb-5" style={{ background: 'hsla(45, 86%, 40%, 0.1)' }}>
+                        <b.icon className="w-6 h-6 text-gold" />
+                      </div>
+                      <h3 className="text-lg font-display font-semibold mb-2 text-foreground">{b.title}</h3>
+                      <p className="text-muted-foreground text-sm leading-relaxed">{b.desc}</p>
+                    </div>
+                  </ScaleOnHover>
+                </StaggerItem>
               ))}
-            </div>
+            </StaggerContainer>
           </div>
         </section>
 
         {/* Comparison Table */}
         <section className="py-20 md:py-28 relative" style={{ background: 'hsl(243, 28%, 14%)' }}>
           <div className="container mx-auto px-4 md:px-6">
-            <div className="text-center mb-16">
+            <AnimatedSection className="text-center mb-16">
               <h2 className="text-3xl md:text-4xl lg:text-5xl font-display font-bold mb-4">{t.compTitle}</h2>
               <p className="text-muted-foreground text-lg max-w-xl mx-auto">{t.compSub}</p>
-            </div>
-            <div className="max-w-4xl mx-auto overflow-x-auto">
-              <table className="w-full">
-                <thead>
-                  <tr>
-                    {t.compHeaders.map((h, i) => (
-                      <th key={i} className={`py-4 px-4 md:px-6 text-left text-sm font-display font-semibold ${i === 2 ? 'text-gold' : 'text-muted-foreground'}`}>
-                        {h}
-                      </th>
-                    ))}
-                  </tr>
-                </thead>
-                <tbody>
-                  {t.compRows.map((row, i) => (
-                    <tr key={i} className="border-t border-border/30">
-                      <td className="py-4 px-4 md:px-6 text-sm font-medium text-foreground">{row[0]}</td>
-                      <td className="py-4 px-4 md:px-6 text-sm">
-                        <span className="flex items-center gap-2 text-red-400">
-                          <XCircle className="w-4 h-4 flex-shrink-0" /> {row[1]}
-                        </span>
-                      </td>
-                      <td className="py-4 px-4 md:px-6 text-sm">
-                        <span className="flex items-center gap-2 text-gold">
-                          <CheckCircle2 className="w-4 h-4 flex-shrink-0" /> {row[2]}
-                        </span>
-                      </td>
+            </AnimatedSection>
+            <AnimatedSection delay={0.2}>
+              <div className="max-w-4xl mx-auto overflow-x-auto">
+                <table className="w-full">
+                  <thead>
+                    <tr>
+                      {t.compHeaders.map((h, i) => (
+                        <th key={i} className={`py-4 px-4 md:px-6 text-left text-sm font-display font-semibold ${i === 2 ? 'text-gold' : 'text-muted-foreground'}`}>
+                          {h}
+                        </th>
+                      ))}
                     </tr>
-                  ))}
-                </tbody>
-              </table>
-            </div>
+                  </thead>
+                  <tbody>
+                    {t.compRows.map((row, i) => (
+                      <motion.tr
+                        key={i}
+                        className="border-t border-border/30"
+                        initial={{ opacity: 0, x: -20 }}
+                        whileInView={{ opacity: 1, x: 0 }}
+                        viewport={{ once: true }}
+                        transition={{ delay: i * 0.08, duration: 0.4 }}
+                      >
+                        <td className="py-4 px-4 md:px-6 text-sm font-medium text-foreground">{row[0]}</td>
+                        <td className="py-4 px-4 md:px-6 text-sm">
+                          <span className="flex items-center gap-2 text-red-400">
+                            <XCircle className="w-4 h-4 flex-shrink-0" /> {row[1]}
+                          </span>
+                        </td>
+                        <td className="py-4 px-4 md:px-6 text-sm">
+                          <span className="flex items-center gap-2 text-gold">
+                            <CheckCircle2 className="w-4 h-4 flex-shrink-0" /> {row[2]}
+                          </span>
+                        </td>
+                      </motion.tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            </AnimatedSection>
           </div>
         </section>
 
         {/* Services */}
         <section className="py-20 md:py-28">
           <div className="container mx-auto px-4 md:px-6">
-            <div className="text-center mb-16">
+            <AnimatedSection className="text-center mb-16">
               <h2 className="text-3xl md:text-4xl lg:text-5xl font-display font-bold mb-4">{t.servicesTitle}</h2>
               <p className="text-muted-foreground text-lg max-w-xl mx-auto">{t.servicesSub}</p>
-            </div>
-            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-6xl mx-auto">
+            </AnimatedSection>
+            <StaggerContainer className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-6xl mx-auto">
               {t.services.map((s, i) => (
-                <Link key={i} to={s.href} className="glass-card p-8 hover:border-gold/30 transition-all duration-300 hover:-translate-y-1 group block">
-                  <div className="w-14 h-14 rounded-2xl flex items-center justify-center mb-6" style={{ background: 'hsla(45, 86%, 40%, 0.1)' }}>
-                    <s.icon className="w-7 h-7 text-gold" />
-                  </div>
-                  <h3 className="text-xl font-display font-semibold mb-3 text-foreground">{s.title}</h3>
-                  <p className="text-muted-foreground text-sm leading-relaxed mb-4">{s.desc}</p>
-                  <span className="inline-flex items-center gap-1 text-gold text-sm font-medium group-hover:gap-2 transition-all">
-                    {lang === 'es' ? 'Ver servicio' : 'Learn more'} <ArrowRight className="w-4 h-4" />
-                  </span>
-                </Link>
+                <StaggerItem key={i}>
+                  <ScaleOnHover>
+                    <Link to={s.href} className="glass-card p-8 hover:border-gold/30 transition-all duration-300 group block h-full">
+                      <div className="w-14 h-14 rounded-2xl flex items-center justify-center mb-6" style={{ background: 'hsla(45, 86%, 40%, 0.1)' }}>
+                        <s.icon className="w-7 h-7 text-gold" />
+                      </div>
+                      <h3 className="text-xl font-display font-semibold mb-3 text-foreground">{s.title}</h3>
+                      <p className="text-muted-foreground text-sm leading-relaxed mb-4">{s.desc}</p>
+                      <span className="inline-flex items-center gap-1 text-gold text-sm font-medium group-hover:gap-2 transition-all">
+                        {lang === 'es' ? 'Ver servicio' : 'Learn more'} <ArrowRight className="w-4 h-4" />
+                      </span>
+                    </Link>
+                  </ScaleOnHover>
+                </StaggerItem>
               ))}
-            </div>
-            <div className="text-center mt-10">
+            </StaggerContainer>
+            <AnimatedSection className="text-center mt-10">
               <Link to={lang === 'es' ? '/servicios' : '/en/services'} className="btn-outline-gold inline-flex items-center gap-2 !px-6 !py-3 text-sm">
                 {t.viewAll} <ArrowRight className="w-4 h-4" />
               </Link>
-            </div>
+            </AnimatedSection>
           </div>
         </section>
 
         {/* Stats */}
         <section className="py-20 md:py-28 relative" style={{ background: 'linear-gradient(135deg, hsla(356, 68%, 20%, 0.1), hsla(45, 86%, 40%, 0.05))' }}>
           <div className="container mx-auto px-4 md:px-6">
-            <h2 className="text-3xl md:text-4xl font-display font-bold text-center mb-16">{t.statsTitle}</h2>
-            <div className="grid grid-cols-2 lg:grid-cols-4 gap-6 max-w-4xl mx-auto">
+            <AnimatedSection>
+              <h2 className="text-3xl md:text-4xl font-display font-bold text-center mb-16">{t.statsTitle}</h2>
+            </AnimatedSection>
+            <StaggerContainer className="grid grid-cols-2 lg:grid-cols-4 gap-6 max-w-4xl mx-auto">
               {t.stats.map((s, i) => (
-                <div key={i} className="text-center p-6">
-                  <div className="text-4xl md:text-5xl font-display font-bold text-gradient-gold mb-2">{s.value}</div>
-                  <div className="text-muted-foreground text-sm">{s.label}</div>
-                </div>
+                <StaggerItem key={i}>
+                  <div className="text-center p-6">
+                    <motion.div
+                      className="text-4xl md:text-5xl font-display font-bold text-gradient-gold mb-2"
+                      initial={{ scale: 0.5, opacity: 0 }}
+                      whileInView={{ scale: 1, opacity: 1 }}
+                      viewport={{ once: true }}
+                      transition={{ type: 'spring', stiffness: 200, delay: i * 0.1 }}
+                    >
+                      {s.value}
+                    </motion.div>
+                    <div className="text-muted-foreground text-sm">{s.label}</div>
+                  </div>
+                </StaggerItem>
               ))}
-            </div>
+            </StaggerContainer>
           </div>
         </section>
 
         {/* Testimonials */}
         <section className="py-20 md:py-28">
           <div className="container mx-auto px-4 md:px-6">
-            <h2 className="text-3xl md:text-4xl font-display font-bold text-center mb-16">{t.testimonialsTitle}</h2>
-            <div className="max-w-2xl mx-auto relative">
-              <div className="glass-card p-8 md:p-12 text-center gold-glow">
-                <div className="flex justify-center gap-1 mb-6">
-                  {[...Array(5)].map((_, i) => (
-                    <Star key={i} className="w-5 h-5 text-gold fill-gold" />
-                  ))}
-                </div>
-                <p className="text-foreground text-lg md:text-xl leading-relaxed mb-8 italic">
-                  "{t.testimonials[currentTestimonial].text}"
-                </p>
-                <div>
-                  <p className="font-display font-semibold text-foreground">{t.testimonials[currentTestimonial].name}</p>
-                  <p className="text-muted-foreground text-sm">{t.testimonials[currentTestimonial].role}</p>
+            <AnimatedSection>
+              <h2 className="text-3xl md:text-4xl font-display font-bold text-center mb-16">{t.testimonialsTitle}</h2>
+            </AnimatedSection>
+            <AnimatedSection delay={0.2}>
+              <div className="max-w-2xl mx-auto relative">
+                <motion.div
+                  key={currentTestimonial}
+                  initial={{ opacity: 0, x: 30 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  exit={{ opacity: 0, x: -30 }}
+                  transition={{ duration: 0.4 }}
+                  className="glass-card p-8 md:p-12 text-center gold-glow"
+                >
+                  <div className="flex justify-center gap-1 mb-6">
+                    {[...Array(5)].map((_, i) => (
+                      <Star key={i} className="w-5 h-5 text-gold fill-gold" />
+                    ))}
+                  </div>
+                  <p className="text-foreground text-lg md:text-xl leading-relaxed mb-8 italic">
+                    "{t.testimonials[currentTestimonial].text}"
+                  </p>
+                  <div>
+                    <p className="font-display font-semibold text-foreground">{t.testimonials[currentTestimonial].name}</p>
+                    <p className="text-muted-foreground text-sm">{t.testimonials[currentTestimonial].role}</p>
+                  </div>
+                </motion.div>
+                <div className="flex justify-center gap-4 mt-8">
+                  <motion.button
+                    whileHover={{ scale: 1.1 }}
+                    whileTap={{ scale: 0.9 }}
+                    onClick={() => setCurrentTestimonial((prev) => (prev === 0 ? t.testimonials.length - 1 : prev - 1))}
+                    className="p-2 rounded-full border border-border hover:border-gold/50 hover:text-gold transition-colors"
+                    aria-label={lang === 'es' ? 'Anterior' : 'Previous'}
+                  >
+                    <ChevronLeft className="w-5 h-5" />
+                  </motion.button>
+                  <div className="flex items-center gap-2">
+                    {t.testimonials.map((_, i) => (
+                      <button key={i} onClick={() => setCurrentTestimonial(i)}
+                        className={`w-2 h-2 rounded-full transition-all ${i === currentTestimonial ? 'bg-gold w-6' : 'bg-border'}`}
+                        aria-label={`Testimonial ${i + 1}`} />
+                    ))}
+                  </div>
+                  <motion.button
+                    whileHover={{ scale: 1.1 }}
+                    whileTap={{ scale: 0.9 }}
+                    onClick={() => setCurrentTestimonial((prev) => (prev === t.testimonials.length - 1 ? 0 : prev + 1))}
+                    className="p-2 rounded-full border border-border hover:border-gold/50 hover:text-gold transition-colors"
+                    aria-label={lang === 'es' ? 'Siguiente' : 'Next'}
+                  >
+                    <ChevronRight className="w-5 h-5" />
+                  </motion.button>
                 </div>
               </div>
-              <div className="flex justify-center gap-4 mt-8">
-                <button
-                  onClick={() => setCurrentTestimonial((prev) => (prev === 0 ? t.testimonials.length - 1 : prev - 1))}
-                  className="p-2 rounded-full border border-border hover:border-gold/50 hover:text-gold transition-colors"
-                  aria-label={lang === 'es' ? 'Anterior' : 'Previous'}
-                >
-                  <ChevronLeft className="w-5 h-5" />
-                </button>
-                <div className="flex items-center gap-2">
-                  {t.testimonials.map((_, i) => (
-                    <button key={i} onClick={() => setCurrentTestimonial(i)}
-                      className={`w-2 h-2 rounded-full transition-all ${i === currentTestimonial ? 'bg-gold w-6' : 'bg-border'}`}
-                      aria-label={`Testimonial ${i + 1}`} />
-                  ))}
-                </div>
-                <button
-                  onClick={() => setCurrentTestimonial((prev) => (prev === t.testimonials.length - 1 ? 0 : prev + 1))}
-                  className="p-2 rounded-full border border-border hover:border-gold/50 hover:text-gold transition-colors"
-                  aria-label={lang === 'es' ? 'Siguiente' : 'Next'}
-                >
-                  <ChevronRight className="w-5 h-5" />
-                </button>
-              </div>
-            </div>
+            </AnimatedSection>
           </div>
         </section>
 
@@ -321,28 +379,36 @@ const Index = ({ lang = 'es' }: IndexProps) => {
         <section className="py-20 md:py-28 relative overflow-hidden" style={{ background: 'linear-gradient(135deg, hsl(243, 31%, 10%), hsl(243, 28%, 16%))' }}>
           <div className="absolute inset-0" style={{ background: 'radial-gradient(ellipse at 50% 50%, hsla(45, 86%, 40%, 0.08), transparent 70%)' }} />
           <div className="container mx-auto px-4 md:px-6 relative z-10 text-center">
-            <h2 className="text-3xl md:text-4xl lg:text-5xl font-display font-bold mb-6">{t.ctaTitle}</h2>
-            <p className="text-muted-foreground text-lg max-w-xl mx-auto mb-10">{t.ctaSub}</p>
-            <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <a
-                href="https://wa.me/17865787671?text=Hola%20Ferova%2C%20quiero%20saber%20más%20sobre%20sus%20servicios."
-                target="_blank"
-                rel="noopener noreferrer"
-                className="btn-gold text-center flex items-center justify-center gap-2"
-              >
-                <MessageCircle className="w-5 h-5" />
-                {t.ctaBtn}
-              </a>
-              <Link to={lang === 'es' ? '/precios' : '/en/pricing'} className="btn-outline-gold text-center">
-                {t.ctaLink}
-              </Link>
-            </div>
+            <AnimatedSection>
+              <h2 className="text-3xl md:text-4xl lg:text-5xl font-display font-bold mb-6">{t.ctaTitle}</h2>
+              <p className="text-muted-foreground text-lg max-w-xl mx-auto mb-10">{t.ctaSub}</p>
+            </AnimatedSection>
+            <AnimatedSection delay={0.2}>
+              <div className="flex flex-col sm:flex-row gap-4 justify-center">
+                <motion.a
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.97 }}
+                  href="https://wa.me/17865787671?text=Hola%20Ferova%2C%20quiero%20saber%20más%20sobre%20sus%20servicios."
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="btn-gold text-center flex items-center justify-center gap-2"
+                >
+                  <MessageCircle className="w-5 h-5" />
+                  {t.ctaBtn}
+                </motion.a>
+                <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.97 }}>
+                  <Link to={lang === 'es' ? '/precios' : '/en/pricing'} className="btn-outline-gold text-center block">
+                    {t.ctaLink}
+                  </Link>
+                </motion.div>
+              </div>
+            </AnimatedSection>
           </div>
         </section>
       </main>
       <Footer currentLang={lang} />
       <ChatWidget lang={lang} />
-    </>
+    </PageTransition>
   );
 };
 

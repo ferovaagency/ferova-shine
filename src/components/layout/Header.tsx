@@ -38,7 +38,7 @@ const Header = ({ currentLang = 'es' }: HeaderProps) => {
       <div className="container mx-auto px-4 md:px-6">
         <div className="flex items-center justify-between h-16 md:h-20">
           <Link to={currentLang === 'es' ? '/' : '/en'} className="flex-shrink-0">
-            <img src={logoImg} alt="Ferova Agency" className="h-12 md:h-14 w-auto brightness-0 invert" />
+            <img src={logoImg} alt="Ferova Agency" className="h-12 md:h-14 w-auto" style={{ filter: 'brightness(0) invert(1) sepia(1) saturate(5) hue-rotate(15deg)' }} />
           </Link>
 
           <nav className="hidden lg:flex items-center gap-6">
