@@ -223,27 +223,7 @@ const Recursos = ({ lang = 'es' }: Props) => {
           </div>
         </section>
 
-        {/* CTA */}
-        <section className="py-20 md:py-28 relative overflow-hidden" style={{ background: 'linear-gradient(135deg, hsl(243, 31%, 10%), hsl(243, 28%, 16%))' }}>
-          <div className="absolute inset-0" style={{ background: 'radial-gradient(ellipse at 50% 50%, hsla(45, 86%, 40%, 0.08), transparent 70%)' }} />
-          <div className="container mx-auto px-4 md:px-6 relative z-10 text-center">
-            <AnimatedSection>
-              <h2 className="text-3xl md:text-4xl font-display font-bold mb-6">{t.ctaTitle}</h2>
-              <p className="text-muted-foreground text-lg max-w-xl mx-auto mb-10">{t.ctaSub}</p>
-              <motion.a
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.97 }}
-                href="https://wa.me/17865787671?text=Hola%20Ferova%2C%20quiero%20más%20información."
-                target="_blank"
-                rel="noopener noreferrer"
-                className="btn-gold inline-flex items-center gap-2"
-              >
-                <MessageCircle className="w-5 h-5" />
-                {t.ctaBtn}
-              </motion.a>
-            </AnimatedSection>
-          </div>
-        </section>
+        {/* Single clean CTA merged with newsletter */}
       </main>
       <Footer currentLang={lang} />
       <ChatWidget lang={lang} />
