@@ -30,7 +30,7 @@ const Servicios = ({ lang = 'es' }: ServiciosProps) => {
   ];
 
   return (
-    <>
+    <PageTransition>
       <Header currentLang={lang} />
       <main className="pt-20">
         <section className="py-20 md:py-28 text-center relative grid-pattern">
