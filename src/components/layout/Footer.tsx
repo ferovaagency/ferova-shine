@@ -1,6 +1,7 @@
 import { Link } from 'react-router-dom';
 import { Mail, MapPin, Instagram, Linkedin, Twitter, MessageCircle } from 'lucide-react';
-import logoImg from '@/assets/ferova-logo.png';
+import logoDark from '@/assets/ferova-logo-dark.png';
+import logoLight from '@/assets/ferova-logo.png';
 
 interface FooterProps {
   currentLang?: 'es' | 'en';
@@ -65,23 +66,24 @@ const Footer = ({ currentLang = 'es' }: FooterProps) => {
   const d = t[currentLang];
 
   return (
-    <footer className="border-t border-border/50" style={{ background: 'hsl(243, 31%, 7%)' }}>
+    <footer className="border-t border-border/50 bg-card">
       <div className="container mx-auto px-4 md:px-6 py-12 md:py-16">
         <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-8">
           <div className="col-span-2 md:col-span-4 lg:col-span-2">
             <Link to={currentLang === 'es' ? '/' : '/en'}>
-              <img src={logoImg} alt="Ferova Agency" className="h-16 w-auto" style={{ filter: 'brightness(0) invert(1) sepia(1) saturate(5) hue-rotate(15deg)' }} />
+              <img src={logoDark} alt="Ferova Agency" className="h-16 w-auto dark:hidden" />
+              <img src={logoLight} alt="Ferova Agency" className="h-16 w-auto hidden dark:block" style={{ filter: 'brightness(0) invert(1) sepia(1) saturate(5) hue-rotate(15deg)' }} />
             </Link>
             <p className="text-muted-foreground text-sm mt-3 max-w-xs">{d.tagline}</p>
             <div className="mt-4 space-y-2 text-sm text-muted-foreground">
-              <a href="mailto:info@ferova.agency" className="flex items-center gap-2 hover:text-gold transition-colors">
-                <Mail className="w-4 h-4" /> info@ferova.agency
+              <a href="mailto:maria.fer@ferova.com.co" className="flex items-center gap-2 hover:text-gold transition-colors">
+                <Mail className="w-4 h-4" /> maria.fer@ferova.com.co
               </a>
               <a href="https://wa.me/17865787671" target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 hover:text-gold transition-colors">
                 <MessageCircle className="w-4 h-4" /> +1 (786) 578-7671
               </a>
               <div className="flex items-center gap-2">
-                <MapPin className="w-4 h-4" /> Bogotá, Colombia · Miami, FL
+                <MapPin className="w-4 h-4 flex-shrink-0" /> Bogotá, Colombia · Brasil · Estados Unidos
               </div>
             </div>
             <div className="flex gap-3 mt-4">

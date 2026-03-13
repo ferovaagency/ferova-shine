@@ -96,7 +96,7 @@ const Contacto = ({ lang = 'es' }: Props) => {
                   </div>
                   <div><p className="font-display font-semibold text-foreground">{t.whatsapp}</p><p className="text-muted-foreground text-sm">{t.whatsappDesc}</p></div>
                 </a>
-                <a href="mailto:info@ferova.agency" className="glass-card p-5 flex items-center gap-4 hover:border-gold/30 transition-all block">
+                <a href="mailto:maria.fer@ferova.com.co" className="glass-card p-5 flex items-center gap-4 hover:border-gold/30 transition-all block">
                   <div className="w-12 h-12 rounded-xl flex items-center justify-center" style={{ background: 'hsla(45, 86%, 40%, 0.1)' }}>
                     <Mail className="w-6 h-6 text-gold" />
                   </div>
@@ -106,7 +106,7 @@ const Contacto = ({ lang = 'es' }: Props) => {
                   <div className="w-12 h-12 rounded-xl flex items-center justify-center" style={{ background: 'hsla(45, 86%, 40%, 0.1)' }}>
                     <MapPin className="w-6 h-6 text-gold" />
                   </div>
-                  <div><p className="font-display font-semibold text-foreground">{t.location}</p></div>
+                  <div><p className="font-display font-semibold text-foreground">Bogotá, Colombia · Brasil · Estados Unidos</p></div>
                 </div>
               </div>
             </div>

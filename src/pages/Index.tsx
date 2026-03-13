@@ -134,7 +134,7 @@ const Index = ({ lang = 'es' }: IndexProps) => {
       <main>
         {/* Hero */}
         <section className="relative min-h-screen flex items-center pt-20 overflow-hidden grid-pattern">
-          <div className="absolute inset-0" style={{ background: 'radial-gradient(ellipse at 30% 50%, hsla(356, 68%, 20%, 0.1) 0%, transparent 60%), radial-gradient(ellipse at 70% 20%, hsla(45, 86%, 40%, 0.06) 0%, transparent 50%)' }} />
+          <div className="absolute inset-0" style={{ background: 'radial-gradient(ellipse at 30% 50%, hsla(356, 68%, 20%, 0.08) 0%, transparent 60%), radial-gradient(ellipse at 70% 20%, hsla(45, 86%, 40%, 0.05) 0%, transparent 50%)' }} />
           <div className="container mx-auto px-4 md:px-6 relative z-10">
             <div className="max-w-4xl mx-auto text-center">
               <AnimatedSection delay={0}>
@@ -177,7 +177,7 @@ const Index = ({ lang = 'es' }: IndexProps) => {
               </AnimatedSection>
             </div>
           </div>
-          <div className="absolute bottom-0 left-0 right-0 h-32" style={{ background: 'linear-gradient(to top, hsl(243, 31%, 10%), transparent)' }} />
+          <div className="absolute bottom-0 left-0 right-0 h-32" style={{ background: 'linear-gradient(to top, hsl(var(--background)), transparent)' }} />
         </section>
 
         {/* Benefits */}
@@ -206,7 +206,7 @@ const Index = ({ lang = 'es' }: IndexProps) => {
         </section>
 
         {/* Comparison Table */}
-        <section className="py-20 md:py-28 relative" style={{ background: 'hsl(243, 28%, 14%)' }}>
+        <section className="py-20 md:py-28 relative bg-surface">
           <div className="container mx-auto px-4 md:px-6">
             <AnimatedSection className="text-center mb-16">
               <h2 className="text-3xl md:text-4xl lg:text-5xl font-display font-bold mb-4">{t.compTitle}</h2>
@@ -376,8 +376,8 @@ const Index = ({ lang = 'es' }: IndexProps) => {
         </section>
 
         {/* CTA */}
-        <section className="py-20 md:py-28 relative overflow-hidden" style={{ background: 'linear-gradient(135deg, hsl(243, 31%, 10%), hsl(243, 28%, 16%))' }}>
-          <div className="absolute inset-0" style={{ background: 'radial-gradient(ellipse at 50% 50%, hsla(45, 86%, 40%, 0.08), transparent 70%)' }} />
+        <section className="py-20 md:py-28 relative overflow-hidden bg-surface">
+          <div className="absolute inset-0" style={{ background: 'radial-gradient(ellipse at 50% 50%, hsla(45, 86%, 40%, 0.06), transparent 70%)' }} />
           <div className="container mx-auto px-4 md:px-6 relative z-10 text-center">
             <AnimatedSection>
               <h2 className="text-3xl md:text-4xl lg:text-5xl font-display font-bold mb-6">{t.ctaTitle}</h2>
