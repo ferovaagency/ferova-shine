@@ -98,7 +98,7 @@ const Servicios = ({ lang = 'es' }: ServiciosProps) => {
       </main>
       <Footer currentLang={lang} />
       <ChatWidget lang={lang} />
-    </>
+    </PageTransition>
   );
 };
 
