@@ -177,7 +177,7 @@ const Index = ({ lang = 'es' }: IndexProps) => {
               </AnimatedSection>
             </div>
           </div>
-          <div className="absolute bottom-0 left-0 right-0 h-32" style={{ background: 'linear-gradient(to top, hsl(243, 31%, 10%), transparent)' }} />
+          <div className="absolute bottom-0 left-0 right-0 h-32" style={{ background: 'linear-gradient(to top, hsl(var(--background)), transparent)' }} />
         </section>
 
         {/* Benefits */}
