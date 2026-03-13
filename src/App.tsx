@@ -3,6 +3,8 @@ import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
+import ExitIntentPopup from "@/components/ui/exit-intent-popup";
+import SocialProofToasts from "@/components/ui/social-proof-toasts";
 import Index from "./pages/Index";
 import NotFound from "./pages/NotFound";
 import Servicios from "./pages/Servicios";
@@ -29,6 +31,8 @@ const App = () => (
     <TooltipProvider>
       <Toaster />
       <Sonner />
+      <ExitIntentPopup lang="es" />
+      <SocialProofToasts lang="es" />
       <BrowserRouter>
         <Routes>
           {/* Spanish Routes */}
