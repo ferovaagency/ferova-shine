@@ -11,6 +11,8 @@ import DiseneoWeb from "./pages/DiseneoWeb";
 import CasosDeExito from "./pages/CasosDeExito";
 import SobreNosotros from "./pages/SobreNosotros";
 import SobreMariaFer from "./pages/SobreMariaFer";
+import Precios from "./pages/Precios";
+import Contacto from "./pages/Contacto";
 
 const queryClient = new QueryClient();
 
@@ -22,24 +24,27 @@ const App = () => (
       <BrowserRouter>
         <Routes>
           {/* Spanish Routes */}
-          <Route path="/" element={<Index />} />
+          <Route path="/" element={<Index lang="es" />} />
           <Route path="/servicios" element={<Servicios lang="es" />} />
           <Route path="/servicios/seo-ecommerce" element={<SeoEcommerce lang="es" />} />
           <Route path="/servicios/diseno-web" element={<DiseneoWeb lang="es" />} />
+          <Route path="/precios" element={<Precios lang="es" />} />
           <Route path="/casos-de-exito" element={<CasosDeExito lang="es" />} />
           <Route path="/sobre-nosotros" element={<SobreNosotros lang="es" />} />
           <Route path="/sobre-maria-fer" element={<SobreMariaFer lang="es" />} />
-          
+          <Route path="/contacto" element={<Contacto lang="es" />} />
+
           {/* English Routes */}
-          <Route path="/en" element={<Index />} />
+          <Route path="/en" element={<Index lang="en" />} />
           <Route path="/en/services" element={<Servicios lang="en" />} />
           <Route path="/en/services/ecommerce-seo" element={<SeoEcommerce lang="en" />} />
           <Route path="/en/services/web-design" element={<DiseneoWeb lang="en" />} />
+          <Route path="/en/pricing" element={<Precios lang="en" />} />
           <Route path="/en/case-studies" element={<CasosDeExito lang="en" />} />
           <Route path="/en/about-us" element={<SobreNosotros lang="en" />} />
           <Route path="/en/about-maria-fer" element={<SobreMariaFer lang="en" />} />
-          
-          {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
+          <Route path="/en/contact" element={<Contacto lang="en" />} />
+
           <Route path="*" element={<NotFound />} />
         </Routes>
       </BrowserRouter>
