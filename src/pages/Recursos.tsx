@@ -196,9 +196,9 @@ const Recursos = ({ lang = 'es' }: Props) => {
           <div className="container mx-auto px-4 md:px-6">
             <AnimatedSection>
               <div className="max-w-2xl mx-auto text-center">
-                <Mail className="w-12 h-12 text-gold mx-auto mb-6" />
-                <h2 className="text-3xl md:text-4xl font-display font-bold mb-4">{t.newsletterTitle}</h2>
-                <p className="text-muted-foreground text-lg mb-8">{t.newsletterSub}</p>
+                <Mail className="w-12 h-12 mx-auto mb-6" style={{ color: 'hsl(45, 86%, 40%)' }} />
+                <h2 className="text-3xl md:text-4xl font-display font-bold mb-4" style={{ color: 'hsl(0, 0%, 95%)' }}>{t.newsletterTitle}</h2>
+                <p className="text-lg mb-8" style={{ color: 'hsl(0, 0%, 65%)' }}>{t.newsletterSub}</p>
                 <form onSubmit={handleNewsletterSubmit} className="flex flex-col sm:flex-row gap-3 max-w-md mx-auto">
                   <input
                     type="email"
@@ -206,7 +206,12 @@ const Recursos = ({ lang = 'es' }: Props) => {
                     placeholder={t.emailPlaceholder}
                     value={emailInput}
                     onChange={e => setEmailInput(e.target.value)}
-                    className="flex-grow px-5 py-3 rounded-full text-foreground text-sm placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-gold/50 transition-all border border-border/50 bg-background"
+                    className="flex-grow px-5 py-3 rounded-full text-sm focus:outline-none focus:ring-2 transition-all border"
+                    style={{
+                      background: 'hsla(243, 28%, 18%, 0.8)',
+                      borderColor: 'hsla(243, 20%, 30%, 0.5)',
+                      color: 'hsl(0, 0%, 95%)',
+                    }}
                   />
                   <motion.button
                     whileHover={{ scale: 1.05 }}

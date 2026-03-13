@@ -1,8 +1,11 @@
+import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import Header from '@/components/layout/Header';
 import Footer from '@/components/layout/Footer';
 import ChatWidget from '@/components/ui/chat-widget';
 import AdBanner from '@/components/ui/ad-banner';
+import ReadingProgress from '@/components/ui/reading-progress';
+import { SkeletonBlogCard } from '@/components/ui/skeleton-card';
 import { Clock, ArrowRight, User } from 'lucide-react';
 
 interface Props { lang?: 'es' | 'en'; }
@@ -70,9 +73,16 @@ const blogPosts = {
 
 const Blog = ({ lang = 'es' }: Props) => {
   const posts = blogPosts[lang];
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const timer = setTimeout(() => setLoading(false), 600);
+    return () => clearTimeout(timer);
+  }, []);
 
   return (
     <>
+      <ReadingProgress />
       <Header currentLang={lang} />
       <main className="pt-20">
         <section className="py-20 md:py-28 text-center relative grid-pattern">
@@ -88,7 +98,13 @@ const Blog = ({ lang = 'es' }: Props) => {
         <section className="py-20 md:py-28">
           <div className="container mx-auto px-4 md:px-6">
             <div className="max-w-4xl mx-auto space-y-8">
-              {posts.map((post, i) => (
+              {loading ? (
+                <>
+                  <SkeletonBlogCard />
+                  <SkeletonBlogCard />
+                  <SkeletonBlogCard />
+                </>
+              ) : posts.map((post, i) => (
                 <Link
                   key={i}
                   to={`${lang === 'es' ? '/blog' : '/en/blog'}/${post.slug}`}
