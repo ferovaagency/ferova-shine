@@ -5,6 +5,7 @@ import ChatWidget from '@/components/ui/chat-widget';
 import { AnimatedSection, StaggerContainer, StaggerItem, ScaleOnHover, PageTransition } from '@/components/ui/motion';
 import { Check, X, Clock, Zap, MapPin, Palette, ArrowRight, MessageCircle, Timer, Stethoscope, Map, Paintbrush } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
+import { getPaymentLink, type PaymentLinkKey } from '@/lib/payment-links';
 
 interface Props { lang?: 'es' | 'en'; }
 
@@ -18,7 +19,7 @@ interface Plan {
   includes: { icon: React.ElementType; text: string }[];
   excludes: string[];
   cta: string;
-  ctaLink: string;
+  paymentKey: PaymentLinkKey;
   urgency?: string;
   popular?: boolean;
 }
@@ -32,7 +33,8 @@ const Precios = ({ lang = 'es' }: Props) => {
   const [currency, setCurrency] = useState<'cop' | 'usd'>('usd');
   const { toast } = useToast();
 
-  const handleCta = (link: string) => {
+  const handleCta = (key: PaymentLinkKey) => {
+    const link = getPaymentLink(key, currency);
     window.open(link, '_blank', 'noopener,noreferrer');
     toast({
       title: lang === 'es' ? '¡Confirmado!' : 'Confirmed!',
@@ -52,35 +54,28 @@ const Precios = ({ lang = 'es' }: Props) => {
       title: 'Asesorías Virtuales',
       plans: [
         {
-          icon: Timer,
-          name: 'Asesoría Express',
+          icon: Timer, name: 'Asesoría Express',
           tagline: '¿Llevas días dando vueltas a un problema? Ferova Agency entra en tu negocio para eliminar el ruido y darte la respuesta exacta.',
-          priceUsd: 35,
-          priceCop: 140000,
+          priceUsd: 35, priceCop: 140000,
           includes: [
             { icon: Zap, text: 'Diagnóstico rápido (30 min)' },
             { icon: Stethoscope, text: 'Solución a 1 bloqueo específico' },
             { icon: Clock, text: 'Grabación de la sesión' },
           ],
           excludes: ['Implementación técnica', 'Seguimiento posterior', 'Plan estratégico completo'],
-          cta: 'Agendar mi espacio',
-          ctaLink: 'https://wa.link/asesoria30',
+          cta: 'Agendar mi espacio', paymentKey: 'asesoria30',
         },
         {
-          icon: Stethoscope,
-          name: 'Asesoría Impacto',
+          icon: Stethoscope, name: 'Asesoría Impacto',
           tagline: 'No es una charla, es una cirugía a tu estrategia. Ferova Agency audita y reconstruye tu hoja de ruta para que traiga dinero.',
-          priceUsd: 55,
-          priceCop: 220000,
+          priceUsd: 55, priceCop: 220000,
           includes: [
             { icon: Zap, text: 'Auditoría de estrategia (60 min)' },
             { icon: ArrowRight, text: 'Plan de acción inmediato' },
             { icon: Palette, text: 'Guía de herramientas recomendadas' },
           ],
           excludes: ['Implementación técnica', 'Gestión de campañas', 'Diseño de activos'],
-          cta: 'Hablar con un Consultor',
-          ctaLink: 'https://wa.link/asesoria60',
-          popular: true,
+          cta: 'Hablar con un Consultor', paymentKey: 'asesoria60', popular: true,
         },
       ],
     },
@@ -88,20 +83,16 @@ const Precios = ({ lang = 'es' }: Props) => {
       title: 'SEO Especializado',
       plans: [
         {
-          icon: Map,
-          name: 'SEO & GEO Local',
+          icon: Map, name: 'SEO & GEO Local',
           tagline: 'Si no estás en el mapa, no existes. Ferova Agency convierte tu perfil de Google en una máquina de atraer clientes.',
-          priceUsd: 150,
-          priceCop: 600000,
-          recurring: '/mes',
+          priceUsd: 150, priceCop: 600000, recurring: '/mes',
           includes: [
             { icon: MapPin, text: 'Optimización de Google Business Profile' },
             { icon: Zap, text: 'Estrategia de 5 keywords locales' },
             { icon: Stethoscope, text: 'Auditoría de visibilidad local' },
           ],
           excludes: ['Pauta publicitaria (Ads)', 'Creación de contenido para redes', 'Diseño web'],
-          cta: 'Iniciar Optimización',
-          ctaLink: 'https://wa.link/seogeo',
+          cta: 'Iniciar Optimización', paymentKey: 'seoGeoLocal',
           urgency: 'Solo 3 cupos disponibles por mes para garantizar resultados.',
         },
       ],
@@ -110,19 +101,16 @@ const Precios = ({ lang = 'es' }: Props) => {
       title: 'Branding',
       plans: [
         {
-          icon: Paintbrush,
-          name: 'Branding Essential',
+          icon: Paintbrush, name: 'Branding Essential',
           tagline: 'Tu marca es lo que dicen de ti cuando no estás. Ferova Agency crea una identidad que proyecta autoridad y profesionalismo.',
-          priceUsd: 150,
-          priceCop: 600000,
+          priceUsd: 150, priceCop: 600000,
           includes: [
             { icon: Palette, text: 'Logo principal + variaciones' },
             { icon: Zap, text: 'Paleta de colores + tipografía' },
             { icon: ArrowRight, text: 'Archivos editables (AI/SVG)' },
           ],
           excludes: ['Registro legal de marca', 'Manual de marca extendido', 'Papelería corporativa'],
-          cta: 'Completar Briefing',
-          ctaLink: 'https://wa.link/branding',
+          cta: 'Completar Briefing', paymentKey: 'brandingEssential',
         },
       ],
     },
@@ -131,35 +119,28 @@ const Precios = ({ lang = 'es' }: Props) => {
       title: 'Virtual Consulting',
       plans: [
         {
-          icon: Timer,
-          name: 'Express Consulting',
+          icon: Timer, name: 'Express Consulting',
           tagline: 'Been going back and forth on a problem? Ferova Agency steps into your business to cut the noise and give you the exact answer.',
-          priceUsd: 35,
-          priceCop: 140000,
+          priceUsd: 35, priceCop: 140000,
           includes: [
             { icon: Zap, text: 'Quick diagnosis (30 min)' },
             { icon: Stethoscope, text: 'Solution to 1 specific blocker' },
             { icon: Clock, text: 'Session recording' },
           ],
           excludes: ['Technical implementation', 'Follow-up', 'Full strategic plan'],
-          cta: 'Book my spot',
-          ctaLink: 'https://wa.link/asesoria30',
+          cta: 'Book my spot', paymentKey: 'asesoria30',
         },
         {
-          icon: Stethoscope,
-          name: 'Impact Consulting',
+          icon: Stethoscope, name: 'Impact Consulting',
           tagline: 'It\'s not a chat, it\'s surgery on your strategy. Ferova Agency audits and rebuilds your roadmap to bring in revenue.',
-          priceUsd: 55,
-          priceCop: 220000,
+          priceUsd: 55, priceCop: 220000,
           includes: [
             { icon: Zap, text: 'Strategy audit (60 min)' },
             { icon: ArrowRight, text: 'Immediate action plan' },
             { icon: Palette, text: 'Recommended tools guide' },
           ],
           excludes: ['Technical implementation', 'Campaign management', 'Asset design'],
-          cta: 'Talk to a Consultant',
-          ctaLink: 'https://wa.link/asesoria60',
-          popular: true,
+          cta: 'Talk to a Consultant', paymentKey: 'asesoria60', popular: true,
         },
       ],
     },
@@ -167,20 +148,16 @@ const Precios = ({ lang = 'es' }: Props) => {
       title: 'Specialized SEO',
       plans: [
         {
-          icon: Map,
-          name: 'SEO & GEO Local',
+          icon: Map, name: 'SEO & GEO Local',
           tagline: 'If you\'re not on the map, you don\'t exist. Ferova Agency turns your Google profile into a client-attracting machine.',
-          priceUsd: 150,
-          priceCop: 600000,
-          recurring: '/mo',
+          priceUsd: 150, priceCop: 600000, recurring: '/mo',
           includes: [
             { icon: MapPin, text: 'Google Business Profile optimization' },
             { icon: Zap, text: '5 local keyword strategy' },
             { icon: Stethoscope, text: 'Local visibility audit' },
           ],
           excludes: ['Ad spend (Ads)', 'Social media content', 'Web design'],
-          cta: 'Start Optimization',
-          ctaLink: 'https://wa.link/seogeo',
+          cta: 'Start Optimization', paymentKey: 'seoGeoLocal',
           urgency: 'Only 3 spots available per month to guarantee results.',
         },
       ],
@@ -189,19 +166,16 @@ const Precios = ({ lang = 'es' }: Props) => {
       title: 'Branding',
       plans: [
         {
-          icon: Paintbrush,
-          name: 'Branding Essential',
+          icon: Paintbrush, name: 'Branding Essential',
           tagline: 'Your brand is what people say about you when you\'re not in the room. Ferova Agency creates an identity that projects authority.',
-          priceUsd: 150,
-          priceCop: 600000,
+          priceUsd: 150, priceCop: 600000,
           includes: [
             { icon: Palette, text: 'Main logo + variations' },
             { icon: Zap, text: 'Color palette + typography' },
             { icon: ArrowRight, text: 'Editable files (AI/SVG)' },
           ],
           excludes: ['Legal trademark registration', 'Extended brand manual', 'Corporate stationery'],
-          cta: 'Complete Briefing',
-          ctaLink: 'https://wa.link/branding',
+          cta: 'Complete Briefing', paymentKey: 'brandingEssential',
         },
       ],
     },
@@ -211,7 +185,6 @@ const Precios = ({ lang = 'es' }: Props) => {
     title: 'Planes y Precios',
     sub: 'Servicios diseñados para impulsar tu negocio con estrategia, claridad y resultados medibles.',
     noInclude: 'No incluye:',
-    oneTime: 'Pago único',
     faq: 'Preguntas frecuentes',
     faqs: [
       { q: '¿Cómo agendo una asesoría?', a: 'Al hacer clic en el botón, serás redirigido a WhatsApp donde coordinaremos fecha y hora.' },
@@ -223,7 +196,6 @@ const Precios = ({ lang = 'es' }: Props) => {
     title: 'Plans & Pricing',
     sub: 'Services designed to drive your business with strategy, clarity and measurable results.',
     noInclude: 'Does not include:',
-    oneTime: 'One-time payment',
     faq: 'FAQ',
     faqs: [
       { q: 'How do I book a consultation?', a: 'Clicking the button redirects you to WhatsApp where we\'ll coordinate date and time.' },
@@ -245,8 +217,6 @@ const Precios = ({ lang = 'es' }: Props) => {
               <h1 className="text-4xl md:text-5xl lg:text-6xl font-display font-bold mb-6">{t.title}</h1>
               <p className="text-muted-foreground text-lg max-w-2xl mx-auto mb-10">{t.sub}</p>
             </AnimatedSection>
-
-            {/* Currency toggle */}
             <div className="flex items-center justify-center gap-1 p-1 rounded-full border border-border w-fit mx-auto">
               <button onClick={() => setCurrency('usd')} className={`px-5 py-2 rounded-full text-sm font-medium transition-all ${currency === 'usd' ? 'bg-gold text-primary-foreground' : 'text-muted-foreground hover:text-foreground'}`}>USD</button>
               <button onClick={() => setCurrency('cop')} className={`px-5 py-2 rounded-full text-sm font-medium transition-all ${currency === 'cop' ? 'bg-gold text-primary-foreground' : 'text-muted-foreground hover:text-foreground'}`}>COP</button>
@@ -261,8 +231,7 @@ const Precios = ({ lang = 'es' }: Props) => {
               <AnimatedSection>
                 <h2 className="text-3xl md:text-4xl font-display font-bold text-center mb-14">{cat.title}</h2>
               </AnimatedSection>
-
-              <StaggerContainer className={`grid gap-8 max-w-5xl mx-auto ${cat.plans.length === 1 ? 'max-w-lg' : cat.plans.length === 2 ? 'md:grid-cols-2' : 'md:grid-cols-3'}`}>
+              <StaggerContainer className={`grid gap-8 max-w-5xl mx-auto ${cat.plans.length === 1 ? 'max-w-lg' : 'md:grid-cols-2'}`}>
                 {cat.plans.map((plan, pi) => {
                   const IconComp = plan.icon;
                   return (
@@ -274,63 +243,45 @@ const Precios = ({ lang = 'es' }: Props) => {
                               {lang === 'es' ? 'Recomendado' : 'Recommended'}
                             </div>
                           )}
-
-                          {/* Icon */}
                           <div className="w-14 h-14 rounded-2xl flex items-center justify-center mb-5" style={{ background: 'hsla(45, 86%, 40%, 0.1)' }}>
                             <IconComp className="w-7 h-7 text-gold" />
                           </div>
-
-                          {/* Name & tagline */}
                           <h3 className="text-2xl font-display font-bold mb-3 text-foreground">{plan.name}</h3>
                           <p className="text-muted-foreground text-sm leading-relaxed mb-6">{plan.tagline}</p>
-
-                          {/* Price */}
                           <div className="mb-6">
                             <span className="text-4xl font-display font-bold text-foreground">{formatPrice(currency === 'usd' ? plan.priceUsd : plan.priceCop)}</span>
                             <span className="text-muted-foreground text-sm ml-1">{plan.recurring || (lang === 'es' ? '/ pago único' : '/ one-time')}</span>
                           </div>
-
-                          {/* Urgency */}
                           {plan.urgency && (
                             <div className="mb-6 px-3 py-2 rounded-lg text-xs font-semibold flex items-center gap-2" style={{ background: 'hsla(356, 68%, 20%, 0.15)', color: 'hsl(356, 68%, 55%)' }}>
-                              <Clock className="w-3.5 h-3.5" />
-                              {plan.urgency}
+                              <Clock className="w-3.5 h-3.5" /> {plan.urgency}
                             </div>
                           )}
-
-                          {/* Includes */}
                           <ul className="space-y-3 mb-6 flex-1">
                             {plan.includes.map((item, ii) => {
                               const ItemIcon = item.icon;
                               return (
                                 <li key={ii} className="flex items-start gap-3 text-sm text-foreground">
-                                  <ItemIcon className="w-4 h-4 text-gold flex-shrink-0 mt-0.5" />
-                                  {item.text}
+                                  <ItemIcon className="w-4 h-4 text-gold flex-shrink-0 mt-0.5" /> {item.text}
                                 </li>
                               );
                             })}
                           </ul>
-
-                          {/* Excludes */}
                           <div className="mb-8 pt-4 border-t border-border">
                             <p className="text-xs font-semibold text-muted-foreground mb-2">{t.noInclude}</p>
                             <ul className="space-y-1.5">
                               {plan.excludes.map((ex, ei) => (
                                 <li key={ei} className="flex items-center gap-2 text-xs text-muted-foreground">
-                                  <X className="w-3 h-3 flex-shrink-0 opacity-50" />
-                                  {ex}
+                                  <X className="w-3 h-3 flex-shrink-0 opacity-50" /> {ex}
                                 </li>
                               ))}
                             </ul>
                           </div>
-
-                          {/* CTA */}
                           <button
-                            onClick={() => handleCta(plan.ctaLink)}
+                            onClick={() => handleCta(plan.paymentKey)}
                             className={`w-full py-3.5 rounded-full font-semibold text-sm transition-all duration-300 flex items-center justify-center gap-2 ${plan.popular ? 'btn-gold !px-0' : 'border border-gold/40 text-gold hover:bg-gold hover:text-primary-foreground'}`}
                           >
-                            <MessageCircle className="w-4 h-4" />
-                            {plan.cta}
+                            <MessageCircle className="w-4 h-4" /> {plan.cta}
                           </button>
                         </div>
                       </ScaleOnHover>
