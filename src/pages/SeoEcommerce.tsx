@@ -279,11 +279,11 @@ const SeoEcommerce = ({ lang = 'es' }: Props) => {
               {t.faqs.map((faq, i) => (
                 <div key={i} className="glass-card overflow-hidden">
                   <button onClick={() => setOpenFaq(openFaq === i ? null : i)} className="w-full p-6 text-left flex items-center justify-between hover:bg-gold/5 transition-colors">
-                    <h3 className="text-lg font-display font-semibold pr-4" style={{ color: 'hsl(0, 0%, 95%)' }}>{faq.q}</h3>
+                    <h3 className="text-lg font-display font-semibold pr-4 text-foreground">{faq.q}</h3>
                     <Plus className={`w-5 h-5 text-gold transition-transform duration-200 flex-shrink-0 ${openFaq === i ? 'rotate-45' : ''}`} />
                   </button>
                   {openFaq === i && (
-                    <div className="px-6 pb-6"><p className="leading-relaxed" style={{ color: 'hsl(0, 0%, 65%)' }}>{faq.a}</p></div>
+                    <div className="px-6 pb-6"><p className="leading-relaxed text-muted-foreground">{faq.a}</p></div>
                   )}
                 </div>
               ))}
