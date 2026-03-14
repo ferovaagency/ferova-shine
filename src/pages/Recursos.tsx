@@ -192,13 +192,13 @@ const Recursos = ({ lang = 'es' }: Props) => {
         </section>
 
         {/* Newsletter Section */}
-        <section className="py-20 md:py-28" style={{ background: 'hsl(243, 28%, 14%)' }}>
+        <section className="py-20 md:py-28 dark-section" style={{ background: 'hsl(243, 28%, 14%)' }}>
           <div className="container mx-auto px-4 md:px-6">
             <AnimatedSection>
               <div className="max-w-2xl mx-auto text-center">
-                <Mail className="w-12 h-12 mx-auto mb-6" style={{ color: 'hsl(45, 86%, 40%)' }} />
-                <h2 className="text-3xl md:text-4xl font-display font-bold mb-4" style={{ color: 'hsl(0, 0%, 95%)' }}>{t.newsletterTitle}</h2>
-                <p className="text-lg mb-8" style={{ color: 'hsl(0, 0%, 65%)' }}>{t.newsletterSub}</p>
+                <Mail className="w-12 h-12 mx-auto mb-6 text-gold" />
+                <h2 className="text-3xl md:text-4xl font-display font-bold mb-4 text-foreground">{t.newsletterTitle}</h2>
+                <p className="text-lg mb-8 text-muted-foreground">{t.newsletterSub}</p>
                 <form onSubmit={handleNewsletterSubmit} className="flex flex-col sm:flex-row gap-3 max-w-md mx-auto">
                   <input
                     type="email"
