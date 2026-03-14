@@ -5,6 +5,7 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import ExitIntentPopup from "@/components/ui/exit-intent-popup";
 import SocialProofToasts from "@/components/ui/social-proof-toasts";
+import { getLangFromHostname } from "@/hooks/use-lang-from-host";
 import Index from "./pages/Index";
 import NotFound from "./pages/NotFound";
 import Servicios from "./pages/Servicios";
@@ -26,35 +27,58 @@ import SobreNosotros from "./pages/SobreNosotros";
 
 const queryClient = new QueryClient();
 
+/** Detect language from hostname; falls back to path-based /en prefix */
+const hostLang = getLangFromHostname();
+
 const App = () => (
   <QueryClientProvider client={queryClient}>
     <TooltipProvider>
       <Toaster />
       <Sonner />
-      <ExitIntentPopup lang="es" />
-      <SocialProofToasts lang="es" />
+      <ExitIntentPopup lang={hostLang} />
+      <SocialProofToasts lang={hostLang} />
       <BrowserRouter>
         <Routes>
-          {/* Spanish Routes */}
-          <Route path="/" element={<Index lang="es" />} />
-          <Route path="/servicios" element={<Servicios lang="es" />} />
-          <Route path="/servicios/seo-ecommerce" element={<SeoEcommerce lang="es" />} />
-          <Route path="/servicios/diseno-web" element={<DiseneoWeb lang="es" />} />
-          <Route path="/servicios/pauta-digital" element={<PautaDigital lang="es" />} />
-          <Route path="/servicios/diseno-logos" element={<DisenoLogos lang="es" />} />
-          <Route path="/servicios/descuentos-herramientas" element={<DescuentosHerramientas lang="es" />} />
-          <Route path="/servicios/asesorias-marketing" element={<AsesoriasMarketing lang="es" />} />
-          <Route path="/servicios/optimizacion-linkedin" element={<OptimizacionLinkedin lang="es" />} />
-          <Route path="/precios" element={<Precios lang="es" />} />
-          <Route path="/casos-de-exito" element={<CasosDeExito lang="es" />} />
-          <Route path="/casos-de-exito/:id" element={<CasoDetalle lang="es" />} />
-          <Route path="/contacto" element={<Contacto lang="es" />} />
-          <Route path="/blog" element={<Blog lang="es" />} />
-          <Route path="/blog/:slug" element={<BlogPost lang="es" />} />
-          <Route path="/recursos" element={<Recursos lang="es" />} />
-          <Route path="/nosotros" element={<SobreNosotros lang="es" />} />
+          {/*
+            When accessed via seoforecommerces.co → hostLang = 'en'
+            When accessed via seoparaecommerce.co → hostLang = 'es'
+            All routes at "/" serve the detected language automatically.
+          */}
 
-          {/* English Routes */}
+          {/* Root routes — language determined by hostname */}
+          <Route path="/" element={<Index lang={hostLang} />} />
+          <Route path="/servicios" element={<Servicios lang={hostLang} />} />
+          <Route path="/services" element={<Servicios lang={hostLang} />} />
+          <Route path="/servicios/seo-ecommerce" element={<SeoEcommerce lang={hostLang} />} />
+          <Route path="/services/ecommerce-seo" element={<SeoEcommerce lang={hostLang} />} />
+          <Route path="/servicios/diseno-web" element={<DiseneoWeb lang={hostLang} />} />
+          <Route path="/services/web-design" element={<DiseneoWeb lang={hostLang} />} />
+          <Route path="/servicios/pauta-digital" element={<PautaDigital lang={hostLang} />} />
+          <Route path="/services/digital-ads" element={<PautaDigital lang={hostLang} />} />
+          <Route path="/servicios/diseno-logos" element={<DisenoLogos lang={hostLang} />} />
+          <Route path="/services/logo-design" element={<DisenoLogos lang={hostLang} />} />
+          <Route path="/servicios/descuentos-herramientas" element={<DescuentosHerramientas lang={hostLang} />} />
+          <Route path="/services/tool-discounts" element={<DescuentosHerramientas lang={hostLang} />} />
+          <Route path="/servicios/asesorias-marketing" element={<AsesoriasMarketing lang={hostLang} />} />
+          <Route path="/services/marketing-consulting" element={<AsesoriasMarketing lang={hostLang} />} />
+          <Route path="/servicios/optimizacion-linkedin" element={<OptimizacionLinkedin lang={hostLang} />} />
+          <Route path="/services/linkedin-optimization" element={<OptimizacionLinkedin lang={hostLang} />} />
+          <Route path="/precios" element={<Precios lang={hostLang} />} />
+          <Route path="/pricing" element={<Precios lang={hostLang} />} />
+          <Route path="/casos-de-exito" element={<CasosDeExito lang={hostLang} />} />
+          <Route path="/case-studies" element={<CasosDeExito lang={hostLang} />} />
+          <Route path="/casos-de-exito/:id" element={<CasoDetalle lang={hostLang} />} />
+          <Route path="/case-studies/:id" element={<CasoDetalle lang={hostLang} />} />
+          <Route path="/contacto" element={<Contacto lang={hostLang} />} />
+          <Route path="/contact" element={<Contacto lang={hostLang} />} />
+          <Route path="/blog" element={<Blog lang={hostLang} />} />
+          <Route path="/blog/:slug" element={<BlogPost lang={hostLang} />} />
+          <Route path="/recursos" element={<Recursos lang={hostLang} />} />
+          <Route path="/resources" element={<Recursos lang={hostLang} />} />
+          <Route path="/nosotros" element={<SobreNosotros lang={hostLang} />} />
+          <Route path="/about" element={<SobreNosotros lang={hostLang} />} />
+
+          {/* Legacy /en prefix routes still work */}
           <Route path="/en" element={<Index lang="en" />} />
           <Route path="/en/services" element={<Servicios lang="en" />} />
           <Route path="/en/services/ecommerce-seo" element={<SeoEcommerce lang="en" />} />
