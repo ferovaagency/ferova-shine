@@ -5,6 +5,7 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import ExitIntentPopup from "@/components/ui/exit-intent-popup";
 import SocialProofToasts from "@/components/ui/social-proof-toasts";
+import AiAdvisorChat from "@/components/ui/ai-advisor-chat";
 import { getLangFromHostname } from "@/hooks/use-lang-from-host";
 import Index from "./pages/Index";
 import NotFound from "./pages/NotFound";
