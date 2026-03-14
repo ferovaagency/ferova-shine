@@ -86,17 +86,17 @@ const DisenoLogos = ({ lang = 'es' }: Props) => {
         </section>
 
         {/* Features */}
-        <section className="py-20 md:py-28" style={{ background: 'hsl(243, 28%, 14%)' }}>
+        <section className="py-20 md:py-28 dark-section" style={{ background: 'hsl(243, 28%, 14%)' }}>
           <div className="container mx-auto px-4 md:px-6">
-            <h2 className="text-3xl md:text-4xl font-display font-bold text-center mb-16" style={{ color: 'hsl(45, 86%, 40%)' }}>{t.whatIncludes}</h2>
+            <h2 className="text-3xl md:text-4xl font-display font-bold text-center mb-16 text-gold">{t.whatIncludes}</h2>
             <div className="grid md:grid-cols-2 gap-8 max-w-5xl mx-auto">
               {t.features.map((f, i) => (
                 <div key={i} className="glass-card p-8 hover:border-gold/30 transition-all duration-300">
                   <div className="w-12 h-12 rounded-xl flex items-center justify-center mb-4" style={{ background: 'hsla(45, 86%, 40%, 0.1)' }}>
                     <f.icon className="w-6 h-6 text-gold" />
                   </div>
-                  <h3 className="text-xl font-display font-bold mb-3" style={{ color: 'hsl(0, 0%, 95%)' }}>{f.title}</h3>
-                  <p className="text-sm leading-relaxed" style={{ color: 'hsl(0, 0%, 65%)' }}>{f.desc}</p>
+                  <h3 className="text-xl font-display font-bold mb-3 text-foreground">{f.title}</h3>
+                  <p className="text-sm leading-relaxed text-muted-foreground">{f.desc}</p>
                 </div>
               ))}
             </div>

@@ -272,9 +272,9 @@ const SeoEcommerce = ({ lang = 'es' }: Props) => {
         </section>
 
         {/* FAQ */}
-        <section className="py-20 md:py-28" style={{ background: 'hsl(243, 28%, 14%)' }}>
+        <section className="py-20 md:py-28 dark-section" style={{ background: 'hsl(243, 28%, 14%)' }}>
           <div className="container mx-auto px-4 md:px-6">
-            <h2 className="text-3xl md:text-4xl font-display font-bold text-center mb-16" style={{ color: 'hsl(45, 86%, 40%)' }}>{t.faqTitle}</h2>
+            <h2 className="text-3xl md:text-4xl font-display font-bold text-center mb-16 text-gold">{t.faqTitle}</h2>
             <div className="max-w-3xl mx-auto space-y-4">
               {t.faqs.map((faq, i) => (
                 <div key={i} className="glass-card overflow-hidden">

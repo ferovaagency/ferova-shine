@@ -294,9 +294,9 @@ const Precios = ({ lang = 'es' }: Props) => {
         ))}
 
         {/* FAQ */}
-        <section className="py-20 md:py-28" style={{ background: 'hsl(243, 28%, 14%)' }}>
+        <section className="py-20 md:py-28 dark-section" style={{ background: 'hsl(243, 28%, 14%)' }}>
           <div className="container mx-auto px-4 md:px-6">
-            <h2 className="text-3xl md:text-4xl font-display font-bold text-center mb-16" style={{ color: 'hsl(0, 0%, 95%)' }}>{t.faq}</h2>
+            <h2 className="text-3xl md:text-4xl font-display font-bold text-center mb-16 text-gold">{t.faq}</h2>
             <div className="max-w-2xl mx-auto space-y-4">
               {t.faqs.map((faq, i) => (
                 <details key={i} className="glass-card p-6 group">
