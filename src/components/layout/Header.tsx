@@ -46,7 +46,15 @@ const Header = ({ currentLang = 'es' }: HeaderProps) => {
   };
 
   const ctaText = currentLang === 'es' ? 'Agendar Asesoría' : 'Book Consultation';
-  const langSwitch = { es: { code: 'EN', href: '/en' }, en: { code: 'ES', href: '/' } };
+  // When on custom domains, switch to the other domain; otherwise use path prefix
+  const host = window.location.hostname.toLowerCase();
+  const isCustomDomain = host.includes('seoparaecommerce.co') || host.includes('seoforecommerces.co');
+  const langSwitch = isCustomDomain
+    ? {
+        es: { code: 'EN', href: 'https://seoforecommerces.co' },
+        en: { code: 'ES', href: 'https://seoparaecommerce.co' },
+      }
+    : { es: { code: 'EN', href: '/en' }, en: { code: 'ES', href: '/' } };
 
   return (
     <>
