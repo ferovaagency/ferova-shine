@@ -203,10 +203,10 @@ const SeoEcommerce = ({ lang = 'es' }: Props) => {
         </section>
 
         {/* Pricing – SEO & GEO Local */}
-        <section className="py-20 md:py-28" style={{ background: 'hsl(243, 28%, 14%)' }}>
+        <section className="py-20 md:py-28 dark-section" style={{ background: 'hsl(243, 28%, 14%)' }}>
           <div className="container mx-auto px-4 md:px-6">
             <div className="text-center mb-10">
-              <h2 className="text-3xl md:text-4xl font-display font-bold mb-4" style={{ color: 'hsl(0, 0%, 95%)' }}>{t.planTitle}</h2>
+              <h2 className="text-3xl md:text-4xl font-display font-bold mb-4 text-foreground">{t.planTitle}</h2>
               <div className="flex items-center justify-center gap-1 p-1 rounded-full border border-border w-fit mx-auto">
                 <button onClick={() => setCurrency('usd')} className={`px-5 py-2 rounded-full text-sm font-medium transition-all ${currency === 'usd' ? 'bg-gold text-primary-foreground' : 'text-muted-foreground hover:text-foreground'}`}>USD</button>
                 <button onClick={() => setCurrency('cop')} className={`px-5 py-2 rounded-full text-sm font-medium transition-all ${currency === 'cop' ? 'bg-gold text-primary-foreground' : 'text-muted-foreground hover:text-foreground'}`}>COP</button>
@@ -216,10 +216,10 @@ const SeoEcommerce = ({ lang = 'es' }: Props) => {
               <div className="w-14 h-14 rounded-2xl flex items-center justify-center mb-5 mx-auto" style={{ background: 'hsla(45, 86%, 40%, 0.1)' }}>
                 <MapPin className="w-7 h-7 text-gold" />
               </div>
-              <p className="text-sm leading-relaxed mb-6 text-center" style={{ color: 'hsl(0, 0%, 70%)' }}>{t.planTagline}</p>
+              <p className="text-sm leading-relaxed mb-6 text-center text-muted-foreground">{t.planTagline}</p>
               <div className="text-center mb-6">
-                <span className="text-4xl font-display font-bold" style={{ color: 'hsl(0, 0%, 95%)' }}>{formatPrice(150, 600000)}</span>
-                <span className="text-sm ml-1" style={{ color: 'hsl(0, 0%, 60%)' }}>{t.monthly}</span>
+                <span className="text-4xl font-display font-bold text-foreground">{formatPrice(150, 600000)}</span>
+                <span className="text-sm ml-1 text-muted-foreground">{t.monthly}</span>
               </div>
 
               {/* Urgency */}
@@ -230,17 +230,17 @@ const SeoEcommerce = ({ lang = 'es' }: Props) => {
 
               <ul className="space-y-3 mb-6">
                 {t.planIncludes.map((item, i) => (
-                  <li key={i} className="flex items-start gap-3 text-sm" style={{ color: 'hsl(0, 0%, 90%)' }}>
+                  <li key={i} className="flex items-start gap-3 text-sm text-foreground">
                     <MapPin className="w-4 h-4 text-gold flex-shrink-0 mt-0.5" />
                     {item}
                   </li>
                 ))}
               </ul>
               <div className="mb-8 pt-4 border-t border-border">
-                <p className="text-xs font-semibold mb-2" style={{ color: 'hsl(0, 0%, 60%)' }}>{t.noInclude}</p>
+                <p className="text-xs font-semibold mb-2 text-muted-foreground">{t.noInclude}</p>
                 <ul className="space-y-1.5">
                   {t.planExcludes.map((ex, i) => (
-                    <li key={i} className="flex items-center gap-2 text-xs" style={{ color: 'hsl(0, 0%, 55%)' }}>
+                    <li key={i} className="flex items-center gap-2 text-xs text-muted-foreground">
                       <span className="opacity-50">✕</span> {ex}
                     </li>
                   ))}
