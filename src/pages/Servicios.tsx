@@ -76,12 +76,12 @@ const Servicios = ({ lang = 'es' }: ServiciosProps) => {
         </section>
 
         {/* CTA */}
-        <section className="py-20 md:py-28" style={{ background: 'hsl(243, 28%, 14%)' }}>
+        <section className="py-20 md:py-28 dark-section" style={{ background: 'hsl(243, 28%, 14%)' }}>
           <div className="container mx-auto px-4 md:px-6 text-center">
-            <h2 className="text-3xl md:text-4xl font-display font-bold mb-6" style={{ color: 'hsl(0, 0%, 95%)' }}>
+            <h2 className="text-3xl md:text-4xl font-display font-bold mb-6 text-foreground">
               {lang === 'es' ? '¿Listo para impulsar tu e-commerce?' : 'Ready to boost your e-commerce?'}
             </h2>
-            <p className="text-lg max-w-xl mx-auto mb-10" style={{ color: 'hsl(0, 0%, 70%)' }}>
+            <p className="text-lg max-w-xl mx-auto mb-10 text-muted-foreground">
               {lang === 'es' ? 'Escríbenos y diseñamos la estrategia perfecta para tu negocio.' : 'Contact us and we\'ll design the perfect strategy for your business.'}
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">

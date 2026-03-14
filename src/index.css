@@ -130,6 +130,19 @@
     box-shadow: 0 0 20px hsla(45, 86%, 40%, 0.15), 0 0 60px hsla(45, 86%, 40%, 0.05);
   }
 
+  /* Force light-on-dark tokens for sections with dark inline backgrounds */
+  .dark-section {
+    --foreground: 0 0% 95%;
+    --card-foreground: 0 0% 95%;
+    --muted-foreground: 0 0% 60%;
+    --border: 243 20% 22%;
+  }
+
+  .dark-section .glass-card {
+    background: hsla(243, 28%, 18%, 0.6);
+    border-color: hsla(243, 20%, 30%, 0.3);
+  }
+
   .wine-glow {
     box-shadow: 0 0 20px hsla(356, 68%, 20%, 0.2), 0 0 60px hsla(356, 68%, 20%, 0.08);
   }
