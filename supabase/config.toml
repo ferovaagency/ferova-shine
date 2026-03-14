@@ -1,1 +1,4 @@
 project_id = "lknzbundoabbhoaypnwr"
+
+[functions.ai-sales-advisor]
+verify_jwt = false

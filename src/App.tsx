@@ -38,6 +38,7 @@ const App = () => (
       <Sonner />
       <ExitIntentPopup lang={hostLang} />
       <SocialProofToasts lang={hostLang} />
+      <AiAdvisorChat lang={hostLang} />
       <BrowserRouter>
         <Routes>
           {/*
