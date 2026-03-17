@@ -135,7 +135,7 @@ const BlogPost = ({ lang = 'es' }: Props) => {
                     const [heading, ...rest] = paragraph.split('\n\n');
                     return (
                       <div key={i}>
-                        <h2 className="text-2xl font-display font-bold mt-10 mb-4 text-foreground">{heading.replace('## ', '')}</h2>
+                        <h2 className="text-xl font-display font-bold mt-10 mb-4 text-foreground">{heading.replace('## ', '')}</h2>
                         {rest.map((p, j) => (
                           <p key={j} className="text-muted-foreground leading-relaxed mb-4">{p}</p>
                         ))}
