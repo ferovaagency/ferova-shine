@@ -115,7 +115,7 @@ const SobreNosotros = ({ lang = 'es' }: Props) => {
               </StaggerItem>
               <StaggerItem>
                 <div className="glass-card p-8 md:p-10 h-full border-l-4 border-l-wine">
-                  <h2 className="text-2xl font-display font-bold mb-4 text-wine-light">{t.visionTitle}</h2>
+                  <h2 className="text-xl font-display font-bold mb-4 text-wine-light">{t.visionTitle}</h2>
                   <p className="text-foreground text-lg leading-relaxed">{t.vision}</p>
                 </div>
               </StaggerItem>
