@@ -1,7 +1,9 @@
+import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import Header from '@/components/layout/Header';
 import Footer from '@/components/layout/Footer';
 import ChatWidget from '@/components/ui/chat-widget';
+import ProposalModal from '@/components/ui/proposal-modal';
 import { AnimatedSection, StaggerContainer, StaggerItem, ScaleOnHover, PageTransition } from '@/components/ui/motion';
 import { motion } from 'framer-motion';
 import { Search, Monitor, Target, ArrowRight, CheckCircle, Palette, Tag, GraduationCap, MessageCircle, Linkedin } from 'lucide-react';
@@ -11,6 +13,8 @@ interface ServiciosProps {
 }
 
 const Servicios = ({ lang = 'es' }: ServiciosProps) => {
+  const [proposalOpen, setProposalOpen] = useState(false);
+  const [proposalService, setProposalService] = useState('');
   const services = lang === 'es' ? [
     { icon: Search, title: 'SEO para E-commerce', description: 'Estrategia integral de posicionamiento orgánico diseñada para tiendas online.', features: ['Auditoría técnica SEO', 'Keyword research estratégico', 'Optimización on-page', 'Link building de calidad', 'Content marketing', 'Reporting mensual'], href: '/servicios/seo-ecommerce' },
     { icon: Monitor, title: 'Diseño de Web Apps', description: 'Web Apps de Alto Rendimiento para E-commerce. Más rápidas que WordPress. Más seguras. Mejor SEO.', features: ['Diseño UI/UX profesional', 'Desarrollo responsive', 'Core Web Vitals optimizados', 'Integración e-commerce', 'Mobile-first', 'Mantenimiento continuo'], href: '/servicios/diseno-web' },
@@ -64,10 +68,18 @@ const Servicios = ({ lang = 'es' }: ServiciosProps) => {
                           </li>
                         ))}
                       </ul>
-                      <span className="inline-flex items-center gap-1 text-gold text-sm font-semibold group-hover:gap-2 transition-all">
-                        {lang === 'es' ? 'Ver detalles' : 'View details'} <ArrowRight className="w-4 h-4" />
-                      </span>
+                      <div className="flex items-center justify-between">
+                        <span className="inline-flex items-center gap-1 text-gold text-sm font-semibold group-hover:gap-2 transition-all">
+                          {lang === 'es' ? 'Ver detalles' : 'View details'} <ArrowRight className="w-4 h-4" />
+                        </span>
+                      </div>
                     </Link>
+                    <button
+                      onClick={(e) => { e.preventDefault(); setProposalService(s.title); setProposalOpen(true); }}
+                      className="mt-3 w-full py-2 rounded-full text-xs font-medium border border-border text-muted-foreground hover:text-foreground hover:border-gold/40 transition-all"
+                    >
+                      {lang === 'es' ? 'Solicitar propuesta personalizada' : 'Request custom proposal'}
+                    </button>
                   </ScaleOnHover>
                 </StaggerItem>
               ))}
@@ -98,6 +110,7 @@ const Servicios = ({ lang = 'es' }: ServiciosProps) => {
       </main>
       <Footer currentLang={lang} />
       <ChatWidget lang={lang} />
+      <ProposalModal open={proposalOpen} onClose={() => setProposalOpen(false)} lang={lang} defaultService={proposalService} />
     </PageTransition>
   );
 };

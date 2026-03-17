@@ -79,7 +79,7 @@ const CasoDetalle = ({ lang = 'es' }: Props) => {
               </div>
 
               <AnimatedSection delay={0.4} className="text-center mt-12">
-                <h3 className="text-2xl font-display font-bold mb-4">
+                <h3 className="text-xl font-display font-bold mb-4">
                   {lang === 'es' ? '¿Quieres resultados similares?' : 'Want similar results?'}
                 </h3>
                 <motion.a

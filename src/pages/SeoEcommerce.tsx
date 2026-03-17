@@ -150,7 +150,7 @@ const SeoEcommerce = ({ lang = 'es' }: Props) => {
                 <div className="w-20 h-20 rounded-full flex items-center justify-center mx-auto mb-4" style={{ background: 'linear-gradient(135deg, hsl(45 86% 40%), hsl(45 86% 52%))' }}>
                   <Search className="w-10 h-10 text-primary-foreground" />
                 </div>
-                <h3 className="text-2xl font-display font-bold mb-2">{lang === 'es' ? 'Diagnóstico gratuito' : 'Free diagnosis'}</h3>
+                <h3 className="text-xl font-display font-bold mb-2">{lang === 'es' ? 'Diagnóstico gratuito' : 'Free diagnosis'}</h3>
                 <p className="text-muted-foreground">{lang === 'es' ? 'Análisis inicial sin costo de tu sitio web' : 'Free initial analysis of your website'}</p>
               </div>
             </div>
@@ -261,7 +261,7 @@ const SeoEcommerce = ({ lang = 'es' }: Props) => {
               {t.steps.map((s, i) => (
                 <div key={i} className="text-center">
                   <div className="w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-6 bg-gold">
-                    <span className="text-2xl font-display font-bold text-primary-foreground">{s.n}</span>
+                    <span className="text-xl font-display font-bold text-primary-foreground">{s.n}</span>
                   </div>
                   <h3 className="text-xl font-display font-bold mb-4">{s.title}</h3>
                   <p className="text-muted-foreground leading-relaxed">{s.desc}</p>

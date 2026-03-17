@@ -2,6 +2,7 @@ import { useState } from 'react';
 import Header from '@/components/layout/Header';
 import Footer from '@/components/layout/Footer';
 import ChatWidget from '@/components/ui/chat-widget';
+import ProposalModal from '@/components/ui/proposal-modal';
 import { AnimatedSection, StaggerContainer, StaggerItem, ScaleOnHover, PageTransition } from '@/components/ui/motion';
 import { Check, X, Clock, Zap, MapPin, Palette, ArrowRight, MessageCircle, Timer, Stethoscope, Map, Paintbrush } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
@@ -31,6 +32,8 @@ interface Category {
 
 const Precios = ({ lang = 'es' }: Props) => {
   const [currency, setCurrency] = useState<'cop' | 'usd'>('usd');
+  const [proposalOpen, setProposalOpen] = useState(false);
+  const [proposalService, setProposalService] = useState('');
   const { toast } = useToast();
 
   const handleCta = (key: PaymentLinkKey) => {
@@ -246,7 +249,7 @@ const Precios = ({ lang = 'es' }: Props) => {
                           <div className="w-14 h-14 rounded-2xl flex items-center justify-center mb-5" style={{ background: 'hsla(45, 86%, 40%, 0.1)' }}>
                             <IconComp className="w-7 h-7 text-gold" />
                           </div>
-                          <h3 className="text-2xl font-display font-bold mb-3 text-foreground">{plan.name}</h3>
+                          <h3 className="text-xl font-display font-bold mb-3 text-foreground">{plan.name}</h3>
                           <p className="text-muted-foreground text-sm leading-relaxed mb-6">{plan.tagline}</p>
                           <div className="mb-6">
                             <span className="text-4xl font-display font-bold text-foreground">{formatPrice(currency === 'usd' ? plan.priceUsd : plan.priceCop)}</span>
@@ -283,6 +286,12 @@ const Precios = ({ lang = 'es' }: Props) => {
                           >
                             <MessageCircle className="w-4 h-4" /> {plan.cta}
                           </button>
+                          <button
+                            onClick={() => { setProposalService(plan.name); setProposalOpen(true); }}
+                            className="w-full mt-3 py-2 rounded-full text-xs font-medium border border-border text-muted-foreground hover:text-foreground hover:border-gold/40 transition-all"
+                          >
+                            {lang === 'es' ? 'Solicitar propuesta personalizada' : 'Request custom proposal'}
+                          </button>
                         </div>
                       </ScaleOnHover>
                     </StaggerItem>
@@ -313,6 +322,7 @@ const Precios = ({ lang = 'es' }: Props) => {
       </main>
       <Footer currentLang={lang} />
       <ChatWidget lang={lang} />
+      <ProposalModal open={proposalOpen} onClose={() => setProposalOpen(false)} lang={lang} defaultService={proposalService} />
     </PageTransition>
   );
 };

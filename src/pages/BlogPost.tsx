@@ -135,7 +135,7 @@ const BlogPost = ({ lang = 'es' }: Props) => {
                     const [heading, ...rest] = paragraph.split('\n\n');
                     return (
                       <div key={i}>
-                        <h2 className="text-2xl font-display font-bold mt-10 mb-4 text-foreground">{heading.replace('## ', '')}</h2>
+                        <h2 className="text-xl font-display font-bold mt-10 mb-4 text-foreground">{heading.replace('## ', '')}</h2>
                         {rest.map((p, j) => (
                           <p key={j} className="text-muted-foreground leading-relaxed mb-4">{p}</p>
                         ))}
@@ -150,7 +150,7 @@ const BlogPost = ({ lang = 'es' }: Props) => {
 
               {/* CTA */}
               <div className="glass-card p-8 mt-12 text-center gold-glow">
-                <h3 className="text-2xl font-display font-bold mb-4">
+                <h3 className="text-xl font-display font-bold mb-4">
                   {lang === 'es' ? '¿Quieres resultados así para tu e-commerce?' : 'Want results like these for your e-commerce?'}
                 </h3>
                 <p className="text-muted-foreground mb-6">

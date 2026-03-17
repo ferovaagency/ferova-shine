@@ -109,13 +109,13 @@ const SobreNosotros = ({ lang = 'es' }: Props) => {
             <StaggerContainer className="grid md:grid-cols-2 gap-8 max-w-4xl mx-auto">
               <StaggerItem>
                 <div className="glass-card p-8 md:p-10 h-full border-l-4 border-l-gold">
-                  <h2 className="text-2xl font-display font-bold mb-4 text-gold">{t.missionTitle}</h2>
+                  <h2 className="text-xl font-display font-bold mb-4 text-gold">{t.missionTitle}</h2>
                   <p className="text-foreground text-lg leading-relaxed">{t.mission}</p>
                 </div>
               </StaggerItem>
               <StaggerItem>
                 <div className="glass-card p-8 md:p-10 h-full border-l-4 border-l-wine">
-                  <h2 className="text-2xl font-display font-bold mb-4 text-wine-light">{t.visionTitle}</h2>
+                  <h2 className="text-xl font-display font-bold mb-4 text-wine-light">{t.visionTitle}</h2>
                   <p className="text-foreground text-lg leading-relaxed">{t.vision}</p>
                 </div>
               </StaggerItem>
@@ -187,7 +187,7 @@ const SobreNosotros = ({ lang = 'es' }: Props) => {
                 <div className="relative mb-6">
                   <div className="h-24 rounded-xl bg-gradient-to-r from-[#0A66C2]/20 to-gold/10" />
                   <div className="w-20 h-20 rounded-full bg-gold/10 border-4 border-background flex items-center justify-center absolute -bottom-10 left-6">
-                    <span className="text-gold font-display font-bold text-2xl">MF</span>
+                    <span className="text-gold font-display font-bold text-xl">MF</span>
                   </div>
                 </div>
                 <div className="pt-8 pl-2">

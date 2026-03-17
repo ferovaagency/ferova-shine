@@ -7,8 +7,10 @@ import ExitIntentPopup from "@/components/ui/exit-intent-popup";
 import SocialProofToasts from "@/components/ui/social-proof-toasts";
 import AiAdvisorChat from "@/components/ui/ai-advisor-chat";
 import { getLangFromHostname } from "@/hooks/use-lang-from-host";
+import ScrollToTop from "./components/ScrollToTop";
 import Index from "./pages/Index";
 import NotFound from "./pages/NotFound";
+import Terminos from "./pages/Terminos";
 import Servicios from "./pages/Servicios";
 import SeoEcommerce from "./pages/SeoEcommerce";
 import DiseneoWeb from "./pages/DiseneoWeb";
@@ -40,6 +42,7 @@ const App = () => (
       <SocialProofToasts lang={hostLang} />
       <AiAdvisorChat lang={hostLang} />
       <BrowserRouter>
+        <ScrollToTop />
         <Routes>
           {/*
             When accessed via seoforecommerces.co → hostLang = 'en'
@@ -79,6 +82,8 @@ const App = () => (
           <Route path="/resources" element={<Recursos lang={hostLang} />} />
           <Route path="/nosotros" element={<SobreNosotros lang={hostLang} />} />
           <Route path="/about" element={<SobreNosotros lang={hostLang} />} />
+          <Route path="/terminos" element={<Terminos lang={hostLang} />} />
+          <Route path="/terms" element={<Terminos lang={hostLang} />} />
 
           {/* Legacy /en prefix routes still work */}
           <Route path="/en" element={<Index lang="en" />} />
@@ -98,6 +103,7 @@ const App = () => (
           <Route path="/en/blog/:slug" element={<BlogPost lang="en" />} />
           <Route path="/en/resources" element={<Recursos lang="en" />} />
           <Route path="/en/about" element={<SobreNosotros lang="en" />} />
+          <Route path="/en/terms" element={<Terminos lang="en" />} />
 
           <Route path="*" element={<NotFound />} />
         </Routes>

@@ -168,6 +168,7 @@ const AiAdvisorChat = ({ lang = 'es' }: AiAdvisorChatProps) => {
       setMessages(prev => [...prev, { role: 'assistant', content: txt.error }]);
     } finally {
       setLoading(false);
+      setTimeout(() => inputRef.current?.focus(), 100);
     }
   };
 

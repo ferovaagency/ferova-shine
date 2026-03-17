@@ -99,7 +99,7 @@ const ServicesPreview = ({ lang = 'es' }: ServicesPreviewProps) => {
                 </div>
 
                 {/* Content */}
-                <h3 className="text-2xl font-semibold text-foreground mb-4">
+                <h3 className="text-xl font-semibold text-foreground mb-4">
                   {service.title}
                 </h3>
                 

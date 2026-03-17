@@ -63,7 +63,7 @@ const HeroSection = ({ lang = 'es' }: HeroSectionProps) => {
           </h1>
 
           {/* Subheadline */}
-          <p className="text-xl md:text-2xl text-muted-foreground mb-12 max-w-3xl mx-auto leading-relaxed animate-fade-up">
+          <p className="text-xl text-muted-foreground mb-12 max-w-3xl mx-auto leading-relaxed animate-fade-up">
             {data.subheadline}
           </p>
 

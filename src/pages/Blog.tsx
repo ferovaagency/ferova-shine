@@ -118,7 +118,7 @@ const Blog = ({ lang = 'es' }: Props) => {
                       <Clock className="w-3 h-3" /> {post.readTime}
                     </span>
                   </div>
-                  <h2 className="text-xl md:text-2xl font-display font-bold mb-3 text-foreground group-hover:text-gold transition-colors">
+                  <h2 className="text-xl font-display font-bold mb-3 text-foreground group-hover:text-gold transition-colors">
                     {post.title}
                   </h2>
                   <p className="text-muted-foreground text-sm leading-relaxed mb-4">{post.excerpt}</p>
