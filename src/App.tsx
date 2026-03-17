@@ -42,6 +42,7 @@ const App = () => (
       <SocialProofToasts lang={hostLang} />
       <AiAdvisorChat lang={hostLang} />
       <BrowserRouter>
+        <ScrollToTop />
         <Routes>
           {/*
             When accessed via seoforecommerces.co → hostLang = 'en'
