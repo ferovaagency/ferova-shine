@@ -82,6 +82,8 @@ const App = () => (
           <Route path="/resources" element={<Recursos lang={hostLang} />} />
           <Route path="/nosotros" element={<SobreNosotros lang={hostLang} />} />
           <Route path="/about" element={<SobreNosotros lang={hostLang} />} />
+          <Route path="/terminos" element={<Terminos lang={hostLang} />} />
+          <Route path="/terms" element={<Terminos lang={hostLang} />} />
 
           {/* Legacy /en prefix routes still work */}
           <Route path="/en" element={<Index lang="en" />} />
