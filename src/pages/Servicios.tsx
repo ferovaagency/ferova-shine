@@ -13,6 +13,8 @@ interface ServiciosProps {
 }
 
 const Servicios = ({ lang = 'es' }: ServiciosProps) => {
+  const [proposalOpen, setProposalOpen] = useState(false);
+  const [proposalService, setProposalService] = useState('');
   const services = lang === 'es' ? [
     { icon: Search, title: 'SEO para E-commerce', description: 'Estrategia integral de posicionamiento orgánico diseñada para tiendas online.', features: ['Auditoría técnica SEO', 'Keyword research estratégico', 'Optimización on-page', 'Link building de calidad', 'Content marketing', 'Reporting mensual'], href: '/servicios/seo-ecommerce' },
     { icon: Monitor, title: 'Diseño de Web Apps', description: 'Web Apps de Alto Rendimiento para E-commerce. Más rápidas que WordPress. Más seguras. Mejor SEO.', features: ['Diseño UI/UX profesional', 'Desarrollo responsive', 'Core Web Vitals optimizados', 'Integración e-commerce', 'Mobile-first', 'Mantenimiento continuo'], href: '/servicios/diseno-web' },
