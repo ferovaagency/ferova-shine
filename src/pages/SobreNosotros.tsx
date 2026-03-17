@@ -109,7 +109,7 @@ const SobreNosotros = ({ lang = 'es' }: Props) => {
             <StaggerContainer className="grid md:grid-cols-2 gap-8 max-w-4xl mx-auto">
               <StaggerItem>
                 <div className="glass-card p-8 md:p-10 h-full border-l-4 border-l-gold">
-                  <h2 className="text-2xl font-display font-bold mb-4 text-gold">{t.missionTitle}</h2>
+                  <h2 className="text-xl font-display font-bold mb-4 text-gold">{t.missionTitle}</h2>
                   <p className="text-foreground text-lg leading-relaxed">{t.mission}</p>
                 </div>
               </StaggerItem>
