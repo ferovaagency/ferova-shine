@@ -246,7 +246,7 @@ const Precios = ({ lang = 'es' }: Props) => {
                           <div className="w-14 h-14 rounded-2xl flex items-center justify-center mb-5" style={{ background: 'hsla(45, 86%, 40%, 0.1)' }}>
                             <IconComp className="w-7 h-7 text-gold" />
                           </div>
-                          <h3 className="text-2xl font-display font-bold mb-3 text-foreground">{plan.name}</h3>
+                          <h3 className="text-xl font-display font-bold mb-3 text-foreground">{plan.name}</h3>
                           <p className="text-muted-foreground text-sm leading-relaxed mb-6">{plan.tagline}</p>
                           <div className="mb-6">
                             <span className="text-4xl font-display font-bold text-foreground">{formatPrice(currency === 'usd' ? plan.priceUsd : plan.priceCop)}</span>

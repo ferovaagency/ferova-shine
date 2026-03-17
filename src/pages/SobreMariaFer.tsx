@@ -813,7 +813,7 @@ const SobreMariaFer = ({ lang = 'es' }: SobreMariaFerProps) => {
           <div className="grid md:grid-cols-2 gap-8 md:gap-12">
             {/* Quick Links Column */}
             <div>
-              <h3 className="text-xl md:text-2xl font-bold mb-6 md:mb-8 text-white">
+              <h3 className="text-xl font-bold mb-6 md:mb-8 text-white">
                 {t.contact.quickLinks.title}
               </h3>
               

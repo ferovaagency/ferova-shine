@@ -125,7 +125,7 @@ const OptimizacionLinkedin = ({ lang = 'es' }: Props) => {
                 <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-semibold bg-gold/20 text-gold mb-6">
                   <Star className="w-3 h-3 fill-gold" /> Plan Único
                 </div>
-                <h3 className="text-2xl font-display font-bold mb-2">{t.planName}</h3>
+                <h3 className="text-xl font-display font-bold mb-2">{t.planName}</h3>
                 <p className="text-muted-foreground text-sm mb-6">{t.planDesc}</p>
                 <div className="mb-8">
                   <span className="text-4xl font-display font-bold text-foreground">${t.planPrice.usd} USD</span>

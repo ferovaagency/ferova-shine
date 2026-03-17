@@ -261,7 +261,7 @@ const SeoEcommerce = ({ lang = 'es' }: Props) => {
               {t.steps.map((s, i) => (
                 <div key={i} className="text-center">
                   <div className="w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-6 bg-gold">
-                    <span className="text-2xl font-display font-bold text-primary-foreground">{s.n}</span>
+                    <span className="text-xl font-display font-bold text-primary-foreground">{s.n}</span>
                   </div>
                   <h3 className="text-xl font-display font-bold mb-4">{s.title}</h3>
                   <p className="text-muted-foreground leading-relaxed">{s.desc}</p>

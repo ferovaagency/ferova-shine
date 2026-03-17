@@ -89,7 +89,7 @@ const ExitIntentPopup = ({ lang = 'es' }: Props) => {
               <div className="w-16 h-16 rounded-2xl flex items-center justify-center mx-auto mb-5" style={{ background: 'hsla(45, 86%, 40%, 0.15)' }}>
                 <BookOpen className="w-8 h-8" style={{ color: 'hsl(45, 86%, 40%)' }} />
               </div>
-              <h3 className="text-2xl font-display font-bold mb-3" style={{ color: 'hsl(0, 0%, 95%)' }}>{t.title}</h3>
+              <h3 className="text-xl font-display font-bold mb-3" style={{ color: 'hsl(0, 0%, 95%)' }}>{t.title}</h3>
               <p className="text-sm leading-relaxed mb-6" style={{ color: 'hsl(0, 0%, 60%)' }}>{t.sub}</p>
 
               <form onSubmit={handleSubmit} className="space-y-3">

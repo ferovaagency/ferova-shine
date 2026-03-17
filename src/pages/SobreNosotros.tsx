@@ -187,7 +187,7 @@ const SobreNosotros = ({ lang = 'es' }: Props) => {
                 <div className="relative mb-6">
                   <div className="h-24 rounded-xl bg-gradient-to-r from-[#0A66C2]/20 to-gold/10" />
                   <div className="w-20 h-20 rounded-full bg-gold/10 border-4 border-background flex items-center justify-center absolute -bottom-10 left-6">
-                    <span className="text-gold font-display font-bold text-2xl">MF</span>
+                    <span className="text-gold font-display font-bold text-xl">MF</span>
                   </div>
                 </div>
                 <div className="pt-8 pl-2">

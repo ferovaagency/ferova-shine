@@ -150,7 +150,7 @@ const BlogPost = ({ lang = 'es' }: Props) => {
 
               {/* CTA */}
               <div className="glass-card p-8 mt-12 text-center gold-glow">
-                <h3 className="text-2xl font-display font-bold mb-4">
+                <h3 className="text-xl font-display font-bold mb-4">
                   {lang === 'es' ? '¿Quieres resultados así para tu e-commerce?' : 'Want results like these for your e-commerce?'}
                 </h3>
                 <p className="text-muted-foreground mb-6">

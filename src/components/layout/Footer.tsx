@@ -56,7 +56,7 @@ const Footer = ({ currentLang = 'es' }: FooterProps) => {
         { name: 'Contact', href: '/en/contact' },
       ],
       legalLinks: [
-        { name: 'Terms', href: '/en/terms' },
+        { name: 'Terms & Conditions', href: '/en/terms' },
         { name: 'Privacy', href: '/en/privacy' },
         { name: 'Cookies', href: '/en/cookies' },
       ],
