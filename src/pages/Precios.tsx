@@ -32,6 +32,8 @@ interface Category {
 
 const Precios = ({ lang = 'es' }: Props) => {
   const [currency, setCurrency] = useState<'cop' | 'usd'>('usd');
+  const [proposalOpen, setProposalOpen] = useState(false);
+  const [proposalService, setProposalService] = useState('');
   const { toast } = useToast();
 
   const handleCta = (key: PaymentLinkKey) => {
