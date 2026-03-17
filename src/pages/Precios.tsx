@@ -286,6 +286,12 @@ const Precios = ({ lang = 'es' }: Props) => {
                           >
                             <MessageCircle className="w-4 h-4" /> {plan.cta}
                           </button>
+                          <button
+                            onClick={() => { setProposalService(plan.name); setProposalOpen(true); }}
+                            className="w-full mt-3 py-2 rounded-full text-xs font-medium border border-border text-muted-foreground hover:text-foreground hover:border-gold/40 transition-all"
+                          >
+                            {lang === 'es' ? 'Solicitar propuesta personalizada' : 'Request custom proposal'}
+                          </button>
                         </div>
                       </ScaleOnHover>
                     </StaggerItem>
