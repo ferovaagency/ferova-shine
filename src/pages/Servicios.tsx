@@ -110,6 +110,7 @@ const Servicios = ({ lang = 'es' }: ServiciosProps) => {
       </main>
       <Footer currentLang={lang} />
       <ChatWidget lang={lang} />
+      <ProposalModal open={proposalOpen} onClose={() => setProposalOpen(false)} lang={lang} defaultService={proposalService} />
     </PageTransition>
   );
 };

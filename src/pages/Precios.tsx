@@ -322,6 +322,7 @@ const Precios = ({ lang = 'es' }: Props) => {
       </main>
       <Footer currentLang={lang} />
       <ChatWidget lang={lang} />
+      <ProposalModal open={proposalOpen} onClose={() => setProposalOpen(false)} lang={lang} defaultService={proposalService} />
     </PageTransition>
   );
 };
