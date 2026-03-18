@@ -5,9 +5,12 @@ import logoLight from '@/assets/ferova-logo.png';
 
 interface FooterProps {
   currentLang?: 'es' | 'en';
+  lang?: 'es' | 'en';
 }
 
-const Footer = ({ currentLang = 'es' }: FooterProps) => {
+const Footer = ({ currentLang, lang }: FooterProps) => {
+  const locale = lang ?? currentLang ?? 'es';
+
   const t = {
     es: {
       tagline: 'Web Apps de alto rendimiento para e-commerce. SEO, diseño y estrategia digital.',
@@ -63,33 +66,33 @@ const Footer = ({ currentLang = 'es' }: FooterProps) => {
     },
   };
 
-  const d = t[currentLang];
+  const d = t[locale];
 
   return (
     <footer className="border-t border-border/50 bg-card">
-      <div className="container mx-auto px-4 md:px-6 py-12 md:py-16">
-        <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-8">
+      <div className="container mx-auto px-4 py-12 md:px-6 md:py-16">
+        <div className="grid grid-cols-2 gap-8 md:grid-cols-4 lg:grid-cols-5">
           <div className="col-span-2 md:col-span-4 lg:col-span-2">
-            <Link to={currentLang === 'es' ? '/' : '/en'}>
+            <Link to={locale === 'es' ? '/' : '/en'}>
               <img src={logoDark} alt="Ferova Agency" className="h-16 w-auto dark:hidden" />
-              <img src={logoLight} alt="Ferova Agency" className="h-16 w-auto hidden dark:block" style={{ filter: 'brightness(0) invert(1) sepia(1) saturate(5) hue-rotate(15deg)' }} />
+              <img src={logoLight} alt="Ferova Agency" className="hidden h-16 w-auto dark:block" style={{ filter: 'brightness(0) invert(1) sepia(1) saturate(5) hue-rotate(15deg)' }} />
             </Link>
-            <p className="text-muted-foreground text-sm mt-3 max-w-xs">{d.tagline}</p>
+            <p className="mt-3 max-w-xs text-sm text-muted-foreground">{d.tagline}</p>
             <div className="mt-4 space-y-2 text-sm text-muted-foreground">
-              <a href="mailto:maria.fer@ferova.com.co" className="flex items-center gap-2 hover:text-gold transition-colors">
-                <Mail className="w-4 h-4" /> maria.fer@ferova.com.co
+              <a href="mailto:maria.fer@ferova.com.co" className="flex items-center gap-2 transition-colors hover:text-gold">
+                <Mail className="h-4 w-4" /> maria.fer@ferova.com.co
               </a>
-              <a href="https://wa.me/17865787671" target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 hover:text-gold transition-colors">
-                <MessageCircle className="w-4 h-4" /> +1 (786) 578-7671
+              <a href="https://wa.me/17865787671" target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 transition-colors hover:text-gold">
+                <MessageCircle className="h-4 w-4" /> +1 (786) 578-7671
               </a>
               <div className="flex items-center gap-2">
-                <MapPin className="w-4 h-4 flex-shrink-0" /> Bogotá, Colombia · Brasil · Estados Unidos
+                <MapPin className="h-4 w-4 flex-shrink-0" /> Bogotá, Colombia · Brasil · Estados Unidos
               </div>
             </div>
-            <div className="flex gap-3 mt-4">
+            <div className="mt-4 flex gap-3">
               {[Instagram, Linkedin, Twitter].map((Icon, i) => (
-                <a key={i} href="#" className="p-2 rounded-lg border border-border/50 text-muted-foreground hover:text-gold hover:border-gold/50 transition-all" aria-label="Social">
-                  <Icon className="w-4 h-4" />
+                <a key={i} href="#" className="rounded-lg border border-border/50 p-2 text-muted-foreground transition-all hover:border-gold/50 hover:text-gold" aria-label="Social">
+                  <Icon className="h-4 w-4" />
                 </a>
               ))}
             </div>
@@ -101,11 +104,11 @@ const Footer = ({ currentLang = 'es' }: FooterProps) => {
             { title: d.legal, links: d.legalLinks },
           ].map((section) => (
             <div key={section.title}>
-              <h4 className="font-display font-semibold text-foreground mb-4 text-sm">{section.title}</h4>
+              <h4 className="mb-4 text-sm font-display font-semibold text-foreground">{section.title}</h4>
               <ul className="space-y-2">
                 {section.links.map((link) => (
                   <li key={link.name}>
-                    <Link to={link.href} className="text-sm text-muted-foreground hover:text-gold transition-colors">
+                    <Link to={link.href} className="text-sm text-muted-foreground transition-colors hover:text-gold">
                       {link.name}
                     </Link>
                   </li>
@@ -115,8 +118,8 @@ const Footer = ({ currentLang = 'es' }: FooterProps) => {
           ))}
         </div>
 
-        <div className="border-t border-border/30 mt-12 pt-8 text-center">
-          <p className="text-muted-foreground text-xs">© {new Date().getFullYear()} Ferova Agency. {d.rights}</p>
+        <div className="mt-12 border-t border-border/30 pt-8 text-center">
+          <p className="text-xs text-muted-foreground">© {new Date().getFullYear()} Ferova Agency. {d.rights}</p>
         </div>
       </div>
     </footer>
