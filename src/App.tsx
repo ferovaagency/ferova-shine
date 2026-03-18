@@ -104,6 +104,7 @@ const App = () => (
           <Route path="/en/resources" element={<Recursos lang="en" />} />
           <Route path="/en/about" element={<SobreNosotros lang="en" />} />
           <Route path="/en/terms" element={<Terminos lang="en" />} />
+          <Route path="/whatsapp-business" element={<OptimizacionWhatsapp />} />
 
           <Route path="*" element={<NotFound />} />
         </Routes>
