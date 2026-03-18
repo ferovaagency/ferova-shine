@@ -1,6 +1,5 @@
 import { Link } from 'react-router-dom';
 import { Mail, MapPin, Instagram, Linkedin, Twitter, MessageCircle } from 'lucide-react';
-import logoDark from '@/assets/ferova-logo-dark.png.png';
 import logoLight from '@/assets/ferova-logo.png.png';
 
 interface FooterProps {
@@ -74,8 +73,7 @@ const Footer = ({ currentLang, lang }: FooterProps) => {
         <div className="grid grid-cols-2 gap-8 md:grid-cols-4 lg:grid-cols-5">
           <div className="col-span-2 md:col-span-4 lg:col-span-2">
             <Link to={locale === 'es' ? '/' : '/en'}>
-              <img src={logoDark} alt="Ferova Agency" className="h-16 w-auto dark:hidden" />
-              <img src={logoLight} alt="Ferova Agency" className="hidden h-16 w-auto dark:block" style={{ filter: 'brightness(0) invert(1) sepia(1) saturate(5) hue-rotate(15deg)' }} />
+              <img src={logoLight} alt="Ferova Agency" className="h-16 w-auto" />
             </Link>
             <p className="mt-3 max-w-xs text-sm text-muted-foreground">{d.tagline}</p>
             <div className="mt-4 space-y-2 text-sm text-muted-foreground">
