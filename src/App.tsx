@@ -28,6 +28,8 @@ import BlogPost from "./pages/BlogPost";
 import Recursos from "./pages/Recursos";
 import SobreNosotros from "./pages/SobreNosotros";
 import OptimizacionWhatsapp from "./pages/OptimizacionWhatsapp";
+import AdminBlog from "./pages/AdminBlog";
+
 const queryClient = new QueryClient();
 
 /** Detect language from hostname; falls back to path-based /en prefix */
@@ -78,6 +80,7 @@ const App = () => (
           <Route path="/contact" element={<Contacto lang={hostLang} />} />
           <Route path="/blog" element={<Blog lang={hostLang} />} />
           <Route path="/blog/:slug" element={<BlogPost lang={hostLang} />} />
+          <Route path="/admin-blog" element={<AdminBlog lang={hostLang} />} />
           <Route path="/recursos" element={<Recursos lang={hostLang} />} />
           <Route path="/resources" element={<Recursos lang={hostLang} />} />
           <Route path="/nosotros" element={<SobreNosotros lang={hostLang} />} />
@@ -103,6 +106,7 @@ const App = () => (
           <Route path="/en/contact" element={<Contacto lang="en" />} />
           <Route path="/en/blog" element={<Blog lang="en" />} />
           <Route path="/en/blog/:slug" element={<BlogPost lang="en" />} />
+          <Route path="/en/admin-blog" element={<AdminBlog lang="en" />} />
           <Route path="/en/resources" element={<Recursos lang="en" />} />
           <Route path="/en/about" element={<SobreNosotros lang="en" />} />
           <Route path="/en/terms" element={<Terminos lang="en" />} />
