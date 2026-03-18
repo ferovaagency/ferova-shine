@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom';
 import { Mail, MapPin, Instagram, Linkedin, Twitter, MessageCircle } from 'lucide-react';
-import logoDark from '@/assets/ferova-logo-dark.png';
-import logoLight from '@/assets/ferova-logo.png';
+import logoDark from '@/assets/ferova-logo-dark.png.png';
+import logoLight from '@/assets/ferova-logo.png.png';
 
 interface FooterProps {
   currentLang?: 'es' | 'en';
