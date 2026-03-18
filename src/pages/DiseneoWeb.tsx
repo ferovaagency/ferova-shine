@@ -1,453 +1,384 @@
-import { useState } from 'react';
-import { Link } from 'react-router-dom';
 import Header from '@/components/layout/Header';
 import Footer from '@/components/layout/Footer';
 import ChatWidget from '@/components/ui/chat-widget';
-import ProposalModal from '@/components/ui/proposal-modal';
-import { AnimatedSection, StaggerContainer, StaggerItem, ScaleOnHover, PageTransition } from '@/components/ui/motion';
-import { motion } from 'framer-motion';
+import AdBanner from '@/components/ui/ad-banner';
+import { useState } from 'react';
+import { getPaymentLink } from '@/lib/payment-links';
+import { useToast } from '@/hooks/use-toast';
 import {
-  Rocket, Clock, Code2, Smartphone, Bot, CheckCircle, X,
-  Palette, Search, MessageCircle, Zap, Shield, FileText,
-  Monitor, Globe, Database, ArrowRight
+  Zap, Shield, BarChart3, Smartphone, Check, X, ArrowRight,
+  MessageCircle, Globe, ShoppingCart, Rocket, Star
 } from 'lucide-react';
 
 interface Props { lang?: 'es' | 'en'; }
 
 const DiseneoWeb = ({ lang = 'es' }: Props) => {
   const [currency, setCurrency] = useState<'usd' | 'cop'>('usd');
-  const [proposalOpen, setProposalOpen] = useState(false);
-  const [proposalService, setProposalService] = useState('');
+  const { toast } = useToast();
 
-  const formatPrice = (usd: number, cop: number) => {
-    if (currency === 'cop') return new Intl.NumberFormat('es-CO', { style: 'currency', currency: 'COP', maximumFractionDigits: 0 }).format(cop);
-    return new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD', maximumFractionDigits: 0 }).format(usd);
+  const handleCta = (key: 'webEconomico' | 'webPro' | 'webEcommerce') => {
+    const link = getPaymentLink(key, currency);
+    window.open(link, '_blank', 'noopener,noreferrer');
+    toast({
+      title: lang === 'es' ? '¡Confirmado!' : 'Confirmed!',
+      description: lang === 'es' ? '¡Plan seleccionado! Te contactaremos pronto.' : 'Plan selected! We\'ll contact you soon.',
+    });
   };
 
-  const openProposal = (service: string) => {
-    setProposalService(service);
-    setProposalOpen(true);
+  const formatPrice = (usd: number, cop: number, isMonthly = false) => {
+    const val = currency === 'cop'
+      ? new Intl.NumberFormat('es-CO', { style: 'currency', currency: 'COP', maximumFractionDigits: 0 }).format(cop)
+      : new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD', maximumFractionDigits: 0 }).format(usd);
+    return val;
   };
-
-  const whatsappUrl = (plan: string) =>
-    `https://wa.me/17865787671?text=${encodeURIComponent(
-      lang === 'es'
-        ? `Hola Ferova, me interesa el plan ${plan} de Diseño Web.`
-        : `Hi Ferova, I'm interested in the ${plan} Web Design plan.`
-    )}`;
 
   const t = lang === 'es' ? {
-    heroTitle: 'Tu sitio web debería vender mientras duermes',
-    heroSub: 'Construimos Web Apps modernas en React con entrega en 1 semana. No WordPress genérico. Código tuyo, rápido, seguro y optimizado para Google desde el día 1.',
-    heroCta: 'Solicitar Propuesta',
-    diffTitle: '¿Por qué elegir Ferova?',
-    differentiators: [
-      { icon: Rocket, title: 'Entrega en 1 semana', desc: 'Tu sitio listo en 7 días. Sin meses de espera.' },
-      { icon: Code2, title: 'Código tuyo en GitHub', desc: 'Eres dueño de cada línea de código. Sin dependencias.' },
-      { icon: Smartphone, title: 'Mobile-first siempre', desc: 'Diseñado primero para móvil, perfecto en todas las pantallas.' },
-      { icon: Bot, title: 'IA integrada opcional', desc: 'Chatbots, generadores de contenido y automatizaciones con IA.' },
-    ],
-    includesTitle: 'Lo que incluye cada proyecto',
-    includes: [
-      { icon: Palette, text: 'Diseño con tu marca aplicada desde el día 1' },
-      { icon: Search, text: 'SEO técnico desde la estructura' },
-      { icon: MessageCircle, text: 'WhatsApp flotante integrado' },
-      { icon: FileText, text: 'Formularios con notificación automática' },
-      { icon: Smartphone, text: 'Responsive total en todos los dispositivos' },
-      { icon: Database, text: 'Conexión a backend moderno' },
-    ],
-    plansTitle: 'Planes y Precios',
-    plans: [
-      {
-        name: 'Express SaaS',
-        tagline: 'Para quienes necesitan presencia profesional rápida.',
-        usd: 400, cop: 1600000,
-        monthly: false,
-        monthlyUsd: 0, monthlyCop: 0,
-        features: [
-          'Landing profesional (1 página)',
-          'Diseño de marca aplicado',
-          'WhatsApp flotante',
-          'Formulario de contacto',
-          'SEO básico on-page',
-          'Hosting incluido 1 año',
-        ],
-        excludes: ['Blog', 'Bot de IA', 'Panel admin', 'Tienda virtual'],
-      },
-      {
-        name: 'Business Pro',
-        tagline: 'Para negocios que necesitan escalar su presencia digital.',
-        usd: 625, cop: 2500000,
-        monthly: true,
-        monthlyUsd: 35, monthlyCop: 140000,
-        popular: true,
-        features: [
-          'Todo Express SaaS incluido',
-          'Hasta 8 páginas',
-          'Bot IA básico integrado',
-          'Blog optimizado para SEO',
-          'Panel de administración',
-          'Soporte mensual incluido',
-        ],
-        excludes: ['Tienda virtual', 'Pasarela de pagos', 'Bot IA avanzado'],
-      },
-      {
-        name: 'Full Commerce',
-        tagline: 'E-commerce completo listo para vender desde el día 1.',
-        usd: 1125, cop: 4500000,
-        monthly: true,
-        monthlyUsd: 50, monthlyCop: 200000,
-        features: [
-          'Todo Business Pro incluido',
-          'Tienda virtual completa',
-          'Pasarela de pagos (Wompi/Stripe)',
-          'Bot IA avanzado personalizado',
-          'Generador de fichas con IA',
-          'SEO Schema.org estructurado',
-        ],
-        excludes: [],
-      },
-    ],
-    processTitle: 'Tu Web App en 7 días',
-    process: [
-      { day: '1', title: 'Kickoff', desc: 'Reunión de inicio, definición de objetivos y briefing creativo.' },
-      { day: '2', title: 'Fundación', desc: 'Arquitectura del sitio, setup técnico y estructura de navegación.' },
-      { day: '3', title: 'Páginas', desc: 'Diseño y desarrollo de todas las páginas con tu marca.' },
-      { day: '4', title: 'Funcionalidades', desc: 'Formularios, WhatsApp, integraciones y funcionalidades clave.' },
-      { day: '5', title: 'SEO', desc: 'Optimización técnica, meta tags, velocidad y Core Web Vitals.' },
-      { day: '6', title: 'Pruebas', desc: 'Testing en todos los dispositivos, QA y correcciones finales.' },
-      { day: '7', title: 'Entrega', desc: 'Deploy final, capacitación y entrega del código en GitHub.' },
-    ],
-    ctaTitle: '¿Listo para tener un sitio que trabaje por ti?',
-    ctaSub: 'Agenda una llamada y recibe tu propuesta personalizada en menos de 24 horas.',
-    ctaBtn: 'Solicitar propuesta personalizada',
+    title: 'Diseño Web & Webapps',
+    sub: 'Sitios web y webapps profesionales construidos en Lovable + Supabase. Entrega en 1 semana. Código 100% tuyo en GitHub.',
+    whatIncludes: '¿Qué incluye nuestro servicio?',
+    pricingTitle: 'Planes de Diseño Web',
+    pricingNote: 'Todos los planes incluyen dominio de tu elección. El precio de construcción es un pago único.',
     noInclude: 'No incluye:',
-    monthLabel: '/mes',
-    oneTime: '/ pago único',
-    proposalBtn: 'Solicitar propuesta personalizada',
-  } : {
-    heroTitle: 'Your website should sell while you sleep',
-    heroSub: "We build modern React Web Apps delivered in 1 week. No generic WordPress. Your code, fast, secure and Google-optimized from day 1.",
-    heroCta: 'Request Proposal',
-    diffTitle: 'Why choose Ferova?',
-    differentiators: [
-      { icon: Rocket, title: '1-week delivery', desc: 'Your site ready in 7 days. No months of waiting.' },
-      { icon: Code2, title: 'Your code on GitHub', desc: "You own every line of code. No vendor lock-in." },
-      { icon: Smartphone, title: 'Always mobile-first', desc: 'Designed mobile-first, perfect on every screen.' },
-      { icon: Bot, title: 'Optional AI integration', desc: 'Chatbots, content generators and AI automations.' },
+    monthly: '/mes',
+    oneTime: 'construcción',
+    features: [
+      { icon: Zap, title: 'Entrega en 1 semana', desc: 'Lo que en WordPress tarda 6 semanas, lo entregamos en 7 días con nuestro proceso optimizado.' },
+      { icon: Shield, title: 'Código 100% tuyo', desc: 'Todo el código vive en tu GitHub. No dependes de nosotros para el futuro.' },
+      { icon: BarChart3, title: 'SEO desde la estructura', desc: 'Meta tags, Schema.org, URLs amigables y velocidad de carga optimizada desde el inicio.' },
+      { icon: Smartphone, title: 'Mobile-first siempre', desc: 'Todas las webapps están optimizadas primero para móvil, tablet y desktop.' },
     ],
-    includesTitle: 'What every project includes',
-    includes: [
-      { icon: Palette, text: 'Design with your brand applied from day 1' },
-      { icon: Search, text: 'Technical SEO from the ground up' },
-      { icon: MessageCircle, text: 'Floating WhatsApp widget' },
-      { icon: FileText, text: 'Forms with automatic notifications' },
-      { icon: Smartphone, text: 'Fully responsive across all devices' },
-      { icon: Database, text: 'Modern backend connection' },
-    ],
-    plansTitle: 'Plans & Pricing',
     plans: [
       {
-        name: 'Express SaaS',
-        tagline: 'For those who need a professional presence fast.',
-        usd: 400, cop: 1600000,
-        monthly: false,
-        monthlyUsd: 0, monthlyCop: 0,
-        features: [
-          'Professional landing (1 page)',
-          'Brand design applied',
-          'Floating WhatsApp',
-          'Contact form',
-          'Basic on-page SEO',
-          'Hosting included 1 year',
+        key: 'webEconomico' as const,
+        icon: Globe,
+        name: 'Plan Económico',
+        tagline: 'Ideal para emprendedores y negocios nuevos que necesitan presencia digital profesional rápidamente.',
+        buildUSD: 499, buildCOP: 1600000,
+        monthlyUSD: 0, monthlyCOP: 0,
+        yearlyUSD: 499, yearlyCOP: 1600000,
+        billingNote: lang === 'es' ? '+ comisión sobre ventas generadas' : '+ commission on sales generated',
+        popular: false,
+        includes: [
+          'Landing page profesional (Home + secciones)',
+          'Diseño de marca aplicado (colores, fuentes, logo)',
+          'Botón de WhatsApp siempre visible',
+          'Formulario de contacto con notificación',
+          'SEO básico: meta tags, H1-H4, URLs amigables',
+          'Responsive mobile-first',
+          'Hosting incluido via Lovable o Vercel',
+          'Entrega en 1 semana',
         ],
-        excludes: ['Blog', 'AI bot', 'Admin panel', 'Online store'],
+        excludes: ['Tienda virtual / carrito de compras', 'Panel de administración', 'Bot de IA', 'Blog con SEO'],
+        cta: lang === 'es' ? 'Empezar proyecto' : 'Start project',
       },
       {
-        name: 'Business Pro',
-        tagline: 'For businesses ready to scale their digital presence.',
-        usd: 625, cop: 2500000,
-        monthly: true,
-        monthlyUsd: 35, monthlyCop: 140000,
+        key: 'webPro' as const,
+        icon: Rocket,
+        name: 'Plan Pro',
+        tagline: 'Para negocios en crecimiento que necesitan más páginas, blog, panel de administración y funcionalidades avanzadas.',
+        buildUSD: 749, buildCOP: 2500000,
+        monthlyUSD: 59, monthlyCOP: 200000,
+        yearlyUSD: 749, yearlyCOP: 2500000,
+        billingNote: lang === 'es' ? '+ $59 USD / $200.000 COP por mes' : '+ $59 USD / $200,000 COP/month',
         popular: true,
-        features: [
-          'Everything in Express SaaS',
-          'Up to 8 pages',
-          'Basic AI bot integrated',
-          'SEO-optimized blog',
-          'Admin panel',
-          'Monthly support included',
+        includes: [
+          'Todo el Plan Económico +',
+          'Hasta 8 páginas (Servicios, Nosotros, Blog, Contacto...)',
+          'Bot de IA básico (responde preguntas frecuentes)',
+          'Blog con SEO y meta tags dinámicos',
+          'Formularios avanzados (cotizaciones, registros)',
+          'Panel de administración de contenido',
+          'Integración Supabase (base de datos para leads)',
+          'Soporte mensual: hasta 4 horas de ajustes',
         ],
-        excludes: ['Online store', 'Payment gateway', 'Advanced AI bot'],
+        excludes: ['Tienda virtual / pasarela de pagos', 'Generador de fichas con IA', 'Carga masiva de productos'],
+        cta: lang === 'es' ? 'Elegir Plan Pro' : 'Choose Pro Plan',
       },
       {
-        name: 'Full Commerce',
-        tagline: 'Complete e-commerce ready to sell from day 1.',
-        usd: 1125, cop: 4500000,
-        monthly: true,
-        monthlyUsd: 50, monthlyCop: 200000,
-        features: [
-          'Everything in Business Pro',
-          'Complete online store',
-          'Payment gateway (Wompi/Stripe)',
-          'Advanced custom AI bot',
-          'AI product sheet generator',
-          'Schema.org structured SEO',
+        key: 'webEcommerce' as const,
+        icon: ShoppingCart,
+        name: 'Ecommerce Full',
+        tagline: 'Tienda virtual completa con carrito, pagos, bot de IA vendedor y panel de administración para gestionar todo.',
+        buildUSD: 990, buildCOP: 3120000,
+        monthlyUSD: 119, monthlyCOP: 400000,
+        yearlyUSD: 990, yearlyCOP: 3120000,
+        billingNote: lang === 'es' ? '+ $119 USD / $400.000 COP por mes' : '+ $119 USD / $400,000 COP/month',
+        popular: false,
+        includes: [
+          'Todo el Plan Pro +',
+          'Tienda virtual completa (catálogo, carrito, checkout)',
+          'Pasarela de pagos (Wompi / Stripe / MercadoPago)',
+          'Bot de IA avanzado (asesor de ventas con cotizaciones)',
+          'Generador de fichas de producto con IA',
+          'Panel admin completo (productos, pedidos, clientes)',
+          'SEO avanzado: Schema.org, sitemap dinámico',
+          'Soporte mensual: hasta 8 horas de ajustes',
         ],
-        excludes: [],
+        excludes: ['Presupuesto de pauta publicitaria', 'Producción de video', 'Gestión de contenido orgánico'],
+        cta: lang === 'es' ? 'Quiero mi tienda' : 'I want my store',
       },
     ],
-    processTitle: 'Your Web App in 7 days',
-    process: [
-      { day: '1', title: 'Kickoff', desc: 'Kickoff meeting, goal definition and creative brief.' },
-      { day: '2', title: 'Foundation', desc: 'Site architecture, technical setup and navigation structure.' },
-      { day: '3', title: 'Pages', desc: 'Design and development of all pages with your brand.' },
-      { day: '4', title: 'Features', desc: 'Forms, WhatsApp, integrations and key functionalities.' },
-      { day: '5', title: 'SEO', desc: 'Technical optimization, meta tags, speed and Core Web Vitals.' },
-      { day: '6', title: 'Testing', desc: 'Testing on all devices, QA and final fixes.' },
-      { day: '7', title: 'Delivery', desc: 'Final deploy, training and code delivery on GitHub.' },
+    process: 'Cómo entregamos en 1 semana',
+    steps: [
+      { n: '01', title: 'Kickoff y marca', desc: 'Reunión inicial, recopilamos logo, colores y contenido.' },
+      { n: '02', title: 'Estructura base', desc: 'Construimos Header, Footer, Home y rutas principales.' },
+      { n: '03', title: 'Páginas y funciones', desc: 'Desarrollamos cada página con sus funcionalidades.' },
+      { n: '04', title: 'Entrega y dominio', desc: 'Revisión final, conexión del dominio y capacitación básica.' },
     ],
-    ctaTitle: 'Ready for a site that works for you?',
-    ctaSub: 'Book a call and get your custom proposal in under 24 hours.',
-    ctaBtn: 'Request custom proposal',
+  } : {
+    title: 'Web Design & Webapps',
+    sub: 'Professional websites and webapps built on Lovable + Supabase. 1-week delivery. 100% your code on GitHub.',
+    whatIncludes: 'What does our service include?',
+    pricingTitle: 'Web Design Plans',
+    pricingNote: 'All plans include your domain of choice. The build price is a one-time payment.',
     noInclude: 'Does not include:',
-    monthLabel: '/mo',
-    oneTime: '/ one-time',
-    proposalBtn: 'Request custom proposal',
+    monthly: '/mo',
+    oneTime: 'build',
+    features: [
+      { icon: Zap, title: '1-week delivery', desc: 'What takes 6 weeks in WordPress, we deliver in 7 days with our optimized process.' },
+      { icon: Shield, title: '100% your code', desc: 'All code lives in your GitHub. You\'re not dependent on us for the future.' },
+      { icon: BarChart3, title: 'SEO from the ground up', desc: 'Meta tags, Schema.org, friendly URLs and optimized load speed from day one.' },
+      { icon: Smartphone, title: 'Always mobile-first', desc: 'All webapps are optimized first for mobile, tablet and desktop.' },
+    ],
+    plans: [
+      {
+        key: 'webEconomico' as const,
+        icon: Globe,
+        name: 'Starter Plan',
+        tagline: 'Ideal for entrepreneurs and new businesses that need professional digital presence quickly.',
+        buildUSD: 499, buildCOP: 1600000,
+        monthlyUSD: 0, monthlyCOP: 0,
+        yearlyUSD: 499, yearlyCOP: 1600000,
+        billingNote: '+ commission on generated sales',
+        popular: false,
+        includes: [
+          'Professional landing page (Home + sections)',
+          'Brand design applied (colors, fonts, logo)',
+          'Always-visible WhatsApp button',
+          'Contact form with notification',
+          'Basic SEO: meta tags, H1-H4, friendly URLs',
+          'Responsive mobile-first',
+          'Hosting included via Lovable or Vercel',
+          '1-week delivery',
+        ],
+        excludes: ['Online store / shopping cart', 'Admin panel', 'AI bot', 'SEO blog'],
+        cta: 'Start project',
+      },
+      {
+        key: 'webPro' as const,
+        icon: Rocket,
+        name: 'Pro Plan',
+        tagline: 'For growing businesses that need more pages, a blog, admin panel and advanced features.',
+        buildUSD: 749, buildCOP: 2500000,
+        monthlyUSD: 59, monthlyCOP: 200000,
+        yearlyUSD: 749, yearlyCOP: 2500000,
+        billingNote: '+ $59 USD / $200,000 COP/month',
+        popular: true,
+        includes: [
+          'Everything in Starter +',
+          'Up to 8 pages (Services, About, Blog, Contact...)',
+          'Basic AI bot (answers FAQs)',
+          'Blog with SEO and dynamic meta tags',
+          'Advanced forms (quotes, registrations)',
+          'Content admin panel',
+          'Supabase integration (lead database)',
+          'Monthly support: up to 4 hours of adjustments',
+        ],
+        excludes: ['Online store / payment gateway', 'AI product sheet generator', 'Bulk product upload'],
+        cta: 'Choose Pro Plan',
+      },
+      {
+        key: 'webEcommerce' as const,
+        icon: ShoppingCart,
+        name: 'Full Ecommerce',
+        tagline: 'Complete online store with cart, payments, AI sales bot and admin panel to manage everything.',
+        buildUSD: 990, buildCOP: 3120000,
+        monthlyUSD: 119, monthlyCOP: 400000,
+        yearlyUSD: 990, yearlyCOP: 3120000,
+        billingNote: '+ $119 USD / $400,000 COP/month',
+        popular: false,
+        includes: [
+          'Everything in Pro +',
+          'Complete online store (catalog, cart, checkout)',
+          'Payment gateway (Wompi / Stripe / MercadoPago)',
+          'Advanced AI bot (sales advisor with quotes)',
+          'AI product sheet generator',
+          'Full admin panel (products, orders, customers)',
+          'Advanced SEO: Schema.org, dynamic sitemap',
+          'Monthly support: up to 8 hours of adjustments',
+        ],
+        excludes: ['Ad spend budget', 'Video production', 'Organic content management'],
+        cta: 'I want my store',
+      },
+    ],
+    process: 'How we deliver in 1 week',
+    steps: [
+      { n: '01', title: 'Kickoff & brand', desc: 'Initial meeting, we collect logo, colors and content.' },
+      { n: '02', title: 'Base structure', desc: 'We build Header, Footer, Home and main routes.' },
+      { n: '03', title: 'Pages & features', desc: 'We develop each page with its functionalities.' },
+      { n: '04', title: 'Delivery & domain', desc: 'Final review, domain connection and basic training.' },
+    ],
   };
 
   return (
-    <PageTransition>
+    <>
       <Header currentLang={lang} />
       <main className="pt-20">
+
         {/* Hero */}
-        <section className="py-20 md:py-28 relative grid-pattern">
+        <section className="py-20 md:py-28 text-center relative grid-pattern">
           <div className="absolute inset-0" style={{ background: 'radial-gradient(ellipse at 50% 30%, hsla(45, 86%, 40%, 0.06), transparent 60%)' }} />
-          <div className="container mx-auto px-4 md:px-6 relative z-10 text-center">
-            <AnimatedSection>
-              <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-gold/20 bg-gold/5 text-gold text-sm font-medium mb-8">
-                <Rocket className="w-4 h-4" />
-                {lang === 'es' ? 'Entrega en 7 días' : '7-day delivery'}
-              </div>
-            </AnimatedSection>
-            <AnimatedSection delay={0.1}>
-              <h1 className="text-4xl md:text-5xl lg:text-6xl font-display font-bold mb-6 max-w-4xl mx-auto">
-                {t.heroTitle}
-              </h1>
-            </AnimatedSection>
-            <AnimatedSection delay={0.2}>
-              <p className="text-lg md:text-xl text-muted-foreground max-w-2xl mx-auto mb-10">
-                {t.heroSub}
-              </p>
-            </AnimatedSection>
-            <AnimatedSection delay={0.3}>
-              <div className="flex flex-col sm:flex-row gap-4 justify-center">
-                <motion.button
-                  whileHover={{ scale: 1.05 }}
-                  whileTap={{ scale: 0.97 }}
-                  onClick={() => openProposal(lang === 'es' ? 'Diseño Web / Web Apps' : 'Web Design / Web Apps')}
-                  className="btn-gold flex items-center justify-center gap-2"
-                >
-                  <MessageCircle className="w-5 h-5" />
-                  {t.heroCta}
-                </motion.button>
-                <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.97 }}>
-                  <Link to={lang === 'es' ? '/casos-de-exito' : '/en/case-studies'} className="btn-outline-gold text-center block">
-                    {lang === 'es' ? 'Ver casos de éxito' : 'View case studies'}
-                  </Link>
-                </motion.div>
-              </div>
-            </AnimatedSection>
+          <div className="container mx-auto px-4 md:px-6 relative z-10">
+            <h1 className="text-4xl md:text-5xl lg:text-6xl font-display font-bold mb-6">{t.title}</h1>
+            <p className="text-muted-foreground text-lg max-w-2xl mx-auto mb-10">{t.sub}</p>
+            <a href="https://wa.me/17865787671?text=Hola%20Ferova%2C%20quiero%20información%20sobre%20diseño%20web" target="_blank" rel="noopener noreferrer" className="btn-gold inline-flex items-center gap-2">
+              <MessageCircle className="w-5 h-5" />
+              {lang === 'es' ? 'Solicitar propuesta' : 'Request proposal'}
+            </a>
           </div>
         </section>
 
-        {/* Differentiators */}
+        {/* Features */}
         <section className="py-20 md:py-28 dark-section" style={{ background: 'hsl(243, 28%, 14%)' }}>
           <div className="container mx-auto px-4 md:px-6">
-            <AnimatedSection className="text-center mb-16">
-              <h2 className="text-3xl md:text-4xl font-display font-bold text-gold">{t.diffTitle}</h2>
-            </AnimatedSection>
-            <StaggerContainer className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6 max-w-5xl mx-auto">
-              {t.differentiators.map((d, i) => (
-                <StaggerItem key={i}>
-                  <ScaleOnHover>
-                    <div className="glass-card p-6 text-center hover:border-gold/30 transition-all h-full">
-                      <div className="w-14 h-14 rounded-2xl flex items-center justify-center mx-auto mb-5" style={{ background: 'hsla(45, 86%, 40%, 0.1)' }}>
-                        <d.icon className="w-7 h-7 text-gold" />
-                      </div>
-                      <h3 className="text-lg font-display font-bold mb-2 text-foreground">{d.title}</h3>
-                      <p className="text-muted-foreground text-sm leading-relaxed">{d.desc}</p>
-                    </div>
-                  </ScaleOnHover>
-                </StaggerItem>
-              ))}
-            </StaggerContainer>
-          </div>
-        </section>
-
-        {/* What's included */}
-        <section className="py-20 md:py-28">
-          <div className="container mx-auto px-4 md:px-6">
-            <AnimatedSection className="text-center mb-16">
-              <h2 className="text-3xl md:text-4xl font-display font-bold">{t.includesTitle}</h2>
-            </AnimatedSection>
-            <StaggerContainer className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6 max-w-4xl mx-auto">
-              {t.includes.map((item, i) => (
-                <StaggerItem key={i}>
-                  <div className="flex items-start gap-4 p-5 glass-card hover:border-gold/30 transition-all">
-                    <div className="w-10 h-10 rounded-xl flex items-center justify-center flex-shrink-0" style={{ background: 'hsla(45, 86%, 40%, 0.1)' }}>
-                      <item.icon className="w-5 h-5 text-gold" />
-                    </div>
-                    <p className="text-sm text-foreground leading-relaxed">{item.text}</p>
+            <h2 className="text-3xl md:text-4xl font-display font-bold text-center mb-16 text-gold">{t.whatIncludes}</h2>
+            <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+              {t.features.map((f, i) => (
+                <div key={i} className="glass-card p-8 hover:border-gold/30 transition-all duration-300">
+                  <div className="w-12 h-12 rounded-xl flex items-center justify-center mb-4" style={{ background: 'hsla(45, 86%, 40%, 0.1)' }}>
+                    <f.icon className="w-6 h-6 text-gold" />
                   </div>
-                </StaggerItem>
+                  <h3 className="text-xl font-display font-bold mb-3 text-foreground">{f.title}</h3>
+                  <p className="text-sm leading-relaxed text-muted-foreground">{f.desc}</p>
+                </div>
               ))}
-            </StaggerContainer>
+            </div>
           </div>
         </section>
 
         {/* Pricing */}
-        <section className="py-20 md:py-28 dark-section" style={{ background: 'hsl(243, 28%, 14%)' }}>
+        <section className="py-20 md:py-28">
           <div className="container mx-auto px-4 md:px-6">
-            <AnimatedSection className="text-center mb-6">
-              <h2 className="text-3xl md:text-4xl font-display font-bold text-foreground">{t.plansTitle}</h2>
-            </AnimatedSection>
+            <h2 className="text-3xl md:text-4xl font-display font-bold text-center mb-4">{t.pricingTitle}</h2>
+            <p className="text-muted-foreground text-center max-w-xl mx-auto mb-8">{t.pricingNote}</p>
+
+            {/* Currency toggle */}
             <div className="flex items-center justify-center gap-1 p-1 rounded-full border border-border w-fit mx-auto mb-14">
               <button onClick={() => setCurrency('usd')} className={`px-5 py-2 rounded-full text-sm font-medium transition-all ${currency === 'usd' ? 'bg-gold text-primary-foreground' : 'text-muted-foreground hover:text-foreground'}`}>USD</button>
               <button onClick={() => setCurrency('cop')} className={`px-5 py-2 rounded-full text-sm font-medium transition-all ${currency === 'cop' ? 'bg-gold text-primary-foreground' : 'text-muted-foreground hover:text-foreground'}`}>COP</button>
             </div>
 
-            <StaggerContainer className="grid md:grid-cols-3 gap-8 max-w-6xl mx-auto">
-              {t.plans.map((plan, i) => (
-                <StaggerItem key={i}>
-                  <ScaleOnHover>
-                    <div className={`glass-card p-8 relative h-full flex flex-col transition-all duration-300 ${(plan as any).popular ? 'border-gold/50 gold-glow' : ''}`}>
-                      {(plan as any).popular && (
-                        <div className="absolute -top-3 left-1/2 -translate-x-1/2 px-4 py-1 rounded-full text-xs font-semibold bg-gold text-primary-foreground">
-                          {lang === 'es' ? 'Más popular' : 'Most popular'}
-                        </div>
-                      )}
-                      <h3 className="text-xl font-display font-bold mb-2 text-foreground">{plan.name}</h3>
-                      <p className="text-muted-foreground text-sm leading-relaxed mb-6">{plan.tagline}</p>
-                      <div className="mb-2">
-                        <span className="text-3xl font-display font-bold text-foreground">
-                          {formatPrice(plan.usd, plan.cop)}
-                        </span>
-                        <span className="text-muted-foreground text-sm ml-1">{t.oneTime}</span>
+            <div className="grid md:grid-cols-3 gap-8 max-w-6xl mx-auto">
+              {t.plans.map((plan, i) => {
+                const IconComp = plan.icon;
+                return (
+                  <div key={i} className={`glass-card p-8 relative flex flex-col transition-all duration-300 ${plan.popular ? 'border-gold/50 gold-glow' : ''}`}>
+                    {plan.popular && (
+                      <div className="absolute -top-3 left-1/2 -translate-x-1/2 px-4 py-1 rounded-full text-xs font-semibold bg-gold text-primary-foreground whitespace-nowrap">
+                        {lang === 'es' ? 'Más elegido' : 'Most popular'}
                       </div>
-                      {plan.monthly && (
-                        <p className="text-gold text-sm font-medium mb-6">
-                          + {formatPrice(plan.monthlyUsd, plan.monthlyCop)}{t.monthLabel}
-                        </p>
-                      )}
-                      {!plan.monthly && <div className="mb-6" />}
+                    )}
 
-                      <ul className="space-y-3 mb-6 flex-1">
-                        {plan.features.map((f, j) => (
-                          <li key={j} className="flex items-start gap-3 text-sm text-foreground">
-                            <CheckCircle className="w-4 h-4 text-gold flex-shrink-0 mt-0.5" /> {f}
+                    <div className="w-14 h-14 rounded-2xl flex items-center justify-center mb-5" style={{ background: 'hsla(45, 86%, 40%, 0.1)' }}>
+                      <IconComp className="w-7 h-7 text-gold" />
+                    </div>
+
+                    <h3 className="text-xl font-display font-bold mb-3">{plan.name}</h3>
+                    <p className="text-muted-foreground text-sm leading-relaxed mb-6">{plan.tagline}</p>
+
+                    {/* Price */}
+                    <div className="mb-2">
+                      <span className="text-3xl font-display font-bold">
+                        {currency === 'cop'
+                          ? new Intl.NumberFormat('es-CO', { style: 'currency', currency: 'COP', maximumFractionDigits: 0 }).format(plan.buildCOP)
+                          : new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD', maximumFractionDigits: 0 }).format(plan.buildUSD)}
+                      </span>
+                      <span className="text-muted-foreground text-sm ml-1">{t.oneTime}</span>
+                    </div>
+                    {plan.monthlyUSD > 0 && (
+                      <p className="text-gold text-sm font-semibold mb-6">{plan.billingNote}</p>
+                    )}
+                    {plan.monthlyUSD === 0 && (
+                      <p className="text-muted-foreground text-xs mb-6">{plan.billingNote}</p>
+                    )}
+
+                    {/* Includes */}
+                    <ul className="space-y-3 mb-6 flex-1">
+                      {plan.includes.map((item, ii) => (
+                        <li key={ii} className="flex items-start gap-3 text-sm text-foreground">
+                          <Check className="w-4 h-4 text-gold flex-shrink-0 mt-0.5" />
+                          {item}
+                        </li>
+                      ))}
+                    </ul>
+
+                    {/* Excludes */}
+                    <div className="mb-8 pt-4 border-t border-border">
+                      <p className="text-xs font-semibold text-muted-foreground mb-2">{t.noInclude}</p>
+                      <ul className="space-y-1.5">
+                        {plan.excludes.map((ex, ei) => (
+                          <li key={ei} className="flex items-center gap-2 text-xs text-muted-foreground">
+                            <X className="w-3 h-3 flex-shrink-0 opacity-50" /> {ex}
                           </li>
                         ))}
                       </ul>
-
-                      {plan.excludes.length > 0 && (
-                        <div className="mb-6 pt-4 border-t border-border">
-                          <p className="text-xs font-semibold text-muted-foreground mb-2">{t.noInclude}</p>
-                          <ul className="space-y-1.5">
-                            {plan.excludes.map((ex, j) => (
-                              <li key={j} className="flex items-center gap-2 text-xs text-muted-foreground">
-                                <X className="w-3 h-3 flex-shrink-0 opacity-50" /> {ex}
-                              </li>
-                            ))}
-                          </ul>
-                        </div>
-                      )}
-
-                      <div className="space-y-3 mt-auto">
-                        <a
-                          href={whatsappUrl(plan.name)}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className={`w-full py-3.5 rounded-full font-semibold text-sm transition-all duration-300 flex items-center justify-center gap-2 ${(plan as any).popular ? 'btn-gold !px-0' : 'border border-gold/40 text-gold hover:bg-gold hover:text-primary-foreground'}`}
-                        >
-                          <MessageCircle className="w-4 h-4" />
-                          {lang === 'es' ? 'Empezar ahora' : 'Start now'}
-                        </a>
-                        <button
-                          onClick={() => openProposal(plan.name)}
-                          className="w-full py-2.5 rounded-full text-xs font-medium border border-border text-muted-foreground hover:text-foreground hover:border-gold/40 transition-all"
-                        >
-                          {t.proposalBtn}
-                        </button>
-                      </div>
                     </div>
-                  </ScaleOnHover>
-                </StaggerItem>
-              ))}
-            </StaggerContainer>
+
+                    <button
+                      onClick={() => handleCta(plan.key)}
+                      className={`w-full py-3.5 rounded-full font-semibold text-sm transition-all duration-300 flex items-center justify-center gap-2 ${plan.popular ? 'btn-gold !px-0' : 'border border-gold/40 text-gold hover:bg-gold hover:text-primary-foreground'}`}
+                    >
+                      <ArrowRight className="w-4 h-4" /> {plan.cta}
+                    </button>
+                  </div>
+                );
+              })}
+            </div>
           </div>
         </section>
 
-        {/* 7-day process */}
-        <section className="py-20 md:py-28">
+        {/* Process */}
+        <section className="py-20 md:py-28 dark-section" style={{ background: 'hsl(243, 28%, 14%)' }}>
           <div className="container mx-auto px-4 md:px-6">
-            <AnimatedSection className="text-center mb-16">
-              <h2 className="text-3xl md:text-4xl font-display font-bold">{t.processTitle}</h2>
-            </AnimatedSection>
-            <div className="max-w-3xl mx-auto">
-              {t.process.map((step, i) => (
-                <AnimatedSection key={i} delay={i * 0.08}>
-                  <div className="flex gap-6 mb-8 last:mb-0">
-                    <div className="flex flex-col items-center">
-                      <div className="w-12 h-12 rounded-full bg-gold flex items-center justify-center flex-shrink-0">
-                        <span className="text-sm font-bold text-primary-foreground">{step.day}</span>
-                      </div>
-                      {i < t.process.length - 1 && (
-                        <div className="w-0.5 flex-1 bg-border/50 mt-2" />
-                      )}
-                    </div>
-                    <div className="pb-8">
-                      <h3 className="text-lg font-display font-bold text-foreground mb-1">{step.title}</h3>
-                      <p className="text-muted-foreground text-sm leading-relaxed">{step.desc}</p>
-                    </div>
+            <h2 className="text-3xl md:text-4xl font-display font-bold text-center mb-16 text-gold">{t.process}</h2>
+            <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8 max-w-5xl mx-auto">
+              {t.steps.map((s, i) => (
+                <div key={i} className="text-center">
+                  <div className="w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-6 bg-gold">
+                    <span className="text-xl font-display font-bold text-primary-foreground">{s.n}</span>
                   </div>
-                </AnimatedSection>
+                  <h3 className="text-xl font-display font-bold mb-4">{s.title}</h3>
+                  <p className="text-muted-foreground leading-relaxed">{s.desc}</p>
+                </div>
               ))}
             </div>
           </div>
         </section>
 
-        {/* Final CTA */}
-        <section className="py-20 md:py-28 relative overflow-hidden bg-surface">
-          <div className="absolute inset-0" style={{ background: 'radial-gradient(ellipse at 50% 50%, hsla(45, 86%, 40%, 0.06), transparent 70%)' }} />
-          <div className="container mx-auto px-4 md:px-6 relative z-10 text-center">
-            <AnimatedSection>
-              <h2 className="text-3xl md:text-4xl lg:text-5xl font-display font-bold mb-6">{t.ctaTitle}</h2>
-              <p className="text-muted-foreground text-lg max-w-xl mx-auto mb-10">{t.ctaSub}</p>
-            </AnimatedSection>
-            <AnimatedSection delay={0.2}>
-              <motion.button
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.97 }}
-                onClick={() => openProposal(lang === 'es' ? 'Diseño Web / Web Apps' : 'Web Design / Web Apps')}
-                className="btn-gold inline-flex items-center gap-2"
-              >
-                <MessageCircle className="w-5 h-5" />
-                {t.ctaBtn}
-              </motion.button>
-            </AnimatedSection>
+        {/* CTA */}
+        <section className="py-20 md:py-28 text-center">
+          <div className="container mx-auto px-4 md:px-6">
+            <Star className="w-12 h-12 text-gold mx-auto mb-6" />
+            <h2 className="text-3xl md:text-4xl font-display font-bold mb-6">
+              {lang === 'es' ? '¿Listo para tu nueva web?' : 'Ready for your new website?'}
+            </h2>
+            <p className="text-muted-foreground text-lg max-w-xl mx-auto mb-8">
+              {lang === 'es'
+                ? 'Cuéntanos tu proyecto y te respondemos con una propuesta en menos de 24 horas.'
+                : 'Tell us about your project and we\'ll respond with a proposal in less than 24 hours.'}
+            </p>
+            <a href="https://wa.me/17865787671?text=Hola%20Ferova%2C%20quiero%20una%20propuesta%20de%20diseño%20web" target="_blank" rel="noopener noreferrer" className="btn-gold inline-flex items-center gap-2">
+              <MessageCircle className="w-5 h-5" />
+              {lang === 'es' ? 'Solicitar propuesta gratis' : 'Request free proposal'}
+            </a>
           </div>
         </section>
+
+        <AdBanner slot="service-diseno-web" className="max-w-4xl mx-auto mb-20" />
       </main>
       <Footer currentLang={lang} />
       <ChatWidget lang={lang} />
-      <ProposalModal
-        open={proposalOpen}
-        onClose={() => setProposalOpen(false)}
-        lang={lang}
-        defaultService={proposalService}
-      />
-    </PageTransition>
+    </>
   );
 };
 
