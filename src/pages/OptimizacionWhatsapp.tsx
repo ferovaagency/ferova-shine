@@ -171,7 +171,7 @@ export default function OptimizacionWhatsapp({ lang = 'es' }: Props) {
           <p className="text-center text-sm text-muted-foreground mt-6">
             ¿Tienes dudas? Escríbenos por{' '}
             <a
-              href="https://wa.me/573XXXXXXXXX?text=Hola%2C%20quiero%20información%20sobre%20Optimización%20WhatsApp%20Business"
+              href="https://wa.me/17865787671?text=Hola%2C%20quiero%20información%20sobre%20Optimización%20WhatsApp%20Business"
               target="_blank"
               rel="noopener noreferrer"
               className="text-green-600 dark:text-green-400 underline hover:opacity-80"
