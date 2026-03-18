@@ -27,6 +27,7 @@ import Blog from "./pages/Blog";
 import BlogPost from "./pages/BlogPost";
 import Recursos from "./pages/Recursos";
 import SobreNosotros from "./pages/SobreNosotros";
+import OptimizacionWhatsapp from "./pages/OptimizacionWhatsapp";
 
 const queryClient = new QueryClient();
 
@@ -104,7 +105,8 @@ const App = () => (
           <Route path="/en/resources" element={<Recursos lang="en" />} />
           <Route path="/en/about" element={<SobreNosotros lang="en" />} />
           <Route path="/en/terms" element={<Terminos lang="en" />} />
-          <Route path="/whatsapp-business" element={<OptimizacionWhatsapp />} />
+          <Route path="/servicios/whatsapp-business" element={<OptimizacionWhatsapp lang={hostLang} />} />
+          <Route path="/services/whatsapp-business" element={<OptimizacionWhatsapp lang={hostLang} />} />
 
           <Route path="*" element={<NotFound />} />
         </Routes>
