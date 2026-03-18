@@ -28,7 +28,6 @@ import BlogPost from "./pages/BlogPost";
 import Recursos from "./pages/Recursos";
 import SobreNosotros from "./pages/SobreNosotros";
 import OptimizacionWhatsapp from "./pages/OptimizacionWhatsapp";
-
 const queryClient = new QueryClient();
 
 /** Detect language from hostname; falls back to path-based /en prefix */
@@ -85,6 +84,8 @@ const App = () => (
           <Route path="/about" element={<SobreNosotros lang={hostLang} />} />
           <Route path="/terminos" element={<Terminos lang={hostLang} />} />
           <Route path="/terms" element={<Terminos lang={hostLang} />} />
+          <Route path="/servicios/whatsapp-business" element={<OptimizacionWhatsapp lang={hostLang} />} />
+          <Route path="/services/whatsapp-business" element={<OptimizacionWhatsapp lang={hostLang} />} />
 
           {/* Legacy /en prefix routes still work */}
           <Route path="/en" element={<Index lang="en" />} />
@@ -105,8 +106,6 @@ const App = () => (
           <Route path="/en/resources" element={<Recursos lang="en" />} />
           <Route path="/en/about" element={<SobreNosotros lang="en" />} />
           <Route path="/en/terms" element={<Terminos lang="en" />} />
-          <Route path="/servicios/whatsapp-business" element={<OptimizacionWhatsapp lang={hostLang} />} />
-          <Route path="/services/whatsapp-business" element={<OptimizacionWhatsapp lang={hostLang} />} />
 
           <Route path="*" element={<NotFound />} />
         </Routes>
