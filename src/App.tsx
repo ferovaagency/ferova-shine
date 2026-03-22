@@ -29,6 +29,7 @@ import Recursos from "./pages/Recursos";
 import SobreNosotros from "./pages/SobreNosotros";
 import OptimizacionWhatsapp from "./pages/OptimizacionWhatsapp";
 import AdminBlog from "./pages/AdminBlog";
+import VCard from "./pages/VCard";
 
 const queryClient = new QueryClient();
 
@@ -110,6 +111,7 @@ const App = () => (
           <Route path="/en/resources" element={<Recursos lang="en" />} />
           <Route path="/en/about" element={<SobreNosotros lang="en" />} />
           <Route path="/en/terms" element={<Terminos lang="en" />} />
+          <Route path="/contacto-digital" element={<VCard />} />
 
           <Route path="*" element={<NotFound />} />
         </Routes>
