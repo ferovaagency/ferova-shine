@@ -384,7 +384,7 @@ const DiseneoWeb = ({ lang = 'es' }: Props) => {
           <div className="container mx-auto px-4 md:px-6">
             <Star className="w-12 h-12 text-gold mx-auto mb-6" />
             <h2 className="text-3xl md:text-4xl font-display font-bold mb-6">
-              {lang === 'es' ? '¿Listo para tu nueva web?' : 'Ready for your new website?'}
+              {lang === 'es' ? '¿Listo para tu nueva web?' : lang === 'pt' ? 'Pronto para seu novo site?' : 'Ready for your new website?'}
             </h2>
             <p className="text-muted-foreground text-lg max-w-xl mx-auto mb-8">
               {lang === 'es'
