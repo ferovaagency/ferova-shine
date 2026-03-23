@@ -257,7 +257,7 @@ const DiseneoWeb = ({ lang = 'es' }: Props) => {
             <p className="text-muted-foreground text-lg max-w-2xl mx-auto mb-10">{t.sub}</p>
             <a href="https://wa.me/17865787671?text=Hola%20Ferova%2C%20quiero%20información%20sobre%20diseño%20web" target="_blank" rel="noopener noreferrer" className="btn-gold inline-flex items-center gap-2">
               <MessageCircle className="w-5 h-5" />
-              {lang === 'es' ? 'Solicitar propuesta' : 'Request proposal'}
+              {lang === 'es' ? 'Solicitar propuesta' : lang === 'pt' ? 'Solicitar proposta' : 'Request proposal'}
             </a>
           </div>
         </section>
