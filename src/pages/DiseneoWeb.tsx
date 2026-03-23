@@ -299,7 +299,7 @@ const DiseneoWeb = ({ lang = 'es' }: Props) => {
                   <div key={i} className={`glass-card p-8 relative flex flex-col transition-all duration-300 ${plan.popular ? 'border-gold/50 gold-glow' : ''}`}>
                     {plan.popular && (
                       <div className="absolute -top-3 left-1/2 -translate-x-1/2 px-4 py-1 rounded-full text-xs font-semibold bg-gold text-primary-foreground whitespace-nowrap">
-                        {lang === 'es' ? 'Más elegido' : 'Most popular'}
+                        {lang === 'es' ? 'Más elegido' : lang === 'pt' ? 'Mais escolhido' : 'Most popular'}
                       </div>
                     )}
 
