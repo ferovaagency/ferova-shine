@@ -4,7 +4,7 @@ import Footer from '@/components/layout/Footer';
 import ChatWidget from '@/components/ui/chat-widget';
 import { Mail, MessageCircle, MapPin, Send, Calendar } from 'lucide-react';
 
-interface Props { lang?: 'es' | 'en'; }
+interface Props { lang?: 'es' | 'en' | 'pt'; }
 
 const Contacto = ({ lang = 'es' }: Props) => {
   const [formData, setFormData] = useState({ name: '', email: '', website: '', country: '', budget: '', message: '', consent: false });

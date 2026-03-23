@@ -9,7 +9,7 @@ import {
   FileText, MessageCircle, Briefcase, Award
 } from 'lucide-react';
 
-interface Props { lang?: 'es' | 'en'; }
+interface Props { lang?: 'es' | 'en' | 'pt'; }
 
 const OptimizacionLinkedin = ({ lang = 'es' }: Props) => {
   const t = lang === 'es' ? {

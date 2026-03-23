@@ -5,7 +5,7 @@ import ReactMarkdown from 'react-markdown';
 type Msg = { role: 'user' | 'assistant'; content: string };
 
 interface AiAdvisorChatProps {
-  lang?: 'es' | 'en';
+  lang?: 'es' | 'en' | 'pt';
 }
 
 const CHAT_URL = `${import.meta.env.VITE_SUPABASE_URL}/functions/v1/ai-sales-advisor`;

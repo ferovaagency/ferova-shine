@@ -1,7 +1,7 @@
 import { Target, TrendingUp, Settings, FileText } from 'lucide-react';
 
 interface BenefitsSectionProps {
-  lang?: 'es' | 'en';
+  lang?: 'es' | 'en' | 'pt';
 }
 
 const BenefitsSection = ({ lang = 'es' }: BenefitsSectionProps) => {

@@ -3,7 +3,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { X, BookOpen, Mail } from 'lucide-react';
 
 interface Props {
-  lang?: 'es' | 'en';
+  lang?: 'es' | 'en' | 'pt';
 }
 
 const ExitIntentPopup = ({ lang = 'es' }: Props) => {

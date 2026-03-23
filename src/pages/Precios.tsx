@@ -8,7 +8,7 @@ import { Check, X, Clock, Zap, MapPin, Palette, ArrowRight, MessageCircle, Timer
 import { useToast } from '@/hooks/use-toast';
 import { getPaymentLink, type PaymentLinkKey } from '@/lib/payment-links';
 
-interface Props { lang?: 'es' | 'en'; }
+interface Props { lang?: 'es' | 'en' | 'pt'; }
 
 interface Plan {
   icon: React.ElementType;

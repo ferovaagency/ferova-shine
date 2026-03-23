@@ -11,7 +11,7 @@ import { useToast } from '@/hooks/use-toast';
 import { PageTransition } from '@/components/ui/motion';
 
 interface Props {
-  lang?: 'es' | 'en';
+  lang?: 'es' | 'en' | 'pt';
 }
 
 interface ArticleDraft {

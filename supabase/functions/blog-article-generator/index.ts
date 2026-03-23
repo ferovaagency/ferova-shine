@@ -154,7 +154,7 @@ const normalizeArticle = (raw: Record<string, unknown>, fallback: GeneratePayloa
   };
 };
 
-const getUniqueSlug = async (adminClient: ReturnType<typeof createClient>, baseSlug: string) => {
+const getUniqueSlug = async (adminClient: any, baseSlug: string) => {
   const normalizedBase = slugify(baseSlug) || `articulo-${crypto.randomUUID().slice(0, 8)}`;
   let candidate = normalizedBase;
   let suffix = 1;

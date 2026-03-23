@@ -6,7 +6,7 @@ import { Card, CardContent } from '@/components/ui/card';
 import WaveSeparator from '@/components/ui/wave-separator';
 
 interface SobreMariaFerProps {
-  lang?: 'es' | 'en';
+  lang?: 'es' | 'en' | 'pt';
 }
 
 const SobreMariaFer = ({ lang = 'es' }: SobreMariaFerProps) => {

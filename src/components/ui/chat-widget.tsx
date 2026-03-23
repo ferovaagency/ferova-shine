@@ -1,14 +1,16 @@
 import { MessageCircle } from 'lucide-react';
 
 interface ChatWidgetProps {
-  lang?: 'es' | 'en';
+  lang?: 'es' | 'en' | 'pt';
 }
 
 const ChatWidget = ({ lang = 'es' }: ChatWidgetProps) => {
   const whatsappUrl = "https://wa.me/17865787671?text=" + encodeURIComponent(
-    lang === 'es' 
-      ? 'Hola Ferova, me gustaría saber más sobre sus servicios.'
-      : 'Hi Ferova, I would like to learn more about your services.'
+    lang === 'pt'
+      ? 'Olá Ferova, gostaria de saber mais sobre seus serviços.'
+      : lang === 'en'
+      ? 'Hi Ferova, I would like to learn more about your services.'
+      : 'Hola Ferova, me gustaría saber más sobre sus servicios.'
   );
 
   return (

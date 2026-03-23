@@ -5,7 +5,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 interface ProposalModalProps {
   open: boolean;
   onClose: () => void;
-  lang?: 'es' | 'en';
+  lang?: 'es' | 'en' | 'pt';
   defaultService?: string;
 }
 

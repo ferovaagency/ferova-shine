@@ -8,7 +8,7 @@ import ReadingProgress from '@/components/ui/reading-progress';
 import { SkeletonBlogCard } from '@/components/ui/skeleton-card';
 import { Clock, ArrowRight, User } from 'lucide-react';
 
-interface Props { lang?: 'es' | 'en'; }
+interface Props { lang?: 'es' | 'en' | 'pt'; }
 
 const blogPosts = {
   es: [

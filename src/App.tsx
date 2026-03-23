@@ -33,7 +33,6 @@ import VCard from "./pages/VCard";
 
 const queryClient = new QueryClient();
 
-/** Detect language from hostname; falls back to path-based /en prefix */
 const hostLang = getLangFromHostname();
 
 const App = () => (
@@ -47,12 +46,6 @@ const App = () => (
       <BrowserRouter>
         <ScrollToTop />
         <Routes>
-          {/*
-            When accessed via seoforecommerces.co → hostLang = 'en'
-            When accessed via seoparaecommerce.co → hostLang = 'es'
-            All routes at "/" serve the detected language automatically.
-          */}
-
           {/* Root routes — language determined by hostname */}
           <Route path="/" element={<Index lang={hostLang} />} />
           <Route path="/servicios" element={<Servicios lang={hostLang} />} />
@@ -91,7 +84,7 @@ const App = () => (
           <Route path="/servicios/whatsapp-business" element={<OptimizacionWhatsapp lang={hostLang} />} />
           <Route path="/services/whatsapp-business" element={<OptimizacionWhatsapp lang={hostLang} />} />
 
-          {/* Legacy /en prefix routes still work */}
+          {/* Legacy /en prefix routes */}
           <Route path="/en" element={<Index lang="en" />} />
           <Route path="/en/services" element={<Servicios lang="en" />} />
           <Route path="/en/services/ecommerce-seo" element={<SeoEcommerce lang="en" />} />
@@ -111,8 +104,29 @@ const App = () => (
           <Route path="/en/resources" element={<Recursos lang="en" />} />
           <Route path="/en/about" element={<SobreNosotros lang="en" />} />
           <Route path="/en/terms" element={<Terminos lang="en" />} />
-          <Route path="/contacto-digital" element={<VCard />} />
 
+          {/* Portuguese /pt prefix routes */}
+          <Route path="/pt" element={<Index lang="pt" />} />
+          <Route path="/pt/servicos" element={<Servicios lang="pt" />} />
+          <Route path="/pt/seo-ecommerce" element={<SeoEcommerce lang="pt" />} />
+          <Route path="/pt/design-web" element={<DiseneoWeb lang="pt" />} />
+          <Route path="/pt/anuncios-digitais" element={<PautaDigital lang="pt" />} />
+          <Route path="/pt/design-logos" element={<DisenoLogos lang="pt" />} />
+          <Route path="/pt/ferramentas" element={<DescuentosHerramientas lang="pt" />} />
+          <Route path="/pt/consultorias" element={<AsesoriasMarketing lang="pt" />} />
+          <Route path="/pt/linkedin" element={<OptimizacionLinkedin lang="pt" />} />
+          <Route path="/pt/whatsapp-business" element={<OptimizacionWhatsapp lang="pt" />} />
+          <Route path="/pt/precos" element={<Precios lang="pt" />} />
+          <Route path="/pt/casos-de-sucesso" element={<CasosDeExito lang="pt" />} />
+          <Route path="/pt/casos-de-sucesso/:id" element={<CasoDetalle lang="pt" />} />
+          <Route path="/pt/contato" element={<Contacto lang="pt" />} />
+          <Route path="/pt/blog" element={<Blog lang="pt" />} />
+          <Route path="/pt/blog/:slug" element={<BlogPost lang="pt" />} />
+          <Route path="/pt/recursos" element={<Recursos lang="pt" />} />
+          <Route path="/pt/sobre-nos" element={<SobreNosotros lang="pt" />} />
+          <Route path="/pt/termos" element={<Terminos lang="pt" />} />
+
+          <Route path="/contacto-digital" element={<VCard />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </BrowserRouter>

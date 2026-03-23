@@ -2,7 +2,7 @@ import { ArrowRight, Search, Monitor, Target } from 'lucide-react';
 import { Link } from 'react-router-dom';
 
 interface ServicesPreviewProps {
-  lang?: 'es' | 'en';
+  lang?: 'es' | 'en' | 'pt';
 }
 
 const ServicesPreview = ({ lang = 'es' }: ServicesPreviewProps) => {

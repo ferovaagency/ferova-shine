@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom';
 import { Target, BarChart3, Users, Megaphone, Check, ArrowRight, MessageCircle, Minus } from 'lucide-react';
 import { useState } from 'react';
 
-interface Props { lang?: 'es' | 'en'; }
+interface Props { lang?: 'es' | 'en' | 'pt'; }
 
 const PautaDigital = ({ lang = 'es' }: Props) => {
   const [currency, setCurrency] = useState<'cop' | 'usd'>('cop');
