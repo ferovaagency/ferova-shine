@@ -3,7 +3,7 @@ import Footer from '@/components/layout/Footer';
 import { Tag, ExternalLink, Star, Zap, Globe, Mail } from 'lucide-react';
 import { Link } from 'react-router-dom';
 
-interface Props { lang?: 'es' | 'en'; }
+interface Props { lang?: 'es' | 'en' | 'pt'; }
 
 const tools = [
   {

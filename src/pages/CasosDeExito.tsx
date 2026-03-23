@@ -7,7 +7,7 @@ import { AnimatedSection, StaggerContainer, StaggerItem, ScaleOnHover, PageTrans
 import { motion } from 'framer-motion';
 import { Target, BarChart3, ShoppingCart, ArrowRight, MessageCircle } from 'lucide-react';
 
-interface Props { lang?: 'es' | 'en'; }
+interface Props { lang?: 'es' | 'en' | 'pt'; }
 
 export const casesData = {
   es: [

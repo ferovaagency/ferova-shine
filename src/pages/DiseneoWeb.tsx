@@ -10,7 +10,7 @@ import {
   MessageCircle, Globe, ShoppingCart, Rocket, Star
 } from 'lucide-react';
 
-interface Props { lang?: 'es' | 'en'; }
+interface Props { lang?: 'es' | 'en' | 'pt'; }
 
 const DiseneoWeb = ({ lang = 'es' }: Props) => {
   const [currency, setCurrency] = useState<'usd' | 'cop'>('usd');

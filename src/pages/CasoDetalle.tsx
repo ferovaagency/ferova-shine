@@ -7,7 +7,7 @@ import { ArrowLeft, MessageCircle } from 'lucide-react';
 import { AnimatedSection, StaggerContainer, StaggerItem, PageTransition } from '@/components/ui/motion';
 import { motion } from 'framer-motion';
 
-interface Props { lang?: 'es' | 'en'; }
+interface Props { lang?: 'es' | 'en' | 'pt'; }
 
 const CasoDetalle = ({ lang = 'es' }: Props) => {
   const { id } = useParams();

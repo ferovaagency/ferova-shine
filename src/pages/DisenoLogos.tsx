@@ -8,7 +8,7 @@ import { useState } from 'react';
 import { getPaymentLink } from '@/lib/payment-links';
 import { useToast } from '@/hooks/use-toast';
 
-interface Props { lang?: 'es' | 'en'; }
+interface Props { lang?: 'es' | 'en' | 'pt'; }
 
 const DisenoLogos = ({ lang = 'es' }: Props) => {
   const [currency, setCurrency] = useState<'usd' | 'cop'>('usd');

@@ -10,7 +10,7 @@ import {
   Plus, ArrowRight, Star, Smartphone
 } from 'lucide-react';
 
-interface Props { lang?: 'es' | 'en'; }
+interface Props { lang?: 'es' | 'en' | 'pt'; }
 
 const OptimizacionWhatsapp = ({ lang = 'es' }: Props) => {
   const [currency, setCurrency] = useState<'usd' | 'cop'>('usd');

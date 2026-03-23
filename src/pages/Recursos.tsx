@@ -6,7 +6,7 @@ import { AnimatedSection, StaggerContainer, StaggerItem, ScaleOnHover, PageTrans
 import { motion } from 'framer-motion';
 import { BookOpen, Globe, Mail, FileText, Calendar, BarChart3, Lock, ArrowRight, Download, MessageCircle, ExternalLink } from 'lucide-react';
 
-interface Props { lang?: 'es' | 'en'; }
+interface Props { lang?: 'es' | 'en' | 'pt'; }
 
 const categories = [
   { id: 'all', es: 'Todos', en: 'All' },

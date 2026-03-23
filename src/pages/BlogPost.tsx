@@ -5,7 +5,7 @@ import ChatWidget from '@/components/ui/chat-widget';
 import AdBanner from '@/components/ui/ad-banner';
 import { ArrowLeft, Clock, User, MessageCircle } from 'lucide-react';
 
-interface Props { lang?: 'es' | 'en'; }
+interface Props { lang?: 'es' | 'en' | 'pt'; }
 
 const postsContent: Record<string, Record<string, { title: string; author: string; date: string; readTime: string; category: string; content: string[] }>> = {
   es: {
