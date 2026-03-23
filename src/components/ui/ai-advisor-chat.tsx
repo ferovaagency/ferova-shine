@@ -37,6 +37,19 @@ const t = {
       'I want to rank on Google',
     ],
   },
+  pt: {
+    title: 'Fera · Consultora IA',
+    subtitle: 'Sua consultora digital',
+    welcome: "Olá! 👋 Sou a **Fera**, sua consultora digital da Ferova Agency.\n\nMe conte sobre o seu negócio e vou te ajudar a encontrar a melhor estratégia de crescimento. Que tipo de negócio você tem?",
+    placeholder: 'Digite sua mensagem...',
+    badge: 'Consultora IA',
+    error: 'Ocorreu um erro. Tente novamente.',
+    suggestions: [
+      'Preciso de mais clientes',
+      'Minha marca não parece profissional',
+      'Quero aparecer no Google',
+    ],
+  },
 };
 
 const AiAdvisorChat = ({ lang = 'es' }: AiAdvisorChatProps) => {
