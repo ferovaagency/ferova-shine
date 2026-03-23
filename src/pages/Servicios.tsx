@@ -23,6 +23,14 @@ const Servicios = ({ lang = 'es' }: ServiciosProps) => {
     { icon: Palette, title: 'Diseño de Logos', description: 'Identidad visual única y profesional que posiciona tu marca en la mente de tus clientes.', features: ['Propuestas de diseño', 'Manual de marca', 'Archivos editables', 'Paleta de colores', 'Tipografías seleccionadas', 'Aplicaciones de marca'], href: '/servicios/diseno-logos' },
     { icon: Tag, title: 'Descuentos en Herramientas', description: 'Accede a herramientas premium de marketing, SEO y productividad a precios exclusivos.', features: ['SEMrush', 'Ahrefs', 'Surfer SEO', 'Envato Elements', 'Canva Pro', 'Y muchas más'], href: '/servicios/descuentos-herramientas' },
     { icon: GraduationCap, title: 'Asesorías de Marketing Virtual', description: 'Consultoría estratégica personalizada para escalar tu negocio digital.', features: ['Diagnóstico digital', 'Estrategia de crecimiento', 'Plan de acción', 'Sesiones 1-a-1', 'Seguimiento mensual', 'Soporte continuo'], href: '/servicios/asesorias-marketing' },
+  ] : lang === 'pt' ? [
+    { icon: Search, title: 'SEO para E-commerce', description: 'Estratégia completa de posicionamento orgânico projetada para lojas virtuais.', features: ['Auditoria técnica SEO', 'Pesquisa estratégica de palavras-chave', 'Otimização on-page', 'Link building de qualidade', 'Marketing de conteúdo', 'Relatórios mensais'], href: '/pt/seo-ecommerce' },
+    { icon: Monitor, title: 'Desenvolvimento de Web Apps', description: 'Web Apps de alto desempenho para e-commerce. Mais rápidas que WordPress. Mais seguras. Melhor SEO.', features: ['Design UI/UX profissional', 'Desenvolvimento responsivo', 'Core Web Vitals otimizados', 'Integração e-commerce', 'Mobile-first', 'Manutenção contínua'], href: '/pt/design-web' },
+    { icon: Target, title: 'Tráfego Pago', description: 'Campanhas publicitárias no Google, Meta, TikTok e LinkedIn que geram vendas reais.', features: ['Google Ads & Shopping', 'Facebook e Instagram Ads', 'TikTok Ads', 'LinkedIn Ads', 'Remarketing avançado', 'Relatórios em tempo real'], href: '/pt/anuncios-digitais' },
+    { icon: Linkedin, title: 'Otimização de LinkedIn', description: 'Potencialize sua marca pessoal e atraia oportunidades com um perfil otimizado estrategicamente.', features: ['Auditoria de perfil', 'Headline e Sobre estratégico', 'SEO de palavras-chave profissionais', 'Banner profissional', 'Estratégia de conteúdo', 'Sessão de acompanhamento'], href: '/pt/linkedin' },
+    { icon: Palette, title: 'Design de Logos', description: 'Identidade visual única e profissional que posiciona sua marca na mente dos seus clientes.', features: ['Propostas de design', 'Manual de marca', 'Arquivos editáveis', 'Paleta de cores', 'Tipografias selecionadas', 'Aplicações de marca'], href: '/pt/design-logos' },
+    { icon: Tag, title: 'Descontos em Ferramentas', description: 'Acesse ferramentas premium de marketing, SEO e produtividade a preços exclusivos.', features: ['SEMrush', 'Ahrefs', 'Surfer SEO', 'Envato Elements', 'Canva Pro', 'E muito mais'], href: '/pt/ferramentas' },
+    { icon: GraduationCap, title: 'Consultorias de Marketing Virtual', description: 'Consultoria estratégica personalizada para escalar seu negócio digital.', features: ['Diagnóstico digital', 'Estratégia de crescimento', 'Plano de ação', 'Sessões 1-a-1', 'Acompanhamento mensal', 'Suporte contínuo'], href: '/pt/consultorias' },
   ] : [
     { icon: Search, title: 'E-commerce SEO', description: 'Comprehensive organic positioning strategy designed for online stores.', features: ['Technical SEO audit', 'Strategic keyword research', 'On-page optimization', 'Quality link building', 'Content marketing', 'Monthly reporting'], href: '/en/services/ecommerce-seo' },
     { icon: Monitor, title: 'Web App Design', description: 'High-Performance Web Apps for E-commerce. Faster than WordPress. More secure. Better SEO.', features: ['Professional UI/UX design', 'Responsive development', 'Optimized Core Web Vitals', 'E-commerce integration', 'Mobile-first', 'Continuous maintenance'], href: '/en/services/web-design' },
@@ -41,10 +49,10 @@ const Servicios = ({ lang = 'es' }: ServiciosProps) => {
           <div className="absolute inset-0" style={{ background: 'radial-gradient(ellipse at 50% 30%, hsla(45, 86%, 40%, 0.06), transparent 60%)' }} />
           <div className="container mx-auto px-4 md:px-6 relative z-10">
             <h1 className="text-4xl md:text-5xl lg:text-6xl font-display font-bold mb-6">
-              {lang === 'es' ? 'Nuestros Servicios' : 'Our Services'}
+              {lang === 'es' ? 'Nuestros Servicios' : lang === 'pt' ? 'Nossos Serviços' : 'Our Services'}
             </h1>
             <p className="text-muted-foreground text-lg max-w-2xl mx-auto">
-              {lang === 'es' ? 'Soluciones especializadas para hacer crecer tu e-commerce con estrategia, diseño y tecnología.' : 'Specialized solutions to grow your e-commerce with strategy, design and technology.'}
+              {lang === 'es' ? 'Soluciones especializadas para hacer crecer tu e-commerce con estrategia, diseño y tecnología.' : lang === 'pt' ? 'Soluções especializadas para fazer seu e-commerce crescer com estratégia, design e tecnologia.' : 'Specialized solutions to grow your e-commerce with strategy, design and technology.'}
             </p>
           </div>
         </section>
@@ -70,7 +78,7 @@ const Servicios = ({ lang = 'es' }: ServiciosProps) => {
                       </ul>
                       <div className="flex items-center justify-between">
                         <span className="inline-flex items-center gap-1 text-gold text-sm font-semibold group-hover:gap-2 transition-all">
-                          {lang === 'es' ? 'Ver detalles' : 'View details'} <ArrowRight className="w-4 h-4" />
+                          {lang === 'es' ? 'Ver detalles' : lang === 'pt' ? 'Ver detalhes' : 'View details'} <ArrowRight className="w-4 h-4" />
                         </span>
                       </div>
                     </Link>
@@ -78,7 +86,7 @@ const Servicios = ({ lang = 'es' }: ServiciosProps) => {
                       onClick={(e) => { e.preventDefault(); setProposalService(s.title); setProposalOpen(true); }}
                       className="mt-3 w-full py-2 rounded-full text-xs font-medium border border-border text-muted-foreground hover:text-foreground hover:border-gold/40 transition-all"
                     >
-                      {lang === 'es' ? 'Solicitar propuesta personalizada' : 'Request custom proposal'}
+                      {lang === 'es' ? 'Solicitar propuesta personalizada' : lang === 'pt' ? 'Solicitar proposta personalizada' : 'Request custom proposal'}
                     </button>
                   </ScaleOnHover>
                 </StaggerItem>
@@ -91,18 +99,18 @@ const Servicios = ({ lang = 'es' }: ServiciosProps) => {
         <section className="py-20 md:py-28 dark-section" style={{ background: 'hsl(243, 28%, 14%)' }}>
           <div className="container mx-auto px-4 md:px-6 text-center">
             <h2 className="text-3xl md:text-4xl font-display font-bold mb-6 text-foreground">
-              {lang === 'es' ? '¿Listo para impulsar tu e-commerce?' : 'Ready to boost your e-commerce?'}
+              {lang === 'es' ? '¿Listo para impulsar tu e-commerce?' : lang === 'pt' ? 'Pronto para impulsionar seu e-commerce?' : 'Ready to boost your e-commerce?'}
             </h2>
             <p className="text-lg max-w-xl mx-auto mb-10 text-muted-foreground">
-              {lang === 'es' ? 'Escríbenos y diseñamos la estrategia perfecta para tu negocio.' : 'Contact us and we\'ll design the perfect strategy for your business.'}
+              {lang === 'es' ? 'Escríbenos y diseñamos la estrategia perfecta para tu negocio.' : lang === 'pt' ? 'Fale conosco e criamos a estratégia perfeita para o seu negócio.' : 'Contact us and we\'ll design the perfect strategy for your business.'}
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <a href="https://wa.me/17865787671?text=Hola%20Ferova%2C%20quiero%20agendar%20una%20asesoría." target="_blank" rel="noopener noreferrer" className="btn-gold flex items-center justify-center gap-2">
                 <MessageCircle className="w-5 h-5" />
-                {lang === 'es' ? 'Agendar Asesoría' : 'Book Consultation'}
+                {lang === 'es' ? 'Agendar Asesoría' : lang === 'pt' ? 'Agendar Consultoria' : 'Book Consultation'}
               </a>
-              <Link to={lang === 'es' ? '/contacto' : '/en/contact'} className="btn-outline-gold text-center">
-                {lang === 'es' ? 'Formulario de contacto' : 'Contact form'}
+              <Link to={lang === 'es' ? '/contacto' : lang === 'pt' ? '/pt/contato' : '/en/contact'} className="btn-outline-gold text-center">
+                {lang === 'es' ? 'Formulario de contacto' : lang === 'pt' ? 'Formulário de contato' : 'Contact form'}
               </Link>
             </div>
           </div>

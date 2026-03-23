@@ -18,9 +18,10 @@ const DisenoLogos = ({ lang = 'es' }: Props) => {
     const link = getPaymentLink('brandingEssential', currency);
     window.open(link, '_blank', 'noopener,noreferrer');
     toast({
-      title: lang === 'es' ? '¡Confirmado!' : 'Confirmed!',
+      title: lang === 'es' ? '¡Confirmado!' : lang === 'pt' ? 'Confirmado!' : 'Confirmed!',
       description: lang === 'es'
         ? '¡Plan confirmado! En Ferova Agency estamos listos para empezar.'
+        : lang === 'pt' ? 'Plano confirmado! Na Ferova Agency estamos prontos para começar.'
         : 'Plan confirmed! At Ferova Agency we are ready to start.',
     });
   };
@@ -50,6 +51,26 @@ const DisenoLogos = ({ lang = 'es' }: Props) => {
     ],
     planExcludes: ['Registro legal de marca', 'Manual de marca extendido', 'Papelería corporativa'],
     noInclude: 'No incluye:',
+  } : lang === 'pt' ? {
+    title: 'Design de Logos & Branding',
+    sub: 'Identidade visual única e profissional que posiciona sua marca na mente dos seus clientes.',
+    whatIncludes: 'O que nosso serviço inclui?',
+    features: [
+      { icon: Palette, title: 'Design conceitual', desc: 'Propostas criativas baseadas nos valores e personalidade da sua marca.' },
+      { icon: Layers, title: 'Variações e aplicações', desc: 'Logo principal, secundário, iconográfico e variações de cor.' },
+      { icon: FileImage, title: 'Arquivos editáveis', desc: 'Entrega em AI, EPS, SVG, PNG e PDF para qualquer uso.' },
+      { icon: BookOpen, title: 'Manual de marca', desc: 'Guia completo com paleta de cores, tipografias e regras de uso.' },
+    ],
+    planTitle: 'Plano Branding Essential',
+    planTagline: 'Sua marca é o que dizem de você quando você não está. A Ferova Agency cria uma identidade que projeta autoridade e profissionalismo.',
+    planCta: 'Preencher Briefing',
+    planIncludes: [
+      { icon: Palette, text: 'Logo principal + variações' },
+      { icon: Zap, text: 'Paleta de cores + tipografia' },
+      { icon: ArrowRight, text: 'Arquivos editáveis (AI/SVG)' },
+    ],
+    planExcludes: ['Registro legal de marca', 'Manual de marca estendido', 'Papelaria corporativa'],
+    noInclude: 'Não inclui:',
   } : {
     title: 'Logo Design & Branding',
     sub: 'Unique professional visual identity that positions your brand in customers\' minds.',
@@ -118,7 +139,7 @@ const DisenoLogos = ({ lang = 'es' }: Props) => {
               <p className="text-muted-foreground text-sm leading-relaxed mb-6 text-center">{t.planTagline}</p>
               <div className="text-center mb-6">
                 <span className="text-4xl font-display font-bold">{formatPrice(150, 600000)}</span>
-                <span className="text-muted-foreground text-sm ml-1">{lang === 'es' ? '/ pago único' : '/ one-time'}</span>
+                <span className="text-muted-foreground text-sm ml-1">{lang === 'es' ? '/ pago único' : lang === 'pt' ? '/ pagamento único' : '/ one-time'}</span>
               </div>
               <ul className="space-y-3 mb-6">
                 {t.planIncludes.map((item, i) => {

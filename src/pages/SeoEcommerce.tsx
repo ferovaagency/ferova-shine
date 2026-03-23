@@ -78,6 +78,53 @@ const SeoEcommerce = ({ lang = 'es' }: Props) => {
       { q: '¿Qué es GEO y en qué se diferencia del SEO?', a: 'GEO (Geographical Optimization) se enfoca en posicionar tu negocio en búsquedas geolocalizadas, mapas y motores de respuesta con intención local inmediata.' },
       { q: '¿Cómo miden el ROI del SEO?', a: 'Medimos tráfico orgánico, posiciones de keywords, conversiones orgánicas, revenue orgánico y reducción del CAC.' },
     ],
+  } : lang === 'pt' ? {
+    title: 'SEO para E-commerce',
+    sub: 'Estratégia completa de posicionamento orgânico projetada especificamente para lojas virtuais que buscam aumentar suas vendas de forma sustentável.',
+    cta: 'Solicitar diagnóstico',
+    ctaSecondary: 'Ver casos de sucesso',
+    whatIncludes: 'O que nosso serviço inclui?',
+    process: 'Nosso processo',
+    faqTitle: 'Perguntas frequentes',
+    geoTitle: 'GEO: Otimização Geográfica',
+    geoTagline: 'Não apenas te posicionamos em buscadores, te colocamos no mapa do mundo real.',
+    geoDesc: 'A Ferova Agency não faz apenas SEO tradicional. Implementamos GEO (Geographical Optimization), a otimização para motores de resposta e buscas geolocalizadas, garantindo que seu negócio apareça em mapas e consultas de intenção local imediata.',
+    geoFeatures: [
+      { icon: MapPin, title: 'Google Business Profile', desc: 'Otimização completa do seu perfil para aparecer no Map Pack e buscas "perto de mim".' },
+      { icon: Globe2, title: 'Motores de resposta', desc: 'Posicionamento em assistentes de voz, snippets destacados e motores de IA conversacional.' },
+      { icon: Navigation, title: 'Buscas geolocalizadas', desc: 'Estratégia de palavras-chave com intenção local para captar tráfego de alta conversão.' },
+      { icon: Target, title: 'Intenção local imediata', desc: 'Captamos usuários que buscam soluções agora mesmo na sua região geográfica.' },
+    ],
+    planTitle: 'Plano SEO & GEO Local',
+    planTagline: 'Se você não está no mapa, você não existe. A Ferova Agency transforma seu perfil do Google em uma máquina de atrair clientes.',
+    planCta: 'Iniciar Otimização',
+    planIncludes: [
+      'Otimização do Google Business Profile',
+      'Estratégia de 5 palavras-chave locais',
+      'Auditoria de visibilidade local',
+    ],
+    planExcludes: ['Anúncios pagos (Ads)', 'Criação de conteúdo para redes', 'Desenvolvimento web'],
+    noInclude: 'Não inclui:',
+    urgency: 'Apenas 3 vagas disponíveis por mês para garantir resultados.',
+    monthly: '/mês',
+    features: [
+      { icon: Search, title: 'Auditoria técnica completa', desc: 'Análise profunda de rastreabilidade, indexação, Core Web Vitals e arquitetura do site.' },
+      { icon: TrendingUp, title: 'Pesquisa estratégica de palavras-chave', desc: 'Pesquisa exaustiva de palavras-chave com potencial comercial.' },
+      { icon: Users, title: 'Otimização on-page', desc: 'Otimização de títulos, meta descriptions, URLs e estrutura interna.' },
+      { icon: BarChart3, title: 'Link building especializado', desc: 'Estratégia de construção de links de qualidade específica para e-commerce.' },
+    ],
+    steps: [
+      { n: '01', title: 'Diagnóstico inicial', desc: 'Auditoria completa e definição de objetivos SMART.' },
+      { n: '02', title: 'Estratégia personalizada', desc: 'Roadmap SEO específico baseado em descobertas e objetivos.' },
+      { n: '03', title: 'Implementação', desc: 'Otimizações técnicas, conteúdo e link building.' },
+      { n: '04', title: 'Monitoramento e ajustes', desc: 'Acompanhamento contínuo e otimização baseada em dados.' },
+    ],
+    faqs: [
+      { q: 'Quanto tempo leva para ver resultados em SEO?', a: 'Os primeiros resultados visíveis costumam aparecer entre 3-6 meses. Os resultados significativos se consolidam entre 6-12 meses.' },
+      { q: 'O que diferencia o SEO para e-commerce do SEO tradicional?', a: 'Requer estratégias específicas como otimização de fichas de produto, gestão de conteúdo duplicado, SEO para filtros e facetas.' },
+      { q: 'O que é GEO e como se diferencia do SEO?', a: 'GEO (Geographical Optimization) se foca em posicionar seu negócio em buscas geolocalizadas, mapas e motores de resposta com intenção local imediata.' },
+      { q: 'Como vocês medem o ROI do SEO?', a: 'Medimos tráfego orgânico, posições de palavras-chave, conversões orgânicas, receita orgânica e redução do CAC.' },
+    ],
   } : {
     title: 'E-commerce SEO',
     sub: 'Comprehensive organic positioning strategy designed specifically for online stores looking to increase their sales sustainably.',
@@ -143,15 +190,15 @@ const SeoEcommerce = ({ lang = 'es' }: Props) => {
                   <a href="https://wa.me/17865787671" target="_blank" rel="noopener noreferrer" className="btn-gold flex items-center justify-center gap-2">
                     <MessageCircle className="w-5 h-5" /> {t.cta}
                   </a>
-                  <Link to={lang === 'es' ? '/casos-de-exito' : '/en/case-studies'} className="btn-outline-gold text-center">{t.ctaSecondary}</Link>
+                  <Link to={lang === 'es' ? '/casos-de-exito' : lang === 'pt' ? '/pt/casos-de-sucesso' : '/en/case-studies'} className="btn-outline-gold text-center">{t.ctaSecondary}</Link>
                 </div>
               </div>
               <div className="glass-card p-8 text-center gold-glow">
                 <div className="w-20 h-20 rounded-full flex items-center justify-center mx-auto mb-4" style={{ background: 'linear-gradient(135deg, hsl(45 86% 40%), hsl(45 86% 52%))' }}>
                   <Search className="w-10 h-10 text-primary-foreground" />
                 </div>
-                <h3 className="text-xl font-display font-bold mb-2">{lang === 'es' ? 'Diagnóstico gratuito' : 'Free diagnosis'}</h3>
-                <p className="text-muted-foreground">{lang === 'es' ? 'Análisis inicial sin costo de tu sitio web' : 'Free initial analysis of your website'}</p>
+              <h3 className="text-xl font-display font-bold mb-2">{lang === 'es' ? 'Diagnóstico gratuito' : lang === 'pt' ? 'Diagnóstico gratuito' : 'Free diagnosis'}</h3>
+                <p className="text-muted-foreground">{lang === 'es' ? 'Análisis inicial sin costo de tu sitio web' : lang === 'pt' ? 'Análise inicial sem custo do seu site' : 'Free initial analysis of your website'}</p>
               </div>
             </div>
           </div>
@@ -295,10 +342,10 @@ const SeoEcommerce = ({ lang = 'es' }: Props) => {
         <section className="py-20 md:py-28">
           <div className="container mx-auto px-4 md:px-6 text-center">
             <h2 className="text-3xl md:text-4xl font-display font-bold mb-6">
-              {lang === 'es' ? '¿Listo para dominar Google?' : 'Ready to dominate Google?'}
+              {lang === 'es' ? '¿Listo para dominar Google?' : lang === 'pt' ? 'Pronto para dominar o Google?' : 'Ready to dominate Google?'}
             </h2>
             <p className="text-muted-foreground text-lg max-w-2xl mx-auto mb-8">
-              {lang === 'es' ? 'Solicita tu diagnóstico SEO gratuito.' : 'Request your free SEO diagnosis.'}
+              {lang === 'es' ? 'Solicita tu diagnóstico SEO gratuito.' : lang === 'pt' ? 'Solicite seu diagnóstico SEO gratuito.' : 'Request your free SEO diagnosis.'}
             </p>
             <a href="https://wa.me/17865787671" target="_blank" rel="noopener noreferrer" className="btn-gold inline-flex items-center gap-2">
               <MessageCircle className="w-5 h-5" /> {t.cta}

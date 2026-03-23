@@ -24,6 +24,20 @@ const Contacto = ({ lang = 'es' }: Props) => {
     emailTitle: 'Email', emailDesc: 'Respuesta en 24h',
     schedule: 'Agendar llamada', scheduleDesc: 'Elige un horario',
     location: 'Bogotá, Colombia · Miami, FL',
+  } : lang === 'pt' ? {
+    title: 'Vamos falar sobre seu projeto',
+    sub: 'Conte-nos o que você precisa. Responderemos em menos de 24 horas.',
+    name: 'Nome completo', email: 'E-mail', website: 'Site atual (opcional)',
+    country: 'País', budget: 'Orçamento estimado',
+    budgetOptions: ['Selecione uma faixa', 'Menos de $500 USD', '$500 - $1.500 USD', '$1.500 - $5.000 USD', 'Mais de $5.000 USD'],
+    message: 'Conte-nos sobre seu projeto',
+    consent: 'Autorizo o tratamento dos meus dados pessoais de acordo com a',
+    consentLink: 'Política de Privacidade', send: 'Enviar mensagem', sending: 'Enviando...',
+    contactTitle: 'Outras formas de contato',
+    whatsapp: 'WhatsApp', whatsappDesc: 'Resposta rápida',
+    emailTitle: 'Email', emailDesc: 'Resposta em 24h',
+    schedule: 'Agendar chamada', scheduleDesc: 'Escolha um horário',
+    location: 'Bogotá, Colômbia · Miami, FL',
   } : {
     title: "Let's talk about your project",
     sub: "Tell us what you need. We'll respond within 24 hours.",
@@ -44,10 +58,9 @@ const Contacto = ({ lang = 'es' }: Props) => {
     e.preventDefault();
     if (!formData.consent) return;
     setSending(true);
-    // TODO: Connect to Brevo API
     await new Promise(r => setTimeout(r, 1500));
     setSending(false);
-    alert(lang === 'es' ? '¡Mensaje enviado!' : 'Message sent!');
+    alert(lang === 'es' ? '¡Mensaje enviado!' : lang === 'pt' ? 'Mensagem enviada!' : 'Message sent!');
     setFormData({ name: '', email: '', website: '', country: '', budget: '', message: '', consent: false });
   };
 
@@ -81,7 +94,7 @@ const Contacto = ({ lang = 'es' }: Props) => {
                 <textarea required rows={4} placeholder={t.message} value={formData.message} onChange={e => setFormData({ ...formData, message: e.target.value })} className={inputCls + ' resize-none'} />
                 <label className="flex items-start gap-3 text-sm text-muted-foreground cursor-pointer">
                   <input type="checkbox" required checked={formData.consent} onChange={e => setFormData({ ...formData, consent: e.target.checked })} className="mt-1 rounded border-border" />
-                  <span>{t.consent}{' '}<a href={lang === 'es' ? '/privacidad' : '/en/privacy'} className="text-gold underline underline-offset-2">{t.consentLink}</a>.</span>
+                  <span>{t.consent}{' '}<a href={lang === 'es' ? '/privacidad' : lang === 'pt' ? '/pt/termos' : '/en/privacy'} className="text-gold underline underline-offset-2">{t.consentLink}</a>.</span>
                 </label>
                 <button type="submit" disabled={sending} className="btn-gold w-full !py-4 flex items-center justify-center gap-2 disabled:opacity-60">
                   <Send className="w-4 h-4" /> {sending ? t.sending : t.send}

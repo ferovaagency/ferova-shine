@@ -120,6 +120,75 @@ const Index = ({ lang = 'es' }: IndexProps) => {
     ctaBtn: 'Agendar Asesoría',
     ctaLink: 'Ver planes',
     viewAll: 'Ver todos los servicios',
+  } : lang === 'pt' ? {
+    heroTitle1: 'Web Apps de',
+    heroTitle2: 'Alto Desempenho',
+    heroTitle3: 'para E-commerce',
+    heroSub: 'Mais rápidas que WordPress. Mais seguras. Melhor SEO. Projetadas para converter visitantes em clientes.',
+    ctaPrimary: 'Agendar Consultoria',
+    ctaSecondary: 'Fale conosco pelo WhatsApp',
+    benefitsTitle: 'Por que uma Web App?',
+    benefitsSub: 'Web Apps modernas superam o WordPress em cada métrica que importa.',
+    benefits: [
+      { icon: Zap, title: 'Velocidade extrema', desc: 'Carrega em menos de 1 segundo. Melhor experiência do usuário e mais conversões.' },
+      { icon: Shield, title: 'Segurança total', desc: 'Sem plugins vulneráveis. Sem invasões. Sua loja protegida 24/7.' },
+      { icon: Search, title: 'SEO de nova geração', desc: 'Estrutura otimizada desde o código. O Google te recompensa com melhor posicionamento.' },
+      { icon: BarChart3, title: 'Conversão real', desc: 'Cada elemento projetado para guiar o usuário até a compra.' },
+    ],
+    compTitle: 'WordPress vs Web Apps Ferova',
+    compSub: 'Descubra por que as marcas líderes estão migrando para Web Apps.',
+    compHeaders: ['Recurso', 'WordPress', 'Web App Ferova'],
+    compRows: [
+      ['Velocidade de carga', '3-8 segundos', '< 1 segundo'],
+      ['Segurança', 'Plugins vulneráveis', 'Arquitetura segura'],
+      ['SEO técnico', 'Limitado por plugins', 'Otimizado nativamente'],
+      ['Manutenção', 'Atualizações constantes', 'Zero manutenção'],
+      ['Escalabilidade', 'Fica lento com tráfego', 'Escala automaticamente'],
+      ['Core Web Vitals', 'Difícil de aprovar', 'Aprovação garantida'],
+    ],
+    servicesTitle: 'Serviços',
+    servicesSub: 'Tudo o que você precisa para dominar o e-commerce.',
+    services: [
+      { icon: Search, title: 'SEO para E-commerce', desc: 'Posicione sua loja virtual nas primeiras posições do Google.', href: '/pt/seo-ecommerce' },
+      { icon: Code2, title: 'Desenvolvimento Web / Web Apps', desc: 'Sites ultra-rápidos, modernos e otimizados para converter.', href: '/pt/design-web' },
+      { icon: TrendingUp, title: 'Tráfego Pago', desc: 'Campanhas no Google, Meta, TikTok e LinkedIn que geram vendas.', href: '/pt/anuncios-digitais' },
+      { icon: Palette, title: 'Design de Logos', desc: 'Identidade visual única que representa sua marca.', href: '/pt/design-logos' },
+      { icon: Tag, title: 'Descontos em Ferramentas', desc: 'Acesse ferramentas premium a preços especiais.', href: '/pt/ferramentas' },
+      { icon: GraduationCap, title: 'Consultorias de Marketing', desc: 'Consultoria estratégica para escalar seu negócio.', href: '/pt/consultorias' },
+      { icon: Linkedin, title: 'Otimização de LinkedIn', desc: 'Potencialize sua marca pessoal com um perfil otimizado.', href: '/pt/linkedin' },
+    ],
+    statsTitle: 'Resultados que falam pela Ferova Agency',
+    stats: [
+      { value: 95, suffix: '%', prefix: '+', label: 'Tráfego Orgânico' },
+      { value: 50, suffix: '%', prefix: '+', label: 'Receita Orgânica' },
+      { value: 30, suffix: '%', prefix: '+', label: 'Novos Clientes' },
+      { value: 13, suffix: '', prefix: '', label: 'Marcas Impactadas' },
+    ],
+    statsNote: '*Dados baseados em implementações dos últimos 12 meses.',
+    diffTitle: 'O que diferencia a Ferova Agency',
+    diffSub: 'Não acreditamos em soluções genéricas. Trabalhamos com estratégias personalizadas; ganhamos se você ganha.',
+    differentiators: [
+      { icon: Target, title: 'Modelo baseado em resultados', desc: 'Nosso sucesso é medido pelo seu. Alinhamos nossos objetivos com os do seu negócio.' },
+      { icon: Lightbulb, title: 'Estratégias personalizadas', desc: 'Cada e-commerce é único. Criamos planos sob medida para suas necessidades.' },
+      { icon: FileText, title: 'Relatórios transparentes', desc: 'Sem letras miúdas. Relatórios claros com métricas que você entende e que importam.' },
+    ],
+    whyTitle: 'Por que escolher a Ferova Agency',
+    whyItems: [
+      { icon: Users, title: 'Envolvimento total', desc: 'Trabalhamos como uma extensão da sua equipe, com dedicação completa a cada projeto.' },
+      { icon: Handshake, title: 'Aliados estratégicos', desc: 'Mais que fornecedores, somos parceiros no seu crescimento digital.' },
+      { icon: Eye, title: 'Transparência sem jargões', desc: 'Comunicação clara e direta. Você vai entender cada decisão e cada resultado.' },
+    ],
+    testimonialsTitle: 'O que nossos clientes dizem',
+    testimonials: [
+      { name: 'Carolina M.', role: 'CEO, Loja de Moda', text: 'Desde que migramos para a Web App da Ferova, nossas vendas dobraram em 4 meses. A velocidade do site é incrível.' },
+      { name: 'Andrés P.', role: 'Diretor E-commerce', text: 'A equipe da Ferova entende e-commerce como ninguém. A abordagem baseada em dados nos deu confiança desde o primeiro dia.' },
+      { name: 'Laura G.', role: 'Fundadora, Cosmética Natural', text: 'Não me preocupo mais com invasões ou plugins. Minha loja está segura e carrega instantaneamente. Super recomendo.' },
+    ],
+    ctaTitle: 'Pronto para fazer seu e-commerce crescer?',
+    ctaSub: 'Agende uma consultoria gratuita e descubra quanto sua loja virtual pode crescer.',
+    ctaBtn: 'Agendar Consultoria',
+    ctaLink: 'Ver planos',
+    viewAll: 'Ver todos os serviços',
   } : {
     heroTitle1: 'High-Performance',
     heroTitle2: 'Web Apps',
@@ -192,7 +261,7 @@ const Index = ({ lang = 'es' }: IndexProps) => {
   };
 
   const whatsappUrl = 'https://wa.me/17865787671?text=' + encodeURIComponent(
-    lang === 'es' ? 'Hola Ferova, quiero agendar una asesoría.' : 'Hi Ferova, I want to book a consultation.'
+    lang === 'es' ? 'Hola Ferova, quiero agendar una asesoría.' : lang === 'pt' ? 'Olá Ferova, quero agendar uma consultoria.' : 'Hi Ferova, I want to book a consultation.'
   );
 
   return (
@@ -207,7 +276,7 @@ const Index = ({ lang = 'es' }: IndexProps) => {
               <AnimatedSection delay={0}>
                 <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-gold/20 bg-gold/5 text-gold text-sm font-medium mb-8">
                   <Rocket className="w-4 h-4" />
-                  {lang === 'es' ? 'Agencia Boutique de SEO para Ecommerce' : 'Boutique E-commerce SEO Agency'}
+                  {lang === 'es' ? 'Agencia Boutique de SEO para Ecommerce' : lang === 'pt' ? 'Agência Boutique de SEO para E-commerce' : 'Boutique E-commerce SEO Agency'}
                 </div>
               </AnimatedSection>
               <AnimatedSection delay={0.1}>
@@ -236,8 +305,8 @@ const Index = ({ lang = 'es' }: IndexProps) => {
                     {t.ctaPrimary}
                   </motion.a>
                   <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.97 }}>
-                    <Link to={lang === 'es' ? '/contacto' : '/en/contact'} className="btn-outline-gold text-center block">
-                      {lang === 'es' ? 'Ver planes y precios' : 'See plans & pricing'}
+                    <Link to={lang === 'es' ? '/contacto' : lang === 'pt' ? '/pt/contato' : '/en/contact'} className="btn-outline-gold text-center block">
+                      {lang === 'es' ? 'Ver planes y precios' : lang === 'pt' ? 'Ver planos e preços' : 'See plans & pricing'}
                     </Link>
                   </motion.div>
                 </div>
@@ -339,7 +408,7 @@ const Index = ({ lang = 'es' }: IndexProps) => {
                       <h3 className="text-xl font-display font-semibold mb-3 text-foreground">{s.title}</h3>
                       <p className="text-muted-foreground text-sm leading-relaxed mb-4">{s.desc}</p>
                       <span className="inline-flex items-center gap-1 text-gold text-sm font-medium group-hover:gap-2 transition-all">
-                        {lang === 'es' ? 'Ver servicio' : 'Learn more'} <ArrowRight className="w-4 h-4" />
+                        {lang === 'es' ? 'Ver servicio' : lang === 'pt' ? 'Ver serviço' : 'Learn more'} <ArrowRight className="w-4 h-4" />
                       </span>
                     </Link>
                   </ScaleOnHover>
@@ -347,7 +416,7 @@ const Index = ({ lang = 'es' }: IndexProps) => {
               ))}
             </StaggerContainer>
             <AnimatedSection className="text-center mt-10">
-              <Link to={lang === 'es' ? '/servicios' : '/en/services'} className="btn-outline-gold inline-flex items-center gap-2 !px-6 !py-3 text-sm">
+              <Link to={lang === 'es' ? '/servicios' : lang === 'pt' ? '/pt/servicos' : '/en/services'} className="btn-outline-gold inline-flex items-center gap-2 !px-6 !py-3 text-sm">
                 {t.viewAll} <ArrowRight className="w-4 h-4" />
               </Link>
             </AnimatedSection>
@@ -464,7 +533,7 @@ const Index = ({ lang = 'es' }: IndexProps) => {
                     whileTap={{ scale: 0.9 }}
                     onClick={() => setCurrentTestimonial((prev) => (prev === 0 ? t.testimonials.length - 1 : prev - 1))}
                     className="p-2 rounded-full border border-border hover:border-gold/50 hover:text-gold transition-colors"
-                    aria-label={lang === 'es' ? 'Anterior' : 'Previous'}
+                    aria-label={lang === 'es' ? 'Anterior' : lang === 'pt' ? 'Anterior' : 'Previous'}
                   >
                     <ChevronLeft className="w-5 h-5" />
                   </motion.button>
@@ -480,7 +549,7 @@ const Index = ({ lang = 'es' }: IndexProps) => {
                     whileTap={{ scale: 0.9 }}
                     onClick={() => setCurrentTestimonial((prev) => (prev === t.testimonials.length - 1 ? 0 : prev + 1))}
                     className="p-2 rounded-full border border-border hover:border-gold/50 hover:text-gold transition-colors"
-                    aria-label={lang === 'es' ? 'Siguiente' : 'Next'}
+                    aria-label={lang === 'es' ? 'Siguiente' : lang === 'pt' ? 'Próximo' : 'Next'}
                   >
                     <ChevronRight className="w-5 h-5" />
                   </motion.button>
@@ -512,7 +581,7 @@ const Index = ({ lang = 'es' }: IndexProps) => {
                   {t.ctaBtn}
                 </motion.a>
                 <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.97 }}>
-                  <Link to={lang === 'es' ? '/precios' : '/en/pricing'} className="btn-outline-gold text-center block">
+                  <Link to={lang === 'es' ? '/precios' : lang === 'pt' ? '/pt/precos' : '/en/pricing'} className="btn-outline-gold text-center block">
                     {t.ctaLink}
                   </Link>
                 </motion.div>
