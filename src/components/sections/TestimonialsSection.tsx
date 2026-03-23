@@ -4,7 +4,7 @@ import { AnimatedSection } from '@/components/ui/motion';
 import { motion } from 'framer-motion';
 
 interface TestimonialsSectionProps {
-  lang?: 'es' | 'en';
+  lang?: 'es' | 'en' | 'pt';
 }
 
 const TestimonialsSection = ({ lang = 'es' }: TestimonialsSectionProps) => {
