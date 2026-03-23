@@ -125,8 +125,32 @@ const DiseneoWeb = ({ lang = 'es' }: Props) => {
       { n: '03', title: 'Páginas y funciones', desc: 'Desarrollamos cada página con sus funcionalidades.' },
       { n: '04', title: 'Entrega y dominio', desc: 'Revisión final, conexión del dominio y capacitación básica.' },
     ],
+  } : lang === 'pt' ? {
+    title: 'Desenvolvimento Web & Webapps',
+    sub: 'Sites e webapps profissionais construídos em Lovable + Supabase. Entrega em 1 semana. Código 100% seu no GitHub.',
+    whatIncludes: 'O que nosso serviço inclui?',
+    pricingTitle: 'Planos de Desenvolvimento Web',
+    pricingNote: 'Todos os planos incluem domínio de sua escolha. O preço de construção é um pagamento único.',
+    noInclude: 'Não inclui:', monthly: '/mês', oneTime: 'construção',
+    features: [
+      { icon: Zap, title: 'Entrega em 1 semana', desc: 'O que no WordPress leva 6 semanas, entregamos em 7 dias com nosso processo otimizado.' },
+      { icon: Shield, title: 'Código 100% seu', desc: 'Todo o código fica no seu GitHub. Você não depende de nós para o futuro.' },
+      { icon: BarChart3, title: 'SEO desde a estrutura', desc: 'Meta tags, Schema.org, URLs amigáveis e velocidade de carga otimizada desde o início.' },
+      { icon: Smartphone, title: 'Mobile-first sempre', desc: 'Todas as webapps são otimizadas primeiro para mobile, tablet e desktop.' },
+    ],
+    plans: [
+      { key: 'webEconomico' as const, icon: Globe, name: 'Plano Econômico', tagline: 'Ideal para empreendedores e novos negócios que precisam de presença digital profissional rapidamente.', buildUSD: 499, buildCOP: 1600000, monthlyUSD: 0, monthlyCOP: 0, yearlyUSD: 499, yearlyCOP: 1600000, billingNote: '+ comissão sobre vendas geradas', popular: false, includes: ['Landing page profissional (Home + seções)', 'Design de marca aplicado (cores, fontes, logo)', 'Botão de WhatsApp sempre visível', 'Formulário de contato com notificação', 'SEO básico: meta tags, H1-H4, URLs amigáveis', 'Responsivo mobile-first', 'Hospedagem incluída via Lovable ou Vercel', 'Entrega em 1 semana'], excludes: ['Loja virtual / carrinho de compras', 'Painel de administração', 'Bot de IA', 'Blog com SEO'], cta: 'Iniciar projeto' },
+      { key: 'webPro' as const, icon: Rocket, name: 'Plano Pro', tagline: 'Para negócios em crescimento que precisam de mais páginas, blog, painel admin e funcionalidades avançadas.', buildUSD: 749, buildCOP: 2500000, monthlyUSD: 59, monthlyCOP: 200000, yearlyUSD: 749, yearlyCOP: 2500000, billingNote: '+ $59 USD / $200.000 COP por mês', popular: true, includes: ['Tudo do Plano Econômico +', 'Até 8 páginas (Serviços, Sobre, Blog, Contato...)', 'Bot de IA básico (responde perguntas frequentes)', 'Blog com SEO e meta tags dinâmicos', 'Formulários avançados (cotações, registros)', 'Painel de administração de conteúdo', 'Integração Supabase (banco de dados para leads)', 'Suporte mensal: até 4 horas de ajustes'], excludes: ['Loja virtual / gateway de pagamento', 'Gerador de fichas com IA', 'Upload massivo de produtos'], cta: 'Escolher Plano Pro' },
+      { key: 'webEcommerce' as const, icon: ShoppingCart, name: 'Ecommerce Full', tagline: 'Loja virtual completa com carrinho, pagamentos, bot de IA vendedor e painel admin para gerenciar tudo.', buildUSD: 990, buildCOP: 3120000, monthlyUSD: 119, monthlyCOP: 400000, yearlyUSD: 990, yearlyCOP: 3120000, billingNote: '+ $119 USD / $400.000 COP por mês', popular: false, includes: ['Tudo do Plano Pro +', 'Loja virtual completa (catálogo, carrinho, checkout)', 'Gateway de pagamento (Wompi / Stripe / MercadoPago)', 'Bot de IA avançado (consultor de vendas com cotações)', 'Gerador de fichas de produto com IA', 'Painel admin completo (produtos, pedidos, clientes)', 'SEO avançado: Schema.org, sitemap dinâmico', 'Suporte mensal: até 8 horas de ajustes'], excludes: ['Orçamento de anúncios pagos', 'Produção de vídeo', 'Gestão de conteúdo orgânico'], cta: 'Quero minha loja' },
+    ],
+    process: 'Como entregamos em 1 semana',
+    steps: [
+      { n: '01', title: 'Kickoff e marca', desc: 'Reunião inicial, coletamos logo, cores e conteúdo.' },
+      { n: '02', title: 'Estrutura base', desc: 'Construímos Header, Footer, Home e rotas principais.' },
+      { n: '03', title: 'Páginas e funções', desc: 'Desenvolvemos cada página com suas funcionalidades.' },
+      { n: '04', title: 'Entrega e domínio', desc: 'Revisão final, conexão do domínio e capacitação básica.' },
+    ],
   } : {
-    title: 'Web Design & Webapps',
     sub: 'Professional websites and webapps built on Lovable + Supabase. 1-week delivery. 100% your code on GitHub.',
     whatIncludes: 'What does our service include?',
     pricingTitle: 'Web Design Plans',
