@@ -3,14 +3,14 @@ import { Mail, MapPin, Instagram, Linkedin, Twitter, MessageCircle } from 'lucid
 import logoLight from '@/assets/ferova-logo.png.png';
 
 interface FooterProps {
-  currentLang?: 'es' | 'en';
-  lang?: 'es' | 'en';
+  currentLang?: 'es' | 'en' | 'pt';
+  lang?: 'es' | 'en' | 'pt';
 }
 
 const Footer = ({ currentLang, lang }: FooterProps) => {
   const locale = lang ?? currentLang ?? 'es';
 
-  const t = {
+  const t: Record<string, { tagline: string; services: string; company: string; legal: string; rights: string; servLinks: { name: string; href: string }[]; compLinks: { name: string; href: string }[]; legalLinks: { name: string; href: string }[] }> = {
     es: {
       tagline: 'Web Apps de alto rendimiento para e-commerce. SEO, diseño y estrategia digital.',
       services: 'Servicios',
@@ -63,16 +63,42 @@ const Footer = ({ currentLang, lang }: FooterProps) => {
         { name: 'Cookies', href: '/en/cookies' },
       ],
     },
+    pt: {
+      tagline: 'Web Apps de alto desempenho para e-commerce. SEO, design e estratégia digital.',
+      services: 'Serviços',
+      company: 'Empresa',
+      legal: 'Legal',
+      rights: 'Todos os direitos reservados.',
+      servLinks: [
+        { name: 'SEO para E-commerce', href: '/pt/seo-ecommerce' },
+        { name: 'Design Web / Web Apps', href: '/pt/design-web' },
+        { name: 'Anúncios Digitais', href: '/pt/anuncios-digitais' },
+        { name: 'Design de Logos', href: '/pt/design-logos' },
+        { name: 'Ferramentas com Desconto', href: '/pt/ferramentas' },
+        { name: 'Consultorias de Marketing', href: '/pt/consultorias' },
+      ],
+      compLinks: [
+        { name: 'Preços', href: '/pt/precos' },
+        { name: 'Casos de Sucesso', href: '/pt/casos-de-sucesso' },
+        { name: 'Blog', href: '/pt/blog' },
+        { name: 'Contato', href: '/pt/contato' },
+      ],
+      legalLinks: [
+        { name: 'Termos e Condições', href: '/pt/termos' },
+        { name: 'Privacidade', href: '/pt/privacidade' },
+        { name: 'Cookies', href: '/pt/cookies' },
+      ],
+    },
   };
 
-  const d = t[locale];
+  const d = t[locale] ?? t.es;
 
   return (
     <footer className="border-t border-border/50 bg-card">
       <div className="container mx-auto px-4 py-12 md:px-6 md:py-16">
         <div className="grid grid-cols-2 gap-8 md:grid-cols-4 lg:grid-cols-5">
           <div className="col-span-2 md:col-span-4 lg:col-span-2">
-            <Link to={locale === 'es' ? '/' : '/en'}>
+            <Link to={locale === 'pt' ? '/pt' : locale === 'en' ? '/en' : '/'}>
               <img src={logoLight} alt="Ferova Agency" className="h-16 w-auto" />
             </Link>
             <p className="mt-3 max-w-xs text-sm text-muted-foreground">{d.tagline}</p>

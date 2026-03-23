@@ -4,8 +4,8 @@ import { Menu, X } from "lucide-react";
 import logoLight from "@/assets/ferova-logo.png.png";
 
 interface HeaderProps {
-  currentLang?: "es" | "en";
-  lang?: "es" | "en";
+  currentLang?: "es" | "en" | "pt";
+  lang?: "es" | "en" | "pt";
 }
 
 export default function Header({ currentLang, lang }: HeaderProps) {
@@ -13,28 +13,52 @@ export default function Header({ currentLang, lang }: HeaderProps) {
   const location = useLocation();
   const [mobileOpen, setMobileOpen] = useState(false);
 
-  const navigation = locale === "es"
+  const navigation = locale === "pt"
     ? [
-        { label: "Servicios", href: "/servicios" },
-        { label: "Precios", href: "/precios" },
-        { label: "Casos", href: "/casos-de-exito" },
-        { label: "Blog", href: "/blog" },
-        { label: "Recursos", href: "/recursos" },
-        { label: "Contacto", href: "/contacto" },
+        { label: "Serviços", href: "/pt/servicos" },
+        { label: "Preços", href: "/pt/precos" },
+        { label: "Casos", href: "/pt/casos-de-sucesso" },
+        { label: "Blog", href: "/pt/blog" },
+        { label: "Recursos", href: "/pt/recursos" },
+        { label: "Contato", href: "/pt/contato" },
       ]
-    : [
+    : locale === "en"
+    ? [
         { label: "Services", href: "/en/services" },
         { label: "Pricing", href: "/en/pricing" },
         { label: "Cases", href: "/en/case-studies" },
         { label: "Blog", href: "/en/blog" },
         { label: "Resources", href: "/en/resources" },
         { label: "Contact", href: "/en/contact" },
+      ]
+    : [
+        { label: "Servicios", href: "/servicios" },
+        { label: "Precios", href: "/precios" },
+        { label: "Casos", href: "/casos-de-exito" },
+        { label: "Blog", href: "/blog" },
+        { label: "Recursos", href: "/recursos" },
+        { label: "Contacto", href: "/contacto" },
       ];
 
-  const homeHref = locale === "es" ? "/" : "/en";
+  const homeHref = locale === "pt" ? "/pt" : locale === "en" ? "/en" : "/";
+
+  const langSwitchLinks = locale === "pt"
+    ? [
+        { label: "ES", href: "/" },
+        { label: "EN", href: "/en" },
+      ]
+    : locale === "en"
+    ? [
+        { label: "ES", href: "/" },
+        { label: "PT", href: "/pt" },
+      ]
+    : [
+        { label: "EN", href: "/en" },
+        { label: "PT", href: "/pt" },
+      ];
 
   const isActive = (href: string) =>
-    href === "/"
+    href === "/" || href === "/en" || href === "/pt"
       ? location.pathname === href
       : location.pathname === href || location.pathname.startsWith(`${href}/`);
 
@@ -55,13 +79,24 @@ export default function Header({ currentLang, lang }: HeaderProps) {
               {item.label}
             </Link>
           ))}
+          <div className="flex items-center gap-1 ml-2 border-l border-border/50 pl-4">
+            {langSwitchLinks.map((l) => (
+              <Link
+                key={l.label}
+                to={l.href}
+                className="px-2 py-1 text-xs font-medium rounded text-muted-foreground hover:text-foreground hover:bg-accent transition-colors"
+              >
+                {l.label}
+              </Link>
+            ))}
+          </div>
         </nav>
 
         <button
           type="button"
           className="inline-flex h-10 w-10 items-center justify-center rounded-full border border-border bg-card text-foreground lg:hidden"
           onClick={() => setMobileOpen((value) => !value)}
-          aria-label={locale === "es" ? "Abrir menú" : "Open menu"}
+          aria-label={locale === "pt" ? "Abrir menu" : locale === "es" ? "Abrir menú" : "Open menu"}
           aria-expanded={mobileOpen}
         >
           {mobileOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
@@ -81,6 +116,18 @@ export default function Header({ currentLang, lang }: HeaderProps) {
                 {item.label}
               </Link>
             ))}
+            <div className="flex gap-2 mt-2 pt-2 border-t border-border/50">
+              {langSwitchLinks.map((l) => (
+                <Link
+                  key={l.label}
+                  to={l.href}
+                  onClick={() => setMobileOpen(false)}
+                  className="px-4 py-2 text-xs font-medium rounded-lg border border-border text-muted-foreground hover:text-foreground"
+                >
+                  {l.label}
+                </Link>
+              ))}
+            </div>
           </nav>
         </div>
       )}
