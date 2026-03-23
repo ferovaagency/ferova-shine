@@ -190,7 +190,7 @@ const SeoEcommerce = ({ lang = 'es' }: Props) => {
                   <a href="https://wa.me/17865787671" target="_blank" rel="noopener noreferrer" className="btn-gold flex items-center justify-center gap-2">
                     <MessageCircle className="w-5 h-5" /> {t.cta}
                   </a>
-                  <Link to={lang === 'es' ? '/casos-de-exito' : '/en/case-studies'} className="btn-outline-gold text-center">{t.ctaSecondary}</Link>
+                  <Link to={lang === 'es' ? '/casos-de-exito' : lang === 'pt' ? '/pt/casos-de-sucesso' : '/en/case-studies'} className="btn-outline-gold text-center">{t.ctaSecondary}</Link>
                 </div>
               </div>
               <div className="glass-card p-8 text-center gold-glow">
