@@ -389,11 +389,12 @@ const DiseneoWeb = ({ lang = 'es' }: Props) => {
             <p className="text-muted-foreground text-lg max-w-xl mx-auto mb-8">
               {lang === 'es'
                 ? 'Cuéntanos tu proyecto y te respondemos con una propuesta en menos de 24 horas.'
+                : lang === 'pt' ? 'Conte-nos seu projeto e responderemos com uma proposta em menos de 24 horas.'
                 : 'Tell us about your project and we\'ll respond with a proposal in less than 24 hours.'}
             </p>
             <a href="https://wa.me/17865787671?text=Hola%20Ferova%2C%20quiero%20una%20propuesta%20de%20diseño%20web" target="_blank" rel="noopener noreferrer" className="btn-gold inline-flex items-center gap-2">
               <MessageCircle className="w-5 h-5" />
-              {lang === 'es' ? 'Solicitar propuesta gratis' : 'Request free proposal'}
+              {lang === 'es' ? 'Solicitar propuesta gratis' : lang === 'pt' ? 'Solicitar proposta grátis' : 'Request free proposal'}
             </a>
           </div>
         </section>
