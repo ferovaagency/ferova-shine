@@ -4,7 +4,7 @@ import WaveSeparator from '../ui/wave-separator';
 import heroBg from '@/assets/hero-bg.jpg';
 
 interface HeroSectionProps {
-  lang?: 'es' | 'en';
+  lang?: 'es' | 'en' | 'pt';
 }
 
 const HeroSection = ({ lang = 'es' }: HeroSectionProps) => {

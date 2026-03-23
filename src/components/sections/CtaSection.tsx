@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import WaveSeparator from '../ui/wave-separator';
 
 interface CtaSectionProps {
-  lang?: 'es' | 'en';
+  lang?: 'es' | 'en' | 'pt';
 }
 
 const CtaSection = ({ lang = 'es' }: CtaSectionProps) => {

@@ -1,7 +1,7 @@
 import { Map, Search, Rocket } from 'lucide-react';
 
 interface ProcessSectionProps {
-  lang?: 'es' | 'en';
+  lang?: 'es' | 'en' | 'pt';
 }
 
 const ProcessSection = ({ lang = 'es' }: ProcessSectionProps) => {

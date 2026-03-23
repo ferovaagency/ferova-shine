@@ -24,7 +24,7 @@ const messagesEn = [
 ];
 
 interface Props {
-  lang?: 'es' | 'en';
+  lang?: 'es' | 'en' | 'pt';
 }
 
 const SocialProofToasts = ({ lang = 'es' }: Props) => {
