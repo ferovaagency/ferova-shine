@@ -345,7 +345,7 @@ const SeoEcommerce = ({ lang = 'es' }: Props) => {
               {lang === 'es' ? '¿Listo para dominar Google?' : lang === 'pt' ? 'Pronto para dominar o Google?' : 'Ready to dominate Google?'}
             </h2>
             <p className="text-muted-foreground text-lg max-w-2xl mx-auto mb-8">
-              {lang === 'es' ? 'Solicita tu diagnóstico SEO gratuito.' : 'Request your free SEO diagnosis.'}
+              {lang === 'es' ? 'Solicita tu diagnóstico SEO gratuito.' : lang === 'pt' ? 'Solicite seu diagnóstico SEO gratuito.' : 'Request your free SEO diagnosis.'}
             </p>
             <a href="https://wa.me/17865787671" target="_blank" rel="noopener noreferrer" className="btn-gold inline-flex items-center gap-2">
               <MessageCircle className="w-5 h-5" /> {t.cta}
