@@ -342,7 +342,7 @@ const SeoEcommerce = ({ lang = 'es' }: Props) => {
         <section className="py-20 md:py-28">
           <div className="container mx-auto px-4 md:px-6 text-center">
             <h2 className="text-3xl md:text-4xl font-display font-bold mb-6">
-              {lang === 'es' ? '¿Listo para dominar Google?' : 'Ready to dominate Google?'}
+              {lang === 'es' ? '¿Listo para dominar Google?' : lang === 'pt' ? 'Pronto para dominar o Google?' : 'Ready to dominate Google?'}
             </h2>
             <p className="text-muted-foreground text-lg max-w-2xl mx-auto mb-8">
               {lang === 'es' ? 'Solicita tu diagnóstico SEO gratuito.' : 'Request your free SEO diagnosis.'}
