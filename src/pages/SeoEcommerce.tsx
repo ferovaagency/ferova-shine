@@ -302,6 +302,122 @@ const SeoEcommerce = ({ lang = 'es' }: Props) => {
           </div>
         </section>
 
+        {/* SEO Plans */}
+        <section className="py-20 md:py-28">
+          <div className="container mx-auto px-4 md:px-6">
+            <h2 className="text-3xl md:text-4xl font-display font-bold text-center mb-4">
+              {lang === 'es' ? 'Planes SEO Mensuales' : lang === 'pt' ? 'Planos SEO Mensais' : 'Monthly SEO Plans'}
+            </h2>
+            <p className="text-muted-foreground text-center max-w-xl mx-auto mb-4">
+              {lang === 'es' ? 'Mínimo 6 meses de contrato.' : lang === 'pt' ? 'Mínimo 6 meses de contrato.' : 'Minimum 6-month contract.'}
+            </p>
+
+            <div className="flex items-center justify-center gap-1 p-1 rounded-full border border-border w-fit mx-auto mb-14">
+              <button onClick={() => setCurrency('usd')} className={`px-5 py-2 rounded-full text-sm font-medium transition-all ${currency === 'usd' ? 'bg-gold text-primary-foreground' : 'text-muted-foreground hover:text-foreground'}`}>USD</button>
+              <button onClick={() => setCurrency('cop')} className={`px-5 py-2 rounded-full text-sm font-medium transition-all ${currency === 'cop' ? 'bg-gold text-primary-foreground' : 'text-muted-foreground hover:text-foreground'}`}>COP</button>
+              <button onClick={() => setCurrency('brl')} className={`px-5 py-2 rounded-full text-sm font-medium transition-all ${currency === 'brl' ? 'bg-gold text-primary-foreground' : 'text-muted-foreground hover:text-foreground'}`}>BRL</button>
+            </div>
+
+            <div className="grid md:grid-cols-2 gap-8 max-w-4xl mx-auto">
+              {/* Plan SEO WebApps */}
+              <div className="glass-card p-8 flex flex-col border-gold/50 gold-glow relative">
+                <div className="absolute -top-3 left-1/2 -translate-x-1/2 px-4 py-1 rounded-full text-xs font-semibold bg-gold text-primary-foreground whitespace-nowrap">
+                  {lang === 'es' ? 'Recomendado' : lang === 'pt' ? 'Recomendado' : 'Recommended'}
+                </div>
+                <div className="w-14 h-14 rounded-2xl flex items-center justify-center mb-5" style={{ background: 'hsla(45, 86%, 40%, 0.1)' }}>
+                  <TrendingUp className="w-7 h-7 text-gold" />
+                </div>
+                <h3 className="text-xl font-display font-bold mb-3">
+                  {lang === 'es' ? 'SEO WebApps (Lovable)' : lang === 'pt' ? 'SEO WebApps (Lovable)' : 'SEO WebApps (Lovable)'}
+                </h3>
+                <div className="mb-6">
+                  <span className="text-3xl font-display font-bold">{formatPrice(199, 600000, 990)}</span>
+                  <span className="text-muted-foreground text-sm ml-1">{lang === 'es' ? '/mes' : lang === 'pt' ? '/mês' : '/mo'}</span>
+                </div>
+                <ul className="space-y-3 mb-6 flex-1">
+                  {(lang === 'es' ? [
+                    'Optimización técnica del sitio',
+                    'Hasta 8 blogs mensuales optimizados para IAs y buscadores (GEO + SEO)',
+                    'Optimización On Page y Off Page',
+                    'Análisis de tráfico orgánico y comportamiento de usuarios',
+                    'Tageo de eventos en Analytics',
+                    'Conexión con Search Console',
+                    'Informe semanal y mensual de resultados',
+                  ] : lang === 'pt' ? [
+                    'Otimização técnica do site',
+                    'Até 8 blogs mensais otimizados para IAs e buscadores (GEO + SEO)',
+                    'Otimização On Page e Off Page',
+                    'Análise de tráfego orgânico e comportamento de usuários',
+                    'Tagueamento de eventos no Analytics',
+                    'Conexão com Search Console',
+                    'Relatório semanal e mensal de resultados',
+                  ] : [
+                    'Technical site optimization',
+                    'Up to 8 monthly blogs optimized for AI & search engines (GEO + SEO)',
+                    'On Page and Off Page optimization',
+                    'Organic traffic and user behavior analysis',
+                    'Analytics event tagging',
+                    'Search Console connection',
+                    'Weekly and monthly results report',
+                  ]).map((item, ii) => (
+                    <li key={ii} className="flex items-start gap-3 text-sm text-foreground">
+                      <Check className="w-4 h-4 text-gold flex-shrink-0 mt-0.5" /> {item}
+                    </li>
+                  ))}
+                </ul>
+                <button
+                  onClick={() => { const link = getPaymentLink('seoWebapps', currency); window.open(link, '_blank', 'noopener,noreferrer'); }}
+                  className="btn-gold w-full flex items-center justify-center gap-2 !px-0"
+                >
+                  <MessageCircle className="w-4 h-4" /> {lang === 'es' ? 'Iniciar SEO' : lang === 'pt' ? 'Iniciar SEO' : 'Start SEO'}
+                </button>
+              </div>
+
+              {/* Plan SEO CMS */}
+              <div className="glass-card p-8 flex flex-col">
+                <div className="w-14 h-14 rounded-2xl flex items-center justify-center mb-5" style={{ background: 'hsla(45, 86%, 40%, 0.1)' }}>
+                  <Globe2 className="w-7 h-7 text-gold" />
+                </div>
+                <h3 className="text-xl font-display font-bold mb-3">
+                  {lang === 'es' ? 'SEO CMS (WordPress y otros)' : lang === 'pt' ? 'SEO CMS (WordPress e outros)' : 'SEO CMS (WordPress & others)'}
+                </h3>
+                <div className="mb-6">
+                  <span className="text-3xl font-display font-bold">{formatPrice(249, 800000, 1290)}</span>
+                  <span className="text-muted-foreground text-sm ml-1">{lang === 'es' ? '/mes' : lang === 'pt' ? '/mês' : '/mo'}</span>
+                </div>
+                <ul className="space-y-3 mb-6 flex-1">
+                  {(lang === 'es' ? [
+                    'Todo lo del plan SEO WebApps',
+                    'Adaptado para WordPress y otros CMS',
+                    'Optimización de plugins y velocidad CMS',
+                    'Gestión técnica de actualizaciones',
+                  ] : lang === 'pt' ? [
+                    'Tudo do plano SEO WebApps',
+                    'Adaptado para WordPress e outros CMS',
+                    'Otimização de plugins e velocidade CMS',
+                    'Gestão técnica de atualizações',
+                  ] : [
+                    'Everything in SEO WebApps plan',
+                    'Adapted for WordPress and other CMS',
+                    'Plugin and CMS speed optimization',
+                    'Technical update management',
+                  ]).map((item, ii) => (
+                    <li key={ii} className="flex items-start gap-3 text-sm text-foreground">
+                      <Check className="w-4 h-4 text-gold flex-shrink-0 mt-0.5" /> {item}
+                    </li>
+                  ))}
+                </ul>
+                <button
+                  onClick={() => { const link = getPaymentLink('seoCms', currency); window.open(link, '_blank', 'noopener,noreferrer'); }}
+                  className="w-full py-3.5 rounded-full font-semibold text-sm transition-all duration-300 flex items-center justify-center gap-2 border border-gold/40 text-gold hover:bg-gold hover:text-primary-foreground"
+                >
+                  <MessageCircle className="w-4 h-4" /> {lang === 'es' ? 'Iniciar SEO CMS' : lang === 'pt' ? 'Iniciar SEO CMS' : 'Start CMS SEO'}
+                </button>
+              </div>
+            </div>
+          </div>
+        </section>
+
         {/* Process */}
         <section className="py-20 md:py-28">
           <div className="container mx-auto px-4 md:px-6">
