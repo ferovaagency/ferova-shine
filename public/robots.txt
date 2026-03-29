@@ -1,24 +1,47 @@
+# Ferova Agency — robots.txt
+# Optimizado para SEO, GEO e IAs generativas
+
 User-agent: Googlebot
 Allow: /
-Disallow: /admin-blog
-Disallow: /en/admin-blog
 
 User-agent: Bingbot
 Allow: /
-Disallow: /admin-blog
-Disallow: /en/admin-blog
 
-User-agent: Twitterbot
+User-agent: Slurp
 Allow: /
-Disallow: /admin-blog
-Disallow: /en/admin-blog
 
-User-agent: facebookexternalhit
+User-agent: DuckDuckBot
 Allow: /
-Disallow: /admin-blog
-Disallow: /en/admin-blog
+
+User-agent: GPTBot
+Allow: /
+
+User-agent: ChatGPT-User
+Allow: /
+
+User-agent: Claude-Web
+Allow: /
+
+User-agent: anthropic-ai
+Allow: /
+
+User-agent: PerplexityBot
+Allow: /
+
+User-agent: Gemini
+Allow: /
+
+User-agent: Google-Extended
+Allow: /
+
+User-agent: CCBot
+Allow: /
+
+User-agent: cohere-ai
+Allow: /
 
 User-agent: *
 Allow: /
-Disallow: /admin-blog
-Disallow: /en/admin-blog
+
+Sitemap: https://seoparaecommerce.co/sitemap.xml
+Sitemap: https://seoforecommerces.co/sitemap.xml
