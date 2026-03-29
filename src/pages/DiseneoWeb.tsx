@@ -13,34 +13,33 @@ import {
 interface Props { lang?: 'es' | 'en' | 'pt'; }
 
 const DiseneoWeb = ({ lang = 'es' }: Props) => {
-  const [currency, setCurrency] = useState<'usd' | 'cop'>('usd');
+  const [currency, setCurrency] = useState<'usd' | 'cop' | 'brl'>('usd');
   const { toast } = useToast();
 
-  const handleCta = (key: 'webEconomico' | 'webPro' | 'webEcommerce') => {
+  const handleCta = (key: 'webEconomico' | 'webServicios' | 'webEcommerceFull') => {
     const link = getPaymentLink(key, currency);
     window.open(link, '_blank', 'noopener,noreferrer');
     toast({
-      title: lang === 'es' ? '¡Confirmado!' : 'Confirmed!',
-      description: lang === 'es' ? '¡Plan seleccionado! Te contactaremos pronto.' : 'Plan selected! We\'ll contact you soon.',
+      title: lang === 'es' ? '¡Confirmado!' : lang === 'pt' ? 'Confirmado!' : 'Confirmed!',
+      description: lang === 'es' ? '¡Plan seleccionado! Te contactaremos pronto.' : lang === 'pt' ? 'Plano selecionado! Entraremos em contato em breve.' : 'Plan selected! We\'ll contact you soon.',
     });
   };
 
-  const formatPrice = (usd: number, cop: number, isMonthly = false) => {
-    const val = currency === 'cop'
-      ? new Intl.NumberFormat('es-CO', { style: 'currency', currency: 'COP', maximumFractionDigits: 0 }).format(cop)
-      : new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD', maximumFractionDigits: 0 }).format(usd);
-    return val;
+  const formatPrice = (usd: number, cop: number, brl: number) => {
+    if (currency === 'cop') return new Intl.NumberFormat('es-CO', { style: 'currency', currency: 'COP', maximumFractionDigits: 0 }).format(cop);
+    if (currency === 'brl') return new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL', maximumFractionDigits: 0 }).format(brl);
+    return new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD', maximumFractionDigits: 0 }).format(usd);
   };
 
   const t = lang === 'es' ? {
     title: 'Diseño Web & Webapps',
-    sub: 'Sitios web y webapps profesionales construidos en Lovable + Supabase. Entrega en 1 semana. Código 100% tuyo en GitHub.',
+    sub: 'Sitios web y webapps profesionales construidos en Lovable con IA integrada. Entrega en 1 semana. Código 100% tuyo en GitHub.',
     whatIncludes: '¿Qué incluye nuestro servicio?',
     pricingTitle: 'Planes de Diseño Web',
-    pricingNote: 'Todos los planes incluyen dominio de tu elección. El precio de construcción es un pago único.',
     noInclude: 'No incluye:',
     monthly: '/mes',
-    oneTime: 'construcción',
+    yearly: '/año',
+    build: 'construcción',
     features: [
       { icon: Zap, title: 'Entrega en 1 semana', desc: 'Lo que en WordPress tarda 6 semanas, lo entregamos en 7 días con nuestro proceso optimizado.' },
       { icon: Shield, title: 'Código 100% tuyo', desc: 'Todo el código vive en tu GitHub. No dependes de nosotros para el futuro.' },
@@ -51,71 +50,65 @@ const DiseneoWeb = ({ lang = 'es' }: Props) => {
       {
         key: 'webEconomico' as const,
         icon: Globe,
-        name: 'Plan Económico',
-        tagline: 'Ideal para emprendedores y negocios nuevos que necesitan presencia digital profesional rápidamente.',
-        buildUSD: 499, buildCOP: 1600000,
-        monthlyUSD: 0, monthlyCOP: 0,
-        yearlyUSD: 499, yearlyCOP: 1600000,
-        billingNote: lang === 'es' ? '+ comisión sobre ventas generadas' : '+ commission on sales generated',
+        name: 'Web Económica',
+        tagline: 'Sitios web en Lovable con IA integrada, entrega en 1 semana.',
+        priceLabel: { usd: 599, cop: 1800000, brl: 2990 },
+        billingType: 'yearly' as const,
+        monthlyPrice: null,
         popular: false,
         includes: [
-          'Landing page profesional (Home + secciones)',
-          'Diseño de marca aplicado (colores, fuentes, logo)',
+          'Dominio incluido',
+          'Hosting incluido',
+          '5 páginas (Inicio / Servicios o Tienda / Nosotros / Contacto)',
           'Botón de WhatsApp siempre visible',
           'Formulario de contacto con notificación',
-          'SEO básico: meta tags, H1-H4, URLs amigables',
-          'Responsive mobile-first',
-          'Hosting incluido via Lovable o Vercel',
-          'Entrega en 1 semana',
+          'Asesor comercial IA integrado',
         ],
-        excludes: ['Tienda virtual / carrito de compras', 'Panel de administración', 'Bot de IA', 'Blog con SEO'],
-        cta: lang === 'es' ? 'Empezar proyecto' : 'Start project',
+        excludes: ['Panel de administrador', 'Blog', 'Más de 5 páginas', 'Soporte mensual'],
+        cta: 'Empezar proyecto',
       },
       {
-        key: 'webPro' as const,
+        key: 'webServicios' as const,
         icon: Rocket,
-        name: 'Plan Pro',
-        tagline: 'Para negocios en crecimiento que necesitan más páginas, blog, panel de administración y funcionalidades avanzadas.',
-        buildUSD: 749, buildCOP: 2500000,
-        monthlyUSD: 59, monthlyCOP: 200000,
-        yearlyUSD: 749, yearlyCOP: 2500000,
-        billingNote: lang === 'es' ? '+ $59 USD / $200.000 COP por mes' : '+ $59 USD / $200,000 COP/month',
+        name: 'WebApp Servicios',
+        tagline: 'Web consultiva con funciones avanzadas, IA y panel de administrador.',
+        priceLabel: { usd: 899, cop: 2800000, brl: 4490 },
+        billingType: 'build' as const,
+        monthlyPrice: { usd: 65, cop: 200000, brl: 320 },
         popular: true,
         includes: [
-          'Todo el Plan Económico +',
-          'Hasta 8 páginas (Servicios, Nosotros, Blog, Contacto...)',
-          'Bot de IA básico (responde preguntas frecuentes)',
-          'Blog con SEO y meta tags dinámicos',
-          'Formularios avanzados (cotizaciones, registros)',
-          'Panel de administración de contenido',
-          'Integración Supabase (base de datos para leads)',
-          'Soporte mensual: hasta 4 horas de ajustes',
+          'Hosting 1 año incluido',
+          '5 páginas principales + hasta 5 páginas de servicios',
+          'Botón de WhatsApp siempre visible',
+          'Formulario de contacto con notificación',
+          'Asesor IA integrado',
+          'Panel admin con creación de blogs',
+          'Soporte mensual (actualizaciones, cambios de info, soporte técnico)',
         ],
-        excludes: ['Tienda virtual / pasarela de pagos', 'Generador de fichas con IA', 'Carga masiva de productos'],
-        cta: lang === 'es' ? 'Elegir Plan Pro' : 'Choose Pro Plan',
+        excludes: ['Tienda virtual', 'Más de 10 páginas', 'Cambios de estructura completa'],
+        cta: 'Elegir WebApp Servicios',
       },
       {
-        key: 'webEcommerce' as const,
+        key: 'webEcommerceFull' as const,
         icon: ShoppingCart,
-        name: 'Ecommerce Full',
-        tagline: 'Tienda virtual completa con carrito, pagos, bot de IA vendedor y panel de administración para gestionar todo.',
-        buildUSD: 990, buildCOP: 3120000,
-        monthlyUSD: 119, monthlyCOP: 400000,
-        yearlyUSD: 990, yearlyCOP: 3120000,
-        billingNote: lang === 'es' ? '+ $119 USD / $400.000 COP por mes' : '+ $119 USD / $400,000 COP/month',
+        name: 'WebApp E-Commerce',
+        tagline: 'Tienda virtual completa con IA maximizada para conversión.',
+        priceLabel: { usd: 1490, cop: 4200000, brl: 7490 },
+        billingType: 'build' as const,
+        monthlyPrice: { usd: 119, cop: 400000, brl: 570 },
         popular: false,
         includes: [
-          'Todo el Plan Pro +',
-          'Tienda virtual completa (catálogo, carrito, checkout)',
-          'Pasarela de pagos (Wompi / Stripe / MercadoPago)',
-          'Bot de IA avanzado (asesor de ventas con cotizaciones)',
-          'Generador de fichas de producto con IA',
-          'Panel admin completo (productos, pedidos, clientes)',
-          'SEO avanzado: Schema.org, sitemap dinámico',
-          'Soporte mensual: hasta 8 horas de ajustes',
+          'Hosting 1 año incluido',
+          '5 páginas principales, hasta 300 productos',
+          'Filtros / categorías / marcas / carrito / checkout / pasarela de pago',
+          'Botón de WhatsApp siempre visible',
+          'Formulario de contacto con notificación',
+          'Asesor IA para ventas',
+          'Panel admin avanzado con IA (pedidos, estados, base de datos, generador fichas producto, generador blogs)',
+          'Soporte mensual (actualizaciones, cambios info, hasta 100 productos/mes, soporte técnico)',
         ],
-        excludes: ['Presupuesto de pauta publicitaria', 'Producción de video', 'Gestión de contenido orgánico'],
-        cta: lang === 'es' ? 'Quiero mi tienda' : 'I want my store',
+        excludes: ['Cambios de estructura completa'],
+        cta: 'Quiero mi tienda',
       },
     ],
     process: 'Cómo entregamos en 1 semana',
@@ -127,11 +120,13 @@ const DiseneoWeb = ({ lang = 'es' }: Props) => {
     ],
   } : lang === 'pt' ? {
     title: 'Desenvolvimento Web & Webapps',
-    sub: 'Sites e webapps profissionais construídos em Lovable + Supabase. Entrega em 1 semana. Código 100% seu no GitHub.',
+    sub: 'Sites e webapps profissionais construídos em Lovable com IA integrada. Entrega em 1 semana. Código 100% seu no GitHub.',
     whatIncludes: 'O que nosso serviço inclui?',
     pricingTitle: 'Planos de Desenvolvimento Web',
-    pricingNote: 'Todos os planos incluem domínio de sua escolha. O preço de construção é um pagamento único.',
-    noInclude: 'Não inclui:', monthly: '/mês', oneTime: 'construção',
+    noInclude: 'Não inclui:',
+    monthly: '/mês',
+    yearly: '/ano',
+    build: 'construção',
     features: [
       { icon: Zap, title: 'Entrega em 1 semana', desc: 'O que no WordPress leva 6 semanas, entregamos em 7 dias com nosso processo otimizado.' },
       { icon: Shield, title: 'Código 100% seu', desc: 'Todo o código fica no seu GitHub. Você não depende de nós para o futuro.' },
@@ -139,9 +134,69 @@ const DiseneoWeb = ({ lang = 'es' }: Props) => {
       { icon: Smartphone, title: 'Mobile-first sempre', desc: 'Todas as webapps são otimizadas primeiro para mobile, tablet e desktop.' },
     ],
     plans: [
-      { key: 'webEconomico' as const, icon: Globe, name: 'Plano Econômico', tagline: 'Ideal para empreendedores e novos negócios que precisam de presença digital profissional rapidamente.', buildUSD: 499, buildCOP: 1600000, monthlyUSD: 0, monthlyCOP: 0, yearlyUSD: 499, yearlyCOP: 1600000, billingNote: '+ comissão sobre vendas geradas', popular: false, includes: ['Landing page profissional (Home + seções)', 'Design de marca aplicado (cores, fontes, logo)', 'Botão de WhatsApp sempre visível', 'Formulário de contato com notificação', 'SEO básico: meta tags, H1-H4, URLs amigáveis', 'Responsivo mobile-first', 'Hospedagem incluída via Lovable ou Vercel', 'Entrega em 1 semana'], excludes: ['Loja virtual / carrinho de compras', 'Painel de administração', 'Bot de IA', 'Blog com SEO'], cta: 'Iniciar projeto' },
-      { key: 'webPro' as const, icon: Rocket, name: 'Plano Pro', tagline: 'Para negócios em crescimento que precisam de mais páginas, blog, painel admin e funcionalidades avançadas.', buildUSD: 749, buildCOP: 2500000, monthlyUSD: 59, monthlyCOP: 200000, yearlyUSD: 749, yearlyCOP: 2500000, billingNote: '+ $59 USD / $200.000 COP por mês', popular: true, includes: ['Tudo do Plano Econômico +', 'Até 8 páginas (Serviços, Sobre, Blog, Contato...)', 'Bot de IA básico (responde perguntas frequentes)', 'Blog com SEO e meta tags dinâmicos', 'Formulários avançados (cotações, registros)', 'Painel de administração de conteúdo', 'Integração Supabase (banco de dados para leads)', 'Suporte mensal: até 4 horas de ajustes'], excludes: ['Loja virtual / gateway de pagamento', 'Gerador de fichas com IA', 'Upload massivo de produtos'], cta: 'Escolher Plano Pro' },
-      { key: 'webEcommerce' as const, icon: ShoppingCart, name: 'Ecommerce Full', tagline: 'Loja virtual completa com carrinho, pagamentos, bot de IA vendedor e painel admin para gerenciar tudo.', buildUSD: 990, buildCOP: 3120000, monthlyUSD: 119, monthlyCOP: 400000, yearlyUSD: 990, yearlyCOP: 3120000, billingNote: '+ $119 USD / $400.000 COP por mês', popular: false, includes: ['Tudo do Plano Pro +', 'Loja virtual completa (catálogo, carrinho, checkout)', 'Gateway de pagamento (Wompi / Stripe / MercadoPago)', 'Bot de IA avançado (consultor de vendas com cotações)', 'Gerador de fichas de produto com IA', 'Painel admin completo (produtos, pedidos, clientes)', 'SEO avançado: Schema.org, sitemap dinâmico', 'Suporte mensal: até 8 horas de ajustes'], excludes: ['Orçamento de anúncios pagos', 'Produção de vídeo', 'Gestão de conteúdo orgânico'], cta: 'Quero minha loja' },
+      {
+        key: 'webEconomico' as const,
+        icon: Globe,
+        name: 'Web Econômica',
+        tagline: 'Sites em Lovable com IA integrada, entrega em 1 semana.',
+        priceLabel: { usd: 599, cop: 1800000, brl: 2990 },
+        billingType: 'yearly' as const,
+        monthlyPrice: null,
+        popular: false,
+        includes: [
+          'Domínio incluído',
+          'Hospedagem incluída',
+          '5 páginas (Início / Serviços ou Loja / Sobre / Contato)',
+          'Botão de WhatsApp sempre visível',
+          'Formulário de contato com notificação',
+          'Consultor comercial IA integrado',
+        ],
+        excludes: ['Painel de administrador', 'Blog', 'Mais de 5 páginas', 'Suporte mensal'],
+        cta: 'Iniciar projeto',
+      },
+      {
+        key: 'webServicios' as const,
+        icon: Rocket,
+        name: 'WebApp Serviços',
+        tagline: 'Site consultivo com funções avançadas, IA e painel admin.',
+        priceLabel: { usd: 899, cop: 2800000, brl: 4490 },
+        billingType: 'build' as const,
+        monthlyPrice: { usd: 65, cop: 200000, brl: 320 },
+        popular: true,
+        includes: [
+          'Hospedagem 1 ano incluída',
+          '5 páginas principais + até 5 páginas de serviços',
+          'Botão de WhatsApp sempre visível',
+          'Formulário de contato com notificação',
+          'Consultor IA integrado',
+          'Painel admin com criação de blogs',
+          'Suporte mensal (atualizações, mudanças de info, suporte técnico)',
+        ],
+        excludes: ['Loja virtual', 'Mais de 10 páginas', 'Mudanças de estrutura completa'],
+        cta: 'Escolher WebApp Serviços',
+      },
+      {
+        key: 'webEcommerceFull' as const,
+        icon: ShoppingCart,
+        name: 'WebApp E-Commerce',
+        tagline: 'Loja virtual completa com IA maximizada para conversão.',
+        priceLabel: { usd: 1490, cop: 4200000, brl: 7490 },
+        billingType: 'build' as const,
+        monthlyPrice: { usd: 119, cop: 400000, brl: 570 },
+        popular: false,
+        includes: [
+          'Hospedagem 1 ano incluída',
+          '5 páginas principais, até 300 produtos',
+          'Filtros / categorias / marcas / carrinho / checkout / gateway de pagamento',
+          'Botão de WhatsApp sempre visível',
+          'Formulário de contato com notificação',
+          'Consultor IA para vendas',
+          'Painel admin avançado com IA (pedidos, status, banco de dados, gerador fichas produto, gerador blogs)',
+          'Suporte mensal (atualizações, mudanças info, até 100 produtos/mês, suporte técnico)',
+        ],
+        excludes: ['Mudanças de estrutura completa'],
+        cta: 'Quero minha loja',
+      },
     ],
     process: 'Como entregamos em 1 semana',
     steps: [
@@ -151,13 +206,14 @@ const DiseneoWeb = ({ lang = 'es' }: Props) => {
       { n: '04', title: 'Entrega e domínio', desc: 'Revisão final, conexão do domínio e capacitação básica.' },
     ],
   } : {
-    sub: 'Professional websites and webapps built on Lovable + Supabase. 1-week delivery. 100% your code on GitHub.',
+    title: 'Web Design & Webapps',
+    sub: 'Professional websites and webapps built on Lovable with integrated AI. 1-week delivery. 100% your code on GitHub.',
     whatIncludes: 'What does our service include?',
     pricingTitle: 'Web Design Plans',
-    pricingNote: 'All plans include your domain of choice. The build price is a one-time payment.',
     noInclude: 'Does not include:',
     monthly: '/mo',
-    oneTime: 'build',
+    yearly: '/yr',
+    build: 'build',
     features: [
       { icon: Zap, title: '1-week delivery', desc: 'What takes 6 weeks in WordPress, we deliver in 7 days with our optimized process.' },
       { icon: Shield, title: '100% your code', desc: 'All code lives in your GitHub. You\'re not dependent on us for the future.' },
@@ -168,70 +224,64 @@ const DiseneoWeb = ({ lang = 'es' }: Props) => {
       {
         key: 'webEconomico' as const,
         icon: Globe,
-        name: 'Starter Plan',
-        tagline: 'Ideal for entrepreneurs and new businesses that need professional digital presence quickly.',
-        buildUSD: 499, buildCOP: 1600000,
-        monthlyUSD: 0, monthlyCOP: 0,
-        yearlyUSD: 499, yearlyCOP: 1600000,
-        billingNote: '+ commission on generated sales',
+        name: 'Starter Web',
+        tagline: 'Websites built on Lovable with integrated AI, delivered in 1 week.',
+        priceLabel: { usd: 599, cop: 1800000, brl: 2990 },
+        billingType: 'yearly' as const,
+        monthlyPrice: null,
         popular: false,
         includes: [
-          'Professional landing page (Home + sections)',
-          'Brand design applied (colors, fonts, logo)',
+          'Domain included',
+          'Hosting included',
+          '5 pages (Home / Services or Store / About / Contact)',
           'Always-visible WhatsApp button',
           'Contact form with notification',
-          'Basic SEO: meta tags, H1-H4, friendly URLs',
-          'Responsive mobile-first',
-          'Hosting included via Lovable or Vercel',
-          '1-week delivery',
+          'Integrated AI sales advisor',
         ],
-        excludes: ['Online store / shopping cart', 'Admin panel', 'AI bot', 'SEO blog'],
+        excludes: ['Admin panel', 'Blog', 'More than 5 pages', 'Monthly support'],
         cta: 'Start project',
       },
       {
-        key: 'webPro' as const,
+        key: 'webServicios' as const,
         icon: Rocket,
-        name: 'Pro Plan',
-        tagline: 'For growing businesses that need more pages, a blog, admin panel and advanced features.',
-        buildUSD: 749, buildCOP: 2500000,
-        monthlyUSD: 59, monthlyCOP: 200000,
-        yearlyUSD: 749, yearlyCOP: 2500000,
-        billingNote: '+ $59 USD / $200,000 COP/month',
+        name: 'Services WebApp',
+        tagline: 'Consultative website with advanced features, AI and admin panel.',
+        priceLabel: { usd: 899, cop: 2800000, brl: 4490 },
+        billingType: 'build' as const,
+        monthlyPrice: { usd: 65, cop: 200000, brl: 320 },
         popular: true,
         includes: [
-          'Everything in Starter +',
-          'Up to 8 pages (Services, About, Blog, Contact...)',
-          'Basic AI bot (answers FAQs)',
-          'Blog with SEO and dynamic meta tags',
-          'Advanced forms (quotes, registrations)',
-          'Content admin panel',
-          'Supabase integration (lead database)',
-          'Monthly support: up to 4 hours of adjustments',
+          '1-year hosting included',
+          '5 main pages + up to 5 service pages',
+          'Always-visible WhatsApp button',
+          'Contact form with notification',
+          'Integrated AI advisor',
+          'Admin panel with blog creation',
+          'Monthly support (updates, info changes, tech support)',
         ],
-        excludes: ['Online store / payment gateway', 'AI product sheet generator', 'Bulk product upload'],
-        cta: 'Choose Pro Plan',
+        excludes: ['Online store', 'More than 10 pages', 'Full structural changes'],
+        cta: 'Choose Services WebApp',
       },
       {
-        key: 'webEcommerce' as const,
+        key: 'webEcommerceFull' as const,
         icon: ShoppingCart,
-        name: 'Full Ecommerce',
-        tagline: 'Complete online store with cart, payments, AI sales bot and admin panel to manage everything.',
-        buildUSD: 990, buildCOP: 3120000,
-        monthlyUSD: 119, monthlyCOP: 400000,
-        yearlyUSD: 990, yearlyCOP: 3120000,
-        billingNote: '+ $119 USD / $400,000 COP/month',
+        name: 'E-Commerce WebApp',
+        tagline: 'Complete online store with AI maximized for conversion.',
+        priceLabel: { usd: 1490, cop: 4200000, brl: 7490 },
+        billingType: 'build' as const,
+        monthlyPrice: { usd: 119, cop: 400000, brl: 570 },
         popular: false,
         includes: [
-          'Everything in Pro +',
-          'Complete online store (catalog, cart, checkout)',
-          'Payment gateway (Wompi / Stripe / MercadoPago)',
-          'Advanced AI bot (sales advisor with quotes)',
-          'AI product sheet generator',
-          'Full admin panel (products, orders, customers)',
-          'Advanced SEO: Schema.org, dynamic sitemap',
-          'Monthly support: up to 8 hours of adjustments',
+          '1-year hosting included',
+          '5 main pages, up to 300 products',
+          'Filters / categories / brands / cart / checkout / payment gateway',
+          'Always-visible WhatsApp button',
+          'Contact form with notification',
+          'AI sales advisor',
+          'Advanced admin panel with AI (orders, statuses, database, product sheet generator, blog generator)',
+          'Monthly support (updates, info changes, up to 100 products/mo, tech support)',
         ],
-        excludes: ['Ad spend budget', 'Video production', 'Organic content management'],
+        excludes: ['Full structural changes'],
         cta: 'I want my store',
       },
     ],
@@ -283,13 +333,13 @@ const DiseneoWeb = ({ lang = 'es' }: Props) => {
         {/* Pricing */}
         <section className="py-20 md:py-28">
           <div className="container mx-auto px-4 md:px-6">
-            <h2 className="text-3xl md:text-4xl font-display font-bold text-center mb-4">{t.pricingTitle}</h2>
-            <p className="text-muted-foreground text-center max-w-xl mx-auto mb-8">{t.pricingNote}</p>
+            <h2 className="text-3xl md:text-4xl font-display font-bold text-center mb-10">{t.pricingTitle}</h2>
 
             {/* Currency toggle */}
             <div className="flex items-center justify-center gap-1 p-1 rounded-full border border-border w-fit mx-auto mb-14">
               <button onClick={() => setCurrency('usd')} className={`px-5 py-2 rounded-full text-sm font-medium transition-all ${currency === 'usd' ? 'bg-gold text-primary-foreground' : 'text-muted-foreground hover:text-foreground'}`}>USD</button>
               <button onClick={() => setCurrency('cop')} className={`px-5 py-2 rounded-full text-sm font-medium transition-all ${currency === 'cop' ? 'bg-gold text-primary-foreground' : 'text-muted-foreground hover:text-foreground'}`}>COP</button>
+              <button onClick={() => setCurrency('brl')} className={`px-5 py-2 rounded-full text-sm font-medium transition-all ${currency === 'brl' ? 'bg-gold text-primary-foreground' : 'text-muted-foreground hover:text-foreground'}`}>BRL</button>
             </div>
 
             <div className="grid md:grid-cols-3 gap-8 max-w-6xl mx-auto">
@@ -313,18 +363,18 @@ const DiseneoWeb = ({ lang = 'es' }: Props) => {
                     {/* Price */}
                     <div className="mb-2">
                       <span className="text-3xl font-display font-bold">
-                        {currency === 'cop'
-                          ? new Intl.NumberFormat('es-CO', { style: 'currency', currency: 'COP', maximumFractionDigits: 0 }).format(plan.buildCOP)
-                          : new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD', maximumFractionDigits: 0 }).format(plan.buildUSD)}
+                        {formatPrice(plan.priceLabel.usd, plan.priceLabel.cop, plan.priceLabel.brl)}
                       </span>
-                      <span className="text-muted-foreground text-sm ml-1">{t.oneTime}</span>
+                      <span className="text-muted-foreground text-sm ml-1">
+                        {plan.billingType === 'yearly' ? t.yearly : t.build}
+                      </span>
                     </div>
-                    {plan.monthlyUSD > 0 && (
-                      <p className="text-gold text-sm font-semibold mb-6">{plan.billingNote}</p>
+                    {plan.monthlyPrice && (
+                      <p className="text-gold text-sm font-semibold mb-6">
+                        + {formatPrice(plan.monthlyPrice.usd, plan.monthlyPrice.cop, plan.monthlyPrice.brl)}{t.monthly}
+                      </p>
                     )}
-                    {plan.monthlyUSD === 0 && (
-                      <p className="text-muted-foreground text-xs mb-6">{plan.billingNote}</p>
-                    )}
+                    {!plan.monthlyPrice && <div className="mb-6" />}
 
                     {/* Includes */}
                     <ul className="space-y-3 mb-6 flex-1">

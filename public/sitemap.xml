@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+        xmlns:xhtml="http://www.w3.org/1999/xhtml">
+
+  <!-- ESPAÑOL — seoparaecommerce.co -->
+  <url>
+    <loc>https://seoparaecommerce.co/</loc>
+    <xhtml:link rel="alternate" hreflang="es" href="https://seoparaecommerce.co/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://seoforecommerces.co/"/>
+    <xhtml:link rel="alternate" hreflang="pt" href="https://seoparaecommerce.co/pt"/>
+    <changefreq>weekly</changefreq><priority>1.0</priority>
+  </url>
+  <url><loc>https://seoparaecommerce.co/servicios</loc><changefreq>monthly</changefreq><priority>0.9</priority></url>
+  <url><loc>https://seoparaecommerce.co/servicios/seo-ecommerce</loc><changefreq>monthly</changefreq><priority>0.9</priority></url>
+  <url><loc>https://seoparaecommerce.co/servicios/diseno-web</loc><changefreq>monthly</changefreq><priority>0.9</priority></url>
+  <url><loc>https://seoparaecommerce.co/servicios/pauta-digital</loc><changefreq>monthly</changefreq><priority>0.9</priority></url>
+  <url><loc>https://seoparaecommerce.co/servicios/diseno-logos</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://seoparaecommerce.co/servicios/asesorias-marketing</loc><changefreq>monthly</changefreq><priority>0.9</priority></url>
+  <url><loc>https://seoparaecommerce.co/servicios/optimizacion-linkedin</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://seoparaecommerce.co/servicios/whatsapp-business</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://seoparaecommerce.co/servicios/descuentos-herramientas</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://seoparaecommerce.co/precios</loc><changefreq>monthly</changefreq><priority>0.9</priority></url>
+  <url><loc>https://seoparaecommerce.co/casos-de-exito</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://seoparaecommerce.co/blog</loc><changefreq>weekly</changefreq><priority>0.9</priority></url>
+  <url><loc>https://seoparaecommerce.co/recursos</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://seoparaecommerce.co/nosotros</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://seoparaecommerce.co/contacto</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://seoparaecommerce.co/contacto-digital</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://seoparaecommerce.co/terminos</loc><changefreq>yearly</changefreq><priority>0.3</priority></url>
+
+  <!-- INGLÉS — seoforecommerces.co -->
+  <url>
+    <loc>https://seoforecommerces.co/</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://seoforecommerces.co/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://seoparaecommerce.co/"/>
+    <xhtml:link rel="alternate" hreflang="pt" href="https://seoparaecommerce.co/pt"/>
+    <changefreq>weekly</changefreq><priority>1.0</priority>
+  </url>
+  <url><loc>https://seoforecommerces.co/services</loc><changefreq>monthly</changefreq><priority>0.9</priority></url>
+  <url><loc>https://seoforecommerces.co/services/ecommerce-seo</loc><changefreq>monthly</changefreq><priority>0.9</priority></url>
+  <url><loc>https://seoforecommerces.co/services/web-design</loc><changefreq>monthly</changefreq><priority>0.9</priority></url>
+  <url><loc>https://seoforecommerces.co/services/digital-ads</loc><changefreq>monthly</changefreq><priority>0.9</priority></url>
+  <url><loc>https://seoforecommerces.co/services/logo-design</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://seoforecommerces.co/services/marketing-consulting</loc><changefreq>monthly</changefreq><priority>0.9</priority></url>
+  <url><loc>https://seoforecommerces.co/services/linkedin-optimization</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://seoforecommerces.co/services/whatsapp-business</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://seoforecommerces.co/pricing</loc><changefreq>monthly</changefreq><priority>0.9</priority></url>
+  <url><loc>https://seoforecommerces.co/blog</loc><changefreq>weekly</changefreq><priority>0.9</priority></url>
+  <url><loc>https://seoforecommerces.co/contact</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
+
+  <!-- PORTUGUÉS — /pt -->
+  <url>
+    <loc>https://seoparaecommerce.co/pt</loc>
+    <xhtml:link rel="alternate" hreflang="pt" href="https://seoparaecommerce.co/pt"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://seoparaecommerce.co/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://seoforecommerces.co/"/>
+    <changefreq>weekly</changefreq><priority>1.0</priority>
+  </url>
+  <url><loc>https://seoparaecommerce.co/pt/servicos</loc><changefreq>monthly</changefreq><priority>0.9</priority></url>
+  <url><loc>https://seoparaecommerce.co/pt/seo-ecommerce</loc><changefreq>monthly</changefreq><priority>0.9</priority></url>
+  <url><loc>https://seoparaecommerce.co/pt/design-web</loc><changefreq>monthly</changefreq><priority>0.9</priority></url>
+  <url><loc>https://seoparaecommerce.co/pt/anuncios-digitais</loc><changefreq>monthly</changefreq><priority>0.9</priority></url>
+  <url><loc>https://seoparaecommerce.co/pt/consultorias</loc><changefreq>monthly</changefreq><priority>0.9</priority></url>
+  <url><loc>https://seoparaecommerce.co/pt/linkedin</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://seoparaecommerce.co/pt/whatsapp-business</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://seoparaecommerce.co/pt/precos</loc><changefreq>monthly</changefreq><priority>0.9</priority></url>
+  <url><loc>https://seoparaecommerce.co/pt/casos-de-sucesso</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://seoparaecommerce.co/pt/blog</loc><changefreq>weekly</changefreq><priority>0.9</priority></url>
+  <url><loc>https://seoparaecommerce.co/pt/recursos</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://seoparaecommerce.co/pt/sobre-nos</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://seoparaecommerce.co/pt/contato</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://seoparaecommerce.co/pt/termos</loc><changefreq>yearly</changefreq><priority>0.3</priority></url>
+
+</urlset>
