@@ -267,7 +267,7 @@ const SeoEcommerce = ({ lang = 'es' }: Props) => {
               </div>
               <p className="text-sm leading-relaxed mb-6 text-center text-muted-foreground">{t.planTagline}</p>
               <div className="text-center mb-6">
-                <span className="text-4xl font-display font-bold text-foreground">{formatPrice(150, 600000)}</span>
+                <span className="text-4xl font-display font-bold text-foreground">{formatPrice(150, 600000, 790)}</span>
                 <span className="text-sm ml-1 text-muted-foreground">{t.monthly}</span>
               </div>
 
