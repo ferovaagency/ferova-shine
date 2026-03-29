@@ -126,7 +126,7 @@ const PautaDigital = ({ lang = 'es' }: Props) => {
                   <div className="w-12 h-12 rounded-xl flex items-center justify-center mb-4" style={{ background: 'hsla(45, 86%, 40%, 0.1)' }}>
                     <f.icon className="w-6 h-6 text-gold" />
                   </div>
-                  <h3 className="text-xl font-display font-bold mb-3">{f.title}</h3>
+                  <h3 className="text-xl font-display font-bold mb-3 text-foreground">{f.title}</h3>
                   <p className="text-muted-foreground text-sm leading-relaxed">{f.desc}</p>
                 </div>
               ))}
