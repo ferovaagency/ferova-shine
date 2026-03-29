@@ -26,8 +26,9 @@ const SeoEcommerce = ({ lang = 'es' }: Props) => {
     });
   };
 
-  const formatPrice = (usd: number, cop: number) => {
+  const formatPrice = (usd: number, cop: number, brl: number) => {
     if (currency === 'cop') return new Intl.NumberFormat('es-CO', { style: 'currency', currency: 'COP', maximumFractionDigits: 0 }).format(cop);
+    if (currency === 'brl') return new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL', maximumFractionDigits: 0 }).format(brl);
     return new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD', maximumFractionDigits: 0 }).format(usd);
   };
 
