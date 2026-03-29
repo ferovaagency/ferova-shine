@@ -161,7 +161,7 @@ const PautaDigital = ({ lang = 'es' }: Props) => {
                       {plan.badge}
                     </div>
                   )}
-                  <h3 className="text-xl font-display font-bold mb-3">{plan.name}</h3>
+                  <h3 className="text-xl font-display font-bold mb-3 text-foreground">{plan.name}</h3>
                   <div className="mb-2">
                     <p className="text-gold font-bold text-lg leading-tight">
                       {currency === 'cop' ? plan.priceCOP : plan.priceUSD}

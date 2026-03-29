@@ -357,7 +357,7 @@ const DiseneoWeb = ({ lang = 'es' }: Props) => {
                       <IconComp className="w-7 h-7 text-gold" />
                     </div>
 
-                    <h3 className="text-xl font-display font-bold mb-3">{plan.name}</h3>
+                    <h3 className="text-xl font-display font-bold mb-3 text-foreground">{plan.name}</h3>
                     <p className="text-muted-foreground text-sm leading-relaxed mb-6">{plan.tagline}</p>
 
                     {/* Price */}
