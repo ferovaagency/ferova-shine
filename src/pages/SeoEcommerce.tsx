@@ -242,7 +242,7 @@ const SeoEcommerce = ({ lang = 'es' }: Props) => {
                   <div className="w-14 h-14 rounded-2xl flex items-center justify-center mx-auto mb-4" style={{ background: 'hsla(45, 86%, 40%, 0.1)' }}>
                     <gf.icon className="w-7 h-7 text-gold" />
                   </div>
-                  <h3 className="text-lg font-display font-bold mb-2">{gf.title}</h3>
+                  <h3 className="text-lg font-display font-bold mb-2 text-foreground">{gf.title}</h3>
                   <p className="text-muted-foreground text-sm leading-relaxed">{gf.desc}</p>
                 </div>
               ))}
