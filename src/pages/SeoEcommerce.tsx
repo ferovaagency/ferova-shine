@@ -3,7 +3,7 @@ import Header from '@/components/layout/Header';
 import Footer from '@/components/layout/Footer';
 import ChatWidget from '@/components/ui/chat-widget';
 import AdBanner from '@/components/ui/ad-banner';
-import { Search, TrendingUp, Users, BarChart3, Plus, MessageCircle, MapPin, Globe2, Navigation, Target, Clock } from 'lucide-react';
+import { Search, TrendingUp, Users, BarChart3, Plus, MessageCircle, MapPin, Globe2, Navigation, Target, Clock, Check } from 'lucide-react';
 import { useState } from 'react';
 import { getPaymentLink } from '@/lib/payment-links';
 import { useToast } from '@/hooks/use-toast';
