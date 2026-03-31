@@ -10,21 +10,8 @@ type GeneratePayload = {
   title?: string;
   keyword?: string;
   category?: string;
-  lang?: "es" | "en";
-};
-
-type ArticlePayload = {
-  title?: string;
-  slug?: string;
-  excerpt?: string;
-  content?: string;
-  meta_title?: string;
-  meta_description?: string;
-  category?: string;
-  keyword?: string;
-  cover_image?: string | null;
-  author?: string;
-  active?: boolean;
+  ideas?: string;
+  lang?: "es" | "en" | "pt";
 };
 
 const jsonResponse = (body: unknown, status = 200) =>
@@ -61,23 +48,43 @@ const extractJson = (value: string) => {
   return JSON.parse(value.slice(start, end + 1));
 };
 
-const buildSystemPrompt = (lang: "es" | "en") =>
-  lang === "es"
-    ? `Eres un editor SEO senior de Ferova Agency. Devuelve SOLO JSON válido, sin markdown, sin comentarios y sin texto extra.
+const buildSystemPrompt = (lang: "es" | "en" | "pt") => {
+  const base = `Eres el editor SEO senior de Ferova Agency. Devuelve SOLO JSON válido, sin markdown, sin comentarios y sin texto extra.
 
-Genera un artículo comercial y útil para blog corporativo.
-Requisitos estrictos:
-- title: SEO-friendly y claro.
-- slug: corto, limpio y orientado SEO.
+GUÍA EDITORIAL FEROVA AGENCY 2025 — REGLAS OBLIGATORIAS:
+
+ESTRUCTURA JERÁRQUICA:
+- H1 Único: Máximo 65 caracteres. Fórmula: [Keyword principal] + [Promesa de valor/Contexto].
+- Primera oración: OBLIGATORIAMENTE afirmativa (Sujeto + Verbo + Predicado). PROHIBIDO comenzar con preguntas o anécdotas.
+- Introducción: Un párrafo que explique qué aprenderá el lector, el contexto del problema y la promesa de valor.
+- Cuerpo: H2 para temas principales, H3 para subtemas. PROHIBIDO saltar niveles (ej. de H2 a H4).
+
+CALIDAD Y SEO:
+- Extensión: Entre 800 y 1.200 palabras.
+- Tono: Conversado pero profesional. Explica cada término técnico con su porqué y para qué.
+- Densidad SEO: Keyword en H1, primer párrafo (primeras 100 palabras) y en al menos un H2.
+- Autoridad: Menciona a Ferova Agency solo para reforzar autoridad técnica (ej. "En Ferova Agency analizamos..."). PROHIBIDO venta agresiva o frases como "somos los mejores".
+- Enlaces internos: Genera enlaces <a href="..."> naturales hacia servicios relevantes del sitio (/servicios/seo-ecommerce, /servicios/diseno-web, /servicios/pauta-digital, /servicios/asesorias-marketing, /contacto).
+
+CIERRE ESTRATÉGICO:
+- Conclusión clara (2-3 oraciones)
+- Resumen práctico (puntos clave en lista)
+- Reflexión estratégica
+- Invitación sutil (CTA no agresivo)
+
+VALIDACIÓN FINAL:
+- Responde internamente: "¿Este contenido realmente ayuda a una empresa a tomar mejores decisiones digitales?" Si no, reescribe.
+
+METADATOS:
+- meta_title: Máximo 60 caracteres con keyword + contexto.
+- meta_description: 150-160 caracteres con propuesta de valor y CTA implícito.
+- slug: URL amigable con keyword principal.
 - excerpt: máximo 150 caracteres.
-- content: HTML válido con un solo h1 omitido, varios <h2>, algunos <h3> y párrafos <p>.
-- meta_title: máximo 60 caracteres.
-- meta_description: máximo 155 caracteres.
-- category: string.
-- keyword: string.
-- Tono: concreto, profesional, persuasivo y sin relleno.
-- Enfoca el contenido en negocio, beneficios, monetización y claridad.
-- No inventes datos absurdos ni promesas absolutas.
+
+FORMATO DE CONTENIDO HTML:
+- NO incluyas <h1> en content (se renderiza aparte).
+- Usa <h2>, <h3>, <p>, <ul>, <li>, <strong>, <a href="...">.
+- NO uses <h4>, <h5>, <h6>.
 
 JSON esperado:
 {
@@ -88,41 +95,50 @@ JSON esperado:
   "meta_title": "",
   "meta_description": "",
   "category": "",
-  "keyword": ""
-}`
-    : `You are a senior SEO editor for Ferova Agency. Return ONLY valid JSON, with no markdown, comments or extra text.
-
-Generate a commercially useful corporate blog article.
-Strict requirements:
-- title: SEO-friendly and clear.
-- slug: short, clean and SEO-oriented.
-- excerpt: max 150 characters.
-- content: valid HTML with no h1, several <h2>, some <h3> and paragraph <p> tags.
-- meta_title: max 60 characters.
-- meta_description: max 155 characters.
-- category: string.
-- keyword: string.
-- Tone: direct, professional, persuasive and concise.
-- Focus on business impact, monetization, benefits and clarity.
-- Do not invent absurd figures or absolute promises.
-
-Expected JSON:
-{
-  "title": "",
-  "slug": "",
-  "excerpt": "",
-  "content": "",
-  "meta_title": "",
-  "meta_description": "",
-  "category": "",
-  "keyword": ""
+  "keyword": "",
+  "validation_pass": true,
+  "validation_reason": ""
 }`;
 
+  if (lang === "en") return base.replace("Eres el editor SEO senior", "You are the senior SEO editor");
+  if (lang === "pt") return base.replace("Eres el editor SEO senior", "Você é o editor SEO sênior");
+  return base;
+};
+
 const buildUserPrompt = (payload: GeneratePayload) => {
-  const lang = payload.lang === "en" ? "en" : "es";
-  return lang === "es"
-    ? `Crea el artículo con estos insumos:\n- título base: ${safeString(payload.title)}\n- keyword principal: ${safeString(payload.keyword)}\n- categoría: ${safeString(payload.category) || "General"}`
-    : `Create the article with these inputs:\n- base title: ${safeString(payload.title)}\n- primary keyword: ${safeString(payload.keyword)}\n- category: ${safeString(payload.category) || "General"}`;
+  const lang = payload.lang || "es";
+  const ideas = safeString(payload.ideas);
+  
+  if (lang === "en") {
+    return `Create the article with these inputs:
+- base title: ${safeString(payload.title)}
+- primary keyword: ${safeString(payload.keyword)}
+- category: ${safeString(payload.category) || "General"}
+- key ideas to develop:
+${ideas || "No specific ideas provided."}
+
+IMPORTANT: Follow the Ferova Editorial Guide 2025 strictly. Transform the ideas into structured, SEO-optimized content. Include internal links. Validate the article answers: "Does this content truly help a business make better digital decisions?"`;
+  }
+  
+  if (lang === "pt") {
+    return `Crie o artigo com estas entradas:
+- título base: ${safeString(payload.title)}
+- palavra-chave principal: ${safeString(payload.keyword)}
+- categoria: ${safeString(payload.category) || "Geral"}
+- ideias principais para desenvolver:
+${ideas || "Sem ideias específicas fornecidas."}
+
+IMPORTANTE: Siga o Guia Editorial Ferova 2025 estritamente. Transforme as ideias em conteúdo estruturado e otimizado para SEO. Inclua links internos. Valide se o artigo responde: "Este conteúdo realmente ajuda uma empresa a tomar melhores decisões digitais?"`;
+  }
+
+  return `Crea el artículo con estos insumos:
+- título base: ${safeString(payload.title)}
+- keyword principal: ${safeString(payload.keyword)}
+- categoría: ${safeString(payload.category) || "General"}
+- ideas principales para desarrollar:
+${ideas || "Sin ideas específicas proporcionadas."}
+
+IMPORTANTE: Sigue la Guía Editorial Ferova 2025 estrictamente. Transforma las ideas en contenido estructurado y optimizado para SEO. Incluye enlaces internos. Valida que el artículo responda: "¿Este contenido realmente ayuda a una empresa a tomar mejores decisiones digitales?"`;
 };
 
 const normalizeArticle = (raw: Record<string, unknown>, fallback: GeneratePayload) => {
@@ -131,7 +147,7 @@ const normalizeArticle = (raw: Record<string, unknown>, fallback: GeneratePayloa
   const content = safeString(raw.content);
   const excerpt = truncate(safeString(raw.excerpt) || stripHtml(content), 150);
   const metaTitle = truncate(safeString(raw.meta_title) || title, 60);
-  const metaDescription = truncate(safeString(raw.meta_description) || excerpt, 155);
+  const metaDescription = truncate(safeString(raw.meta_description) || excerpt, 160);
   const category = safeString(raw.category) || safeString(fallback.category);
   const keyword = safeString(raw.keyword) || safeString(fallback.keyword);
 
@@ -151,6 +167,8 @@ const normalizeArticle = (raw: Record<string, unknown>, fallback: GeneratePayloa
     cover_image: null,
     author: "AnnovaSoft",
     active: true,
+    validation_pass: raw.validation_pass === true,
+    validation_reason: safeString(raw.validation_reason) || "",
   };
 };
 
@@ -166,10 +184,7 @@ const getUniqueSlug = async (adminClient: any, baseSlug: string) => {
       .eq("slug", candidate)
       .maybeSingle();
 
-    if (error) {
-      throw new Error(`No se pudo validar el slug: ${error.message}`);
-    }
-
+    if (error) throw new Error(`No se pudo validar el slug: ${error.message}`);
     if (!data) return candidate;
 
     suffix += 1;
@@ -180,10 +195,6 @@ const getUniqueSlug = async (adminClient: any, baseSlug: string) => {
 serve(async (req) => {
   if (req.method === "OPTIONS") {
     return new Response(null, { headers: corsHeaders });
-  }
-
-  if (!req.headers.get("Authorization")) {
-    return jsonResponse({ error: "Unauthorized" }, 401);
   }
 
   try {
@@ -201,10 +212,10 @@ serve(async (req) => {
 
     if (action === "generate") {
       const payload = (body?.payload ?? {}) as GeneratePayload;
-      const lang = payload.lang === "en" ? "en" : "es";
+      const lang = (payload.lang === "en" || payload.lang === "pt") ? payload.lang : "es";
 
       if (!safeString(payload.title) || !safeString(payload.keyword)) {
-        return jsonResponse({ error: lang === "es" ? "Título y keyword son obligatorios." : "Title and keyword are required." }, 400);
+        return jsonResponse({ error: "Título y keyword son obligatorios." }, 400);
       }
 
       const modelResponse = await fetch("https://ai.gateway.lovable.dev/v1/chat/completions", {
@@ -224,6 +235,12 @@ serve(async (req) => {
       });
 
       if (!modelResponse.ok) {
+        if (modelResponse.status === 429) {
+          return jsonResponse({ error: "Rate limit exceeded. Try again later." }, 429);
+        }
+        if (modelResponse.status === 402) {
+          return jsonResponse({ error: "AI credits exhausted." }, 402);
+        }
         const errorText = await modelResponse.text();
         throw new Error(`AI generation failed: ${errorText}`);
       }
@@ -234,34 +251,44 @@ serve(async (req) => {
       const article = normalizeArticle(parsed, payload);
       article.slug = await getUniqueSlug(adminClient, article.slug);
 
-      return jsonResponse({ article });
+      const { validation_pass, validation_reason, ...articleData } = article;
+
+      return jsonResponse({
+        article: articleData,
+        validation: { pass: validation_pass, reason: validation_reason },
+      });
     }
 
     if (action === "save") {
-      const article = normalizeArticle((body?.payload?.article ?? {}) as Record<string, unknown>, {});
-      const slug = await getUniqueSlug(adminClient, article.slug || article.title);
+      const raw = (body?.payload?.article ?? {}) as Record<string, unknown>;
+      const title = safeString(raw.title);
+      const slug = await getUniqueSlug(adminClient, safeString(raw.slug) || title);
+      const content = safeString(raw.content);
+      const excerpt = truncate(safeString(raw.excerpt) || stripHtml(content), 150);
+
+      if (!title || !slug || !content) {
+        return jsonResponse({ error: "Artículo incompleto." }, 400);
+      }
 
       const { data, error } = await adminClient
         .from("blog_posts")
         .insert({
-          title: article.title,
+          title,
           slug,
-          content: article.content,
-          excerpt: article.excerpt,
-          cover_image: article.cover_image,
-          author: article.author,
-          active: article.active,
-          category: article.category || null,
-          keyword: article.keyword || null,
-          meta_title: article.meta_title,
-          meta_description: article.meta_description,
+          content,
+          excerpt,
+          cover_image: safeString(raw.cover_image) || null,
+          author: safeString(raw.author) || "AnnovaSoft",
+          active: raw.active === false ? false : true,
+          category: safeString(raw.category) || null,
+          keyword: safeString(raw.keyword) || null,
+          meta_title: truncate(safeString(raw.meta_title) || title, 60),
+          meta_description: truncate(safeString(raw.meta_description) || excerpt, 160),
         })
         .select("id, slug, title")
         .single();
 
-      if (error) {
-        throw new Error(`No se pudo guardar el artículo: ${error.message}`);
-      }
+      if (error) throw new Error(`No se pudo guardar: ${error.message}`);
 
       return jsonResponse({ post: data });
     }

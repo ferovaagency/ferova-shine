@@ -6,7 +6,8 @@ import ChatWidget from '@/components/ui/chat-widget';
 import AdBanner from '@/components/ui/ad-banner';
 import ReadingProgress from '@/components/ui/reading-progress';
 import { SkeletonBlogCard } from '@/components/ui/skeleton-card';
-import { Clock, ArrowRight, User } from 'lucide-react';
+import { Clock, ArrowRight, User, Search } from 'lucide-react';
+import { Input } from '@/components/ui/input';
 
 interface Props { lang?: 'es' | 'en' | 'pt'; }
 
@@ -72,42 +73,66 @@ const blogPosts = {
 };
 
 const Blog = ({ lang = 'es' }: Props) => {
-  const posts = blogPosts[lang];
+  const posts = blogPosts[lang] ?? blogPosts['es'];
   const [loading, setLoading] = useState(true);
+  const [search, setSearch] = useState('');
 
   useEffect(() => {
     const timer = setTimeout(() => setLoading(false), 600);
     return () => clearTimeout(timer);
   }, []);
 
+  const filtered = posts.filter((post) => {
+    if (!search.trim()) return true;
+    const q = search.toLowerCase();
+    return (
+      post.title.toLowerCase().includes(q) ||
+      post.excerpt.toLowerCase().includes(q) ||
+      post.category.toLowerCase().includes(q)
+    );
+  });
+
   return (
     <>
       <ReadingProgress />
       <Header currentLang={lang} />
       <main className="pt-20">
-        <section className="py-20 md:py-28 text-center relative grid-pattern">
+        <section className="py-10 md:py-14 text-center relative grid-pattern">
           <div className="absolute inset-0" style={{ background: 'radial-gradient(ellipse at 50% 30%, hsla(45, 86%, 40%, 0.06), transparent 60%)' }} />
           <div className="container mx-auto px-4 md:px-6 relative z-10">
-            <h1 className="text-4xl md:text-5xl lg:text-6xl font-display font-bold mb-6">Blog</h1>
-            <p className="text-muted-foreground text-lg max-w-xl mx-auto">
-              {lang === 'es' ? 'Recursos, guías y estrategias para dominar el SEO y el e-commerce.' : 'Resources, guides and strategies to master SEO and e-commerce.'}
+            <h1 className="text-3xl md:text-4xl lg:text-5xl font-display font-bold mb-4">Blog</h1>
+            <p className="text-muted-foreground text-base max-w-xl mx-auto mb-6">
+              {lang === 'es' ? 'Recursos, guías y estrategias para dominar el SEO y el e-commerce.' : lang === 'pt' ? 'Recursos, guias e estratégias para dominar o SEO e o e-commerce.' : 'Resources, guides and strategies to master SEO and e-commerce.'}
             </p>
+            <div className="max-w-md mx-auto relative">
+              <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+              <Input
+                value={search}
+                onChange={(e) => setSearch(e.target.value)}
+                placeholder={lang === 'es' ? 'Buscar artículos...' : lang === 'pt' ? 'Buscar artigos...' : 'Search articles...'}
+                className="pl-9"
+              />
+            </div>
           </div>
         </section>
 
-        <section className="py-20 md:py-28">
+        <section className="py-12 md:py-16">
           <div className="container mx-auto px-4 md:px-6">
-            <div className="max-w-4xl mx-auto space-y-8">
+            <div className="max-w-4xl mx-auto space-y-6">
               {loading ? (
                 <>
                   <SkeletonBlogCard />
                   <SkeletonBlogCard />
                   <SkeletonBlogCard />
                 </>
-              ) : posts.map((post, i) => (
+              ) : filtered.length === 0 ? (
+                <p className="text-center text-muted-foreground py-12">
+                  {lang === 'es' ? 'No se encontraron artículos.' : lang === 'pt' ? 'Nenhum artigo encontrado.' : 'No articles found.'}
+                </p>
+              ) : filtered.map((post, i) => (
                 <Link
                   key={i}
-                  to={`${lang === 'es' ? '/blog' : '/en/blog'}/${post.slug}`}
+                  to={`${lang === 'es' ? '/blog' : lang === 'pt' ? '/pt/blog' : '/en/blog'}/${post.slug}`}
                   className="glass-card p-6 md:p-8 block hover:border-gold/30 transition-all duration-300 group"
                 >
                   <div className="flex items-center gap-3 mb-4">
@@ -127,7 +152,7 @@ const Blog = ({ lang = 'es' }: Props) => {
                       <User className="w-3 h-3" /> {post.author} · {post.date}
                     </div>
                     <span className="inline-flex items-center gap-1 text-gold text-sm font-medium group-hover:gap-2 transition-all">
-                      {lang === 'es' ? 'Leer más' : 'Read more'} <ArrowRight className="w-4 h-4" />
+                      {lang === 'es' ? 'Leer más' : lang === 'pt' ? 'Ler mais' : 'Read more'} <ArrowRight className="w-4 h-4" />
                     </span>
                   </div>
                 </Link>
