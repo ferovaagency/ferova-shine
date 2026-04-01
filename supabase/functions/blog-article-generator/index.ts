@@ -48,38 +48,107 @@ const extractJson = (value: string) => {
   return JSON.parse(value.slice(start, end + 1));
 };
 
+const GUIA_EDITORIAL = `
+=== GUÍA EDITORIAL FEROVA AGENCY 2025 — FUENTE DE VERDAD ABSOLUTA ===
+
+0. ANTES DE ESCRIBIR — 3 PREGUNTAS OBLIGATORIAS
+Antes de generar cualquier borrador, responde internamente:
+1. ¿Qué aprende el lector? (valor concreto, no vago)
+2. ¿Qué decisión lo ayuda a tomar? (comprar, contratar, implementar, cambiar)
+3. ¿Este contenido realmente ayuda a una empresa a tomar mejores decisiones digitales?
+Si alguna respuesta es negativa, reescribe hasta que las tres sean afirmativas.
+
+1. ESTRUCTURA OBLIGATORIA
+
+BLOQUE 1 — H1 (Título SEO):
+- Fórmula: [Keyword principal] + [Promesa de valor o contexto]
+- Máximo 65 caracteres. Solo UN H1 por artículo. Keyword al inicio de forma natural.
+- PROHIBIDO: clickbait vacío, "Los 10 secretos que nadie te dice..."
+
+BLOQUE 2 — Frase Inicial Afirmativa (OBLIGATORIA):
+- Primera oración: SIEMPRE afirmación con Sujeto + Verbo + Predicado + contexto técnico/estratégico.
+- PROHIBIDO: comenzar con pregunta, anécdota, o frase genérica.
+- Ejemplos correctos:
+  · "El SEO técnico mejora el rendimiento orgánico cuando la estructura del sitio está correctamente optimizada."
+  · "Una tienda virtual sin estrategia de conversión pierde entre el 60 y el 80% de sus visitantes."
+
+BLOQUE 3 — Resumen Introductorio (1 párrafo):
+- Qué aprenderá el lector + Contexto del problema + Promesa de valor práctica.
+- Tono conversado y profesional. Sin listas de specs sin contexto. Sin venta directa.
+
+BLOQUE 4 — Desarrollo con Jerarquía H2/H3:
+- H2 para secciones principales (con keyword secundaria si aplica).
+- H3 para subsecciones dentro de un H2.
+- REGLA ABSOLUTA: Nunca saltar niveles (no H2→H4, no H3 sin H2 previo).
+- Cada sección H2 debe desarrollar completamente su tema.
+
+BLOQUE 5 — Cierre Estratégico:
+- Conclusión clara: 2-3 oraciones resumiendo el aprendizaje principal.
+- Resumen práctico: puntos clave que el lector puede aplicar hoy (lista).
+- Reflexión estratégica: por qué importa en el contexto de negocio.
+- Invitación sutil: CTA no agresiva ("Si quieres profundizar..." o "En Ferova Agency podemos ayudarte a...").
+
+2. TONO Y ESTILO
+- Conversado pero profesional (como un experto en consultoría).
+- Explicativo con contexto: cada punto con por qué y para qué.
+- Educación antes que venta: aportar valor real primero.
+- Técnico con traducción: explicar cada término técnico.
+- Directo al grano: sin relleno, sin repetición.
+
+3. SEO DENTRO DEL ARTÍCULO
+- Keyword en H1: obligatoria, natural.
+- Keyword en primer párrafo: primeras 100 palabras.
+- Keyword en al menos un H2.
+- Variaciones semánticas: sinónimos y términos relacionados.
+- Densidad máxima: 2-3%, no repetir keyword más de 1 vez por cada 100 palabras.
+- Meta title: máx 60 caracteres, keyword + contexto.
+- Meta description: 150-160 caracteres, propuesta de valor + keyword + CTA implícita.
+- URL amigable: /blog/keyword-principal-del-articulo
+
+4. EXTENSIÓN POR TIPO
+- Artículo informativo básico: 800–1.200 palabras, 1 keyword principal + 2-3 secundarias.
+- Artículo de autoridad: 1.200–2.000 palabras.
+- Guía completa / Pilar content: 2.000–3.500 palabras.
+
+5. MENCIÓN DE MARCA
+- Solo para reforzar autoridad técnica: "En Ferova Agency, cuando realizamos auditorías SEO, analizamos primero la estructura técnica..."
+- PROHIBIDO: "Somos la mejor agencia", venta agresiva, frases publicitarias.
+
+6. ELEMENTOS OPCIONALES
+- Casos reales o representativos cuando ilustren el tema.
+- Errores comunes cuando el artículo es educativo.
+- Comparaciones cuando hay opciones que evaluar.
+- Listas prácticas para puntos accionables.
+- Datos y estadísticas siempre con fuente. NUNCA inventar cifras.
+- FAQ al final cuando haya preguntas frecuentes reales (excelente para IAs generativas).
+
+7. LO QUE NUNCA DEBE APARECER
+- Artículos genéricos sin industria específica.
+- Texto que suena a IA genérica sin voz propia.
+- Múltiples H1.
+- Keywords repetidas forzadamente.
+- Venta agresiva.
+- Afirmaciones sin respaldo.
+- H3 sin H2 previo.
+- Terminar sin cierre estratégico.
+
+8. ENLACES INTERNOS NATURALES
+Incluir 2-4 enlaces internos hacia servicios relevantes del sitio:
+/servicios/seo-ecommerce, /servicios/diseno-web, /servicios/pauta-digital, /servicios/asesorias-marketing, /contacto, /blog
+`;
+
 const buildSystemPrompt = (lang: "es" | "en" | "pt") => {
-  const base = `Eres el editor SEO senior de Ferova Agency. Devuelve SOLO JSON válido, sin markdown, sin comentarios y sin texto extra.
+  const langNote = lang === "en"
+    ? "Write the article entirely in English."
+    : lang === "pt"
+    ? "Escreva o artigo inteiramente em português brasileiro."
+    : "Escribe el artículo enteramente en español.";
 
-GUÍA EDITORIAL FEROVA AGENCY 2025 — REGLAS OBLIGATORIAS:
+  return `Eres el editor SEO senior de Ferova Agency. Devuelve SOLO JSON válido, sin markdown, sin comentarios y sin texto extra.
 
-ESTRUCTURA JERÁRQUICA:
-- H1 Único: Máximo 65 caracteres. Fórmula: [Keyword principal] + [Promesa de valor/Contexto].
-- Primera oración: OBLIGATORIAMENTE afirmativa (Sujeto + Verbo + Predicado). PROHIBIDO comenzar con preguntas o anécdotas.
-- Introducción: Un párrafo que explique qué aprenderá el lector, el contexto del problema y la promesa de valor.
-- Cuerpo: H2 para temas principales, H3 para subtemas. PROHIBIDO saltar niveles (ej. de H2 a H4).
+${GUIA_EDITORIAL}
 
-CALIDAD Y SEO:
-- Extensión: Entre 800 y 1.200 palabras.
-- Tono: Conversado pero profesional. Explica cada término técnico con su porqué y para qué.
-- Densidad SEO: Keyword en H1, primer párrafo (primeras 100 palabras) y en al menos un H2.
-- Autoridad: Menciona a Ferova Agency solo para reforzar autoridad técnica (ej. "En Ferova Agency analizamos..."). PROHIBIDO venta agresiva o frases como "somos los mejores".
-- Enlaces internos: Genera enlaces <a href="..."> naturales hacia servicios relevantes del sitio (/servicios/seo-ecommerce, /servicios/diseno-web, /servicios/pauta-digital, /servicios/asesorias-marketing, /contacto).
-
-CIERRE ESTRATÉGICO:
-- Conclusión clara (2-3 oraciones)
-- Resumen práctico (puntos clave en lista)
-- Reflexión estratégica
-- Invitación sutil (CTA no agresivo)
-
-VALIDACIÓN FINAL:
-- Responde internamente: "¿Este contenido realmente ayuda a una empresa a tomar mejores decisiones digitales?" Si no, reescribe.
-
-METADATOS:
-- meta_title: Máximo 60 caracteres con keyword + contexto.
-- meta_description: 150-160 caracteres con propuesta de valor y CTA implícito.
-- slug: URL amigable con keyword principal.
-- excerpt: máximo 150 caracteres.
+${langNote}
 
 FORMATO DE CONTENIDO HTML:
 - NO incluyas <h1> en content (se renderiza aparte).
@@ -99,16 +168,12 @@ JSON esperado:
   "validation_pass": true,
   "validation_reason": ""
 }`;
-
-  if (lang === "en") return base.replace("Eres el editor SEO senior", "You are the senior SEO editor");
-  if (lang === "pt") return base.replace("Eres el editor SEO senior", "Você é o editor SEO sênior");
-  return base;
 };
 
 const buildUserPrompt = (payload: GeneratePayload) => {
   const lang = payload.lang || "es";
   const ideas = safeString(payload.ideas);
-  
+
   if (lang === "en") {
     return `Create the article with these inputs:
 - base title: ${safeString(payload.title)}
@@ -117,9 +182,9 @@ const buildUserPrompt = (payload: GeneratePayload) => {
 - key ideas to develop:
 ${ideas || "No specific ideas provided."}
 
-IMPORTANT: Follow the Ferova Editorial Guide 2025 strictly. Transform the ideas into structured, SEO-optimized content. Include internal links. Validate the article answers: "Does this content truly help a business make better digital decisions?"`;
+MANDATORY: Answer the 3 obligatory questions BEFORE writing. Follow the Ferova Editorial Guide 2025 strictly. Start with an affirmative statement (Subject+Verb+Predicate). Include internal links. Generate between 800-1200 words. Validate: "Does this content truly help a business make better digital decisions?"`;
   }
-  
+
   if (lang === "pt") {
     return `Crie o artigo com estas entradas:
 - título base: ${safeString(payload.title)}
@@ -128,7 +193,7 @@ IMPORTANT: Follow the Ferova Editorial Guide 2025 strictly. Transform the ideas 
 - ideias principais para desenvolver:
 ${ideas || "Sem ideias específicas fornecidas."}
 
-IMPORTANTE: Siga o Guia Editorial Ferova 2025 estritamente. Transforme as ideias em conteúdo estruturado e otimizado para SEO. Inclua links internos. Valide se o artigo responde: "Este conteúdo realmente ajuda uma empresa a tomar melhores decisões digitais?"`;
+OBRIGATÓRIO: Responda as 3 perguntas obrigatórias ANTES de escrever. Siga o Guia Editorial Ferova 2025 estritamente. Comece com uma afirmação (Sujeito+Verbo+Predicado). Inclua links internos. Gere entre 800-1200 palavras. Valide: "Este conteúdo realmente ajuda uma empresa a tomar melhores decisões digitais?"`;
   }
 
   return `Crea el artículo con estos insumos:
@@ -138,7 +203,7 @@ IMPORTANTE: Siga o Guia Editorial Ferova 2025 estritamente. Transforme as ideias
 - ideas principales para desarrollar:
 ${ideas || "Sin ideas específicas proporcionadas."}
 
-IMPORTANTE: Sigue la Guía Editorial Ferova 2025 estrictamente. Transforma las ideas en contenido estructurado y optimizado para SEO. Incluye enlaces internos. Valida que el artículo responda: "¿Este contenido realmente ayuda a una empresa a tomar mejores decisiones digitales?"`;
+OBLIGATORIO: Responde las 3 preguntas obligatorias ANTES de escribir. Sigue la Guía Editorial Ferova 2025 estrictamente. Comienza con una afirmación (Sujeto+Verbo+Predicado). Incluye enlaces internos. Genera entre 800-1200 palabras. Valida: "¿Este contenido realmente ayuda a una empresa a tomar mejores decisiones digitales?"`;
 };
 
 const normalizeArticle = (raw: Record<string, unknown>, fallback: GeneratePayload) => {
