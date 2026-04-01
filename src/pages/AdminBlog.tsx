@@ -247,6 +247,7 @@ const AdminBlog = ({ lang = 'es' }: Props) => {
       setForm(emptyForm);
       setPreview(null);
       setValidation(null);
+      setPublishDate(undefined);
     } catch (error) {
       toast({ title: copy.generator, description: error instanceof Error ? error.message : 'Error', variant: 'destructive' });
     } finally {
