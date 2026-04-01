@@ -230,7 +230,7 @@ const normalizeArticle = (raw: Record<string, unknown>, fallback: GeneratePayloa
     category,
     keyword,
     cover_image: null,
-    author: "AnnovaSoft",
+    author: "Maria Calderon",
     active: true,
     validation_pass: raw.validation_pass === true,
     validation_reason: safeString(raw.validation_reason) || "",
