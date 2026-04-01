@@ -120,6 +120,7 @@ const BlogPost = ({ lang = 'es' }: Props) => {
           .select('title, author, category, content, created_at, meta_title, meta_description')
           .eq('slug', slug)
           .eq('active', true)
+          .lte('published_at', new Date().toISOString())
           .maybeSingle();
 
         if (error || !data) {
