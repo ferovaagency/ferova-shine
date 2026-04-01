@@ -93,6 +93,7 @@ const AdminBlog = ({ lang = 'es' }: Props) => {
   const [isGenerating, setIsGenerating] = useState(false);
   const [isSaving, setIsSaving] = useState(false);
   const [validation, setValidation] = useState<{ pass: boolean; reason: string } | null>(null);
+  const [publishDate, setPublishDate] = useState<Date | undefined>(undefined);
   const previewRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
 
