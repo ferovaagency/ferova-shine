@@ -345,7 +345,7 @@ serve(async (req) => {
           content,
           excerpt,
           cover_image: safeString(raw.cover_image) || null,
-          author: safeString(raw.author) || "AnnovaSoft",
+          author: safeString(raw.author) || "Maria Calderon",
           active: raw.active === false ? false : true,
           category: safeString(raw.category) || null,
           keyword: safeString(raw.keyword) || null,

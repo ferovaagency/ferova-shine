@@ -49,7 +49,7 @@ const normalizeArticle = (raw: unknown): ArticleDraft => {
     category: getSafeString(source.category),
     keyword: getSafeString(source.keyword),
     cover_image: getSafeString(source.cover_image) || null,
-    author: getSafeString(source.author) || 'AnnovaSoft',
+    author: getSafeString(source.author) || 'Maria Calderon',
     active: source.active === false ? false : true,
   };
 
