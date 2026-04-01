@@ -298,6 +298,21 @@ const AdminBlog = ({ lang = 'es' }: Props) => {
                       <Label htmlFor="article-ideas">{copy.ideas}</Label>
                       <Textarea id="article-ideas" value={form.ideas} onChange={(e) => setForm((c) => ({ ...c, ideas: e.target.value }))} placeholder={copy.ideasPlaceholder} rows={5} disabled={isGenerating} />
                     </div>
+                    <div className="space-y-2">
+                      <Label>{lang === 'pt' ? 'Data de publicação' : lang === 'en' ? 'Publish date' : 'Fecha de publicación'}</Label>
+                      <Popover>
+                        <PopoverTrigger asChild>
+                          <Button variant="outline" className={cn("w-full justify-start text-left font-normal", !publishDate && "text-muted-foreground")} disabled={isGenerating}>
+                            <CalendarIcon className="mr-2 h-4 w-4" />
+                            {publishDate ? format(publishDate, 'PPP') : (lang === 'es' ? 'Ahora (inmediato)' : lang === 'pt' ? 'Agora (imediato)' : 'Now (immediate)')}
+                          </Button>
+                        </PopoverTrigger>
+                        <PopoverContent className="w-auto p-0" align="start">
+                          <Calendar mode="single" selected={publishDate} onSelect={setPublishDate} className={cn("p-3 pointer-events-auto")} />
+                        </PopoverContent>
+                      </Popover>
+                      <p className="text-xs text-muted-foreground">{lang === 'es' ? 'Deja vacío para publicar de inmediato.' : lang === 'pt' ? 'Deixe vazio para publicar imediatamente.' : 'Leave empty to publish immediately.'}</p>
+                    </div>
                     <Button type="submit" className="w-full" disabled={isGenerating}>
                       {isGenerating ? <Loader2 className="mr-2 h-4 w-4 animate-spin" /> : <Sparkles className="mr-2 h-4 w-4" />}
                       {isGenerating ? copy.generating : copy.generate}
