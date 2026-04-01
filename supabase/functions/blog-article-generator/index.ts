@@ -335,6 +335,8 @@ serve(async (req) => {
         return jsonResponse({ error: "Artículo incompleto." }, 400);
       }
 
+      const publishedAt = safeString(raw.published_at) || new Date().toISOString();
+
       const { data, error } = await adminClient
         .from("blog_posts")
         .insert({
@@ -349,6 +351,7 @@ serve(async (req) => {
           keyword: safeString(raw.keyword) || null,
           meta_title: truncate(safeString(raw.meta_title) || title, 60),
           meta_description: truncate(safeString(raw.meta_description) || excerpt, 160),
+          published_at: publishedAt,
         })
         .select("id, slug, title")
         .single();

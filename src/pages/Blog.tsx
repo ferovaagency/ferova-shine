@@ -50,9 +50,10 @@ const Blog = ({ lang = 'es' }: Props) => {
       try {
         const { data } = await supabase
           .from('blog_posts')
-          .select('slug, title, excerpt, author, category, content, created_at')
+          .select('slug, title, excerpt, author, category, content, created_at, published_at')
           .eq('active', true)
-          .order('created_at', { ascending: false })
+          .lte('published_at', new Date().toISOString())
+          .order('published_at', { ascending: false })
           .limit(50);
 
         if (data && data.length > 0) {

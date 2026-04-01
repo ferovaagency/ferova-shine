@@ -27,6 +27,7 @@ export type Database = {
           keyword: string | null
           meta_description: string | null
           meta_title: string | null
+          published_at: string
           slug: string
           title: string
           updated_at: string
@@ -43,6 +44,7 @@ export type Database = {
           keyword?: string | null
           meta_description?: string | null
           meta_title?: string | null
+          published_at?: string
           slug: string
           title: string
           updated_at?: string
@@ -59,6 +61,7 @@ export type Database = {
           keyword?: string | null
           meta_description?: string | null
           meta_title?: string | null
+          published_at?: string
           slug?: string
           title?: string
           updated_at?: string
@@ -70,7 +73,7 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
-      [_ in never]: never
+      blog_slugify: { Args: { v: string }; Returns: string }
     }
     Enums: {
       [_ in never]: never
