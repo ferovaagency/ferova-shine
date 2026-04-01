@@ -234,8 +234,12 @@ const AdminBlog = ({ lang = 'es' }: Props) => {
 
     setIsSaving(true);
     try {
+      const articleWithDate = {
+        ...preview,
+        published_at: publishDate ? publishDate.toISOString() : new Date().toISOString(),
+      };
       const { data, error } = await supabase.functions.invoke('blog-article-generator', {
-        body: { action: 'save', payload: { article: preview } },
+        body: { action: 'save', payload: { article: articleWithDate } },
       });
       if (error) throw error;
       const savedSlug = getSafeString((data as { post?: { slug?: string } } | null)?.post?.slug);
