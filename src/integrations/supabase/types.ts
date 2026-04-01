@@ -74,7 +74,6 @@ export type Database = {
     }
     Functions: {
       blog_slugify: { Args: { v: string }; Returns: string }
-      unaccent: { Args: { "": string }; Returns: string }
     }
     Enums: {
       [_ in never]: never
