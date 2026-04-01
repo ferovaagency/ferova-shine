@@ -1,5 +1,6 @@
 import { useMemo, useState, useRef } from 'react';
-import { Loader2, Save, Sparkles, AlertTriangle, CheckCircle2, List } from 'lucide-react';
+import { Loader2, Save, Sparkles, AlertTriangle, CheckCircle2, List, CalendarIcon } from 'lucide-react';
+import { format } from 'date-fns';
 import Header from '@/components/layout/Header';
 import Footer from '@/components/layout/Footer';
 import { supabase } from '@/integrations/supabase/client';
