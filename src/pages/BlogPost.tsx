@@ -120,6 +120,7 @@ const BlogPost = ({ lang = 'es' }: Props) => {
           .select('title, author, category, content, created_at, meta_title, meta_description')
           .eq('slug', slug)
           .eq('active', true)
+          .lte('published_at', new Date().toISOString())
           .maybeSingle();
 
         if (error || !data) {
@@ -181,37 +182,37 @@ const BlogPost = ({ lang = 'es' }: Props) => {
       <>
         <Header currentLang={lang} />
         <main className="pt-20">
-          <article className="py-20 md:py-28">
+          <article className="py-8 md:py-12">
             <div className="container mx-auto px-4 md:px-6">
-              <div className="max-w-3xl mx-auto">
-                <Link to={blogBase} className="inline-flex items-center gap-2 text-muted-foreground hover:text-primary transition-colors mb-8 text-sm">
+              <div className="mx-auto" style={{ maxWidth: '720px' }}>
+                <Link to={blogBase} className="inline-flex items-center gap-2 text-muted-foreground hover:text-primary transition-colors mb-6 text-sm">
                   <ArrowLeft className="w-4 h-4" /> {backLabel}
                 </Link>
-                <div className="flex items-center gap-3 mb-6">
+                <div className="flex items-center gap-3 mb-4">
                   <span className="text-xs px-3 py-1 rounded-full font-medium bg-primary/10 text-primary">{staticPost.category}</span>
                   <span className="text-muted-foreground text-xs flex items-center gap-1"><Clock className="w-3 h-3" /> {staticPost.readTime}</span>
                 </div>
-                <h1 className="text-3xl md:text-4xl lg:text-5xl font-display font-bold mb-6">{staticPost.title}</h1>
-                <div className="flex items-center gap-4 text-muted-foreground text-sm mb-12 pb-8 border-b border-border/30">
+                <h1 className="text-2xl md:text-3xl lg:text-4xl font-display font-bold mb-4 leading-tight">{staticPost.title}</h1>
+                <div className="flex items-center gap-4 text-muted-foreground text-sm mb-8 pb-6 border-b border-border/30">
                   <span className="flex items-center gap-1"><User className="w-4 h-4" /> {staticPost.author}</span>
                   <span>{staticPost.date}</span>
                 </div>
-                <AdBanner slot="blog-post-top" className="mb-10" />
-                <div className="prose prose-invert max-w-none space-y-6">
+                <AdBanner slot="blog-post-top" className="mb-8" />
+                <div className="blog-content space-y-4" style={{ lineHeight: '1.6' }}>
                   {staticPost.content.map((paragraph, i) => {
                     if (paragraph.startsWith('## ')) {
                       const [heading, ...rest] = paragraph.split('\n\n');
                       return (
                         <div key={i}>
-                          <h2 className="text-xl font-display font-bold mt-10 mb-4 text-foreground">{heading.replace('## ', '')}</h2>
-                          {rest.map((p, j) => <p key={j} className="text-muted-foreground leading-relaxed mb-4">{p}</p>)}
+                          <h2 className="text-xl font-display font-bold mt-8 mb-3 text-foreground">{heading.replace('## ', '')}</h2>
+                          {rest.map((p, j) => <p key={j} className="text-muted-foreground mb-3">{p}</p>)}
                         </div>
                       );
                     }
-                    return <p key={i} className="text-muted-foreground leading-relaxed">{paragraph}</p>;
+                    return <p key={i} className="text-muted-foreground">{paragraph}</p>;
                   })}
                 </div>
-                <AdBanner slot="blog-post-bottom" className="mt-12" />
+                <AdBanner slot="blog-post-bottom" className="mt-10" />
                 <CtaBlock lang={lang} contactPath={contactPath} />
               </div>
             </div>
@@ -235,27 +236,28 @@ const BlogPost = ({ lang = 'es' }: Props) => {
     <>
       <Header currentLang={lang} />
       <main className="pt-20">
-        <article className="py-20 md:py-28">
+        <article className="py-8 md:py-12">
           <div className="container mx-auto px-4 md:px-6">
-            <div className="max-w-3xl mx-auto">
-              <Link to={blogBase} className="inline-flex items-center gap-2 text-muted-foreground hover:text-primary transition-colors mb-8 text-sm">
+            <div className="mx-auto" style={{ maxWidth: '720px' }}>
+              <Link to={blogBase} className="inline-flex items-center gap-2 text-muted-foreground hover:text-primary transition-colors mb-6 text-sm">
                 <ArrowLeft className="w-4 h-4" /> {backLabel}
               </Link>
-              <div className="flex items-center gap-3 mb-6">
+              <div className="flex items-center gap-3 mb-4">
                 <span className="text-xs px-3 py-1 rounded-full font-medium bg-primary/10 text-primary">{post.category || 'General'}</span>
                 <span className="text-muted-foreground text-xs flex items-center gap-1"><Clock className="w-3 h-3" /> {readTime}</span>
               </div>
-              <h1 className="text-3xl md:text-4xl lg:text-5xl font-display font-bold mb-6">{post.title}</h1>
-              <div className="flex items-center gap-4 text-muted-foreground text-sm mb-12 pb-8 border-b border-border/30">
-                <span className="flex items-center gap-1"><User className="w-4 h-4" /> {post.author || 'Ferova Agency'}</span>
+              <h1 className="text-2xl md:text-3xl lg:text-4xl font-display font-bold mb-4 leading-tight">{post.title}</h1>
+              <div className="flex items-center gap-4 text-muted-foreground text-sm mb-8 pb-6 border-b border-border/30">
+                <span className="flex items-center gap-1"><User className="w-4 h-4" /> {post.author || 'Maria Calderon'}</span>
                 <span>{dateStr}</span>
               </div>
-              <AdBanner slot="blog-post-top" className="mb-10" />
+              <AdBanner slot="blog-post-top" className="mb-8" />
               <article
-                className="prose prose-sm max-w-none text-foreground dark:prose-invert prose-headings:font-display prose-headings:text-foreground prose-p:text-muted-foreground prose-strong:text-foreground prose-a:text-primary"
+                className="blog-content prose prose-sm max-w-none text-foreground dark:prose-invert"
+                style={{ lineHeight: '1.6' }}
                 dangerouslySetInnerHTML={{ __html: post.content }}
               />
-              <AdBanner slot="blog-post-bottom" className="mt-12" />
+              <AdBanner slot="blog-post-bottom" className="mt-10" />
               <CtaBlock lang={lang} contactPath={contactPath} />
             </div>
           </div>

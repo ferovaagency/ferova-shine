@@ -225,3 +225,42 @@
   0%, 100% { box-shadow: 0 0 20px hsla(45, 86%, 40%, 0.2); }
   50% { box-shadow: 0 0 40px hsla(45, 86%, 40%, 0.4); }
 }
+
+/* Blog article typography */
+.blog-content h2 {
+  font-size: 1.5rem;
+  font-weight: 700;
+  margin-top: 2rem;
+  margin-bottom: 0.75rem;
+  color: hsl(var(--foreground));
+  font-family: var(--font-display, 'Outfit', sans-serif);
+}
+.blog-content h3 {
+  font-size: 1.25rem;
+  font-weight: 600;
+  margin-top: 1.5rem;
+  margin-bottom: 0.5rem;
+  color: hsl(var(--foreground));
+  font-family: var(--font-display, 'Outfit', sans-serif);
+}
+.blog-content p {
+  margin-bottom: 1rem;
+  color: hsl(var(--muted-foreground));
+}
+.blog-content ul, .blog-content ol {
+  margin-bottom: 1rem;
+  padding-left: 1.5rem;
+}
+.blog-content ul { list-style-type: disc; }
+.blog-content ol { list-style-type: decimal; }
+.blog-content li {
+  margin-bottom: 0.375rem;
+  color: hsl(var(--muted-foreground));
+}
+.blog-content a {
+  color: hsl(var(--primary));
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+.blog-content a:hover { opacity: 0.8; }
+.blog-content strong { color: hsl(var(--foreground)); }
