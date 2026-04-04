@@ -1,93 +1,99 @@
+const WA = (msg: string) =>
+  `https://wa.me/17865787671?text=${encodeURIComponent(msg)}`;
+
 export const paymentLinks = {
   asesoria30: {
-    usd: 'https://ferova.lemonsqueezy.com/checkout/buy/6acec4f4-474c-4ee3-8c8c-8018151503d5',
-    cop: 'https://mpago.li/2m3o1ow',
-    brl: 'https://wa.me/17865787671',
+    usd: WA('Hola, quiero agendar una Asesoría Express de 30 min. ¿Cómo procedo?'),
+    cop: WA('Hola, quiero agendar una Asesoría Express de 30 min. ¿Cómo procedo?'),
+    brl: WA('Olá, quero agendar uma Assessoria Express de 30 min. Como procedo?'),
   },
   asesoria60: {
-    usd: 'https://ferova.lemonsqueezy.com/checkout/buy/6653a2a4-b465-45c5-b633-52fc987f4f94',
-    cop: 'https://mpago.li/2QdXv3N',
-    brl: 'https://wa.me/17865787671',
+    usd: WA('Hola, quiero agendar una Asesoría Impacto de 60 min. ¿Cómo procedo?'),
+    cop: WA('Hola, quiero agendar una Asesoría Impacto de 60 min. ¿Cómo procedo?'),
+    brl: WA('Olá, quero agendar uma Assessoria Impacto de 60 min. Como procedo?'),
   },
   brandingEssential: {
-    usd: 'https://ferova.lemonsqueezy.com/checkout/buy/88f0cdf8-7c81-4ea2-a3c3-14f16dce0b24',
-    cop: 'https://mpago.li/1EsHYki',
-    brl: 'https://wa.me/17865787671',
+    usd: WA('Hola, me interesa el servicio de Branding Essential. ¿Cómo empezamos?'),
+    cop: WA('Hola, me interesa el servicio de Branding Essential. ¿Cómo empezamos?'),
+    brl: WA('Olá, tenho interesse no serviço de Branding Essential. Como começamos?'),
   },
   seoGeoLocal: {
-    usd: 'https://wa.me/17865787671',
-    cop: 'https://wa.me/17865787671',
-    brl: 'https://wa.me/17865787671',
+    usd: WA('Hola, me interesa el servicio de SEO & GEO Local. ¿Cómo empezamos?'),
+    cop: WA('Hola, me interesa el servicio de SEO & GEO Local. ¿Cómo empezamos?'),
+    brl: WA('Olá, tenho interesse no serviço de SEO & GEO Local. Como começamos?'),
   },
   webEconomico: {
-    usd: 'https://wa.me/17865787671',
-    cop: 'https://wa.me/17865787671',
-    brl: 'https://wa.me/17865787671',
-  },
-  webPro: {
-    usd: 'https://wa.me/17865787671',
-    cop: 'https://wa.me/17865787671',
-    brl: 'https://wa.me/17865787671',
-  },
-  webEcommerce: {
-    usd: 'https://wa.me/17865787671',
-    cop: 'https://wa.me/17865787671',
-    brl: 'https://wa.me/17865787671',
+    usd: WA('Hola, me interesa la Web Económica. ¿Cómo empezamos?'),
+    cop: WA('Hola, me interesa la Web Económica. ¿Cómo empezamos?'),
+    brl: WA('Olá, tenho interesse na Web Econômica. Como começamos?'),
   },
   webServicios: {
-    usd: 'https://wa.me/17865787671',
-    cop: 'https://wa.me/17865787671',
-    brl: 'https://wa.me/17865787671',
+    usd: WA('Hola, me interesa la WebApp de Servicios. ¿Cómo empezamos?'),
+    cop: WA('Hola, me interesa la WebApp de Servicios. ¿Cómo empezamos?'),
+    brl: WA('Olá, tenho interesse na WebApp de Serviços. Como começamos?'),
+  },
+  webEcommerce: {
+    usd: WA('Hola, me interesa la WebApp E-Commerce. ¿Cómo empezamos?'),
+    cop: WA('Hola, me interesa la WebApp E-Commerce. ¿Cómo empezamos?'),
+    brl: WA('Olá, tenho interesse na WebApp E-Commerce. Como começamos?'),
   },
   webEcommerceFull: {
-    usd: 'https://wa.me/17865787671',
-    cop: 'https://wa.me/17865787671',
-    brl: 'https://wa.me/17865787671',
+    usd: WA('Hola, me interesa la WebApp E-Commerce Full. ¿Cómo empezamos?'),
+    cop: WA('Hola, me interesa la WebApp E-Commerce Full. ¿Cómo empezamos?'),
+    brl: WA('Olá, tenho interesse na WebApp E-Commerce Full. Como começamos?'),
+  },
+  webPro: {
+    usd: WA('Hola, me interesa la WebApp Pro. ¿Cómo empezamos?'),
+    cop: WA('Hola, me interesa la WebApp Pro. ¿Cómo empezamos?'),
+    brl: WA('Olá, tenho interesse na WebApp Pro. Como começamos?'),
   },
   seoWebapps: {
-    usd: 'https://wa.me/17865787671',
-    cop: 'https://wa.me/17865787671',
-    brl: 'https://wa.me/17865787671',
+    usd: WA('Hola, me interesa el SEO para WebApps. ¿Cómo empezamos?'),
+    cop: WA('Hola, me interesa el SEO para WebApps. ¿Cómo empezamos?'),
+    brl: WA('Olá, tenho interesse no SEO para WebApps. Como começamos?'),
   },
   seoCms: {
-    usd: 'https://wa.me/17865787671',
-    cop: 'https://wa.me/17865787671',
-    brl: 'https://wa.me/17865787671',
+    usd: WA('Hola, me interesa el SEO para CMS. ¿Cómo empezamos?'),
+    cop: WA('Hola, me interesa el SEO para CMS. ¿Cómo empezamos?'),
+    brl: WA('Olá, tenho interesse no SEO para CMS. Como começamos?'),
   },
   pautaEsencial: {
-    usd: 'https://wa.me/17865787671',
-    cop: 'https://wa.me/17865787671',
-    brl: 'https://wa.me/17865787671',
+    usd: WA('Hola, me interesa el plan de Pauta Esencial. ¿Cómo empezamos?'),
+    cop: WA('Hola, me interesa el plan de Pauta Esencial. ¿Cómo empezamos?'),
+    brl: WA('Olá, tenho interesse no plano de Anúncios Essencial. Como começamos?'),
   },
   pautaEstrategico: {
-    usd: 'https://wa.me/17865787671',
-    cop: 'https://wa.me/17865787671',
-    brl: 'https://wa.me/17865787671',
+    usd: WA('Hola, me interesa el plan de Pauta Estratégico 360°. ¿Cómo empezamos?'),
+    cop: WA('Hola, me interesa el plan de Pauta Estratégico 360°. ¿Cómo empezamos?'),
+    brl: WA('Olá, tenho interesse no plano Estratégico 360°. Como começamos?'),
   },
   pautaPremium: {
-    usd: 'https://wa.me/17865787671',
-    cop: 'https://wa.me/17865787671',
-    brl: 'https://wa.me/17865787671',
+    usd: WA('Hola, me interesa el plan de Pauta Premium Full Service. ¿Cómo empezamos?'),
+    cop: WA('Hola, me interesa el plan de Pauta Premium Full Service. ¿Cómo empezamos?'),
+    brl: WA('Olá, tenho interesse no plano Premium Full Service. Como começamos?'),
   },
   whatsapp1: {
-    usd: 'https://wa.me/17865787671',
-    cop: 'https://wa.me/17865787671',
-    brl: 'https://wa.me/17865787671',
+    usd: WA('Hola, me interesa la optimización de WhatsApp Business (1 producto). ¿Cómo empezamos?'),
+    cop: WA('Hola, me interesa la optimización de WhatsApp Business (1 producto). ¿Cómo empezamos?'),
+    brl: WA('Olá, tenho interesse na otimização do WhatsApp Business (1 produto). Como começamos?'),
   },
   whatsapp10: {
-    usd: 'https://wa.me/17865787671',
-    cop: 'https://wa.me/17865787671',
-    brl: 'https://wa.me/17865787671',
+    usd: WA('Hola, me interesa la optimización de WhatsApp Business (10 productos). ¿Cómo empezamos?'),
+    cop: WA('Hola, me interesa la optimización de WhatsApp Business (10 productos). ¿Cómo empezamos?'),
+    brl: WA('Olá, tenho interesse na otimização do WhatsApp Business (10 produtos). Como começamos?'),
   },
   whatsapp20: {
-    usd: 'https://wa.me/17865787671',
-    cop: 'https://wa.me/17865787671',
-    brl: 'https://wa.me/17865787671',
+    usd: WA('Hola, me interesa la optimización de WhatsApp Business (20 productos). ¿Cómo empezamos?'),
+    cop: WA('Hola, me interesa la optimización de WhatsApp Business (20 productos). ¿Cómo empezamos?'),
+    brl: WA('Olá, tenho interesse na otimização do WhatsApp Business (20 produtos). Como começamos?'),
   },
 } as const;
 
 export type PaymentLinkKey = keyof typeof paymentLinks;
 
-export function getPaymentLink(key: PaymentLinkKey, currency: 'usd' | 'cop' | 'brl'): string {
+export function getPaymentLink(
+  key: PaymentLinkKey,
+  currency: 'usd' | 'cop' | 'brl'
+): string {
   return paymentLinks[key][currency];
 }
