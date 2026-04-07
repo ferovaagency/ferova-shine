@@ -68,6 +68,84 @@ export type Database = {
         }
         Relationships: []
       }
+      newsletter_editions: {
+        Row: {
+          created_at: string | null
+          edition_number: number
+          free_content: Json | null
+          id: string
+          plan: string | null
+          pro_content: Json | null
+          published: boolean | null
+          published_at: string | null
+          reading_time: number | null
+          slug: string
+          subject_line: string | null
+          title: string
+          topics: string[] | null
+        }
+        Insert: {
+          created_at?: string | null
+          edition_number: number
+          free_content?: Json | null
+          id?: string
+          plan?: string | null
+          pro_content?: Json | null
+          published?: boolean | null
+          published_at?: string | null
+          reading_time?: number | null
+          slug: string
+          subject_line?: string | null
+          title: string
+          topics?: string[] | null
+        }
+        Update: {
+          created_at?: string | null
+          edition_number?: number
+          free_content?: Json | null
+          id?: string
+          plan?: string | null
+          pro_content?: Json | null
+          published?: boolean | null
+          published_at?: string | null
+          reading_time?: number | null
+          slug?: string
+          subject_line?: string | null
+          title?: string
+          topics?: string[] | null
+        }
+        Relationships: []
+      }
+      newsletter_subscribers: {
+        Row: {
+          active: boolean | null
+          created_at: string | null
+          email: string
+          id: string
+          lang: string | null
+          name: string
+          plan: string | null
+        }
+        Insert: {
+          active?: boolean | null
+          created_at?: string | null
+          email: string
+          id?: string
+          lang?: string | null
+          name: string
+          plan?: string | null
+        }
+        Update: {
+          active?: boolean | null
+          created_at?: string | null
+          email?: string
+          id?: string
+          lang?: string | null
+          name?: string
+          plan?: string | null
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
