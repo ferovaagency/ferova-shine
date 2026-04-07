@@ -96,7 +96,7 @@ const t = {
     metaDesc: 'Weekly SEO and AI newsletter for ecommerce. Every Monday in your inbox.',
     faqs: [
       { q: 'How often is it sent?', a: 'Every Monday morning. On time, no exceptions.' },
-      { q: 'What's the difference between Pro and Free?', a: 'The Pro plan includes deep analysis, real case studies with data, downloadable resources and full access to the archive of all editions.' },
+      { q: "What's the difference between Pro and Free?", a: 'The Pro plan includes deep analysis, real case studies with data, downloadable resources and full access to the archive of all editions.' },
       { q: 'How do I cancel my Pro subscription?', a: 'Just message us on WhatsApp. No forms, no bureaucracy.' },
       { q: 'Can I read past editions?', a: 'Pro subscribers have full archive access. Free subscribers can see a summary of each edition.' },
     ],

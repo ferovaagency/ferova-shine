@@ -19,6 +19,7 @@ export default function Header({ currentLang, lang }: HeaderProps) {
         { label: "Preços", href: "/pt/precos" },
         { label: "Casos", href: "/pt/casos-de-sucesso" },
         { label: "Blog", href: "/pt/blog" },
+        { label: "Newsletter", href: "/pt/newsletter" },
         { label: "Recursos", href: "/pt/recursos" },
         { label: "Contato", href: "/pt/contato" },
       ]
@@ -28,6 +29,7 @@ export default function Header({ currentLang, lang }: HeaderProps) {
         { label: "Pricing", href: "/en/pricing" },
         { label: "Cases", href: "/en/case-studies" },
         { label: "Blog", href: "/en/blog" },
+        { label: "Newsletter", href: "/en/newsletter" },
         { label: "Resources", href: "/en/resources" },
         { label: "Contact", href: "/en/contact" },
       ]
@@ -36,6 +38,7 @@ export default function Header({ currentLang, lang }: HeaderProps) {
         { label: "Precios", href: "/precios" },
         { label: "Casos", href: "/casos-de-exito" },
         { label: "Blog", href: "/blog" },
+        { label: "Newsletter", href: "/newsletter" },
         { label: "Recursos", href: "/recursos" },
         { label: "Contacto", href: "/contacto" },
       ];

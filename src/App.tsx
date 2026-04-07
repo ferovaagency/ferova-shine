@@ -30,6 +30,10 @@ import SobreNosotros from "./pages/SobreNosotros";
 import OptimizacionWhatsapp from "./pages/OptimizacionWhatsapp";
 import AdminBlog from "./pages/AdminBlog";
 import VCard from "./pages/VCard";
+import NewsletterPage from "./pages/NewsletterPage";
+import NewsletterArchivePage from "./pages/NewsletterArchivePage";
+import NewsletterEditionPage from "./pages/NewsletterEditionPage";
+import NewsletterAdminPage from "./pages/NewsletterAdminPage";
 
 const queryClient = new QueryClient();
 
@@ -125,6 +129,18 @@ const App = () => (
           <Route path="/pt/recursos" element={<Recursos lang="pt" />} />
           <Route path="/pt/sobre-nos" element={<SobreNosotros lang="pt" />} />
           <Route path="/pt/termos" element={<Terminos lang="pt" />} />
+
+          {/* Newsletter routes */}
+          <Route path="/newsletter" element={<NewsletterPage lang={hostLang} />} />
+          <Route path="/newsletter/archivo" element={<NewsletterArchivePage lang={hostLang} />} />
+          <Route path="/newsletter/edicion/:slug" element={<NewsletterEditionPage lang={hostLang} />} />
+          <Route path="/newsletter/admin" element={<NewsletterAdminPage />} />
+          <Route path="/en/newsletter" element={<NewsletterPage lang="en" />} />
+          <Route path="/en/newsletter/archive" element={<NewsletterArchivePage lang="en" />} />
+          <Route path="/en/newsletter/edition/:slug" element={<NewsletterEditionPage lang="en" />} />
+          <Route path="/pt/newsletter" element={<NewsletterPage lang="pt" />} />
+          <Route path="/pt/newsletter/arquivo" element={<NewsletterArchivePage lang="pt" />} />
+          <Route path="/pt/newsletter/edicao/:slug" element={<NewsletterEditionPage lang="pt" />} />
 
           <Route path="/contacto-digital" element={<VCard />} />
           <Route path="*" element={<NotFound />} />
