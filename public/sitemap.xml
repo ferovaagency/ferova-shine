@@ -72,4 +72,10 @@
   <url><loc>https://seoparaecommerce.co/pt/contato</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
   <url><loc>https://seoparaecommerce.co/pt/termos</loc><changefreq>yearly</changefreq><priority>0.3</priority></url>
 
+  <url><loc>https://seoparaecommerce.co/newsletter</loc><changefreq>weekly</changefreq><priority>0.9</priority></url>
+  <url><loc>https://seoparaecommerce.co/newsletter/archivo</loc><changefreq>weekly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://seoparaecommerce.co/en/newsletter</loc><changefreq>weekly</changefreq><priority>0.9</priority></url>
+  <url><loc>https://seoparaecommerce.co/en/newsletter/archive</loc><changefreq>weekly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://seoparaecommerce.co/pt/newsletter</loc><changefreq>weekly</changefreq><priority>0.9</priority></url>
+
 </urlset>
