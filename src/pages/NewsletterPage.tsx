@@ -159,6 +159,7 @@ const NewsletterPage = ({ lang = 'es' }: Props) => {
   const [loading, setLoading] = useState(false);
   const [currency, setCurrency] = useState<'usd' | 'cop' | 'brl'>('usd');
 
+  useEffect(() => { document.title = l.metaTitle; }, [l.metaTitle]);
   const proPrices = { usd: '$9/mes', cop: '$5.000/mes', brl: 'R$9/mês' };
   const proWaMsg = {
     usd: 'Hola, quiero suscribirme al newsletter PRO de SEO para Ecommerce. Plan: USD $9/mes',
