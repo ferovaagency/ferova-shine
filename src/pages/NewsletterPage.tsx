@@ -1,5 +1,4 @@
-import { useState } from 'react';
-import { Helmet } from 'react-helmet';
+import { useState, useEffect } from 'react';
 import Header from '@/components/layout/Header';
 import Footer from '@/components/layout/Footer';
 import ChatWidget from '@/components/ui/chat-widget';
@@ -189,18 +188,7 @@ const NewsletterPage = ({ lang = 'es' }: Props) => {
 
   return (
     <PageTransition>
-      <Helmet>
-        <title>{l.metaTitle}</title>
-        <meta name="description" content={l.metaDesc} />
-        <script type="application/ld+json">{JSON.stringify({
-          "@context": "https://schema.org",
-          "@type": "WebPage",
-          name: "Newsletter SEO para Ecommerce",
-          description: l.metaDesc,
-          url: "https://seoparaecommerce.co/newsletter",
-          inLanguage: [lang],
-        })}</script>
-      </Helmet>
+      {/* SEO meta tags set via useEffect */}
       <Header lang={lang} />
 
       {/* Hero */}
