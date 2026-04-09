@@ -33,8 +33,8 @@ const SeoEcommerce = ({ lang = 'es' }: Props) => {
   };
 
   const t = lang === 'es' ? {
-    title: 'SEO para E-commerce',
-    sub: 'Estrategia integral de posicionamiento orgánico diseñada específicamente para tiendas online que buscan aumentar sus ventas de forma sostenible.',
+    title: 'SEO que las IAs citan — no solo Google lo indexa',
+    sub: 'Optimizamos tu WebApp para que aparezca en Google, ChatGPT, Perplexity y Google AI Overviews. Blogs mensuales con estructura semántica que las IAs generativas leen y citan.',
     cta: 'Solicitar diagnóstico',
     ctaSecondary: 'Ver casos de éxito',
     whatIncludes: '¿Qué incluye nuestro servicio?',
@@ -80,8 +80,8 @@ const SeoEcommerce = ({ lang = 'es' }: Props) => {
       { q: '¿Cómo miden el ROI del SEO?', a: 'Medimos tráfico orgánico, posiciones de keywords, conversiones orgánicas, revenue orgánico y reducción del CAC.' },
     ],
   } : lang === 'pt' ? {
-    title: 'SEO para E-commerce',
-    sub: 'Estratégia completa de posicionamento orgânico projetada especificamente para lojas virtuais que buscam aumentar suas vendas de forma sustentável.',
+    title: 'SEO que as IAs citam — não só o Google indexa',
+    sub: 'Otimizamos sua WebApp para aparecer no Google, ChatGPT, Perplexity e Google AI Overviews. Blogs mensais com estrutura semântica que as IAs generativas leem e citam.',
     cta: 'Solicitar diagnóstico',
     ctaSecondary: 'Ver casos de sucesso',
     whatIncludes: 'O que nosso serviço inclui?',
@@ -127,8 +127,8 @@ const SeoEcommerce = ({ lang = 'es' }: Props) => {
       { q: 'Como vocês medem o ROI do SEO?', a: 'Medimos tráfego orgânico, posições de palavras-chave, conversões orgânicas, receita orgânica e redução do CAC.' },
     ],
   } : {
-    title: 'E-commerce SEO',
-    sub: 'Comprehensive organic positioning strategy designed specifically for online stores looking to increase their sales sustainably.',
+    title: 'SEO that AIs cite — not just Google indexing',
+    sub: 'We optimize your WebApp to appear on Google, ChatGPT, Perplexity and Google AI Overviews. Monthly blogs with semantic structure that generative AIs read and cite.',
     cta: 'Request diagnosis',
     ctaSecondary: 'View case studies',
     whatIncludes: 'What does our service include?',
@@ -178,6 +178,24 @@ const SeoEcommerce = ({ lang = 'es' }: Props) => {
   return (
     <>
       <Header currentLang={lang} />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify({
+        "@context": "https://schema.org",
+        "@type": "Service",
+        "@id": "https://seoparaecommerce.co/servicios/seo-ecommerce#service",
+        "name": "SEO para E-commerce y AIO",
+        "provider": { "@type": "Organization", "@id": "https://seoparaecommerce.co/#organization", "name": "Ferova Agency" },
+        "description": "Optimizamos webapps para Google, ChatGPT, Perplexity y AI Overviews. Blogs con estructura semántica que las IAs generativas leen y citan.",
+        "areaServed": ["Colombia", "Latinoamérica", "Estados Unidos"],
+        "hasOfferCatalog": {
+          "@type": "OfferCatalog",
+          "name": "Planes SEO",
+          "itemListElement": [
+            { "@type": "Offer", "name": "SEO WebApps", "price": "600000", "priceCurrency": "COP", "unitText": "MONTH", "description": "Posicionamiento orgánico completo para WebApps" },
+            { "@type": "Offer", "name": "SEO CMS", "price": "800000", "priceCurrency": "COP", "unitText": "MONTH", "description": "SEO profesional para WordPress y otros CMS" },
+            { "@type": "Offer", "name": "SEO & GEO Local", "price": "600000", "priceCurrency": "COP", "unitText": "MONTH", "description": "Optimización geográfica para Google Maps y búsquedas locales" }
+          ]
+        }
+      }) }} />
       <main className="pt-20">
         {/* Hero */}
         <section className="py-20 md:py-28 relative grid-pattern">

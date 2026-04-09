@@ -32,8 +32,8 @@ const DiseneoWeb = ({ lang = 'es' }: Props) => {
   };
 
   const t = lang === 'es' ? {
-    title: 'Diseño Web & Webapps',
-    sub: 'Sitios web y webapps profesionales construidos en Lovable con IA integrada. Entrega en 1 semana. Código 100% tuyo en GitHub.',
+    title: 'Webapps que trabajan por ti — entrega en 1 semana',
+    sub: 'No es un sitio web bonito. Es una máquina de ventas con IA integrada, SEO desde la arquitectura y panel de administración para que tú controles todo sin depender de nosotros.',
     whatIncludes: '¿Qué incluye nuestro servicio?',
     pricingTitle: 'Planes de Diseño Web',
     noInclude: 'No incluye:',
@@ -119,8 +119,8 @@ const DiseneoWeb = ({ lang = 'es' }: Props) => {
       { n: '04', title: 'Entrega y dominio', desc: 'Revisión final, conexión del dominio y capacitación básica.' },
     ],
   } : lang === 'pt' ? {
-    title: 'Desenvolvimento Web & Webapps',
-    sub: 'Sites e webapps profissionais construídos em Lovable com IA integrada. Entrega em 1 semana. Código 100% seu no GitHub.',
+    title: 'Webapps que trabalham por você — entrega em 1 semana',
+    sub: 'Não é um site bonito. É uma máquina de vendas com IA integrada, SEO desde a arquitetura e painel de administração para você controlar tudo sem depender de nós.',
     whatIncludes: 'O que nosso serviço inclui?',
     pricingTitle: 'Planos de Desenvolvimento Web',
     noInclude: 'Não inclui:',
@@ -206,8 +206,8 @@ const DiseneoWeb = ({ lang = 'es' }: Props) => {
       { n: '04', title: 'Entrega e domínio', desc: 'Revisão final, conexão do domínio e capacitação básica.' },
     ],
   } : {
-    title: 'Web Design & Webapps',
-    sub: 'Professional websites and webapps built on Lovable with integrated AI. 1-week delivery. 100% your code on GitHub.',
+    title: 'Webapps that work for you — 1-week delivery',
+    sub: 'It\'s not just a pretty website. It\'s a sales machine with integrated AI, SEO from the architecture, and an admin panel so you control everything without depending on us.',
     whatIncludes: 'What does our service include?',
     pricingTitle: 'Web Design Plans',
     noInclude: 'Does not include:',
@@ -297,8 +297,25 @@ const DiseneoWeb = ({ lang = 'es' }: Props) => {
   return (
     <>
       <Header currentLang={lang} />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify({
+        "@context": "https://schema.org",
+        "@type": "Service",
+        "@id": "https://seoparaecommerce.co/servicios/diseno-web#service",
+        "name": "Desarrollo de WebApps para E-commerce",
+        "provider": { "@type": "Organization", "@id": "https://seoparaecommerce.co/#organization", "name": "Ferova Agency" },
+        "description": "Construimos webapps de e-commerce con React, Supabase y IA integrada. Entrega en 1 semana. Incluye panel admin, asesor IA de ventas y SEO técnico.",
+        "areaServed": ["Colombia", "Latinoamérica", "Estados Unidos"],
+        "hasOfferCatalog": {
+          "@type": "OfferCatalog",
+          "name": "Planes de WebApp",
+          "itemListElement": [
+            { "@type": "Offer", "name": "Web Económica", "price": "1800000", "priceCurrency": "COP", "description": "Sitio web profesional con IA integrada, entrega en 1 semana" },
+            { "@type": "Offer", "name": "WebApp Servicios", "price": "2800000", "priceCurrency": "COP", "description": "WebApp consultiva con panel admin y asesor IA" },
+            { "@type": "Offer", "name": "WebApp E-Commerce", "price": "4200000", "priceCurrency": "COP", "description": "Tienda virtual completa con IA de ventas y generador de fichas" }
+          ]
+        }
+      }) }} />
       <main className="pt-20">
-
         {/* Hero */}
         <section className="py-20 md:py-28 text-center relative grid-pattern">
           <div className="absolute inset-0" style={{ background: 'radial-gradient(ellipse at 50% 30%, hsla(45, 86%, 40%, 0.06), transparent 60%)' }} />
