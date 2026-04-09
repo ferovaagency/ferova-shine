@@ -530,8 +530,10 @@ const Precios = ({ lang = 'es' }: Props) => {
   ];
 
   const t = lang === 'pt' ? {
-    title: 'Planos e Preços',
-    sub: 'Serviços desenhados para impulsionar seu negócio com estratégia, clareza e resultados mensuráveis.',
+    title: 'Preços claros. Sem letras miúdas. Sem surpresas.',
+    sub: 'Sabemos que seu orçamento importa. Por isso respondemos a pergunta que todos têm.',
+    tayaTitle: 'Quanto custa uma webapp profissional com IA?',
+    tayaDesc: 'Depende do que você precisa. Uma Web Econômica começa em $599 USD. Uma WebApp de Serviços com painel admin por $899 USD. E uma loja virtual completa com IA de vendas por $1.490 USD. SEO a partir de $199 USD/mês. Sem custos ocultos.',
     noInclude: 'Não inclui:',
     faq: 'Perguntas frequentes',
     recommend: 'Recomendado',
@@ -545,8 +547,10 @@ const Precios = ({ lang = 'es' }: Props) => {
       { q: 'As WebApps incluem domínio e hospedagem?', a: 'Os planos Pro e E-Commerce incluem hospedagem por 1 ano. O plano Web Econômica inclui domínio e hospedagem no preço anual.' },
     ],
   } : lang === 'es' ? {
-    title: 'Planes y Precios',
-    sub: 'Servicios diseñados para impulsar tu negocio con estrategia, claridad y resultados medibles.',
+    title: 'Precios claros. Sin letra pequeña. Sin sorpresas.',
+    sub: 'Sabemos que tu presupuesto importa. Por eso respondemos la pregunta que todos tienen.',
+    tayaTitle: '¿Cuánto cuesta una webapp profesional con IA?',
+    tayaDesc: 'Depende de lo que necesitas. Una Web Económica arranca en $599 USD. Una WebApp de Servicios con panel admin por $899 USD. Y una tienda virtual completa con IA de ventas por $1.490 USD. SEO desde $199 USD/mes. Sin costos ocultos.',
     noInclude: 'No incluye:',
     faq: 'Preguntas frecuentes',
     recommend: 'Recomendado',
@@ -560,8 +564,10 @@ const Precios = ({ lang = 'es' }: Props) => {
       { q: '¿Las WebApps incluyen dominio y hosting?', a: 'Los planes Pro y E-Commerce incluyen hosting por 1 año. El plan Web Económica incluye dominio y hosting en el precio anual.' },
     ],
   } : {
-    title: 'Plans & Pricing',
-    sub: 'Services designed to drive your business with strategy, clarity and measurable results.',
+    title: 'Clear pricing. No fine print. No surprises.',
+    sub: 'We know your budget matters. That\'s why we answer the question everyone has.',
+    tayaTitle: 'How much does a professional webapp with AI cost?',
+    tayaDesc: 'It depends on what you need. A Starter Web starts at $599 USD. A Services WebApp with admin panel for $899 USD. And a full e-commerce store with AI sales advisor for $1,490 USD. SEO from $199 USD/mo. No hidden costs.',
     noInclude: 'Does not include:',
     faq: 'FAQ',
     recommend: 'Recommended',
@@ -593,6 +599,18 @@ const Precios = ({ lang = 'es' }: Props) => {
               <button onClick={() => setCurrency('cop')} className={`px-5 py-2 rounded-full text-sm font-medium transition-all ${currency === 'cop' ? 'bg-gold text-primary-foreground' : 'text-muted-foreground hover:text-foreground'}`}>COP</button>
               <button onClick={() => setCurrency('brl')} className={`px-5 py-2 rounded-full text-sm font-medium transition-all ${currency === 'brl' ? 'bg-gold text-primary-foreground' : 'text-muted-foreground hover:text-foreground'}`}>BRL</button>
             </div>
+          </div>
+        </section>
+
+        {/* They Ask You Answer Section */}
+        <section className="py-16 md:py-20">
+          <div className="container mx-auto px-4 md:px-6">
+            <AnimatedSection>
+              <div className="glass-card p-8 md:p-12 max-w-3xl mx-auto gold-glow">
+                <h2 className="text-2xl md:text-3xl font-display font-bold mb-6 text-foreground">{t.tayaTitle}</h2>
+                <p className="text-muted-foreground leading-relaxed text-lg">{t.tayaDesc}</p>
+              </div>
+            </AnimatedSection>
           </div>
         </section>
 
