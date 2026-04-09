@@ -585,6 +585,22 @@ const Precios = ({ lang = 'es' }: Props) => {
   return (
     <PageTransition>
       <Header currentLang={lang} />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify({
+        "@context": "https://schema.org",
+        "@type": "WebPage",
+        "@id": "https://seoparaecommerce.co/precios#webpage",
+        "name": "Precios - Ferova Agency",
+        "description": "Precios claros de webapps, SEO y branding para e-commerce. Sin costos ocultos.",
+        "provider": { "@type": "Organization", "@id": "https://seoparaecommerce.co/#organization" },
+        "mainEntity": {
+          "@type": "FAQPage",
+          "mainEntity": (t.faqs || []).map(f => ({
+            "@type": "Question",
+            "name": f.q,
+            "acceptedAnswer": { "@type": "Answer", "text": f.a }
+          }))
+        }
+      }) }} />
       <main className="pt-20">
         {/* Hero */}
         <section className="py-20 md:py-28 text-center relative grid-pattern">
