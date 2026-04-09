@@ -322,7 +322,7 @@ const Precios = ({ lang = 'es' }: Props) => {
           urgency: 'Mínimo 6 meses de contrato para garantizar resultados.',
         },
         {
-          icon: Map, name: 'SEO CMS',
+          icon: Map, name: 'SEO Sitios Tradicionales',
           tagline: 'SEO profesional para sitios web tradicionales y otros CMS. Mínimo 6 meses.',
           priceUsd: 249, priceCop: 800000, priceBrl: 1290,
           recurring: '/mes',
