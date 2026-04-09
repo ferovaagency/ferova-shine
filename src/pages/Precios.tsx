@@ -32,7 +32,7 @@ interface Category {
 }
 
 const Precios = ({ lang = 'es' }: Props) => {
-  const [currency, setCurrency] = useState<'cop' | 'usd' | 'brl'>('usd');
+  const [currency, setCurrency] = useState<'cop' | 'usd' | 'brl'>(lang === 'pt' ? 'brl' : lang === 'es' ? 'cop' : 'usd');
   const [proposalOpen, setProposalOpen] = useState(false);
   const [proposalService, setProposalService] = useState('');
   const { toast } = useToast();
@@ -594,11 +594,18 @@ const Precios = ({ lang = 'es' }: Props) => {
         "provider": { "@type": "Organization", "@id": "https://seoparaecommerce.co/#organization" },
         "mainEntity": {
           "@type": "FAQPage",
-          "mainEntity": (t.faqs || []).map(f => ({
-            "@type": "Question",
-            "name": f.q,
-            "acceptedAnswer": { "@type": "Answer", "text": f.a }
-          }))
+          "mainEntity": [
+            ...(t.faqs || []).map(f => ({
+              "@type": "Question",
+              "name": f.q,
+              "acceptedAnswer": { "@type": "Answer", "text": f.a }
+            })),
+            {
+              "@type": "Question",
+              "name": "¿Cuánto cuesta una webapp profesional con IA?",
+              "acceptedAnswer": { "@type": "Answer", "text": "En Ferova Agency manejamos 3 planes: Web Económica desde $1.800.000 COP/año, WebApp Servicios desde $2.800.000 COP de construcción más $200.000 COP/mes, y WebApp E-Commerce desde $4.200.000 COP de construcción más $400.000 COP/mes. Todos incluyen asesor de inteligencia artificial integrado y entrega en 1 semana." }
+            }
+          ]
         }
       }) }} />
       <main className="pt-20">
