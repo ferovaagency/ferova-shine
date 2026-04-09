@@ -97,7 +97,7 @@ const Precios = ({ lang = 'es' }: Props) => {
       plans: [
         {
           icon: Globe, name: 'Web Econômica',
-          tagline: 'Site em Lovable com IA integrada. Entrega em 1 semana, sem mensalidades.',
+          tagline: 'Site profissional com IA integrada. Entrega em 1 semana, sem mensalidades.',
           priceUsd: 599, priceCop: 1800000, priceBrl: 2990,
           recurring: '/ano',
           includes: [
@@ -150,7 +150,7 @@ const Precios = ({ lang = 'es' }: Props) => {
       plans: [
         {
           icon: Search, name: 'SEO WebApps',
-          tagline: 'Posicionamento orgânico completo para WebApps em Lovable. Mínimo 6 meses.',
+          tagline: 'Posicionamento orgânico completo para WebApps. Mínimo 6 meses.',
           priceUsd: 199, priceCop: 600000, priceBrl: 990,
           recurring: '/mês',
           includes: [
@@ -168,12 +168,12 @@ const Precios = ({ lang = 'es' }: Props) => {
         },
         {
           icon: Map, name: 'SEO CMS',
-          tagline: 'SEO profissional para WordPress e outros CMS. Mínimo 6 meses.',
+          tagline: 'SEO profissional para sites tradicionais e CMS. Mínimo 6 meses.',
           priceUsd: 249, priceCop: 800000, priceBrl: 1290,
           recurring: '/mês',
           includes: [
             { icon: Zap, text: 'Tudo do plano SEO WebApps' },
-            { icon: Globe, text: 'Adaptado para WordPress, Shopify e outros CMS' },
+            { icon: Globe, text: 'Adaptado para sites tradicionais, Shopify e outros CMS' },
           ],
           excludes: ['Tráfego pago', 'Gestão de redes sociais'],
           cta: 'Iniciar SEO', paymentKey: 'seoCms',
@@ -252,7 +252,7 @@ const Precios = ({ lang = 'es' }: Props) => {
       plans: [
         {
           icon: Globe, name: 'Web Económica',
-          tagline: 'Sitio web en Lovable con IA integrada. Entrega en 1 semana, sin mensualidades.',
+          tagline: 'Sitio web profesional con IA integrada. Entrega en 1 semana, sin mensualidades.',
           priceUsd: 599, priceCop: 1800000, priceBrl: 2990,
           recurring: '/año',
           includes: [
@@ -305,7 +305,7 @@ const Precios = ({ lang = 'es' }: Props) => {
       plans: [
         {
           icon: Search, name: 'SEO WebApps',
-          tagline: 'Posicionamiento orgánico completo para WebApps en Lovable. Mínimo 6 meses.',
+          tagline: 'Posicionamiento orgánico completo para WebApps. Mínimo 6 meses.',
           priceUsd: 199, priceCop: 600000, priceBrl: 990,
           recurring: '/mes',
           includes: [
@@ -323,12 +323,12 @@ const Precios = ({ lang = 'es' }: Props) => {
         },
         {
           icon: Map, name: 'SEO CMS',
-          tagline: 'SEO profesional para WordPress y otros CMS. Mínimo 6 meses.',
+          tagline: 'SEO profesional para sitios web tradicionales y otros CMS. Mínimo 6 meses.',
           priceUsd: 249, priceCop: 800000, priceBrl: 1290,
           recurring: '/mes',
           includes: [
             { icon: Zap, text: 'Todo lo del plan SEO WebApps' },
-            { icon: Globe, text: 'Adaptado para WordPress, Shopify y otros CMS' },
+            { icon: Globe, text: 'Adaptado para sitios web tradicionales, Shopify y otros CMS' },
           ],
           excludes: ['Pauta publicitaria', 'Gestión de redes sociales'],
           cta: 'Iniciar SEO', paymentKey: 'seoCms',
@@ -407,7 +407,7 @@ const Precios = ({ lang = 'es' }: Props) => {
       plans: [
         {
           icon: Globe, name: 'Starter Web',
-          tagline: 'Lovable website with integrated AI. 1-week delivery, no monthly fees.',
+          tagline: 'Professional website with integrated AI. 1-week delivery, no monthly fees.',
           priceUsd: 599, priceCop: 1800000, priceBrl: 2990,
           recurring: '/year',
           includes: [
@@ -460,7 +460,7 @@ const Precios = ({ lang = 'es' }: Props) => {
       plans: [
         {
           icon: Search, name: 'SEO WebApps',
-          tagline: 'Complete organic positioning for Lovable WebApps. Minimum 6 months.',
+          tagline: 'Complete organic positioning for WebApps. Minimum 6 months.',
           priceUsd: 199, priceCop: 600000, priceBrl: 990,
           recurring: '/mo',
           includes: [
@@ -477,13 +477,13 @@ const Precios = ({ lang = 'es' }: Props) => {
           urgency: 'Minimum 6-month contract to guarantee results.',
         },
         {
-          icon: Map, name: 'SEO CMS',
-          tagline: 'Professional SEO for WordPress and other CMS. Minimum 6 months.',
+          icon: Map, name: 'SEO Traditional Sites',
+          tagline: 'Professional SEO for traditional websites and CMS. Minimum 6 months.',
           priceUsd: 249, priceCop: 800000, priceBrl: 1290,
           recurring: '/mo',
           includes: [
             { icon: Zap, text: 'Everything in SEO WebApps plan' },
-            { icon: Globe, text: 'Adapted for WordPress, Shopify and other CMS' },
+            { icon: Globe, text: 'Adapted for traditional websites, Shopify and other CMS' },
           ],
           excludes: ['Paid advertising', 'Social media management'],
           cta: 'Start SEO', paymentKey: 'seoCms',
