@@ -47,7 +47,7 @@ const resources = {
     },
     {
       title: 'Demo: Web App E-commerce',
-      desc: 'Explora una Web App de tienda online completamente funcional construida en Lovable + Supabase con carga menor a 1 segundo.',
+      desc: 'Explora una Web App de tienda online completamente funcional con carga menor a 1 segundo y IA integrada.',
       category: 'webapp',
       type: 'free',
       image: '🚀',
@@ -70,8 +70,8 @@ const resources = {
       link: '#',
     },
     {
-      title: 'Masterclass: De WordPress a Web App',
-      desc: 'Evento grabado donde mostramos el proceso completo de migración de WordPress a Lovable + Supabase paso a paso.',
+      title: 'Masterclass: De sitio tradicional a Web App',
+      desc: 'Evento grabado donde mostramos el proceso completo de migración de un sitio tradicional a una Web App de alto rendimiento paso a paso.',
       category: 'event',
       type: 'free',
       image: '🎓',
@@ -115,7 +115,7 @@ const resources = {
     },
     {
       title: 'Demo: E-commerce Web App',
-      desc: 'Explore a fully functional online store Web App built on Lovable + Supabase with sub-1-second load time.',
+      desc: 'Explore a fully functional online store Web App with sub-1-second load time and integrated AI.',
       category: 'webapp',
       type: 'free',
       image: '🚀',
@@ -138,8 +138,8 @@ const resources = {
       link: '#',
     },
     {
-      title: 'Masterclass: From WordPress to Web App',
-      desc: 'Recorded event showing the complete migration process from WordPress to Lovable + Supabase step by step.',
+      title: 'Masterclass: From Traditional Site to Web App',
+      desc: 'Recorded event showing the complete migration process from a traditional site to a high-performance Web App step by step.',
       category: 'event',
       type: 'free',
       image: '🎓',
