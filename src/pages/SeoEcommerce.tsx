@@ -191,7 +191,7 @@ const SeoEcommerce = ({ lang = 'es' }: Props) => {
           "name": "Planes SEO",
           "itemListElement": [
             { "@type": "Offer", "name": "SEO WebApps", "price": "600000", "priceCurrency": "COP", "unitText": "MONTH", "description": "Posicionamiento orgánico completo para WebApps" },
-            { "@type": "Offer", "name": "SEO CMS", "price": "800000", "priceCurrency": "COP", "unitText": "MONTH", "description": "SEO profesional para WordPress y otros CMS" },
+            { "@type": "Offer", "name": "SEO Sitios Tradicionales", "price": "800000", "priceCurrency": "COP", "unitText": "MONTH", "description": "SEO profesional para sitios web tradicionales y otros CMS" },
             { "@type": "Offer", "name": "SEO & GEO Local", "price": "600000", "priceCurrency": "COP", "unitText": "MONTH", "description": "Optimización geográfica para Google Maps y búsquedas locales" }
           ]
         }
@@ -346,7 +346,7 @@ const SeoEcommerce = ({ lang = 'es' }: Props) => {
                   <TrendingUp className="w-7 h-7 text-gold" />
                 </div>
                 <h3 className="text-xl font-display font-bold mb-3">
-                  {lang === 'es' ? 'SEO WebApps (Lovable)' : lang === 'pt' ? 'SEO WebApps (Lovable)' : 'SEO WebApps (Lovable)'}
+                  {lang === 'es' ? 'SEO WebApps' : lang === 'pt' ? 'SEO WebApps' : 'SEO WebApps'}
                 </h3>
                 <div className="mb-6">
                   <span className="text-3xl font-display font-bold">{formatPrice(199, 600000, 990)}</span>
@@ -397,7 +397,7 @@ const SeoEcommerce = ({ lang = 'es' }: Props) => {
                   <Globe2 className="w-7 h-7 text-gold" />
                 </div>
                 <h3 className="text-xl font-display font-bold mb-3">
-                  {lang === 'es' ? 'SEO CMS (WordPress y otros)' : lang === 'pt' ? 'SEO CMS (WordPress e outros)' : 'SEO CMS (WordPress & others)'}
+                  {lang === 'es' ? 'SEO Sitios Tradicionales' : lang === 'pt' ? 'SEO Sites Tradicionais' : 'SEO Traditional Sites'}
                 </h3>
                 <div className="mb-6">
                   <span className="text-3xl font-display font-bold">{formatPrice(249, 800000, 1290)}</span>
@@ -406,18 +406,18 @@ const SeoEcommerce = ({ lang = 'es' }: Props) => {
                 <ul className="space-y-3 mb-6 flex-1">
                   {(lang === 'es' ? [
                     'Todo lo del plan SEO WebApps',
-                    'Adaptado para WordPress y otros CMS',
-                    'Optimización de plugins y velocidad CMS',
+                    'Adaptado para sitios web tradicionales y otros CMS',
+                    'Optimización de plugins y velocidad',
                     'Gestión técnica de actualizaciones',
                   ] : lang === 'pt' ? [
                     'Tudo do plano SEO WebApps',
-                    'Adaptado para WordPress e outros CMS',
-                    'Otimização de plugins e velocidade CMS',
+                    'Adaptado para sites tradicionais e outros CMS',
+                    'Otimização de plugins e velocidade',
                     'Gestão técnica de atualizações',
                   ] : [
                     'Everything in SEO WebApps plan',
-                    'Adapted for WordPress and other CMS',
-                    'Plugin and CMS speed optimization',
+                    'Adapted for traditional websites and other CMS',
+                    'Plugin and speed optimization',
                     'Technical update management',
                   ]).map((item, ii) => (
                     <li key={ii} className="flex items-start gap-3 text-sm text-foreground">
@@ -429,7 +429,7 @@ const SeoEcommerce = ({ lang = 'es' }: Props) => {
                   onClick={() => { const link = getPaymentLink('seoCms', currency); window.open(link, '_blank', 'noopener,noreferrer'); }}
                   className="w-full py-3.5 rounded-full font-semibold text-sm transition-all duration-300 flex items-center justify-center gap-2 border border-gold/40 text-gold hover:bg-gold hover:text-primary-foreground"
                 >
-                  <MessageCircle className="w-4 h-4" /> {lang === 'es' ? 'Iniciar SEO CMS' : lang === 'pt' ? 'Iniciar SEO CMS' : 'Start CMS SEO'}
+                  <MessageCircle className="w-4 h-4" /> {lang === 'es' ? 'Iniciar SEO Sitios' : lang === 'pt' ? 'Iniciar SEO Sites' : 'Start Traditional SEO'}
                 </button>
               </div>
             </div>
