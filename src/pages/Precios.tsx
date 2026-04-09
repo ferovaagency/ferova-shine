@@ -32,7 +32,7 @@ interface Category {
 }
 
 const Precios = ({ lang = 'es' }: Props) => {
-  const [currency, setCurrency] = useState<'cop' | 'usd' | 'brl'>('usd');
+  const [currency, setCurrency] = useState<'cop' | 'usd' | 'brl'>(lang === 'pt' ? 'brl' : lang === 'es' ? 'cop' : 'usd');
   const [proposalOpen, setProposalOpen] = useState(false);
   const [proposalService, setProposalService] = useState('');
   const { toast } = useToast();
@@ -97,7 +97,7 @@ const Precios = ({ lang = 'es' }: Props) => {
       plans: [
         {
           icon: Globe, name: 'Web Econômica',
-          tagline: 'Site em Lovable com IA integrada. Entrega em 1 semana, sem mensalidades.',
+          tagline: 'Site profissional com IA integrada. Entrega em 1 semana, sem mensalidades.',
           priceUsd: 599, priceCop: 1800000, priceBrl: 2990,
           recurring: '/ano',
           includes: [
@@ -150,7 +150,7 @@ const Precios = ({ lang = 'es' }: Props) => {
       plans: [
         {
           icon: Search, name: 'SEO WebApps',
-          tagline: 'Posicionamento orgânico completo para WebApps em Lovable. Mínimo 6 meses.',
+          tagline: 'Posicionamento orgânico completo para WebApps. Mínimo 6 meses.',
           priceUsd: 199, priceCop: 600000, priceBrl: 990,
           recurring: '/mês',
           includes: [
@@ -167,13 +167,13 @@ const Precios = ({ lang = 'es' }: Props) => {
           urgency: 'Mínimo 6 meses de contrato para garantir resultados.',
         },
         {
-          icon: Map, name: 'SEO CMS',
-          tagline: 'SEO profissional para WordPress e outros CMS. Mínimo 6 meses.',
+          icon: Map, name: 'SEO Sites Tradicionais',
+          tagline: 'SEO profissional para sites tradicionais e CMS. Mínimo 6 meses.',
           priceUsd: 249, priceCop: 800000, priceBrl: 1290,
           recurring: '/mês',
           includes: [
             { icon: Zap, text: 'Tudo do plano SEO WebApps' },
-            { icon: Globe, text: 'Adaptado para WordPress, Shopify e outros CMS' },
+            { icon: Globe, text: 'Adaptado para sites tradicionais, Shopify e outros CMS' },
           ],
           excludes: ['Tráfego pago', 'Gestão de redes sociais'],
           cta: 'Iniciar SEO', paymentKey: 'seoCms',
@@ -252,7 +252,7 @@ const Precios = ({ lang = 'es' }: Props) => {
       plans: [
         {
           icon: Globe, name: 'Web Económica',
-          tagline: 'Sitio web en Lovable con IA integrada. Entrega en 1 semana, sin mensualidades.',
+          tagline: 'Sitio web profesional con IA integrada. Entrega en 1 semana, sin mensualidades.',
           priceUsd: 599, priceCop: 1800000, priceBrl: 2990,
           recurring: '/año',
           includes: [
@@ -305,7 +305,7 @@ const Precios = ({ lang = 'es' }: Props) => {
       plans: [
         {
           icon: Search, name: 'SEO WebApps',
-          tagline: 'Posicionamiento orgánico completo para WebApps en Lovable. Mínimo 6 meses.',
+          tagline: 'Posicionamiento orgánico completo para WebApps. Mínimo 6 meses.',
           priceUsd: 199, priceCop: 600000, priceBrl: 990,
           recurring: '/mes',
           includes: [
@@ -322,13 +322,13 @@ const Precios = ({ lang = 'es' }: Props) => {
           urgency: 'Mínimo 6 meses de contrato para garantizar resultados.',
         },
         {
-          icon: Map, name: 'SEO CMS',
-          tagline: 'SEO profesional para WordPress y otros CMS. Mínimo 6 meses.',
+          icon: Map, name: 'SEO Sitios Tradicionales',
+          tagline: 'SEO profesional para sitios web tradicionales y otros CMS. Mínimo 6 meses.',
           priceUsd: 249, priceCop: 800000, priceBrl: 1290,
           recurring: '/mes',
           includes: [
             { icon: Zap, text: 'Todo lo del plan SEO WebApps' },
-            { icon: Globe, text: 'Adaptado para WordPress, Shopify y otros CMS' },
+            { icon: Globe, text: 'Adaptado para sitios web tradicionales, Shopify y otros CMS' },
           ],
           excludes: ['Pauta publicitaria', 'Gestión de redes sociales'],
           cta: 'Iniciar SEO', paymentKey: 'seoCms',
@@ -407,7 +407,7 @@ const Precios = ({ lang = 'es' }: Props) => {
       plans: [
         {
           icon: Globe, name: 'Starter Web',
-          tagline: 'Lovable website with integrated AI. 1-week delivery, no monthly fees.',
+          tagline: 'Professional website with integrated AI. 1-week delivery, no monthly fees.',
           priceUsd: 599, priceCop: 1800000, priceBrl: 2990,
           recurring: '/year',
           includes: [
@@ -460,7 +460,7 @@ const Precios = ({ lang = 'es' }: Props) => {
       plans: [
         {
           icon: Search, name: 'SEO WebApps',
-          tagline: 'Complete organic positioning for Lovable WebApps. Minimum 6 months.',
+          tagline: 'Complete organic positioning for WebApps. Minimum 6 months.',
           priceUsd: 199, priceCop: 600000, priceBrl: 990,
           recurring: '/mo',
           includes: [
@@ -477,13 +477,13 @@ const Precios = ({ lang = 'es' }: Props) => {
           urgency: 'Minimum 6-month contract to guarantee results.',
         },
         {
-          icon: Map, name: 'SEO CMS',
-          tagline: 'Professional SEO for WordPress and other CMS. Minimum 6 months.',
+          icon: Map, name: 'SEO Traditional Sites',
+          tagline: 'Professional SEO for traditional websites and CMS. Minimum 6 months.',
           priceUsd: 249, priceCop: 800000, priceBrl: 1290,
           recurring: '/mo',
           includes: [
             { icon: Zap, text: 'Everything in SEO WebApps plan' },
-            { icon: Globe, text: 'Adapted for WordPress, Shopify and other CMS' },
+            { icon: Globe, text: 'Adapted for traditional websites, Shopify and other CMS' },
           ],
           excludes: ['Paid advertising', 'Social media management'],
           cta: 'Start SEO', paymentKey: 'seoCms',
@@ -533,7 +533,7 @@ const Precios = ({ lang = 'es' }: Props) => {
     title: 'Preços claros. Sem letras miúdas. Sem surpresas.',
     sub: 'Sabemos que seu orçamento importa. Por isso respondemos a pergunta que todos têm.',
     tayaTitle: 'Quanto custa uma webapp profissional com IA?',
-    tayaDesc: 'Depende do que você precisa. Uma Web Econômica começa em $599 USD. Uma WebApp de Serviços com painel admin por $899 USD. E uma loja virtual completa com IA de vendas por $1.490 USD. SEO a partir de $199 USD/mês. Sem custos ocultos.',
+    tayaDesc: 'Depende do que você precisa. Uma Web Econômica começa em R$2.990/ano. Uma WebApp de Serviços com painel admin por R$4.490 de construção + R$320/mês. E uma loja virtual completa com IA de vendas por R$7.490 de construção + R$570/mês. SEO a partir de R$990/mês. Sem custos ocultos.',
     noInclude: 'Não inclui:',
     faq: 'Perguntas frequentes',
     recommend: 'Recomendado',
@@ -550,7 +550,7 @@ const Precios = ({ lang = 'es' }: Props) => {
     title: 'Precios claros. Sin letra pequeña. Sin sorpresas.',
     sub: 'Sabemos que tu presupuesto importa. Por eso respondemos la pregunta que todos tienen.',
     tayaTitle: '¿Cuánto cuesta una webapp profesional con IA?',
-    tayaDesc: 'Depende de lo que necesitas. Una Web Económica arranca en $599 USD. Una WebApp de Servicios con panel admin por $899 USD. Y una tienda virtual completa con IA de ventas por $1.490 USD. SEO desde $199 USD/mes. Sin costos ocultos.',
+    tayaDesc: 'Depende de lo que necesitas. Una Web Económica arranca en $1.800.000 COP/año. Una WebApp de Servicios con panel admin por $2.800.000 COP de construcción + $200.000 COP/mes. Y una tienda virtual completa con IA de ventas por $4.200.000 COP de construcción + $400.000 COP/mes. SEO desde $600.000 COP/mes. Sin costos ocultos.',
     noInclude: 'No incluye:',
     faq: 'Preguntas frecuentes',
     recommend: 'Recomendado',
@@ -567,7 +567,7 @@ const Precios = ({ lang = 'es' }: Props) => {
     title: 'Clear pricing. No fine print. No surprises.',
     sub: 'We know your budget matters. That\'s why we answer the question everyone has.',
     tayaTitle: 'How much does a professional webapp with AI cost?',
-    tayaDesc: 'It depends on what you need. A Starter Web starts at $599 USD. A Services WebApp with admin panel for $899 USD. And a full e-commerce store with AI sales advisor for $1,490 USD. SEO from $199 USD/mo. No hidden costs.',
+    tayaDesc: 'It depends on what you need. A Starter Web starts at $599 USD/year. A Services WebApp with admin panel for $899 USD build + $65 USD/month. And a full e-commerce store with AI sales advisor for $1,490 USD build + $119 USD/month. SEO from $199 USD/month. No hidden costs.',
     noInclude: 'Does not include:',
     faq: 'FAQ',
     recommend: 'Recommended',
@@ -594,11 +594,18 @@ const Precios = ({ lang = 'es' }: Props) => {
         "provider": { "@type": "Organization", "@id": "https://seoparaecommerce.co/#organization" },
         "mainEntity": {
           "@type": "FAQPage",
-          "mainEntity": (t.faqs || []).map(f => ({
-            "@type": "Question",
-            "name": f.q,
-            "acceptedAnswer": { "@type": "Answer", "text": f.a }
-          }))
+          "mainEntity": [
+            ...(t.faqs || []).map(f => ({
+              "@type": "Question",
+              "name": f.q,
+              "acceptedAnswer": { "@type": "Answer", "text": f.a }
+            })),
+            {
+              "@type": "Question",
+              "name": "¿Cuánto cuesta una webapp profesional con IA?",
+              "acceptedAnswer": { "@type": "Answer", "text": "En Ferova Agency manejamos 3 planes: Web Económica desde $1.800.000 COP/año, WebApp Servicios desde $2.800.000 COP de construcción más $200.000 COP/mes, y WebApp E-Commerce desde $4.200.000 COP de construcción más $400.000 COP/mes. Todos incluyen asesor de inteligencia artificial integrado y entrega en 1 semana." }
+            }
+          ]
         }
       }) }} />
       <main className="pt-20">
@@ -618,7 +625,7 @@ const Precios = ({ lang = 'es' }: Props) => {
           </div>
         </section>
 
-        {/* They Ask You Answer Section */}
+        {/* Pricing Transparency Section */}
         <section className="py-16 md:py-20">
           <div className="container mx-auto px-4 md:px-6">
             <AnimatedSection>
