@@ -178,6 +178,24 @@ const SeoEcommerce = ({ lang = 'es' }: Props) => {
   return (
     <>
       <Header currentLang={lang} />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify({
+        "@context": "https://schema.org",
+        "@type": "Service",
+        "@id": "https://seoparaecommerce.co/servicios/seo-ecommerce#service",
+        "name": "SEO para E-commerce y AIO",
+        "provider": { "@type": "Organization", "@id": "https://seoparaecommerce.co/#organization", "name": "Ferova Agency" },
+        "description": "Optimizamos webapps para Google, ChatGPT, Perplexity y AI Overviews. Blogs con estructura semántica que las IAs generativas leen y citan.",
+        "areaServed": ["Colombia", "Latinoamérica", "Estados Unidos"],
+        "hasOfferCatalog": {
+          "@type": "OfferCatalog",
+          "name": "Planes SEO",
+          "itemListElement": [
+            { "@type": "Offer", "name": "SEO WebApps", "price": "600000", "priceCurrency": "COP", "unitText": "MONTH", "description": "Posicionamiento orgánico completo para WebApps" },
+            { "@type": "Offer", "name": "SEO CMS", "price": "800000", "priceCurrency": "COP", "unitText": "MONTH", "description": "SEO profesional para WordPress y otros CMS" },
+            { "@type": "Offer", "name": "SEO & GEO Local", "price": "600000", "priceCurrency": "COP", "unitText": "MONTH", "description": "Optimización geográfica para Google Maps y búsquedas locales" }
+          ]
+        }
+      }) }} />
       <main className="pt-20">
         {/* Hero */}
         <section className="py-20 md:py-28 relative grid-pattern">

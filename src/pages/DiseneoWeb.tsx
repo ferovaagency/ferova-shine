@@ -297,7 +297,24 @@ const DiseneoWeb = ({ lang = 'es' }: Props) => {
   return (
     <>
       <Header currentLang={lang} />
-      <main className="pt-20">
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify({
+        "@context": "https://schema.org",
+        "@type": "Service",
+        "@id": "https://seoparaecommerce.co/servicios/diseno-web#service",
+        "name": "Desarrollo de WebApps para E-commerce",
+        "provider": { "@type": "Organization", "@id": "https://seoparaecommerce.co/#organization", "name": "Ferova Agency" },
+        "description": "Construimos webapps de e-commerce con React, Supabase y IA integrada. Entrega en 1 semana. Incluye panel admin, asesor IA de ventas y SEO técnico.",
+        "areaServed": ["Colombia", "Latinoamérica", "Estados Unidos"],
+        "hasOfferCatalog": {
+          "@type": "OfferCatalog",
+          "name": "Planes de WebApp",
+          "itemListElement": [
+            { "@type": "Offer", "name": "Web Económica", "price": "1800000", "priceCurrency": "COP", "description": "Sitio web profesional con IA integrada, entrega en 1 semana" },
+            { "@type": "Offer", "name": "WebApp Servicios", "price": "2800000", "priceCurrency": "COP", "description": "WebApp consultiva con panel admin y asesor IA" },
+            { "@type": "Offer", "name": "WebApp E-Commerce", "price": "4200000", "priceCurrency": "COP", "description": "Tienda virtual completa con IA de ventas y generador de fichas" }
+          ]
+        }
+      }) }} />
 
         {/* Hero */}
         <section className="py-20 md:py-28 text-center relative grid-pattern">
