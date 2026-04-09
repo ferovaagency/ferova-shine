@@ -12,7 +12,7 @@ interface Props { lang?: 'es' | 'en' | 'pt'; }
 
 const SeoEcommerce = ({ lang = 'es' }: Props) => {
   const [openFaq, setOpenFaq] = useState<number | null>(null);
-  const [currency, setCurrency] = useState<'usd' | 'cop' | 'brl'>('usd');
+  const [currency, setCurrency] = useState<'usd' | 'cop' | 'brl'>(lang === 'pt' ? 'brl' : lang === 'es' ? 'cop' : 'usd');
   const { toast } = useToast();
 
   const handleCta = () => {

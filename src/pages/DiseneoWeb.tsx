@@ -13,7 +13,7 @@ import {
 interface Props { lang?: 'es' | 'en' | 'pt'; }
 
 const DiseneoWeb = ({ lang = 'es' }: Props) => {
-  const [currency, setCurrency] = useState<'usd' | 'cop' | 'brl'>('usd');
+  const [currency, setCurrency] = useState<'usd' | 'cop' | 'brl'>(lang === 'pt' ? 'brl' : lang === 'es' ? 'cop' : 'usd');
   const { toast } = useToast();
 
   const handleCta = (key: 'webEconomico' | 'webServicios' | 'webEcommerceFull') => {
