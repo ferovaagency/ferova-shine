@@ -315,7 +315,7 @@ const DiseneoWeb = ({ lang = 'es' }: Props) => {
           ]
         }
       }) }} />
-
+      <main className="pt-20">
         {/* Hero */}
         <section className="py-20 md:py-28 text-center relative grid-pattern">
           <div className="absolute inset-0" style={{ background: 'radial-gradient(ellipse at 50% 30%, hsla(45, 86%, 40%, 0.06), transparent 60%)' }} />
