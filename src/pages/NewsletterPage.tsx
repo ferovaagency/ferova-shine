@@ -8,6 +8,7 @@ import { Input } from '@/components/ui/input';
 import { supabase } from '@/integrations/supabase/client';
 import { toast } from 'sonner';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
+import { useAnalytics } from '@/hooks/useAnalytics';
 
 interface Props { lang?: 'es' | 'en' | 'pt'; }
 
@@ -158,6 +159,9 @@ const NewsletterPage = ({ lang = 'es' }: Props) => {
   const [email, setEmail] = useState('');
   const [loading, setLoading] = useState(false);
   const [currency, setCurrency] = useState<'usd' | 'cop' | 'brl'>('usd');
+  const { trackNewsletter, trackCurrencyChange } = useAnalytics();
+
+  useEffect(() => { trackNewsletter('view_plans'); }, []);
 
   useEffect(() => { document.title = l.metaTitle; }, [l.metaTitle]);
   const proPrices = { usd: '$9/mes', cop: '$5.000/mes', brl: 'R$9/mês' };
@@ -217,7 +221,7 @@ const NewsletterPage = ({ lang = 'es' }: Props) => {
             {/* Currency toggle */}
             <div className="flex justify-center gap-2 mb-12">
               {(['usd', 'cop', 'brl'] as const).map(c => (
-                <button key={c} onClick={() => setCurrency(c)} className={`px-4 py-2 rounded-full text-sm font-semibold transition-all ${currency === c ? 'btn-gold' : 'border border-border text-muted-foreground hover:text-foreground'}`}>
+                <button key={c} onClick={() => { setCurrency(c); trackCurrencyChange(c); }} className={`px-4 py-2 rounded-full text-sm font-semibold transition-all ${currency === c ? 'btn-gold' : 'border border-border text-muted-foreground hover:text-foreground'}`}>
                   {c.toUpperCase()}
                 </button>
               ))}
@@ -238,7 +242,7 @@ const NewsletterPage = ({ lang = 'es' }: Props) => {
                 <form onSubmit={handleSubscribe} className="space-y-3">
                   <Input value={name} onChange={e => setName(e.target.value)} placeholder={l.namePlaceholder} required className="bg-background" />
                   <Input type="email" value={email} onChange={e => setEmail(e.target.value)} placeholder={l.emailPlaceholder} required className="bg-background" />
-                  <button type="submit" disabled={loading} className="btn-outline-gold w-full">{loading ? '...' : l.freeBtn}</button>
+                  <button type="submit" disabled={loading} onClick={() => trackNewsletter('subscribe_free', 'gratuito')} className="btn-outline-gold w-full">{loading ? '...' : l.freeBtn}</button>
                 </form>
                 <p className="text-xs text-muted-foreground text-center mt-3">{l.noSpam}</p>
               </div>
@@ -255,7 +259,7 @@ const NewsletterPage = ({ lang = 'es' }: Props) => {
                     </li>
                   ))}
                 </ul>
-                <a href={`https://wa.me/17865787671?text=${encodeURIComponent(proWaMsg[currency])}`} target="_blank" rel="noopener noreferrer" className="btn-gold w-full block text-center">
+                <a href={`https://wa.me/17865787671?text=${encodeURIComponent(proWaMsg[currency])}`} target="_blank" rel="noopener noreferrer" onClick={() => trackNewsletter('subscribe_paid', 'pro')} className="btn-gold w-full block text-center">
                   <MessageCircle className="inline h-4 w-4 mr-2 -mt-0.5" />{l.proBtn} — {proPrices[currency]}
                 </a>
                 <p className="text-xs text-muted-foreground text-center mt-3">{l.proNote}</p>

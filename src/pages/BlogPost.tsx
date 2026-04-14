@@ -6,6 +6,7 @@ import ChatWidget from '@/components/ui/chat-widget';
 import AdBanner from '@/components/ui/ad-banner';
 import { ArrowLeft, Clock, User, MessageCircle, Loader2 } from 'lucide-react';
 import { supabase } from '@/integrations/supabase/client';
+import { useAnalytics } from '@/hooks/useAnalytics';
 
 interface Props { lang?: 'es' | 'en' | 'pt'; }
 
@@ -99,6 +100,7 @@ const BlogPost = ({ lang = 'es' }: Props) => {
   const [dbPost, setDbPost] = useState<PostData | null>(null);
   const [loading, setLoading] = useState(true);
   const [notFound, setNotFound] = useState(false);
+  const { trackBlogRead } = useAnalytics();
 
   const staticPost = slug ? staticPosts[lang]?.[slug] : null;
 
