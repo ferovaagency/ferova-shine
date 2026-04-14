@@ -176,16 +176,28 @@ const NewsletterPage = ({ lang = 'es' }: Props) => {
     if (!name.trim() || !email.trim()) return;
     setLoading(true);
     try {
-      const { error } = await supabase.from('newsletter_subscribers').upsert(
+      // Save to database
+      await supabase.from('newsletter_subscribers').upsert(
         { name: name.trim(), email: email.trim().toLowerCase(), plan: 'free', lang, active: true },
         { onConflict: 'email' }
       );
+
+      // Send to Brevo
+      const { data, error } = await supabase.functions.invoke('newsletter-subscribe', {
+        body: { email: email.trim(), name: name.trim(), listId: 11 },
+      });
+
       if (error) throw error;
-      toast.success(l.successToast);
-      setName(''); setEmail('');
-    } catch (err: any) {
-      if (err?.code === '23505') { toast.info(l.duplicateToast); }
-      else { toast.error(l.errorToast); }
+
+      if (data?.message === 'Ya estás suscrito') {
+        toast.info(l.duplicateToast);
+      } else {
+        toast.success(l.successToast);
+        trackNewsletter('subscribe_free', 'gratuito');
+        setName(''); setEmail('');
+      }
+    } catch (err) {
+      toast.error(l.errorToast);
     } finally { setLoading(false); }
   };
 
