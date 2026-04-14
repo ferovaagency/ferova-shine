@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Header from '@/components/layout/Header';
 import Footer from '@/components/layout/Footer';
 import ChatWidget from '@/components/ui/chat-widget';
@@ -7,6 +7,7 @@ import { AnimatedSection, StaggerContainer, StaggerItem, ScaleOnHover, PageTrans
 import { Check, X, Clock, Zap, MapPin, Palette, ArrowRight, MessageCircle, Timer, Stethoscope, Map, Paintbrush, Globe, ShoppingCart, Search, Rocket } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
 import { getPaymentLink, type PaymentLinkKey } from '@/lib/payment-links';
+import { useAnalytics } from '@/hooks/useAnalytics';
 
 interface Props { lang?: 'es' | 'en' | 'pt'; }
 
@@ -36,9 +37,12 @@ const Precios = ({ lang = 'es' }: Props) => {
   const [proposalOpen, setProposalOpen] = useState(false);
   const [proposalService, setProposalService] = useState('');
   const { toast } = useToast();
+  const { trackServiceCTA, trackWhatsApp, trackCurrencyChange } = useAnalytics();
 
   const handleCta = (key: PaymentLinkKey) => {
     const link = getPaymentLink(key, currency);
+    trackServiceCTA(key, currency, 'whatsapp_click');
+    trackWhatsApp('pricing_page', key);
     window.open(link, '_blank', 'noopener,noreferrer');
     toast({
       title: lang === 'pt' ? 'Confirmado!' : lang === 'es' ? '¡Confirmado!' : 'Confirmed!',
@@ -618,9 +622,9 @@ const Precios = ({ lang = 'es' }: Props) => {
               <p className="text-muted-foreground text-lg max-w-2xl mx-auto mb-10">{t.sub}</p>
             </AnimatedSection>
             <div className="flex items-center justify-center gap-1 p-1 rounded-full border border-border w-fit mx-auto">
-              <button onClick={() => setCurrency('usd')} className={`px-5 py-2 rounded-full text-sm font-medium transition-all ${currency === 'usd' ? 'bg-gold text-primary-foreground' : 'text-muted-foreground hover:text-foreground'}`}>USD</button>
-              <button onClick={() => setCurrency('cop')} className={`px-5 py-2 rounded-full text-sm font-medium transition-all ${currency === 'cop' ? 'bg-gold text-primary-foreground' : 'text-muted-foreground hover:text-foreground'}`}>COP</button>
-              <button onClick={() => setCurrency('brl')} className={`px-5 py-2 rounded-full text-sm font-medium transition-all ${currency === 'brl' ? 'bg-gold text-primary-foreground' : 'text-muted-foreground hover:text-foreground'}`}>BRL</button>
+              <button onClick={() => { setCurrency('usd'); trackCurrencyChange('usd'); }} className={`px-5 py-2 rounded-full text-sm font-medium transition-all ${currency === 'usd' ? 'bg-gold text-primary-foreground' : 'text-muted-foreground hover:text-foreground'}`}>USD</button>
+              <button onClick={() => { setCurrency('cop'); trackCurrencyChange('cop'); }} className={`px-5 py-2 rounded-full text-sm font-medium transition-all ${currency === 'cop' ? 'bg-gold text-primary-foreground' : 'text-muted-foreground hover:text-foreground'}`}>COP</button>
+              <button onClick={() => { setCurrency('brl'); trackCurrencyChange('brl'); }} className={`px-5 py-2 rounded-full text-sm font-medium transition-all ${currency === 'brl' ? 'bg-gold text-primary-foreground' : 'text-muted-foreground hover:text-foreground'}`}>BRL</button>
             </div>
           </div>
         </section>

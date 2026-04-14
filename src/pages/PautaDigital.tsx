@@ -4,11 +4,13 @@ import ChatWidget from '@/components/ui/chat-widget';
 import { Link } from 'react-router-dom';
 import { Target, BarChart3, Users, Megaphone, Check, ArrowRight, MessageCircle, Minus } from 'lucide-react';
 import { useState } from 'react';
+import { useAnalytics } from '@/hooks/useAnalytics';
 
 interface Props { lang?: 'es' | 'en' | 'pt'; }
 
 const PautaDigital = ({ lang = 'es' }: Props) => {
   const [currency, setCurrency] = useState<'cop' | 'usd'>('cop');
+  const { trackCurrencyChange } = useAnalytics();
 
   const plans = [
     {
@@ -148,8 +150,8 @@ const PautaDigital = ({ lang = 'es' }: Props) => {
               </p>
               {/* Currency toggle */}
               <div className="inline-flex items-center gap-1 p-1 rounded-full border border-border mb-8">
-                <button onClick={() => setCurrency('cop')} className={`px-4 py-2 rounded-full text-sm font-medium transition-all ${currency === 'cop' ? 'bg-gold text-black' : 'text-muted-foreground'}`}>COP</button>
-                <button onClick={() => setCurrency('usd')} className={`px-4 py-2 rounded-full text-sm font-medium transition-all ${currency === 'usd' ? 'bg-gold text-black' : 'text-muted-foreground'}`}>USD</button>
+                <button onClick={() => { setCurrency('cop'); trackCurrencyChange('cop'); }} className={`px-4 py-2 rounded-full text-sm font-medium transition-all ${currency === 'cop' ? 'bg-gold text-black' : 'text-muted-foreground'}`}>COP</button>
+                <button onClick={() => { setCurrency('usd'); trackCurrencyChange('usd'); }} className={`px-4 py-2 rounded-full text-sm font-medium transition-all ${currency === 'usd' ? 'bg-gold text-black' : 'text-muted-foreground'}`}>USD</button>
               </div>
             </div>
 

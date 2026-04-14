@@ -2,6 +2,7 @@ import { useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { Menu, X } from "lucide-react";
 import logoLight from "@/assets/ferova-logo.png.png";
+import { useAnalytics } from "@/hooks/useAnalytics";
 
 interface HeaderProps {
   currentLang?: "es" | "en" | "pt";
@@ -12,6 +13,7 @@ export default function Header({ currentLang, lang }: HeaderProps) {
   const locale = lang ?? currentLang ?? "es";
   const location = useLocation();
   const [mobileOpen, setMobileOpen] = useState(false);
+  const { trackLanguageChange } = useAnalytics();
 
   const navigation = locale === "pt"
     ? [
@@ -87,6 +89,7 @@ export default function Header({ currentLang, lang }: HeaderProps) {
               <Link
                 key={l.label}
                 to={l.href}
+                onClick={() => trackLanguageChange(locale, l.label.toLowerCase())}
                 className="px-2 py-1 text-xs font-medium rounded text-muted-foreground hover:text-foreground hover:bg-accent transition-colors"
               >
                 {l.label}
@@ -124,7 +127,7 @@ export default function Header({ currentLang, lang }: HeaderProps) {
                 <Link
                   key={l.label}
                   to={l.href}
-                  onClick={() => setMobileOpen(false)}
+                  onClick={() => { trackLanguageChange(locale, l.label.toLowerCase()); setMobileOpen(false); }}
                   className="px-4 py-2 text-xs font-medium rounded-lg border border-border text-muted-foreground hover:text-foreground"
                 >
                   {l.label}
