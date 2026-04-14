@@ -4,9 +4,10 @@ import Footer from '@/components/layout/Footer';
 import ChatWidget from '@/components/ui/chat-widget';
 import AdBanner from '@/components/ui/ad-banner';
 import { Search, TrendingUp, Users, BarChart3, Plus, MessageCircle, MapPin, Globe2, Navigation, Target, Clock, Check } from 'lucide-react';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { getPaymentLink } from '@/lib/payment-links';
 import { useToast } from '@/hooks/use-toast';
+import { useAnalytics } from '@/hooks/useAnalytics';
 
 interface Props { lang?: 'es' | 'en' | 'pt'; }
 
@@ -14,9 +15,28 @@ const SeoEcommerce = ({ lang = 'es' }: Props) => {
   const [openFaq, setOpenFaq] = useState<number | null>(null);
   const [currency, setCurrency] = useState<'usd' | 'cop' | 'brl'>(lang === 'pt' ? 'brl' : lang === 'es' ? 'cop' : 'usd');
   const { toast } = useToast();
+  const { trackServiceCTA, trackWhatsApp, trackCurrencyChange, trackScrollDepth } = useAnalytics();
+
+  useEffect(() => {
+    const depths = [25, 50, 75, 100];
+    const triggered = new Set<number>();
+    const handleScroll = () => {
+      const scrolled = (window.scrollY / (document.body.scrollHeight - window.innerHeight)) * 100;
+      depths.forEach(depth => {
+        if (scrolled >= depth && !triggered.has(depth)) {
+          triggered.add(depth);
+          trackScrollDepth(depth, window.location.pathname);
+        }
+      });
+    };
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
 
   const handleCta = () => {
     const link = getPaymentLink('seoGeoLocal', currency);
+    trackServiceCTA('seoGeoLocal', currency, 'whatsapp_click');
+    trackWhatsApp('service_page', 'seoGeoLocal');
     window.open(link, '_blank', 'noopener,noreferrer');
     toast({
       title: lang === 'es' ? '¡Confirmado!' : 'Confirmed!',

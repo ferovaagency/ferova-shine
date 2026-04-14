@@ -139,6 +139,13 @@ const BlogPost = ({ lang = 'es' }: Props) => {
     fetchPost();
   }, [slug, staticPost]);
 
+  // Track blog read
+  useEffect(() => {
+    const title = dbPost?.title || staticPost?.title;
+    const s = slug || '';
+    if (title) trackBlogRead(title, s);
+  }, [dbPost, staticPost, slug]);
+
   // Update meta tags for DB posts
   useEffect(() => {
     if (dbPost?.meta_title) document.title = dbPost.meta_title;

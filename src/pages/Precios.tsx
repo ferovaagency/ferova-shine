@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Header from '@/components/layout/Header';
 import Footer from '@/components/layout/Footer';
 import ChatWidget from '@/components/ui/chat-widget';
@@ -7,6 +7,7 @@ import { AnimatedSection, StaggerContainer, StaggerItem, ScaleOnHover, PageTrans
 import { Check, X, Clock, Zap, MapPin, Palette, ArrowRight, MessageCircle, Timer, Stethoscope, Map, Paintbrush, Globe, ShoppingCart, Search, Rocket } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
 import { getPaymentLink, type PaymentLinkKey } from '@/lib/payment-links';
+import { useAnalytics } from '@/hooks/useAnalytics';
 
 interface Props { lang?: 'es' | 'en' | 'pt'; }
 
@@ -36,9 +37,12 @@ const Precios = ({ lang = 'es' }: Props) => {
   const [proposalOpen, setProposalOpen] = useState(false);
   const [proposalService, setProposalService] = useState('');
   const { toast } = useToast();
+  const { trackServiceCTA, trackWhatsApp, trackCurrencyChange } = useAnalytics();
 
   const handleCta = (key: PaymentLinkKey) => {
     const link = getPaymentLink(key, currency);
+    trackServiceCTA(key, currency, 'whatsapp_click');
+    trackWhatsApp('pricing_page', key);
     window.open(link, '_blank', 'noopener,noreferrer');
     toast({
       title: lang === 'pt' ? 'Confirmado!' : lang === 'es' ? '¡Confirmado!' : 'Confirmed!',

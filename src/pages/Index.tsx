@@ -12,6 +12,7 @@ import {
 import { AnimatedSection, StaggerContainer, StaggerItem, ScaleOnHover, PageTransition } from '@/components/ui/motion';
 import { motion, useMotionValue, useTransform, animate } from 'framer-motion';
 import { useEffect, useRef } from 'react';
+import { useAnalytics } from '@/hooks/useAnalytics';
 
 interface IndexProps {
   lang?: 'es' | 'en' | 'pt';
@@ -50,6 +51,23 @@ const AnimatedCounter = ({ value, suffix = '', prefix = '' }: { value: number; s
 
 const Index = ({ lang = 'es' }: IndexProps) => {
   const [currentTestimonial, setCurrentTestimonial] = useState(0);
+  const { trackScrollDepth } = useAnalytics();
+
+  useEffect(() => {
+    const depths = [25, 50, 75, 100];
+    const triggered = new Set<number>();
+    const handleScroll = () => {
+      const scrolled = (window.scrollY / (document.body.scrollHeight - window.innerHeight)) * 100;
+      depths.forEach(depth => {
+        if (scrolled >= depth && !triggered.has(depth)) {
+          triggered.add(depth);
+          trackScrollDepth(depth, window.location.pathname);
+        }
+      });
+    };
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
 
   const t = lang === 'es' ? {
     heroTitle1: 'Tu tienda online',
