@@ -1,6 +1,7 @@
 import { Link } from 'react-router-dom';
 import { Mail, MapPin, Instagram, Linkedin, Twitter, MessageCircle } from 'lucide-react';
 import logoLight from '@/assets/ferova-logo.png.png';
+import { useAnalytics } from '@/hooks/useAnalytics';
 
 interface FooterProps {
   currentLang?: 'es' | 'en' | 'pt';
@@ -9,6 +10,7 @@ interface FooterProps {
 
 const Footer = ({ currentLang, lang }: FooterProps) => {
   const locale = lang ?? currentLang ?? 'es';
+  const { trackSocialClick } = useAnalytics();
 
   const t: Record<string, { tagline: string; services: string; company: string; legal: string; rights: string; servLinks: { name: string; href: string }[]; compLinks: { name: string; href: string }[]; legalLinks: { name: string; href: string }[] }> = {
     es: {
@@ -114,8 +116,12 @@ const Footer = ({ currentLang, lang }: FooterProps) => {
               </div>
             </div>
             <div className="mt-4 flex gap-3">
-              {[Instagram, Linkedin, Twitter].map((Icon, i) => (
-                <a key={i} href="#" className="rounded-lg border border-border/50 p-2 text-muted-foreground transition-all hover:border-gold/50 hover:text-gold" aria-label="Social">
+              {([
+                { Icon: Instagram, name: 'instagram', url: '#' },
+                { Icon: Linkedin, name: 'linkedin', url: '#' },
+                { Icon: Twitter, name: 'twitter', url: '#' },
+              ]).map(({ Icon, name, url }) => (
+                <a key={name} href={url} onClick={() => trackSocialClick(name, url)} className="rounded-lg border border-border/50 p-2 text-muted-foreground transition-all hover:border-gold/50 hover:text-gold" aria-label={name}>
                   <Icon className="h-4 w-4" />
                 </a>
               ))}
