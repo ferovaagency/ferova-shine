@@ -2,7 +2,7 @@ import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import ExitIntentPopup from "@/components/ui/exit-intent-popup";
 import SocialProofToasts from "@/components/ui/social-proof-toasts";
 import AiAdvisorChat from "@/components/ui/ai-advisor-chat";
@@ -141,6 +141,26 @@ const App = () => (
           <Route path="/pt/newsletter" element={<NewsletterPage lang="pt" />} />
           <Route path="/pt/newsletter/arquivo" element={<NewsletterArchivePage lang="pt" />} />
           <Route path="/pt/newsletter/edicao/:slug" element={<NewsletterEditionPage lang="pt" />} />
+
+          {/* Redirecciones 301 */}
+          <Route path="/como-encontrar-palabras-clave-ecommerce/feed/" element={<Navigate to="/blog/como-encontrar-palabras-clave-ecommerce" replace />} />
+          <Route path="/como-encontrar-palabras-clave-ecommerce" element={<Navigate to="/blog/como-encontrar-palabras-clave-ecommerce" replace />} />
+          <Route path="/project/caso-de-exito-de-google-ads" element={<Navigate to="/casos-de-exito/google-ads-arcos-desinfeccion" replace />} />
+          <Route path="/project/caso-de-exito-de-google-ads/" element={<Navigate to="/casos-de-exito/google-ads-arcos-desinfeccion" replace />} />
+          <Route path="/project/caso-de-exito-ecommerce-de-cableado-estructurado" element={<Navigate to="/casos-de-exito/ecommerce-cableado-estructurado" replace />} />
+          <Route path="/project/caso-de-exito-ecommerce-de-cableado-estructurado/" element={<Navigate to="/casos-de-exito/ecommerce-cableado-estructurado" replace />} />
+          <Route path="/project/caso-de-exito-ecommerce-de-mascotas" element={<Navigate to="/casos-de-exito/ecommerce-mascotas" replace />} />
+          <Route path="/project/caso-de-exito-ecommerce-de-mascotas/" element={<Navigate to="/casos-de-exito/ecommerce-mascotas" replace />} />
+          <Route path="/aumentar-ventas-ecommerce-sin-publicidad" element={<Navigate to="/blog/aumentar-ventas-ecommerce-sin-publicidad" replace />} />
+          <Route path="/aumentar-ventas-ecommerce-sin-publicidad/" element={<Navigate to="/blog/aumentar-ventas-ecommerce-sin-publicidad" replace />} />
+          <Route path="/como-aumentar-visitas-sitio-web-2025" element={<Navigate to="/" replace />} />
+          <Route path="/como-aumentar-visitas-sitio-web-2025/" element={<Navigate to="/" replace />} />
+          <Route path="/seo-tecnico-tiendas-online" element={<Navigate to="/blog/seo-tecnico-tiendas-online" replace />} />
+          <Route path="/seo-tecnico-tiendas-online/" element={<Navigate to="/blog/seo-tecnico-tiendas-online" replace />} />
+          <Route path="/divi-vs-elementor-sitio-web-2025" element={<Navigate to="/blog/divi-vs-elementor-tienda-online-wordpress" replace />} />
+          <Route path="/divi-vs-elementor-sitio-web-2025/" element={<Navigate to="/blog/divi-vs-elementor-tienda-online-wordpress" replace />} />
+          <Route path="/google-ads-vs-meta-ads-2025" element={<Navigate to="/blog/google-ads-vs-meta-ads-ecommerce" replace />} />
+          <Route path="/google-ads-vs-meta-ads-2025/" element={<Navigate to="/blog/google-ads-vs-meta-ads-ecommerce" replace />} />
 
           <Route path="/contacto-digital" element={<VCard />} />
           <Route path="*" element={<NotFound />} />
