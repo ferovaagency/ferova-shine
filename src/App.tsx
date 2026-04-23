@@ -34,6 +34,7 @@ import NewsletterPage from "./pages/NewsletterPage";
 import NewsletterArchivePage from "./pages/NewsletterArchivePage";
 import NewsletterEditionPage from "./pages/NewsletterEditionPage";
 import NewsletterAdminPage from "./pages/NewsletterAdminPage";
+import BriefingNewsletter from "./pages/BriefingNewsletter";
 
 const queryClient = new QueryClient();
 
@@ -163,6 +164,12 @@ const App = () => (
           <Route path="/google-ads-vs-meta-ads-2025/" element={<Navigate to="/blog/google-ads-vs-meta-ads-ecommerce" replace />} />
 
           <Route path="/contacto-digital" element={<VCard />} />
+
+          {/* Briefing de Newsletters - sales page */}
+          <Route path="/recursos/briefing-newsletter" element={<BriefingNewsletter lang={hostLang} />} />
+          <Route path="/en/resources/newsletter-briefing" element={<BriefingNewsletter lang="en" />} />
+          <Route path="/pt/recursos/briefing-newsletter" element={<BriefingNewsletter lang="pt" />} />
+
           <Route path="*" element={<NotFound />} />
         </Routes>
       </BrowserRouter>

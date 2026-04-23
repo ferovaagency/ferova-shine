@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { Link } from 'react-router-dom';
 import Header from '@/components/layout/Header';
 import Footer from '@/components/layout/Footer';
 import ChatWidget from '@/components/ui/chat-widget';
@@ -335,6 +336,22 @@ const Recursos = ({ lang = 'es' }: Props) => {
                         >
                           {tool.cta[lang]}
                         </a>
+
+                        {/* CTA secundario solo para Briefing */}
+                        {tool.id === 'briefing' && (
+                          <Link
+                            to={
+                              lang === 'en'
+                                ? '/en/resources/newsletter-briefing'
+                                : lang === 'pt'
+                                ? '/pt/recursos/briefing-newsletter'
+                                : '/recursos/briefing-newsletter'
+                            }
+                            className="w-full text-center border border-primary/40 text-primary py-2.5 rounded-xl font-semibold hover:bg-primary/10 transition-colors text-sm"
+                          >
+                            {lang === 'en' ? 'See more details' : lang === 'pt' ? 'Ver mais detalhes' : 'Ver más detalles'}
+                          </Link>
+                        )}
                       </div>
                     </ScaleOnHover>
                   </StaggerItem>
