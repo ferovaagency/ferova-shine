@@ -295,11 +295,11 @@ const BriefingNewsletter = ({ lang = 'es' }: Props) => {
           />
           <div className="absolute inset-0 bg-gradient-primary opacity-90" aria-hidden="true" />
           <div className="absolute inset-0 bg-black/40" aria-hidden="true" />
-          <div className="relative z-10 container mx-auto px-4 md:px-6 py-24 md:py-32 text-center text-foreground">
-            <h1 className="text-4xl md:text-5xl lg:text-6xl font-display font-bold max-w-4xl mx-auto leading-tight text-foreground">
+          <div className="relative z-10 container mx-auto px-4 md:px-6 py-24 md:py-32 text-center text-white">
+            <h1 className="text-4xl md:text-5xl lg:text-6xl font-display font-bold max-w-4xl mx-auto leading-tight text-white">
               {t.heroH1}
             </h1>
-            <p className="text-lg md:text-xl mt-6 max-w-3xl mx-auto text-foreground/90">
+            <p className="text-lg md:text-xl mt-6 max-w-3xl mx-auto text-white/90">
               {t.heroSub}
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center mt-10">
@@ -311,7 +311,7 @@ const BriefingNewsletter = ({ lang = 'es' }: Props) => {
               </a>
               <a
                 href="#demo"
-                className="inline-flex items-center justify-center px-8 py-4 rounded-full border border-foreground/40 text-foreground font-semibold hover:bg-foreground/10 transition"
+                className="inline-flex items-center justify-center px-8 py-4 rounded-full border border-white/40 text-white font-semibold hover:bg-white/10 transition"
               >
                 {t.ctaSecondary}
               </a>
