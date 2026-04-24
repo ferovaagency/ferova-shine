@@ -295,11 +295,11 @@ const BriefingNewsletter = ({ lang = 'es' }: Props) => {
           />
           <div className="absolute inset-0 bg-gradient-primary opacity-90" aria-hidden="true" />
           <div className="absolute inset-0 bg-black/40" aria-hidden="true" />
-          <div className="relative z-10 container mx-auto px-4 md:px-6 py-24 md:py-32 text-center text-white">
-            <h1 className="text-4xl md:text-5xl lg:text-6xl font-display font-bold max-w-4xl mx-auto leading-tight">
+          <div className="relative z-10 container mx-auto px-4 md:px-6 py-24 md:py-32 text-center text-foreground">
+            <h1 className="text-4xl md:text-5xl lg:text-6xl font-display font-bold max-w-4xl mx-auto leading-tight text-foreground">
               {t.heroH1}
             </h1>
-            <p className="text-lg md:text-xl mt-6 max-w-3xl mx-auto opacity-90">
+            <p className="text-lg md:text-xl mt-6 max-w-3xl mx-auto text-foreground/90">
               {t.heroSub}
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center mt-10">
@@ -311,7 +311,7 @@ const BriefingNewsletter = ({ lang = 'es' }: Props) => {
               </a>
               <a
                 href="#demo"
-                className="inline-flex items-center justify-center px-8 py-4 rounded-full border border-white/40 text-white font-semibold hover:bg-white/10 transition"
+                className="inline-flex items-center justify-center px-8 py-4 rounded-full border border-foreground/40 text-foreground font-semibold hover:bg-foreground/10 transition"
               >
                 {t.ctaSecondary}
               </a>
@@ -360,9 +360,9 @@ const BriefingNewsletter = ({ lang = 'es' }: Props) => {
         </section>
 
         {/* SECCIÓN 4 - Demo video */}
-        <section id="demo" className="py-20 bg-gradient-primary text-white">
+        <section id="demo" className="py-20 bg-background text-foreground">
           <div className="container mx-auto px-4 md:px-6 text-center">
-            <h2 className="text-3xl md:text-4xl font-display font-bold">{t.demoH2}</h2>
+            <h2 className="text-3xl md:text-4xl font-display font-bold text-foreground">{t.demoH2}</h2>
             <video
               controls
               className="w-full max-w-3xl mx-auto rounded-2xl shadow-2xl mt-8"
@@ -372,8 +372,8 @@ const BriefingNewsletter = ({ lang = 'es' }: Props) => {
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-8 mt-12 max-w-4xl mx-auto">
               {t.stats.map((s) => (
                 <div key={s.k} className="text-center">
-                  <div className="text-2xl md:text-3xl font-display font-bold">{s.k}</div>
-                  <div className="text-sm opacity-80 mt-1">{s.v}</div>
+                  <div className="text-2xl md:text-3xl font-display font-bold text-foreground">{s.k}</div>
+                  <div className="text-sm text-muted-foreground mt-1">{s.v}</div>
                 </div>
               ))}
             </div>
@@ -495,20 +495,20 @@ const BriefingNewsletter = ({ lang = 'es' }: Props) => {
         </section>
 
         {/* SECCIÓN 9 - CTA Final */}
-        <section className="py-20 bg-gradient-primary text-white text-center">
+        <section className="py-20 bg-muted/30 text-foreground text-center">
           <div className="container mx-auto px-4 md:px-6 max-w-4xl">
-            <h2 className="text-3xl md:text-4xl lg:text-5xl font-display font-bold leading-tight">
+            <h2 className="text-3xl md:text-4xl lg:text-5xl font-display font-bold leading-tight text-foreground">
               {t.finalH2}
             </h2>
             <a
               href={price.link}
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center justify-center px-8 py-4 rounded-full bg-gold text-black font-semibold hover:bg-gold/90 transition mt-8"
+              className="inline-flex items-center justify-center px-8 py-4 rounded-full bg-primary text-primary-foreground font-semibold hover:bg-primary/90 transition mt-8"
             >
               {price.cta[lang]}
             </a>
-            <p className="text-sm opacity-80 mt-4">{t.finalNote}</p>
+            <p className="text-sm text-muted-foreground mt-4">{t.finalNote}</p>
           </div>
         </section>
       </main>
