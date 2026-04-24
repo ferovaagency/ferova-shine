@@ -286,14 +286,15 @@ const BriefingNewsletter = ({ lang = 'es' }: Props) => {
         {/* SECCIÓN 1 - Hero */}
         <section className="relative overflow-hidden">
           <div
-            className="absolute inset-0 bg-cover bg-center"
+            className="absolute inset-0 bg-cover bg-center scale-105 blur-sm"
             style={{
               backgroundImage:
                 "url('https://images.unsplash.com/photo-1504711434969-e33886168f5c?w=1920&q=80')",
             }}
             aria-hidden="true"
           />
-          <div className="absolute inset-0 bg-gradient-primary opacity-70" aria-hidden="true" />
+          <div className="absolute inset-0 bg-gradient-primary opacity-90" aria-hidden="true" />
+          <div className="absolute inset-0 bg-black/40" aria-hidden="true" />
           <div className="relative z-10 container mx-auto px-4 md:px-6 py-24 md:py-32 text-center text-white">
             <h1 className="text-4xl md:text-5xl lg:text-6xl font-display font-bold max-w-4xl mx-auto leading-tight">
               {t.heroH1}
@@ -329,7 +330,7 @@ const BriefingNewsletter = ({ lang = 'es' }: Props) => {
                     <div className="w-14 h-14 rounded-xl bg-primary/10 flex items-center justify-center mx-auto mb-5">
                       <Icon className="w-7 h-7 text-primary" />
                     </div>
-                    <h3 className="font-display font-bold text-xl mb-3">{p.title}</h3>
+                    <h3 className="font-display font-bold text-xl mb-3 text-foreground">{p.title}</h3>
                     <p className="text-muted-foreground leading-relaxed">{p.desc}</p>
                   </div>
                 );
@@ -342,7 +343,7 @@ const BriefingNewsletter = ({ lang = 'es' }: Props) => {
         <section className="py-20 bg-muted/30">
           <div className="container mx-auto px-4 md:px-6">
             <div className="text-center mb-14 max-w-3xl mx-auto">
-              <h2 className="text-3xl md:text-4xl font-display font-bold">{t.solutionH2}</h2>
+              <h2 className="text-3xl md:text-4xl font-display font-bold text-foreground">{t.solutionH2}</h2>
             </div>
             <div className="grid md:grid-cols-3 gap-8 max-w-6xl mx-auto">
               {t.steps.map((s) => (
@@ -350,7 +351,7 @@ const BriefingNewsletter = ({ lang = 'es' }: Props) => {
                   <div className="text-6xl md:text-7xl font-display font-bold text-gold/80 mb-3">
                     {s.n}
                   </div>
-                  <h3 className="font-display font-bold text-xl mb-3">{s.title}</h3>
+                  <h3 className="font-display font-bold text-xl mb-3 text-foreground">{s.title}</h3>
                   <p className="text-muted-foreground leading-relaxed">{s.desc}</p>
                 </div>
               ))}
@@ -383,7 +384,7 @@ const BriefingNewsletter = ({ lang = 'es' }: Props) => {
         <section className="py-20 bg-background">
           <div className="container mx-auto px-4 md:px-6">
             <div className="text-center mb-12 max-w-3xl mx-auto">
-              <h2 className="text-3xl md:text-4xl font-display font-bold">{t.benefitsH2}</h2>
+              <h2 className="text-3xl md:text-4xl font-display font-bold text-foreground">{t.benefitsH2}</h2>
             </div>
             <div className="grid md:grid-cols-2 gap-5 max-w-4xl mx-auto">
               {t.benefits.map((b) => (
@@ -400,7 +401,7 @@ const BriefingNewsletter = ({ lang = 'es' }: Props) => {
         <section className="py-20 bg-muted/30">
           <div className="container mx-auto px-4 md:px-6">
             <div className="text-center mb-12">
-              <h2 className="text-3xl md:text-4xl font-display font-bold">{t.testimoniosH2}</h2>
+              <h2 className="text-3xl md:text-4xl font-display font-bold text-foreground">{t.testimoniosH2}</h2>
             </div>
             <div className="grid md:grid-cols-3 gap-6 max-w-6xl mx-auto">
               {t.testimonios.map((tm) => (
@@ -426,7 +427,7 @@ const BriefingNewsletter = ({ lang = 'es' }: Props) => {
         <section id="precios" className="py-20 bg-background">
           <div className="container mx-auto px-4 md:px-6">
             <div className="text-center mb-10 max-w-3xl mx-auto">
-              <h2 className="text-3xl md:text-4xl font-display font-bold">{t.pricingH2}</h2>
+              <h2 className="text-3xl md:text-4xl font-display font-bold text-foreground">{t.pricingH2}</h2>
             </div>
 
             {/* Toggle moneda */}
@@ -478,7 +479,7 @@ const BriefingNewsletter = ({ lang = 'es' }: Props) => {
         <section className="py-20 bg-muted/30">
           <div className="container mx-auto px-4 md:px-6 max-w-3xl">
             <div className="text-center mb-10">
-              <h2 className="text-3xl md:text-4xl font-display font-bold">{t.faqH2}</h2>
+              <h2 className="text-3xl md:text-4xl font-display font-bold text-foreground">{t.faqH2}</h2>
             </div>
             <Accordion type="single" collapsible className="w-full">
               {t.faqs.map((f, i) => (
