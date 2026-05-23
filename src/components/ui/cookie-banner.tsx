@@ -135,9 +135,9 @@ const CookieBanner = ({ lang = 'es' }: Props) => {
     setSettingsOpen(false);
   }, []);
 
-  const acceptAll = () => persist({ analytics: true, marketing: true, functional: true });
-  const essentialOnly = () => persist({ analytics: false, marketing: false, functional: false });
-  const saveCustom = () => persist({ analytics, marketing, functional });
+  const acceptAll = () => { persist({ analytics: true, marketing: true, functional: true }); trackEvent('cookies_accepted_all'); };
+  const essentialOnly = () => { persist({ analytics: false, marketing: false, functional: false }); trackEvent('cookies_accepted_essential'); };
+  const saveCustom = () => { persist({ analytics, marketing, functional }); trackEvent('cookies_customized', { analytics, marketing, functional }); };
 
   return (
     <AnimatePresence>
