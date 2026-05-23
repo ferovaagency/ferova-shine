@@ -7,6 +7,7 @@ import AdBanner from '@/components/ui/ad-banner';
 import { ArrowLeft, Clock, User, MessageCircle, Loader2 } from 'lucide-react';
 import { supabase } from '@/integrations/supabase/client';
 import { useAnalytics } from '@/hooks/useAnalytics';
+import SEO from '@/components/SEO';
 
 interface Props { lang?: 'es' | 'en' | 'pt'; }
 
@@ -197,8 +198,15 @@ const BlogPost = ({ lang = 'es' }: Props) => {
 
   // Render static post
   if (staticPost) {
+    const postPath = `${blogBase}/${slug}`;
+    const articleLd = {
+      '@context': 'https://schema.org', '@type': 'Article',
+      headline: staticPost.title, author: { '@type': 'Person', name: staticPost.author || 'Maria Calderon' },
+      datePublished: staticPost.date,
+    };
     return (
       <>
+        <SEO title={`${staticPost.title} — Ferova Agency`} description={staticPost.content[0]?.slice(0, 155) || staticPost.title} path={postPath} lang={lang} type="article" jsonLd={articleLd} />
         <Header currentLang={lang} />
         <main className="pt-20">
           <article className="py-8 md:py-12">
@@ -251,8 +259,20 @@ const BlogPost = ({ lang = 'es' }: Props) => {
     { day: 'numeric', month: 'short', year: 'numeric' }
   );
 
+  const postPath = `${blogBase}/${slug}`;
+  const seoTitle = post.meta_title || `${post.title} — Ferova Agency`;
+  const seoDesc = post.meta_description || post.content.replace(/<[^>]*>/g, ' ').slice(0, 155);
+  const articleLd = {
+    '@context': 'https://schema.org', '@type': 'Article',
+    headline: post.title,
+    author: { '@type': 'Person', name: post.author || 'Maria Calderon' },
+    datePublished: post.created_at,
+    articleSection: post.category || undefined,
+  };
+
   return (
     <>
+      <SEO title={seoTitle} description={seoDesc} path={postPath} lang={lang} type="article" jsonLd={articleLd} />
       <Header currentLang={lang} />
       <main className="pt-20">
         <article className="py-8 md:py-12">
