@@ -63,7 +63,7 @@ const CasoDetalle = ({ lang = 'es' }: Props) => {
                 <AnimatedSection delay={0.3}>
                   <div className="glass-card p-8">
                     <h2 className="text-xl font-display font-bold mb-6 text-gold">{lang === 'es' ? 'Resultados' : 'Results'}</h2>
-                    <StaggerContainer className="grid grid-cols-2 md:grid-cols-4 gap-6">
+                    <StaggerContainer className="grid grid-cols-2 md:grid-cols-4 gap-6 mb-8">
                       {caso.results.map((r, i) => (
                         <StaggerItem key={i}>
                           <div className="text-center">
@@ -74,6 +74,36 @@ const CasoDetalle = ({ lang = 'es' }: Props) => {
                         </StaggerItem>
                       ))}
                     </StaggerContainer>
+                    {/* Visual impact bars */}
+                    <div className="space-y-3 pt-6 border-t border-border/40">
+                      <p className="text-xs uppercase tracking-wide text-muted-foreground mb-3">
+                        {lang === 'es' ? 'Impacto relativo' : lang === 'pt' ? 'Impacto relativo' : 'Relative impact'}
+                      </p>
+                      {(() => {
+                        const parsed = caso.results.map((r) => {
+                          const m = r.value.replace(/,/g, '').match(/-?\d+(\.\d+)?/);
+                          return { metric: r.metric, num: m ? parseFloat(m[0]) : 0, value: r.value };
+                        });
+                        const max = Math.max(...parsed.map((p) => Math.abs(p.num)), 1);
+                        return parsed.map((p, i) => (
+                          <div key={i} className="space-y-1">
+                            <div className="flex justify-between text-xs">
+                              <span className="text-muted-foreground">{p.metric}</span>
+                              <span className="text-gold font-medium">{p.value}</span>
+                            </div>
+                            <div className="h-2 bg-muted/30 rounded-full overflow-hidden">
+                              <motion.div
+                                initial={{ width: 0 }}
+                                whileInView={{ width: `${Math.min(100, (Math.abs(p.num) / max) * 100)}%` }}
+                                viewport={{ once: true }}
+                                transition={{ duration: 1, delay: i * 0.1, ease: 'easeOut' }}
+                                className="h-full bg-gradient-to-r from-gold/60 to-gold rounded-full"
+                              />
+                            </div>
+                          </div>
+                        ));
+                      })()}
+                    </div>
                   </div>
                 </AnimatedSection>
               </div>
