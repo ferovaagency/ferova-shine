@@ -272,8 +272,7 @@ const BlogPost = ({ lang = 'es' }: Props) => {
               </div>
               <AdBanner slot="blog-post-top" className="mb-8" />
               <article
-                className="blog-content prose prose-sm max-w-none text-foreground dark:prose-invert"
-                style={{ lineHeight: '1.6' }}
+                className="prose-blog dark:prose-invert"
                 dangerouslySetInnerHTML={{ __html: post.content }}
               />
               <AdBanner slot="blog-post-bottom" className="mt-10" />
