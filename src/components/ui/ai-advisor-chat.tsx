@@ -88,6 +88,7 @@ const AiAdvisorChat = ({ lang = 'es' }: AiAdvisorChatProps) => {
   const sendMessage = async (text: string) => {
     if (!text.trim() || loading) return;
     trackAIChat('message_sent');
+    trackEvent('ai_assistant_message_sent', { msg_number: messages.filter(m => m.role === 'user').length + 1 });
     const userMsg: Msg = { role: 'user', content: text.trim() };
     const newMessages = [...messages, userMsg];
     setMessages(newMessages);
