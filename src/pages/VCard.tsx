@@ -11,7 +11,7 @@ export default function VCard() {
     cargo: 'Especialista en GEO y Webapps',
     empresa: 'Ferova Agency',
     telefono: '+17865787671',
-    email: 'maria.fer@ferova.com.co',
+    email: 'gerencia@seoparaecommerce.co',
     web: 'https://seoparaecommerce.co',
     whatsapp: '17865787671',
   };

@@ -22,7 +22,7 @@ const Terminos = ({ lang = 'es' }: Props) => {
 
               {/* 1. Partes */}
               <h2 className="text-xl font-bold mt-10 mb-4">1. Partes del Acuerdo</h2>
-              <p>Ferova Agency opera actualmente como persona natural bajo la dirección de María Fernanda Calderón Arias, con correo electrónico de contacto <a href="mailto:maria.fer@ferova.com.co" className="text-gold">maria.fer@ferova.com.co</a>. La empresa se encuentra en proceso de constitución como LLC en Estados Unidos.</p>
+              <p>Ferova Agency opera actualmente como persona natural bajo la dirección de María Fernanda Calderón Arias, con correo electrónico de contacto <a href="mailto:gerencia@seoparaecommerce.co" className="text-gold">gerencia@seoparaecommerce.co</a>. La empresa se encuentra en proceso de constitución como LLC en Estados Unidos.</p>
               <p>El "Cliente" es cualquier persona natural o jurídica, empresa o emprendimiento que acepte una propuesta comercial o realice un pago a Ferova Agency por cualquiera de sus servicios.</p>
               <p>Las confirmaciones realizadas por WhatsApp, correo electrónico u otros medios digitales escritos tienen valor vinculante para ambas partes y se consideran aceptación formal de las condiciones establecidas.</p>
 
@@ -75,7 +75,7 @@ const Terminos = ({ lang = 'es' }: Props) => {
               <h2 className="text-xl font-bold mt-10 mb-4">6. Comunicación y Reuniones</h2>
               <ul>
                 <li>Las reuniones deben agendarse con mínimo 24 horas de anticipación.</li>
-                <li>Las solicitudes de trabajo y cambios deben realizarse por WhatsApp o correo electrónico a <a href="mailto:maria.fer@ferova.com.co" className="text-gold">maria.fer@ferova.com.co</a>.</li>
+                <li>Las solicitudes de trabajo y cambios deben realizarse por WhatsApp o correo electrónico a <a href="mailto:gerencia@seoparaecommerce.co" className="text-gold">gerencia@seoparaecommerce.co</a>.</li>
                 <li>Cualquier cambio en el alcance del proyecto debe solicitarse y aprobarse por escrito.</li>
               </ul>
 
@@ -105,7 +105,7 @@ const Terminos = ({ lang = 'es' }: Props) => {
               {/* 9. Comunicaciones Comerciales */}
               <h2 className="text-xl font-bold mt-10 mb-4">9. Comunicaciones Comerciales</h2>
               <p>Al contratar cualquier servicio de Ferova Agency, el cliente acepta recibir comunicaciones comerciales a través de WhatsApp, SMS y correo electrónico, incluyendo información sobre servicios, promociones y contenido de valor.</p>
-              <p>El cliente puede cancelar estas comunicaciones en cualquier momento escribiendo a <a href="mailto:maria.fer@ferova.com.co" className="text-gold">maria.fer@ferova.com.co</a>.</p>
+              <p>El cliente puede cancelar estas comunicaciones en cualquier momento escribiendo a <a href="mailto:gerencia@seoparaecommerce.co" className="text-gold">gerencia@seoparaecommerce.co</a>.</p>
 
               <hr className="border-border/30 my-8" />
 
@@ -204,7 +204,7 @@ const Terminos = ({ lang = 'es' }: Props) => {
               <h2 className="text-xl font-bold mt-12 mb-4 text-gold">Política de Cancelación</h2>
               <ul>
                 <li>El contrato mínimo será el especificado en la propuesta comercial de cada servicio.</li>
-                <li>La cancelación de servicios mensuales requiere un aviso por escrito con 15 días de anticipación a <a href="mailto:maria.fer@ferova.com.co" className="text-gold">maria.fer@ferova.com.co</a>.</li>
+                <li>La cancelación de servicios mensuales requiere un aviso por escrito con 15 días de anticipación a <a href="mailto:gerencia@seoparaecommerce.co" className="text-gold">gerencia@seoparaecommerce.co</a>.</li>
               </ul>
 
               <h3 className="text-lg font-semibold mt-6 mb-3">Retención en Proyectos Cerrados</h3>
@@ -239,7 +239,7 @@ const Terminos = ({ lang = 'es' }: Props) => {
               <p><strong>Ferova Agency no vende ni comparte datos personales con terceros.</strong> Los datos se utilizan exclusivamente para la prestación de los servicios contratados, la comunicación con el cliente y la facturación.</p>
 
               <h3 className="text-lg font-semibold mt-6 mb-3">Derechos del Titular</h3>
-              <p>El titular de los datos puede ejercer los siguientes derechos escribiendo a <a href="mailto:maria.fer@ferova.com.co" className="text-gold">maria.fer@ferova.com.co</a>:</p>
+              <p>El titular de los datos puede ejercer los siguientes derechos escribiendo a <a href="mailto:gerencia@seoparaecommerce.co" className="text-gold">gerencia@seoparaecommerce.co</a>:</p>
               <ul>
                 <li>Acceso a sus datos personales.</li>
                 <li>Rectificación de datos inexactos o incompletos.</li>
