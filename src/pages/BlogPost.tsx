@@ -119,7 +119,7 @@ const BlogPost = ({ lang = 'es' }: Props) => {
       try {
         const { data, error } = await supabase
           .from('blog_posts')
-          .select('title, author, category, content, created_at, meta_title, meta_description')
+          .select('title, title_en, title_pt, author, category, content, content_en, content_pt, created_at, meta_title, meta_title_en, meta_title_pt, meta_description, meta_description_en, meta_description_pt')
           .eq('slug', slug)
           .eq('active', true)
           .lte('published_at', new Date().toISOString())
@@ -128,7 +128,17 @@ const BlogPost = ({ lang = 'es' }: Props) => {
         if (error || !data) {
           setNotFound(true);
         } else {
-          setDbPost(data);
+          const pick = <T,>(en: T | null, pt: T | null, es: T): T =>
+            (lang === 'en' && en) ? en : (lang === 'pt' && pt) ? pt : es;
+          setDbPost({
+            title: pick(data.title_en, data.title_pt, data.title),
+            author: data.author,
+            category: data.category,
+            content: pick(data.content_en, data.content_pt, data.content),
+            created_at: data.created_at,
+            meta_title: pick(data.meta_title_en, data.meta_title_pt, data.meta_title),
+            meta_description: pick(data.meta_description_en, data.meta_description_pt, data.meta_description),
+          });
         }
       } catch {
         setNotFound(true);
@@ -137,7 +147,7 @@ const BlogPost = ({ lang = 'es' }: Props) => {
       }
     };
     fetchPost();
-  }, [slug, staticPost]);
+  }, [slug, staticPost, lang]);
 
   // Track blog read
   useEffect(() => {
