@@ -27,6 +27,29 @@
   <url><loc>https://seoparaecommerce.co/nosotros</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
   <url><loc>https://seoparaecommerce.co/contacto</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
   <url><loc>https://seoparaecommerce.co/contacto-digital</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://seoparaecommerce.co/sobre-maria-fer</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://seoparaecommerce.co/servicios/whatsapp-business</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://seoparaecommerce.co/servicios/whatsapp-ia-bot</loc><changefreq>monthly</changefreq><priority>0.9</priority></url>
+
+  <!-- Casos de éxito (detalle) -->
+  <url><loc>https://seoparaecommerce.co/casos-de-exito/google-ads-arcos-desinfeccion</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://seoparaecommerce.co/casos-de-exito/ecommerce-cableado-estructurado</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://seoparaecommerce.co/casos-de-exito/ecommerce-mascotas</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://seoparaecommerce.co/casos-de-exito/cliente-tecnologia-migracion-web-app</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
+
+  <!-- Blog posts (ES) -->
+  <url><loc>https://seoparaecommerce.co/blog/google-ads-vs-meta-ads-ecommerce</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://seoparaecommerce.co/blog/divi-vs-elementor-tienda-online-wordpress</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://seoparaecommerce.co/blog/seo-tecnico-tiendas-online</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://seoparaecommerce.co/blog/aumentar-ventas-ecommerce-sin-publicidad</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://seoparaecommerce.co/blog/como-encontrar-palabras-clave-ecommerce</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://seoparaecommerce.co/blog/trafico-sin-ventas-tienda-diagnostico-solucion</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://seoparaecommerce.co/blog/aeo-answer-engine-optimization-ecommerce</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://seoparaecommerce.co/blog/intencion-busqueda-ecommerce-clientes-compran</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://seoparaecommerce.co/blog/core-web-vitals-ecommerce-ventas-2025</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://seoparaecommerce.co/blog/chat-ia-ventas-automatizar-e-commerce</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://seoparaecommerce.co/blog/webapps-vs-wordpress-codigo-limpio-ventas</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
+
   <url><loc>https://seoparaecommerce.co/terminos</loc><changefreq>yearly</changefreq><priority>0.3</priority></url>
 
   <!-- INGLÉS — seoforecommerces.co -->
@@ -47,7 +70,16 @@
   <url><loc>https://seoforecommerces.co/services/whatsapp-business</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
   <url><loc>https://seoforecommerces.co/pricing</loc><changefreq>monthly</changefreq><priority>0.9</priority></url>
   <url><loc>https://seoforecommerces.co/blog</loc><changefreq>weekly</changefreq><priority>0.9</priority></url>
-  <url><loc>https://seoforecommerces.co/contact</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://seoforecommerces.co/services/tool-discounts</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://seoforecommerces.co/case-studies</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://seoforecommerces.co/case-studies/google-ads-arcos-desinfeccion</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://seoforecommerces.co/case-studies/ecommerce-cableado-estructurado</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://seoforecommerces.co/case-studies/ecommerce-mascotas</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://seoforecommerces.co/case-studies/cliente-tecnologia-migracion-web-app</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://seoforecommerces.co/services/whatsapp-ai-bot</loc><changefreq>monthly</changefreq><priority>0.9</priority></url>
+  <url><loc>https://seoforecommerces.co/about</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://seoforecommerces.co/resources</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://seoforecommerces.co/terms</loc><changefreq>yearly</changefreq><priority>0.3</priority></url>
 
   <!-- PORTUGUÉS — /pt -->
   <url>
