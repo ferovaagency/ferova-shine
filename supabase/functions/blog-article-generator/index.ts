@@ -365,6 +365,7 @@ serve(async (req) => {
         console.warn("internal-links injection skipped:", linkErr);
       }
 
+      const publishedAt = safeString(raw.published_at) || new Date().toISOString();
 
       const { data, error } = await adminClient
         .from("blog_posts")
