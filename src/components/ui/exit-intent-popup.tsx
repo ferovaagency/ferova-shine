@@ -69,6 +69,7 @@ const ExitIntentPopup = ({ lang = 'es' }: Props) => {
       if (e.clientY <= 5) {
         setShow(true);
         sessionStorage.setItem('exit-intent-shown', 'true');
+        trackEvent('popup_shown', { type: 'exit_intent' });
       }
     };
     const timeout = setTimeout(() => {
@@ -80,7 +81,7 @@ const ExitIntentPopup = ({ lang = 'es' }: Props) => {
     };
   }, [dismissed]);
 
-  const close = () => { setShow(false); setDismissed(true); };
+  const close = () => { setShow(false); setDismissed(true); trackEvent('popup_closed'); };
 
   const privacyHref = lang === 'en' ? '/en/privacy' : lang === 'pt' ? '/pt/privacidade' : '/privacidad';
 
