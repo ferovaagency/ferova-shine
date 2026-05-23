@@ -2,6 +2,7 @@ import { Link } from 'react-router-dom';
 import { Mail, MapPin, Instagram, Linkedin, Facebook, Youtube, MessageCircle } from 'lucide-react';
 import logoLight from '@/assets/ferova-logo.png.png';
 import { useAnalytics } from '@/hooks/useAnalytics';
+import { trackEvent } from '@/lib/analytics';
 
 interface FooterProps {
   currentLang?: 'es' | 'en' | 'pt';
