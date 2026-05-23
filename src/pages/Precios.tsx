@@ -115,7 +115,21 @@ const Precios = ({ lang = 'es' }: Props) => {
       <Helmet>
         <title>Precios claros, sin sorpresas — Ferova Agency</title>
         <meta name="description" content="Precios en USD, COP, BRL y EUR para Web Apps, SEO + GEO + IAO y WhatsApp IA Bot. Sin contratos forzados ni letras chiquitas." />
-        <link rel="canonical" href="https://seoparaecommerce.co/precios" />
+        <link rel="canonical" href={lang === 'en' ? 'https://seoforecommerces.co/pricing' : lang === 'pt' ? 'https://seoparaecommerce.co/pt/precos' : 'https://seoparaecommerce.co/precios'} />
+        <meta property="og:title" content="Precios claros, sin sorpresas — Ferova Agency" />
+        <meta property="og:description" content="Precios en USD, COP, BRL y EUR para Web Apps, SEO + GEO + IAO y WhatsApp IA Bot." />
+        <meta property="og:url" content={lang === 'en' ? 'https://seoforecommerces.co/pricing' : lang === 'pt' ? 'https://seoparaecommerce.co/pt/precos' : 'https://seoparaecommerce.co/precios'} />
+        <script type="application/ld+json">{JSON.stringify({
+          '@context': 'https://schema.org',
+          '@type': 'FAQPage',
+          mainEntity: [
+            { '@type': 'Question', name: '¿Hay contrato de permanencia?', acceptedAnswer: { '@type': 'Answer', text: 'No. Todos los planes son mes a mes. Cancela cuando quieras.' } },
+            { '@type': 'Question', name: '¿La asesoría inicial se descuenta?', acceptedAnswer: { '@type': 'Answer', text: 'Sí. El costo de la asesoría inicial se descuenta del primer mes del servicio que contrates.' } },
+            { '@type': 'Question', name: '¿Qué métodos de pago aceptan?', acceptedAnswer: { '@type': 'Answer', text: 'Coordinamos por WhatsApp el método más conveniente: transferencia, Wompi, MercadoPago, PayPal o Stripe.' } },
+            { '@type': 'Question', name: '¿Puedo cambiar de plan?', acceptedAnswer: { '@type': 'Answer', text: 'Sí. Subes o bajas de plan en cualquier momento sin penalización.' } },
+            { '@type': 'Question', name: '¿Los precios incluyen impuestos?', acceptedAnswer: { '@type': 'Answer', text: 'Los precios mostrados son base. Se aplica IVA o impuesto local según tu país.' } },
+          ],
+        })}</script>
       </Helmet>
       <Header currentLang={lang} />
       <main className="pt-20">
