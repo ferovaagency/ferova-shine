@@ -201,7 +201,7 @@ const AiAdvisorChat = ({ lang = 'es' }: AiAdvisorChatProps) => {
     <>
       {/* Floating trigger — positioned above WhatsApp button on mobile, left side on desktop */}
       <button
-        onClick={() => { const next = !open; setOpen(next); if (next) trackAIChat('open'); }}
+        onClick={() => { const next = !open; setOpen(next); if (next) { trackAIChat('open'); trackEvent('ai_assistant_opened'); } }}
         className={`fixed z-50 rounded-full shadow-2xl transition-all duration-300 hover:scale-110 group
           ${open ? 'scale-0 opacity-0' : 'scale-100 opacity-100'}
           bottom-24 right-6 lg:bottom-8 lg:left-6 lg:right-auto
