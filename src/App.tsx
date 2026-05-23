@@ -93,7 +93,7 @@ const App = () => (
           <Route path="/contact" element={<Contacto lang={hostLang} />} />
           <Route path="/blog" element={<Blog lang={hostLang} />} />
           <Route path="/blog/:slug" element={<BlogPost lang={hostLang} />} />
-          <Route path="/admin-blog" element={<AdminBlog lang={hostLang} />} />
+          <Route path="/admin-blog" element={<AdminGuard><AdminBlog lang={hostLang} /></AdminGuard>} />
           <Route path="/recursos" element={<Recursos lang={hostLang} />} />
           <Route path="/resources" element={<Recursos lang={hostLang} />} />
           <Route path="/nosotros" element={<SobreNosotros lang={hostLang} />} />
