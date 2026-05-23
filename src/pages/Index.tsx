@@ -329,6 +329,30 @@ const Index = ({ lang = 'es' }: IndexProps) => {
                   </motion.div>
                 </div>
               </AnimatedSection>
+              {/* Trust strip — regla de 3 segundos */}
+              <AnimatedSection delay={0.4}>
+                <div className="mt-10 flex flex-wrap items-center justify-center gap-x-6 gap-y-3 text-xs md:text-sm text-muted-foreground">
+                  <div className="flex items-center gap-1.5">
+                    <Star className="w-4 h-4 fill-gold text-gold" />
+                    <span><strong className="text-foreground">5.0</strong> Google Reviews</span>
+                  </div>
+                  <span className="hidden sm:inline text-border">•</span>
+                  <div className="flex items-center gap-1.5">
+                    <CheckCircle2 className="w-4 h-4 text-gold" />
+                    <span><strong className="text-foreground">+13</strong> {lang === 'es' ? 'marcas impactadas' : lang === 'pt' ? 'marcas impactadas' : 'brands impacted'}</span>
+                  </div>
+                  <span className="hidden sm:inline text-border">•</span>
+                  <div className="flex items-center gap-1.5">
+                    <Zap className="w-4 h-4 text-gold" />
+                    <span><strong className="text-foreground">{lang === 'es' ? 'Entrega' : lang === 'pt' ? 'Entrega' : 'Delivery'}</strong> {lang === 'es' ? 'en 1 semana' : lang === 'pt' ? 'em 1 semana' : 'in 1 week'}</span>
+                  </div>
+                  <span className="hidden sm:inline text-border">•</span>
+                  <div className="flex items-center gap-1.5">
+                    <Shield className="w-4 h-4 text-gold" />
+                    <span><strong className="text-foreground">{lang === 'es' ? 'Sin contratos' : lang === 'pt' ? 'Sem contratos' : 'No contracts'}</strong> {lang === 'es' ? 'forzosos' : lang === 'pt' ? 'forçados' : 'lock-in'}</span>
+                  </div>
+                </div>
+              </AnimatedSection>
             </div>
           </div>
           <div className="absolute bottom-0 left-0 right-0 h-32" style={{ background: 'linear-gradient(to top, hsl(var(--background)), transparent)' }} />
