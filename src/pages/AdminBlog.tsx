@@ -14,6 +14,7 @@ import { PageTransition } from '@/components/ui/motion';
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
 import { Calendar } from '@/components/ui/calendar';
 import { cn } from '@/lib/utils';
+import BlogTranslations from '@/components/admin/BlogTranslations';
 
 interface Props {
   lang?: 'es' | 'en' | 'pt';
@@ -426,6 +427,10 @@ const AdminBlog = ({ lang = 'es' }: Props) => {
                 </CardContent>
               </Card>
             </div>
+          </div>
+
+          <div className="container mx-auto px-4 md:px-6 mt-8">
+            <BlogTranslations />
           </div>
         </section>
       </main>

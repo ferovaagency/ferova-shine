@@ -28,6 +28,7 @@ import BlogPost from "./pages/BlogPost";
 import Recursos from "./pages/Recursos";
 import SobreNosotros from "./pages/SobreNosotros";
 import OptimizacionWhatsapp from "./pages/OptimizacionWhatsapp";
+import WhatsappIaBot from "./pages/WhatsappIaBot";
 import AdminBlog from "./pages/AdminBlog";
 import VCard from "./pages/VCard";
 import NewsletterPage from "./pages/NewsletterPage";
@@ -99,6 +100,9 @@ const App = () => (
           <Route path="/terms" element={<Terminos lang={hostLang} />} />
           <Route path="/servicios/whatsapp-business" element={<OptimizacionWhatsapp lang={hostLang} />} />
           <Route path="/services/whatsapp-business" element={<OptimizacionWhatsapp lang={hostLang} />} />
+          <Route path="/servicios/whatsapp-ia-bot" element={<WhatsappIaBot lang={hostLang} />} />
+          <Route path="/services/whatsapp-ai-bot" element={<WhatsappIaBot lang="en" />} />
+          <Route path="/pt/whatsapp-ia-bot" element={<WhatsappIaBot lang="pt" />} />
 
           {/* Legacy /en prefix routes */}
           <Route path="/en" element={<Index lang="en" />} />
