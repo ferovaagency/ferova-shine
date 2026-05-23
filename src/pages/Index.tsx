@@ -458,30 +458,43 @@ const Index = ({ lang = 'es' }: IndexProps) => {
           </div>
         </section>
 
-        {/* Services */}
+        {/* Services — bento grid */}
         <section className="py-20 md:py-28">
           <div className="container mx-auto px-4 md:px-6">
             <AnimatedSection className="text-center mb-16">
               <h2 className="text-3xl md:text-4xl lg:text-5xl font-display font-bold mb-4">{t.servicesTitle}</h2>
               <p className="text-muted-foreground text-lg max-w-xl mx-auto">{t.servicesSub}</p>
             </AnimatedSection>
-            <StaggerContainer className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-6xl mx-auto">
-              {t.services.map((s, i) => (
-                <StaggerItem key={i}>
-                  <ScaleOnHover>
-                    <Link to={s.href} className="glass-card p-8 hover:border-gold/30 transition-all duration-300 group block h-full">
-                      <div className="w-14 h-14 rounded-2xl flex items-center justify-center mb-6 bg-gold/10">
-                        <s.icon className="w-7 h-7 text-gold" />
-                      </div>
-                      <h3 className="text-xl font-display font-semibold mb-3 text-foreground">{s.title}</h3>
-                      <p className="text-muted-foreground text-sm leading-relaxed mb-4">{s.desc}</p>
-                      <span className="inline-flex items-center gap-1 text-gold text-sm font-medium group-hover:gap-2 transition-all">
-                        {lang === 'es' ? 'Ver servicio' : lang === 'pt' ? 'Ver serviço' : 'Learn more'} <ArrowRight className="w-4 h-4" />
-                      </span>
-                    </Link>
-                  </ScaleOnHover>
-                </StaggerItem>
-              ))}
+            <StaggerContainer className="grid md:grid-cols-3 lg:grid-cols-4 gap-5 max-w-6xl mx-auto auto-rows-fr">
+              {t.services.map((s, i) => {
+                // bento: first item (WhatsApp IA / SEO) spans 2 cols; second spans 2 rows
+                const isFeatured = i === 0;
+                const isTall = i === 1;
+                const cls = isFeatured
+                  ? 'md:col-span-2 lg:col-span-2'
+                  : isTall
+                  ? 'md:row-span-2'
+                  : '';
+                return (
+                  <StaggerItem key={i} className={cls}>
+                    <ScaleOnHover>
+                      <Link
+                        to={s.href}
+                        className={`glass-card p-6 md:p-7 hover:border-gold/40 transition-all duration-300 group flex flex-col h-full ${isFeatured ? 'ring-1 ring-gold/30 bg-gradient-to-br from-gold/5 to-transparent' : ''}`}
+                      >
+                        <div className={`rounded-2xl flex items-center justify-center mb-5 bg-gold/10 ${isFeatured ? 'w-16 h-16' : 'w-12 h-12'}`}>
+                          <s.icon className={`text-gold ${isFeatured ? 'w-8 h-8' : 'w-6 h-6'}`} />
+                        </div>
+                        <h3 className={`font-display font-semibold mb-2 text-foreground ${isFeatured ? 'text-2xl' : 'text-lg'}`}>{s.title}</h3>
+                        <p className="text-muted-foreground text-sm leading-relaxed mb-4 flex-1">{s.desc}</p>
+                        <span className="inline-flex items-center gap-1 text-gold text-sm font-medium group-hover:gap-2 transition-all">
+                          {lang === 'es' ? 'Ver servicio' : lang === 'pt' ? 'Ver serviço' : 'Learn more'} <ArrowRight className="w-4 h-4" />
+                        </span>
+                      </Link>
+                    </ScaleOnHover>
+                  </StaggerItem>
+                );
+              })}
             </StaggerContainer>
             <AnimatedSection className="text-center mt-10">
               <Link to={lang === 'es' ? '/servicios' : lang === 'pt' ? '/pt/servicos' : '/en/services'} className="btn-outline-gold inline-flex items-center gap-2 !px-6 !py-3 text-sm">
