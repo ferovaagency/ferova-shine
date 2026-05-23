@@ -29,6 +29,12 @@ export const casesData = {
       solution: 'Estabilizamos el sitio, depuramos plugins innecesarios, rediseñamos completamente con Divi, restablecimos funcionalidades críticas y lanzamos estrategia SEO posicionando "Guabi para gato" en el #1 de Google en solo 2 meses.',
       results: [{ metric: 'Ventas mensuales', value: '$3M → $10M', period: '3 meses' }, { metric: 'Producto #1 Google', value: 'Guabi gato', period: '2 meses' }, { metric: 'Estabilidad del sitio', value: '100%', period: 'sin caídas' }, { metric: 'Crecimiento', value: '+233%', period: 'en ventas' }],
     },
+    {
+      id: 'cliente-tecnologia-migracion-web-app', title: 'Migración a Web App: -70% costos y +180% velocidad', category: 'webapp', country: 'Colombia', icon: Rocket,
+      challenge: 'Cliente del sector tecnología con plataforma legacy en WordPress + plugins. Costos de mantenimiento mensuales superiores a $2.000 USD, caídas semanales y tiempo de carga de 8.4s que destruía la conversión.',
+      solution: 'Migramos a una Web App propietaria en stack moderno (React + backend serverless). Rediseñamos la arquitectura de datos, implementamos caché en el edge y eliminamos 14 plugins innecesarios. Lanzamiento en 6 semanas sin caídas.',
+      results: [{ metric: 'Costos mensuales', value: '-70%', period: 'vs WordPress' }, { metric: 'Velocidad de carga', value: '8.4s → 1.2s', period: '+180% más rápido' }, { metric: 'Conversión', value: '+42%', period: 'primeros 90 días' }, { metric: 'Uptime', value: '99.98%', period: 'sin caídas' }],
+    },
   ],
   en: [
     {
