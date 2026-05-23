@@ -5,7 +5,7 @@ import Footer from '@/components/layout/Footer';
 import ChatWidget from '@/components/ui/chat-widget';
 import { AnimatedSection, StaggerContainer, StaggerItem, ScaleOnHover, PageTransition } from '@/components/ui/motion';
 import { motion } from 'framer-motion';
-import { Target, BarChart3, ShoppingCart, ArrowRight, MessageCircle } from 'lucide-react';
+import { Target, BarChart3, ShoppingCart, ArrowRight, MessageCircle, Rocket } from 'lucide-react';
 
 interface Props { lang?: 'es' | 'en' | 'pt'; }
 
