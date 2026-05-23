@@ -95,9 +95,10 @@ const ExitIntentPopup = ({ lang = 'es' }: Props) => {
         body: { email: email.trim(), name: name.trim(), source: 'popup', attributes: { LANG: lang } },
       });
       if (error) throw error;
+      trackEvent('newsletter_signup', { source: 'exit_popup', lang });
       toast.success(t.success);
       setName(''); setEmail(''); setConsent(false);
-      close();
+      setShow(false); setDismissed(true);
     } catch (err) {
       console.error(err);
       toast.error(t.error);
