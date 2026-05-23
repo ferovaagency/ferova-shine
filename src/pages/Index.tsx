@@ -279,7 +279,7 @@ const Index = ({ lang = 'es' }: IndexProps) => {
     viewAll: 'View all services',
   };
 
-  const whatsappUrl = 'https://wa.me/17865787671?text=' + encodeURIComponent(
+  const whatsappUrl = 'https://wa.link/bfq71f?text=' + encodeURIComponent(
     lang === 'es' ? 'Hola Ferova, quiero agendar una asesoría.' : lang === 'pt' ? 'Olá Ferova, quero agendar uma consultoria.' : 'Hi Ferova, I want to book a consultation.'
   );
 

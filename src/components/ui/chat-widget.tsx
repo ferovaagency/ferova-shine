@@ -7,7 +7,7 @@ interface ChatWidgetProps {
 
 const ChatWidget = ({ lang = 'es' }: ChatWidgetProps) => {
   const { trackWhatsApp } = useAnalytics();
-  const whatsappUrl = "https://wa.me/17865787671?text=" + encodeURIComponent(
+  const whatsappUrl = "https://wa.link/bfq71f?text=" + encodeURIComponent(
     lang === 'pt'
       ? 'Olá Ferova, gostaria de saber mais sobre seus serviços.'
       : lang === 'en'

@@ -111,7 +111,7 @@ const Contacto = ({ lang = 'es' }: Props) => {
 
               <div className="lg:col-span-2 space-y-6">
                 <h3 className="font-display font-semibold text-lg mb-2">{t.contactTitle}</h3>
-                <a href="https://wa.me/17865787671" target="_blank" rel="noopener noreferrer" className="glass-card p-5 flex items-center gap-4 hover:border-gold/30 transition-all block">
+                <a href="https://wa.link/bfq71f" target="_blank" rel="noopener noreferrer" className="glass-card p-5 flex items-center gap-4 hover:border-gold/30 transition-all block">
                   <div className="w-12 h-12 rounded-xl flex items-center justify-center" style={{ background: 'hsla(142, 70%, 45%, 0.1)' }}>
                     <MessageCircle className="w-6 h-6" style={{ color: '#25D366' }} />
                   </div>
