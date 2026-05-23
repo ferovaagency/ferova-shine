@@ -238,7 +238,51 @@ export type Database = {
       }
     }
     Views: {
-      [_ in never]: never
+      newsletter_editions_public: {
+        Row: {
+          created_at: string | null
+          edition_number: number | null
+          free_content: Json | null
+          id: string | null
+          plan: string | null
+          published: boolean | null
+          published_at: string | null
+          reading_time: number | null
+          slug: string | null
+          subject_line: string | null
+          title: string | null
+          topics: string[] | null
+        }
+        Insert: {
+          created_at?: string | null
+          edition_number?: number | null
+          free_content?: Json | null
+          id?: string | null
+          plan?: string | null
+          published?: boolean | null
+          published_at?: string | null
+          reading_time?: number | null
+          slug?: string | null
+          subject_line?: string | null
+          title?: string | null
+          topics?: string[] | null
+        }
+        Update: {
+          created_at?: string | null
+          edition_number?: number | null
+          free_content?: Json | null
+          id?: string | null
+          plan?: string | null
+          published?: boolean | null
+          published_at?: string | null
+          reading_time?: number | null
+          slug?: string | null
+          subject_line?: string | null
+          title?: string | null
+          topics?: string[] | null
+        }
+        Relationships: []
+      }
     }
     Functions: {
       blog_slugify: { Args: { v: string }; Returns: string }
