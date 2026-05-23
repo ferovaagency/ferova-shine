@@ -256,6 +256,36 @@ const AdminBlog = ({ lang = 'es' }: Props) => {
     }
   };
 
+  const [isUploading, setIsUploading] = useState(false);
+  const coverInputRef = useRef<HTMLInputElement | null>(null);
+
+  const handleUploadCover = async (file: File) => {
+    if (!preview) return;
+    if (!file.type.startsWith('image/')) {
+      toast({ title: lang === 'es' ? 'Solo imágenes' : lang === 'pt' ? 'Apenas imagens' : 'Images only', variant: 'destructive' });
+      return;
+    }
+    if (file.size > 5 * 1024 * 1024) {
+      toast({ title: lang === 'es' ? 'Máximo 5MB' : lang === 'pt' ? 'Máximo 5MB' : 'Max 5MB', variant: 'destructive' });
+      return;
+    }
+    setIsUploading(true);
+    try {
+      const ext = file.name.split('.').pop()?.toLowerCase() || 'jpg';
+      const path = `${preview.slug || 'cover'}-${Date.now()}.${ext}`;
+      const { error: upErr } = await supabase.storage.from('blog-images').upload(path, file, { upsert: true, contentType: file.type });
+      if (upErr) throw upErr;
+      const { data } = supabase.storage.from('blog-images').getPublicUrl(path);
+      setPreview({ ...preview, cover_image: data.publicUrl });
+      toast({ title: lang === 'es' ? 'Imagen subida' : lang === 'pt' ? 'Imagem enviada' : 'Image uploaded' });
+    } catch (e) {
+      toast({ title: lang === 'es' ? 'Error al subir' : lang === 'pt' ? 'Erro ao enviar' : 'Upload error', description: e instanceof Error ? e.message : 'Error', variant: 'destructive' });
+    } finally {
+      setIsUploading(false);
+      if (coverInputRef.current) coverInputRef.current.value = '';
+    }
+  };
+
   return (
     <PageTransition>
       <Header currentLang={lang} />
