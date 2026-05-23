@@ -6,6 +6,7 @@ import ChatWidget from '@/components/ui/chat-widget';
 import { AnimatedSection, StaggerContainer, StaggerItem, ScaleOnHover, PageTransition } from '@/components/ui/motion';
 import { motion } from 'framer-motion';
 import { Mail, Newspaper, Star, Search, Rocket, ExternalLink, LucideIcon } from 'lucide-react';
+import SEO from '@/components/SEO';
 
 interface Props { lang?: 'es' | 'en' | 'pt'; }
 
@@ -244,8 +245,15 @@ const Recursos = ({ lang = 'es' }: Props) => {
     setEmailInput('');
   };
 
+  const seo = lang === 'en'
+    ? { t: 'Free Resources & Tool Discounts — Ferova Agency', d: 'Free guides, templates and exclusive discounts on premium tools for e-commerce founders.', p: '/en/resources' }
+    : lang === 'pt'
+    ? { t: 'Recursos Gratuitos e Descontos — Ferova Agency', d: 'Guias gratuitos, templates e descontos exclusivos em ferramentas premium para donos de e-commerce.', p: '/pt/recursos' }
+    : { t: 'Recursos Gratuitos y Descuentos — Ferova Agency', d: 'Guías gratuitas, plantillas y descuentos exclusivos en herramientas premium para fundadores de ecommerce.', p: '/recursos' };
+
   return (
     <PageTransition>
+      <SEO title={seo.t} description={seo.d} path={seo.p} lang={lang} />
       <Header currentLang={lang} />
       <main className="pt-20">
 

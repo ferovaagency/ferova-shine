@@ -6,6 +6,7 @@ import ChatWidget from '@/components/ui/chat-widget';
 import { AnimatedSection, StaggerContainer, StaggerItem, ScaleOnHover, PageTransition } from '@/components/ui/motion';
 import { motion } from 'framer-motion';
 import { Target, BarChart3, ShoppingCart, ArrowRight, MessageCircle, Rocket } from 'lucide-react';
+import SEO from '@/components/SEO';
 
 interface Props { lang?: 'es' | 'en' | 'pt'; }
 
@@ -103,8 +104,15 @@ const CasosDeExito = ({ lang = 'es' }: Props) => {
   const filtered = filter === 'all' ? cases : cases.filter(c => c.category === filter);
   const basePath = lang === 'es' ? '/casos-de-exito' : lang === 'pt' ? '/pt/casos-de-sucesso' : '/en/case-studies';
 
+  const seo = lang === 'en'
+    ? { t: 'Case Studies — Real E-commerce Results | Ferova', d: 'Real case studies: e-commerce stores that multiplied sales with SEO, web apps and digital ads from Ferova Agency.', p: '/en/case-studies' }
+    : lang === 'pt'
+    ? { t: 'Casos de Sucesso — Resultados Reais | Ferova', d: 'Casos reais: lojas virtuais que multiplicaram vendas com SEO, web apps e tráfego pago da Ferova Agency.', p: '/pt/casos-de-sucesso' }
+    : { t: 'Casos de Éxito — Resultados Reales | Ferova', d: 'Casos reales: tiendas online que multiplicaron ventas con SEO, web apps y pauta digital de Ferova Agency.', p: '/casos-de-exito' };
+
   return (
     <PageTransition>
+      <SEO title={seo.t} description={seo.d} path={seo.p} lang={lang} />
       <Header currentLang={lang} />
       <main className="pt-20">
         <section className="py-20 md:py-28 text-center relative grid-pattern">

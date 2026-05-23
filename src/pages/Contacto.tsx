@@ -3,6 +3,7 @@ import Header from '@/components/layout/Header';
 import Footer from '@/components/layout/Footer';
 import ChatWidget from '@/components/ui/chat-widget';
 import { Mail, MessageCircle, MapPin, Send, Calendar } from 'lucide-react';
+import SEO from '@/components/SEO';
 
 interface Props { lang?: 'es' | 'en' | 'pt'; }
 
@@ -66,8 +67,15 @@ const Contacto = ({ lang = 'es' }: Props) => {
 
   const inputCls = "w-full px-4 py-3 rounded-xl text-foreground text-sm placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-gold/50 transition-all border border-border/50 bg-background";
 
+  const seo = lang === 'en'
+    ? { t: 'Contact — Ferova Agency', d: 'Tell us about your e-commerce project. We reply in under 24 hours via WhatsApp or email.', p: '/contact' }
+    : lang === 'pt'
+    ? { t: 'Contato — Ferova Agency', d: 'Conte-nos sobre seu projeto de e-commerce. Respondemos em menos de 24 horas pelo WhatsApp ou e-mail.', p: '/pt/contato' }
+    : { t: 'Contacto — Ferova Agency', d: 'Cuéntanos sobre tu proyecto de e-commerce. Respondemos en menos de 24 horas por WhatsApp o email.', p: '/contacto' };
+
   return (
     <>
+      <SEO title={seo.t} description={seo.d} path={seo.p} lang={lang} />
       <Header currentLang={lang} />
       <main className="pt-20">
         <section className="py-20 md:py-28 relative grid-pattern">

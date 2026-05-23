@@ -9,6 +9,7 @@ import { SkeletonBlogCard } from '@/components/ui/skeleton-card';
 import { Clock, ArrowRight, User, Search } from 'lucide-react';
 import { Input } from '@/components/ui/input';
 import { supabase } from '@/integrations/supabase/client';
+import SEO from '@/components/SEO';
 
 interface Props { lang?: 'es' | 'en' | 'pt'; }
 
@@ -84,8 +85,15 @@ const Blog = ({ lang = 'es' }: Props) => {
     return post.title.toLowerCase().includes(q) || post.excerpt.toLowerCase().includes(q) || post.category.toLowerCase().includes(q);
   });
 
+  const seo = lang === 'en'
+    ? { t: 'E-commerce Blog — SEO, Web Apps & AI | Ferova Agency', d: 'Guides and strategies to grow your online store: SEO, conversion, web apps and AI for e-commerce.', p: '/en/blog' }
+    : lang === 'pt'
+    ? { t: 'Blog de E-commerce — SEO, Web Apps e IA | Ferova', d: 'Guias e estratégias para crescer sua loja virtual: SEO, conversão, web apps e IA para e-commerce.', p: '/pt/blog' }
+    : { t: 'Blog de E-commerce — SEO, Web Apps e IA | Ferova', d: 'Guías y estrategias para hacer crecer tu tienda online: SEO, conversión, web apps e IA para e-commerce.', p: '/blog' };
+
   return (
     <>
+      <SEO title={seo.t} description={seo.d} path={seo.p} lang={lang} />
       <ReadingProgress />
       <Header currentLang={lang} />
       <main className="pt-20">
