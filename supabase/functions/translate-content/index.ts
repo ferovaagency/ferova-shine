@@ -66,11 +66,11 @@ Deno.serve(async (req) => {
     if (body.postId && body.target) {
       const target = String(body.target);
       if (!['en', 'pt'].includes(target)) throw new Error('target must be en or pt');
+      const uuidRe = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
+      if (!uuidRe.test(String(body.postId))) throw new Error('invalid postId');
 
-      const supabase = createClient(
-        Deno.env.get('SUPABASE_URL')!,
-        Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!,
-      );
+      const supabase = adminClient;
+
 
       const { data: post, error } = await supabase
         .from('blog_posts')
