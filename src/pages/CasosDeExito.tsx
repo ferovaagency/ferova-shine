@@ -5,7 +5,7 @@ import Footer from '@/components/layout/Footer';
 import ChatWidget from '@/components/ui/chat-widget';
 import { AnimatedSection, StaggerContainer, StaggerItem, ScaleOnHover, PageTransition } from '@/components/ui/motion';
 import { motion } from 'framer-motion';
-import { Target, BarChart3, ShoppingCart, ArrowRight, MessageCircle } from 'lucide-react';
+import { Target, BarChart3, ShoppingCart, ArrowRight, MessageCircle, Rocket } from 'lucide-react';
 
 interface Props { lang?: 'es' | 'en' | 'pt'; }
 
@@ -29,6 +29,12 @@ export const casesData = {
       solution: 'Estabilizamos el sitio, depuramos plugins innecesarios, rediseñamos completamente con Divi, restablecimos funcionalidades críticas y lanzamos estrategia SEO posicionando "Guabi para gato" en el #1 de Google en solo 2 meses.',
       results: [{ metric: 'Ventas mensuales', value: '$3M → $10M', period: '3 meses' }, { metric: 'Producto #1 Google', value: 'Guabi gato', period: '2 meses' }, { metric: 'Estabilidad del sitio', value: '100%', period: 'sin caídas' }, { metric: 'Crecimiento', value: '+233%', period: 'en ventas' }],
     },
+    {
+      id: 'cliente-tecnologia-migracion-web-app', title: 'Migración a Web App: -70% costos y +180% velocidad', category: 'webapp', country: 'Colombia', icon: Rocket,
+      challenge: 'Cliente del sector tecnología con plataforma legacy en WordPress + plugins. Costos de mantenimiento mensuales superiores a $2.000 USD, caídas semanales y tiempo de carga de 8.4s que destruía la conversión.',
+      solution: 'Migramos a una Web App propietaria en stack moderno (React + backend serverless). Rediseñamos la arquitectura de datos, implementamos caché en el edge y eliminamos 14 plugins innecesarios. Lanzamiento en 6 semanas sin caídas.',
+      results: [{ metric: 'Costos mensuales', value: '-70%', period: 'vs WordPress' }, { metric: 'Velocidad de carga', value: '8.4s → 1.2s', period: '+180% más rápido' }, { metric: 'Conversión', value: '+42%', period: 'primeros 90 días' }, { metric: 'Uptime', value: '99.98%', period: 'sin caídas' }],
+    },
   ],
   en: [
     {
@@ -42,6 +48,12 @@ export const casesData = {
       challenge: 'E-commerce with 14,000+ server parts and structured cabling products. Customers searched by part number but the site wasn\'t on Google. Thousands of 404 errors from deleted products hurt domain authority.',
       solution: 'We performed a full technical audit, fixed thousands of 404 errors, optimized product pages by part number, and scaled indexing of the entire catalog over 2 years of continuous work.',
       results: [{ metric: '#1 positions', value: '50', period: 'references' }, { metric: 'Indexed products', value: '12,486', period: 'first page' }, { metric: 'Daily quotes', value: '10-15', period: 'consistent' }, { metric: 'Close rate', value: '93%', period: 'requests' }],
+    },
+    {
+      id: 'cliente-tecnologia-migracion-web-app', title: 'Web App migration: -70% costs & +180% speed', category: 'webapp', country: 'Colombia', icon: Rocket,
+      challenge: 'Tech client with a legacy WordPress + plugins platform. Monthly maintenance over $2,000 USD, weekly downtime and 8.4s load time killing conversion.',
+      solution: 'Migrated to a proprietary Web App on a modern stack (React + serverless backend). Redesigned data architecture, implemented edge caching and removed 14 unnecessary plugins. Launched in 6 weeks with zero downtime.',
+      results: [{ metric: 'Monthly costs', value: '-70%', period: 'vs WordPress' }, { metric: 'Load time', value: '8.4s → 1.2s', period: '+180% faster' }, { metric: 'Conversion', value: '+42%', period: 'first 90 days' }, { metric: 'Uptime', value: '99.98%', period: 'no downtime' }],
     },
     {
       id: 'ecommerce-mascotas', title: 'Tripled sales for a pet e-commerce', category: 'seo', country: 'Colombia', icon: ShoppingCart,
@@ -69,6 +81,12 @@ export const casesData = {
       solution: 'Estabilizamos o site, limpamos plugins desnecessários, redesenhamos completamente com Divi, restauramos funcionalidades críticas e lançamos estratégia SEO posicionando "Guabi para gato" no #1 do Google em apenas 2 meses.',
       results: [{ metric: 'Vendas mensais', value: '$3M → $10M', period: '3 meses' }, { metric: 'Produto #1 Google', value: 'Guabi gato', period: '2 meses' }, { metric: 'Estabilidade do site', value: '100%', period: 'sem quedas' }, { metric: 'Crescimento', value: '+233%', period: 'em vendas' }],
     },
+    {
+      id: 'cliente-tecnologia-migracion-web-app', title: 'Migração para Web App: -70% custos e +180% velocidade', category: 'webapp', country: 'Colômbia', icon: Rocket,
+      challenge: 'Cliente do setor de tecnologia com plataforma legacy em WordPress + plugins. Custos de manutenção mensais acima de $2.000 USD, quedas semanais e tempo de carregamento de 8.4s destruindo a conversão.',
+      solution: 'Migramos para uma Web App proprietária em stack moderno (React + backend serverless). Redesenhamos a arquitetura de dados, implementamos cache no edge e removemos 14 plugins desnecessários. Lançamento em 6 semanas sem quedas.',
+      results: [{ metric: 'Custos mensais', value: '-70%', period: 'vs WordPress' }, { metric: 'Tempo de carga', value: '8.4s → 1.2s', period: '+180% mais rápido' }, { metric: 'Conversão', value: '+42%', period: 'primeiros 90 dias' }, { metric: 'Uptime', value: '99.98%', period: 'sem quedas' }],
+    },
   ],
 };
 
@@ -76,10 +94,11 @@ const CasosDeExito = ({ lang = 'es' }: Props) => {
   const [filter, setFilter] = useState('all');
   const cases = casesData[lang] || casesData.es;
   const filters = lang === 'es'
-    ? [{ id: 'all', label: 'Todos' }, { id: 'seo', label: 'SEO' }, { id: 'pauta', label: 'Pauta Digital' }]
+    ? [{ id: 'all', label: 'Todos' }, { id: 'seo', label: 'SEO' }, { id: 'pauta', label: 'Pauta Digital' }, { id: 'webapp', label: 'Web Apps' }]
     : lang === 'pt'
-    ? [{ id: 'all', label: 'Todos' }, { id: 'seo', label: 'SEO' }, { id: 'pauta', label: 'Tráfego Pago' }]
-    : [{ id: 'all', label: 'All' }, { id: 'seo', label: 'SEO' }, { id: 'pauta', label: 'Digital Ads' }];
+    ? [{ id: 'all', label: 'Todos' }, { id: 'seo', label: 'SEO' }, { id: 'pauta', label: 'Tráfego Pago' }, { id: 'webapp', label: 'Web Apps' }]
+    : [{ id: 'all', label: 'All' }, { id: 'seo', label: 'SEO' }, { id: 'pauta', label: 'Digital Ads' }, { id: 'webapp', label: 'Web Apps' }];
+
 
   const filtered = filter === 'all' ? cases : cases.filter(c => c.category === filter);
   const basePath = lang === 'es' ? '/casos-de-exito' : lang === 'pt' ? '/pt/casos-de-sucesso' : '/en/case-studies';
