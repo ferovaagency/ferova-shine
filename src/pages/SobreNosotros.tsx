@@ -5,6 +5,7 @@ import ChatWidget from '@/components/ui/chat-widget';
 import { AnimatedSection, StaggerContainer, StaggerItem, ScaleOnHover, PageTransition } from '@/components/ui/motion';
 import { motion } from 'framer-motion';
 import { Target, TrendingUp, Heart, BookOpen, Users, Handshake, Eye, MessageCircle, Rocket, Linkedin, ExternalLink } from 'lucide-react';
+import SEO from '@/components/SEO';
 
 interface Props { lang?: 'es' | 'en' | 'pt'; }
 
@@ -87,8 +88,15 @@ const SobreNosotros = ({ lang = 'es' }: Props) => {
     lang === 'es' ? 'Hola Ferova, quiero agendar una asesoría.' : lang === 'pt' ? 'Olá Ferova, quero agendar uma consultoria.' : 'Hi Ferova, I want to book a consultation.'
   );
 
+  const seo = lang === 'en'
+    ? { t: 'About Ferova Agency — Boutique E-commerce SEO', d: 'Boutique e-commerce SEO agency founded by María Fer Calderón. Shared-success model focused on growing online stores.', p: '/en/about' }
+    : lang === 'pt'
+    ? { t: 'Sobre a Ferova Agency — Agência boutique de SEO', d: 'Agência boutique de SEO para e-commerce fundada por María Fer Calderón. Modelo de sucesso compartilhado focado em crescer lojas virtuais.', p: '/pt/sobre-nos' }
+    : { t: 'Sobre Ferova Agency — Agencia boutique de SEO', d: 'Agencia boutique de SEO para ecommerce fundada por María Fer Calderón. Modelo de éxito compartido enfocado en crecer tiendas online.', p: '/nosotros' };
+
   return (
     <PageTransition>
+      <SEO title={seo.t} description={seo.d} path={seo.p} lang={lang} />
       <Header currentLang={lang} />
       <main className="pt-20">
         <section className="py-20 md:py-28 relative grid-pattern">

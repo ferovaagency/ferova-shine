@@ -1,0 +1,51 @@
+# Ferova Agency
+
+> Agencia boutique de SEO, web apps de alto rendimiento e IA para ecommerce en Colombia, Latam y EEUU. Entrega en 1 semana. Fundada por María Fer Calderón.
+
+Ferova Agency construye webapps modernas con IA integrada para tiendas online, optimiza SEO técnico y de contenido para ecommerce, y ofrece pauta digital en Google, Meta, TikTok y LinkedIn. Operamos en español, inglés y portugués.
+
+## Páginas principales
+
+- [Inicio](/): Propuesta de valor, casos y servicios.
+- [Servicios](/servicios): Catálogo completo de servicios.
+- [Precios](/precios): Planes multimoneda (USD, COP, BRL, EUR).
+- [Sobre nosotros](/nosotros): Quiénes somos y nuestra metodología.
+- [Sobre María Fer Calderón](/sobre-maria-fer): Perfil de la fundadora.
+- [Contacto](/contacto): Formulario y canales directos.
+
+## Servicios
+
+- [SEO para Ecommerce](/servicios/seo-ecommerce): Posicionamiento orgánico para tiendas online.
+- [Diseño Web / Web Apps](/servicios/diseno-web): Web apps ultrarrápidas optimizadas para vender.
+- [Pauta Digital](/servicios/pauta-digital): Campañas en Google, Meta, TikTok y LinkedIn.
+- [Diseño de Logos](/servicios/diseno-logos): Identidad visual de marca.
+- [Asesorías de Marketing](/servicios/asesorias-marketing): Consultoría estratégica.
+- [Optimización de LinkedIn](/servicios/optimizacion-linkedin): Marca personal en LinkedIn.
+- [WhatsApp Business](/servicios/whatsapp-business): Automatización y ventas.
+- [WhatsApp IA Bot](/servicios/whatsapp-ia-bot): Bot de ventas con IA 24/7.
+- [Descuentos en Herramientas](/servicios/descuentos-herramientas): Acceso a herramientas premium.
+
+## Contenido
+
+- [Blog de Ecommerce](/blog): Guías sobre SEO, web apps, IA y conversión.
+- [Casos de éxito](/casos-de-exito): Resultados reales de clientes.
+- [Recursos gratuitos](/recursos): Plantillas, guías y herramientas.
+- [Newsletter Pro](/newsletter-pro): Newsletter premium para fundadores de ecommerce.
+
+## English
+
+- [Home (EN)](https://seoforecommerces.co/): English version of the site.
+- [Services (EN)](https://seoforecommerces.co/services): Service catalog in English.
+- [Pricing (EN)](https://seoforecommerces.co/pricing): Multi-currency pricing.
+
+## Português
+
+- [Início (PT)](/pt): Versão em português.
+- [Serviços (PT)](/pt/servicos): Catálogo de serviços.
+- [Preços (PT)](/pt/precos): Planos em BRL.
+
+## Optional
+
+- [Política de Privacidad](/privacidad)
+- [Cookies](/cookies)
+- [Términos](/terminos)
