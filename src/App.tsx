@@ -35,6 +35,9 @@ import NewsletterArchivePage from "./pages/NewsletterArchivePage";
 import NewsletterEditionPage from "./pages/NewsletterEditionPage";
 import NewsletterAdminPage from "./pages/NewsletterAdminPage";
 import BriefingNewsletter from "./pages/BriefingNewsletter";
+import Privacidad from "./pages/Privacidad";
+import Cookies from "./pages/Cookies";
+import CookieBanner from "@/components/ui/cookie-banner";
 
 const queryClient = new QueryClient();
 
@@ -48,6 +51,7 @@ const App = () => (
       <ExitIntentPopup lang={hostLang} />
       <SocialProofToasts lang={hostLang} />
       <AiAdvisorChat lang={hostLang} />
+      <CookieBanner lang={hostLang} />
       <BrowserRouter>
         <ScrollToTop />
         <Routes>
@@ -169,6 +173,14 @@ const App = () => (
           <Route path="/recursos/briefing-newsletter" element={<BriefingNewsletter lang={hostLang} />} />
           <Route path="/en/resources/newsletter-briefing" element={<BriefingNewsletter lang="en" />} />
           <Route path="/pt/recursos/briefing-newsletter" element={<BriefingNewsletter lang="pt" />} />
+
+          {/* Páginas legales */}
+          <Route path="/privacidad" element={<Privacidad lang={hostLang} />} />
+          <Route path="/cookies" element={<Cookies lang={hostLang} />} />
+          <Route path="/en/privacy" element={<Privacidad lang="en" />} />
+          <Route path="/en/cookies" element={<Cookies lang="en" />} />
+          <Route path="/pt/privacidade" element={<Privacidad lang="pt" />} />
+          <Route path="/pt/cookies" element={<Cookies lang="pt" />} />
 
           <Route path="*" element={<NotFound />} />
         </Routes>
