@@ -4,6 +4,7 @@ import Footer from '@/components/layout/Footer';
 import ChatWidget from '@/components/ui/chat-widget';
 import AdBanner from '@/components/ui/ad-banner';
 import { Search, TrendingUp, Users, BarChart3, Plus, MessageCircle, MapPin, Globe2, Navigation, Target, Clock, Check } from 'lucide-react';
+import SEO from '@/components/SEO';
 import { useState, useEffect } from 'react';
 import { getPaymentLink } from '@/lib/payment-links';
 import { useToast } from '@/hooks/use-toast';
@@ -195,8 +196,16 @@ const SeoEcommerce = ({ lang = 'es' }: Props) => {
     ],
   };
 
+  const seo = lang === 'en'
+    ? { t: 'E-commerce SEO + GEO + AEO — Ferova Agency', d: 'SEO for online stores that ranks on Google and gets cited by ChatGPT, Perplexity and AI Overviews. Local GEO included.', p: '/en/services/ecommerce-seo' }
+    : lang === 'pt'
+    ? { t: 'SEO para E-commerce + GEO + AEO — Ferova', d: 'SEO para lojas virtuais que ranqueia no Google e é citado por ChatGPT, Perplexity e AI Overviews. GEO local incluído.', p: '/pt/seo-ecommerce' }
+    : { t: 'SEO para Ecommerce + GEO + IAO — Ferova', d: 'SEO para tiendas online que posiciona en Google y es citado por ChatGPT, Perplexity y AI Overviews. GEO local incluido.', p: '/servicios/seo-ecommerce' };
+  const faqLd = { '@context': 'https://schema.org', '@type': 'FAQPage', mainEntity: t.faqs.map((f: any) => ({ '@type': 'Question', name: f.q, acceptedAnswer: { '@type': 'Answer', text: f.a } })) };
+
   return (
     <>
+      <SEO title={seo.t} description={seo.d} path={seo.p} lang={lang} jsonLd={faqLd} />
       <Header currentLang={lang} />
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify({
         "@context": "https://schema.org",
