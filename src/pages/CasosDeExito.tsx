@@ -50,6 +50,12 @@ export const casesData = {
       results: [{ metric: '#1 positions', value: '50', period: 'references' }, { metric: 'Indexed products', value: '12,486', period: 'first page' }, { metric: 'Daily quotes', value: '10-15', period: 'consistent' }, { metric: 'Close rate', value: '93%', period: 'requests' }],
     },
     {
+      id: 'cliente-tecnologia-migracion-web-app', title: 'Web App migration: -70% costs & +180% speed', category: 'webapp', country: 'Colombia', icon: Rocket,
+      challenge: 'Tech client with a legacy WordPress + plugins platform. Monthly maintenance over $2,000 USD, weekly downtime and 8.4s load time killing conversion.',
+      solution: 'Migrated to a proprietary Web App on a modern stack (React + serverless backend). Redesigned data architecture, implemented edge caching and removed 14 unnecessary plugins. Launched in 6 weeks with zero downtime.',
+      results: [{ metric: 'Monthly costs', value: '-70%', period: 'vs WordPress' }, { metric: 'Load time', value: '8.4s → 1.2s', period: '+180% faster' }, { metric: 'Conversion', value: '+42%', period: 'first 90 days' }, { metric: 'Uptime', value: '99.98%', period: 'no downtime' }],
+    },
+    {
       id: 'ecommerce-mascotas', title: 'Tripled sales for a pet e-commerce', category: 'seo', country: 'Colombia', icon: ShoppingCart,
       challenge: 'Pet e-commerce that went from $45M to just $3M monthly (90% drop). The custom-coded site broke with every WordPress update. Multiple agencies recommended migrating to Shopify, but the client wanted to save their investment.',
       solution: 'We stabilized the site, cleaned unnecessary plugins, fully redesigned with Divi, restored critical functionalities and launched an SEO strategy positioning "Guabi cat food" at #1 on Google in just 2 months.',
