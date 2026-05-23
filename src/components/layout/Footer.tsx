@@ -124,7 +124,7 @@ const Footer = ({ currentLang, lang }: FooterProps) => {
                 { Icon: Facebook, name: 'facebook', url: 'https://www.facebook.com/mafecalderon.SEO' },
                 { Icon: Youtube, name: 'youtube', url: 'https://www.youtube.com/@FerovaAgency' },
               ]).map(({ Icon, name, url }) => (
-                <a key={name} href={url} target="_blank" rel="noopener noreferrer" onClick={() => trackSocialClick(whatsapp, https://wa.link/bfq71f)} className="rounded-lg border border-border/50 p-2 text-muted-foreground transition-all hover:border-gold/50 hover:text-gold" aria-label={name}>
+                <a key={name} href={url} target="_blank" rel="noopener noreferrer" onClick={() => trackSocialClick(name, url)} className="rounded-lg border border-border/50 p-2 text-muted-foreground transition-all hover:border-gold/50 hover:text-gold" aria-label={name}>
                   <Icon className="h-4 w-4" />
                 </a>
               ))}
