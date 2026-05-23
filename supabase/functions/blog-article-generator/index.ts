@@ -328,11 +328,41 @@ serve(async (req) => {
       const raw = (body?.payload?.article ?? {}) as Record<string, unknown>;
       const title = safeString(raw.title);
       const slug = await getUniqueSlug(adminClient, safeString(raw.slug) || title);
-      const content = safeString(raw.content);
+      let content = safeString(raw.content);
       const excerpt = truncate(safeString(raw.excerpt) || stripHtml(content), 150);
 
       if (!title || !slug || !content) {
         return jsonResponse({ error: "Artículo incompleto." }, 400);
+      }
+
+      // Auto-insert internal links to existing blog posts (max 3, only on first match)
+      try {
+        const { data: existingPosts } = await adminClient
+          .from("blog_posts")
+          .select("slug, title, keyword")
+          .eq("active", true)
+          .limit(50);
+        if (existingPosts && existingPosts.length > 0) {
+          let linksAdded = 0;
+          for (const post of existingPosts) {
+            if (linksAdded >= 3) break;
+            const anchorRaw = safeString((post as any).keyword) || safeString((post as any).title);
+            if (!anchorRaw || anchorRaw.length < 4) continue;
+            // Escape regex chars and match whole word, case-insensitive, only in paragraphs (avoid headings/existing links)
+            const escaped = anchorRaw.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+            const regex = new RegExp(`(<p[^>]*>(?:(?!</p>).)*?)\\b(${escaped})\\b((?:(?!</p>).)*?</p>)`, "i");
+            // Skip if already linked
+            const linkCheck = new RegExp(`<a[^>]*>[^<]*${escaped}[^<]*</a>`, "i");
+            if (linkCheck.test(content)) continue;
+            if (regex.test(content)) {
+              const href = `/blog/${(post as any).slug}`;
+              content = content.replace(regex, `$1<a href="${href}" class="text-gold underline hover:opacity-80">$2</a>$3`);
+              linksAdded++;
+            }
+          }
+        }
+      } catch (linkErr) {
+        console.warn("internal-links injection skipped:", linkErr);
       }
 
       const publishedAt = safeString(raw.published_at) || new Date().toISOString();
