@@ -152,7 +152,7 @@ const App = () => (
           <Route path="/newsletter" element={<NewsletterPage lang={hostLang} />} />
           <Route path="/newsletter/archivo" element={<NewsletterArchivePage lang={hostLang} />} />
           <Route path="/newsletter/edicion/:slug" element={<NewsletterEditionPage lang={hostLang} />} />
-          <Route path="/newsletter/admin" element={<NewsletterAdminPage />} />
+          <Route path="/newsletter/admin" element={<AdminGuard><NewsletterAdminPage /></AdminGuard>} />
           <Route path="/newsletter-pro" element={<NewsletterPro lang={hostLang} />} />
           <Route path="/en/newsletter-pro" element={<NewsletterPro lang="en" />} />
           <Route path="/pt/newsletter-pro" element={<NewsletterPro lang="pt" />} />
