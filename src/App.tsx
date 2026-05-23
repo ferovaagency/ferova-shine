@@ -152,6 +152,9 @@ const App = () => (
           <Route path="/newsletter/archivo" element={<NewsletterArchivePage lang={hostLang} />} />
           <Route path="/newsletter/edicion/:slug" element={<NewsletterEditionPage lang={hostLang} />} />
           <Route path="/newsletter/admin" element={<NewsletterAdminPage />} />
+          <Route path="/newsletter-pro" element={<NewsletterPro lang={hostLang} />} />
+          <Route path="/en/newsletter-pro" element={<NewsletterPro lang="en" />} />
+          <Route path="/pt/newsletter-pro" element={<NewsletterPro lang="pt" />} />
           <Route path="/en/newsletter" element={<NewsletterPage lang="en" />} />
           <Route path="/en/newsletter/archive" element={<NewsletterArchivePage lang="en" />} />
           <Route path="/en/newsletter/edition/:slug" element={<NewsletterEditionPage lang="en" />} />

@@ -279,6 +279,29 @@ const Recursos = ({ lang = 'es' }: Props) => {
               </div>
             </AnimatedSection>
 
+            {/* Ferova Pro featured card */}
+            <Link
+              to={lang === 'pt' ? '/pt/newsletter-pro' : lang === 'en' ? '/en/newsletter-pro' : '/newsletter-pro'}
+              className="block max-w-5xl mx-auto mb-8 p-6 rounded-2xl border-2 border-gold bg-gradient-to-br from-purple-950/10 via-card to-gold/10 hover:shadow-xl transition-all"
+            >
+              <div className="flex flex-col md:flex-row md:items-center gap-4">
+                <div className="flex-1">
+                  <span className="inline-block px-3 py-1 rounded-full bg-gold/20 text-gold text-xs font-bold uppercase mb-3">
+                    Ferova Pro · Newsletter premium
+                  </span>
+                  <h3 className="text-xl md:text-2xl font-display font-bold mb-1 text-foreground">
+                    {lang === 'pt' ? 'Estratégias avançadas, casos reais e comunidade privada' : lang === 'en' ? 'Advanced strategies, real cases and private community' : 'Estrategias avanzadas, casos reales y comunidad privada'}
+                  </h3>
+                  <p className="text-sm text-muted-foreground">
+                    {lang === 'pt' ? 'Newsletter Pro semanal por US$9/mês. Cancele quando quiser.' : lang === 'en' ? 'Weekly Pro newsletter for US$9/month. Cancel anytime.' : 'Newsletter Pro semanal por US$9/mes. Cancela cuando quieras.'}
+                  </p>
+                </div>
+                <span className="self-start md:self-center px-5 py-3 rounded-full bg-gold text-slate-950 font-bold text-sm whitespace-nowrap">
+                  {lang === 'pt' ? 'Ver detalhes →' : lang === 'en' ? 'See details →' : 'Ver detalles →'}
+                </span>
+              </div>
+            </Link>
+
             <StaggerContainer className="grid md:grid-cols-2 gap-6 max-w-5xl mx-auto">
               {tools.map((tool) => {
                 const Icon = tool.icon;
