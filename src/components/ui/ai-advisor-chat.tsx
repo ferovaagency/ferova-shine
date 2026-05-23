@@ -217,9 +217,11 @@ const AiAdvisorChat = ({ lang = 'es' }: AiAdvisorChatProps) => {
         <span className="absolute inset-0 rounded-full animate-ping opacity-20" style={{ background: 'hsl(45,86%,40%)' }} />
       </button>
 
-      {/* Badge label on desktop */}
+      {/* Badge label — visible on mobile (next to button) and desktop */}
       {!open && (
-        <div className="hidden lg:flex fixed z-50 left-[5.5rem] bottom-11 items-center gap-1 bg-card border border-border rounded-full px-3 py-1.5 shadow-lg text-xs font-medium text-foreground pointer-events-none">
+        <div className="fixed z-50 flex items-center gap-1 bg-card border border-border rounded-full px-3 py-1.5 shadow-lg text-xs font-medium text-foreground pointer-events-none
+          bottom-[6.75rem] right-[5.5rem]
+          lg:bottom-11 lg:left-[5.5rem] lg:right-auto">
           <Bot className="w-3.5 h-3.5 text-gold" />
           {txt.badge}
         </div>
