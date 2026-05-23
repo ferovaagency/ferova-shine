@@ -286,70 +286,96 @@ const Index = ({ lang = 'es' }: IndexProps) => {
     <PageTransition>
       <Header currentLang={lang} />
       <main>
-        {/* Hero */}
-        <section className="relative min-h-screen flex items-center pt-20 overflow-hidden grid-pattern">
-          <div className="absolute inset-0" style={{ background: 'radial-gradient(ellipse at 30% 50%, hsla(356, 68%, 20%, 0.08) 0%, transparent 60%), radial-gradient(ellipse at 70% 20%, hsla(45, 86%, 40%, 0.05) 0%, transparent 50%)' }} />
+        {/* Hero — split layout with KPI cards (regla 3 segundos) */}
+        <section className="relative min-h-screen flex items-center pt-24 pb-16 overflow-hidden grid-pattern">
+          <div className="absolute inset-0" style={{ background: 'radial-gradient(ellipse at 20% 40%, hsla(356, 68%, 20%, 0.10) 0%, transparent 55%), radial-gradient(ellipse at 85% 70%, hsla(45, 86%, 40%, 0.08) 0%, transparent 55%)' }} />
           <div className="container mx-auto px-4 md:px-6 relative z-10">
-            <div className="max-w-4xl mx-auto text-center">
-              <AnimatedSection delay={0}>
-                <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-gold/20 bg-gold/5 text-gold text-sm font-medium mb-8">
-                  <Rocket className="w-4 h-4" />
-                  {lang === 'es' ? 'Agencia Boutique de SEO para Ecommerce' : lang === 'pt' ? 'Agência Boutique de SEO para E-commerce' : 'Boutique E-commerce SEO Agency'}
-                </div>
-              </AnimatedSection>
-              <AnimatedSection delay={0.1}>
-                <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-display font-bold leading-tight mb-6">
-                  {t.heroTitle1}{' '}
-                  <span className="text-gradient-gold">{t.heroTitle2}</span>
-                  <br />{t.heroTitle3}
-                </h1>
-              </AnimatedSection>
-              <AnimatedSection delay={0.2}>
-                <p className="text-lg md:text-xl text-muted-foreground max-w-2xl mx-auto mb-10">
-                  {t.heroSub}
-                </p>
-              </AnimatedSection>
-              <AnimatedSection delay={0.3}>
-                <div className="flex flex-col sm:flex-row gap-4 justify-center">
-                  <motion.a
-                    whileHover={{ scale: 1.05 }}
-                    whileTap={{ scale: 0.97 }}
-                    href={whatsappUrl}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="btn-gold text-center flex items-center justify-center gap-2"
-                  >
-                    <MessageCircle className="w-5 h-5" />
-                    {t.ctaPrimary}
-                  </motion.a>
-                  <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.97 }}>
-                    <Link to={lang === 'es' ? '/contacto' : lang === 'pt' ? '/pt/contato' : '/en/contact'} className="btn-outline-gold text-center block">
-                      {lang === 'es' ? 'Ver planes y precios' : lang === 'pt' ? 'Ver planos e preços' : 'See plans & pricing'}
-                    </Link>
-                  </motion.div>
-                </div>
-              </AnimatedSection>
-              {/* Trust strip — regla de 3 segundos */}
-              <AnimatedSection delay={0.4}>
-                <div className="mt-10 flex flex-wrap items-center justify-center gap-x-6 gap-y-3 text-xs md:text-sm text-muted-foreground">
-                  <div className="flex items-center gap-1.5">
-                    <Star className="w-4 h-4 fill-gold text-gold" />
-                    <span><strong className="text-foreground">5.0</strong> Google Reviews</span>
+            <div className="grid lg:grid-cols-[1.15fr,1fr] gap-12 lg:gap-16 items-center">
+              {/* Left: copy */}
+              <div>
+                <AnimatedSection delay={0}>
+                  <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-gold/20 bg-gold/5 text-gold text-xs md:text-sm font-medium mb-6">
+                    <Rocket className="w-4 h-4" />
+                    {lang === 'es' ? 'Agencia Boutique de SEO para Ecommerce' : lang === 'pt' ? 'Agência Boutique de SEO para E-commerce' : 'Boutique E-commerce SEO Agency'}
                   </div>
-                  <span className="hidden sm:inline text-border">•</span>
-                  <div className="flex items-center gap-1.5">
-                    <CheckCircle2 className="w-4 h-4 text-gold" />
-                    <span><strong className="text-foreground">+13</strong> {lang === 'es' ? 'marcas impactadas' : lang === 'pt' ? 'marcas impactadas' : 'brands impacted'}</span>
+                </AnimatedSection>
+                <AnimatedSection delay={0.1}>
+                  <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-display font-bold leading-[1.05] mb-6">
+                    {t.heroTitle1}{' '}
+                    <span className="text-gradient-gold">{t.heroTitle2}</span>
+                    <br />{t.heroTitle3}
+                  </h1>
+                </AnimatedSection>
+                <AnimatedSection delay={0.2}>
+                  <p className="text-base md:text-xl text-muted-foreground max-w-xl mb-8">
+                    {t.heroSub}
+                  </p>
+                </AnimatedSection>
+                <AnimatedSection delay={0.3}>
+                  <div className="flex flex-col sm:flex-row gap-3">
+                    <motion.a whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.97 }} href={whatsappUrl} target="_blank" rel="noopener noreferrer" className="btn-gold text-center flex items-center justify-center gap-2">
+                      <MessageCircle className="w-5 h-5" />
+                      {t.ctaPrimary}
+                    </motion.a>
+                    <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.97 }}>
+                      <Link to={lang === 'es' ? '/contacto' : lang === 'pt' ? '/pt/contato' : '/en/contact'} className="btn-outline-gold text-center block">
+                        {lang === 'es' ? 'Ver planes y precios' : lang === 'pt' ? 'Ver planos e preços' : 'See plans & pricing'}
+                      </Link>
+                    </motion.div>
                   </div>
-                  <span className="hidden sm:inline text-border">•</span>
-                  <div className="flex items-center gap-1.5">
-                    <Zap className="w-4 h-4 text-gold" />
-                    <span><strong className="text-foreground">{lang === 'es' ? 'Entrega' : lang === 'pt' ? 'Entrega' : 'Delivery'}</strong> {lang === 'es' ? 'en 1 semana' : lang === 'pt' ? 'em 1 semana' : 'in 1 week'}</span>
+                </AnimatedSection>
+                <AnimatedSection delay={0.4}>
+                  <div className="mt-8 flex flex-wrap items-center gap-x-5 gap-y-2 text-xs md:text-sm text-muted-foreground">
+                    <div className="flex items-center gap-1.5">
+                      <div className="flex">{[...Array(5)].map((_, i) => <Star key={i} className="w-3.5 h-3.5 fill-gold text-gold" />)}</div>
+                      <span><strong className="text-foreground">5.0</strong> Google</span>
+                    </div>
+                    <span className="text-border">•</span>
+                    <span><strong className="text-foreground">+13</strong> {lang === 'es' ? 'marcas' : lang === 'pt' ? 'marcas' : 'brands'}</span>
+                    <span className="text-border">•</span>
+                    <span>{lang === 'es' ? 'Entrega en' : lang === 'pt' ? 'Entrega em' : 'Delivery in'} <strong className="text-foreground">1 {lang === 'pt' ? 'semana' : lang === 'en' ? 'week' : 'semana'}</strong></span>
                   </div>
-                  <span className="hidden sm:inline text-border">•</span>
-                  <div className="flex items-center gap-1.5">
-                    <Shield className="w-4 h-4 text-gold" />
-                    <span><strong className="text-foreground">{lang === 'es' ? 'Sin contratos' : lang === 'pt' ? 'Sem contratos' : 'No contracts'}</strong> {lang === 'es' ? 'forzosos' : lang === 'pt' ? 'forçados' : 'lock-in'}</span>
+                </AnimatedSection>
+              </div>
+
+              {/* Right: KPI proof cards */}
+              <AnimatedSection delay={0.35}>
+                <div className="relative">
+                  <div className="absolute -inset-4 bg-gradient-to-br from-gold/10 via-transparent to-wine/10 rounded-3xl blur-2xl" />
+                  <div className="relative grid grid-cols-2 gap-3 md:gap-4">
+                    <motion.div whileHover={{ y: -4 }} className="glass-card p-5 md:p-6 col-span-2 border-gold/30">
+                      <div className="flex items-center justify-between mb-2">
+                        <span className="text-xs uppercase tracking-wide text-muted-foreground">{lang === 'es' ? 'Tráfico orgánico' : lang === 'pt' ? 'Tráfego orgânico' : 'Organic traffic'}</span>
+                        <TrendingUp className="w-4 h-4 text-gold" />
+                      </div>
+                      <div className="text-4xl md:text-5xl font-display font-bold text-gradient-gold">
+                        <AnimatedCounter value={95} prefix="+" suffix="%" />
+                      </div>
+                      <p className="text-xs text-muted-foreground mt-2">{lang === 'es' ? 'Promedio en los últimos 12 meses' : lang === 'pt' ? 'Média nos últimos 12 meses' : 'Average over the last 12 months'}</p>
+                    </motion.div>
+                    <motion.div whileHover={{ y: -4 }} className="glass-card p-4 md:p-5">
+                      <div className="text-2xl md:text-3xl font-display font-bold text-gold mb-1">
+                        <AnimatedCounter value={50} prefix="+" suffix="%" />
+                      </div>
+                      <p className="text-xs text-muted-foreground">{lang === 'es' ? 'Ingresos orgánicos' : lang === 'pt' ? 'Receita orgânica' : 'Organic revenue'}</p>
+                    </motion.div>
+                    <motion.div whileHover={{ y: -4 }} className="glass-card p-4 md:p-5">
+                      <div className="text-2xl md:text-3xl font-display font-bold text-gold mb-1">
+                        &lt;<AnimatedCounter value={1} suffix="s" />
+                      </div>
+                      <p className="text-xs text-muted-foreground">{lang === 'es' ? 'Tiempo de carga' : lang === 'pt' ? 'Tempo de carga' : 'Load time'}</p>
+                    </motion.div>
+                    <motion.div whileHover={{ y: -4 }} className="glass-card p-4 md:p-5 col-span-2 border-wine/20">
+                      <div className="flex items-center gap-3">
+                        <div className="w-10 h-10 rounded-xl bg-wine/15 flex items-center justify-center shrink-0">
+                          <MessageCircle className="w-5 h-5 text-wine-light" />
+                        </div>
+                        <div className="min-w-0">
+                          <p className="text-sm font-display font-semibold text-foreground truncate">{lang === 'es' ? 'WhatsApp IA Bot integrado' : lang === 'pt' ? 'WhatsApp IA Bot integrado' : 'Integrated WhatsApp AI Bot'}</p>
+                          <p className="text-xs text-muted-foreground truncate">{lang === 'es' ? 'Tu cliente pregunta. La IA vende.' : lang === 'pt' ? 'Seu cliente pergunta. A IA vende.' : 'Customers ask. The AI sells.'}</p>
+                        </div>
+                      </div>
+                    </motion.div>
                   </div>
                 </div>
               </AnimatedSection>
@@ -432,30 +458,43 @@ const Index = ({ lang = 'es' }: IndexProps) => {
           </div>
         </section>
 
-        {/* Services */}
+        {/* Services — bento grid */}
         <section className="py-20 md:py-28">
           <div className="container mx-auto px-4 md:px-6">
             <AnimatedSection className="text-center mb-16">
               <h2 className="text-3xl md:text-4xl lg:text-5xl font-display font-bold mb-4">{t.servicesTitle}</h2>
               <p className="text-muted-foreground text-lg max-w-xl mx-auto">{t.servicesSub}</p>
             </AnimatedSection>
-            <StaggerContainer className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-6xl mx-auto">
-              {t.services.map((s, i) => (
-                <StaggerItem key={i}>
-                  <ScaleOnHover>
-                    <Link to={s.href} className="glass-card p-8 hover:border-gold/30 transition-all duration-300 group block h-full">
-                      <div className="w-14 h-14 rounded-2xl flex items-center justify-center mb-6 bg-gold/10">
-                        <s.icon className="w-7 h-7 text-gold" />
-                      </div>
-                      <h3 className="text-xl font-display font-semibold mb-3 text-foreground">{s.title}</h3>
-                      <p className="text-muted-foreground text-sm leading-relaxed mb-4">{s.desc}</p>
-                      <span className="inline-flex items-center gap-1 text-gold text-sm font-medium group-hover:gap-2 transition-all">
-                        {lang === 'es' ? 'Ver servicio' : lang === 'pt' ? 'Ver serviço' : 'Learn more'} <ArrowRight className="w-4 h-4" />
-                      </span>
-                    </Link>
-                  </ScaleOnHover>
-                </StaggerItem>
-              ))}
+            <StaggerContainer className="grid md:grid-cols-3 lg:grid-cols-4 gap-5 max-w-6xl mx-auto auto-rows-fr">
+              {t.services.map((s, i) => {
+                // bento: first item (WhatsApp IA / SEO) spans 2 cols; second spans 2 rows
+                const isFeatured = i === 0;
+                const isTall = i === 1;
+                const cls = isFeatured
+                  ? 'md:col-span-2 lg:col-span-2'
+                  : isTall
+                  ? 'md:row-span-2'
+                  : '';
+                return (
+                  <StaggerItem key={i} className={cls}>
+                    <ScaleOnHover>
+                      <Link
+                        to={s.href}
+                        className={`glass-card p-6 md:p-7 hover:border-gold/40 transition-all duration-300 group flex flex-col h-full ${isFeatured ? 'ring-1 ring-gold/30 bg-gradient-to-br from-gold/5 to-transparent' : ''}`}
+                      >
+                        <div className={`rounded-2xl flex items-center justify-center mb-5 bg-gold/10 ${isFeatured ? 'w-16 h-16' : 'w-12 h-12'}`}>
+                          <s.icon className={`text-gold ${isFeatured ? 'w-8 h-8' : 'w-6 h-6'}`} />
+                        </div>
+                        <h3 className={`font-display font-semibold mb-2 text-foreground ${isFeatured ? 'text-2xl' : 'text-lg'}`}>{s.title}</h3>
+                        <p className="text-muted-foreground text-sm leading-relaxed mb-4 flex-1">{s.desc}</p>
+                        <span className="inline-flex items-center gap-1 text-gold text-sm font-medium group-hover:gap-2 transition-all">
+                          {lang === 'es' ? 'Ver servicio' : lang === 'pt' ? 'Ver serviço' : 'Learn more'} <ArrowRight className="w-4 h-4" />
+                        </span>
+                      </Link>
+                    </ScaleOnHover>
+                  </StaggerItem>
+                );
+              })}
             </StaggerContainer>
             <AnimatedSection className="text-center mt-10">
               <Link to={lang === 'es' ? '/servicios' : lang === 'pt' ? '/pt/servicos' : '/en/services'} className="btn-outline-gold inline-flex items-center gap-2 !px-6 !py-3 text-sm">
