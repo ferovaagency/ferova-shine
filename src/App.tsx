@@ -48,11 +48,11 @@ const App = () => (
     <TooltipProvider>
       <Toaster />
       <Sonner />
-      <ExitIntentPopup lang={hostLang} />
-      <SocialProofToasts lang={hostLang} />
-      <AiAdvisorChat lang={hostLang} />
-      <CookieBanner lang={hostLang} />
       <BrowserRouter>
+        <ExitIntentPopup lang={hostLang} />
+        <SocialProofToasts lang={hostLang} />
+        <AiAdvisorChat lang={hostLang} />
+        <CookieBanner lang={hostLang} />
         <ScrollToTop />
         <Routes>
           {/* Root routes — language determined by hostname */}
