@@ -59,16 +59,26 @@ export type Database = {
           author: string
           category: string | null
           content: string
+          content_en: string | null
+          content_pt: string | null
           cover_image: string | null
           created_at: string
           excerpt: string | null
+          excerpt_en: string | null
+          excerpt_pt: string | null
           id: string
           keyword: string | null
           meta_description: string | null
+          meta_description_en: string | null
+          meta_description_pt: string | null
           meta_title: string | null
+          meta_title_en: string | null
+          meta_title_pt: string | null
           published_at: string
           slug: string
           title: string
+          title_en: string | null
+          title_pt: string | null
           updated_at: string
         }
         Insert: {
@@ -76,16 +86,26 @@ export type Database = {
           author?: string
           category?: string | null
           content: string
+          content_en?: string | null
+          content_pt?: string | null
           cover_image?: string | null
           created_at?: string
           excerpt?: string | null
+          excerpt_en?: string | null
+          excerpt_pt?: string | null
           id?: string
           keyword?: string | null
           meta_description?: string | null
+          meta_description_en?: string | null
+          meta_description_pt?: string | null
           meta_title?: string | null
+          meta_title_en?: string | null
+          meta_title_pt?: string | null
           published_at?: string
           slug: string
           title: string
+          title_en?: string | null
+          title_pt?: string | null
           updated_at?: string
         }
         Update: {
@@ -93,16 +113,26 @@ export type Database = {
           author?: string
           category?: string | null
           content?: string
+          content_en?: string | null
+          content_pt?: string | null
           cover_image?: string | null
           created_at?: string
           excerpt?: string | null
+          excerpt_en?: string | null
+          excerpt_pt?: string | null
           id?: string
           keyword?: string | null
           meta_description?: string | null
+          meta_description_en?: string | null
+          meta_description_pt?: string | null
           meta_title?: string | null
+          meta_title_en?: string | null
+          meta_title_pt?: string | null
           published_at?: string
           slug?: string
           title?: string
+          title_en?: string | null
+          title_pt?: string | null
           updated_at?: string
         }
         Relationships: []
