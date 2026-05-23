@@ -2,6 +2,7 @@ import { useEffect, useState, useCallback } from 'react';
 import { Link } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Cookie, X, Settings, Check } from 'lucide-react';
+import { trackEvent } from '@/lib/analytics';
 
 export type CookieConsent = {
   essential: true;
