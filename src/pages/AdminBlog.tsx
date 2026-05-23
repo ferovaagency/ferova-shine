@@ -443,6 +443,29 @@ const AdminBlog = ({ lang = 'es' }: Props) => {
                         />
                       </div>
 
+                      {/* Cover image upload */}
+                      <div className="rounded-xl border border-border bg-muted/30 p-4 space-y-3">
+                        <p className="text-xs uppercase tracking-wide text-muted-foreground flex items-center gap-1.5">
+                          <ImageIcon className="h-3.5 w-3.5" /> {lang === 'es' ? 'Imagen de portada' : lang === 'pt' ? 'Imagem de capa' : 'Cover image'}
+                        </p>
+                        {preview.cover_image ? (
+                          <img src={preview.cover_image} alt="cover" className="w-full max-h-56 object-cover rounded-lg border border-border" />
+                        ) : (
+                          <p className="text-xs text-muted-foreground italic">
+                            {lang === 'es' ? 'Sin imagen. Sube una JPG/PNG/WebP (máx 5MB).' : lang === 'pt' ? 'Sem imagem. Envie JPG/PNG/WebP (máx 5MB).' : 'No image. Upload JPG/PNG/WebP (max 5MB).'}
+                          </p>
+                        )}
+                        <input ref={coverInputRef} type="file" accept="image/*" className="hidden" onChange={(e) => { const f = e.target.files?.[0]; if (f) handleUploadCover(f); }} />
+                        <Button type="button" variant="outline" size="sm" disabled={isUploading} onClick={() => coverInputRef.current?.click()}>
+                          {isUploading ? <Loader2 className="mr-2 h-4 w-4 animate-spin" /> : <ImagePlus className="mr-2 h-4 w-4" />}
+                          {isUploading
+                            ? (lang === 'es' ? 'Subiendo...' : lang === 'pt' ? 'Enviando...' : 'Uploading...')
+                            : preview.cover_image
+                              ? (lang === 'es' ? 'Reemplazar imagen' : lang === 'pt' ? 'Substituir imagem' : 'Replace image')
+                              : (lang === 'es' ? 'Subir imagen' : lang === 'pt' ? 'Enviar imagem' : 'Upload image')}
+                        </Button>
+                      </div>
+
                       {/* Publish */}
                       <Button type="button" onClick={handleSave} disabled={isSaving || !canPublish} className="w-full">
                         {isSaving ? <Loader2 className="mr-2 h-4 w-4 animate-spin" /> : <Save className="mr-2 h-4 w-4" />}
