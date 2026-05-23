@@ -153,8 +153,11 @@ const Footer = ({ currentLang, lang }: FooterProps) => {
           ))}
         </div>
 
-        <div className="mt-12 border-t border-border/30 pt-8 text-center">
+        <div className="mt-12 border-t border-border/30 pt-8 flex flex-col sm:flex-row items-center justify-between gap-3">
           <p className="text-xs text-muted-foreground">© {new Date().getFullYear()} Ferova Agency. {d.rights}</p>
+          <button onClick={() => window.dispatchEvent(new CustomEvent('open-cookie-settings'))} className="text-xs text-muted-foreground hover:text-gold underline">
+            {locale === 'pt' ? 'Configurar cookies' : locale === 'en' ? 'Cookie settings' : 'Configurar cookies'}
+          </button>
         </div>
       </div>
     </footer>
