@@ -122,7 +122,7 @@ const App = () => (
           <Route path="/en/contact" element={<Contacto lang="en" />} />
           <Route path="/en/blog" element={<Blog lang="en" />} />
           <Route path="/en/blog/:slug" element={<BlogPost lang="en" />} />
-          <Route path="/en/admin-blog" element={<AdminBlog lang="en" />} />
+          <Route path="/en/admin-blog" element={<AdminGuard><AdminBlog lang="en" /></AdminGuard>} />
           <Route path="/en/resources" element={<Recursos lang="en" />} />
           <Route path="/en/about" element={<SobreNosotros lang="en" />} />
           <Route path="/en/terms" element={<Terminos lang="en" />} />
