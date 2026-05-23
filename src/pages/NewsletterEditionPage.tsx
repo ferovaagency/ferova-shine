@@ -141,7 +141,7 @@ const NewsletterEditionPage = ({ lang = 'es' }: Props) => {
                 <div className="absolute inset-0 flex flex-col items-center justify-center text-center p-6 rounded-2xl" style={{ background: 'hsla(243, 31%, 10%, 0.85)', backdropFilter: 'blur(4px)' }}>
                   <p className="text-lg font-bold mb-2" style={{ color: 'hsl(45 86% 52%)' }}>{l.proLocked}</p>
                   <p className="text-sm text-muted-foreground mb-6 max-w-sm">{l.proDesc}</p>
-                  <a href={`https://wa.me/17865787671?text=${waProMsg}`} target="_blank" rel="noopener noreferrer" className="btn-gold text-sm">
+                  <a href={`https://wa.link/bfq71f?text=${waProMsg}`} target="_blank" rel="noopener noreferrer" className="btn-gold text-sm">
                     <MessageCircle className="inline h-4 w-4 mr-2 -mt-0.5" />{l.proCta}
                   </a>
                 </div>
@@ -158,7 +158,7 @@ const NewsletterEditionPage = ({ lang = 'es' }: Props) => {
             <div className="glass-card p-6 text-center">
               <p className="font-bold mb-4" style={{ fontFamily: "'Outfit', sans-serif" }}>{l.liked}</p>
               <div className="flex flex-col sm:flex-row gap-3 justify-center">
-                <a href={`https://wa.me/17865787671?text=${waProMsg}`} target="_blank" rel="noopener noreferrer" className="btn-gold text-sm">
+                <a href={`https://wa.link/bfq71f?text=${waProMsg}`} target="_blank" rel="noopener noreferrer" className="btn-gold text-sm">
                   <MessageCircle className="inline h-4 w-4 mr-2 -mt-0.5" />{l.subscribePro}
                 </a>
                 <a href={linkedInShare} target="_blank" rel="noopener noreferrer" className="btn-outline-gold text-sm">

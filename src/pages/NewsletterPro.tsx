@@ -8,7 +8,7 @@ import { trackEvent } from '@/lib/analytics';
 interface Props { lang?: 'es' | 'en' | 'pt' }
 
 const PRICE_USD = 9;
-const WA = `https://wa.me/17865787671?text=${encodeURIComponent('Hola, quiero suscribirme a Ferova Pro')}`;
+const WA = `https://wa.link/bfq71f?text=${encodeURIComponent('Hola, quiero suscribirme a Ferova Pro')}`;
 
 const NewsletterPro = ({ lang = 'es' }: Props) => {
   const onSubscribe = (source: string) => trackEvent('whatsapp_button_clicked', { source, label: 'newsletter_pro_subscribe' });
