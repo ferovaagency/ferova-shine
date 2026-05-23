@@ -217,14 +217,22 @@ const AiAdvisorChat = ({ lang = 'es' }: AiAdvisorChatProps) => {
         <span className="absolute inset-0 rounded-full animate-ping opacity-20" style={{ background: 'hsl(45,86%,40%)' }} />
       </button>
 
-      {/* Badge label — visible on mobile (next to button) and desktop */}
+      {/* Badge label — big, visible, eye-catching on mobile and desktop */}
       {!open && (
-        <div className="fixed z-50 flex items-center gap-1 bg-card border border-border rounded-full px-3 py-1.5 shadow-lg text-xs font-medium text-foreground pointer-events-none
-          bottom-[6.75rem] right-[5.5rem]
-          lg:bottom-11 lg:left-[5.5rem] lg:right-auto">
-          <Bot className="w-3.5 h-3.5 text-gold" />
-          {txt.badge}
-        </div>
+        <button
+          onClick={() => { setOpen(true); trackAIChat('open'); trackEvent('ai_assistant_opened'); }}
+          className="fixed z-50 flex items-center gap-2 rounded-full px-4 py-2.5 shadow-xl text-sm font-bold text-white animate-pulse
+            bottom-[7rem] right-[5.5rem]
+            lg:bottom-12 lg:left-[6rem] lg:right-auto lg:px-5 lg:py-3 lg:text-base"
+          style={{
+            background: 'linear-gradient(135deg, hsl(45,86%,40%), hsl(45,86%,52%))',
+            boxShadow: '0 8px 24px hsla(45,86%,40%,0.45)',
+          }}
+          aria-label={txt.badge}
+        >
+          <Bot className="w-4 h-4 lg:w-5 lg:h-5" />
+          <span>👋 {txt.badge}</span>
+        </button>
       )}
 
       {/* Chat panel */}

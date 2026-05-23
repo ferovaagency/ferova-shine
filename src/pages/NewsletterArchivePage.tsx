@@ -34,10 +34,9 @@ const NewsletterArchivePage = ({ lang = 'es' }: Props) => {
 
   useEffect(() => {
     (async () => {
-      const { data } = await supabase
-        .from('newsletter_editions')
+      const { data } = await (supabase as any)
+        .from('newsletter_editions_public')
         .select('id, edition_number, slug, title, topics, plan, reading_time, published_at')
-        .eq('published', true)
         .order('edition_number', { ascending: false });
       setEditions(data || []);
       setLoading(false);

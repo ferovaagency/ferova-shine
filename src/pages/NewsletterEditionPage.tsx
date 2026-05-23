@@ -20,7 +20,6 @@ interface Edition {
   reading_time: number | null;
   published_at: string | null;
   free_content: any;
-  pro_content: any;
 }
 
 const t = {
@@ -41,17 +40,16 @@ const NewsletterEditionPage = ({ lang = 'es' }: Props) => {
     if (!slug) return;
     (async () => {
       setLoading(true);
-      const { data } = await supabase
-        .from('newsletter_editions')
+      const { data } = await (supabase as any)
+        .from('newsletter_editions_public')
         .select('*')
         .eq('slug', slug)
-        .eq('published', true)
         .maybeSingle();
       setEdition(data as Edition | null);
 
       if (data) {
-        const { data: prev } = await supabase.from('newsletter_editions').select('slug').eq('published', true).eq('edition_number', data.edition_number - 1).maybeSingle();
-        const { data: next } = await supabase.from('newsletter_editions').select('slug').eq('published', true).eq('edition_number', data.edition_number + 1).maybeSingle();
+        const { data: prev } = await (supabase as any).from('newsletter_editions_public').select('slug').eq('edition_number', data.edition_number - 1).maybeSingle();
+        const { data: next } = await (supabase as any).from('newsletter_editions_public').select('slug').eq('edition_number', data.edition_number + 1).maybeSingle();
         setPrevSlug(prev?.slug || null);
         setNextSlug(next?.slug || null);
       }
@@ -68,7 +66,7 @@ const NewsletterEditionPage = ({ lang = 'es' }: Props) => {
   if (!edition) return (<PageTransition><Header lang={lang} /><div className="pt-32 pb-20 text-center text-muted-foreground">{l.notFound}</div><Footer lang={lang} /></PageTransition>);
 
   const fc = edition.free_content || {};
-  const pc = edition.pro_content || {};
+  const pc: any = {};
 
   return (
     <PageTransition>
