@@ -31,6 +31,7 @@ import OptimizacionWhatsapp from "./pages/OptimizacionWhatsapp";
 import WhatsappIaBot from "./pages/WhatsappIaBot";
 import NewsletterPro from "./pages/NewsletterPro";
 import AdminBlog from "./pages/AdminBlog";
+import AdminGuard from "./components/admin/AdminGuard";
 import VCard from "./pages/VCard";
 import NewsletterPage from "./pages/NewsletterPage";
 import NewsletterArchivePage from "./pages/NewsletterArchivePage";
@@ -92,7 +93,7 @@ const App = () => (
           <Route path="/contact" element={<Contacto lang={hostLang} />} />
           <Route path="/blog" element={<Blog lang={hostLang} />} />
           <Route path="/blog/:slug" element={<BlogPost lang={hostLang} />} />
-          <Route path="/admin-blog" element={<AdminBlog lang={hostLang} />} />
+          <Route path="/admin-blog" element={<AdminGuard><AdminBlog lang={hostLang} /></AdminGuard>} />
           <Route path="/recursos" element={<Recursos lang={hostLang} />} />
           <Route path="/resources" element={<Recursos lang={hostLang} />} />
           <Route path="/nosotros" element={<SobreNosotros lang={hostLang} />} />
@@ -121,7 +122,7 @@ const App = () => (
           <Route path="/en/contact" element={<Contacto lang="en" />} />
           <Route path="/en/blog" element={<Blog lang="en" />} />
           <Route path="/en/blog/:slug" element={<BlogPost lang="en" />} />
-          <Route path="/en/admin-blog" element={<AdminBlog lang="en" />} />
+          <Route path="/en/admin-blog" element={<AdminGuard><AdminBlog lang="en" /></AdminGuard>} />
           <Route path="/en/resources" element={<Recursos lang="en" />} />
           <Route path="/en/about" element={<SobreNosotros lang="en" />} />
           <Route path="/en/terms" element={<Terminos lang="en" />} />
@@ -151,7 +152,7 @@ const App = () => (
           <Route path="/newsletter" element={<NewsletterPage lang={hostLang} />} />
           <Route path="/newsletter/archivo" element={<NewsletterArchivePage lang={hostLang} />} />
           <Route path="/newsletter/edicion/:slug" element={<NewsletterEditionPage lang={hostLang} />} />
-          <Route path="/newsletter/admin" element={<NewsletterAdminPage />} />
+          <Route path="/newsletter/admin" element={<AdminGuard><NewsletterAdminPage /></AdminGuard>} />
           <Route path="/newsletter-pro" element={<NewsletterPro lang={hostLang} />} />
           <Route path="/en/newsletter-pro" element={<NewsletterPro lang="en" />} />
           <Route path="/pt/newsletter-pro" element={<NewsletterPro lang="pt" />} />
