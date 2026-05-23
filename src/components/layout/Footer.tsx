@@ -105,8 +105,8 @@ const Footer = ({ currentLang, lang }: FooterProps) => {
             </Link>
             <p className="mt-3 max-w-xs text-sm text-muted-foreground">{d.tagline}</p>
             <div className="mt-4 space-y-2 text-sm text-muted-foreground">
-              <a href="mailto:maria.fer@ferova.com.co" className="flex items-center gap-2 transition-colors hover:text-gold">
-                <Mail className="h-4 w-4" /> maria.fer@ferova.com.co
+              <a href="mailto:gerencia@seoparaecommerce.co" className="flex items-center gap-2 transition-colors hover:text-gold">
+                <Mail className="h-4 w-4" /> gerencia@seoparaecommerce.co
               </a>
               <a href="https://wa.me/17865787671" target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 transition-colors hover:text-gold">
                 <MessageCircle className="h-4 w-4" /> +1 (786) 578-7671
