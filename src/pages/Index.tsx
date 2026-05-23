@@ -13,6 +13,7 @@ import { AnimatedSection, StaggerContainer, StaggerItem, ScaleOnHover, PageTrans
 import { motion, useMotionValue, useTransform, animate } from 'framer-motion';
 import { useEffect, useRef } from 'react';
 import { useAnalytics } from '@/hooks/useAnalytics';
+import SEO from '@/components/SEO';
 
 interface IndexProps {
   lang?: 'es' | 'en' | 'pt';
@@ -282,8 +283,15 @@ const Index = ({ lang = 'es' }: IndexProps) => {
     lang === 'es' ? 'Hola Ferova, quiero agendar una asesoría.' : lang === 'pt' ? 'Olá Ferova, quero agendar uma consultoria.' : 'Hi Ferova, I want to book a consultation.'
   );
 
+  const seo = lang === 'en'
+    ? { t: 'Ferova Agency — High-performance Web Apps for E-commerce', d: 'Boutique agency building high-performance web apps and SEO for e-commerce in LATAM and the US. 1-week delivery with integrated AI.', p: '/' }
+    : lang === 'pt'
+    ? { t: 'Ferova Agency — Web Apps de alta performance para E-commerce', d: 'Agência boutique de web apps de alta performance e SEO para e-commerce na LATAM. Entrega em 1 semana com IA integrada.', p: '/pt' }
+    : { t: 'Ferova Agency — Web Apps de Alto Rendimiento para E-commerce', d: 'Agencia boutique de webapps de alto rendimiento y SEO para ecommerce en LATAM y EEUU. Entrega en 1 semana con IA integrada.', p: '/' };
+
   return (
     <PageTransition>
+      <SEO title={seo.t} description={seo.d} path={seo.p} lang={lang} />
       <Header currentLang={lang} />
       <main>
         {/* Hero — split layout with KPI cards (regla 3 segundos) */}
