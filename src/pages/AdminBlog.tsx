@@ -427,6 +427,10 @@ const AdminBlog = ({ lang = 'es' }: Props) => {
               </Card>
             </div>
           </div>
+
+          <div className="container mx-auto px-4 md:px-6 mt-8">
+            <BlogTranslations />
+          </div>
         </section>
       </main>
       <Footer currentLang={lang} />
