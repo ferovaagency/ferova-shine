@@ -31,6 +31,7 @@ import OptimizacionWhatsapp from "./pages/OptimizacionWhatsapp";
 import WhatsappIaBot from "./pages/WhatsappIaBot";
 import NewsletterPro from "./pages/NewsletterPro";
 import AdminBlog from "./pages/AdminBlog";
+import AdminGuard from "./components/admin/AdminGuard";
 import VCard from "./pages/VCard";
 import NewsletterPage from "./pages/NewsletterPage";
 import NewsletterArchivePage from "./pages/NewsletterArchivePage";
