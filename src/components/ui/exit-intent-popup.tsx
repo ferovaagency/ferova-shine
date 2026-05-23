@@ -4,6 +4,7 @@ import { X, Mail, Sparkles } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { supabase } from '@/integrations/supabase/client';
 import { toast } from 'sonner';
+import { trackEvent } from '@/lib/analytics';
 
 interface Props {
   lang?: 'es' | 'en' | 'pt';
@@ -68,6 +69,7 @@ const ExitIntentPopup = ({ lang = 'es' }: Props) => {
       if (e.clientY <= 5) {
         setShow(true);
         sessionStorage.setItem('exit-intent-shown', 'true');
+        trackEvent('popup_shown', { type: 'exit_intent' });
       }
     };
     const timeout = setTimeout(() => {
@@ -79,7 +81,7 @@ const ExitIntentPopup = ({ lang = 'es' }: Props) => {
     };
   }, [dismissed]);
 
-  const close = () => { setShow(false); setDismissed(true); };
+  const close = () => { setShow(false); setDismissed(true); trackEvent('popup_closed'); };
 
   const privacyHref = lang === 'en' ? '/en/privacy' : lang === 'pt' ? '/pt/privacidade' : '/privacidad';
 
@@ -93,9 +95,10 @@ const ExitIntentPopup = ({ lang = 'es' }: Props) => {
         body: { email: email.trim(), name: name.trim(), source: 'popup', attributes: { LANG: lang } },
       });
       if (error) throw error;
+      trackEvent('newsletter_signup', { source: 'exit_popup', lang });
       toast.success(t.success);
       setName(''); setEmail(''); setConsent(false);
-      close();
+      setShow(false); setDismissed(true);
     } catch (err) {
       console.error(err);
       toast.error(t.error);

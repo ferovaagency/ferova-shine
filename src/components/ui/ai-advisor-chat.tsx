@@ -2,6 +2,7 @@ import { useState, useRef, useEffect, useCallback } from 'react';
 import { Bot, X, Send, Sparkles, ArrowDown } from 'lucide-react';
 import ReactMarkdown from 'react-markdown';
 import { useAnalytics } from '@/hooks/useAnalytics';
+import { trackEvent } from '@/lib/analytics';
 
 type Msg = { role: 'user' | 'assistant'; content: string };
 
@@ -87,6 +88,7 @@ const AiAdvisorChat = ({ lang = 'es' }: AiAdvisorChatProps) => {
   const sendMessage = async (text: string) => {
     if (!text.trim() || loading) return;
     trackAIChat('message_sent');
+    trackEvent('ai_assistant_message_sent', { msg_number: messages.filter(m => m.role === 'user').length + 1 });
     const userMsg: Msg = { role: 'user', content: text.trim() };
     const newMessages = [...messages, userMsg];
     setMessages(newMessages);
@@ -199,7 +201,7 @@ const AiAdvisorChat = ({ lang = 'es' }: AiAdvisorChatProps) => {
     <>
       {/* Floating trigger — positioned above WhatsApp button on mobile, left side on desktop */}
       <button
-        onClick={() => { const next = !open; setOpen(next); if (next) trackAIChat('open'); }}
+        onClick={() => { const next = !open; setOpen(next); if (next) { trackAIChat('open'); trackEvent('ai_assistant_opened'); } }}
         className={`fixed z-50 rounded-full shadow-2xl transition-all duration-300 hover:scale-110 group
           ${open ? 'scale-0 opacity-0' : 'scale-100 opacity-100'}
           bottom-24 right-6 lg:bottom-8 lg:left-6 lg:right-auto

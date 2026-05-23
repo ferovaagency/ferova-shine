@@ -38,21 +38,28 @@ import BriefingNewsletter from "./pages/BriefingNewsletter";
 import Privacidad from "./pages/Privacidad";
 import Cookies from "./pages/Cookies";
 import CookieBanner from "@/components/ui/cookie-banner";
+import { useScrollTracking } from "@/hooks/useScrollTracking";
 
 const queryClient = new QueryClient();
 
 const hostLang = getLangFromHostname();
+
+const RouteTracker = () => {
+  useScrollTracking();
+  return null;
+};
 
 const App = () => (
   <QueryClientProvider client={queryClient}>
     <TooltipProvider>
       <Toaster />
       <Sonner />
-      <ExitIntentPopup lang={hostLang} />
-      <SocialProofToasts lang={hostLang} />
-      <AiAdvisorChat lang={hostLang} />
-      <CookieBanner lang={hostLang} />
       <BrowserRouter>
+        <RouteTracker />
+        <ExitIntentPopup lang={hostLang} />
+        <SocialProofToasts lang={hostLang} />
+        <AiAdvisorChat lang={hostLang} />
+        <CookieBanner lang={hostLang} />
         <ScrollToTop />
         <Routes>
           {/* Root routes — language determined by hostname */}

@@ -1,75 +1,67 @@
+# Sesión 2 — Plan de implementación
 
-# Sesión 1 — Plan de implementación
+No tocamos: header, footer, pop-up, asesor IA, banners, cookies (todo de Sesión 1 queda intacto).
 
-Voy a ejecutar los 11 bloques en una sola sesión, pero en este orden para que las dependencias funcionen.
+## Bloque A — Analytics tracking completo
 
-## Bloqueante pendiente
-- **Favicon**: necesito que adjuntes el archivo (PNG/ICO) en el chat antes de poder reemplazar `public/favicon.ico`. El resto avanza sin él.
-- **Secrets Brevo**: ya configurados (`BREVO_API_KEY`, `BREVO_LIST_NEWSLETTER=11`). ✅
+1. Verificar/agregar GA4 (`G-FPTVQ5XHE6` ya está en `useAnalytics.ts`) en `index.html` con Consent Mode v2 (default denied, gated por `cookie_consent`).
+2. Crear `src/lib/analytics.ts` con `trackEvent` tipado y guard de consent desde `localStorage.cookie_consent.analytics`.
+3. Crear hook `src/hooks/useScrollTracking.ts` que dispare `scroll_75` (IntersectionObserver) y `time_on_page_60s` (setTimeout) por ruta.
+4. Aplicar `trackEvent` en:
+   - Header/Footer/CTA: botones WhatsApp (`whatsapp_button_clicked` con `location`)
+   - Footer + selectores: redes (`social_click`)
+   - `AiAdvisorChat`: open, form submit, message_sent (con msg_number), escalated_whatsapp, product_card_clicked
+   - `ExitIntentPopup`: shown/closed/newsletter_signup
+   - `CookieBanner`: aceptar_all / essential / customizar
+   - Home: service_card_clicked, case_study_clicked, blog_clicked, cta_clicked
+   - `Precios`: pricing_card_clicked
+   - `Contacto`: contact_form_submitted
+5. Montar `useScrollTracking` en layout/`App.tsx` y `trackPageView` en cambios de ruta.
 
-## Fase A — Contactos, redes, banderas, fix scroll (sin backend)
-1. **Reemplazo global de contactos**: `grep` de cualquier número/email distinto a `+17865787671` y `gerencia@seoparaecommerce.co` y actualizo. Incluye `Footer.tsx`, `chat-widget.tsx`, `ai-advisor-chat.tsx`, secciones de contacto, asesor IA, CTA.
-2. **Fix doble scroll**: auditar `ScrollToTop.tsx` y todos los `window.scrollTo` sueltos. Dejar UNA sola implementación con `behavior: 'smooth'`.
-3. **Redes sociales reales**: en `Footer.tsx` reemplazar los `href="#"` por los 6 links reales (WhatsApp, LinkedIn, Instagram, Facebook, TikTok, YouTube). Añadir iconos faltantes (Facebook, TikTok, YouTube) con `lucide-react` o SVG.
-4. **Selector de idiomas con banderas**: crear `src/components/ui/country-flag.tsx` con SVG inline de 🇪🇸 🇺🇸 🇧🇷 y usarlo en `Header.tsx` reemplazando códigos de texto.
+## Bloque B — Home rediseñado (regla 3s + StoryBrand + TAYA)
 
-## Fase B — Páginas legales + banner de cookies
-5. **Páginas legales**:
-   - `src/pages/Privacidad.tsx` con el texto completo de la Política de Tratamiento de Datos (Ley 1581 + GDPR).
-   - `src/pages/Cookies.tsx` con la política de cookies.
-   - Rutas en `App.tsx`: `/privacidad`, `/cookies` (+ EN/PT como alias simples).
-   - Actualizar links del footer (`/privacidad`, `/cookies`).
-6. **Banner de cookies**:
-   - `src/components/ui/cookie-banner.tsx`: esquina inferior, 3 botones (Aceptar todas / Solo esenciales / Configurar).
-   - Modal de configuración con switches por categoría.
-   - Persistencia en `localStorage` con clave `cookie_consent`.
-   - Carga condicional de GA4 según `consent.analytics`.
-   - Link "Configurar cookies" en footer que reabre el modal.
-   - Montar en `App.tsx`.
+Reescribir `src/pages/Index.tsx` (y sus secciones) con 6 secciones:
+1. **Hero** — H1 claro, sub con audiencia/resultado, 3 stats de confianza (+7 años, 14M COP/mes, #1 Google), CTA WhatsApp + Ver servicios, visual dashboard (reusar asset existente o generar nuevo).
+2. **El problema** — 3 cards de dolor (no te encuentran / página parqueada / sin tiempo).
+3. **Lo que hacemos por ti** — 4 servicios (Web Apps Ecommerce, SEO+GEO+IAO, WhatsApp IA Bot, Herramientas).
+4. **Resultados reales** — 4 métricas + 1 testimonio destacado (Ana María Osorio) + CTA casos.
+5. **They Ask You Answer** — 5 FAQs en accordion.
+6. **CTA final** — WhatsApp.
 
-## Fase C — Pop-up newsletter + edge function brevo-sync
-7. **Edge function `brevo-sync`**: crear `supabase/functions/brevo-sync/index.ts` con el código provisto (CORS, validación con Zod, llamada a Brevo API). Se despliega sola.
-8. **Reemplazar `ExitIntentPopup`** para que ofrezca el newsletter:
-   - Título, bajada, campos nombre + email + checkbox consent + link a `/privacidad`.
-   - Submit → `supabase.functions.invoke('brevo-sync', { body: { email, name, source: 'popup' } })`.
-   - Manejo de éxito/error con toast.
-9. **Aplicar `brevo-sync` en los otros 3 puntos de captura**:
-   - `Recursos.tsx` (sección de recursos gratuitos) → `source: 'recursos'`.
-   - `NewsletterPage.tsx` → `source: 'newsletter_page'`.
-   - Asesor IA (ver Fase D) → `source: 'asesor_ia'`.
+Todos los textos i18n (es/en/pt) siguiendo memoria narrativa (sin nombrar tecnologías).
 
-## Fase D — Asesor IA con persistencia + admin
-10. **Migración DB** (única migración SQL en esta sesión):
-    - Enum `app_role` ('admin','user') si no existe.
-    - Tabla `user_roles` (id, user_id, role, unique(user_id,role)) + RLS.
-    - Función security-definer `has_role(_user_id, _role)`.
-    - Tabla `ai_conversations` (session_id, user_name, user_email, consent, messages JSONB, escalated, timestamps).
-    - RLS: `INSERT/UPDATE` público (chat anónimo); `SELECT` solo para admins vía `has_role`.
-    - Trigger `updated_at` reutilizando función existente o nueva.
-11. **Auth para admin**: habilitar email/password (sin auto-confirm) y Google. Crear `/auth` (login + signup) y `/admin/conversaciones` protegida con redirect.
-12. **Refactor del asesor IA**:
-    - Pantalla inicial: nombre + email + checkbox consent (link a `/privacidad`) + botón "Empezar conversación".
-    - Al primer mensaje: generar `session_id`, INSERT en `ai_conversations`, llamar `brevo-sync` (source: 'asesor_ia').
-    - Cada mensaje siguiente: UPDATE del array `messages`.
-    - Burbuja con punto rojo pulsante (ya parece existir, verifico estilos).
-    - Eliminar cualquier pop-up secundario del asesor IA.
-13. **`/admin/conversaciones`**: lista con filtros (fecha, escalated, email) + vista detalle.
+## Bloque C — Servicios reestructurados
 
-## Fase E — Favicon (si llega el archivo)
-14. Copiar a `public/favicon.png`, borrar `favicon.ico` antiguo, actualizar `<link rel="icon">` en `index.html`.
+1. No hay tabla `services` en DB (los servicios viven en código). Refactor `src/pages/Servicios.tsx` para mostrar SOLO 4 categorías: `seo-geo-iao`, `web-apps-ecommerce`, `whatsapp-ia-bot`, `herramientas-marketing`.
+2. Crear landing nueva `src/pages/WhatsappIaBot.tsx` con estructura completa (hero, demo gif/mockup, problema, 3 pasos, casos uso, métricas, precio $100 USD/mes, FAQ, CTA).
+3. Crear landing nueva `src/pages/HerramientasMarketing.tsx` con hero, categorías, 6-8 herramientas destacadas, CTA a `/recursos`.
+4. Consolidar landing SEO existente (`SeoEcommerce.tsx`) bajo `/servicios/seo-geo-iao` (alias de ruta).
+5. Añadir rutas en `App.tsx` y actualizar links internos.
 
-## Validación final
-- Probar popup → Brevo (lista 11) recibe el contacto.
-- Probar banner cookies → `localStorage.cookie_consent` se guarda.
-- Probar redes sociales → todas abren en pestaña nueva.
-- Probar asesor IA → guarda en `ai_conversations` + sincroniza a Brevo.
-- Probar `/privacidad`, `/cookies` desde footer.
-- Probar `/auth` → login → `/admin/conversaciones` accesible solo con rol admin.
+## Bloque D — i18n blogs y casos de éxito
+
+Estrategia híbrida (Opción A + B):
+1. Migración SQL: añadir columnas `*_en` y `*_pt` a `blog_posts` (title, excerpt, content, meta_title, meta_description).
+2. Como no existe tabla `case_studies` (los casos están hardcoded), traducir directamente en código (i18n estática).
+3. Crear edge function `translate-content` que use Lovable AI (`google/gemini-2.5-flash`).
+4. En `AdminBlog`: botones "Traducir a EN" / "Traducir a PT" que llamen la edge function y guarden.
+5. En `BlogPost.tsx`: leer columna según `lang` con fallback a español.
+
+## Bloque E — SEO local LATAM
+
+1. `index.html`: añadir hreflang (`es-co`, `es-419`, `en`, `pt-br`, `x-default`), meta geo (CO-DC, Bogotá, coords), schema `ProfessionalService` con `areaServed` (CO, MX, PE, CL, AR, BR, ES, US) y `founder` María Fernanda Calderón.
+2. Actualizar/extender JSON-LD existente sin romper Organization actual.
+
+## Bloque F — Validación
+
+- Build limpio, sin errores runtime (arreglar también el error actual de `useContext(...)` null si persiste).
+- Verificar consola: eventos GA4 sin error.
+- Smoke test: home nuevo renderiza, /servicios/whatsapp-ia-bot y /servicios/herramientas-marketing accesibles.
 
 ## Notas técnicas
-- La migración se hace primero y se espera tu aprobación (Lovable lo pide). Luego escribo el código.
-- Después de la migración deberás asignarte rol admin manualmente con un INSERT (te lo indico al final con tu user_id real).
-- La edge function `brevo-sync` queda con `verify_jwt = false` por defecto (popup público).
-- No toco diseño general — solo los componentes/rutas mencionados.
+- Edge function nueva requiere bloque en `supabase/config.toml` si necesita non-default settings (no, basta default).
+- Migración SQL pedirá aprobación antes de cualquier edit de código que dependa de tipos.
+- Mantener tokens de diseño (`text-foreground`, `bg-primary`, etc.), nada de colores directos.
+- Respetar memorias: WhatsApp +17865787671, sin mencionar tecnologías, autora Maria Calderon, logo `.png.png`.
 
-¿Apruebas y procedo? Si tienes el favicon a mano, adjúntalo ahora para incluirlo en la misma sesión.
+¿Apruebas para arrancar? Si quieres lo divido en sub-sesiones (A+E primero, luego B, luego C, luego D) dime.
