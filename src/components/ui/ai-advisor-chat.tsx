@@ -2,6 +2,7 @@ import { useState, useRef, useEffect, useCallback } from 'react';
 import { Bot, X, Send, Sparkles, ArrowDown } from 'lucide-react';
 import ReactMarkdown from 'react-markdown';
 import { useAnalytics } from '@/hooks/useAnalytics';
+import { trackEvent } from '@/lib/analytics';
 
 type Msg = { role: 'user' | 'assistant'; content: string };
 
