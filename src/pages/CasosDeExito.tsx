@@ -81,6 +81,12 @@ export const casesData = {
       solution: 'Estabilizamos o site, limpamos plugins desnecessários, redesenhamos completamente com Divi, restauramos funcionalidades críticas e lançamos estratégia SEO posicionando "Guabi para gato" no #1 do Google em apenas 2 meses.',
       results: [{ metric: 'Vendas mensais', value: '$3M → $10M', period: '3 meses' }, { metric: 'Produto #1 Google', value: 'Guabi gato', period: '2 meses' }, { metric: 'Estabilidade do site', value: '100%', period: 'sem quedas' }, { metric: 'Crescimento', value: '+233%', period: 'em vendas' }],
     },
+    {
+      id: 'cliente-tecnologia-migracion-web-app', title: 'Migração para Web App: -70% custos e +180% velocidade', category: 'webapp', country: 'Colômbia', icon: Rocket,
+      challenge: 'Cliente do setor de tecnologia com plataforma legacy em WordPress + plugins. Custos de manutenção mensais acima de $2.000 USD, quedas semanais e tempo de carregamento de 8.4s destruindo a conversão.',
+      solution: 'Migramos para uma Web App proprietária em stack moderno (React + backend serverless). Redesenhamos a arquitetura de dados, implementamos cache no edge e removemos 14 plugins desnecessários. Lançamento em 6 semanas sem quedas.',
+      results: [{ metric: 'Custos mensais', value: '-70%', period: 'vs WordPress' }, { metric: 'Tempo de carga', value: '8.4s → 1.2s', period: '+180% mais rápido' }, { metric: 'Conversão', value: '+42%', period: 'primeiros 90 dias' }, { metric: 'Uptime', value: '99.98%', period: 'sem quedas' }],
+    },
   ],
 };
 
@@ -88,10 +94,11 @@ const CasosDeExito = ({ lang = 'es' }: Props) => {
   const [filter, setFilter] = useState('all');
   const cases = casesData[lang] || casesData.es;
   const filters = lang === 'es'
-    ? [{ id: 'all', label: 'Todos' }, { id: 'seo', label: 'SEO' }, { id: 'pauta', label: 'Pauta Digital' }]
+    ? [{ id: 'all', label: 'Todos' }, { id: 'seo', label: 'SEO' }, { id: 'pauta', label: 'Pauta Digital' }, { id: 'webapp', label: 'Web Apps' }]
     : lang === 'pt'
-    ? [{ id: 'all', label: 'Todos' }, { id: 'seo', label: 'SEO' }, { id: 'pauta', label: 'Tráfego Pago' }]
-    : [{ id: 'all', label: 'All' }, { id: 'seo', label: 'SEO' }, { id: 'pauta', label: 'Digital Ads' }];
+    ? [{ id: 'all', label: 'Todos' }, { id: 'seo', label: 'SEO' }, { id: 'pauta', label: 'Tráfego Pago' }, { id: 'webapp', label: 'Web Apps' }]
+    : [{ id: 'all', label: 'All' }, { id: 'seo', label: 'SEO' }, { id: 'pauta', label: 'Digital Ads' }, { id: 'webapp', label: 'Web Apps' }];
+
 
   const filtered = filter === 'all' ? cases : cases.filter(c => c.category === filter);
   const basePath = lang === 'es' ? '/casos-de-exito' : lang === 'pt' ? '/pt/casos-de-sucesso' : '/en/case-studies';
