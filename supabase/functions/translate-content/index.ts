@@ -1,62 +1,89 @@
-// Translate blog content via Lovable AI Gateway (Gemini)
-// Public function — no auth required, uses LOVABLE_API_KEY server-side.
+// Translate blog post via Lovable AI Gateway (Gemini)
+// Supports two modes:
+// 1) { content, targetLang } -> translates a single string and returns it
+// 2) { postId, target } -> fetches post, translates title/excerpt/content/meta_*, saves back
+import { createClient } from 'https://esm.sh/@supabase/supabase-js@2.45.0';
+
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
   'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type',
   'Access-Control-Allow-Methods': 'POST, OPTIONS',
 };
 
+const LOVABLE_API_KEY = Deno.env.get('LOVABLE_API_KEY');
+
+const langName = (l: string) =>
+  l === 'en' ? 'English (US)' : l === 'pt' ? 'Brazilian Portuguese' : l;
+
+async function translateOne(text: string, target: string, kind: string) {
+  if (!text) return '';
+  const prompt = `Translate the following ${kind} from Spanish to ${langName(target)}. Preserve all HTML tags, attributes, links and structure. Keep the tone professional and conversion-oriented (marketing copy). Do not add any preamble or comments. Return ONLY the translated text.\n\n---\n${text}`;
+  const res = await fetch('https://ai.gateway.lovable.dev/v1/chat/completions', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${LOVABLE_API_KEY}` },
+    body: JSON.stringify({
+      model: 'google/gemini-2.5-flash',
+      messages: [{ role: 'user', content: prompt }],
+      temperature: 0.3,
+    }),
+  });
+  if (!res.ok) throw new Error(`AI gateway error ${res.status}: ${await res.text()}`);
+  const data = await res.json();
+  return data?.choices?.[0]?.message?.content ?? '';
+}
+
 Deno.serve(async (req) => {
-  if (req.method === 'OPTIONS') {
-    return new Response(null, { headers: corsHeaders });
-  }
+  if (req.method === 'OPTIONS') return new Response(null, { headers: corsHeaders });
+
   try {
-    const { content, targetLang, contentType = 'HTML article' } = await req.json();
-    if (!content || !targetLang) {
-      return new Response(JSON.stringify({ error: 'Missing content or targetLang' }), {
-        status: 400,
+    if (!LOVABLE_API_KEY) throw new Error('LOVABLE_API_KEY not configured');
+    const body = await req.json();
+
+    // Mode 2: translate full post by ID
+    if (body.postId && body.target) {
+      const target = String(body.target);
+      if (!['en', 'pt'].includes(target)) throw new Error('target must be en or pt');
+
+      const supabase = createClient(
+        Deno.env.get('SUPABASE_URL')!,
+        Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!,
+      );
+
+      const { data: post, error } = await supabase
+        .from('blog_posts')
+        .select('id, title, excerpt, content, meta_title, meta_description')
+        .eq('id', body.postId)
+        .maybeSingle();
+      if (error || !post) throw new Error(error?.message || 'Post not found');
+
+      const [title, excerpt, content, meta_title, meta_description] = await Promise.all([
+        translateOne(post.title || '', target, 'blog title'),
+        translateOne(post.excerpt || '', target, 'blog excerpt'),
+        translateOne(post.content || '', target, 'HTML article'),
+        translateOne(post.meta_title || '', target, 'SEO meta title'),
+        translateOne(post.meta_description || '', target, 'SEO meta description'),
+      ]);
+
+      const update: Record<string, string> = {
+        [`title_${target}`]: title,
+        [`excerpt_${target}`]: excerpt,
+        [`content_${target}`]: content,
+        [`meta_title_${target}`]: meta_title,
+        [`meta_description_${target}`]: meta_description,
+      };
+
+      const { error: upErr } = await supabase.from('blog_posts').update(update).eq('id', body.postId);
+      if (upErr) throw upErr;
+
+      return new Response(JSON.stringify({ ok: true }), {
         headers: { ...corsHeaders, 'Content-Type': 'application/json' },
       });
     }
 
-    const LOVABLE_API_KEY = Deno.env.get('LOVABLE_API_KEY');
-    if (!LOVABLE_API_KEY) {
-      return new Response(JSON.stringify({ error: 'LOVABLE_API_KEY not configured' }), {
-        status: 500,
-        headers: { ...corsHeaders, 'Content-Type': 'application/json' },
-      });
-    }
-
-    const langName =
-      targetLang === 'en' ? 'English (US)'
-      : targetLang === 'pt' ? 'Brazilian Portuguese'
-      : targetLang;
-
-    const prompt = `Translate the following ${contentType} from Spanish to ${langName}. Preserve all HTML tags, attributes, links and structure. Keep the tone professional and conversion-oriented (marketing copy). Do not add any preamble or comments. Return ONLY the translated text.\n\n---\n${content}`;
-
-    const res = await fetch('https://ai.gateway.lovable.dev/v1/chat/completions', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        Authorization: `Bearer ${LOVABLE_API_KEY}`,
-      },
-      body: JSON.stringify({
-        model: 'google/gemini-2.5-flash',
-        messages: [{ role: 'user', content: prompt }],
-        temperature: 0.3,
-      }),
-    });
-
-    if (!res.ok) {
-      const errText = await res.text();
-      return new Response(JSON.stringify({ error: `AI gateway error: ${res.status} ${errText}` }), {
-        status: 502,
-        headers: { ...corsHeaders, 'Content-Type': 'application/json' },
-      });
-    }
-
-    const data = await res.json();
-    const translated = data?.choices?.[0]?.message?.content ?? '';
+    // Mode 1: translate single string
+    const { content, targetLang, contentType = 'HTML article' } = body;
+    if (!content || !targetLang) throw new Error('Missing content or targetLang');
+    const translated = await translateOne(content, targetLang, contentType);
     return new Response(JSON.stringify({ translated }), {
       headers: { ...corsHeaders, 'Content-Type': 'application/json' },
     });
