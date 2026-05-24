@@ -207,7 +207,18 @@ JSON esperado:
   "category": "",
   "keyword": "",
   "validation_pass": true,
-  "validation_reason": ""
+  "validation_reason": "",
+  "schema_article": {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "headline": "",
+    "description": "",
+    "author": { "@type": "Organization", "name": "Ferova Agency" },
+    "datePublished": "YYYY-MM-DD",
+    "keywords": ""
+  },
+  "intencion_busqueda": "informacional | comercial | transaccional | navegacional",
+  "aporta_original": "1 frase concreta sobre qué aporta este artículo que no esté en los primeros resultados de Google"
 }`;
 };
 
