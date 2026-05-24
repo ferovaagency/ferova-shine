@@ -12,7 +12,6 @@ interface Payload {
   name?: string;
   source?: string;
   attributes?: Record<string, unknown>;
-  listId?: number;
 }
 
 function isValidEmail(e: string): boolean {
@@ -36,8 +35,8 @@ Deno.serve(async (req) => {
     const attributes = (body.attributes && typeof body.attributes === 'object') ? body.attributes : {};
 
     const BREVO_API_KEY = Deno.env.get('BREVO_API_KEY');
-    const DEFAULT_LIST = Number(Deno.env.get('BREVO_LIST_NEWSLETTER') || '0');
-    const LIST_ID = Number(body.listId) > 0 ? Number(body.listId) : DEFAULT_LIST;
+    // Hardcoded server-side: never accept client-supplied listId.
+    const LIST_ID = Number(Deno.env.get('BREVO_LIST_NEWSLETTER') || '0');
 
     if (!email || !isValidEmail(email)) {
       return new Response(JSON.stringify({ error: 'Email inválido' }), {

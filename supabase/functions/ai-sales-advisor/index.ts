@@ -122,9 +122,38 @@ serve(async (req) => {
   }
 
   try {
-    const { messages, lang } = await req.json();
+    const body = await req.json().catch(() => ({}));
+    const { messages, lang } = body as { messages?: unknown; lang?: unknown };
     const LOVABLE_API_KEY = Deno.env.get("LOVABLE_API_KEY");
     if (!LOVABLE_API_KEY) throw new Error("LOVABLE_API_KEY is not configured");
+
+    // Input validation to prevent credit abuse / prompt injection
+    const MAX_MESSAGES = 20;
+    const MAX_CONTENT_LEN = 2000;
+    if (!Array.isArray(messages) || messages.length === 0 || messages.length > MAX_MESSAGES) {
+      return new Response(
+        JSON.stringify({ error: `messages must be an array of 1-${MAX_MESSAGES} items` }),
+        { status: 400, headers: { ...corsHeaders, "Content-Type": "application/json" } }
+      );
+    }
+    const safeMessages: { role: "user" | "assistant"; content: string }[] = [];
+    for (const m of messages) {
+      if (!m || typeof m !== "object") {
+        return new Response(JSON.stringify({ error: "invalid message item" }), {
+          status: 400,
+          headers: { ...corsHeaders, "Content-Type": "application/json" },
+        });
+      }
+      const role = (m as { role?: unknown }).role;
+      const content = (m as { content?: unknown }).content;
+      if ((role !== "user" && role !== "assistant") || typeof content !== "string") {
+        return new Response(JSON.stringify({ error: "invalid role/content" }), {
+          status: 400,
+          headers: { ...corsHeaders, "Content-Type": "application/json" },
+        });
+      }
+      safeMessages.push({ role, content: content.slice(0, MAX_CONTENT_LEN) });
+    }
 
     const systemPrompt = lang === "en" ? SYSTEM_PROMPT_EN : SYSTEM_PROMPT_ES;
 
@@ -140,7 +169,7 @@ serve(async (req) => {
           model: "google/gemini-3-flash-preview",
           messages: [
             { role: "system", content: systemPrompt },
-            ...messages,
+            ...safeMessages,
           ],
           stream: true,
         }),
