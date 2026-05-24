@@ -272,6 +272,10 @@ const normalizeArticle = (raw: Record<string, unknown>, fallback: GeneratePayloa
     throw new Error("El artículo generado está incompleto.");
   }
 
+  const schemaArticle = (raw.schema_article && typeof raw.schema_article === "object") ? raw.schema_article : null;
+  const intencionBusqueda = safeString(raw.intencion_busqueda);
+  const aportaOriginal = safeString(raw.aporta_original);
+
   return {
     title,
     slug,
@@ -286,6 +290,9 @@ const normalizeArticle = (raw: Record<string, unknown>, fallback: GeneratePayloa
     active: true,
     validation_pass: raw.validation_pass === true,
     validation_reason: safeString(raw.validation_reason) || "",
+    schema_article: schemaArticle,
+    intencion_busqueda: intencionBusqueda,
+    aporta_original: aportaOriginal,
   };
 };
 
