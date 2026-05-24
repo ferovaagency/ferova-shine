@@ -135,6 +135,47 @@ BLOQUE 5 — Cierre Estratégico:
 8. ENLACES INTERNOS NATURALES
 Incluir 2-4 enlaces internos hacia servicios relevantes del sitio:
 /servicios/seo-ecommerce, /servicios/diseno-web, /servicios/pauta-digital, /servicios/asesorias-marketing, /contacto, /blog
+
+=== DIRECTRICES GOOGLE SEARCH (OBLIGATORIAS) ===
+
+1. CONTENIDO ÚTIL ANTES QUE SEO: el artículo debe responder genuinamente a una intención de búsqueda real. Si el lector terminaría sintiendo que no aprendió nada nuevo o que solo leyó relleno, reescríbelo.
+
+2. E-E-A-T en cada artículo:
+   - Experiencia: incluye observaciones de primera mano, datos concretos, ejemplos vividos cuando sea posible
+   - Expertise: usa terminología precisa del sector sin sobreexplicar lo obvio
+   - Autoridad: cita fuentes oficiales (gobierno, papers, sitios .gov/.edu) cuando hagas afirmaciones técnicas
+   - Confianza: nunca afirmes datos que no puedas respaldar, nunca inventes estadísticas, fechas ni nombres
+
+3. EVITAR CONTENIDO ESCALADO DE BAJA CALIDAD:
+   - Nada de párrafos genéricos que aplican a cualquier marca/industria
+   - Nada de "en el competitivo mundo actual..." ni intros vacías
+   - Cada sección debe tener información específica y accionable, no relleno
+
+4. OPTIMIZACIÓN PARA AI OVERVIEWS Y BÚSQUEDA GENERATIVA:
+   - Primera oración del artículo debe responder directamente la pregunta principal
+   - Estructura con respuestas cortas y claras en los primeros 2-3 párrafos
+   - Usa listas y tablas cuando aporten valor (los LLMs las extraen mejor)
+   - Incluye un FAQ al final con 3-5 preguntas reales que la gente busca
+
+5. INTENCIÓN DE BÚSQUEDA: identifica si la keyword es informacional, navegacional, transaccional o comercial. Adapta el formato:
+   - Informacional: guía o explicación clara
+   - Comercial (comparativas): tablas, pros/contras concretos
+   - Transaccional: pasos claros + CTA suave
+
+6. DATOS ESTRUCTURADOS: al final del JSON, incluye un campo "schema_article" con un objeto JSON-LD válido tipo Article que el sitio inyectará en el <head>. Debe incluir: headline, description, author (Organization), datePublished, keywords.
+
+7. PROHIBICIONES ABSOLUTAS:
+   - No inventar fuentes, URLs, estudios ni autores
+   - No inventar estadísticas con porcentajes específicos (ej: "el 87% de las empresas")
+   - No prometer resultados garantizados
+   - No usar lenguaje de clickbait ("descubre el secreto", "no creerás lo que")
+   - No copiar estructura ni frases de otros sitios
+
+8. ORIGINALIDAD: cada artículo debe aportar al menos un ángulo, ejemplo o aplicación que no sea obvio buscando los primeros resultados de Google. Si se siente como "lo mismo que ya hay en internet", reescríbelo con un enfoque más específico al contexto de la marca.
+
+9. EXTENSIÓN ÚTIL: respeta el rango de palabras del tipo, pero NUNCA infles para llegar al mínimo. Es preferible un artículo de 1.000 palabras útiles que uno de 2.000 con relleno.
+
+10. ACTUALIDAD: si el tema es sensible a fechas (tendencias, herramientas, regulaciones), menciona explícitamente el año actual y aclara que el lector debe verificar cambios recientes.
 `;
 
 const buildSystemPrompt = (lang: "es" | "en" | "pt") => {
@@ -166,7 +207,18 @@ JSON esperado:
   "category": "",
   "keyword": "",
   "validation_pass": true,
-  "validation_reason": ""
+  "validation_reason": "",
+  "schema_article": {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "headline": "",
+    "description": "",
+    "author": { "@type": "Organization", "name": "Ferova Agency" },
+    "datePublished": "YYYY-MM-DD",
+    "keywords": ""
+  },
+  "intencion_busqueda": "informacional | comercial | transaccional | navegacional",
+  "aporta_original": "1 frase concreta sobre qué aporta este artículo que no esté en los primeros resultados de Google"
 }`;
 };
 
@@ -220,6 +272,10 @@ const normalizeArticle = (raw: Record<string, unknown>, fallback: GeneratePayloa
     throw new Error("El artículo generado está incompleto.");
   }
 
+  const schemaArticle = (raw.schema_article && typeof raw.schema_article === "object") ? raw.schema_article : null;
+  const intencionBusqueda = safeString(raw.intencion_busqueda);
+  const aportaOriginal = safeString(raw.aporta_original);
+
   return {
     title,
     slug,
@@ -234,6 +290,9 @@ const normalizeArticle = (raw: Record<string, unknown>, fallback: GeneratePayloa
     active: true,
     validation_pass: raw.validation_pass === true,
     validation_reason: safeString(raw.validation_reason) || "",
+    schema_article: schemaArticle,
+    intencion_busqueda: intencionBusqueda,
+    aporta_original: aportaOriginal,
   };
 };
 
