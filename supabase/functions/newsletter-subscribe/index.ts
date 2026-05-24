@@ -11,9 +11,9 @@ serve(async (req) => {
   }
 
   try {
-    const { email, name, listId = 11 } = await req.json();
+    const { email, name } = await req.json();
 
-    if (!email || typeof email !== 'string' || !email.includes('@')) {
+    if (!email || typeof email !== 'string' || !email.includes('@') || email.length > 254) {
       return new Response(
         JSON.stringify({ error: 'Email válido requerido' }),
         { status: 400, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
@@ -25,6 +25,9 @@ serve(async (req) => {
       throw new Error('BREVO_API_KEY is not configured');
     }
 
+    // Hardcoded server-side: never trust client-supplied listId.
+    const LIST_ID = Number(Deno.env.get('BREVO_LIST_NEWSLETTER') || '11');
+
     const response = await fetch('https://api.brevo.com/v3/contacts', {
       method: 'POST',
       headers: {
@@ -34,8 +37,8 @@ serve(async (req) => {
       },
       body: JSON.stringify({
         email: email.trim().toLowerCase(),
-        attributes: { FIRSTNAME: (name || '').trim() },
-        listIds: [listId],
+        attributes: { FIRSTNAME: (typeof name === 'string' ? name : '').trim().slice(0, 120) },
+        listIds: [LIST_ID],
         updateEnabled: true,
       }),
     });
