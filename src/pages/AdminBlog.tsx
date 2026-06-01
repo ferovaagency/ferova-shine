@@ -449,7 +449,7 @@ const AdminBlog = ({ lang = 'es' }: Props) => {
                           <ImageIcon className="h-3.5 w-3.5" /> {lang === 'es' ? 'Imagen de portada' : lang === 'pt' ? 'Imagem de capa' : 'Cover image'}
                         </p>
                         {preview.cover_image ? (
-                          <img src={preview.cover_image} alt="cover" className="w-full max-h-56 object-cover rounded-lg border border-border" />
+                          <img src={preview.cover_image} alt="Blog post cover image" className="w-full max-h-56 object-cover rounded-lg border border-border" />
                         ) : (
                           <p className="text-xs text-muted-foreground italic">
                             {lang === 'es' ? 'Sin imagen. Sube una JPG/PNG/WebP (máx 5MB).' : lang === 'pt' ? 'Sem imagem. Envie JPG/PNG/WebP (máx 5MB).' : 'No image. Upload JPG/PNG/WebP (max 5MB).'}
