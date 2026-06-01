@@ -496,7 +496,7 @@ const Index = ({ lang = 'es' }: IndexProps) => {
                         <h3 className={`font-display font-semibold mb-2 text-foreground ${isFeatured ? 'text-2xl' : 'text-lg'}`}>{s.title}</h3>
                         <p className="text-muted-foreground text-sm leading-relaxed mb-4 flex-1">{s.desc}</p>
                         <span className="inline-flex items-center gap-1 text-gold text-sm font-medium group-hover:gap-2 transition-all">
-                          {lang === 'es' ? 'Ver servicio' : lang === 'pt' ? 'Ver serviço' : 'Learn more'} <ArrowRight className="w-4 h-4" />
+                          {lang === 'es' ? 'Ver servicio' : lang === 'pt' ? 'Ver serviço' : 'View service details'} <ArrowRight className="w-4 h-4" />
                         </span>
                       </Link>
                     </ScaleOnHover>

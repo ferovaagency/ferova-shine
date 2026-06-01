@@ -96,9 +96,9 @@ const Servicios = ({ lang = 'es' }: ServiciosProps) => {
     </div>
   );
 
-  const seoTitle = lang === 'es' ? 'Servicios de marketing digital y SEO para e-commerce — Ferova Agency'
-    : lang === 'pt' ? 'Serviços de marketing digital e SEO para e-commerce — Ferova Agency'
-    : 'E-commerce digital marketing and SEO services — Ferova Agency';
+  const seoTitle = lang === 'es' ? 'Servicios SEO y marketing digital e-commerce — Ferova'
+    : lang === 'pt' ? 'Serviços SEO e marketing digital e-commerce — Ferova'
+    : 'E-commerce SEO & digital marketing services — Ferova';
   const seoDesc = lang === 'es' ? '4 servicios principales: SEO + GEO + IAO, Web Apps, Pauta Digital y WhatsApp IA Bot. Marketing especializado para tiendas online en LATAM.'
     : lang === 'pt' ? '4 serviços principais: SEO + GEO + IAO, Web Apps, Tráfego Pago e WhatsApp IA Bot. Marketing especializado para lojas virtuais na LATAM.'
     : 'Four main services: SEO + GEO + AEO, Web Apps, Digital Ads and WhatsApp AI Bot. Specialized marketing for online stores in LATAM.';
