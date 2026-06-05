@@ -1,0 +1,25 @@
+# Redirecciones 301 — sintaxis Netlify/Cloudflare Pages
+# NOTA: Lovable hosting NO procesa este archivo. Vale para Netlify/Cloudflare/Vercel adapters.
+# Si el sitio sigue desplegado únicamente en Lovable, las rutas legacy deben mantenerse vía router.
+
+/como-encontrar-palabras-clave-ecommerce/feed/        /blog/como-encontrar-palabras-clave-ecommerce  301
+/como-encontrar-palabras-clave-ecommerce              /blog/como-encontrar-palabras-clave-ecommerce  301
+/project/caso-de-exito-de-google-ads                  /casos-de-exito/google-ads-arcos-desinfeccion  301
+/project/caso-de-exito-de-google-ads/                 /casos-de-exito/google-ads-arcos-desinfeccion  301
+/project/caso-de-exito-ecommerce-de-cableado-estructurado   /casos-de-exito/ecommerce-cableado-estructurado  301
+/project/caso-de-exito-ecommerce-de-cableado-estructurado/  /casos-de-exito/ecommerce-cableado-estructurado  301
+/project/caso-de-exito-ecommerce-de-mascotas          /casos-de-exito/ecommerce-mascotas  301
+/project/caso-de-exito-ecommerce-de-mascotas/         /casos-de-exito/ecommerce-mascotas  301
+/aumentar-ventas-ecommerce-sin-publicidad             /blog/aumentar-ventas-ecommerce-sin-publicidad  301
+/aumentar-ventas-ecommerce-sin-publicidad/            /blog/aumentar-ventas-ecommerce-sin-publicidad  301
+/como-aumentar-visitas-sitio-web-2025                 /  301
+/como-aumentar-visitas-sitio-web-2025/                /  301
+/seo-tecnico-tiendas-online                           /blog/seo-tecnico-tiendas-online  301
+/seo-tecnico-tiendas-online/                          /blog/seo-tecnico-tiendas-online  301
+/divi-vs-elementor-sitio-web-2025                     /blog/divi-vs-elementor-tienda-online-wordpress  301
+/divi-vs-elementor-sitio-web-2025/                    /blog/divi-vs-elementor-tienda-online-wordpress  301
+/google-ads-vs-meta-ads-2025                          /blog/google-ads-vs-meta-ads-ecommerce  301
+/google-ads-vs-meta-ads-2025/                         /blog/google-ads-vs-meta-ads-ecommerce  301
+
+# SPA fallback
+/*    /index.html   200
