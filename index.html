@@ -150,7 +150,28 @@
 
 </head>
   <body>
-    <div id="root"></div>
+    <div id="root">
+      <!-- Esqueleto semántico estático: garantiza que Googlebot indexe contenido transaccional en la primera pasada antes de ejecutar JavaScript. Será reemplazado tras la hidratación de React. -->
+      <header>
+        <a href="/" aria-label="Ferova Agency — Inicio">Ferova Agency</a>
+        <nav aria-label="Navegación principal">
+          <a href="/servicios">Servicios</a>
+          <a href="/servicios/seo-ecommerce">SEO E-commerce</a>
+          <a href="/casos-de-exito">Casos de éxito</a>
+          <a href="/blog">Blog</a>
+          <a href="/contacto">Contacto</a>
+        </nav>
+      </header>
+      <main>
+        <h1>Ferova Shine — Web Apps de Alto Rendimiento e Inteligencia Artificial</h1>
+        <p>Agencia boutique especializada en construir <strong>web apps de e-commerce</strong> ultrarrápidas con <strong>SEO técnico avanzado</strong>, <strong>posicionamiento GEO/AIO</strong> y <strong>asesores con Inteligencia Artificial B2B</strong> integrados en WhatsApp. Entregamos proyectos en una semana para emprendedores y empresas en Colombia, Latinoamérica, Brasil, España y Estados Unidos.</p>
+        <p>Servicios principales: SEO para e-commerce, diseño y desarrollo web con IA, pauta digital en Google Ads y Meta Ads, automatizaciones con IA, consultorías de marketing y optimización de LinkedIn y WhatsApp Business.</p>
+        <p><a href="/contacto">Solicita una consultoría inicial</a> · <a href="/casos-de-exito">Ver casos de éxito</a></p>
+      </main>
+      <noscript>
+        <p>Esta web requiere JavaScript habilitado para una experiencia interactiva completa. El contenido principal sigue siendo accesible arriba.</p>
+      </noscript>
+    </div>
     <script type="module" src="/src/main.tsx"></script>
   </body>
 </html>
