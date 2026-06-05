@@ -1,0 +1,36 @@
+{
+  "$schema": "https://openapi.vercel.sh/vercel.json",
+  "redirects": [
+    { "source": "/como-encontrar-palabras-clave-ecommerce/feed", "destination": "/blog/como-encontrar-palabras-clave-ecommerce", "permanent": true },
+    { "source": "/como-encontrar-palabras-clave-ecommerce/feed/", "destination": "/blog/como-encontrar-palabras-clave-ecommerce", "permanent": true },
+    { "source": "/como-encontrar-palabras-clave-ecommerce", "destination": "/blog/como-encontrar-palabras-clave-ecommerce", "permanent": true },
+    { "source": "/como-encontrar-palabras-clave-ecommerce/", "destination": "/blog/como-encontrar-palabras-clave-ecommerce", "permanent": true },
+
+    { "source": "/project/caso-de-exito-de-google-ads", "destination": "/casos-de-exito/google-ads-arcos-desinfeccion", "permanent": true },
+    { "source": "/project/caso-de-exito-de-google-ads/", "destination": "/casos-de-exito/google-ads-arcos-desinfeccion", "permanent": true },
+
+    { "source": "/project/caso-de-exito-ecommerce-de-cableado-estructurado", "destination": "/casos-de-exito/ecommerce-cableado-estructurado", "permanent": true },
+    { "source": "/project/caso-de-exito-ecommerce-de-cableado-estructurado/", "destination": "/casos-de-exito/ecommerce-cableado-estructurado", "permanent": true },
+
+    { "source": "/project/caso-de-exito-ecommerce-de-mascotas", "destination": "/casos-de-exito/ecommerce-mascotas", "permanent": true },
+    { "source": "/project/caso-de-exito-ecommerce-de-mascotas/", "destination": "/casos-de-exito/ecommerce-mascotas", "permanent": true },
+
+    { "source": "/aumentar-ventas-ecommerce-sin-publicidad", "destination": "/blog/aumentar-ventas-ecommerce-sin-publicidad", "permanent": true },
+    { "source": "/aumentar-ventas-ecommerce-sin-publicidad/", "destination": "/blog/aumentar-ventas-ecommerce-sin-publicidad", "permanent": true },
+
+    { "source": "/como-aumentar-visitas-sitio-web-2025", "destination": "/", "permanent": true },
+    { "source": "/como-aumentar-visitas-sitio-web-2025/", "destination": "/", "permanent": true },
+
+    { "source": "/seo-tecnico-tiendas-online", "destination": "/blog/seo-tecnico-tiendas-online", "permanent": true },
+    { "source": "/seo-tecnico-tiendas-online/", "destination": "/blog/seo-tecnico-tiendas-online", "permanent": true },
+
+    { "source": "/divi-vs-elementor-sitio-web-2025", "destination": "/blog/divi-vs-elementor-tienda-online-wordpress", "permanent": true },
+    { "source": "/divi-vs-elementor-sitio-web-2025/", "destination": "/blog/divi-vs-elementor-tienda-online-wordpress", "permanent": true },
+
+    { "source": "/google-ads-vs-meta-ads-2025", "destination": "/blog/google-ads-vs-meta-ads-ecommerce", "permanent": true },
+    { "source": "/google-ads-vs-meta-ads-2025/", "destination": "/blog/google-ads-vs-meta-ads-ecommerce", "permanent": true }
+  ],
+  "rewrites": [
+    { "source": "/(.*)", "destination": "/index.html" }
+  ]
+}
