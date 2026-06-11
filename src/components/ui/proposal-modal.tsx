@@ -66,7 +66,7 @@ const ProposalModal = ({ open, onClose, lang = 'es', defaultService = '' }: Prop
     const text = lang === 'es'
       ? `Hola Ferova, solicito una propuesta personalizada.\n\n👤 *Nombre:* ${form.name}\n🏢 *Empresa:* ${form.company}\n📋 *Servicio:* ${form.service}\n💰 *Presupuesto:* ${form.budget}\n💬 *Mensaje:* ${form.message}`
       : `Hi Ferova, I'm requesting a custom proposal.\n\n👤 *Name:* ${form.name}\n🏢 *Company:* ${form.company}\n📋 *Service:* ${form.service}\n💰 *Budget:* ${form.budget}\n💬 *Message:* ${form.message}`;
-    const url = `https://wa.link/bfq71f?text=${encodeURIComponent(text)}`;
+    const url = `https://wa.link/hbrsxy?text=${encodeURIComponent(text)}`;
     window.open(url, '_blank', 'noopener,noreferrer');
     onClose();
   };

@@ -18,7 +18,7 @@ import { trackEvent } from '@/lib/analytics';
 
 interface Props { lang?: 'es' | 'en' | 'pt'; }
 
-const WA = 'https://wa.link/bfq71f';
+const WA = 'https://wa.link/hbrsxy';
 
 function detectDefaultCurrency(lang: 'es' | 'en' | 'pt'): Currency {
   if (typeof navigator === 'undefined') {
