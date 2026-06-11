@@ -58,7 +58,7 @@ const Servicios = ({ lang = 'es' }: ServiciosProps) => {
     { icon: GraduationCap, title: 'Marketing Consulting', description: 'Strategic 1-on-1 consulting to scale your business.', features: ['Diagnosis', 'Strategy', 'Action plan', '1-on-1 sessions', 'Follow-up'], href: '/en/services/marketing-consulting' },
   ];
 
-  const waUrl = 'https://wa.link/bfq71f?text=' + encodeURIComponent(
+  const waUrl = 'https://wa.link/hbrsxy?text=' + encodeURIComponent(
     lang === 'es' ? 'Hola Ferova, quiero agendar una asesoría.'
     : lang === 'pt' ? 'Olá Ferova, quero agendar uma consultoria.'
     : 'Hi Ferova, I would like to book a consultation.'
