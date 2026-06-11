@@ -66,7 +66,7 @@ const OptimizacionLinkedin = ({ lang = 'es' }: Props) => {
     ctaSub: 'Book a free consultation and discover how to transform your professional profile.',
   };
 
-  const whatsappUrl = 'https://wa.link/bfq71f?text=' + encodeURIComponent(
+  const whatsappUrl = 'https://wa.link/hbrsxy?text=' + encodeURIComponent(
     lang === 'es' ? 'Hola Ferova, me interesa la optimización de LinkedIn.' : 'Hi Ferova, I\'m interested in LinkedIn optimization.'
   );
 

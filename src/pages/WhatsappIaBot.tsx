@@ -137,7 +137,7 @@ const copyMap = {
 
 const WhatsappIaBot = ({ lang = 'es' }: Props) => {
   const c = copyMap[lang];
-  const waUrl = 'https://wa.link/bfq71f';
+  const waUrl = 'https://wa.link/hbrsxy';
 
   const handleCta = (label: string) => {
     trackEvent('whatsapp_button_clicked', { source: 'whatsapp_ia_bot_landing', label });

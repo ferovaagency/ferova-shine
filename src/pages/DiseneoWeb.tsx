@@ -342,7 +342,7 @@ const DiseneoWeb = ({ lang = 'es' }: Props) => {
           <div className="container mx-auto px-4 md:px-6 relative z-10">
             <h1 className="text-4xl md:text-5xl lg:text-6xl font-display font-bold mb-6">{t.title}</h1>
             <p className="text-muted-foreground text-lg max-w-2xl mx-auto mb-10">{t.sub}</p>
-            <a href="https://wa.link/bfq71f?text=Hola%20Ferova%2C%20quiero%20información%20sobre%20diseño%20web" target="_blank" rel="noopener noreferrer" className="btn-gold inline-flex items-center gap-2">
+            <a href="https://wa.link/hbrsxy?text=Hola%20Ferova%2C%20quiero%20información%20sobre%20diseño%20web" target="_blank" rel="noopener noreferrer" className="btn-gold inline-flex items-center gap-2">
               <MessageCircle className="w-5 h-5" />
               {lang === 'es' ? 'Solicitar propuesta' : lang === 'pt' ? 'Solicitar proposta' : 'Request proposal'}
             </a>
@@ -479,7 +479,7 @@ const DiseneoWeb = ({ lang = 'es' }: Props) => {
                 : lang === 'pt' ? 'Conte-nos seu projeto e responderemos com uma proposta em menos de 24 horas.'
                 : 'Tell us about your project and we\'ll respond with a proposal in less than 24 hours.'}
             </p>
-            <a href="https://wa.link/bfq71f?text=Hola%20Ferova%2C%20quiero%20una%20propuesta%20de%20diseño%20web" target="_blank" rel="noopener noreferrer" className="btn-gold inline-flex items-center gap-2">
+            <a href="https://wa.link/hbrsxy?text=Hola%20Ferova%2C%20quiero%20una%20propuesta%20de%20diseño%20web" target="_blank" rel="noopener noreferrer" className="btn-gold inline-flex items-center gap-2">
               <MessageCircle className="w-5 h-5" />
               {lang === 'es' ? 'Solicitar propuesta gratis' : lang === 'pt' ? 'Solicitar proposta grátis' : 'Request free proposal'}
             </a>
