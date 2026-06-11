@@ -2,7 +2,6 @@ import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import Header from '@/components/layout/Header';
 import Footer from '@/components/layout/Footer';
-import ChatWidget from '@/components/ui/chat-widget';
 import { AnimatedSection, StaggerContainer, StaggerItem, ScaleOnHover, PageTransition } from '@/components/ui/motion';
 import { motion } from 'framer-motion';
 import { Mail, Newspaper, Star, Search, Rocket, ExternalLink, LucideIcon } from 'lucide-react';
@@ -449,7 +448,6 @@ const Recursos = ({ lang = 'es' }: Props) => {
 
       </main>
       <Footer currentLang={lang} />
-      <ChatWidget lang={lang} />
     </PageTransition>
   );
 };

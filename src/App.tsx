@@ -11,6 +11,7 @@ import { getLangFromHostname } from "@/hooks/use-lang-from-host";
 import ScrollToTop from "./components/ScrollToTop";
 import AdminGuard from "./components/admin/AdminGuard";
 import CookieBanner from "@/components/ui/cookie-banner";
+import ChatWidget from "@/components/ui/chat-widget";
 import { useScrollTracking } from "@/hooks/useScrollTracking";
 
 // Code splitting: cada página se carga bajo demanda para reducir el bundle inicial.
@@ -72,6 +73,7 @@ const App = () => (
         <SocialProofToasts lang={hostLang} />
         <AiAdvisorChat lang={hostLang} />
         <CookieBanner lang={hostLang} />
+        <ChatWidget lang={hostLang} />
         <ScrollToTop />
         <Suspense fallback={<PageFallback />}>
           <Routes>

@@ -1,6 +1,5 @@
 import Header from '@/components/layout/Header';
 import Footer from '@/components/layout/Footer';
-import ChatWidget from '@/components/ui/chat-widget';
 import { Link } from 'react-router-dom';
 import { Target, BarChart3, Users, Megaphone, Check, ArrowRight, MessageCircle, Minus } from 'lucide-react';
 import { useState } from 'react';
@@ -201,7 +200,6 @@ const PautaDigital = ({ lang = 'es' }: Props) => {
 
       </main>
       <Footer currentLang={lang} />
-      <ChatWidget lang={lang} />
     </>
   );
 };

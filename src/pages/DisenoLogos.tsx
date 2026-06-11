@@ -1,6 +1,5 @@
 import Header from '@/components/layout/Header';
 import Footer from '@/components/layout/Footer';
-import ChatWidget from '@/components/ui/chat-widget';
 import AdBanner from '@/components/ui/ad-banner';
 import { Link } from 'react-router-dom';
 import { Palette, Layers, FileImage, BookOpen, MessageCircle, Zap, ArrowRight, X } from 'lucide-react';
@@ -171,7 +170,6 @@ const DisenoLogos = ({ lang = 'es' }: Props) => {
         <AdBanner slot="service-diseno-logos" className="max-w-4xl mx-auto mb-20" />
       </main>
       <Footer currentLang={lang} />
-      <ChatWidget lang={lang} />
     </>
   );
 };

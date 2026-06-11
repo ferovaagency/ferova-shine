@@ -2,7 +2,6 @@ import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import Header from '@/components/layout/Header';
 import Footer from '@/components/layout/Footer';
-import ChatWidget from '@/components/ui/chat-widget';
 import { AnimatedSection, PageTransition } from '@/components/ui/motion';
 import { Clock, ArrowRight, Lock, MessageCircle } from 'lucide-react';
 import { supabase } from '@/integrations/supabase/client';
@@ -104,7 +103,6 @@ const NewsletterArchivePage = ({ lang = 'es' }: Props) => {
       </section>
 
       <Footer lang={lang} />
-      <ChatWidget />
     </PageTransition>
   );
 };

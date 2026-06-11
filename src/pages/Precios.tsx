@@ -3,7 +3,6 @@ import { Link } from 'react-router-dom';
 import { Helmet } from 'react-helmet-async';
 import Header from '@/components/layout/Header';
 import Footer from '@/components/layout/Footer';
-import ChatWidget from '@/components/ui/chat-widget';
 import { Button } from '@/components/ui/button';
 import { Check, MessageCircle } from 'lucide-react';
 import {
@@ -234,7 +233,6 @@ const Precios = ({ lang = 'es' }: Props) => {
         </section>
       </main>
       <Footer currentLang={lang} />
-      <ChatWidget lang={lang} />
     </>
   );
 };

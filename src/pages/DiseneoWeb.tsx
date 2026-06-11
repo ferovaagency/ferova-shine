@@ -1,6 +1,5 @@
 import Header from '@/components/layout/Header';
 import Footer from '@/components/layout/Footer';
-import ChatWidget from '@/components/ui/chat-widget';
 import AdBanner from '@/components/ui/ad-banner';
 import { useState, useEffect } from 'react';
 import { getPaymentLink } from '@/lib/payment-links';
@@ -489,7 +488,6 @@ const DiseneoWeb = ({ lang = 'es' }: Props) => {
         <AdBanner slot="service-diseno-web" className="max-w-4xl mx-auto mb-20" />
       </main>
       <Footer currentLang={lang} />
-      <ChatWidget lang={lang} />
     </>
   );
 };
