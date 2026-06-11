@@ -2,7 +2,6 @@ import { useState, useEffect } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import Header from '@/components/layout/Header';
 import Footer from '@/components/layout/Footer';
-import ChatWidget from '@/components/ui/chat-widget';
 import { PageTransition } from '@/components/ui/motion';
 import { Clock, Share2, ArrowLeft, ArrowRight, Lock, MessageCircle, Wrench, Lightbulb, Newspaper } from 'lucide-react';
 import { supabase } from '@/integrations/supabase/client';
@@ -168,7 +167,6 @@ const NewsletterEditionPage = ({ lang = 'es' }: Props) => {
         </div>
       </article>
       <Footer lang={lang} />
-      <ChatWidget />
     </PageTransition>
   );
 };

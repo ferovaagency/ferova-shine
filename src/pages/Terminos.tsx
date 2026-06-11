@@ -1,6 +1,5 @@
 import Header from '@/components/layout/Header';
 import Footer from '@/components/layout/Footer';
-import ChatWidget from '@/components/ui/chat-widget';
 
 interface Props { lang?: 'es' | 'en' | 'pt'; }
 
@@ -276,7 +275,6 @@ const Terminos = ({ lang = 'es' }: Props) => {
         </section>
       </main>
       <Footer currentLang={lang} />
-      <ChatWidget lang={lang} />
     </>
   );
 };

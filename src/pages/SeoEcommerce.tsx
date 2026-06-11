@@ -1,7 +1,6 @@
 import { Link } from 'react-router-dom';
 import Header from '@/components/layout/Header';
 import Footer from '@/components/layout/Footer';
-import ChatWidget from '@/components/ui/chat-widget';
 import AdBanner from '@/components/ui/ad-banner';
 import { Search, TrendingUp, Users, BarChart3, Plus, MessageCircle, MapPin, Globe2, Navigation, Target, Clock, Check } from 'lucide-react';
 import SEO from '@/components/SEO';
@@ -521,7 +520,6 @@ const SeoEcommerce = ({ lang = 'es' }: Props) => {
         <AdBanner slot="service-seo-bottom" className="max-w-4xl mx-auto mb-20" />
       </main>
       <Footer currentLang={lang} />
-      <ChatWidget lang={lang} />
     </>
   );
 };

@@ -2,7 +2,6 @@ import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import Header from '@/components/layout/Header';
 import Footer from '@/components/layout/Footer';
-import ChatWidget from '@/components/ui/chat-widget';
 import AdBanner from '@/components/ui/ad-banner';
 import ReadingProgress from '@/components/ui/reading-progress';
 import { SkeletonBlogCard } from '@/components/ui/skeleton-card';
@@ -142,7 +141,6 @@ const Blog = ({ lang = 'es' }: Props) => {
         </section>
       </main>
       <Footer currentLang={lang} />
-      <ChatWidget lang={lang} />
     </>
   );
 };

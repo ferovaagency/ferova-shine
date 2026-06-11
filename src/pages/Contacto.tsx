@@ -1,7 +1,6 @@
 import { useState } from 'react';
 import Header from '@/components/layout/Header';
 import Footer from '@/components/layout/Footer';
-import ChatWidget from '@/components/ui/chat-widget';
 import { Mail, MessageCircle, MapPin, Send, Calendar } from 'lucide-react';
 import SEO from '@/components/SEO';
 
@@ -135,7 +134,6 @@ const Contacto = ({ lang = 'es' }: Props) => {
         </section>
       </main>
       <Footer currentLang={lang} />
-      <ChatWidget lang={lang} />
     </>
   );
 };

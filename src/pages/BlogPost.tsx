@@ -2,7 +2,6 @@ import { useParams, Link } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import Header from '@/components/layout/Header';
 import Footer from '@/components/layout/Footer';
-import ChatWidget from '@/components/ui/chat-widget';
 import AdBanner from '@/components/ui/ad-banner';
 import { ArrowLeft, Clock, User, MessageCircle, Loader2 } from 'lucide-react';
 import { supabase } from '@/integrations/supabase/client';
@@ -246,7 +245,6 @@ const BlogPost = ({ lang = 'es' }: Props) => {
           </article>
         </main>
         <Footer currentLang={lang} />
-        <ChatWidget lang={lang} />
       </>
     );
   }
@@ -302,7 +300,6 @@ const BlogPost = ({ lang = 'es' }: Props) => {
         </article>
       </main>
       <Footer currentLang={lang} />
-      <ChatWidget lang={lang} />
     </>
   );
 };

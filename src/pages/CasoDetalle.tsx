@@ -1,7 +1,6 @@
 import { useParams, Link } from 'react-router-dom';
 import Header from '@/components/layout/Header';
 import Footer from '@/components/layout/Footer';
-import ChatWidget from '@/components/ui/chat-widget';
 import { casesData } from './CasosDeExito';
 import { ArrowLeft, MessageCircle } from 'lucide-react';
 import { AnimatedSection, StaggerContainer, StaggerItem, PageTransition } from '@/components/ui/motion';
@@ -128,7 +127,6 @@ const CasoDetalle = ({ lang = 'es' }: Props) => {
         </section>
       </main>
       <Footer currentLang={lang} />
-      <ChatWidget lang={lang} />
     </PageTransition>
   );
 };

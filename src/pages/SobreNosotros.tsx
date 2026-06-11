@@ -1,7 +1,6 @@
 import { Link } from 'react-router-dom';
 import Header from '@/components/layout/Header';
 import Footer from '@/components/layout/Footer';
-import ChatWidget from '@/components/ui/chat-widget';
 import { AnimatedSection, StaggerContainer, StaggerItem, ScaleOnHover, PageTransition } from '@/components/ui/motion';
 import { motion } from 'framer-motion';
 import { Target, TrendingUp, Heart, BookOpen, Users, Handshake, Eye, MessageCircle, Rocket, Linkedin, ExternalLink } from 'lucide-react';
@@ -153,7 +152,6 @@ const SobreNosotros = ({ lang = 'es' }: Props) => {
         </section>
       </main>
       <Footer currentLang={lang} />
-      <ChatWidget lang={lang} />
     </PageTransition>
   );
 };
