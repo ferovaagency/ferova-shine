@@ -73,6 +73,7 @@ const App = () => (
         <SocialProofToasts lang={hostLang} />
         <AiAdvisorChat lang={hostLang} />
         <CookieBanner lang={hostLang} />
+        <ChatWidget lang={hostLang} />
         <ScrollToTop />
         <Suspense fallback={<PageFallback />}>
           <Routes>
