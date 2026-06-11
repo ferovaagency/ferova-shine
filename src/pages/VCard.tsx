@@ -27,7 +27,7 @@ export default function VCard() {
     const mensaje = encodeURIComponent(
       `Hola Maria, soy ${nombre.trim()} fue un gusto conocerte, sigamos en contacto`
     );
-    window.open(`https://wa.me/${info.whatsapp}?text=${mensaje}`, '_blank');
+    window.open(`https://wa.link/hbrsxy?text=${mensaje}`, '_blank');
 
     // 2 — Descargar .vcf al mismo tiempo
     const vcard = [
