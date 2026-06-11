@@ -42,6 +42,9 @@ Allow: /
 
 User-agent: *
 Allow: /
+Disallow: /admin-blog
+Disallow: /en/admin-blog
+Disallow: /pt/admin-blog
 
 Sitemap: https://seoparaecommerce.co/sitemap.xml
 Sitemap: https://seoforecommerces.co/sitemap.xml
