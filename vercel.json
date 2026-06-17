@@ -28,7 +28,9 @@
     { "source": "/divi-vs-elementor-sitio-web-2025/", "destination": "/blog/divi-vs-elementor-tienda-online-wordpress", "permanent": true },
 
     { "source": "/google-ads-vs-meta-ads-2025", "destination": "/blog/google-ads-vs-meta-ads-ecommerce", "permanent": true },
-    { "source": "/google-ads-vs-meta-ads-2025/", "destination": "/blog/google-ads-vs-meta-ads-ecommerce", "permanent": true }
+    { "source": "/2025/09/13/entrada-3/", "destination": "/blog", "permanent": true }
+    { "source": "/2025/09/07/hello-world/", "destination": "/blog", "permanent": true }
+    { "source": "/en/entrada-3/", "destination": "/blog", "permanent": true }
   ],
   "rewrites": [
     { "source": "/(.*)", "destination": "/index.html" }
