@@ -1026,7 +1026,7 @@ const SobreMariaFer = ({ lang = "es" }: SobreMariaFerProps) => {
       <div className="lg:hidden fixed bottom-0 left-0 right-0 z-40 bg-white border-t border-neutral-200 shadow-lg">
         <div className="grid grid-cols-2 gap-px bg-neutral-200">
           <a
-            href="https://wa.me/57XXXXXXXXXX"
+            href="https://wa.link/jvbd4j"
             target="_blank"
             rel="noopener noreferrer"
             className="flex items-center justify-center gap-2 bg-white py-4 hover:bg-neutral-50 transition-colors"
@@ -1036,7 +1036,7 @@ const SobreMariaFer = ({ lang = "es" }: SobreMariaFerProps) => {
             <span className="font-semibold">WhatsApp</span>
           </a>
           <a
-            href="https://calendly.com/tu-enlace"
+            href="https://calendar.app.google/yJ2EH5bboNgBtCfy9"
             target="_blank"
             rel="noopener noreferrer"
             className="flex items-center justify-center gap-2 py-4 font-semibold transition-colors"
