@@ -31,6 +31,16 @@
     { "source": "/2025/09/13/entrada-3/", "destination": "/blog", "permanent": true }
     { "source": "/2025/09/07/hello-world/", "destination": "/blog", "permanent": true }
     { "source": "/en/entrada-3/", "destination": "/blog", "permanent": true }
+    { "source": "/e-commerce-seo/", "destination": "/servicios/seo-ecommerce", "permanent": true }
+    { "source": "/la-antiguedad-del-dominio-afecta-el-posicionamiento-en-google/", "destination": "/blog/como-hacer-seo-ecommerce", "permanent": true }
+    { "source": "/asesoria-de-marketing-1-a-1/", "destination": "/servicios/asesorias-marketing", "permanent": true }
+    { "source": "/wordpress-vs-shopify-en-2025/", "destination": "/blog", "permanent": true }
+    { "source": "/politica-de-cookies-ue/", "destination": "/cookies", "permanent": true }
+    { "source": "/project_category/seo/", "destination": "/casos-de-exito", "permanent": true }
+    { "source": "/success-stories/", "destination": "/casos-de-exito", "permanent": true }
+     { "source": "/project_category/colombia/", "destination": "/casos-de-exito", "permanent": true }
+    { "source": "/en-que-agencia-de-seo-confiar-para-mejorar-el-posicionamiento-local-en-colombia/", "destination": "/blog/agencia-de-ecommerce-colombia", "permanent": true }
+    { "source": "/category/guias-de-usuario/", "destination": "/", "permanent": true }
   ],
   "rewrites": [
     { "source": "/(.*)", "destination": "/index.html" }
