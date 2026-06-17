@@ -883,7 +883,7 @@ const SobreMariaFer = ({ lang = "es" }: SobreMariaFerProps) => {
 
               <div className="space-y-3 md:space-y-4">
                 <a
-                  href="https://wa.me/57XXXXXXXXXX"
+                  href="https://wa.link/jvbd4j"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="flex items-center gap-3 md:gap-4 p-3 md:p-4 bg-white/10 rounded-xl hover:bg-white/20 transition-colors"
