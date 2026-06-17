@@ -313,7 +313,7 @@ const CtaBlock = ({ lang, contactPath }: { lang: string; contactPath: string }) 
       {lang === 'pt' ? 'Fale conosco e ajudamos a escalar sua loja virtual.' : lang === 'en' ? 'Contact us and we\'ll help you scale your online store.' : 'Escríbenos y te ayudamos a escalar tu tienda online.'}
     </p>
     <div className="flex flex-col sm:flex-row gap-4 justify-center">
-      <a href="https://wa.link/hbrsxy" target="_blank" rel="noopener noreferrer" className="btn-gold flex items-center justify-center gap-2">
+      <a href="https://wa.link/jvbd4j" target="_blank" rel="noopener noreferrer" className="btn-gold flex items-center justify-center gap-2">
         <MessageCircle className="w-5 h-5" /> WhatsApp
       </a>
       <Link to={contactPath} className="btn-outline-gold text-center">

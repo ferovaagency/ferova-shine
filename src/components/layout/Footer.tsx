@@ -109,7 +109,7 @@ const Footer = ({ currentLang, lang }: FooterProps) => {
               <a href="mailto:gerencia@seoparaecommerce.co" className="flex items-center gap-2 transition-colors hover:text-gold">
                 <Mail className="h-4 w-4" /> gerencia@seoparaecommerce.co
               </a>
-              <a href="https://wa.link/hbrsxy" target="_blank" rel="noopener noreferrer" onClick={() => trackEvent('whatsapp_button_clicked', { source: 'footer', label: 'phone_link' })} className="flex items-center gap-2 transition-colors hover:text-gold">
+              <a href="https://wa.link/jvbd4j" target="_blank" rel="noopener noreferrer" onClick={() => trackEvent('whatsapp_button_clicked', { source: 'footer', label: 'phone_link' })} className="flex items-center gap-2 transition-colors hover:text-gold">
                 <MessageCircle className="h-4 w-4" /> +1 (786) 578-7671
               </a>
               <div className="flex items-center gap-2">
@@ -118,7 +118,7 @@ const Footer = ({ currentLang, lang }: FooterProps) => {
             </div>
             <div className="mt-4 flex flex-wrap gap-3">
               {([
-                { Icon: MessageCircle, name: 'whatsapp', url: 'https://wa.link/hbrsxy' },
+                { Icon: MessageCircle, name: 'whatsapp', url: 'https://wa.link/jvbd4j' },
                 { Icon: Linkedin, name: 'linkedin', url: 'https://www.linkedin.com/in/maria-fer-calderon/' },
                 { Icon: Instagram, name: 'instagram', url: 'https://www.instagram.com/mafe.ferova/' },
                 { Icon: Facebook, name: 'facebook', url: 'https://www.facebook.com/mafecalderon.SEO' },

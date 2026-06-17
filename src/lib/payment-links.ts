@@ -1,5 +1,5 @@
 const WA = (msg: string) =>
-  `https://wa.link/hbrsxy?text=${encodeURIComponent(msg)}`;
+  `https://wa.link/jvbd4j?text=${encodeURIComponent(msg)}`;
 
 export const paymentLinks = {
   asesoria30: {
