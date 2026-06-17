@@ -3,42 +3,81 @@
 
 User-agent: Googlebot
 Allow: /
+Disallow: /admin-blog
+Disallow: /en/admin-blog
+Disallow: /pt/admin-blog
 
 User-agent: Bingbot
 Allow: /
+Disallow: /admin-blog
+Disallow: /en/admin-blog
+Disallow: /pt/admin-blog
 
 User-agent: Slurp
 Allow: /
+Disallow: /admin-blog
+Disallow: /en/admin-blog
+Disallow: /pt/admin-blog
 
 User-agent: DuckDuckBot
 Allow: /
+Disallow: /admin-blog
+Disallow: /en/admin-blog
+Disallow: /pt/admin-blog
 
 User-agent: GPTBot
 Allow: /
+Disallow: /admin-blog
+Disallow: /en/admin-blog
+Disallow: /pt/admin-blog
 
 User-agent: ChatGPT-User
 Allow: /
+Disallow: /admin-blog
+Disallow: /en/admin-blog
+Disallow: /pt/admin-blog
 
 User-agent: Claude-Web
 Allow: /
+Disallow: /admin-blog
+Disallow: /en/admin-blog
+Disallow: /pt/admin-blog
 
 User-agent: anthropic-ai
 Allow: /
+Disallow: /admin-blog
+Disallow: /en/admin-blog
+Disallow: /pt/admin-blog
 
 User-agent: PerplexityBot
 Allow: /
+Disallow: /admin-blog
+Disallow: /en/admin-blog
+Disallow: /pt/admin-blog
 
 User-agent: Gemini
 Allow: /
+Disallow: /admin-blog
+Disallow: /en/admin-blog
+Disallow: /pt/admin-blog
 
 User-agent: Google-Extended
 Allow: /
+Disallow: /admin-blog
+Disallow: /en/admin-blog
+Disallow: /pt/admin-blog
 
 User-agent: CCBot
 Allow: /
+Disallow: /admin-blog
+Disallow: /en/admin-blog
+Disallow: /pt/admin-blog
 
 User-agent: cohere-ai
 Allow: /
+Disallow: /admin-blog
+Disallow: /en/admin-blog
+Disallow: /pt/admin-blog
 
 User-agent: *
 Allow: /
