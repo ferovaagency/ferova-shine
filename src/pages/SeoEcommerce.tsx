@@ -234,7 +234,7 @@ const SeoEcommerce = ({ lang = 'es' }: Props) => {
                 <h1 className="text-4xl md:text-5xl lg:text-6xl font-display font-bold mb-6">{t.title}</h1>
                 <p className="text-lg text-muted-foreground leading-relaxed mb-8">{t.sub}</p>
                 <div className="flex flex-col sm:flex-row gap-4">
-                  <a href="https://wa.link/hbrsxy" target="_blank" rel="noopener noreferrer" className="btn-gold flex items-center justify-center gap-2">
+                  <a href="https://wa.link/jvbd4j" target="_blank" rel="noopener noreferrer" className="btn-gold flex items-center justify-center gap-2">
                     <MessageCircle className="w-5 h-5" /> {t.cta}
                   </a>
                   <Link to={lang === 'es' ? '/casos-de-exito' : lang === 'pt' ? '/pt/casos-de-sucesso' : '/en/case-studies'} className="btn-outline-gold text-center">{t.ctaSecondary}</Link>
@@ -511,7 +511,7 @@ const SeoEcommerce = ({ lang = 'es' }: Props) => {
             <p className="text-muted-foreground text-lg max-w-2xl mx-auto mb-8">
               {lang === 'es' ? 'Solicita tu diagnóstico SEO gratuito.' : lang === 'pt' ? 'Solicite seu diagnóstico SEO gratuito.' : 'Request your free SEO diagnosis.'}
             </p>
-            <a href="https://wa.link/hbrsxy" target="_blank" rel="noopener noreferrer" className="btn-gold inline-flex items-center gap-2">
+            <a href="https://wa.link/jvbd4j" target="_blank" rel="noopener noreferrer" className="btn-gold inline-flex items-center gap-2">
               <MessageCircle className="w-5 h-5" /> {t.cta}
             </a>
           </div>

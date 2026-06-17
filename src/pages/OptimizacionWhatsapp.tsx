@@ -362,7 +362,7 @@ const OptimizacionWhatsapp = ({ lang = 'es' }: Props) => {
             <h2 className="text-3xl md:text-4xl font-display font-bold mb-6">{t.ctaTitle}</h2>
             <p className="text-muted-foreground text-lg max-w-xl mx-auto mb-8">{t.ctaSub}</p>
             <a
-              href="https://wa.link/hbrsxy?text=Hola%20Ferova%2C%20quiero%20información%20sobre%20Optimización%20WhatsApp%20Business"
+              href="https://wa.link/jvbd4j?text=Hola%20Ferova%2C%20quiero%20información%20sobre%20Optimización%20WhatsApp%20Business"
               target="_blank"
               rel="noopener noreferrer"
               className="inline-flex items-center gap-2 px-8 py-4 rounded-full bg-green-500 hover:bg-green-600 text-white font-semibold transition"

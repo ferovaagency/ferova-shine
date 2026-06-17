@@ -110,7 +110,7 @@ const PautaDigital = ({ lang = 'es' }: Props) => {
                 : 'Ad campaigns on Google, Meta, TikTok and LinkedIn designed to maximize your ROI and drive real sales.'}
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <a href="https://wa.link/hbrsxy" target="_blank" rel="noopener noreferrer" className="btn-gold flex items-center justify-center gap-2">
+              <a href="https://wa.link/jvbd4j" target="_blank" rel="noopener noreferrer" className="btn-gold flex items-center justify-center gap-2">
                 <MessageCircle className="w-5 h-5" />
                 {lang === 'es' ? 'Solicitar propuesta' : 'Request proposal'}
               </a>
@@ -185,7 +185,7 @@ const PautaDigital = ({ lang = 'es' }: Props) => {
                   </ul>
                   <p className="text-xs text-muted-foreground mb-4">{plan.contract}</p>
                   <a
-                    href="https://wa.link/hbrsxy?text=Hola%20Ferova%2C%20quiero%20información%20sobre%20el%20plan%20de%20pauta%20digital"
+                    href="https://wa.link/jvbd4j?text=Hola%20Ferova%2C%20quiero%20información%20sobre%20el%20plan%20de%20pauta%20digital"
                     target="_blank"
                     rel="noopener noreferrer"
                     className={`w-full py-3 rounded-xl font-semibold text-sm text-center flex items-center justify-center gap-2 transition ${plan.highlight ? 'btn-gold' : 'border border-gold/50 text-gold hover:bg-gold/10'}`}

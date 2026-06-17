@@ -114,7 +114,7 @@ const CasoDetalle = ({ lang = 'es' }: Props) => {
                 <motion.a
                   whileHover={{ scale: 1.05 }}
                   whileTap={{ scale: 0.97 }}
-                  href="https://wa.link/hbrsxy"
+                  href="https://wa.link/jvbd4j"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="btn-gold inline-flex items-center gap-2"
