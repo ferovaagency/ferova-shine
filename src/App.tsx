@@ -205,6 +205,17 @@ const App = () => (
             <Route path="/en/ai-training" element={<CapacitacionIA lang="en" />} />
             <Route path="/pt/treinamento-ia" element={<CapacitacionIA lang="pt" />} />
 
+            {/* Creación de Contenido LinkedIn (Agencia) */}
+            <Route path="/servicios/contenido-linkedin" element={<ContenidoLinkedin lang="es" />} />
+            <Route path="/en/services/linkedin-content" element={<ContenidoLinkedin lang="en" />} />
+            <Route path="/pt/conteudo-linkedin" element={<ContenidoLinkedin lang="pt" />} />
+
+            {/* Legacy: Web Económica deprecada → redirige a Desarrollo Web */}
+            <Route path="/servicios/web-economica" element={<Navigate replace to="/servicios/diseno-web" />} />
+            <Route path="/en/services/starter-web" element={<Navigate replace to="/en/services/web-design" />} />
+            <Route path="/pt/web-economica" element={<Navigate replace to="/pt/design-web" />} />
+
+
             <Route path="*" element={<NotFound />} />
           </Routes>
         </Suspense>
