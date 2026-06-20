@@ -114,16 +114,25 @@ export default function VCard() {
             <div className="mb-5" style={{ borderTop: '1px solid rgba(255,255,255,0.08)' }} />
 
             {/* Links rápidos */}
-            <div className="space-y-1.5 mb-5">
+            <div className="space-y-2 mb-5">
               {[
                 { icon: Newspaper, text: 'Newsletter', href: 'https://seoparaecommerce.co/newsletter' },
                 { icon: FileText, text: 'Herramienta de Brief', href: 'https://seoparaecommerce.co/recursos/briefing-newsletter' },
                 { icon: ExternalLink, text: 'Asesoría con nosotros', href: 'https://forms.gle/4vobAkaa8W1uNKno6' },
               ].map((item, i) => (
-                <a key={i} href={item.href} target='_blank' rel="noopener noreferrer"
-                  className="flex items-center gap-2.5 px-3 py-2 rounded-xl text-xs transition-all hover:bg-white/5"
-                  style={{ color: 'rgba(255,255,255,0.55)' }}>
-                  <item.icon className="w-3.5 h-3.5 shrink-0" style={{ color: 'hsl(45,86%,55%)' }} />
+                <a
+                  key={i}
+                  href={item.href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex items-center justify-center gap-2.5 w-full px-4 py-3 rounded-xl text-sm font-semibold transition-all duration-300 hover:scale-[1.02] active:scale-95"
+                  style={{
+                    background: 'linear-gradient(135deg, hsl(45,86%,38%), hsl(45,86%,54%))',
+                    color: '#1a1208',
+                    boxShadow: '0 4px 14px -4px hsl(45,86%,32%)',
+                  }}
+                >
+                  <item.icon className="w-4 h-4 shrink-0" />
                   {item.text}
                 </a>
               ))}
