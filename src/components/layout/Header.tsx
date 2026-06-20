@@ -1,6 +1,12 @@
 import { useState } from "react";
 import { Link, useLocation } from "react-router-dom";
-import { Menu, X } from "lucide-react";
+import { Menu, X, ChevronDown } from "lucide-react";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
 import logoLight from "@/assets/ferova-logo.png.png";
 import { useAnalytics } from "@/hooks/useAnalytics";
 
@@ -9,63 +15,109 @@ interface HeaderProps {
   lang?: "es" | "en" | "pt";
 }
 
+type NavItem = { label: string; href: string };
+
 export default function Header({ currentLang, lang }: HeaderProps) {
   const locale = lang ?? currentLang ?? "es";
   const location = useLocation();
   const [mobileOpen, setMobileOpen] = useState(false);
+  const [mobileAgencyOpen, setMobileAgencyOpen] = useState(false);
   const { trackLanguageChange } = useAnalytics();
-
-  const navigation = locale === "pt"
-    ? [
-        { label: "Serviços", href: "/pt/servicos" },
-        { label: "Preços", href: "/pt/precos" },
-        { label: "Casos", href: "/pt/casos-de-sucesso" },
-        { label: "Blog", href: "/pt/blog" },
-        { label: "Newsletter", href: "/pt/newsletter" },
-        { label: "Recursos", href: "/pt/recursos" },
-        { label: "Contato", href: "/pt/contato" },
-      ]
-    : locale === "en"
-    ? [
-        { label: "Services", href: "/en/services" },
-        { label: "Pricing", href: "/en/pricing" },
-        { label: "Cases", href: "/en/case-studies" },
-        { label: "Blog", href: "/en/blog" },
-        { label: "Newsletter", href: "/en/newsletter" },
-        { label: "Resources", href: "/en/resources" },
-        { label: "Contact", href: "/en/contact" },
-      ]
-    : [
-        { label: "Servicios", href: "/servicios" },
-        { label: "Precios", href: "/precios" },
-        { label: "Casos", href: "/casos-de-exito" },
-        { label: "Blog", href: "/blog" },
-        { label: "Newsletter", href: "/newsletter" },
-        { label: "Recursos", href: "/recursos" },
-        { label: "Contacto", href: "/contacto" },
-      ];
 
   const homeHref = locale === "pt" ? "/pt" : locale === "en" ? "/en" : "/";
 
-  const langSwitchLinks = locale === "pt"
-    ? [
-        { label: "ES", href: "/" },
-        { label: "EN", href: "/en" },
-      ]
-    : locale === "en"
-    ? [
-        { label: "ES", href: "/" },
-        { label: "PT", href: "/pt" },
-      ]
-    : [
-        { label: "EN", href: "/en" },
-        { label: "PT", href: "/pt" },
-      ];
+  const NAV: Record<"es" | "en" | "pt", { primary: NavItem[]; agencyLabel: string; agencyItems: NavItem[] }> = {
+    es: {
+      agencyLabel: "Agencia",
+      primary: [
+        { label: "Inicio", href: "/" },
+        { label: "Mentoría y Asesoría", href: "/consultoria-estrategica" },
+        { label: "Capacitación IA", href: "/capacitacion-ia" },
+        { label: "Recursos", href: "/recursos" },
+        { label: "Blog", href: "/blog" },
+        { label: "Contacto", href: "/contacto" },
+      ],
+      agencyItems: [
+        { label: "SEO E-commerce", href: "/servicios/seo-ecommerce" },
+        { label: "Diseño Web", href: "/servicios/diseno-web" },
+        { label: "Pauta Digital", href: "/servicios/pauta-digital" },
+        { label: "Diseño de Logos", href: "/servicios/diseno-logos" },
+        { label: "LinkedIn", href: "/servicios/optimizacion-linkedin" },
+        { label: "WhatsApp Business", href: "/servicios/whatsapp-business" },
+        { label: "WhatsApp IA Bot", href: "/servicios/whatsapp-ia-bot" },
+        { label: "Asesorías Marketing", href: "/servicios/asesorias-marketing" },
+        { label: "Ver todos los servicios", href: "/servicios" },
+      ],
+    },
+    en: {
+      agencyLabel: "Agency",
+      primary: [
+        { label: "Home", href: "/en" },
+        { label: "Strategy Advisory", href: "/en/strategy-advisory" },
+        { label: "AI Training", href: "/en/ai-training" },
+        { label: "Resources", href: "/en/resources" },
+        { label: "Blog", href: "/en/blog" },
+        { label: "Contact", href: "/en/contact" },
+      ],
+      agencyItems: [
+        { label: "E-commerce SEO", href: "/en/services/ecommerce-seo" },
+        { label: "Web Design", href: "/en/services/web-design" },
+        { label: "Digital Ads", href: "/en/services/digital-ads" },
+        { label: "Logo Design", href: "/en/services/logo-design" },
+        { label: "LinkedIn", href: "/en/services/linkedin-optimization" },
+        { label: "WhatsApp Business", href: "/services/whatsapp-business" },
+        { label: "WhatsApp AI Bot", href: "/services/whatsapp-ai-bot" },
+        { label: "Marketing Consulting", href: "/en/services/marketing-consulting" },
+        { label: "All services", href: "/en/services" },
+      ],
+    },
+    pt: {
+      agencyLabel: "Agência",
+      primary: [
+        { label: "Início", href: "/pt" },
+        { label: "Mentoria e Assessoria", href: "/pt/consultoria-estrategica" },
+        { label: "Treinamento em IA", href: "/pt/treinamento-ia" },
+        { label: "Recursos", href: "/pt/recursos" },
+        { label: "Blog", href: "/pt/blog" },
+        { label: "Contato", href: "/pt/contato" },
+      ],
+      agencyItems: [
+        { label: "SEO E-commerce", href: "/pt/seo-ecommerce" },
+        { label: "Design Web", href: "/pt/design-web" },
+        { label: "Anúncios Digitais", href: "/pt/anuncios-digitais" },
+        { label: "Design de Logos", href: "/pt/design-logos" },
+        { label: "LinkedIn", href: "/pt/linkedin" },
+        { label: "WhatsApp Business", href: "/pt/whatsapp-business" },
+        { label: "WhatsApp IA Bot", href: "/pt/whatsapp-ia-bot" },
+        { label: "Ver todos os serviços", href: "/pt/servicos" },
+      ],
+    },
+  };
+
+  const cfg = NAV[locale];
+
+  const langSwitchLinks =
+    locale === "pt"
+      ? [
+          { label: "ES", href: "/" },
+          { label: "EN", href: "/en" },
+        ]
+      : locale === "en"
+      ? [
+          { label: "ES", href: "/" },
+          { label: "PT", href: "/pt" },
+        ]
+      : [
+          { label: "EN", href: "/en" },
+          { label: "PT", href: "/pt" },
+        ];
 
   const isActive = (href: string) =>
     href === "/" || href === "/en" || href === "/pt"
       ? location.pathname === href
       : location.pathname === href || location.pathname.startsWith(`${href}/`);
+
+  const agencyActive = cfg.agencyItems.some((i) => isActive(i.href));
 
   return (
     <header className="fixed inset-x-0 top-0 z-50 border-b border-border/60 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/80">
@@ -75,7 +127,7 @@ export default function Header({ currentLang, lang }: HeaderProps) {
         </Link>
 
         <nav className="hidden items-center gap-6 lg:flex">
-          {navigation.map((item) => (
+          {cfg.primary.map((item) => (
             <Link
               key={item.href}
               to={item.href}
@@ -84,6 +136,25 @@ export default function Header({ currentLang, lang }: HeaderProps) {
               {item.label}
             </Link>
           ))}
+
+          <DropdownMenu>
+            <DropdownMenuTrigger
+              className={`inline-flex items-center gap-1 text-sm transition-colors outline-none ${
+                agencyActive ? "text-foreground" : "text-muted-foreground hover:text-foreground"
+              }`}
+            >
+              {cfg.agencyLabel}
+              <ChevronDown className="h-3.5 w-3.5" />
+            </DropdownMenuTrigger>
+            <DropdownMenuContent align="end" className="w-64">
+              {cfg.agencyItems.map((it) => (
+                <DropdownMenuItem key={it.href} asChild>
+                  <Link to={it.href} className="cursor-pointer">{it.label}</Link>
+                </DropdownMenuItem>
+              ))}
+            </DropdownMenuContent>
+          </DropdownMenu>
+
           <div className="flex items-center gap-1 ml-2 border-l border-border/50 pl-4">
             {langSwitchLinks.map((l) => (
               <Link
@@ -110,9 +181,9 @@ export default function Header({ currentLang, lang }: HeaderProps) {
       </div>
 
       {mobileOpen && (
-        <div className="border-t border-border/60 bg-background lg:hidden">
+        <div className="border-t border-border/60 bg-background lg:hidden max-h-[calc(100vh-5rem)] overflow-y-auto">
           <nav className="container mx-auto flex flex-col gap-1 px-4 py-4 md:px-6">
-            {navigation.map((item) => (
+            {cfg.primary.map((item) => (
               <Link
                 key={item.href}
                 to={item.href}
@@ -122,6 +193,33 @@ export default function Header({ currentLang, lang }: HeaderProps) {
                 {item.label}
               </Link>
             ))}
+
+            <button
+              type="button"
+              onClick={() => setMobileAgencyOpen((v) => !v)}
+              className={`flex items-center justify-between rounded-xl px-4 py-3 text-sm transition-colors ${
+                agencyActive ? "bg-accent text-accent-foreground" : "text-muted-foreground hover:bg-accent hover:text-accent-foreground"
+              }`}
+              aria-expanded={mobileAgencyOpen}
+            >
+              <span>{cfg.agencyLabel}</span>
+              <ChevronDown className={`h-4 w-4 transition-transform ${mobileAgencyOpen ? "rotate-180" : ""}`} />
+            </button>
+            {mobileAgencyOpen && (
+              <div className="ml-3 border-l border-border/50 pl-3 flex flex-col gap-1">
+                {cfg.agencyItems.map((it) => (
+                  <Link
+                    key={it.href}
+                    to={it.href}
+                    onClick={() => setMobileOpen(false)}
+                    className="rounded-lg px-3 py-2 text-sm text-muted-foreground hover:bg-accent hover:text-accent-foreground"
+                  >
+                    {it.label}
+                  </Link>
+                ))}
+              </div>
+            )}
+
             <div className="flex gap-2 mt-2 pt-2 border-t border-border/50">
               {langSwitchLinks.map((l) => (
                 <Link

@@ -1,67 +1,88 @@
-# Sesión 2 — Plan de implementación
 
-No tocamos: header, footer, pop-up, asesor IA, banners, cookies (todo de Sesión 1 queda intacto).
+# Plan: Reposicionamiento B2B — Consultoría IA + Capacitación
 
-## Bloque A — Analytics tracking completo
+## Decisiones aplicadas (basadas en tus respuestas)
 
-1. Verificar/agregar GA4 (`G-FPTVQ5XHE6` ya está en `useAnalytics.ts`) en `index.html` con Consent Mode v2 (default denied, gated por `cookie_consent`).
-2. Crear `src/lib/analytics.ts` con `trackEvent` tipado y guard de consent desde `localStorage.cookie_consent.analytics`.
-3. Crear hook `src/hooks/useScrollTracking.ts` que dispare `scroll_75` (IntersectionObserver) y `time_on_page_60s` (setTimeout) por ruta.
-4. Aplicar `trackEvent` en:
-   - Header/Footer/CTA: botones WhatsApp (`whatsapp_button_clicked` con `location`)
-   - Footer + selectores: redes (`social_click`)
-   - `AiAdvisorChat`: open, form submit, message_sent (con msg_number), escalated_whatsapp, product_card_clicked
-   - `ExitIntentPopup`: shown/closed/newsletter_signup
-   - `CookieBanner`: aceptar_all / essential / customizar
-   - Home: service_card_clicked, case_study_clicked, blog_clicked, cta_clicked
-   - `Precios`: pricing_card_clicked
-   - `Contacto`: contact_form_submitted
-5. Montar `useScrollTracking` en layout/`App.tsx` y `trackPageView` en cambios de ruta.
+- **Idioma**: se mantiene el sistema actual por hostname (.co=ES, .co EN, /pt/=PT). **No** se agrega selector de idioma manual ni `useAppConfig` global. Cada nueva página recibe `lang` como prop (igual que el resto del proyecto).
+- **Moneda**: se respeta la regla del proyecto: ES→COP, EN→USD, PT→BRL. **No** se muestra USD + "Aprox COP". Se extiende `src/lib/payment-links.ts` (o se crea `src/lib/pricing.ts`) con un formateador único `formatPrice(usd, lang)` que convierte y formatea en la moneda local.
+- **Slugs (SEO/GEO)**: localizados por idioma, siguiendo el patrón existente.
+- **/recursos**: se conserva el contenido actual y se inserta la nueva sección B2B (grid de 4 + modales Brevo) **encima**.
 
-## Bloque B — Home rediseñado (regla 3s + StoryBrand + TAYA)
+## Slugs nuevos
 
-Reescribir `src/pages/Index.tsx` (y sus secciones) con 6 secciones:
-1. **Hero** — H1 claro, sub con audiencia/resultado, 3 stats de confianza (+7 años, 14M COP/mes, #1 Google), CTA WhatsApp + Ver servicios, visual dashboard (reusar asset existente o generar nuevo).
-2. **El problema** — 3 cards de dolor (no te encuentran / página parqueada / sin tiempo).
-3. **Lo que hacemos por ti** — 4 servicios (Web Apps Ecommerce, SEO+GEO+IAO, WhatsApp IA Bot, Herramientas).
-4. **Resultados reales** — 4 métricas + 1 testimonio destacado (Ana María Osorio) + CTA casos.
-5. **They Ask You Answer** — 5 FAQs en accordion.
-6. **CTA final** — WhatsApp.
+| Vista | ES (raíz) | EN (/en) | PT (/pt) |
+|---|---|---|---|
+| Consultoría B2B | `/consultoria-estrategica` | `/en/strategy-advisory` | `/pt/consultoria-estrategica` |
+| Capacitación IA | `/capacitacion-ia` | `/en/ai-training` | `/pt/treinamento-ia` |
 
-Todos los textos i18n (es/en/pt) siguiendo memoria narrativa (sin nombrar tecnologías).
+Se agregan a `src/App.tsx` sin tocar rutas existentes.
 
-## Bloque C — Servicios reestructurados
+## Cambios por archivo
 
-1. No hay tabla `services` en DB (los servicios viven en código). Refactor `src/pages/Servicios.tsx` para mostrar SOLO 4 categorías: `seo-geo-iao`, `web-apps-ecommerce`, `whatsapp-ia-bot`, `herramientas-marketing`.
-2. Crear landing nueva `src/pages/WhatsappIaBot.tsx` con estructura completa (hero, demo gif/mockup, problema, 3 pasos, casos uso, métricas, precio $100 USD/mes, FAQ, CTA).
-3. Crear landing nueva `src/pages/HerramientasMarketing.tsx` con hero, categorías, 6-8 herramientas destacadas, CTA a `/recursos`.
-4. Consolidar landing SEO existente (`SeoEcommerce.tsx`) bajo `/servicios/seo-geo-iao` (alias de ruta).
-5. Añadir rutas en `App.tsx` y actualizar links internos.
+### 1. Lógica de precios — `src/lib/pricing.ts` (nuevo)
+- Constantes: `TRM_USD_COP = 4000`, `TRM_USD_BRL = 5.2` (aprox actual; documentado).
+- `formatPrice(usd: number, lang: 'es'|'en'|'pt', opts?: {period?: 'once'|'monthly'|'from'})` → string localizado en una sola moneda:
+  - ES: `"$400.000 COP/mes"` o `"Desde $76.000 COP"`
+  - EN: `"$150 USD/mo"` / `"From $19 USD"`
+  - PT: `"R$780 BRL/mês"` / `"A partir de R$98 BRL"`
+- Diccionario interno con etiquetas de periodo y prefijos por idioma.
 
-## Bloque D — i18n blogs y casos de éxito
+### 2. Header — `src/components/layout/Header.tsx`
+- Reordenar nav principal: **Inicio · Mentoría y Asesoría · Capacitación IA · Recursos · Agencia ▾ · Blog · Contacto** (con textos localizados ES/EN/PT por interpretación B2B, no traducción literal: "Strategy Advisory", "AI Training" / "Consultoria Estratégica", "Treinamento em IA").
+- "Agencia" como `DropdownMenu` de `@radix-ui/react-dropdown-menu` que agrupa rutas existentes: SEO E-commerce, Diseño Web, Pauta Digital, Logos, LinkedIn, WhatsApp Business, WhatsApp IA Bot, Asesorías Marketing.
+- Conserva selectores de hostname/idioma actuales (banderas si existen) sin agregar nuevo selector.
 
-Estrategia híbrida (Opción A + B):
-1. Migración SQL: añadir columnas `*_en` y `*_pt` a `blog_posts` (title, excerpt, content, meta_title, meta_description).
-2. Como no existe tabla `case_studies` (los casos están hardcoded), traducir directamente en código (i18n estática).
-3. Crear edge function `translate-content` que use Lovable AI (`google/gemini-2.5-flash`).
-4. En `AdminBlog`: botones "Traducir a EN" / "Traducir a PT" que llamen la edge function y guarden.
-5. En `BlogPost.tsx`: leer columna según `lang` con fallback a español.
+### 3. Home — `src/pages/Index.tsx`
+- **Hero**: nuevo titular B2B ("Escala tu E-commerce con IA y Consultoría Estratégica" / "Scale your E-commerce with AI & Strategy Advisory" / "Escale seu E-commerce com IA e Consultoria Estratégica"). CTA primario → `/consultoria-estrategica` (ruta localizada). CTA secundario WhatsApp.
+- **Escalera de Valor (3 Pricing Cards)** con `formatPrice`:
+  1. **Herramientas IA** — "Desde $19 USD" → `/recursos`.
+  2. **Consultoría** — Asesoría 1a1 $150 USD + Mentoría Mensual $500 USD → `/consultoria-estrategica`.
+  3. **Agencia** — Web E-commerce $1.200 USD + SEO/AIO Mensual $500 USD → abre el dropdown de Agencia (scroll a navbar + `data-open`).
+- **Social Proof**: carrusel `embla-carousel-react` minimalista con 5 testimonios B2B (textos en los 3 idiomas).
+- Resto de secciones existentes (Fera, casos, etc.) se conservan debajo.
 
-## Bloque E — SEO local LATAM
+### 4. Nueva vista — `src/pages/ConsultoriaEstrategica.tsx`
+- Hero + propuesta de valor + 2 planes (Asesoría 1a1 / Mentoría Mensual) usando `formatPrice`.
+- FAQ acordeón (shadcn) y CTA WhatsApp (`wa.link/jvbd4j`).
+- SEO localizado (title/description/canonical/hreflang).
 
-1. `index.html`: añadir hreflang (`es-co`, `es-419`, `en`, `pt-br`, `x-default`), meta geo (CO-DC, Bogotá, coords), schema `ProfessionalService` con `areaServed` (CO, MX, PE, CL, AR, BR, ES, US) y `founder` María Fernanda Calderón.
-2. Actualizar/extender JSON-LD existente sin romper Organization actual.
+### 5. Nueva vista — `src/pages/CapacitacionIA.tsx`
+- Hero corporativo para talleres in-company.
+- **Calculadora dinámica** con `react-hook-form`:
+  - `tema`: Marketing (1.0) / Estrategia (1.2) / Inteligencia Artificial (1.5).
+  - `audiencia`: 1 persona (1.0) / 2-5 (1.5) / 6-15 (2.0).
+  - `TARIFA_BASE_USD = 100`, `HORAS = 4`. `precio = base * horas * tema * audiencia`.
+  - Resultado en `motion.div` con `AnimatePresence`, formateado por `formatPrice(precio, lang)` (sale en COP/USD/BRL según hostname).
+  - Disclaimer localizado.
+- Bloque de temarios + CTA WhatsApp.
 
-## Bloque F — Validación
+### 6. `src/pages/Recursos.tsx`
+- Insertar **arriba** una nueva sección `RecursosB2BGrid` con CSS Grid de 4 tarjetas:
+  - Brief de contenido, Newsletter Pro, Analizador de contratos, Comparador de propuestas.
+- Cada tarjeta abre un `Dialog` (`@radix-ui/react-dialog`) centrado con título localizado ("Ingresa tu correo para acceder" / "Enter your email to unlock" / "Informe seu e-mail para acessar") y `<div id="brevo-form-container-{slug}" className="min-h-[200px] w-full" />` vacío para inyección Brevo posterior.
+- El contenido existente de /recursos se preserva intacto debajo.
 
-- Build limpio, sin errores runtime (arreglar también el error actual de `useContext(...)` null si persiste).
-- Verificar consola: eventos GA4 sin error.
-- Smoke test: home nuevo renderiza, /servicios/whatsapp-ia-bot y /servicios/herramientas-marketing accesibles.
+### 7. Rutas — `src/App.tsx`
+- Agregar 6 rutas nuevas (3 vistas × 3 idiomas) usando `lazy(...)`. No se elimina ninguna ruta existente.
 
-## Notas técnicas
-- Edge function nueva requiere bloque en `supabase/config.toml` si necesita non-default settings (no, basta default).
-- Migración SQL pedirá aprobación antes de cualquier edit de código que dependa de tipos.
-- Mantener tokens de diseño (`text-foreground`, `bg-primary`, etc.), nada de colores directos.
-- Respetar memorias: WhatsApp +17865787671, sin mencionar tecnologías, autora Maria Calderon, logo `.png.png`.
+### 8. SEO complementario
+- `public/sitemap.xml`: agregar 6 URLs con hreflang cruzado.
+- Meta tags por página (mismo patrón que el resto del proyecto).
 
-¿Apruebas para arrancar? Si quieres lo divido en sub-sesiones (A+E primero, luego B, luego C, luego D) dime.
+## Diseño visual
+
+- **Dark mode** corporativo, minimalista. Se reutilizan los tokens existentes del proyecto (paleta `#2F2D56` / `#541014` / `#C0930E`, tipografía Nexa) — sin introducir nuevos colores hardcoded.
+- Animaciones sutiles con `framer-motion` (fade/slide en hero, hover scale en cards, AnimatePresence en calculadora).
+- 100% Mobile-first; cards apiladas en mobile, 3 cols en `md:`.
+
+## Fuera de alcance (por las restricciones que diste)
+
+- No se crea `useAppConfig` ni Context i18n global (el proyecto ya gestiona idioma vía prop `lang` desde hostname).
+- No se agrega selector de idioma manual.
+- No se muestra dual currency ("USD + Aprox COP") — incompatible con la regla del proyecto.
+
+## Validación final
+
+- `tsc` build limpio.
+- Verificación visual con Playwright en `/`, `/consultoria-estrategica`, `/capacitacion-ia`, `/recursos` en mobile (375px) y desktop.
+- Confirmar que dropdown "Agencia" lista todas las rutas existentes y que ninguna ruta antigua quedó rota.

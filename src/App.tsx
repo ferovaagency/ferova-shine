@@ -46,6 +46,8 @@ const NewsletterAdminPage = lazy(() => import("./pages/NewsletterAdminPage"));
 const BriefingNewsletter = lazy(() => import("./pages/BriefingNewsletter"));
 const Privacidad = lazy(() => import("./pages/Privacidad"));
 const Cookies = lazy(() => import("./pages/Cookies"));
+const ConsultoriaEstrategica = lazy(() => import("./pages/ConsultoriaEstrategica"));
+const CapacitacionIA = lazy(() => import("./pages/CapacitacionIA"));
 
 const queryClient = new QueryClient();
 
@@ -191,6 +193,16 @@ const App = () => (
             <Route path="/en/cookies" element={<Cookies lang="en" />} />
             <Route path="/pt/privacidade" element={<Privacidad lang="pt" />} />
             <Route path="/pt/cookies" element={<Cookies lang="pt" />} />
+
+            {/* Consultoría Estratégica (B2B) */}
+            <Route path="/consultoria-estrategica" element={<ConsultoriaEstrategica lang="es" />} />
+            <Route path="/en/strategy-advisory" element={<ConsultoriaEstrategica lang="en" />} />
+            <Route path="/pt/consultoria-estrategica" element={<ConsultoriaEstrategica lang="pt" />} />
+
+            {/* Capacitación IA in-company */}
+            <Route path="/capacitacion-ia" element={<CapacitacionIA lang="es" />} />
+            <Route path="/en/ai-training" element={<CapacitacionIA lang="en" />} />
+            <Route path="/pt/treinamento-ia" element={<CapacitacionIA lang="pt" />} />
 
             <Route path="*" element={<NotFound />} />
           </Routes>
