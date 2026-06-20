@@ -44,7 +44,7 @@ const OptimizacionLinkedin = ({ lang = 'es' }: Props) => {
     title: 'LinkedIn Profile Optimization',
     sub: 'Boost your personal brand and attract professional opportunities with a strategically optimized profile.',
     planName: 'LinkedIn Pro',
-    planPrice: { usd: 197, cop: 790000 },
+    planDescPeriod: 'one-time',
     planDesc: 'Complete optimization of your professional LinkedIn profile.',
     features: [
       'Full audit of your current profile',
