@@ -49,6 +49,8 @@ const Cookies = lazy(() => import("./pages/Cookies"));
 const ConsultoriaEstrategica = lazy(() => import("./pages/ConsultoriaEstrategica"));
 const CapacitacionIA = lazy(() => import("./pages/CapacitacionIA"));
 const ContenidoLinkedin = lazy(() => import("./pages/ContenidoLinkedin"));
+const AnalizadorContratos = lazy(() => import("./pages/AnalizadorContratos"));
+const ComparadorPropuestas = lazy(() => import("./pages/ComparadorPropuestas"));
 
 const queryClient = new QueryClient();
 
@@ -210,7 +212,15 @@ const App = () => (
             <Route path="/en/services/linkedin-content" element={<ContenidoLinkedin lang="en" />} />
             <Route path="/pt/conteudo-linkedin" element={<ContenidoLinkedin lang="pt" />} />
 
-            {/* Legacy: Web Económica deprecada → redirige a Desarrollo Web */}
+            {/* Recursos B2B — Analizador de contratos & Comparador de propuestas */}
+            <Route path="/recursos/analizador-contratos" element={<AnalizadorContratos lang="es" />} />
+            <Route path="/en/resources/contract-analyzer" element={<AnalizadorContratos lang="en" />} />
+            <Route path="/pt/recursos/analisador-contratos" element={<AnalizadorContratos lang="pt" />} />
+            <Route path="/recursos/comparador-propuestas" element={<ComparadorPropuestas lang="es" />} />
+            <Route path="/en/resources/proposal-comparator" element={<ComparadorPropuestas lang="en" />} />
+            <Route path="/pt/recursos/comparador-propostas" element={<ComparadorPropuestas lang="pt" />} />
+
+            {/* Legacy: Web Económica deprecada → redirige a Desarrollo Web (301-like client redirect) */}
             <Route path="/servicios/web-economica" element={<Navigate replace to="/servicios/diseno-web" />} />
             <Route path="/en/services/starter-web" element={<Navigate replace to="/en/services/web-design" />} />
             <Route path="/pt/web-economica" element={<Navigate replace to="/pt/design-web" />} />
