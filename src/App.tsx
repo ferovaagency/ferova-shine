@@ -3,7 +3,7 @@ import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import ExitIntentPopup from "@/components/ui/exit-intent-popup";
 import SocialProofToasts from "@/components/ui/social-proof-toasts";
 import AiAdvisorChat from "@/components/ui/ai-advisor-chat";
@@ -48,6 +48,7 @@ const Privacidad = lazy(() => import("./pages/Privacidad"));
 const Cookies = lazy(() => import("./pages/Cookies"));
 const ConsultoriaEstrategica = lazy(() => import("./pages/ConsultoriaEstrategica"));
 const CapacitacionIA = lazy(() => import("./pages/CapacitacionIA"));
+const ContenidoLinkedin = lazy(() => import("./pages/ContenidoLinkedin"));
 
 const queryClient = new QueryClient();
 
@@ -203,6 +204,17 @@ const App = () => (
             <Route path="/capacitacion-ia" element={<CapacitacionIA lang="es" />} />
             <Route path="/en/ai-training" element={<CapacitacionIA lang="en" />} />
             <Route path="/pt/treinamento-ia" element={<CapacitacionIA lang="pt" />} />
+
+            {/* Creación de Contenido LinkedIn (Agencia) */}
+            <Route path="/servicios/contenido-linkedin" element={<ContenidoLinkedin lang="es" />} />
+            <Route path="/en/services/linkedin-content" element={<ContenidoLinkedin lang="en" />} />
+            <Route path="/pt/conteudo-linkedin" element={<ContenidoLinkedin lang="pt" />} />
+
+            {/* Legacy: Web Económica deprecada → redirige a Desarrollo Web */}
+            <Route path="/servicios/web-economica" element={<Navigate replace to="/servicios/diseno-web" />} />
+            <Route path="/en/services/starter-web" element={<Navigate replace to="/en/services/web-design" />} />
+            <Route path="/pt/web-economica" element={<Navigate replace to="/pt/design-web" />} />
+
 
             <Route path="*" element={<NotFound />} />
           </Routes>

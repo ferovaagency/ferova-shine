@@ -1,47 +1,29 @@
 import Header from '@/components/layout/Header';
 import Footer from '@/components/layout/Footer';
 import AdBanner from '@/components/ui/ad-banner';
-import { Link } from 'react-router-dom';
 import { Palette, Layers, FileImage, BookOpen, MessageCircle, Zap, ArrowRight, X } from 'lucide-react';
-import { useState } from 'react';
-import { getPaymentLink } from '@/lib/payment-links';
 import { useToast } from '@/hooks/use-toast';
+import { formatPrice, type Lang } from '@/lib/pricing';
 
-interface Props { lang?: 'es' | 'en' | 'pt'; }
+interface Props { lang?: Lang; }
+
+const LOGO_USD = 250;
 
 const DisenoLogos = ({ lang = 'es' }: Props) => {
-  const [currency, setCurrency] = useState<'usd' | 'cop'>('usd');
   const { toast } = useToast();
-
-  const handleCta = () => {
-    const link = getPaymentLink('brandingEssential', currency);
-    window.open(link, '_blank', 'noopener,noreferrer');
-    toast({
-      title: lang === 'es' ? '¡Confirmado!' : lang === 'pt' ? 'Confirmado!' : 'Confirmed!',
-      description: lang === 'es'
-        ? '¡Plan confirmado! En Ferova Agency estamos listos para empezar.'
-        : lang === 'pt' ? 'Plano confirmado! Na Ferova Agency estamos prontos para começar.'
-        : 'Plan confirmed! At Ferova Agency we are ready to start.',
-    });
-  };
-
-  const formatPrice = (usd: number, cop: number) => {
-    if (currency === 'cop') return new Intl.NumberFormat('es-CO', { style: 'currency', currency: 'COP', maximumFractionDigits: 0 }).format(cop);
-    return new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD', maximumFractionDigits: 0 }).format(usd);
-  };
 
   const t = lang === 'es' ? {
     title: 'Diseño de Logos & Branding',
-    sub: 'Identidad visual única y profesional que posiciona tu marca en la mente de tus clientes.',
-    whatIncludes: '¿Qué incluye nuestro servicio?',
+    sub: 'Identidad visual única y profesional que posiciona tu marca.',
+    whatIncludes: '¿Qué incluye?',
     features: [
-      { icon: Palette, title: 'Diseño conceptual', desc: 'Propuestas creativas basadas en los valores y personalidad de tu marca.' },
+      { icon: Palette, title: 'Diseño conceptual', desc: 'Propuestas creativas basadas en los valores de tu marca.' },
       { icon: Layers, title: 'Variaciones y aplicaciones', desc: 'Logo principal, secundario, iconográfico y variaciones de color.' },
-      { icon: FileImage, title: 'Archivos editables', desc: 'Entrega en AI, EPS, SVG, PNG y PDF para cualquier uso.' },
-      { icon: BookOpen, title: 'Manual de marca', desc: 'Guía completa con paleta de colores, tipografías y reglas de uso.' },
+      { icon: FileImage, title: 'Archivos editables', desc: 'AI, EPS, SVG, PNG y PDF para cualquier uso.' },
+      { icon: BookOpen, title: 'Manual de marca', desc: 'Guía con paleta de colores, tipografías y reglas de uso.' },
     ],
     planTitle: 'Plan Branding Essential',
-    planTagline: 'Tu marca es lo que dicen de ti cuando no estás. Ferova Agency crea una identidad que proyecta autoridad y profesionalismo.',
+    planTagline: 'Una identidad que proyecta autoridad y profesionalismo desde el primer contacto.',
     planCta: 'Completar Briefing',
     planIncludes: [
       { icon: Palette, text: 'Logo principal + variaciones' },
@@ -50,18 +32,19 @@ const DisenoLogos = ({ lang = 'es' }: Props) => {
     ],
     planExcludes: ['Registro legal de marca', 'Manual de marca extendido', 'Papelería corporativa'],
     noInclude: 'No incluye:',
+    period: '/ pago único',
   } : lang === 'pt' ? {
     title: 'Design de Logos & Branding',
-    sub: 'Identidade visual única e profissional que posiciona sua marca na mente dos seus clientes.',
-    whatIncludes: 'O que nosso serviço inclui?',
+    sub: 'Identidade visual única e profissional que posiciona sua marca.',
+    whatIncludes: 'O que inclui?',
     features: [
-      { icon: Palette, title: 'Design conceitual', desc: 'Propostas criativas baseadas nos valores e personalidade da sua marca.' },
+      { icon: Palette, title: 'Design conceitual', desc: 'Propostas criativas baseadas nos valores da sua marca.' },
       { icon: Layers, title: 'Variações e aplicações', desc: 'Logo principal, secundário, iconográfico e variações de cor.' },
-      { icon: FileImage, title: 'Arquivos editáveis', desc: 'Entrega em AI, EPS, SVG, PNG e PDF para qualquer uso.' },
-      { icon: BookOpen, title: 'Manual de marca', desc: 'Guia completo com paleta de cores, tipografias e regras de uso.' },
+      { icon: FileImage, title: 'Arquivos editáveis', desc: 'AI, EPS, SVG, PNG e PDF para qualquer uso.' },
+      { icon: BookOpen, title: 'Manual de marca', desc: 'Guia com paleta de cores, tipografias e regras de uso.' },
     ],
     planTitle: 'Plano Branding Essential',
-    planTagline: 'Sua marca é o que dizem de você quando você não está. A Ferova Agency cria uma identidade que projeta autoridade e profissionalismo.',
+    planTagline: 'Uma identidade que projeta autoridade e profissionalismo desde o primeiro contato.',
     planCta: 'Preencher Briefing',
     planIncludes: [
       { icon: Palette, text: 'Logo principal + variações' },
@@ -70,18 +53,19 @@ const DisenoLogos = ({ lang = 'es' }: Props) => {
     ],
     planExcludes: ['Registro legal de marca', 'Manual de marca estendido', 'Papelaria corporativa'],
     noInclude: 'Não inclui:',
+    period: '/ pagamento único',
   } : {
     title: 'Logo Design & Branding',
-    sub: 'Unique professional visual identity that positions your brand in customers\' minds.',
-    whatIncludes: 'What does our service include?',
+    sub: 'Unique professional visual identity that positions your brand.',
+    whatIncludes: 'What\'s included?',
     features: [
-      { icon: Palette, title: 'Conceptual design', desc: 'Creative proposals based on your brand\'s values and personality.' },
-      { icon: Layers, title: 'Variations & applications', desc: 'Primary, secondary, icon and color variations of your logo.' },
-      { icon: FileImage, title: 'Editable files', desc: 'Delivered in AI, EPS, SVG, PNG and PDF for any use.' },
-      { icon: BookOpen, title: 'Brand manual', desc: 'Complete guide with color palette, typography and usage rules.' },
+      { icon: Palette, title: 'Conceptual design', desc: 'Creative proposals based on your brand values.' },
+      { icon: Layers, title: 'Variations & applications', desc: 'Primary, secondary, icon and color variations.' },
+      { icon: FileImage, title: 'Editable files', desc: 'AI, EPS, SVG, PNG and PDF for any use.' },
+      { icon: BookOpen, title: 'Brand manual', desc: 'Guide with color palette, typography and usage rules.' },
     ],
     planTitle: 'Branding Essential Plan',
-    planTagline: 'Your brand is what people say about you when you\'re not in the room. Ferova Agency creates an identity that projects authority.',
+    planTagline: 'An identity that projects authority and professionalism from first contact.',
     planCta: 'Complete Briefing',
     planIncludes: [
       { icon: Palette, text: 'Main logo + variations' },
@@ -90,13 +74,27 @@ const DisenoLogos = ({ lang = 'es' }: Props) => {
     ],
     planExcludes: ['Legal trademark registration', 'Extended brand manual', 'Corporate stationery'],
     noInclude: 'Does not include:',
+    period: '/ one-time',
+  };
+
+  const waUrl = 'https://wa.link/jvbd4j?text=' + encodeURIComponent(
+    lang === 'es' ? 'Hola Ferova, me interesa Branding Essential.'
+    : lang === 'pt' ? 'Olá Ferova, tenho interesse no Branding Essential.'
+    : 'Hi Ferova, I want the Branding Essential plan.'
+  );
+
+  const handleCta = () => {
+    window.open(waUrl, '_blank', 'noopener,noreferrer');
+    toast({
+      title: lang === 'es' ? '¡Confirmado!' : lang === 'pt' ? 'Confirmado!' : 'Confirmed!',
+      description: lang === 'es' ? 'Te contactaremos pronto.' : lang === 'pt' ? 'Entraremos em contato em breve.' : 'We\'ll contact you soon.',
+    });
   };
 
   return (
     <>
       <Header currentLang={lang} />
       <main className="pt-20">
-        {/* Hero */}
         <section className="py-20 md:py-28 text-center relative grid-pattern">
           <div className="absolute inset-0" style={{ background: 'radial-gradient(ellipse at 50% 30%, hsla(45, 86%, 40%, 0.06), transparent 60%)' }} />
           <div className="container mx-auto px-4 md:px-6 relative z-10">
@@ -105,7 +103,6 @@ const DisenoLogos = ({ lang = 'es' }: Props) => {
           </div>
         </section>
 
-        {/* Features */}
         <section className="py-20 md:py-28 dark-section" style={{ background: 'hsl(243, 28%, 14%)' }}>
           <div className="container mx-auto px-4 md:px-6">
             <h2 className="text-3xl md:text-4xl font-display font-bold text-center mb-16 text-gold">{t.whatIncludes}</h2>
@@ -123,22 +120,17 @@ const DisenoLogos = ({ lang = 'es' }: Props) => {
           </div>
         </section>
 
-        {/* Pricing: Branding Essential */}
         <section className="py-20 md:py-28">
           <div className="container mx-auto px-4 md:px-6">
-            <h2 className="text-3xl md:text-4xl font-display font-bold text-center mb-6">{t.planTitle}</h2>
-            <div className="flex items-center justify-center gap-1 p-1 rounded-full border border-border w-fit mx-auto mb-14">
-              <button onClick={() => setCurrency('usd')} className={`px-5 py-2 rounded-full text-sm font-medium transition-all ${currency === 'usd' ? 'bg-gold text-primary-foreground' : 'text-muted-foreground hover:text-foreground'}`}>USD</button>
-              <button onClick={() => setCurrency('cop')} className={`px-5 py-2 rounded-full text-sm font-medium transition-all ${currency === 'cop' ? 'bg-gold text-primary-foreground' : 'text-muted-foreground hover:text-foreground'}`}>COP</button>
-            </div>
+            <h2 className="text-3xl md:text-4xl font-display font-bold text-center mb-12">{t.planTitle}</h2>
             <div className="max-w-lg mx-auto glass-card p-10 border-gold/30 gold-glow">
               <div className="w-14 h-14 rounded-2xl flex items-center justify-center mb-5 mx-auto" style={{ background: 'hsla(45, 86%, 40%, 0.1)' }}>
                 <Palette className="w-7 h-7 text-gold" />
               </div>
               <p className="text-muted-foreground text-sm leading-relaxed mb-6 text-center">{t.planTagline}</p>
               <div className="text-center mb-6">
-                <span className="text-4xl font-display font-bold">{formatPrice(150, 600000)}</span>
-                <span className="text-muted-foreground text-sm ml-1">{lang === 'es' ? '/ pago único' : lang === 'pt' ? '/ pagamento único' : '/ one-time'}</span>
+                <span className="text-4xl font-display font-bold">{formatPrice(LOGO_USD, lang)}</span>
+                <span className="text-muted-foreground text-sm ml-1">{t.period}</span>
               </div>
               <ul className="space-y-3 mb-6">
                 {t.planIncludes.map((item, i) => {

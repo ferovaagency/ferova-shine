@@ -1,14 +1,16 @@
-import { Link } from 'react-router-dom';
 import Header from '@/components/layout/Header';
 import Footer from '@/components/layout/Footer';
 import { AnimatedSection, StaggerContainer, StaggerItem, ScaleOnHover, PageTransition } from '@/components/ui/motion';
 import { motion } from 'framer-motion';
+import { formatPrice, type Lang } from '@/lib/pricing';
 import {
   Linkedin, CheckCircle, Star, Users, TrendingUp, Eye,
-  FileText, MessageCircle, Briefcase, Award
+  MessageCircle, Briefcase, Award,
 } from 'lucide-react';
 
-interface Props { lang?: 'es' | 'en' | 'pt'; }
+interface Props { lang?: Lang; }
+
+const LINKEDIN_USD = 250;
 
 const OptimizacionLinkedin = ({ lang = 'es' }: Props) => {
   const t = lang === 'es' ? {
@@ -16,7 +18,7 @@ const OptimizacionLinkedin = ({ lang = 'es' }: Props) => {
     title: 'Optimización de Perfil de LinkedIn',
     sub: 'Potencia tu marca personal y atrae oportunidades profesionales con un perfil optimizado estratégicamente.',
     planName: 'LinkedIn Pro',
-    planPrice: { usd: 197, cop: 790000 },
+    planDescPeriod: 'pago único',
     planDesc: 'Optimización completa de tu perfil profesional de LinkedIn.',
     features: [
       'Auditoría completa de tu perfil actual',
@@ -42,7 +44,7 @@ const OptimizacionLinkedin = ({ lang = 'es' }: Props) => {
     title: 'LinkedIn Profile Optimization',
     sub: 'Boost your personal brand and attract professional opportunities with a strategically optimized profile.',
     planName: 'LinkedIn Pro',
-    planPrice: { usd: 197, cop: 790000 },
+    planDescPeriod: 'one-time',
     planDesc: 'Complete optimization of your professional LinkedIn profile.',
     features: [
       'Full audit of your current profile',
@@ -127,10 +129,10 @@ const OptimizacionLinkedin = ({ lang = 'es' }: Props) => {
                 <h3 className="text-xl font-display font-bold mb-2">{t.planName}</h3>
                 <p className="text-muted-foreground text-sm mb-6">{t.planDesc}</p>
                 <div className="mb-8">
-                  <span className="text-4xl font-display font-bold text-foreground">${t.planPrice.usd} USD</span>
-                  <span className="text-muted-foreground text-sm block mt-1">
-                    ({new Intl.NumberFormat('es-CO', { style: 'currency', currency: 'COP', maximumFractionDigits: 0 }).format(t.planPrice.cop)})
+                  <span className="text-4xl font-display font-bold text-foreground">
+                    {formatPrice(LINKEDIN_USD, lang)}
                   </span>
+                  <span className="text-muted-foreground text-sm block mt-1">{t.planDescPeriod}</span>
                 </div>
                 <ul className="space-y-3 mb-8 text-left">
                   {t.features.map((f, j) => (
