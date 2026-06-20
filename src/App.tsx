@@ -48,6 +48,7 @@ const Privacidad = lazy(() => import("./pages/Privacidad"));
 const Cookies = lazy(() => import("./pages/Cookies"));
 const ConsultoriaEstrategica = lazy(() => import("./pages/ConsultoriaEstrategica"));
 const CapacitacionIA = lazy(() => import("./pages/CapacitacionIA"));
+const ContenidoLinkedin = lazy(() => import("./pages/ContenidoLinkedin"));
 
 const queryClient = new QueryClient();
 
