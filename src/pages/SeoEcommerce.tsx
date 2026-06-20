@@ -295,38 +295,56 @@ const SeoEcommerce = ({ lang = 'es' }: Props) => {
           </div>
         </section>
 
-        {/* Pricing – SEO & GEO Local */}
+        {/* Pricing – Plan SEO / AIO Mensual (único) */}
         <section className="py-20 md:py-28 dark-section" style={{ background: 'hsl(243, 28%, 14%)' }}>
           <div className="container mx-auto px-4 md:px-6">
             <div className="text-center mb-10">
-              <h2 className="text-3xl md:text-4xl font-display font-bold mb-4 text-foreground">{t.planTitle}</h2>
-              <div className="flex items-center justify-center gap-1 p-1 rounded-full border border-border w-fit mx-auto">
-                <button onClick={() => { setCurrency('usd'); trackCurrencyChange('usd'); }} className={`px-5 py-2 rounded-full text-sm font-medium transition-all ${currency === 'usd' ? 'bg-gold text-primary-foreground' : 'text-muted-foreground hover:text-foreground'}`}>USD</button>
-                <button onClick={() => { setCurrency('cop'); trackCurrencyChange('cop'); }} className={`px-5 py-2 rounded-full text-sm font-medium transition-all ${currency === 'cop' ? 'bg-gold text-primary-foreground' : 'text-muted-foreground hover:text-foreground'}`}>COP</button>
-                <button onClick={() => { setCurrency('brl'); trackCurrencyChange('brl'); }} className={`px-5 py-2 rounded-full text-sm font-medium transition-all ${currency === 'brl' ? 'bg-gold text-primary-foreground' : 'text-muted-foreground hover:text-foreground'}`}>BRL</button>
-              </div>
+              <h2 className="text-3xl md:text-4xl font-display font-bold mb-4 text-foreground">
+                {lang === 'es' ? 'Posicionamiento SEO / AIO Mensual' : lang === 'pt' ? 'Posicionamento SEO / AIO Mensal' : 'Monthly SEO / AIO Positioning'}
+              </h2>
+              <p className="text-muted-foreground max-w-xl mx-auto">
+                {lang === 'es' ? 'Plan único · mínimo 6 meses de contrato.' : lang === 'pt' ? 'Plano único · mínimo 6 meses de contrato.' : 'Single plan · 6-month minimum contract.'}
+              </p>
             </div>
-            <div className="max-w-lg mx-auto glass-card p-10 border-gold/30 gold-glow">
+            <div className="max-w-lg mx-auto glass-card p-10 border-gold/50 gold-glow">
               <div className="w-14 h-14 rounded-2xl flex items-center justify-center mb-5 mx-auto" style={{ background: 'hsla(45, 86%, 40%, 0.1)' }}>
                 <MapPin className="w-7 h-7 text-gold" />
               </div>
               <p className="text-sm leading-relaxed mb-6 text-center text-muted-foreground">{t.planTagline}</p>
               <div className="text-center mb-6">
-                <span className="text-4xl font-display font-bold text-foreground">{formatPrice(150, 600000, 790)}</span>
-                <span className="text-sm ml-1 text-muted-foreground">{t.monthly}</span>
+                <span className="text-4xl font-display font-bold text-foreground">{formatPrice(SEO_USD, lang, 'monthly')}</span>
               </div>
 
-              {/* Urgency */}
               <div className="mb-6 px-3 py-2 rounded-lg text-xs font-semibold flex items-center gap-2" style={{ background: 'hsla(356, 68%, 20%, 0.15)', color: 'hsl(356, 68%, 55%)' }}>
                 <Clock className="w-3.5 h-3.5" />
                 {t.urgency}
               </div>
 
               <ul className="space-y-3 mb-6">
-                {t.planIncludes.map((item, i) => (
+                {(lang === 'es' ? [
+                  'Optimización técnica + Google Business Profile',
+                  'Hasta 8 blogs mensuales optimizados para IAs y buscadores (GEO + AIO + SEO)',
+                  'Optimización On Page y Off Page',
+                  'Estrategia de keywords locales',
+                  'Tageo de eventos y conexión con Analytics + Search Console',
+                  'Informe semanal y mensual de resultados',
+                ] : lang === 'pt' ? [
+                  'Otimização técnica + Google Business Profile',
+                  'Até 8 blogs mensais otimizados para IAs e buscadores (GEO + AIO + SEO)',
+                  'Otimização On Page e Off Page',
+                  'Estratégia de keywords locais',
+                  'Tagueamento de eventos e conexão com Analytics + Search Console',
+                  'Relatório semanal e mensal de resultados',
+                ] : [
+                  'Technical optimization + Google Business Profile',
+                  'Up to 8 monthly blogs optimized for AI & search engines (GEO + AIO + SEO)',
+                  'On Page and Off Page optimization',
+                  'Local keyword strategy',
+                  'Event tagging and Analytics + Search Console connection',
+                  'Weekly and monthly results report',
+                ]).map((item, i) => (
                   <li key={i} className="flex items-start gap-3 text-sm text-foreground">
-                    <MapPin className="w-4 h-4 text-gold flex-shrink-0 mt-0.5" />
-                    {item}
+                    <Check className="w-4 h-4 text-gold flex-shrink-0 mt-0.5" /> {item}
                   </li>
                 ))}
               </ul>
@@ -347,121 +365,6 @@ const SeoEcommerce = ({ lang = 'es' }: Props) => {
           </div>
         </section>
 
-        {/* SEO Plans */}
-        <section className="py-20 md:py-28">
-          <div className="container mx-auto px-4 md:px-6">
-            <h2 className="text-3xl md:text-4xl font-display font-bold text-center mb-4">
-              {lang === 'es' ? 'Planes SEO Mensuales' : lang === 'pt' ? 'Planos SEO Mensais' : 'Monthly SEO Plans'}
-            </h2>
-            <p className="text-muted-foreground text-center max-w-xl mx-auto mb-4">
-              {lang === 'es' ? 'Mínimo 6 meses de contrato.' : lang === 'pt' ? 'Mínimo 6 meses de contrato.' : 'Minimum 6-month contract.'}
-            </p>
-
-            <div className="flex items-center justify-center gap-1 p-1 rounded-full border border-border w-fit mx-auto mb-14">
-              <button onClick={() => { setCurrency('usd'); trackCurrencyChange('usd'); }} className={`px-5 py-2 rounded-full text-sm font-medium transition-all ${currency === 'usd' ? 'bg-gold text-primary-foreground' : 'text-muted-foreground hover:text-foreground'}`}>USD</button>
-              <button onClick={() => { setCurrency('cop'); trackCurrencyChange('cop'); }} className={`px-5 py-2 rounded-full text-sm font-medium transition-all ${currency === 'cop' ? 'bg-gold text-primary-foreground' : 'text-muted-foreground hover:text-foreground'}`}>COP</button>
-              <button onClick={() => { setCurrency('brl'); trackCurrencyChange('brl'); }} className={`px-5 py-2 rounded-full text-sm font-medium transition-all ${currency === 'brl' ? 'bg-gold text-primary-foreground' : 'text-muted-foreground hover:text-foreground'}`}>BRL</button>
-            </div>
-
-            <div className="grid md:grid-cols-2 gap-8 max-w-4xl mx-auto">
-              {/* Plan SEO WebApps */}
-              <div className="glass-card p-8 flex flex-col border-gold/50 gold-glow relative">
-                <div className="absolute -top-3 left-1/2 -translate-x-1/2 px-4 py-1 rounded-full text-xs font-semibold bg-gold text-primary-foreground whitespace-nowrap">
-                  {lang === 'es' ? 'Recomendado' : lang === 'pt' ? 'Recomendado' : 'Recommended'}
-                </div>
-                <div className="w-14 h-14 rounded-2xl flex items-center justify-center mb-5" style={{ background: 'hsla(45, 86%, 40%, 0.1)' }}>
-                  <TrendingUp className="w-7 h-7 text-gold" />
-                </div>
-                <h3 className="text-xl font-display font-bold mb-3">
-                  {lang === 'es' ? 'SEO WebApps' : lang === 'pt' ? 'SEO WebApps' : 'SEO WebApps'}
-                </h3>
-                <div className="mb-6">
-                  <span className="text-3xl font-display font-bold">{formatPrice(199, 600000, 990)}</span>
-                  <span className="text-muted-foreground text-sm ml-1">{lang === 'es' ? '/mes' : lang === 'pt' ? '/mês' : '/mo'}</span>
-                </div>
-                <ul className="space-y-3 mb-6 flex-1">
-                  {(lang === 'es' ? [
-                    'Optimización técnica del sitio',
-                    'Hasta 8 blogs mensuales optimizados para IAs y buscadores (GEO + SEO)',
-                    'Optimización On Page y Off Page',
-                    'Análisis de tráfico orgánico y comportamiento de usuarios',
-                    'Tageo de eventos en Analytics',
-                    'Conexión con Search Console',
-                    'Informe semanal y mensual de resultados',
-                  ] : lang === 'pt' ? [
-                    'Otimização técnica do site',
-                    'Até 8 blogs mensais otimizados para IAs e buscadores (GEO + SEO)',
-                    'Otimização On Page e Off Page',
-                    'Análise de tráfego orgânico e comportamento de usuários',
-                    'Tagueamento de eventos no Analytics',
-                    'Conexão com Search Console',
-                    'Relatório semanal e mensal de resultados',
-                  ] : [
-                    'Technical site optimization',
-                    'Up to 8 monthly blogs optimized for AI & search engines (GEO + SEO)',
-                    'On Page and Off Page optimization',
-                    'Organic traffic and user behavior analysis',
-                    'Analytics event tagging',
-                    'Search Console connection',
-                    'Weekly and monthly results report',
-                  ]).map((item, ii) => (
-                    <li key={ii} className="flex items-start gap-3 text-sm text-foreground">
-                      <Check className="w-4 h-4 text-gold flex-shrink-0 mt-0.5" /> {item}
-                    </li>
-                  ))}
-                </ul>
-                <button
-                  onClick={() => { const link = getPaymentLink('seoWebapps', currency); window.open(link, '_blank', 'noopener,noreferrer'); }}
-                  className="btn-gold w-full flex items-center justify-center gap-2 !px-0"
-                >
-                  <MessageCircle className="w-4 h-4" /> {lang === 'es' ? 'Iniciar SEO' : lang === 'pt' ? 'Iniciar SEO' : 'Start SEO'}
-                </button>
-              </div>
-
-              {/* Plan SEO CMS */}
-              <div className="glass-card p-8 flex flex-col">
-                <div className="w-14 h-14 rounded-2xl flex items-center justify-center mb-5" style={{ background: 'hsla(45, 86%, 40%, 0.1)' }}>
-                  <Globe2 className="w-7 h-7 text-gold" />
-                </div>
-                <h3 className="text-xl font-display font-bold mb-3">
-                  {lang === 'es' ? 'SEO Sitios Tradicionales' : lang === 'pt' ? 'SEO Sites Tradicionais' : 'SEO Traditional Sites'}
-                </h3>
-                <div className="mb-6">
-                  <span className="text-3xl font-display font-bold">{formatPrice(249, 800000, 1290)}</span>
-                  <span className="text-muted-foreground text-sm ml-1">{lang === 'es' ? '/mes' : lang === 'pt' ? '/mês' : '/mo'}</span>
-                </div>
-                <ul className="space-y-3 mb-6 flex-1">
-                  {(lang === 'es' ? [
-                    'Todo lo del plan SEO WebApps',
-                    'Adaptado para sitios web tradicionales y otros CMS',
-                    'Optimización de plugins y velocidad',
-                    'Gestión técnica de actualizaciones',
-                  ] : lang === 'pt' ? [
-                    'Tudo do plano SEO WebApps',
-                    'Adaptado para sites tradicionais e outros CMS',
-                    'Otimização de plugins e velocidade',
-                    'Gestão técnica de atualizações',
-                  ] : [
-                    'Everything in SEO WebApps plan',
-                    'Adapted for traditional websites and other CMS',
-                    'Plugin and speed optimization',
-                    'Technical update management',
-                  ]).map((item, ii) => (
-                    <li key={ii} className="flex items-start gap-3 text-sm text-foreground">
-                      <Check className="w-4 h-4 text-gold flex-shrink-0 mt-0.5" /> {item}
-                    </li>
-                  ))}
-                </ul>
-                <button
-                  onClick={() => { const link = getPaymentLink('seoCms', currency); window.open(link, '_blank', 'noopener,noreferrer'); }}
-                  className="w-full py-3.5 rounded-full font-semibold text-sm transition-all duration-300 flex items-center justify-center gap-2 border border-gold/40 text-gold hover:bg-gold hover:text-primary-foreground"
-                >
-                  <MessageCircle className="w-4 h-4" /> {lang === 'es' ? 'Iniciar SEO Sitios' : lang === 'pt' ? 'Iniciar SEO Sites' : 'Start Traditional SEO'}
-                </button>
-              </div>
-            </div>
-          </div>
-        </section>
 
         {/* Process */}
         <section className="py-20 md:py-28">
