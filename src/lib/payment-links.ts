@@ -52,6 +52,23 @@ export const paymentLinks = {
     cop: WA('Hola, quiero agendar una Asesoría Impacto de 60 min.'),
     brl: WA('Olá, quero agendar uma Assessoria Impacto de 60 min.'),
   },
+
+  // ===== Legacy WhatsApp Business (página aún publicada) =====
+  whatsapp1: {
+    usd: WA('Hi, I want WhatsApp Business optimization (1 product).'),
+    cop: WA('Hola, me interesa WhatsApp Business (1 producto).'),
+    brl: WA('Olá, tenho interesse no WhatsApp Business (1 produto).'),
+  },
+  whatsapp10: {
+    usd: WA('Hi, I want WhatsApp Business optimization (10 products).'),
+    cop: WA('Hola, me interesa WhatsApp Business (10 productos).'),
+    brl: WA('Olá, tenho interesse no WhatsApp Business (10 produtos).'),
+  },
+  whatsapp20: {
+    usd: WA('Hi, I want WhatsApp Business optimization (20 products).'),
+    cop: WA('Hola, me interesa WhatsApp Business (20 productos).'),
+    brl: WA('Olá, tenho interesse no WhatsApp Business (20 produtos).'),
+  },
 } as const;
 
 export type PaymentLinkKey = keyof typeof paymentLinks;
