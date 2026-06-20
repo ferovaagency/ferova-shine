@@ -20,6 +20,7 @@ import Footer from "@/components/layout/Footer";
 import SEO from "@/components/SEO";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import { trackEvent } from "@/lib/analytics";
+import ValueLadder from "@/components/sections/ValueLadder";
 
 interface IndexProps {
   lang?: "es" | "en" | "pt";
@@ -452,6 +453,9 @@ const Index = ({ lang = "es" }: IndexProps) => {
             </div>
           </div>
         </section>
+
+        {/* ===== ESCALERA DE VALOR (B2B) ===== */}
+        <ValueLadder lang={lang} />
 
         {/* ===== SECCIÓN 2 — PROBLEMA ===== */}
         <section className="py-16 md:py-24 px-4 sm:px-6">
