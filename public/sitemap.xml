@@ -73,4 +73,73 @@
     <priority>0.8</priority>
   </url>
 
+  <!-- ========================================== -->
+  <!-- B2B HIGH TICKET: CONSULTORÍA ESTRATÉGICA   -->
+  <!-- ========================================== -->
+  <url>
+    <loc>https://seoparaecommerce.co/consultoria-estrategica</loc>
+    <xhtml:link rel="alternate" hreflang="es" href="https://seoparaecommerce.co/consultoria-estrategica"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://seoforecommerces.co/en/strategy-advisory"/>
+    <xhtml:link rel="alternate" hreflang="pt" href="https://seoparaecommerce.co/pt/consultoria-estrategica"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://seoparaecommerce.co/consultoria-estrategica"/>
+    <changefreq>monthly</changefreq>
+    <priority>1.0</priority>
+  </url>
+  <url>
+    <loc>https://seoforecommerces.co/en/strategy-advisory</loc>
+    <xhtml:link rel="alternate" hreflang="es" href="https://seoparaecommerce.co/consultoria-estrategica"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://seoforecommerces.co/en/strategy-advisory"/>
+    <xhtml:link rel="alternate" hreflang="pt" href="https://seoparaecommerce.co/pt/consultoria-estrategica"/>
+    <changefreq>monthly</changefreq>
+    <priority>1.0</priority>
+  </url>
+  <url>
+    <loc>https://seoparaecommerce.co/pt/consultoria-estrategica</loc>
+    <xhtml:link rel="alternate" hreflang="es" href="https://seoparaecommerce.co/consultoria-estrategica"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://seoforecommerces.co/en/strategy-advisory"/>
+    <xhtml:link rel="alternate" hreflang="pt" href="https://seoparaecommerce.co/pt/consultoria-estrategica"/>
+    <changefreq>monthly</changefreq>
+    <priority>1.0</priority>
+  </url>
+
+  <!-- ========================================== -->
+  <!-- B2B HIGH TICKET: CAPACITACIÓN IA           -->
+  <!-- ========================================== -->
+  <url>
+    <loc>https://seoparaecommerce.co/capacitacion-ia</loc>
+    <xhtml:link rel="alternate" hreflang="es" href="https://seoparaecommerce.co/capacitacion-ia"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://seoforecommerces.co/en/ai-training"/>
+    <xhtml:link rel="alternate" hreflang="pt" href="https://seoparaecommerce.co/pt/treinamento-ia"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://seoparaecommerce.co/capacitacion-ia"/>
+    <changefreq>monthly</changefreq>
+    <priority>1.0</priority>
+  </url>
+  <url>
+    <loc>https://seoforecommerces.co/en/ai-training</loc>
+    <xhtml:link rel="alternate" hreflang="es" href="https://seoparaecommerce.co/capacitacion-ia"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://seoforecommerces.co/en/ai-training"/>
+    <xhtml:link rel="alternate" hreflang="pt" href="https://seoparaecommerce.co/pt/treinamento-ia"/>
+    <changefreq>monthly</changefreq>
+    <priority>1.0</priority>
+  </url>
+  <url>
+    <loc>https://seoparaecommerce.co/pt/treinamento-ia</loc>
+    <xhtml:link rel="alternate" hreflang="es" href="https://seoparaecommerce.co/capacitacion-ia"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://seoforecommerces.co/en/ai-training"/>
+    <xhtml:link rel="alternate" hreflang="pt" href="https://seoparaecommerce.co/pt/treinamento-ia"/>
+    <changefreq>monthly</changefreq>
+    <priority>1.0</priority>
+  </url>
+
+  <!-- Contenido LinkedIn (Agencia) -->
+  <url>
+    <loc>https://seoparaecommerce.co/servicios/contenido-linkedin</loc>
+    <xhtml:link rel="alternate" hreflang="es" href="https://seoparaecommerce.co/servicios/contenido-linkedin"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://seoforecommerces.co/en/services/linkedin-content"/>
+    <xhtml:link rel="alternate" hreflang="pt" href="https://seoparaecommerce.co/pt/conteudo-linkedin"/>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+
+
 </urlset>
