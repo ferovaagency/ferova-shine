@@ -1,16 +1,18 @@
 /**
- * Detects language from hostname or pathname:
+ * Detecta el idioma solo por hostname.
  *  - seoforecommerces.co → 'en'
- *  - pathname starting with /pt → 'pt'
- *  - seoparaecommerce.co (or any other) → 'es'
+ *  - otro hostname       → 'es'
+ *
+ * NOTA: NO usar pathname aquí. hostLang se evalúa una sola vez al cargar
+ * el módulo; si dependiera del pathname, navegar a /pt/... dejaría toda
+ * la sesión "pegada" en pt y rompería rutas raíz como /recursos.
+ * Las rutas /pt/* y /en/* ya pasan `lang` explícito en App.tsx.
  */
 export function getLangFromHostname(): 'es' | 'en' | 'pt' {
+  if (typeof window === 'undefined') return 'es';
   const host = window.location.hostname.toLowerCase();
   if (host === 'seoforecommerces.co' || host === 'www.seoforecommerces.co') {
     return 'en';
-  }
-  if (window.location.pathname.startsWith('/pt')) {
-    return 'pt';
   }
   return 'es';
 }
