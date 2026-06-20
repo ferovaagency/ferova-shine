@@ -2,90 +2,55 @@ const WA = (msg: string) =>
   `https://wa.link/jvbd4j?text=${encodeURIComponent(msg)}`;
 
 export const paymentLinks = {
-  asesoria30: {
-    usd: WA('Hola, quiero agendar una Asesoría Express de 30 min. ¿Cómo procedo?'),
-    cop: WA('Hola, quiero agendar una Asesoría Express de 30 min. ¿Cómo procedo?'),
-    brl: WA('Olá, quero agendar uma Assessoria Express de 30 min. Como procedo?'),
+  // ===== B2B High-ticket (modelo principal) =====
+  consultoriaEstrategica: {
+    usd: WA('Hello Ferova, I want info about Strategy Advisory.'),
+    cop: WA('Hola Ferova, quiero info sobre Mentoría y Asesoría Estratégica.'),
+    brl: WA('Olá Ferova, quero info sobre Mentoria e Assessoria Estratégica.'),
   },
-  asesoria60: {
-    usd: WA('Hola, quiero agendar una Asesoría Impacto de 60 min. ¿Cómo procedo?'),
-    cop: WA('Hola, quiero agendar una Asesoría Impacto de 60 min. ¿Cómo procedo?'),
-    brl: WA('Olá, quero agendar uma Assessoria Impacto de 60 min. Como procedo?'),
+  capacitacionIA: {
+    usd: WA('Hello Ferova, I want a quote for AI Training in my company.'),
+    cop: WA('Hola Ferova, quiero cotizar Capacitación IA para mi empresa.'),
+    brl: WA('Olá Ferova, quero orçamento para Treinamento em IA na minha empresa.'),
+  },
+
+  // ===== Agencia (Upsell) — 5 servicios activos =====
+  webDevelopment: {
+    usd: WA('Hi Ferova, I want info on Web / E-commerce Development ($1200 USD).'),
+    cop: WA('Hola Ferova, quiero info sobre Desarrollo Web / E-commerce.'),
+    brl: WA('Olá Ferova, quero info sobre Desenvolvimento Web / E-commerce.'),
+  },
+  seoMonthly: {
+    usd: WA('Hi Ferova, I want the Monthly SEO / AIO plan ($500 USD/mo).'),
+    cop: WA('Hola Ferova, quiero el plan SEO / AIO Mensual.'),
+    brl: WA('Olá Ferova, quero o plano SEO / AIO Mensal.'),
   },
   brandingEssential: {
-    usd: WA('Hola, me interesa el servicio de Branding Essential. ¿Cómo empezamos?'),
-    cop: WA('Hola, me interesa el servicio de Branding Essential. ¿Cómo empezamos?'),
-    brl: WA('Olá, tenho interesse no serviço de Branding Essential. Como começamos?'),
+    usd: WA('Hi Ferova, I want the Branding Essential plan ($250 USD).'),
+    cop: WA('Hola Ferova, me interesa el plan Branding Essential.'),
+    brl: WA('Olá Ferova, tenho interesse no Branding Essential.'),
   },
-  seoGeoLocal: {
-    usd: WA('Hola, me interesa el servicio de SEO & GEO Local. ¿Cómo empezamos?'),
-    cop: WA('Hola, me interesa el servicio de SEO & GEO Local. ¿Cómo empezamos?'),
-    brl: WA('Olá, tenho interesse no serviço de SEO & GEO Local. Como começamos?'),
+  linkedinOptimization: {
+    usd: WA('Hi Ferova, I want the LinkedIn Optimization plan ($250 USD).'),
+    cop: WA('Hola Ferova, me interesa Optimización de LinkedIn.'),
+    brl: WA('Olá Ferova, tenho interesse na Otimização de LinkedIn.'),
   },
-  webEconomico: {
-    usd: WA('Hola, me interesa la Web Económica. ¿Cómo empezamos?'),
-    cop: WA('Hola, me interesa la Web Económica. ¿Cómo empezamos?'),
-    brl: WA('Olá, tenho interesse na Web Econômica. Como começamos?'),
+  linkedinContent: {
+    usd: WA('Hi Ferova, I want LinkedIn Content Creation ($400 USD/mo).'),
+    cop: WA('Hola Ferova, quiero el plan de Creación de Contenido LinkedIn.'),
+    brl: WA('Olá Ferova, quero o plano de Criação de Conteúdo LinkedIn.'),
   },
-  webServicios: {
-    usd: WA('Hola, me interesa la WebApp de Servicios. ¿Cómo empezamos?'),
-    cop: WA('Hola, me interesa la WebApp de Servicios. ¿Cómo empezamos?'),
-    brl: WA('Olá, tenho interesse na WebApp de Serviços. Como começamos?'),
+
+  // ===== Asesorías rápidas (legacy soportado) =====
+  asesoria30: {
+    usd: WA('Hi, I want to book a 30-min Express Consultation.'),
+    cop: WA('Hola, quiero agendar una Asesoría Express de 30 min.'),
+    brl: WA('Olá, quero agendar uma Assessoria Express de 30 min.'),
   },
-  webEcommerce: {
-    usd: WA('Hola, me interesa la WebApp E-Commerce. ¿Cómo empezamos?'),
-    cop: WA('Hola, me interesa la WebApp E-Commerce. ¿Cómo empezamos?'),
-    brl: WA('Olá, tenho interesse na WebApp E-Commerce. Como começamos?'),
-  },
-  webEcommerceFull: {
-    usd: WA('Hola, me interesa la WebApp E-Commerce Full. ¿Cómo empezamos?'),
-    cop: WA('Hola, me interesa la WebApp E-Commerce Full. ¿Cómo empezamos?'),
-    brl: WA('Olá, tenho interesse na WebApp E-Commerce Full. Como começamos?'),
-  },
-  webPro: {
-    usd: WA('Hola, me interesa la WebApp Pro. ¿Cómo empezamos?'),
-    cop: WA('Hola, me interesa la WebApp Pro. ¿Cómo empezamos?'),
-    brl: WA('Olá, tenho interesse na WebApp Pro. Como começamos?'),
-  },
-  seoWebapps: {
-    usd: WA('Hola, me interesa el SEO para WebApps. ¿Cómo empezamos?'),
-    cop: WA('Hola, me interesa el SEO para WebApps. ¿Cómo empezamos?'),
-    brl: WA('Olá, tenho interesse no SEO para WebApps. Como começamos?'),
-  },
-  seoCms: {
-    usd: WA('Hola, me interesa el SEO para CMS. ¿Cómo empezamos?'),
-    cop: WA('Hola, me interesa el SEO para CMS. ¿Cómo empezamos?'),
-    brl: WA('Olá, tenho interesse no SEO para CMS. Como começamos?'),
-  },
-  pautaEsencial: {
-    usd: WA('Hola, me interesa el plan de Pauta Esencial. ¿Cómo empezamos?'),
-    cop: WA('Hola, me interesa el plan de Pauta Esencial. ¿Cómo empezamos?'),
-    brl: WA('Olá, tenho interesse no plano de Anúncios Essencial. Como começamos?'),
-  },
-  pautaEstrategico: {
-    usd: WA('Hola, me interesa el plan de Pauta Estratégico 360°. ¿Cómo empezamos?'),
-    cop: WA('Hola, me interesa el plan de Pauta Estratégico 360°. ¿Cómo empezamos?'),
-    brl: WA('Olá, tenho interesse no plano Estratégico 360°. Como começamos?'),
-  },
-  pautaPremium: {
-    usd: WA('Hola, me interesa el plan de Pauta Premium Full Service. ¿Cómo empezamos?'),
-    cop: WA('Hola, me interesa el plan de Pauta Premium Full Service. ¿Cómo empezamos?'),
-    brl: WA('Olá, tenho interesse no plano Premium Full Service. Como começamos?'),
-  },
-  whatsapp1: {
-    usd: WA('Hola, me interesa la optimización de WhatsApp Business (1 producto). ¿Cómo empezamos?'),
-    cop: WA('Hola, me interesa la optimización de WhatsApp Business (1 producto). ¿Cómo empezamos?'),
-    brl: WA('Olá, tenho interesse na otimização do WhatsApp Business (1 produto). Como começamos?'),
-  },
-  whatsapp10: {
-    usd: WA('Hola, me interesa la optimización de WhatsApp Business (10 productos). ¿Cómo empezamos?'),
-    cop: WA('Hola, me interesa la optimización de WhatsApp Business (10 productos). ¿Cómo empezamos?'),
-    brl: WA('Olá, tenho interesse na otimização do WhatsApp Business (10 produtos). Como começamos?'),
-  },
-  whatsapp20: {
-    usd: WA('Hola, me interesa la optimización de WhatsApp Business (20 productos). ¿Cómo empezamos?'),
-    cop: WA('Hola, me interesa la optimización de WhatsApp Business (20 productos). ¿Cómo empezamos?'),
-    brl: WA('Olá, tenho interesse na otimização do WhatsApp Business (20 produtos). Como começamos?'),
+  asesoria60: {
+    usd: WA('Hi, I want to book a 60-min Impact Consultation.'),
+    cop: WA('Hola, quiero agendar una Asesoría Impacto de 60 min.'),
+    brl: WA('Olá, quero agendar uma Assessoria Impacto de 60 min.'),
   },
 } as const;
 
