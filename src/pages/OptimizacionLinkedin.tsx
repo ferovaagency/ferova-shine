@@ -1,14 +1,16 @@
-import { Link } from 'react-router-dom';
 import Header from '@/components/layout/Header';
 import Footer from '@/components/layout/Footer';
 import { AnimatedSection, StaggerContainer, StaggerItem, ScaleOnHover, PageTransition } from '@/components/ui/motion';
 import { motion } from 'framer-motion';
+import { formatPrice, type Lang } from '@/lib/pricing';
 import {
   Linkedin, CheckCircle, Star, Users, TrendingUp, Eye,
-  FileText, MessageCircle, Briefcase, Award
+  MessageCircle, Briefcase, Award,
 } from 'lucide-react';
 
-interface Props { lang?: 'es' | 'en' | 'pt'; }
+interface Props { lang?: Lang; }
+
+const LINKEDIN_USD = 250;
 
 const OptimizacionLinkedin = ({ lang = 'es' }: Props) => {
   const t = lang === 'es' ? {
