@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Download, Globe, Mail, Phone, Share2, Check } from 'lucide-react';
+import { Download, Globe, Mail, Phone, Share2, Check, Newspaper, FileText, ExternalLink } from 'lucide-react';
 
 export default function VCard() {
   const [nombre, setNombre] = useState('');
@@ -103,6 +103,24 @@ export default function VCard() {
                 { icon: Globe, text: 'seoparaecommerce.co', href: info.web },
               ].map((item, i) => (
                 <a key={i} href={item.href} target={i === 2 ? '_blank' : undefined} rel="noopener noreferrer"
+                  className="flex items-center gap-2.5 px-3 py-2 rounded-xl text-xs transition-all hover:bg-white/5"
+                  style={{ color: 'rgba(255,255,255,0.55)' }}>
+                  <item.icon className="w-3.5 h-3.5 shrink-0" style={{ color: 'hsl(45,86%,55%)' }} />
+                  {item.text}
+                </a>
+              ))}
+            </div>
+
+            <div className="mb-5" style={{ borderTop: '1px solid rgba(255,255,255,0.08)' }} />
+
+            {/* Links rápidos */}
+            <div className="space-y-1.5 mb-5">
+              {[
+                { icon: Newspaper, text: 'Newsletter', href: 'https://seoparaecommerce.co/newsletter' },
+                { icon: FileText, text: 'Herramienta de Brief', href: 'https://seoparaecommerce.co/recursos/briefing-newsletter' },
+                { icon: ExternalLink, text: 'Asesoría con nosotros', href: 'https://forms.gle/4vobAkaa8W1uNKno6' },
+              ].map((item, i) => (
+                <a key={i} href={item.href} target='_blank' rel="noopener noreferrer"
                   className="flex items-center gap-2.5 px-3 py-2 rounded-xl text-xs transition-all hover:bg-white/5"
                   style={{ color: 'rgba(255,255,255,0.55)' }}>
                   <item.icon className="w-3.5 h-3.5 shrink-0" style={{ color: 'hsl(45,86%,55%)' }} />
