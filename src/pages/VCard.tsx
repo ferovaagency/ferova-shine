@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Download, Globe, Mail, Phone, Share2, Check } from 'lucide-react';
+import { Download, Globe, Mail, Phone, Share2, Check, Newspaper, FileText, ExternalLink } from 'lucide-react';
 
 export default function VCard() {
   const [nombre, setNombre] = useState('');
