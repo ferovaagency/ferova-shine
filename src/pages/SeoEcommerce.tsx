@@ -5,17 +5,18 @@ import AdBanner from '@/components/ui/ad-banner';
 import { Search, TrendingUp, Users, BarChart3, Plus, MessageCircle, MapPin, Globe2, Navigation, Target, Clock, Check } from 'lucide-react';
 import SEO from '@/components/SEO';
 import { useState, useEffect } from 'react';
-import { getPaymentLink } from '@/lib/payment-links';
 import { useToast } from '@/hooks/use-toast';
 import { useAnalytics } from '@/hooks/useAnalytics';
+import { formatPrice, type Lang } from '@/lib/pricing';
 
-interface Props { lang?: 'es' | 'en' | 'pt'; }
+interface Props { lang?: Lang; }
+
+const SEO_USD = 500;
 
 const SeoEcommerce = ({ lang = 'es' }: Props) => {
   const [openFaq, setOpenFaq] = useState<number | null>(null);
-  const [currency, setCurrency] = useState<'usd' | 'cop' | 'brl'>(lang === 'pt' ? 'brl' : lang === 'es' ? 'cop' : 'usd');
   const { toast } = useToast();
-  const { trackServiceCTA, trackWhatsApp, trackCurrencyChange, trackScrollDepth } = useAnalytics();
+  const { trackServiceCTA, trackWhatsApp, trackScrollDepth } = useAnalytics();
 
   useEffect(() => {
     const depths = [25, 50, 75, 100];
@@ -33,24 +34,22 @@ const SeoEcommerce = ({ lang = 'es' }: Props) => {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
+  const waUrl = 'https://wa.link/jvbd4j?text=' + encodeURIComponent(
+    lang === 'es' ? 'Hola Ferova, me interesa el plan SEO / AIO Mensual.'
+    : lang === 'pt' ? 'Olá Ferova, tenho interesse no plano SEO / AIO Mensal.'
+    : 'Hi Ferova, I want the Monthly SEO / AIO plan.'
+  );
+
   const handleCta = () => {
-    const link = getPaymentLink('seoGeoLocal', currency);
-    trackServiceCTA('seoGeoLocal', currency, 'whatsapp_click');
-    trackWhatsApp('service_page', 'seoGeoLocal');
-    window.open(link, '_blank', 'noopener,noreferrer');
+    trackServiceCTA('seoMonthly', lang === 'es' ? 'cop' : lang === 'pt' ? 'brl' : 'usd', 'whatsapp_click');
+    trackWhatsApp('service_page', 'seoMonthly');
+    window.open(waUrl, '_blank', 'noopener,noreferrer');
     toast({
       title: lang === 'es' ? '¡Confirmado!' : 'Confirmed!',
-      description: lang === 'es'
-        ? '¡Plan confirmado! En Ferova Agency estamos listos para empezar.'
-        : 'Plan confirmed! At Ferova Agency we are ready to start.',
+      description: lang === 'es' ? 'Te contactaremos pronto.' : 'We\'ll contact you soon.',
     });
   };
 
-  const formatPrice = (usd: number, cop: number, brl: number) => {
-    if (currency === 'cop') return new Intl.NumberFormat('es-CO', { style: 'currency', currency: 'COP', maximumFractionDigits: 0 }).format(cop);
-    if (currency === 'brl') return new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL', maximumFractionDigits: 0 }).format(brl);
-    return new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD', maximumFractionDigits: 0 }).format(usd);
-  };
 
   const t = lang === 'es' ? {
     title: 'SEO que las IAs citan — no solo Google lo indexa',
