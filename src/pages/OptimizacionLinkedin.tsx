@@ -129,10 +129,10 @@ const OptimizacionLinkedin = ({ lang = 'es' }: Props) => {
                 <h3 className="text-xl font-display font-bold mb-2">{t.planName}</h3>
                 <p className="text-muted-foreground text-sm mb-6">{t.planDesc}</p>
                 <div className="mb-8">
-                  <span className="text-4xl font-display font-bold text-foreground">${t.planPrice.usd} USD</span>
-                  <span className="text-muted-foreground text-sm block mt-1">
-                    ({new Intl.NumberFormat('es-CO', { style: 'currency', currency: 'COP', maximumFractionDigits: 0 }).format(t.planPrice.cop)})
+                  <span className="text-4xl font-display font-bold text-foreground">
+                    {formatPrice(LINKEDIN_USD, lang)}
                   </span>
+                  <span className="text-muted-foreground text-sm block mt-1">{t.planDescPeriod}</span>
                 </div>
                 <ul className="space-y-3 mb-8 text-left">
                   {t.features.map((f, j) => (
