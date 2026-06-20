@@ -18,7 +18,7 @@ const OptimizacionLinkedin = ({ lang = 'es' }: Props) => {
     title: 'Optimización de Perfil de LinkedIn',
     sub: 'Potencia tu marca personal y atrae oportunidades profesionales con un perfil optimizado estratégicamente.',
     planName: 'LinkedIn Pro',
-    planPrice: { usd: 197, cop: 790000 },
+    planDescPeriod: 'pago único',
     planDesc: 'Optimización completa de tu perfil profesional de LinkedIn.',
     features: [
       'Auditoría completa de tu perfil actual',
