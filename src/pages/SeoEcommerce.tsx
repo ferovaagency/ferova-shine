@@ -215,11 +215,9 @@ const SeoEcommerce = ({ lang = 'es' }: Props) => {
         "areaServed": ["Colombia", "Latinoamérica", "Estados Unidos"],
         "hasOfferCatalog": {
           "@type": "OfferCatalog",
-          "name": "Planes SEO",
+          "name": "Plan SEO / AIO Mensual",
           "itemListElement": [
-            { "@type": "Offer", "name": "SEO WebApps", "price": "600000", "priceCurrency": "COP", "unitText": "MONTH", "description": "Posicionamiento orgánico completo para WebApps" },
-            { "@type": "Offer", "name": "SEO Sitios Tradicionales", "price": "800000", "priceCurrency": "COP", "unitText": "MONTH", "description": "SEO profesional para sitios web tradicionales y otros CMS" },
-            { "@type": "Offer", "name": "SEO & GEO Local", "price": "600000", "priceCurrency": "COP", "unitText": "MONTH", "description": "Optimización geográfica para Google Maps y búsquedas locales" }
+            { "@type": "Offer", "name": "SEO / AIO Mensual", "price": String(SEO_USD), "priceCurrency": "USD", "unitText": "MONTH", "description": "Posicionamiento orgánico SEO + AIO + GEO para WebApps y tiendas" }
           ]
         }
       }) }} />
