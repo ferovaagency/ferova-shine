@@ -176,7 +176,7 @@ export default function CapacitacionIA({ lang = "es" }: Props) {
     const t3 = setTimeout(() => {
       setLoading(false);
       setRevealed(true);
-      trackEvent("quote_calculated", { page: "capacitacion_ia", lang, precioUsd, tema, audiencia });
+      trackEvent("cta_clicked", { cta: "capacitacion_quote_calculated", lang, precioUsd, tema, audiencia });
     }, FAKE_LOADING_MS);
     timersRef.current.push(t1, t2, t3);
   };
