@@ -5,6 +5,7 @@ import { AnimatedSection, StaggerContainer, StaggerItem, ScaleOnHover, PageTrans
 import { motion } from 'framer-motion';
 import { Target, TrendingUp, Heart, BookOpen, Users, Handshake, Eye, MessageCircle, Rocket, Linkedin, ExternalLink } from 'lucide-react';
 import SEO from '@/components/SEO';
+import TeamSection from '@/components/sections/TeamSection';
 
 interface Props { lang?: 'es' | 'en' | 'pt'; }
 
