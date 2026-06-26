@@ -149,8 +149,8 @@ const App = () => (
             <Route path="/pt/servicos" element={<Servicios lang="pt" />} />
             <Route path="/pt/seo-ecommerce" element={<SeoEcommerce lang="pt" />} />
             <Route path="/pt/design-web" element={<DiseneoWeb lang="pt" />} />
-            <Route path="/pt/anuncios-digitais" element={<PautaDigital lang="pt" />} />
-            <Route path="/pt/design-logos" element={<DisenoLogos lang="pt" />} />
+            <Route path="/pt/anuncios-digitais" element={<Navigate replace to="/pt/consultoria-estrategica" />} />
+            <Route path="/pt/design-logos" element={<Navigate replace to="/pt/design-web" />} />
             <Route path="/pt/ferramentas" element={<DescuentosHerramientas lang="pt" />} />
             <Route path="/pt/consultorias" element={<AsesoriasMarketing lang="pt" />} />
             <Route path="/pt/linkedin" element={<OptimizacionLinkedin lang="pt" />} />
