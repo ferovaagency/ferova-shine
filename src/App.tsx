@@ -21,8 +21,7 @@ const Terminos = lazy(() => import("./pages/Terminos"));
 const Servicios = lazy(() => import("./pages/Servicios"));
 const SeoEcommerce = lazy(() => import("./pages/SeoEcommerce"));
 const DiseneoWeb = lazy(() => import("./pages/DiseneoWeb"));
-const PautaDigital = lazy(() => import("./pages/PautaDigital"));
-const DisenoLogos = lazy(() => import("./pages/DisenoLogos"));
+// Deprecadas (pivote B2B): PautaDigital, DisenoLogos, OptimizacionWhatsapp eliminadas.
 const DescuentosHerramientas = lazy(() => import("./pages/DescuentosHerramientas"));
 const AsesoriasMarketing = lazy(() => import("./pages/AsesoriasMarketing"));
 const OptimizacionLinkedin = lazy(() => import("./pages/OptimizacionLinkedin"));
@@ -34,7 +33,8 @@ const Blog = lazy(() => import("./pages/Blog"));
 const BlogPost = lazy(() => import("./pages/BlogPost"));
 const Recursos = lazy(() => import("./pages/Recursos"));
 const SobreNosotros = lazy(() => import("./pages/SobreNosotros"));
-const OptimizacionWhatsapp = lazy(() => import("./pages/OptimizacionWhatsapp"));
+// OptimizacionWhatsapp deprecada (pivote B2B). Redirige a Estrategia.
+// OptimizacionWhatsapp deprecada — solo WhatsappIaBot (B2B)
 const WhatsappIaBot = lazy(() => import("./pages/WhatsappIaBot"));
 const NewsletterPro = lazy(() => import("./pages/NewsletterPro"));
 const AdminBlog = lazy(() => import("./pages/AdminBlog"));
@@ -90,10 +90,10 @@ const App = () => (
             <Route path="/services/ecommerce-seo" element={<SeoEcommerce lang={hostLang} />} />
             <Route path="/servicios/diseno-web" element={<DiseneoWeb lang={hostLang} />} />
             <Route path="/services/web-design" element={<DiseneoWeb lang={hostLang} />} />
-            <Route path="/servicios/pauta-digital" element={<PautaDigital lang={hostLang} />} />
-            <Route path="/services/digital-ads" element={<PautaDigital lang={hostLang} />} />
-            <Route path="/servicios/diseno-logos" element={<DisenoLogos lang={hostLang} />} />
-            <Route path="/services/logo-design" element={<DisenoLogos lang={hostLang} />} />
+            <Route path="/servicios/pauta-digital" element={<Navigate replace to="/consultoria-estrategica" />} />
+            <Route path="/services/digital-ads" element={<Navigate replace to="/en/strategy-advisory" />} />
+            <Route path="/servicios/diseno-logos" element={<Navigate replace to="/servicios/diseno-web" />} />
+            <Route path="/services/logo-design" element={<Navigate replace to="/en/services/web-design" />} />
             <Route path="/servicios/descuentos-herramientas" element={<DescuentosHerramientas lang={hostLang} />} />
             <Route path="/services/tool-discounts" element={<DescuentosHerramientas lang={hostLang} />} />
             <Route path="/servicios/asesorias-marketing" element={<AsesoriasMarketing lang={hostLang} />} />
@@ -117,8 +117,8 @@ const App = () => (
             <Route path="/about" element={<SobreNosotros lang={hostLang} />} />
             <Route path="/terminos" element={<Terminos lang={hostLang} />} />
             <Route path="/terms" element={<Terminos lang={hostLang} />} />
-            <Route path="/servicios/whatsapp-business" element={<OptimizacionWhatsapp lang={hostLang} />} />
-            <Route path="/services/whatsapp-business" element={<OptimizacionWhatsapp lang={hostLang} />} />
+            <Route path="/servicios/whatsapp-business" element={<Navigate replace to="/servicios/whatsapp-ia-bot" />} />
+            <Route path="/services/whatsapp-business" element={<Navigate replace to="/services/whatsapp-ai-bot" />} />
             <Route path="/servicios/whatsapp-ia-bot" element={<WhatsappIaBot lang={hostLang} />} />
             <Route path="/services/whatsapp-ai-bot" element={<WhatsappIaBot lang="en" />} />
             <Route path="/pt/whatsapp-ia-bot" element={<WhatsappIaBot lang="pt" />} />
@@ -128,8 +128,8 @@ const App = () => (
             <Route path="/en/services" element={<Servicios lang="en" />} />
             <Route path="/en/services/ecommerce-seo" element={<SeoEcommerce lang="en" />} />
             <Route path="/en/services/web-design" element={<DiseneoWeb lang="en" />} />
-            <Route path="/en/services/digital-ads" element={<PautaDigital lang="en" />} />
-            <Route path="/en/services/logo-design" element={<DisenoLogos lang="en" />} />
+            <Route path="/en/services/digital-ads" element={<Navigate replace to="/en/strategy-advisory" />} />
+            <Route path="/en/services/logo-design" element={<Navigate replace to="/en/services/web-design" />} />
             <Route path="/en/services/tool-discounts" element={<DescuentosHerramientas lang="en" />} />
             <Route path="/en/services/marketing-consulting" element={<AsesoriasMarketing lang="en" />} />
             <Route path="/en/services/linkedin-optimization" element={<OptimizacionLinkedin lang="en" />} />
@@ -149,12 +149,12 @@ const App = () => (
             <Route path="/pt/servicos" element={<Servicios lang="pt" />} />
             <Route path="/pt/seo-ecommerce" element={<SeoEcommerce lang="pt" />} />
             <Route path="/pt/design-web" element={<DiseneoWeb lang="pt" />} />
-            <Route path="/pt/anuncios-digitais" element={<PautaDigital lang="pt" />} />
-            <Route path="/pt/design-logos" element={<DisenoLogos lang="pt" />} />
+            <Route path="/pt/anuncios-digitais" element={<Navigate replace to="/pt/consultoria-estrategica" />} />
+            <Route path="/pt/design-logos" element={<Navigate replace to="/pt/design-web" />} />
             <Route path="/pt/ferramentas" element={<DescuentosHerramientas lang="pt" />} />
             <Route path="/pt/consultorias" element={<AsesoriasMarketing lang="pt" />} />
             <Route path="/pt/linkedin" element={<OptimizacionLinkedin lang="pt" />} />
-            <Route path="/pt/whatsapp-business" element={<OptimizacionWhatsapp lang="pt" />} />
+            <Route path="/pt/whatsapp-business" element={<Navigate replace to="/pt/whatsapp-ia-bot" />} />
             <Route path="/pt/precos" element={<Precios lang="pt" />} />
             <Route path="/pt/casos-de-sucesso" element={<CasosDeExito lang="pt" />} />
             <Route path="/pt/casos-de-sucesso/:id" element={<CasoDetalle lang="pt" />} />

@@ -5,6 +5,7 @@ import { AnimatedSection, StaggerContainer, StaggerItem, ScaleOnHover, PageTrans
 import { motion } from 'framer-motion';
 import { Target, TrendingUp, Heart, BookOpen, Users, Handshake, Eye, MessageCircle, Rocket, Linkedin, ExternalLink } from 'lucide-react';
 import SEO from '@/components/SEO';
+import TeamSection from '@/components/sections/TeamSection';
 
 interface Props { lang?: 'es' | 'en' | 'pt'; }
 
@@ -143,6 +144,7 @@ const SobreNosotros = ({ lang = 'es' }: Props) => {
             </AnimatedSection>
           </div>
         </section>
+        <TeamSection lang={lang} />
         <section className="py-20 md:py-28 relative overflow-hidden bg-surface">
           <div className="absolute inset-0" style={{ background: 'radial-gradient(ellipse at 50% 50%, hsla(45, 86%, 40%, 0.06), transparent 70%)' }} />
           <div className="container mx-auto px-4 md:px-6 relative z-10 text-center">

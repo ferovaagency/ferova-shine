@@ -21,6 +21,7 @@ import SEO from "@/components/SEO";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import { trackEvent } from "@/lib/analytics";
 import ValueLadder from "@/components/sections/ValueLadder";
+import TeamSection from "@/components/sections/TeamSection";
 
 interface IndexProps {
   lang?: "es" | "en" | "pt";
@@ -66,15 +67,15 @@ type Copy = {
 
 const COPY: Record<"es" | "en" | "pt", Copy> = {
   es: {
-    seoTitle: "Web Apps de Alto Rendimiento e IA para E-commerce | Ferova Agency",
+    seoTitle: "Consultora B2B de IA y Estrategia de Crecimiento | Ferova Agency",
     seoDesc:
-      "Diseñamos Web Apps ultrarrápidas, SEO + GEO + IAO y bots de WhatsApp con IA para escalar tu e-commerce. +7 años de experiencia, resultados medibles.",
-    h1a: "Web Apps de Alto Rendimiento e ",
-    h1b: "IA para E-commerce",
+      "Instalamos infraestructura B2B con IA para que tu equipo venda solo. Sin maquillaje digital. Diseñado para dueños sin experiencia técnica.",
+    h1a: "Hecho para empresarios que quieren ",
+    h1b: "VENDER, no solo verse bien.",
     heroSub:
-      "Convertimos tu tienda en una máquina de ventas: arquitectura SEO nativa, bots de WhatsApp con IA y métricas claras. Hecho para fundadores que quieren escalar, no maquillar.",
-    badges: ["+7 años de experiencia", "14M COP/mes generados", "#1 en Google"],
-    ctaPrimary: "Generar mi Briefing de Mercado (Gratis)",
+      "Las agencias tradicionales están desangrando tu flujo de caja con entregables inútiles. Instalamos infraestructura B2B con IA para que tu equipo venda de forma autónoma. Piénsalo: si ChatGPT, Gemini o Perplexity no mencionan tu marca hoy, ya no existes para el mercado.",
+    badges: ["+7 años de experiencia", "366% crecimiento orgánico real", "Cero pauta publicitaria"],
+    ctaPrimary: "Agendar Llamada de Alineación (15 Min)",
     ctaSecondary: "Hablar por WhatsApp",
     problemTitle: "¿Te suena familiar?",
     problemSub: "Estos son los 3 dolores que más nos cuentan los fundadores B2B antes de trabajar con nosotros.",
@@ -451,6 +452,13 @@ const Index = ({ lang = "es" }: IndexProps) => {
                 {c.ctaSecondary}
               </a>
             </div>
+            <p className="mt-5 text-xs md:text-sm text-white/55 italic">
+              {lang === "es"
+                ? "No maquillamos negocios. Diseñado para dueños sin experiencia técnica."
+                : lang === "pt"
+                ? "Não maquiamos negócios. Feito para donos sem experiência técnica."
+                : "We don't decorate businesses. Built for owners with zero technical background."}
+            </p>
           </div>
         </section>
 
@@ -617,6 +625,9 @@ const Index = ({ lang = "es" }: IndexProps) => {
             </div>
           </div>
         </section>
+
+        {/* ===== SECCIÓN 7 — EQUIPO DIRECTIVO (Ruptura de patrón) ===== */}
+        <TeamSection lang={lang} />
       </main>
 
       <Footer lang={lang} />
