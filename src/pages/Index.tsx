@@ -451,6 +451,13 @@ const Index = ({ lang = "es" }: IndexProps) => {
                 {c.ctaSecondary}
               </a>
             </div>
+            <p className="mt-5 text-xs md:text-sm text-white/55 italic">
+              {lang === "es"
+                ? "No maquillamos negocios. Diseñado para dueños sin experiencia técnica."
+                : lang === "pt"
+                ? "Não maquiamos negócios. Feito para donos sem experiência técnica."
+                : "We don't decorate businesses. Built for owners with zero technical background."}
+            </p>
           </div>
         </section>
 
