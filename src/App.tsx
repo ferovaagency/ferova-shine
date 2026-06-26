@@ -90,10 +90,10 @@ const App = () => (
             <Route path="/services/ecommerce-seo" element={<SeoEcommerce lang={hostLang} />} />
             <Route path="/servicios/diseno-web" element={<DiseneoWeb lang={hostLang} />} />
             <Route path="/services/web-design" element={<DiseneoWeb lang={hostLang} />} />
-            <Route path="/servicios/pauta-digital" element={<PautaDigital lang={hostLang} />} />
-            <Route path="/services/digital-ads" element={<PautaDigital lang={hostLang} />} />
-            <Route path="/servicios/diseno-logos" element={<DisenoLogos lang={hostLang} />} />
-            <Route path="/services/logo-design" element={<DisenoLogos lang={hostLang} />} />
+            <Route path="/servicios/pauta-digital" element={<Navigate replace to="/consultoria-estrategica" />} />
+            <Route path="/services/digital-ads" element={<Navigate replace to="/en/strategy-advisory" />} />
+            <Route path="/servicios/diseno-logos" element={<Navigate replace to="/servicios/diseno-web" />} />
+            <Route path="/services/logo-design" element={<Navigate replace to="/en/services/web-design" />} />
             <Route path="/servicios/descuentos-herramientas" element={<DescuentosHerramientas lang={hostLang} />} />
             <Route path="/services/tool-discounts" element={<DescuentosHerramientas lang={hostLang} />} />
             <Route path="/servicios/asesorias-marketing" element={<AsesoriasMarketing lang={hostLang} />} />
