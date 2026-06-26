@@ -16,17 +16,8 @@
     <priority>1.0</priority>
   </url>
 
-  <!-- ========================================== -->
-  <!-- SILO 1: VENDEDORES IA / AUTOMATIZACIÓN     -->
-  <!-- ========================================== -->
-  <url>
-    <loc>https://seoparaecommerce.co/servicios/whatsapp-ia-bot</loc>
-    <xhtml:link rel="alternate" hreflang="es" href="https://seoparaecommerce.co/servicios/whatsapp-ia-bot"/>
-    <xhtml:link rel="alternate" hreflang="en" href="https://seoforecommerces.co/services/whatsapp-ai-bot"/>
-    <xhtml:link rel="alternate" hreflang="pt" href="https://seoparaecommerce.co/pt/whatsapp-ia-bot"/>
-    <changefreq>monthly</changefreq>
-    <priority>0.9</priority>
-  </url>
+  <!-- (Silo WhatsApp IA Bot eliminado — servicio descontinuado) -->
+
 
   <!-- ========================================== -->
   <!-- SILO 2: WEB APPS / DISEÑO ECOMMERCE        -->

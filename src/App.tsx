@@ -33,9 +33,7 @@ const Blog = lazy(() => import("./pages/Blog"));
 const BlogPost = lazy(() => import("./pages/BlogPost"));
 const Recursos = lazy(() => import("./pages/Recursos"));
 const SobreNosotros = lazy(() => import("./pages/SobreNosotros"));
-// OptimizacionWhatsapp deprecada (pivote B2B). Redirige a Estrategia.
-// OptimizacionWhatsapp deprecada — solo WhatsappIaBot (B2B)
-const WhatsappIaBot = lazy(() => import("./pages/WhatsappIaBot"));
+// WhatsApp IA Bot deprecado — todas las rutas redirigen a Consultoría Estratégica.
 const NewsletterPro = lazy(() => import("./pages/NewsletterPro"));
 const AdminBlog = lazy(() => import("./pages/AdminBlog"));
 const VCard = lazy(() => import("./pages/VCard"));
@@ -117,11 +115,11 @@ const App = () => (
             <Route path="/about" element={<SobreNosotros lang={hostLang} />} />
             <Route path="/terminos" element={<Terminos lang={hostLang} />} />
             <Route path="/terms" element={<Terminos lang={hostLang} />} />
-            <Route path="/servicios/whatsapp-business" element={<Navigate replace to="/servicios/whatsapp-ia-bot" />} />
-            <Route path="/services/whatsapp-business" element={<Navigate replace to="/services/whatsapp-ai-bot" />} />
-            <Route path="/servicios/whatsapp-ia-bot" element={<WhatsappIaBot lang={hostLang} />} />
-            <Route path="/services/whatsapp-ai-bot" element={<WhatsappIaBot lang="en" />} />
-            <Route path="/pt/whatsapp-ia-bot" element={<WhatsappIaBot lang="pt" />} />
+            <Route path="/servicios/whatsapp-business" element={<Navigate replace to="/consultoria-estrategica" />} />
+            <Route path="/services/whatsapp-business" element={<Navigate replace to="/en/strategy-advisory" />} />
+            <Route path="/servicios/whatsapp-ia-bot" element={<Navigate replace to="/consultoria-estrategica" />} />
+            <Route path="/services/whatsapp-ai-bot" element={<Navigate replace to="/en/strategy-advisory" />} />
+            <Route path="/pt/whatsapp-ia-bot" element={<Navigate replace to="/pt/consultoria-estrategica" />} />
 
             {/* Legacy /en prefix routes */}
             <Route path="/en" element={<Index lang="en" />} />
@@ -154,7 +152,7 @@ const App = () => (
             <Route path="/pt/ferramentas" element={<DescuentosHerramientas lang="pt" />} />
             <Route path="/pt/consultorias" element={<AsesoriasMarketing lang="pt" />} />
             <Route path="/pt/linkedin" element={<OptimizacionLinkedin lang="pt" />} />
-            <Route path="/pt/whatsapp-business" element={<Navigate replace to="/pt/whatsapp-ia-bot" />} />
+            <Route path="/pt/whatsapp-business" element={<Navigate replace to="/pt/consultoria-estrategica" />} />
             <Route path="/pt/precos" element={<Precios lang="pt" />} />
             <Route path="/pt/casos-de-sucesso" element={<CasosDeExito lang="pt" />} />
             <Route path="/pt/casos-de-sucesso/:id" element={<CasoDetalle lang="pt" />} />

@@ -40,7 +40,6 @@ export default function Header({ currentLang, lang }: HeaderProps) {
       agencyItems: [
         { label: "Desarrollo Web / E-commerce", href: "/servicios/diseno-web" },
         { label: "SEO / AIO Mensual", href: "/servicios/seo-ecommerce" },
-        { label: "WhatsApp IA Bot", href: "/servicios/whatsapp-ia-bot" },
         { label: "Optimización de LinkedIn", href: "/servicios/optimizacion-linkedin" },
         { label: "Contenido LinkedIn", href: "/servicios/contenido-linkedin" },
       ],
@@ -58,7 +57,6 @@ export default function Header({ currentLang, lang }: HeaderProps) {
       agencyItems: [
         { label: "Web / E-commerce Development", href: "/en/services/web-design" },
         { label: "Monthly SEO / AIO", href: "/en/services/ecommerce-seo" },
-        { label: "WhatsApp AI Bot", href: "/services/whatsapp-ai-bot" },
         { label: "LinkedIn Optimization", href: "/en/services/linkedin-optimization" },
         { label: "LinkedIn Content", href: "/en/services/linkedin-content" },
       ],
@@ -76,7 +74,6 @@ export default function Header({ currentLang, lang }: HeaderProps) {
       agencyItems: [
         { label: "Desenvolvimento Web / E-commerce", href: "/pt/design-web" },
         { label: "SEO / AIO Mensal", href: "/pt/seo-ecommerce" },
-        { label: "WhatsApp IA Bot", href: "/pt/whatsapp-ia-bot" },
         { label: "Otimização de LinkedIn", href: "/pt/linkedin" },
         { label: "Conteúdo LinkedIn", href: "/pt/conteudo-linkedin" },
       ],

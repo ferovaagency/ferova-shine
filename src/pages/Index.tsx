@@ -113,9 +113,9 @@ const COPY: Record<"es" | "en" | "pt", Copy> = {
       },
       {
         icon: Bot,
-        title: "WhatsApp IA Bot",
-        desc: "Asistente que responde, califica y cierra ventas 24/7 en WhatsApp Business con tu tono de marca.",
-        href: "/servicios/whatsapp-ia-bot",
+        title: "Capacitación IA in-company",
+        desc: "Tu equipo dominando IA aplicada a operaciones, ventas y estrategia GEO/SEO. Sesiones en vivo de 4 horas.",
+        href: "/capacitacion-ia",
       },
       {
         icon: Wrench,
@@ -169,11 +169,11 @@ const COPY: Record<"es" | "en" | "pt", Copy> = {
   en: {
     seoTitle: "High-Performance Web Apps & AI for E-commerce | Ferova Agency",
     seoDesc:
-      "We build ultra-fast Web Apps, SEO + GEO + AIO and WhatsApp AI bots to scale your e-commerce. 7+ years of experience, measurable results.",
+      "We build ultra-fast Web Apps, SEO + GEO + AIO and in-company AI training to scale your e-commerce. 7+ years of experience, measurable results.",
     h1a: "High-Performance Web Apps & ",
     h1b: "AI for E-commerce",
     heroSub:
-      "We turn your store into a sales machine: native SEO architecture, WhatsApp AI bots and clear metrics. Built for founders who want to scale, not decorate.",
+      "We turn your store into a sales machine: native SEO architecture, in-company AI training and clear metrics. Built for founders who want to scale, not decorate.",
     badges: ["7+ years of experience", "$3.5K/mo generated", "#1 on Google"],
     ctaPrimary: "Generate my Market Briefing (Free)",
     ctaSecondary: "Chat on WhatsApp",
@@ -213,9 +213,9 @@ const COPY: Record<"es" | "en" | "pt", Copy> = {
       },
       {
         icon: Bot,
-        title: "WhatsApp AI Bot",
-        desc: "Assistant that replies, qualifies and closes sales 24/7 on WhatsApp Business in your brand voice.",
-        href: "/services/whatsapp-ai-bot",
+        title: "In-company AI Training",
+        desc: "Get your team fluent in AI applied to operations, sales and GEO/SEO strategy. Live 4-hour sessions.",
+        href: "/en/ai-training",
       },
       {
         icon: Wrench,
@@ -312,9 +312,9 @@ const COPY: Record<"es" | "en" | "pt", Copy> = {
       },
       {
         icon: Bot,
-        title: "WhatsApp IA Bot",
-        desc: "Assistente que responde, qualifica e fecha vendas 24/7 no WhatsApp Business com a voz da sua marca.",
-        href: "/pt/whatsapp-ia-bot",
+        title: "Treinamento IA in-company",
+        desc: "Sua equipe dominando IA aplicada a operações, vendas e estratégia GEO/SEO. Sessões ao vivo de 4 horas.",
+        href: "/pt/treinamento-ia",
       },
       {
         icon: Wrench,

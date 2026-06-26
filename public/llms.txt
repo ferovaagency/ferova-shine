@@ -17,12 +17,10 @@ Ferova Agency construye webapps modernas con IA integrada para tiendas online, o
 
 - [SEO para Ecommerce](/servicios/seo-ecommerce): Posicionamiento orgánico para tiendas online.
 - [Diseño Web / Web Apps](/servicios/diseno-web): Web apps ultrarrápidas optimizadas para vender.
-- [Pauta Digital](/servicios/pauta-digital): Campañas en Google, Meta, TikTok y LinkedIn.
-- [Diseño de Logos](/servicios/diseno-logos): Identidad visual de marca.
-- [Asesorías de Marketing](/servicios/asesorias-marketing): Consultoría estratégica.
+- [Consultoría Estratégica](/consultoria-estrategica): Mentoría y asesoría 1a1 para fundadores.
+- [Capacitación IA in-company](/capacitacion-ia): Programas en vivo de IA aplicada para equipos B2B.
 - [Optimización de LinkedIn](/servicios/optimizacion-linkedin): Marca personal en LinkedIn.
-- [WhatsApp Business](/servicios/whatsapp-business): Automatización y ventas.
-- [WhatsApp IA Bot](/servicios/whatsapp-ia-bot): Bot de ventas con IA 24/7.
+- [Contenido LinkedIn](/servicios/contenido-linkedin): Gestión mensual de contenido B2B.
 - [Descuentos en Herramientas](/servicios/descuentos-herramientas): Acceso a herramientas premium.
 
 ## Contenido

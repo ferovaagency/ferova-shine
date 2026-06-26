@@ -135,24 +135,5 @@ export const SEO_PLANS: Plan[] = [
     cta: 'Hablar con asesor',
   },
 ];
+// WHATSAPP_PLANS removido — el servicio de WhatsApp IA Bot fue descontinuado.
 
-export const WHATSAPP_PLANS: Plan[] = [
-  {
-    name: 'WhatsApp IA Bot',
-    priceUsd: 100,
-    period: '/mes por número',
-    description: 'Tu asesor automático 24/7',
-    features: [
-      'Asesor IA entrenado con tu información',
-      'Atención 24/7 automática',
-      'Captura y cualifica leads',
-      'Agenda citas',
-      'Escala a humano cuando es necesario',
-      'Resumen de conversaciones',
-      'Panel para ver leads',
-      'Setup incluido (1 vez)',
-    ],
-    cta: 'Quiero mi bot',
-    highlighted: true,
-  },
-];
