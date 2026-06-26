@@ -21,6 +21,7 @@ import SEO from "@/components/SEO";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import { trackEvent } from "@/lib/analytics";
 import ValueLadder from "@/components/sections/ValueLadder";
+import TeamSection from "@/components/sections/TeamSection";
 
 interface IndexProps {
   lang?: "es" | "en" | "pt";
