@@ -128,8 +128,8 @@ const App = () => (
             <Route path="/en/services" element={<Servicios lang="en" />} />
             <Route path="/en/services/ecommerce-seo" element={<SeoEcommerce lang="en" />} />
             <Route path="/en/services/web-design" element={<DiseneoWeb lang="en" />} />
-            <Route path="/en/services/digital-ads" element={<PautaDigital lang="en" />} />
-            <Route path="/en/services/logo-design" element={<DisenoLogos lang="en" />} />
+            <Route path="/en/services/digital-ads" element={<Navigate replace to="/en/strategy-advisory" />} />
+            <Route path="/en/services/logo-design" element={<Navigate replace to="/en/services/web-design" />} />
             <Route path="/en/services/tool-discounts" element={<DescuentosHerramientas lang="en" />} />
             <Route path="/en/services/marketing-consulting" element={<AsesoriasMarketing lang="en" />} />
             <Route path="/en/services/linkedin-optimization" element={<OptimizacionLinkedin lang="en" />} />
