@@ -154,7 +154,7 @@ const App = () => (
             <Route path="/pt/ferramentas" element={<DescuentosHerramientas lang="pt" />} />
             <Route path="/pt/consultorias" element={<AsesoriasMarketing lang="pt" />} />
             <Route path="/pt/linkedin" element={<OptimizacionLinkedin lang="pt" />} />
-            <Route path="/pt/whatsapp-business" element={<OptimizacionWhatsapp lang="pt" />} />
+            <Route path="/pt/whatsapp-business" element={<Navigate replace to="/pt/whatsapp-ia-bot" />} />
             <Route path="/pt/precos" element={<Precios lang="pt" />} />
             <Route path="/pt/casos-de-sucesso" element={<CasosDeExito lang="pt" />} />
             <Route path="/pt/casos-de-sucesso/:id" element={<CasoDetalle lang="pt" />} />
