@@ -624,8 +624,6 @@ const Index = ({ lang = "es" }: IndexProps) => {
             </div>
           </div>
         </section>
-          </div>
-        </section>
 
         {/* ===== SECCIÓN 7 — EQUIPO DIRECTIVO (Ruptura de patrón) ===== */}
         <TeamSection lang={lang} />
