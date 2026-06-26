@@ -198,7 +198,7 @@ const Precios = ({ lang = 'es' }: Props) => {
   const seoTitle = lang === 'en' ? 'Pricing — B2B AI Consultancy | Ferova Agency' : lang === 'pt' ? 'Preços — Consultoria B2B de IA | Ferova Agency' : 'Precios — Consultoría B2B de IA | Ferova Agency';
 
   const handleClick = (tier: Tier) => {
-    trackEvent('pricing_cta_clicked', { tier: tier.id, lang });
+    trackEvent('pricing_card_clicked', { tier: tier.id, lang });
   };
 
   return (
@@ -298,7 +298,7 @@ const Precios = ({ lang = 'es' }: Props) => {
               href={`${WA}?text=${encodeURIComponent(t.exclusivityCta)}`}
               target="_blank"
               rel="noopener noreferrer"
-              onClick={() => trackEvent('pricing_cta_clicked', { tier: 'retainer', lang })}
+              onClick={() => trackEvent('pricing_card_clicked', { tier: 'retainer', lang })}
               className="btn-outline-gold inline-flex items-center justify-center gap-2 whitespace-nowrap"
             >
               {t.exclusivityCta}
