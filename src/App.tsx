@@ -117,8 +117,8 @@ const App = () => (
             <Route path="/about" element={<SobreNosotros lang={hostLang} />} />
             <Route path="/terminos" element={<Terminos lang={hostLang} />} />
             <Route path="/terms" element={<Terminos lang={hostLang} />} />
-            <Route path="/servicios/whatsapp-business" element={<OptimizacionWhatsapp lang={hostLang} />} />
-            <Route path="/services/whatsapp-business" element={<OptimizacionWhatsapp lang={hostLang} />} />
+            <Route path="/servicios/whatsapp-business" element={<Navigate replace to="/servicios/whatsapp-ia-bot" />} />
+            <Route path="/services/whatsapp-business" element={<Navigate replace to="/services/whatsapp-ai-bot" />} />
             <Route path="/servicios/whatsapp-ia-bot" element={<WhatsappIaBot lang={hostLang} />} />
             <Route path="/services/whatsapp-ai-bot" element={<WhatsappIaBot lang="en" />} />
             <Route path="/pt/whatsapp-ia-bot" element={<WhatsappIaBot lang="pt" />} />
