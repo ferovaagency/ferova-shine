@@ -21,8 +21,7 @@ const Terminos = lazy(() => import("./pages/Terminos"));
 const Servicios = lazy(() => import("./pages/Servicios"));
 const SeoEcommerce = lazy(() => import("./pages/SeoEcommerce"));
 const DiseneoWeb = lazy(() => import("./pages/DiseneoWeb"));
-const PautaDigital = lazy(() => import("./pages/PautaDigital"));
-const DisenoLogos = lazy(() => import("./pages/DisenoLogos"));
+// Deprecadas (pivote B2B): PautaDigital, DisenoLogos, OptimizacionWhatsapp eliminadas.
 const DescuentosHerramientas = lazy(() => import("./pages/DescuentosHerramientas"));
 const AsesoriasMarketing = lazy(() => import("./pages/AsesoriasMarketing"));
 const OptimizacionLinkedin = lazy(() => import("./pages/OptimizacionLinkedin"));
