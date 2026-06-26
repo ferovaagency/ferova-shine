@@ -34,7 +34,7 @@ const BlogPost = lazy(() => import("./pages/BlogPost"));
 const Recursos = lazy(() => import("./pages/Recursos"));
 const SobreNosotros = lazy(() => import("./pages/SobreNosotros"));
 // OptimizacionWhatsapp deprecada (pivote B2B). Redirige a Estrategia.
-const OptimizacionWhatsapp = lazy(() => import("./pages/OptimizacionWhatsapp"));
+// OptimizacionWhatsapp deprecada — solo WhatsappIaBot (B2B)
 const WhatsappIaBot = lazy(() => import("./pages/WhatsappIaBot"));
 const NewsletterPro = lazy(() => import("./pages/NewsletterPro"));
 const AdminBlog = lazy(() => import("./pages/AdminBlog"));
