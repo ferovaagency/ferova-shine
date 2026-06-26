@@ -73,12 +73,12 @@ const Footer = ({ currentLang, lang }: FooterProps) => {
       legal: 'Legal',
       rights: 'Todos os direitos reservados.',
       servLinks: [
-        { name: 'SEO para E-commerce', href: '/pt/seo-ecommerce' },
-        { name: 'Design Web / Web Apps', href: '/pt/design-web' },
-        { name: 'Anúncios Digitais', href: '/pt/anuncios-digitais' },
-        { name: 'Design de Logos', href: '/pt/design-logos' },
-        { name: 'Ferramentas com Desconto', href: '/pt/ferramentas' },
-        { name: 'Consultorias de Marketing', href: '/pt/consultorias' },
+        { name: 'Estratégia (Consultoria)', href: '/pt/consultoria-estrategica' },
+        { name: 'Treinamento em IA', href: '/pt/treinamento-ia' },
+        { name: 'Desenvolvimento Web / E-commerce', href: '/pt/design-web' },
+        { name: 'SEO / AIO Mensal', href: '/pt/seo-ecommerce' },
+        { name: 'WhatsApp IA Bot', href: '/pt/whatsapp-ia-bot' },
+        { name: 'Conteúdo LinkedIn', href: '/pt/conteudo-linkedin' },
       ],
       compLinks: [
         { name: 'Preços', href: '/pt/precos' },
