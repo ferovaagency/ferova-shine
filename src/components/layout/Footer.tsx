@@ -25,7 +25,7 @@ const Footer = ({ currentLang, lang }: FooterProps) => {
         { name: 'Capacitación IA', href: '/capacitacion-ia' },
         { name: 'Desarrollo Web / E-commerce', href: '/servicios/diseno-web' },
         { name: 'SEO / AIO Mensual', href: '/servicios/seo-ecommerce' },
-        { name: 'WhatsApp IA Bot', href: '/servicios/whatsapp-ia-bot' },
+        { name: 'Optimización LinkedIn', href: '/servicios/optimizacion-linkedin' },
         { name: 'Contenido LinkedIn', href: '/servicios/contenido-linkedin' },
       ],
       compLinks: [
@@ -51,7 +51,7 @@ const Footer = ({ currentLang, lang }: FooterProps) => {
         { name: 'AI Training', href: '/en/ai-training' },
         { name: 'Web / E-commerce Development', href: '/en/services/web-design' },
         { name: 'Monthly SEO / AIO', href: '/en/services/ecommerce-seo' },
-        { name: 'WhatsApp AI Bot', href: '/services/whatsapp-ai-bot' },
+        { name: 'LinkedIn Optimization', href: '/en/services/linkedin-optimization' },
         { name: 'LinkedIn Content', href: '/en/services/linkedin-content' },
       ],
       compLinks: [
@@ -77,7 +77,7 @@ const Footer = ({ currentLang, lang }: FooterProps) => {
         { name: 'Treinamento em IA', href: '/pt/treinamento-ia' },
         { name: 'Desenvolvimento Web / E-commerce', href: '/pt/design-web' },
         { name: 'SEO / AIO Mensal', href: '/pt/seo-ecommerce' },
-        { name: 'WhatsApp IA Bot', href: '/pt/whatsapp-ia-bot' },
+        { name: 'Otimização de LinkedIn', href: '/pt/linkedin' },
         { name: 'Conteúdo LinkedIn', href: '/pt/conteudo-linkedin' },
       ],
       compLinks: [

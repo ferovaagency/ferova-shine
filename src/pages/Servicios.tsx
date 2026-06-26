@@ -26,33 +26,30 @@ const Servicios = ({ lang = 'es' }: ServiciosProps) => {
   const main: Service[] = lang === 'es' ? [
     { icon: Search, title: 'SEO + GEO + IAO para E-commerce', description: 'Posicionamiento orgánico + Geo-localización + Answer Engine Optimization. Para vender en Google, Maps y motores de IA.', features: ['Auditoría técnica SEO', 'Keyword + intención IA', 'GEO local LATAM', 'Schema y AIO', 'Content marketing', 'Reporte mensual'], href: '/servicios/seo-ecommerce', highlight: true },
     { icon: Monitor, title: 'Diseño de Web Apps y E-commerce', description: 'Web Apps de alto rendimiento. Más rápidas, más seguras y con mejor SEO que las plataformas tradicionales.', features: ['Diseño UI/UX', 'Responsive y mobile-first', 'Core Web Vitals óptimos', 'Integración pagos', 'Catálogo y carrito', 'Mantenimiento'], href: '/servicios/diseno-web' },
-    { icon: Target, title: 'Pauta Digital', description: 'Campañas en Google, Meta, TikTok y LinkedIn que generan ventas reales — no solo clicks.', features: ['Google Ads & Shopping', 'Meta Ads', 'TikTok Ads', 'LinkedIn Ads', 'Remarketing', 'Reporte en tiempo real'], href: '/servicios/pauta-digital' },
-    { icon: Bot, title: 'WhatsApp IA Bot', description: 'Vendedor con IA en WhatsApp que responde 24/7, califica leads y agenda ventas mientras descansas.', features: ['API oficial WhatsApp', 'IA en tu tono', 'Calificación de leads', 'Agenda automática', 'Reportes mensuales', 'Soporte continuo'], href: '/servicios/whatsapp-ia-bot', highlight: true },
+    { icon: GraduationCap, title: 'Capacitación IA in-company', description: 'Tu equipo dominando IA aplicada a operaciones, ventas y estrategia. Programas en vivo de 4 horas.', features: ['Operaciones inteligentes', 'Ingeniería de ventas', 'Estrategia GEO/SEO', 'Hasta 15 personas', 'Workbook personalizado', 'Seguimiento 30 días'], href: '/capacitacion-ia', highlight: true },
   ] : lang === 'pt' ? [
     { icon: Search, title: 'SEO + GEO + IAO para E-commerce', description: 'Posicionamento orgânico + Geo-localização + Answer Engine Optimization. Para vender no Google, Maps e motores de IA.', features: ['Auditoria técnica SEO', 'Palavra-chave + intenção IA', 'GEO local LATAM', 'Schema e AIO', 'Marketing de conteúdo', 'Relatório mensal'], href: '/pt/seo-ecommerce', highlight: true },
     { icon: Monitor, title: 'Design de Web Apps e Loja Virtual', description: 'Web Apps de alto desempenho. Mais rápidas, mais seguras e com melhor SEO que as plataformas tradicionais.', features: ['Design UI/UX', 'Responsivo mobile-first', 'Core Web Vitals ótimos', 'Integração de pagamentos', 'Catálogo e carrinho', 'Manutenção'], href: '/pt/design-web' },
-    { icon: Target, title: 'Tráfego Pago', description: 'Campanhas no Google, Meta, TikTok e LinkedIn que geram vendas reais — não só cliques.', features: ['Google Ads & Shopping', 'Meta Ads', 'TikTok Ads', 'LinkedIn Ads', 'Remarketing', 'Relatório em tempo real'], href: '/pt/anuncios-digitais' },
-    { icon: Bot, title: 'WhatsApp IA Bot', description: 'Vendedor com IA no WhatsApp que responde 24/7, qualifica leads e agenda vendas enquanto você descansa.', features: ['API oficial WhatsApp', 'IA no seu tom', 'Qualificação de leads', 'Agenda automática', 'Relatórios mensais', 'Suporte contínuo'], href: '/pt/whatsapp-ia-bot', highlight: true },
+    { icon: GraduationCap, title: 'Treinamento IA in-company', description: 'Sua equipe dominando IA aplicada a operações, vendas e estratégia. Programas ao vivo de 4 horas.', features: ['Operações inteligentes', 'Engenharia de vendas', 'Estratégia GEO/SEO', 'Até 15 pessoas', 'Workbook personalizado', 'Acompanhamento 30 dias'], href: '/pt/treinamento-ia', highlight: true },
   ] : [
     { icon: Search, title: 'SEO + GEO + AEO for E-commerce', description: 'Organic positioning + Geo-targeting + Answer Engine Optimization. Sell on Google, Maps and AI engines.', features: ['Technical SEO audit', 'Keyword + AI intent', 'Local GEO LATAM', 'Schema and AEO', 'Content marketing', 'Monthly report'], href: '/en/services/ecommerce-seo', highlight: true },
     { icon: Monitor, title: 'Web App & E-commerce Design', description: 'High-performance Web Apps. Faster, more secure and better SEO than traditional platforms.', features: ['UI/UX design', 'Responsive mobile-first', 'Optimal Core Web Vitals', 'Payment integration', 'Catalog and cart', 'Maintenance'], href: '/en/services/web-design' },
-    { icon: Target, title: 'Digital Ads', description: 'Google, Meta, TikTok and LinkedIn campaigns that drive real sales — not just clicks.', features: ['Google Ads & Shopping', 'Meta Ads', 'TikTok Ads', 'LinkedIn Ads', 'Remarketing', 'Real-time report'], href: '/en/services/digital-ads' },
-    { icon: Bot, title: 'WhatsApp AI Bot', description: 'AI salesperson on WhatsApp that replies 24/7, qualifies leads and books sales while you rest.', features: ['Official WhatsApp API', 'AI in your tone', 'Lead qualification', 'Auto booking', 'Monthly reports', 'Continuous support'], href: '/en/services/whatsapp-ai-bot', highlight: true },
+    { icon: GraduationCap, title: 'In-company AI Training', description: 'Get your team fluent in AI applied to operations, sales and strategy. Live 4-hour programs.', features: ['Smart operations', 'Sales engineering', 'GEO/SEO strategy', 'Up to 15 people', 'Custom workbook', '30-day follow-up'], href: '/en/ai-training', highlight: true },
   ];
 
   const tools: Service[] = lang === 'es' ? [
     { icon: Linkedin, title: 'Optimización de LinkedIn', description: 'Perfil que atrae oportunidades y clientes B2B.', features: ['Auditoría', 'Headline + About', 'SEO de keywords', 'Banner', 'Estrategia de contenido'], href: '/servicios/optimizacion-linkedin' },
-    { icon: Palette, title: 'Diseño de Logos', description: 'Identidad visual profesional para tu marca.', features: ['Propuestas', 'Manual de marca', 'Archivos editables', 'Paleta', 'Tipografías'], href: '/servicios/diseno-logos' },
+    { icon: MessageCircle, title: 'Contenido LinkedIn', description: '12 posts + 2 carruseles al mes con tu voz de marca.', features: ['Calendario editorial', '12 posts/mes', '2 carruseles', 'Reporte mensual', 'Estrategia B2B'], href: '/servicios/contenido-linkedin' },
     { icon: Tag, title: 'Descuentos en Herramientas', description: 'SEMrush, Ahrefs, Canva Pro y más, a precio exclusivo.', features: ['SEMrush', 'Ahrefs', 'Surfer SEO', 'Envato', 'Canva Pro'], href: '/servicios/descuentos-herramientas' },
     { icon: GraduationCap, title: 'Asesorías de Marketing', description: 'Consultoría estratégica 1-a-1 para escalar tu negocio.', features: ['Diagnóstico', 'Estrategia', 'Plan de acción', 'Sesiones 1-a-1', 'Seguimiento'], href: '/servicios/asesorias-marketing' },
   ] : lang === 'pt' ? [
     { icon: Linkedin, title: 'Otimização de LinkedIn', description: 'Perfil que atrai oportunidades e clientes B2B.', features: ['Auditoria', 'Headline + Sobre', 'SEO de palavras-chave', 'Banner', 'Estratégia de conteúdo'], href: '/pt/linkedin' },
-    { icon: Palette, title: 'Design de Logos', description: 'Identidade visual profissional para sua marca.', features: ['Propostas', 'Manual de marca', 'Arquivos editáveis', 'Paleta', 'Tipografias'], href: '/pt/design-logos' },
+    { icon: MessageCircle, title: 'Conteúdo LinkedIn', description: '12 posts + 2 carrosséis por mês com a voz da sua marca.', features: ['Calendário editorial', '12 posts/mês', '2 carrosséis', 'Relatório mensal', 'Estratégia B2B'], href: '/pt/conteudo-linkedin' },
     { icon: Tag, title: 'Descontos em Ferramentas', description: 'SEMrush, Ahrefs, Canva Pro e mais, a preço exclusivo.', features: ['SEMrush', 'Ahrefs', 'Surfer SEO', 'Envato', 'Canva Pro'], href: '/pt/ferramentas' },
     { icon: GraduationCap, title: 'Consultorias de Marketing', description: 'Consultoria estratégica 1-a-1 para escalar seu negócio.', features: ['Diagnóstico', 'Estratégia', 'Plano de ação', 'Sessões 1-a-1', 'Acompanhamento'], href: '/pt/consultorias' },
   ] : [
     { icon: Linkedin, title: 'LinkedIn Optimization', description: 'Profile that attracts B2B opportunities and clients.', features: ['Audit', 'Headline + About', 'Keyword SEO', 'Banner', 'Content strategy'], href: '/en/services/linkedin-optimization' },
-    { icon: Palette, title: 'Logo Design', description: 'Professional visual identity for your brand.', features: ['Proposals', 'Brand manual', 'Editable files', 'Palette', 'Typography'], href: '/en/services/logo-design' },
+    { icon: MessageCircle, title: 'LinkedIn Content', description: '12 posts + 2 carousels per month in your brand voice.', features: ['Editorial calendar', '12 posts/mo', '2 carousels', 'Monthly report', 'B2B strategy'], href: '/en/services/linkedin-content' },
     { icon: Tag, title: 'Tool Discounts', description: 'SEMrush, Ahrefs, Canva Pro and more at exclusive prices.', features: ['SEMrush', 'Ahrefs', 'Surfer SEO', 'Envato', 'Canva Pro'], href: '/en/services/tool-discounts' },
     { icon: GraduationCap, title: 'Marketing Consulting', description: 'Strategic 1-on-1 consulting to scale your business.', features: ['Diagnosis', 'Strategy', 'Action plan', '1-on-1 sessions', 'Follow-up'], href: '/en/services/marketing-consulting' },
   ];
@@ -98,9 +95,9 @@ const Servicios = ({ lang = 'es' }: ServiciosProps) => {
   const seoTitle = lang === 'es' ? 'Servicios SEO y marketing digital e-commerce — Ferova'
     : lang === 'pt' ? 'Serviços SEO e marketing digital e-commerce — Ferova'
     : 'E-commerce SEO & digital marketing services — Ferova';
-  const seoDesc = lang === 'es' ? '4 servicios principales: SEO + GEO + IAO, Web Apps, Pauta Digital y WhatsApp IA Bot. Marketing especializado para tiendas online en LATAM.'
-    : lang === 'pt' ? '4 serviços principais: SEO + GEO + IAO, Web Apps, Tráfego Pago e WhatsApp IA Bot. Marketing especializado para lojas virtuais na LATAM.'
-    : 'Four main services: SEO + GEO + AEO, Web Apps, Digital Ads and WhatsApp AI Bot. Specialized marketing for online stores in LATAM.';
+  const seoDesc = lang === 'es' ? 'Servicios B2B: SEO + GEO + IAO, Web Apps, Capacitación IA y LinkedIn para fundadores que escalan en LATAM.'
+    : lang === 'pt' ? 'Serviços B2B: SEO + GEO + IAO, Web Apps, Treinamento em IA e LinkedIn para fundadores que escalam na LATAM.'
+    : 'B2B services: SEO + GEO + AEO, Web Apps, AI Training and LinkedIn for founders scaling in LATAM.';
 
   return (
     <PageTransition>
