@@ -3,8 +3,10 @@
  * Renderiza cada ruta a HTML estático para GPTBot/ClaudeBot/PerplexityBot.
  */
 import { renderToString } from "react-dom/server";
-import { HelmetProvider, FilledContext } from "react-helmet-async";
+import { HelmetProvider } from "react-helmet-async";
 import App from "./App";
+
+type HelmetContext = { helmet?: { title?: { toString(): string }; meta?: { toString(): string }; link?: { toString(): string }; script?: { toString(): string } } };
 import "./index.css";
 
 export async function prerender(data: { url: string }) {
