@@ -53,6 +53,14 @@ import { vitePrerenderPlugin } from "vite-prerender-plugin";
   if (typeof g.IntersectionObserver === "undefined") g.IntersectionObserver = class { observe(){} disconnect(){} unobserve(){} takeRecords(){return []} };
   if (typeof g.ResizeObserver === "undefined") g.ResizeObserver = class { observe(){} disconnect(){} unobserve(){} };
   if (typeof g.matchMedia === "undefined") g.matchMedia = () => ({ matches: false, media: "", addEventListener: () => {}, removeEventListener: () => {}, addListener: () => {}, removeListener: () => {}, onchange: null, dispatchEvent: () => false });
+  if (typeof g.requestAnimationFrame === "undefined") g.requestAnimationFrame = (cb: (t: number) => void) => setTimeout(() => cb(Date.now()), 0) as unknown as number;
+  if (typeof g.cancelAnimationFrame === "undefined") g.cancelAnimationFrame = (id: number) => clearTimeout(id);
+  if (typeof g.requestIdleCallback === "undefined") g.requestIdleCallback = (cb: () => void) => setTimeout(cb, 0);
+  if (typeof g.cancelIdleCallback === "undefined") g.cancelIdleCallback = (id: number) => clearTimeout(id);
+  if (typeof g.getComputedStyle === "undefined") g.getComputedStyle = () => ({ getPropertyValue: () => "" });
+  if (typeof g.HTMLElement === "undefined") g.HTMLElement = class {};
+  if (typeof g.Element === "undefined") g.Element = class {};
+  if (typeof g.Node === "undefined") g.Node = class {};
 }
 
 // Rutas estáticas que se prerenderizan a HTML. Blog/casos/newsletter se descubren
