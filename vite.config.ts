@@ -19,48 +19,13 @@ import { vitePrerenderPlugin } from "vite-prerender-plugin";
     get length() { return memStore.size; },
   };
   const g = globalThis as unknown as Record<string, unknown>;
-  if (typeof g.window === "undefined") g.window = g;
+  // ⚠️ NO stubear `window` ni `document`: muchas libs (react-helmet-async,
+  // framer-motion) usan `typeof window !== "undefined"` para decidir si
+  // ejecutar código de DOM. Solo polyfilleamos lo estrictamente necesario
+  // para que módulos como el cliente de Supabase (que accede a `localStorage`
+  // sin guard alguno en tiempo de import) no lancen ReferenceError.
   if (typeof g.localStorage === "undefined") g.localStorage = stub;
   if (typeof g.sessionStorage === "undefined") g.sessionStorage = stub;
-  if (typeof g.navigator === "undefined") g.navigator = { userAgent: "node" };
-  if (typeof g.location === "undefined") {
-    g.location = { hostname: "seoparaecommerce.co", href: "https://seoparaecommerce.co/", pathname: "/", search: "", hash: "" };
-  }
-  if (typeof g.document === "undefined") {
-    const el = () => ({
-      setAttribute: () => {}, getAttribute: () => null, removeAttribute: () => {},
-      appendChild: (c: unknown) => c, removeChild: (c: unknown) => c, insertBefore: (c: unknown) => c,
-      addEventListener: () => {}, removeEventListener: () => {},
-      style: {}, classList: { add: () => {}, remove: () => {}, toggle: () => {}, contains: () => false },
-      children: [], childNodes: [], firstChild: null, parentNode: null, nextSibling: null,
-      innerHTML: "", textContent: "", nodeType: 1, tagName: "DIV",
-    });
-    g.document = {
-      addEventListener: () => {}, removeEventListener: () => {},
-      createElement: () => el(),
-      createElementNS: () => el(),
-      createTextNode: (t: string) => ({ nodeType: 3, textContent: String(t) }),
-      createDocumentFragment: () => el(),
-      documentElement: { style: {}, scrollHeight: 0, clientHeight: 0, lang: "es", classList: { add: () => {}, remove: () => {} } },
-      body: { appendChild: () => {}, scrollHeight: 0, style: {}, classList: { add: () => {}, remove: () => {} } },
-      head: { appendChild: () => {}, firstChild: null, insertBefore: () => {} },
-      getElementById: () => null, querySelector: () => null, querySelectorAll: () => [],
-      getElementsByTagName: () => [{ appendChild: () => {}, firstChild: null, insertBefore: () => {} }],
-      hidden: false,
-    };
-  }
-  if (typeof g.MutationObserver === "undefined") g.MutationObserver = class { observe(){} disconnect(){} takeRecords(){return []} };
-  if (typeof g.IntersectionObserver === "undefined") g.IntersectionObserver = class { observe(){} disconnect(){} unobserve(){} takeRecords(){return []} };
-  if (typeof g.ResizeObserver === "undefined") g.ResizeObserver = class { observe(){} disconnect(){} unobserve(){} };
-  if (typeof g.matchMedia === "undefined") g.matchMedia = () => ({ matches: false, media: "", addEventListener: () => {}, removeEventListener: () => {}, addListener: () => {}, removeListener: () => {}, onchange: null, dispatchEvent: () => false });
-  if (typeof g.requestAnimationFrame === "undefined") g.requestAnimationFrame = (cb: (t: number) => void) => setTimeout(() => cb(Date.now()), 0) as unknown as number;
-  if (typeof g.cancelAnimationFrame === "undefined") g.cancelAnimationFrame = (id: number) => clearTimeout(id);
-  if (typeof g.requestIdleCallback === "undefined") g.requestIdleCallback = (cb: () => void) => setTimeout(cb, 0);
-  if (typeof g.cancelIdleCallback === "undefined") g.cancelIdleCallback = (id: number) => clearTimeout(id);
-  if (typeof g.getComputedStyle === "undefined") g.getComputedStyle = () => ({ getPropertyValue: () => "" });
-  if (typeof g.HTMLElement === "undefined") g.HTMLElement = class {};
-  if (typeof g.Element === "undefined") g.Element = class {};
-  if (typeof g.Node === "undefined") g.Node = class {};
 }
 
 // Rutas estáticas que se prerenderizan a HTML. Blog/casos/newsletter se descubren
