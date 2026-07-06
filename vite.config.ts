@@ -80,11 +80,6 @@ export default defineConfig(({ mode }) => ({
       additionalPrerenderRoutes: STATIC_ROUTES,
     }),
   ].filter(Boolean),
-      renderTarget: "#root",
-      prerenderScript: path.resolve(__dirname, "./src/prerender.tsx"),
-      additionalPrerenderRoutes: STATIC_ROUTES,
-    }),
-  ].filter(Boolean),
   resolve: {
     alias: {
       "@": path.resolve(__dirname, "./src"),
