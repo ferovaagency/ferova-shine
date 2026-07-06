@@ -89,9 +89,14 @@ export default function TeamSection({ lang = "es" }: TeamSectionProps) {
               className="group relative rounded-2xl border border-white/10 bg-white/[0.03] p-6 backdrop-blur hover:border-gold/40 transition-all hover:-translate-y-1"
             >
               <div
-                className={`aspect-square w-full rounded-xl mb-5 border bg-gradient-to-br ${toneMap[m.tone]} flex items-center justify-center`}
+                className={`aspect-square w-full rounded-xl mb-5 border overflow-hidden bg-gradient-to-br ${toneMap[m.tone]}`}
               >
-                <span className="text-5xl md:text-6xl font-display font-bold opacity-90">{m.initials}</span>
+                <img
+                  src={PHOTOS[m.initials]}
+                  alt={`${m.name} — ${m.role}`}
+                  loading="lazy"
+                  className="w-full h-full object-cover"
+                />
               </div>
               <h3 className="text-lg font-bold text-white leading-tight">{m.name}</h3>
               <p className="text-xs font-semibold uppercase tracking-wider text-gold/90 mb-3">{m.role}</p>
