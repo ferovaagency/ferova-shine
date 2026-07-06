@@ -2,6 +2,27 @@
  * Prerender SSG — usado por vite-prerender-plugin en build.
  * Renderiza cada ruta a HTML estático para GPTBot/ClaudeBot/PerplexityBot.
  */
+
+// --- Polyfills SSR: el Supabase client accede a localStorage al inicializarse,
+//     y algunos widgets tocan window en tiempo de import. Los stubeamos ANTES de
+//     importar App / index.css. Se sustituyen por los reales en el navegador.
+const memStore = new Map<string, string>();
+const noopStorage = {
+  getItem: (k: string) => memStore.get(k) ?? null,
+  setItem: (k: string, v: string) => { memStore.set(k, String(v)); },
+  removeItem: (k: string) => { memStore.delete(k); },
+  clear: () => memStore.clear(),
+  key: (i: number) => Array.from(memStore.keys())[i] ?? null,
+  get length() { return memStore.size; },
+};
+const g = globalThis as unknown as Record<string, unknown>;
+if (typeof g.window === "undefined") g.window = g;
+if (typeof g.localStorage === "undefined") g.localStorage = noopStorage;
+if (typeof g.sessionStorage === "undefined") g.sessionStorage = noopStorage;
+if (typeof g.document === "undefined") {
+  g.document = { addEventListener: () => {}, removeEventListener: () => {}, documentElement: {}, body: {} };
+}
+
 import { renderToString } from "react-dom/server";
 import { HelmetProvider } from "react-helmet-async";
 import App from "./App";
