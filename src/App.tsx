@@ -231,8 +231,10 @@ const App = ({ url }: AppProps = {}) => {
   const body = (
     <QueryClientProvider client={queryClient}>
       <TooltipProvider>
-        <Toaster />
-        <Sonner />
+        <ClientOnly>
+          <Toaster />
+          <Sonner />
+        </ClientOnly>
         {url ? (
           <StaticRouter location={url}>
             <AppInner hostLang={hostLang} />
