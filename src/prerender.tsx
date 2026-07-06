@@ -10,10 +10,10 @@ type HelmetContext = { helmet?: { title?: { toString(): string }; meta?: { toStr
 import "./index.css";
 
 export async function prerender(data: { url: string }) {
-  const helmetContext: HelmetContext = {};
+  const helmetContext: Record<string, unknown> = {};
 
   const html = renderToString(
-    <HelmetProvider context={helmetContext}>
+    <HelmetProvider context={helmetContext as never}>
       <App url={data.url} />
     </HelmetProvider>
   );
