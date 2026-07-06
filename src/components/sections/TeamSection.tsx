@@ -1,4 +1,15 @@
 import { Sparkles } from "lucide-react";
+import mafeImg from "@/assets/team/mafe.jpeg.asset.json";
+import boltImg from "@/assets/team/bolt.jpeg.asset.json";
+import pacoImg from "@/assets/team/paco.jpeg.asset.json";
+import billieImg from "@/assets/team/billie.jpeg.asset.json";
+
+const PHOTOS: Record<string, string> = {
+  MC: mafeImg.url,
+  BO: boltImg.url,
+  PA: pacoImg.url,
+  BI: billieImg.url,
+};
 
 interface TeamSectionProps {
   lang?: "es" | "en" | "pt";
