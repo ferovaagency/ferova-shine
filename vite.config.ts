@@ -4,6 +4,40 @@ import path from "path";
 import { componentTagger } from "lovable-tagger";
 import { vitePrerenderPlugin } from "vite-prerender-plugin";
 
+// Polyfills SSR a nivel de proceso Node — el bundle prerender se importa
+// dinámicamente vía `await import()` y comparte globalThis con este proceso.
+// Se instalan aquí para garantizar que existan ANTES de que cualquier módulo
+// (Supabase client, etc.) toque localStorage/window en tiempo de import.
+{
+  const memStore = new Map<string, string>();
+  const stub = {
+    getItem: (k: string) => memStore.get(k) ?? null,
+    setItem: (k: string, v: string) => void memStore.set(k, String(v)),
+    removeItem: (k: string) => void memStore.delete(k),
+    clear: () => memStore.clear(),
+    key: (i: number) => Array.from(memStore.keys())[i] ?? null,
+    get length() { return memStore.size; },
+  };
+  const g = globalThis as unknown as Record<string, unknown>;
+  if (typeof g.window === "undefined") g.window = g;
+  if (typeof g.localStorage === "undefined") g.localStorage = stub;
+  if (typeof g.sessionStorage === "undefined") g.sessionStorage = stub;
+  if (typeof g.navigator === "undefined") g.navigator = { userAgent: "node" };
+  if (typeof g.location === "undefined") {
+    g.location = { hostname: "seoparaecommerce.co", href: "https://seoparaecommerce.co/", pathname: "/", search: "", hash: "" };
+  }
+  if (typeof g.document === "undefined") {
+    g.document = {
+      addEventListener: () => {}, removeEventListener: () => {},
+      createElement: () => ({ setAttribute: () => {}, style: {}, appendChild: () => {} }),
+      documentElement: { style: {}, scrollHeight: 0, clientHeight: 0, lang: "es" },
+      body: { appendChild: () => {}, scrollHeight: 0 },
+      head: { appendChild: () => {} },
+      getElementById: () => null, querySelector: () => null, querySelectorAll: () => [],
+    };
+  }
+}
+
 // Rutas estáticas que se prerenderizan a HTML. Blog/casos/newsletter se descubren
 // dinámicamente vía `additionalPrerenderRoutes` (ver script prerender.tsx).
 const STATIC_ROUTES = [
