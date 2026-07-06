@@ -35,7 +35,11 @@ import { vitePrerenderPlugin } from "vite-prerender-plugin";
       head: { appendChild: () => {} },
       getElementById: () => null, querySelector: () => null, querySelectorAll: () => [],
     };
-  }
+  if (typeof g.MutationObserver === "undefined") g.MutationObserver = class { observe(){} disconnect(){} takeRecords(){return []} };
+  if (typeof g.IntersectionObserver === "undefined") g.IntersectionObserver = class { observe(){} disconnect(){} unobserve(){} takeRecords(){return []} };
+  if (typeof g.ResizeObserver === "undefined") g.ResizeObserver = class { observe(){} disconnect(){} unobserve(){} };
+  if (typeof g.matchMedia === "undefined") g.matchMedia = () => ({ matches: false, media: "", addEventListener: () => {}, removeEventListener: () => {}, addListener: () => {}, removeListener: () => {}, onchange: null, dispatchEvent: () => false });
+}
 }
 
 // Rutas estáticas que se prerenderizan a HTML. Blog/casos/newsletter se descubren
