@@ -96,6 +96,7 @@ export default function TeamSection({ lang = "es" }: TeamSectionProps) {
                   alt={`${m.name} — ${m.role}`}
                   loading="lazy"
                   className="w-full h-full object-cover"
+                  style={{ objectPosition: m.initials === "MC" ? "center 20%" : "center top" }}
                 />
               </div>
               <h3 className="text-lg font-bold text-white leading-tight">{m.name}</h3>
