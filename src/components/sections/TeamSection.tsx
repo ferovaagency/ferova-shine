@@ -40,7 +40,7 @@ const COPY: Record<"es" | "en" | "pt", { title: string; sub: string; members: Me
       { name: "Billie", role: "Director of Copy", copy: "Cat in charge of critical copy review and visual deliverable QA.", initials: "BI", tone: "emerald" },
     ],
     banner:
-      "AUTHORITY NOTE: This team (yes, pets included) multiplied a B2B client's organic revenue from $750 to $3,500 USD/month in just 6 months. 366% real growth, with zero paid ads.",
+      "AUTHORITY NOTE: This team (yes, pets included) multiplied a B2B client's organic sales from $750 to $3,500 USD per month in just 6 months. 366% real growth, with zero paid ads.",
   },
   pt: {
     title: "Equipe Diretiva",
@@ -52,7 +52,7 @@ const COPY: Record<"es" | "en" | "pt", { title: string; sub: string; members: Me
       { name: "Billie", role: "Diretora de Copys", copy: "Gata encarregada da revisão crítica de textos e controle visual de entregáveis.", initials: "BI", tone: "emerald" },
     ],
     banner:
-      "NOTA DE AUTORIDADE: Este time (sim, mascotes incluídos) multiplicou as vendas orgânicas de um cliente B2B de R$15 mil para R$70 mil/mês em apenas 6 meses. 366% de crescimento real, sem mídia paga.",
+      "NOTA DE AUTORIDADE: Este time (sim, mascotes incluídos) multiplicou as vendas orgânicas de um cliente B2B de R$3.750 para R$17.500 por mês em apenas 6 meses. 366% de crescimento real, sem mídia paga.",
   },
 };
 
