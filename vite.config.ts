@@ -61,6 +61,10 @@ const STATIC_ROUTES = [
   "/pt/newsletter-pro",
 ];
 
+// Prerender opt-in vía env `PRERENDER=1 bun run build` — mientras
+// terminamos de auditar componentes que no son SSR-safe (framer-motion, etc.).
+const enablePrerender = process.env.PRERENDER === "1";
+
 // https://vitejs.dev/config/
 export default defineConfig(({ mode }) => ({
   server: {
@@ -70,7 +74,12 @@ export default defineConfig(({ mode }) => ({
   plugins: [
     react(),
     mode === "development" && componentTagger(),
-    mode !== "development" && vitePrerenderPlugin({
+    mode !== "development" && enablePrerender && vitePrerenderPlugin({
+      renderTarget: "#root",
+      prerenderScript: path.resolve(__dirname, "./src/prerender.tsx"),
+      additionalPrerenderRoutes: STATIC_ROUTES,
+    }),
+  ].filter(Boolean),
       renderTarget: "#root",
       prerenderScript: path.resolve(__dirname, "./src/prerender.tsx"),
       additionalPrerenderRoutes: STATIC_ROUTES,
