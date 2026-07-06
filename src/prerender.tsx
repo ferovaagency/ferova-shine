@@ -18,10 +18,7 @@ export async function prerender(data: { url: string }) {
     </HelmetProvider>
   );
 
-  const { helmet } = helmetContext;
-
-  // Elementos <head> generados por react-helmet-async por ruta.
-  const headElements = new Set<{ type: string; props: Record<string, string> }>();
+  const helmet = (helmetContext as { helmet?: HelmetContext["helmet"] }).helmet;
 
   // Extraer <title> del helmet — vite-prerender-plugin usa `head.title` directo.
   const titleMatch = helmet?.title?.toString().match(/<title[^>]*>([^<]*)<\/title>/);
