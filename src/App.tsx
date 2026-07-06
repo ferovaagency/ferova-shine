@@ -6,7 +6,10 @@ import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import { StaticRouter } from "react-router-dom/server";
 import ExitIntentPopup from "@/components/ui/exit-intent-popup";
 import SocialProofToasts from "@/components/ui/social-proof-toasts";
-import AiAdvisorChat from "@/components/ui/ai-advisor-chat";
+import { lazy } from "react";
+// Lazy: react-markdown (dependencia transitiva) toca `document` en tiempo de
+// import, lo que romperia el SSG.
+const AiAdvisorChat = lazy(() => import("@/components/ui/ai-advisor-chat"));
 import { getLangFromHostname } from "@/hooks/use-lang-from-host";
 import ScrollToTop from "./components/ScrollToTop";
 import AdminGuard from "./components/admin/AdminGuard";
