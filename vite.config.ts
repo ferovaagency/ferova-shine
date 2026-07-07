@@ -26,6 +26,13 @@ import { vitePrerenderPlugin } from "vite-prerender-plugin";
   // sin guard alguno en tiempo de import) no lancen ReferenceError.
   if (typeof g.localStorage === "undefined") g.localStorage = stub;
   if (typeof g.sessionStorage === "undefined") g.sessionStorage = stub;
+  // framer-motion / motion-dom llaman addEventListener sobre `window` en tiempo
+  // de import. Node no expone estos métodos en globalThis; los apagamos con
+  // no-ops para que el prerender no explote.
+  if (typeof (g as { addEventListener?: unknown }).addEventListener === "undefined") {
+    (g as { addEventListener: () => void }).addEventListener = () => {};
+    (g as { removeEventListener: () => void }).removeEventListener = () => {};
+  }
 }
 
 // Rutas estáticas que se prerenderizan a HTML. Blog/casos/newsletter se descubren
