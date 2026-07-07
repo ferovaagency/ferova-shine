@@ -1,5 +1,6 @@
 import Header from '@/components/layout/Header';
 import Footer from '@/components/layout/Footer';
+import SEO from '@/components/SEO';
 import AdBanner from '@/components/ui/ad-banner';
 import { Link } from 'react-router-dom';
 import { GraduationCap, Target, BarChart3, Users, MessageCircle, Timer, Stethoscope, Zap, ArrowRight, Palette, Clock, X } from 'lucide-react';
