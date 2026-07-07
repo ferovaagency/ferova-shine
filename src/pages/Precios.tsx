@@ -1,4 +1,4 @@
-import { Helmet } from 'react-helmet-async';
+import SEO from '@/components/SEO';
 import Header from '@/components/layout/Header';
 import Footer from '@/components/layout/Footer';
 import { Check, MessageCircle, Lock, Zap, Map, Cog, Sparkles } from 'lucide-react';
