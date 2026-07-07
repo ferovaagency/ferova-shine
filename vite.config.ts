@@ -61,9 +61,9 @@ const STATIC_ROUTES = [
   "/pt/newsletter-pro",
 ];
 
-// Prerender opt-in vía env `PRERENDER=1 bun run build` — mientras
-// terminamos de auditar componentes que no son SSR-safe (framer-motion, etc.).
-const enablePrerender = process.env.PRERENDER === "1";
+// Prerender activo por defecto — ES ahora la fuente de HTML indexable para
+// buscadores y crawlers de IA. Puede desactivarse temporalmente con `PRERENDER=0`.
+const enablePrerender = process.env.PRERENDER !== "0";
 
 // https://vitejs.dev/config/
 export default defineConfig(({ mode }) => ({
