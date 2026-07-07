@@ -30,7 +30,6 @@ const CasoDetalle = ({ lang = 'es' }: Props) => {
     );
   }
 
-  return (
   const detailPath = lang === 'en' ? `/en/case-studies/${caso.id}` : lang === 'pt' ? `/pt/casos-de-sucesso/${caso.id}` : `/casos-de-exito/${caso.id}`;
   const seoDesc = (caso.challenge || '').slice(0, 155);
 
