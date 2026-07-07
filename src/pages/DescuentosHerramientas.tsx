@@ -1,5 +1,6 @@
 import Header from '@/components/layout/Header';
 import Footer from '@/components/layout/Footer';
+import SEO from '@/components/SEO';
 import { Tag, ExternalLink, Star, Zap, Globe, Mail } from 'lucide-react';
 import { Link } from 'react-router-dom';
 
