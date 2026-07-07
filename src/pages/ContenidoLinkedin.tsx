@@ -1,5 +1,6 @@
 import Header from '@/components/layout/Header';
 import Footer from '@/components/layout/Footer';
+import SEO from '@/components/SEO';
 import { motion } from 'framer-motion';
 import { Linkedin, CheckCircle, MessageCircle, PenSquare, TrendingUp, Users, Calendar } from 'lucide-react';
 import { formatPrice, type Lang } from '@/lib/pricing';
