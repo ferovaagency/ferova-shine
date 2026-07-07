@@ -26,6 +26,13 @@ import { vitePrerenderPlugin } from "vite-prerender-plugin";
   // sin guard alguno en tiempo de import) no lancen ReferenceError.
   if (typeof g.localStorage === "undefined") g.localStorage = stub;
   if (typeof g.sessionStorage === "undefined") g.sessionStorage = stub;
+  // framer-motion / motion-dom llaman addEventListener sobre `window` en tiempo
+  // de import. Node no expone estos métodos en globalThis; los apagamos con
+  // no-ops para que el prerender no explote.
+  if (typeof (g as { addEventListener?: unknown }).addEventListener === "undefined") {
+    (g as { addEventListener: () => void }).addEventListener = () => {};
+    (g as { removeEventListener: () => void }).removeEventListener = () => {};
+  }
 }
 
 // Rutas estáticas que se prerenderizan a HTML. Blog/casos/newsletter se descubren
@@ -61,9 +68,9 @@ const STATIC_ROUTES = [
   "/pt/newsletter-pro",
 ];
 
-// Prerender opt-in vía env `PRERENDER=1 bun run build` — mientras
-// terminamos de auditar componentes que no son SSR-safe (framer-motion, etc.).
-const enablePrerender = process.env.PRERENDER === "1";
+// Prerender activo por defecto — ES ahora la fuente de HTML indexable para
+// buscadores y crawlers de IA. Puede desactivarse temporalmente con `PRERENDER=0`.
+const enablePrerender = process.env.PRERENDER !== "0";
 
 // https://vitejs.dev/config/
 export default defineConfig(({ mode }) => ({

@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { Download, Globe, Mail, Phone, Share2, Check, Newspaper, FileText, ExternalLink } from 'lucide-react';
+import ferovaLogo from '@/assets/ferova-logo.png.png';
 
 export default function VCard() {
   const [nombre, setNombre] = useState('');
@@ -77,7 +78,7 @@ export default function VCard() {
             <div className="w-24 h-24 rounded-2xl border-4 overflow-hidden shadow-xl flex items-center justify-center"
               style={{ borderColor: 'hsl(45,86%,45%)', background: '#1e1c35' }}>
               <img
-                src="/ferova-logo.png"
+                src={ferovaLogo}
                 alt="Ferova Agency"
                 className="w-full h-full object-contain p-2"
                 onError={(e) => {
