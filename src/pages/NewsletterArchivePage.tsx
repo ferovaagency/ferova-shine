@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import Header from '@/components/layout/Header';
 import Footer from '@/components/layout/Footer';
+import SEO from '@/components/SEO';
 import { AnimatedSection, PageTransition } from '@/components/ui/motion';
 import { Clock, ArrowRight, Lock, MessageCircle } from 'lucide-react';
 import { supabase } from '@/integrations/supabase/client';
