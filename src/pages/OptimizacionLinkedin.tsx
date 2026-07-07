@@ -74,6 +74,12 @@ const OptimizacionLinkedin = ({ lang = 'es' }: Props) => {
 
   return (
     <PageTransition>
+      <SEO
+        title={`${t.title} — Ferova Agency`}
+        description={t.sub}
+        path={lang === 'en' ? '/en/services/linkedin-optimization' : lang === 'pt' ? '/pt/linkedin' : '/servicios/optimizacion-linkedin'}
+        lang={lang}
+      />
       <Header currentLang={lang} />
       <main className="pt-20">
         {/* Hero */}
