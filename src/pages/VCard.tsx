@@ -78,7 +78,7 @@ export default function VCard() {
             <div className="w-24 h-24 rounded-2xl border-4 overflow-hidden shadow-xl flex items-center justify-center"
               style={{ borderColor: 'hsl(45,86%,45%)', background: '#1e1c35' }}>
               <img
-                src="/ferova-logo.png"
+                src={ferovaLogo}
                 alt="Ferova Agency"
                 className="w-full h-full object-contain p-2"
                 onError={(e) => {
