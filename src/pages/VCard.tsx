@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { Download, Globe, Mail, Phone, Share2, Check, Newspaper, FileText, ExternalLink } from 'lucide-react';
+import ferovaLogo from '@/assets/ferova-logo.png.png';
 
 export default function VCard() {
   const [nombre, setNombre] = useState('');
