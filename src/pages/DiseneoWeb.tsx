@@ -1,5 +1,6 @@
 import Header from '@/components/layout/Header';
 import Footer from '@/components/layout/Footer';
+import SEO from '@/components/SEO';
 import AdBanner from '@/components/ui/ad-banner';
 import { useEffect } from 'react';
 import { useToast } from '@/hooks/use-toast';
