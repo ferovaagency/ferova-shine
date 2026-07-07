@@ -1,6 +1,7 @@
 import { useParams, Link } from 'react-router-dom';
 import Header from '@/components/layout/Header';
 import Footer from '@/components/layout/Footer';
+import SEO from '@/components/SEO';
 import { casesData } from './CasosDeExito';
 import { ArrowLeft, MessageCircle } from 'lucide-react';
 import { AnimatedSection, StaggerContainer, StaggerItem, PageTransition } from '@/components/ui/motion';
