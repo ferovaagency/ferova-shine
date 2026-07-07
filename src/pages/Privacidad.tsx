@@ -1,7 +1,7 @@
 import Header from '@/components/layout/Header';
 import Footer from '@/components/layout/Footer';
 import { PageTransition } from '@/components/ui/motion';
-import { Helmet } from 'react-helmet-async';
+import SEO from '@/components/SEO';
 
 interface Props { lang?: 'es' | 'en' | 'pt'; }
 
