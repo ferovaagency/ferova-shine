@@ -21,6 +21,9 @@ import {
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import WaveSeparator from "@/components/ui/wave-separator";
+import mafeImg from "@/assets/team/mafe.jpeg.asset.json";
+
+const MARIA_FER_IMG = mafeImg.url;
 
 interface SobreMariaFerProps {
   lang?: "es" | "en" | "pt";
