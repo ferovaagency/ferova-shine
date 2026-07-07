@@ -81,6 +81,12 @@ const ContenidoLinkedin = ({ lang = 'es' }: Props) => {
 
   return (
     <>
+      <SEO
+        title={`${t.title} — Ferova Agency`}
+        description={t.sub}
+        path={lang === 'en' ? '/en/services/linkedin-content' : lang === 'pt' ? '/pt/conteudo-linkedin' : '/servicios/contenido-linkedin'}
+        lang={lang}
+      />
       <Header currentLang={lang} />
       <main className="pt-20">
         <section className="py-20 md:py-28 text-center relative grid-pattern">
