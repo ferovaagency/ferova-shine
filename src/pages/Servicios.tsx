@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import Header from '@/components/layout/Header';
 import Footer from '@/components/layout/Footer';
 import ProposalModal from '@/components/ui/proposal-modal';
-import { Helmet } from 'react-helmet-async';
+import SEO from '@/components/SEO';
 import { StaggerContainer, StaggerItem, ScaleOnHover, PageTransition } from '@/components/ui/motion';
 import { Search, Monitor, Target, ArrowRight, CheckCircle, Palette, Tag, GraduationCap, MessageCircle, Linkedin, Bot } from 'lucide-react';
 import { trackEvent } from '@/lib/analytics';
