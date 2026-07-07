@@ -31,7 +31,18 @@ const CasoDetalle = ({ lang = 'es' }: Props) => {
   }
 
   return (
+  const detailPath = lang === 'en' ? `/en/case-studies/${caso.id}` : lang === 'pt' ? `/pt/casos-de-sucesso/${caso.id}` : `/casos-de-exito/${caso.id}`;
+  const seoDesc = (caso.challenge || '').slice(0, 155);
+
+  return (
     <PageTransition>
+      <SEO
+        title={`${caso.title} — Ferova Agency`}
+        description={seoDesc}
+        path={detailPath}
+        lang={lang}
+        type="article"
+      />
       <Header currentLang={lang} />
       <main className="pt-20">
         <section className="py-20 md:py-28">
