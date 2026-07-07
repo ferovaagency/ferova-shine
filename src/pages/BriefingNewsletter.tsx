@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import Header from '@/components/layout/Header';
 import Footer from '@/components/layout/Footer';
+import SEO from '@/components/SEO';
 import {
   Accordion,
   AccordionContent,
@@ -281,6 +282,12 @@ const BriefingNewsletter = ({ lang = 'es' }: Props) => {
 
   return (
     <>
+      <SEO
+        title={t.metaTitle}
+        description={t.metaDesc}
+        path={lang === 'en' ? '/en/resources/newsletter-briefing' : lang === 'pt' ? '/pt/recursos/briefing-newsletter' : '/recursos/briefing-newsletter'}
+        lang={lang}
+      />
       <Header currentLang={lang} />
       <main className="pt-20">
         {/* SECCIÓN 1 - Hero */}

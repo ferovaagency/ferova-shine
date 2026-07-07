@@ -1,4 +1,4 @@
-import { Helmet } from 'react-helmet-async';
+import SEO from '@/components/SEO';
 import Header from '@/components/layout/Header';
 import Footer from '@/components/layout/Footer';
 import { Check, MessageCircle, Lock, Zap, Map, Cog, Sparkles } from 'lucide-react';
@@ -203,10 +203,12 @@ const Precios = ({ lang = 'es' }: Props) => {
 
   return (
     <div className="min-h-screen flex flex-col bg-background text-foreground">
-      <Helmet>
-        <title>{seoTitle}</title>
-        <meta name="description" content={t.sub} />
-      </Helmet>
+      <SEO
+        title={seoTitle}
+        description={t.sub}
+        path={lang === 'en' ? '/en/pricing' : lang === 'pt' ? '/pt/precos' : '/precios'}
+        lang={lang}
+      />
       <Header lang={lang} />
 
       <main className="flex-1">

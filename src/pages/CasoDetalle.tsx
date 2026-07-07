@@ -1,6 +1,7 @@
 import { useParams, Link } from 'react-router-dom';
 import Header from '@/components/layout/Header';
 import Footer from '@/components/layout/Footer';
+import SEO from '@/components/SEO';
 import { casesData } from './CasosDeExito';
 import { ArrowLeft, MessageCircle } from 'lucide-react';
 import { AnimatedSection, StaggerContainer, StaggerItem, PageTransition } from '@/components/ui/motion';
@@ -29,8 +30,18 @@ const CasoDetalle = ({ lang = 'es' }: Props) => {
     );
   }
 
+  const detailPath = lang === 'en' ? `/en/case-studies/${caso.id}` : lang === 'pt' ? `/pt/casos-de-sucesso/${caso.id}` : `/casos-de-exito/${caso.id}`;
+  const seoDesc = (caso.challenge || '').slice(0, 155);
+
   return (
     <PageTransition>
+      <SEO
+        title={`${caso.title} — Ferova Agency`}
+        description={seoDesc}
+        path={detailPath}
+        lang={lang}
+        type="article"
+      />
       <Header currentLang={lang} />
       <main className="pt-20">
         <section className="py-20 md:py-28">

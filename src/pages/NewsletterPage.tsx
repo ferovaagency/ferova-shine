@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import Header from '@/components/layout/Header';
 import Footer from '@/components/layout/Footer';
+import SEO from '@/components/SEO';
 import { AnimatedSection, PageTransition } from '@/components/ui/motion';
 import { Check, ArrowRight, MessageCircle, Mail, Star, Shield, Sparkles } from 'lucide-react';
 import { Input } from '@/components/ui/input';
@@ -204,8 +205,14 @@ const NewsletterPage = ({ lang = 'es' }: Props) => {
 
   return (
     <PageTransition>
-      {/* SEO meta tags set via useEffect */}
+      <SEO
+        title={l.metaTitle}
+        description={l.metaDesc}
+        path={lang === 'en' ? '/en/newsletter' : lang === 'pt' ? '/pt/newsletter' : '/newsletter'}
+        lang={lang}
+      />
       <Header lang={lang} />
+
 
       {/* Hero */}
       <section className="dark-section relative pt-28 pb-20 md:pt-36 md:pb-28" style={{ background: 'linear-gradient(135deg, hsl(243 31% 10%), hsl(243 31% 16%))' }}>

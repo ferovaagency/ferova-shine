@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import Header from '@/components/layout/Header';
 import Footer from '@/components/layout/Footer';
+import SEO from '@/components/SEO';
 import { PageTransition } from '@/components/ui/motion';
 import { Clock, Share2, ArrowLeft, ArrowRight, Lock, MessageCircle, Wrench, Lightbulb, Newspaper } from 'lucide-react';
 import { supabase } from '@/integrations/supabase/client';
@@ -67,8 +68,18 @@ const NewsletterEditionPage = ({ lang = 'es' }: Props) => {
   const fc = edition.free_content || {};
   const pc: any = {};
 
+  const editionRoutePath = lang === 'en' ? `/en/newsletter/edition/${edition.slug}` : lang === 'pt' ? `/pt/newsletter/edicao/${edition.slug}` : `/newsletter/edicion/${edition.slug}`;
+  const editionDesc = (edition.topics || []).join(' · ').slice(0, 155) || `Ferova Newsletter — edición #${edition.edition_number}`;
+
   return (
     <PageTransition>
+      <SEO
+        title={`${edition.title} — Ferova Newsletter`}
+        description={editionDesc}
+        path={editionRoutePath}
+        lang={lang}
+        type="article"
+      />
       <Header lang={lang} />
       <article className="pt-28 pb-20 bg-background">
         <div className="container mx-auto px-4 max-w-[720px]" style={{ lineHeight: 1.6 }}>

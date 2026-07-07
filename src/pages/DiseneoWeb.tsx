@@ -1,5 +1,6 @@
 import Header from '@/components/layout/Header';
 import Footer from '@/components/layout/Footer';
+import SEO from '@/components/SEO';
 import AdBanner from '@/components/ui/ad-banner';
 import { useEffect } from 'react';
 import { useToast } from '@/hooks/use-toast';
@@ -146,8 +147,14 @@ const DiseneoWeb = ({ lang = 'es' }: Props) => {
     });
   };
 
-  return (
+   return (
     <>
+      <SEO
+        title={`${t.title} — Ferova Agency`}
+        description={t.sub}
+        path={lang === 'en' ? '/en/services/web-design' : lang === 'pt' ? '/pt/design-web' : '/servicios/diseno-web'}
+        lang={lang}
+      />
       <Header currentLang={lang} />
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify({
         '@context': 'https://schema.org',

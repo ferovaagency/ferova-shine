@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import Header from '@/components/layout/Header';
 import Footer from '@/components/layout/Footer';
+import SEO from '@/components/SEO';
 import { AnimatedSection, PageTransition } from '@/components/ui/motion';
 import { Clock, ArrowRight, Lock, MessageCircle } from 'lucide-react';
 import { supabase } from '@/integrations/supabase/client';
@@ -46,6 +47,12 @@ const NewsletterArchivePage = ({ lang = 'es' }: Props) => {
 
   return (
     <PageTransition>
+      <SEO
+        title={`${l.title} — Ferova Agency`}
+        description={l.sub}
+        path={lang === 'en' ? '/en/newsletter/archive' : lang === 'pt' ? '/pt/newsletter/arquivo' : '/newsletter/archivo'}
+        lang={lang}
+      />
       <Header lang={lang} />
       <section className="dark-section relative pt-28 pb-14 md:pt-36 md:pb-18" style={{ background: 'linear-gradient(135deg, hsl(243 31% 10%), hsl(243 31% 16%))' }}>
         <div className="grid-pattern absolute inset-0 opacity-40" />

@@ -1,5 +1,6 @@
 import Header from '@/components/layout/Header';
 import Footer from '@/components/layout/Footer';
+import SEO from '@/components/SEO';
 import AdBanner from '@/components/ui/ad-banner';
 import { Link } from 'react-router-dom';
 import { GraduationCap, Target, BarChart3, Users, MessageCircle, Timer, Stethoscope, Zap, ArrowRight, Palette, Clock, X } from 'lucide-react';
@@ -119,6 +120,12 @@ const AsesoriasMarketing = ({ lang = 'es' }: Props) => {
 
   return (
     <>
+      <SEO
+        title={`${t.title} — Ferova Agency`}
+        description={t.sub}
+        path={lang === 'en' ? '/en/services/marketing-consulting' : lang === 'pt' ? '/pt/consultorias' : '/servicios/asesorias-marketing'}
+        lang={lang}
+      />
       <Header currentLang={lang} />
       <main className="pt-20">
         {/* Hero */}

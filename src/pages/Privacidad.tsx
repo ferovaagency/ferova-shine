@@ -1,7 +1,7 @@
 import Header from '@/components/layout/Header';
 import Footer from '@/components/layout/Footer';
 import { PageTransition } from '@/components/ui/motion';
-import { Helmet } from 'react-helmet-async';
+import SEO from '@/components/SEO';
 
 interface Props { lang?: 'es' | 'en' | 'pt'; }
 
@@ -10,11 +10,12 @@ const Privacidad = ({ lang = 'es' }: Props) => {
 
   return (
     <PageTransition>
-      <Helmet>
-        <title>Política de Privacidad — Ferova Agency</title>
-        <meta name="description" content="Política de Tratamiento de Datos Personales de Ferova Agency conforme a la Ley 1581 de 2012, Decreto 1377 de 2013 y GDPR." />
-        <link rel="canonical" href="https://seoparaecommerce.co/privacidad" />
-      </Helmet>
+      <SEO
+        title="Política de Privacidad — Ferova Agency"
+        description="Política de Tratamiento de Datos Personales de Ferova Agency conforme a la Ley 1581 de 2012, Decreto 1377 de 2013 y GDPR."
+        path={lang === 'en' ? '/en/privacy' : lang === 'pt' ? '/pt/privacidade' : '/privacidad'}
+        lang={lang}
+      />
       <Header lang={lang} />
       <main className="pt-28 pb-20">
         <div className="container mx-auto px-4 md:px-6 max-w-3xl">

@@ -1,5 +1,6 @@
 import Header from '@/components/layout/Header';
 import Footer from '@/components/layout/Footer';
+import SEO from '@/components/SEO';
 import { Tag, ExternalLink, Star, Zap, Globe, Mail } from 'lucide-react';
 import { Link } from 'react-router-dom';
 
@@ -82,7 +83,14 @@ const tools = [
 export default function DescuentosHerramientas({ lang = 'es' }: Props) {
   return (
     <div className="min-h-screen bg-background">
+      <SEO
+        title={lang === 'en' ? 'Tool discounts & deals — Ferova Agency' : lang === 'pt' ? 'Descontos em ferramentas — Ferova Agency' : 'Descuentos en herramientas — Ferova Agency'}
+        description={lang === 'en' ? 'Exclusive discounts on the tools Ferova Agency uses to grow e-commerce brands: hosting, themes, SEO.' : lang === 'pt' ? 'Descontos exclusivos nas ferramentas que a Ferova usa para escalar e-commerces: hospedagem, temas, SEO.' : 'Descuentos exclusivos en las herramientas que Ferova Agency usa para escalar e-commerce: hosting, temas, SEO.'}
+        path={lang === 'en' ? '/en/services/tool-discounts' : lang === 'pt' ? '/pt/ferramentas' : '/servicios/descuentos-herramientas'}
+        lang={lang}
+      />
       <Header lang={lang} />
+
 
       {/* Hero */}
       <section className="py-20 px-4 text-center">

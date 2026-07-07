@@ -1,4 +1,4 @@
-import { Helmet } from 'react-helmet-async';
+import SEO from '@/components/SEO';
 import Header from '@/components/layout/Header';
 import Footer from '@/components/layout/Footer';
 import { Button } from '@/components/ui/button';
@@ -15,11 +15,12 @@ const NewsletterPro = ({ lang = 'es' }: Props) => {
 
   return (
     <>
-      <Helmet>
-        <title>Ferova Pro — Newsletter premium de SEO + GEO + IAO para e-commerce</title>
-        <meta name="description" content="Newsletter Pro: análisis de casos reales, plantillas, prompts, comunidad privada y office hours. Estrategias accionables cada semana." />
-        <link rel="canonical" href="https://seoparaecommerce.co/newsletter-pro" />
-      </Helmet>
+      <SEO
+        title="Ferova Pro — Newsletter premium de SEO + GEO + IAO para e-commerce"
+        description="Newsletter Pro: análisis de casos reales, plantillas, prompts, comunidad privada y office hours. Estrategias accionables cada semana."
+        path={lang === 'en' ? '/en/newsletter-pro' : lang === 'pt' ? '/pt/newsletter-pro' : '/newsletter-pro'}
+        lang={lang}
+      />
       <Header currentLang={lang} />
       <main className="pt-20">
         {/* Hero */}

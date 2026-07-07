@@ -1,11 +1,19 @@
 import Header from '@/components/layout/Header';
 import Footer from '@/components/layout/Footer';
+import SEO from '@/components/SEO';
+
 
 interface Props { lang?: 'es' | 'en' | 'pt'; }
 
 const Terminos = ({ lang = 'es' }: Props) => {
   return (
     <>
+      <SEO
+        title={lang === 'es' ? 'Términos y Condiciones — Ferova Agency' : 'Terms and Conditions — Ferova Agency'}
+        description={lang === 'es' ? 'Términos y condiciones de prestación de servicios digitales de Ferova Agency.' : 'Terms and conditions for digital services provided by Ferova Agency.'}
+        path={lang === 'en' ? '/en/terms' : lang === 'pt' ? '/pt/termos' : '/terminos'}
+        lang={lang}
+      />
       <Header currentLang={lang} />
       <main className="pt-20">
         <section className="py-16 md:py-24">

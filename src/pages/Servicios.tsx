@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import Header from '@/components/layout/Header';
 import Footer from '@/components/layout/Footer';
 import ProposalModal from '@/components/ui/proposal-modal';
-import { Helmet } from 'react-helmet-async';
+import SEO from '@/components/SEO';
 import { StaggerContainer, StaggerItem, ScaleOnHover, PageTransition } from '@/components/ui/motion';
 import { Search, Monitor, Target, ArrowRight, CheckCircle, Palette, Tag, GraduationCap, MessageCircle, Linkedin, Bot } from 'lucide-react';
 import { trackEvent } from '@/lib/analytics';
@@ -101,11 +101,12 @@ const Servicios = ({ lang = 'es' }: ServiciosProps) => {
 
   return (
     <PageTransition>
-      <Helmet>
-        <title>{seoTitle}</title>
-        <meta name="description" content={seoDesc} />
-        <link rel="canonical" href="https://seoparaecommerce.co/servicios" />
-      </Helmet>
+      <SEO
+        title={seoTitle}
+        description={seoDesc}
+        path={lang === 'en' ? '/en/services' : lang === 'pt' ? '/pt/servicos' : '/servicios'}
+        lang={lang}
+      />
       <Header currentLang={lang} />
       <main className="pt-20">
         <section className="py-16 md:py-20 text-center relative grid-pattern">

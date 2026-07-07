@@ -1,5 +1,6 @@
 import Header from '@/components/layout/Header';
 import Footer from '@/components/layout/Footer';
+import SEO from '@/components/SEO';
 import { AnimatedSection, StaggerContainer, StaggerItem, ScaleOnHover, PageTransition } from '@/components/ui/motion';
 import { motion } from 'framer-motion';
 import { formatPrice, type Lang } from '@/lib/pricing';
@@ -73,6 +74,12 @@ const OptimizacionLinkedin = ({ lang = 'es' }: Props) => {
 
   return (
     <PageTransition>
+      <SEO
+        title={`${t.title} — Ferova Agency`}
+        description={t.sub}
+        path={lang === 'en' ? '/en/services/linkedin-optimization' : lang === 'pt' ? '/pt/linkedin' : '/servicios/optimizacion-linkedin'}
+        lang={lang}
+      />
       <Header currentLang={lang} />
       <main className="pt-20">
         {/* Hero */}
