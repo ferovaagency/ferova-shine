@@ -14,11 +14,12 @@ const Cookies = ({ lang = 'es' }: Props) => {
 
   return (
     <PageTransition>
-      <Helmet>
-        <title>Política de Cookies — Ferova Agency</title>
-        <meta name="description" content="Política de Cookies de Ferova Agency: tipos de cookies, gestión de consentimiento y cómo desactivarlas." />
-        <link rel="canonical" href="https://seoparaecommerce.co/cookies" />
-      </Helmet>
+      <SEO
+        title="Política de Cookies — Ferova Agency"
+        description="Política de Cookies de Ferova Agency: tipos de cookies, gestión de consentimiento y cómo desactivarlas."
+        path={lang === 'en' ? '/en/cookies' : lang === 'pt' ? '/pt/cookies' : '/cookies'}
+        lang={lang}
+      />
       <Header lang={lang} />
       <main className="pt-28 pb-20">
         <div className="container mx-auto px-4 md:px-6 max-w-3xl">
