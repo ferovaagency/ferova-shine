@@ -205,8 +205,14 @@ const NewsletterPage = ({ lang = 'es' }: Props) => {
 
   return (
     <PageTransition>
-      {/* SEO meta tags set via useEffect */}
+      <SEO
+        title={l.metaTitle}
+        description={l.metaDesc}
+        path={lang === 'en' ? '/en/newsletter' : lang === 'pt' ? '/pt/newsletter' : '/newsletter'}
+        lang={lang}
+      />
       <Header lang={lang} />
+
 
       {/* Hero */}
       <section className="dark-section relative pt-28 pb-20 md:pt-36 md:pb-28" style={{ background: 'linear-gradient(135deg, hsl(243 31% 10%), hsl(243 31% 16%))' }}>
