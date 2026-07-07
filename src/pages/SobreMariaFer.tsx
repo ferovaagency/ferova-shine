@@ -345,7 +345,7 @@ const SobreMariaFer = ({ lang = "es" }: SobreMariaFerProps) => {
           "@type": "Person",
           name: "Maria Fer Calderón",
           jobTitle: "Digital Marketing & SEO Specialist",
-          image: "/img/maria-fer.jpg",
+          image: MARIA_FER_IMG,
           email: "contacto@ferova.agency",
           url: "https://ferova.agency/sobre-maria-fer",
           sameAs: [
@@ -500,7 +500,7 @@ const SobreMariaFer = ({ lang = "es" }: SobreMariaFerProps) => {
               style={{ borderColor: "#C0930E" }}
             >
               <img
-                src="/img/maria-fer.jpg"
+                src={MARIA_FER_IMG}
                 alt="Maria Fer Calderón"
                 className="w-full h-full object-cover"
                 onError={(e) => {
@@ -608,7 +608,7 @@ const SobreMariaFer = ({ lang = "es" }: SobreMariaFerProps) => {
                 style={{ borderColor: "#C0930E" }}
               >
                 <img
-                  src="/img/maria-fer.jpg"
+                  src={MARIA_FER_IMG}
                   alt="Maria Fer Calderón"
                   className="w-full h-full object-cover"
                   onError={(e) => {
