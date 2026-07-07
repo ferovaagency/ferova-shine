@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import Header from '@/components/layout/Header';
 import Footer from '@/components/layout/Footer';
+import SEO from '@/components/SEO';
 import { PageTransition } from '@/components/ui/motion';
 import { Clock, Share2, ArrowLeft, ArrowRight, Lock, MessageCircle, Wrench, Lightbulb, Newspaper } from 'lucide-react';
 import { supabase } from '@/integrations/supabase/client';
