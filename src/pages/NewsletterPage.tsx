@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import Header from '@/components/layout/Header';
 import Footer from '@/components/layout/Footer';
+import SEO from '@/components/SEO';
 import { AnimatedSection, PageTransition } from '@/components/ui/motion';
 import { Check, ArrowRight, MessageCircle, Mail, Star, Shield, Sparkles } from 'lucide-react';
 import { Input } from '@/components/ui/input';
