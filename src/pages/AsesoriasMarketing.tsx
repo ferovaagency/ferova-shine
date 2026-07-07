@@ -120,6 +120,12 @@ const AsesoriasMarketing = ({ lang = 'es' }: Props) => {
 
   return (
     <>
+      <SEO
+        title={`${t.title} — Ferova Agency`}
+        description={t.sub}
+        path={lang === 'en' ? '/en/services/marketing-consulting' : lang === 'pt' ? '/pt/consultorias' : '/servicios/asesorias-marketing'}
+        lang={lang}
+      />
       <Header currentLang={lang} />
       <main className="pt-20">
         {/* Hero */}
