@@ -101,11 +101,12 @@ const Servicios = ({ lang = 'es' }: ServiciosProps) => {
 
   return (
     <PageTransition>
-      <Helmet>
-        <title>{seoTitle}</title>
-        <meta name="description" content={seoDesc} />
-        <link rel="canonical" href="https://seoparaecommerce.co/servicios" />
-      </Helmet>
+      <SEO
+        title={seoTitle}
+        description={seoDesc}
+        path={lang === 'en' ? '/en/services' : lang === 'pt' ? '/pt/servicos' : '/servicios'}
+        lang={lang}
+      />
       <Header currentLang={lang} />
       <main className="pt-20">
         <section className="py-16 md:py-20 text-center relative grid-pattern">
