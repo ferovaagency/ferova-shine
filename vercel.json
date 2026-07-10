@@ -1,6 +1,18 @@
 {
   "$schema": "https://openapi.vercel.sh/vercel.json",
   "redirects": [
+    {
+      "source": "/:path*",
+      "has": [{ "type": "host", "value": "seoforecommerces.co" }],
+      "destination": "https://seoparaecommerce.co/en/:path*",
+      "permanent": true
+    },
+    {
+      "source": "/:path*",
+      "has": [{ "type": "host", "value": "www.seoforecommerces.co" }],
+      "destination": "https://seoparaecommerce.co/en/:path*",
+      "permanent": true
+    },
     { "source": "/como-encontrar-palabras-clave-ecommerce/feed", "destination": "/blog/como-encontrar-palabras-clave-ecommerce", "permanent": true },
     { "source": "/como-encontrar-palabras-clave-ecommerce/feed/", "destination": "/blog/como-encontrar-palabras-clave-ecommerce", "permanent": true },
     { "source": "/como-encontrar-palabras-clave-ecommerce", "destination": "/blog/como-encontrar-palabras-clave-ecommerce", "permanent": true },
