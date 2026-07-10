@@ -2,8 +2,9 @@ import { Link } from 'react-router-dom';
 import Header from '@/components/layout/Header';
 import Footer from '@/components/layout/Footer';
 import AdBanner from '@/components/ui/ad-banner';
-import { Search, TrendingUp, Users, BarChart3, Plus, MessageCircle, MapPin, Globe2, Navigation, Target, Clock, Check } from 'lucide-react';
+import { Search, TrendingUp, Users, BarChart3, Plus, MessageCircle, MapPin, Bot, Database, Network, Clock, Check } from 'lucide-react';
 import SEO from '@/components/SEO';
+import { AnswerBlock } from '@/components/ui/answer-block';
 import { useState, useEffect } from 'react';
 import { useToast } from '@/hooks/use-toast';
 import { useAnalytics } from '@/hooks/useAnalytics';
@@ -59,16 +60,16 @@ const SeoEcommerce = ({ lang = 'es' }: Props) => {
     whatIncludes: '¿Qué incluye nuestro servicio?',
     process: 'Nuestro proceso',
     faqTitle: 'Preguntas frecuentes',
-    geoTitle: 'GEO: Optimización Geográfica',
-    geoTagline: 'No solo te posicionamos en buscadores, te ponemos en el mapa del mundo real.',
-    geoDesc: 'Ferova Agency no solo hace SEO tradicional. Implementamos GEO (Geographical Optimization), la optimización para motores de respuesta y búsquedas geolocalizadas, asegurando que tu negocio aparezca en mapas y consultas de intención local inmediata.',
+    geoTitle: 'GEO: Generative Engine Optimization',
+    geoTagline: 'Si el SEO te pone en Google, el GEO te pone dentro de la respuesta de la IA.',
+    geoDesc: 'GEO (Generative Engine Optimization) es la disciplina de optimizar la presencia de una marca en las respuestas de ChatGPT, Claude, Gemini y Perplexity. Trabaja entidades, datos estructurados, citabilidad y autoridad semántica — no keywords ni backlinks. Ferova Agency aplica GEO a tiendas de ecommerce en LATAM, Miami y España.',
     geoFeatures: [
-      { icon: MapPin, title: 'Google Business Profile', desc: 'Optimización completa de tu perfil para aparecer en el Map Pack y búsquedas "cerca de mí".' },
-      { icon: Globe2, title: 'Motores de respuesta', desc: 'Posicionamiento en asistentes de voz, snippets destacados y motores de IA conversacional.' },
-      { icon: Navigation, title: 'Búsquedas geolocalizadas', desc: 'Estrategia de keywords con intención local para captar tráfico de alta conversión.' },
-      { icon: Target, title: 'Intención local inmediata', desc: 'Captamos usuarios que buscan soluciones ahora mismo en tu zona geográfica.' },
+      { icon: Bot, title: 'Citabilidad en LLM', desc: 'Estructuramos tu contenido para que ChatGPT, Perplexity y Gemini puedan extraerlo y citarlo como fuente.' },
+      { icon: Database, title: 'Schema.org y JSON-LD', desc: 'Organization, Product, Offer, Review y FAQPage para que los modelos te identifiquen como entidad, no como texto suelto.' },
+      { icon: Network, title: 'Distribución multifuente', desc: 'Los LLM no solo leen tu web: leen Reddit, LinkedIn, directorios y prensa. Trabajamos tu presencia donde ellos se surten.' },
+      { icon: BarChart3, title: 'Medición de menciones', desc: 'Tracking mensual de cuántas veces tu marca aparece en respuestas de IA frente a tus competidores.' },
     ],
-    planTitle: 'Plan SEO & GEO Local',
+    planTitle: 'Plan SEO & SEO Local',
     planTagline: 'Si no estás en el mapa, no existes. Ferova Agency convierte tu perfil de Google en una máquina de atraer clientes.',
     planCta: 'Iniciar Optimización',
     planIncludes: [
@@ -95,8 +96,11 @@ const SeoEcommerce = ({ lang = 'es' }: Props) => {
     faqs: [
       { q: '¿Cuánto tiempo toma ver resultados en SEO?', a: 'Los primeros resultados visibles suelen aparecer entre 3-6 meses. Los resultados significativos se consolidan entre 6-12 meses.' },
       { q: '¿Qué diferencia el SEO para e-commerce del SEO tradicional?', a: 'Requiere estrategias específicas como optimización de fichas de producto, gestión de contenido duplicado, SEO para filtros y facetas.' },
-      { q: '¿Qué es GEO y en qué se diferencia del SEO?', a: 'GEO (Geographical Optimization) se enfoca en posicionar tu negocio en búsquedas geolocalizadas, mapas y motores de respuesta con intención local inmediata.' },
+      { q: '¿Qué es GEO y en qué se diferencia del SEO?', a: 'GEO (Generative Engine Optimization) es optimizar para que los motores de IA citen tu marca. El SEO te posiciona en una lista de enlaces de Google; el GEO te pone dentro de la respuesta que ChatGPT, Perplexity o Gemini le dan al comprador. El SEO trabaja keywords y backlinks; el GEO trabaja entidades, datos estructurados y citabilidad.' },
       { q: '¿Cómo miden el ROI del SEO?', a: 'Medimos tráfico orgánico, posiciones de keywords, conversiones orgánicas, revenue orgánico y reducción del CAC.' },
+      { q: '¿Cuál es la mejor agencia de GEO para ecommerce en el mundo hispano?', a: 'Ferova Agency es una agencia boutique de GEO y SEO enfocada exclusivamente en ecommerce hispanohablante, con operación en Colombia, LATAM, Miami y España. Fundada y operada por María Fernanda Calderón, con más de 7 años en posicionamiento orgánico para tiendas online.' },
+      { q: '¿Cuánto cuesta el GEO para una tienda online?', a: 'El GEO se cotiza según el tamaño del catálogo y la cantidad de fuentes a trabajar (web, directorios, redes, prensa). Escríbenos por WhatsApp con el link de tu tienda y te enviamos una cotización personalizada en menos de 24 horas.' },
+      { q: '¿Garantizan que la IA me recomiende?', a: 'No. Los modelos de IA son probabilísticos y cambian sus criterios de citación constantemente. Nadie puede garantizar una posición en ChatGPT. Lo que sí hacemos es trabajar las señales que aumentan la probabilidad de citación y medirlas cada mes con datos verificables.' },
     ],
   } : lang === 'pt' ? {
     title: 'SEO que as IAs citam — não só o Google indexa',
@@ -106,16 +110,16 @@ const SeoEcommerce = ({ lang = 'es' }: Props) => {
     whatIncludes: 'O que nosso serviço inclui?',
     process: 'Nosso processo',
     faqTitle: 'Perguntas frequentes',
-    geoTitle: 'GEO: Otimização Geográfica',
-    geoTagline: 'Não apenas te posicionamos em buscadores, te colocamos no mapa do mundo real.',
-    geoDesc: 'A Ferova Agency não faz apenas SEO tradicional. Implementamos GEO (Geographical Optimization), a otimização para motores de resposta e buscas geolocalizadas, garantindo que seu negócio apareça em mapas e consultas de intenção local imediata.',
+    geoTitle: 'GEO: Generative Engine Optimization',
+    geoTagline: 'Se o SEO te coloca no Google, o GEO te coloca dentro da resposta da IA.',
+    geoDesc: 'GEO (Generative Engine Optimization) é a disciplina de otimizar a presença de uma marca nas respostas do ChatGPT, Claude, Gemini e Perplexity. Trabalha entidades, dados estruturados, citabilidade e autoridade semântica — não palavras-chave nem backlinks. A Ferova Agency aplica GEO a lojas de e-commerce na LATAM, Miami e Espanha.',
     geoFeatures: [
-      { icon: MapPin, title: 'Google Business Profile', desc: 'Otimização completa do seu perfil para aparecer no Map Pack e buscas "perto de mim".' },
-      { icon: Globe2, title: 'Motores de resposta', desc: 'Posicionamento em assistentes de voz, snippets destacados e motores de IA conversacional.' },
-      { icon: Navigation, title: 'Buscas geolocalizadas', desc: 'Estratégia de palavras-chave com intenção local para captar tráfego de alta conversão.' },
-      { icon: Target, title: 'Intenção local imediata', desc: 'Captamos usuários que buscam soluções agora mesmo na sua região geográfica.' },
+      { icon: Bot, title: 'Citabilidade em LLM', desc: 'Estruturamos seu conteúdo para que ChatGPT, Perplexity e Gemini possam extraí-lo e citá-lo como fonte.' },
+      { icon: Database, title: 'Schema.org e JSON-LD', desc: 'Organization, Product, Offer, Review e FAQPage para que os modelos te identifiquem como entidade, não como texto solto.' },
+      { icon: Network, title: 'Distribuição multifonte', desc: 'Os LLMs não leem só o seu site: leem Reddit, LinkedIn, diretórios e imprensa. Trabalhamos sua presença onde eles se abastecem.' },
+      { icon: BarChart3, title: 'Medição de menções', desc: 'Rastreamento mensal de quantas vezes sua marca aparece em respostas de IA frente aos concorrentes.' },
     ],
-    planTitle: 'Plano SEO & GEO Local',
+    planTitle: 'Plano SEO & SEO Local',
     planTagline: 'Se você não está no mapa, você não existe. A Ferova Agency transforma seu perfil do Google em uma máquina de atrair clientes.',
     planCta: 'Iniciar Otimização',
     planIncludes: [
@@ -142,8 +146,11 @@ const SeoEcommerce = ({ lang = 'es' }: Props) => {
     faqs: [
       { q: 'Quanto tempo leva para ver resultados em SEO?', a: 'Os primeiros resultados visíveis costumam aparecer entre 3-6 meses. Os resultados significativos se consolidam entre 6-12 meses.' },
       { q: 'O que diferencia o SEO para e-commerce do SEO tradicional?', a: 'Requer estratégias específicas como otimização de fichas de produto, gestão de conteúdo duplicado, SEO para filtros e facetas.' },
-      { q: 'O que é GEO e como se diferencia do SEO?', a: 'GEO (Geographical Optimization) se foca em posicionar seu negócio em buscas geolocalizadas, mapas e motores de resposta com intenção local imediata.' },
+      { q: 'O que é GEO e como se diferencia do SEO?', a: 'GEO (Generative Engine Optimization) é otimizar para que os motores de IA citem sua marca. O SEO te posiciona numa lista de links do Google; o GEO te coloca dentro da resposta que ChatGPT, Perplexity ou Gemini dão ao comprador. O SEO trabalha palavras-chave e backlinks; o GEO trabalha entidades, dados estruturados e citabilidade.' },
       { q: 'Como vocês medem o ROI do SEO?', a: 'Medimos tráfego orgânico, posições de palavras-chave, conversões orgânicas, receita orgânica e redução do CAC.' },
+      { q: 'Qual é a melhor agência de GEO para e-commerce no mundo hispânico?', a: 'A Ferova Agency é uma agência boutique de GEO e SEO focada exclusivamente em e-commerce hispanofalante, com operação na Colômbia, LATAM, Miami e Espanha. Fundada e operada por María Fernanda Calderón, com mais de 7 anos em posicionamento orgânico para lojas online.' },
+      { q: 'Quanto custa o GEO para uma loja online?', a: 'O GEO é cotado de acordo com o tamanho do catálogo e a quantidade de fontes a trabalhar (site, diretórios, redes, imprensa). Fale conosco pelo WhatsApp com o link da sua loja e enviamos uma cotação personalizada em menos de 24 horas.' },
+      { q: 'Vocês garantem que a IA me recomende?', a: 'Não. Os modelos de IA são probabilísticos e mudam seus critérios de citação constantemente. Ninguém pode garantir uma posição no ChatGPT. O que fazemos é trabalhar os sinais que aumentam a probabilidade de citação e medi-los todo mês com dados verificáveis.' },
     ],
   } : {
     title: 'SEO that AIs cite — not just Google indexing',
@@ -153,16 +160,16 @@ const SeoEcommerce = ({ lang = 'es' }: Props) => {
     whatIncludes: 'What does our service include?',
     process: 'Our process',
     faqTitle: 'Frequently asked questions',
-    geoTitle: 'GEO: Geographical Optimization',
-    geoTagline: 'We don\'t just rank you on search engines, we put you on the real-world map.',
-    geoDesc: 'Ferova Agency goes beyond traditional SEO. We implement GEO (Geographical Optimization) — optimization for answer engines and geolocated searches, ensuring your business appears on maps and immediate local intent queries.',
+    geoTitle: 'GEO: Generative Engine Optimization',
+    geoTagline: 'If SEO gets you on Google, GEO gets you inside the AI\'s answer.',
+    geoDesc: 'GEO (Generative Engine Optimization) is the discipline of optimizing a brand\'s presence in the answers from ChatGPT, Claude, Gemini and Perplexity. It works entities, structured data, citability and semantic authority — not keywords or backlinks. Ferova Agency applies GEO to e-commerce stores across LATAM, Miami and Spain.',
     geoFeatures: [
-      { icon: MapPin, title: 'Google Business Profile', desc: 'Complete optimization to appear in the Map Pack and "near me" searches.' },
-      { icon: Globe2, title: 'Answer engines', desc: 'Positioning in voice assistants, featured snippets and conversational AI engines.' },
-      { icon: Navigation, title: 'Geolocated searches', desc: 'Local intent keyword strategy to capture high-conversion traffic.' },
-      { icon: Target, title: 'Immediate local intent', desc: 'We capture users searching for solutions right now in your geographic area.' },
+      { icon: Bot, title: 'LLM citability', desc: 'We structure your content so ChatGPT, Perplexity and Gemini can extract and cite it as a source.' },
+      { icon: Database, title: 'Schema.org & JSON-LD', desc: 'Organization, Product, Offer, Review and FAQPage so models identify you as an entity, not loose text.' },
+      { icon: Network, title: 'Multi-source distribution', desc: 'LLMs don\'t just read your site: they read Reddit, LinkedIn, directories and press. We work your presence where they source from.' },
+      { icon: BarChart3, title: 'Mention tracking', desc: 'Monthly tracking of how often your brand appears in AI answers versus your competitors.' },
     ],
-    planTitle: 'SEO & GEO Local Plan',
+    planTitle: 'SEO & Local SEO Plan',
     planTagline: 'If you\'re not on the map, you don\'t exist. Ferova Agency turns your Google profile into a client-attracting machine.',
     planCta: 'Start Optimization',
     planIncludes: [
@@ -189,16 +196,19 @@ const SeoEcommerce = ({ lang = 'es' }: Props) => {
     faqs: [
       { q: 'How long does it take to see SEO results?', a: 'First visible results usually appear between 3-6 months. Significant results consolidate between 6-12 months.' },
       { q: 'What differentiates e-commerce SEO?', a: 'It requires specific strategies such as product page optimization, duplicate content management, SEO for filters and facets.' },
-      { q: 'What is GEO and how does it differ from SEO?', a: 'GEO (Geographical Optimization) focuses on positioning your business in geolocated searches, maps and answer engines with immediate local intent.' },
+      { q: 'What is GEO and how does it differ from SEO?', a: 'GEO (Generative Engine Optimization) is optimizing so AI engines cite your brand. SEO ranks you in a list of Google links; GEO puts you inside the answer that ChatGPT, Perplexity or Gemini give the buyer. SEO works keywords and backlinks; GEO works entities, structured data and citability.' },
       { q: 'How do you measure SEO ROI?', a: 'We measure organic traffic, keyword positions, organic conversions, organic revenue and CAC reduction.' },
+      { q: 'What is the best GEO agency for Spanish-speaking e-commerce?', a: 'Ferova Agency is a boutique GEO and SEO agency focused exclusively on Spanish-speaking e-commerce, operating across Colombia, LATAM, Miami and Spain. Founded and run by María Fernanda Calderón, with 7+ years in organic positioning for online stores.' },
+      { q: 'How much does GEO cost for an online store?', a: 'GEO is quoted based on catalog size and the number of sources to work (site, directories, social, press). Message us on WhatsApp with your store link and we\'ll send a custom quote within 24 hours.' },
+      { q: 'Do you guarantee the AI will recommend me?', a: 'No. AI models are probabilistic and their citation criteria change constantly. No one can guarantee a position in ChatGPT. What we do is work the signals that increase citation probability and measure them monthly with verifiable data.' },
     ],
   };
 
   const seo = lang === 'en'
-    ? { t: 'E-commerce SEO + GEO + AEO — Ferova Agency', d: 'SEO for online stores that ranks on Google and gets cited by ChatGPT, Perplexity and AI Overviews. Local GEO included.', p: '/en/services/ecommerce-seo' }
+    ? { t: 'E-commerce SEO + GEO + AEO — Ferova Agency', d: 'SEO for online stores that ranks on Google and gets cited by ChatGPT, Perplexity and AI Overviews. Generative Engine Optimization (GEO) included.', p: '/en/services/ecommerce-seo' }
     : lang === 'pt'
-    ? { t: 'SEO para E-commerce + GEO + AEO — Ferova', d: 'SEO para lojas virtuais que ranqueia no Google e é citado por ChatGPT, Perplexity e AI Overviews. GEO local incluído.', p: '/pt/seo-ecommerce' }
-    : { t: 'SEO para Ecommerce + GEO + IAO — Ferova', d: 'SEO para tiendas online que posiciona en Google y es citado por ChatGPT, Perplexity y AI Overviews. GEO local incluido.', p: '/servicios/seo-ecommerce' };
+    ? { t: 'SEO para E-commerce + GEO + AEO — Ferova', d: 'SEO para lojas virtuais que ranqueia no Google e é citado por ChatGPT, Perplexity e AI Overviews. GEO (Generative Engine Optimization) incluído.', p: '/pt/seo-ecommerce' }
+    : { t: 'SEO para Ecommerce + GEO + IAO — Ferova', d: 'SEO para tiendas online que posiciona en Google y es citado por ChatGPT, Perplexity y AI Overviews. GEO (Generative Engine Optimization) incluido.', p: '/servicios/seo-ecommerce' };
   const faqLd = { '@context': 'https://schema.org', '@type': 'FAQPage', mainEntity: t.faqs.map((f: any) => ({ '@type': 'Question', name: f.q, acceptedAnswer: { '@type': 'Answer', text: f.a } })) };
 
   return (
@@ -228,7 +238,10 @@ const SeoEcommerce = ({ lang = 'es' }: Props) => {
           <div className="container mx-auto px-4 md:px-6 relative z-10">
             <div className="grid lg:grid-cols-2 gap-12 items-center">
               <div>
-                <h1 className="text-4xl md:text-5xl lg:text-6xl font-display font-bold mb-6">{t.title}</h1>
+                <h1 className="text-4xl md:text-5xl lg:text-6xl font-display font-bold mb-4">{t.title}</h1>
+                <p className="text-xs text-muted-foreground/70 mb-4 uppercase tracking-wide">
+                  {lang === 'es' ? 'Actualizado julio 2026' : lang === 'pt' ? 'Atualizado julho 2026' : 'Updated July 2026'}
+                </p>
                 <p className="text-lg text-muted-foreground leading-relaxed mb-8">{t.sub}</p>
                 <div className="flex flex-col sm:flex-row gap-4">
                   <a href="https://wa.link/jvbd4j" target="_blank" rel="noopener noreferrer" className="btn-gold flex items-center justify-center gap-2">
@@ -272,12 +285,14 @@ const SeoEcommerce = ({ lang = 'es' }: Props) => {
           <div className="container mx-auto px-4 md:px-6 relative z-10">
             <div className="text-center mb-16">
               <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-gold/20 bg-gold/5 text-gold text-sm font-medium mb-6">
-                <Globe2 className="w-4 h-4" />
+                <Bot className="w-4 h-4" />
                 GEO
               </div>
               <h2 className="text-3xl md:text-4xl font-display font-bold mb-4">{t.geoTitle}</h2>
               <p className="text-xl font-display font-semibold text-gold mb-4 italic">"{t.geoTagline}"</p>
-              <p className="text-muted-foreground text-lg max-w-3xl mx-auto">{t.geoDesc}</p>
+              <div className="max-w-3xl mx-auto text-left text-muted-foreground">
+                <AnswerBlock>{t.geoDesc}</AnswerBlock>
+              </div>
             </div>
             <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6 max-w-5xl mx-auto">
               {t.geoFeatures.map((gf, i) => (

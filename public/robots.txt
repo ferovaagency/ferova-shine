@@ -86,4 +86,3 @@ Disallow: /en/admin-blog
 Disallow: /pt/admin-blog
 
 Sitemap: https://seoparaecommerce.co/sitemap.xml
-Sitemap: https://seoforecommerces.co/sitemap.xml

@@ -51,6 +51,13 @@ import CapacitacionIA from "./pages/CapacitacionIA";
 import ContenidoLinkedin from "./pages/ContenidoLinkedin";
 import AnalizadorContratos from "./pages/AnalizadorContratos";
 import ComparadorPropuestas from "./pages/ComparadorPropuestas";
+import QueEsGeo from "./pages/QueEsGeo";
+import GeoVsSeo from "./pages/GeoVsSeo";
+import GeoParaShopify from "./pages/GeoParaShopify";
+import GeoParaWooCommerce from "./pages/GeoParaWooCommerce";
+import GeoParaVtex from "./pages/GeoParaVtex";
+import EstudioVisibilidadIA from "./pages/EstudioVisibilidadIA";
+import CalculadoraVisibilidadIA from "./pages/CalculadoraVisibilidadIA";
 
 const queryClient = new QueryClient();
 
@@ -208,6 +215,34 @@ const AppRoutes = ({ hostLang }: { hostLang: "es" | "en" | "pt" }) => (
     <Route path="/servicios/web-economica" element={<Navigate replace to="/servicios/diseno-web" />} />
     <Route path="/en/services/starter-web" element={<Navigate replace to="/en/services/web-design" />} />
     <Route path="/pt/web-economica" element={<Navigate replace to="/pt/design-web" />} />
+
+    <Route path="/que-es-geo" element={<QueEsGeo lang="es" />} />
+    <Route path="/en/what-is-geo" element={<QueEsGeo lang="en" />} />
+    <Route path="/pt/o-que-e-geo" element={<QueEsGeo lang="pt" />} />
+
+    <Route path="/geo-vs-seo" element={<GeoVsSeo lang="es" />} />
+    <Route path="/en/geo-vs-seo" element={<GeoVsSeo lang="en" />} />
+    <Route path="/pt/geo-vs-seo" element={<GeoVsSeo lang="pt" />} />
+
+    <Route path="/geo-para-shopify" element={<GeoParaShopify lang="es" />} />
+    <Route path="/en/geo-for-shopify" element={<GeoParaShopify lang="en" />} />
+    <Route path="/pt/geo-para-shopify" element={<GeoParaShopify lang="pt" />} />
+
+    <Route path="/geo-para-woocommerce" element={<GeoParaWooCommerce lang="es" />} />
+    <Route path="/en/geo-for-woocommerce" element={<GeoParaWooCommerce lang="en" />} />
+    <Route path="/pt/geo-para-woocommerce" element={<GeoParaWooCommerce lang="pt" />} />
+
+    <Route path="/geo-para-vtex" element={<GeoParaVtex lang="es" />} />
+    <Route path="/en/geo-for-vtex" element={<GeoParaVtex lang="en" />} />
+    <Route path="/pt/geo-para-vtex" element={<GeoParaVtex lang="pt" />} />
+
+    <Route path="/estudio-visibilidad-ia-ecommerce-hispano-2026" element={<EstudioVisibilidadIA lang="es" />} />
+    <Route path="/en/ai-visibility-study-hispanic-ecommerce-2026" element={<EstudioVisibilidadIA lang="en" />} />
+    <Route path="/pt/estudo-visibilidade-ia-ecommerce-hispano-2026" element={<EstudioVisibilidadIA lang="pt" />} />
+
+    <Route path="/herramientas/calculadora-visibilidad-ia" element={<CalculadoraVisibilidadIA lang="es" />} />
+    <Route path="/en/tools/ai-visibility-calculator" element={<CalculadoraVisibilidadIA lang="en" />} />
+    <Route path="/pt/ferramentas/calculadora-visibilidade-ia" element={<CalculadoraVisibilidadIA lang="pt" />} />
 
     <Route path="*" element={<NotFound />} />
   </Routes>

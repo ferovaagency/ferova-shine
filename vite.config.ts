@@ -47,6 +47,9 @@ const STATIC_ROUTES = [
   "/recursos/analizador-contratos", "/recursos/comparador-propuestas",
   "/recursos/briefing-newsletter",
   "/newsletter", "/newsletter/archivo", "/newsletter-pro",
+  "/que-es-geo", "/geo-vs-seo", "/geo-para-shopify", "/geo-para-woocommerce",
+  "/geo-para-vtex", "/estudio-visibilidad-ia-ecommerce-hispano-2026",
+  "/herramientas/calculadora-visibilidad-ia",
   // EN
   "/en", "/en/services", "/en/services/ecommerce-seo", "/en/services/web-design",
   "/en/services/tool-discounts", "/en/services/marketing-consulting",
@@ -57,6 +60,9 @@ const STATIC_ROUTES = [
   "/en/resources/contract-analyzer", "/en/resources/proposal-comparator",
   "/en/resources/newsletter-briefing", "/en/newsletter", "/en/newsletter/archive",
   "/en/newsletter-pro",
+  "/en/what-is-geo", "/en/geo-vs-seo", "/en/geo-for-shopify", "/en/geo-for-woocommerce",
+  "/en/geo-for-vtex", "/en/ai-visibility-study-hispanic-ecommerce-2026",
+  "/en/tools/ai-visibility-calculator",
   // PT
   "/pt", "/pt/servicos", "/pt/seo-ecommerce", "/pt/design-web", "/pt/ferramentas",
   "/pt/consultorias", "/pt/linkedin", "/pt/conteudo-linkedin",
@@ -66,6 +72,9 @@ const STATIC_ROUTES = [
   "/pt/recursos/analisador-contratos", "/pt/recursos/comparador-propostas",
   "/pt/recursos/briefing-newsletter", "/pt/newsletter", "/pt/newsletter/arquivo",
   "/pt/newsletter-pro",
+  "/pt/o-que-e-geo", "/pt/geo-vs-seo", "/pt/geo-para-shopify", "/pt/geo-para-woocommerce",
+  "/pt/geo-para-vtex", "/pt/estudo-visibilidade-ia-ecommerce-hispano-2026",
+  "/pt/ferramentas/calculadora-visibilidade-ia",
 ];
 
 // Prerender activo por defecto — ES ahora la fuente de HTML indexable para

@@ -23,6 +23,16 @@ Ferova Agency construye webapps modernas con IA integrada para tiendas online, o
 - [Contenido LinkedIn](/servicios/contenido-linkedin): Gestión mensual de contenido B2B.
 - [Descuentos en Herramientas](/servicios/descuentos-herramientas): Acceso a herramientas premium.
 
+## GEO (Generative Engine Optimization)
+
+- [¿Qué es GEO?](/que-es-geo): Definición de Generative Engine Optimization y sus 4 pilares.
+- [GEO vs SEO](/geo-vs-seo): Tabla comparativa de objetivo, canal, señales y métricas.
+- [GEO para Shopify](/geo-para-shopify): Schema Product/Offer y feeds para tiendas Shopify.
+- [GEO para WooCommerce](/geo-para-woocommerce): Consolidación de schema para tiendas WordPress/WooCommerce.
+- [GEO para VTEX](/geo-para-vtex): GEO enterprise para operaciones VTEX en LATAM.
+- [Estudio de Visibilidad IA en Ecommerce Hispano 2026](/estudio-visibilidad-ia-ecommerce-hispano-2026): Metodología abierta y resultados públicos.
+- [Calculadora de Visibilidad IA](/herramientas/calculadora-visibilidad-ia): Diagnóstico rápido de citabilidad de tu tienda.
+
 ## Contenido
 
 - [Blog de Ecommerce](/blog): Guías sobre SEO, web apps, IA y conversión.
@@ -32,9 +42,9 @@ Ferova Agency construye webapps modernas con IA integrada para tiendas online, o
 
 ## English
 
-- [Home (EN)](https://seoforecommerces.co/): English version of the site.
-- [Services (EN)](https://seoforecommerces.co/services): Service catalog in English.
-- [Pricing (EN)](https://seoforecommerces.co/pricing): Multi-currency pricing.
+- [Home (EN)](https://seoparaecommerce.co/en): English version of the site.
+- [Services (EN)](https://seoparaecommerce.co/en/services): Service catalog in English.
+- [Pricing (EN)](https://seoparaecommerce.co/en/pricing): Multi-currency pricing.
 
 ## Português
 
