@@ -27,15 +27,10 @@
     <!-- Hreflang -->
     <link rel="alternate" hreflang="es-co" href="https://seoparaecommerce.co/" />
     <link rel="alternate" hreflang="es-419" href="https://seoparaecommerce.co/" />
-    <link rel="alternate" hreflang="en" href="https://seoforecommerces.co/" />
+    <link rel="alternate" hreflang="en" href="https://seoparaecommerce.co/en" />
     <link rel="alternate" hreflang="pt-br" href="https://seoparaecommerce.co/pt" />
     <link rel="alternate" hreflang="x-default" href="https://seoparaecommerce.co/" />
 
-    <!-- Geo signals -->
-    <meta name="geo.region" content="CO-DC" />
-    <meta name="geo.placename" content="Bogotá, Colombia" />
-    <meta name="geo.position" content="4.7110;-74.0721" />
-    <meta name="ICBM" content="4.7110, -74.0721" />
     <meta name="language" content="Spanish" />
 
     <meta property="og:type" content="website" />
@@ -54,8 +49,15 @@
         "logo": "https://seoparaecommerce.co/favicon.ico",
         "description": "Agencia de webapps de alto rendimiento para e-commerce. Construimos con tecnología de vanguardia e IA integrada. Entrega en 1 semana.",
         "foundingDate": "2022",
-        "areaServed": ["CO", "US", "BR", "MX", "AR"],
-        "serviceType": ["Web Development", "SEO", "E-commerce", "Digital Marketing"],
+        "founder": { "@type": "Person", "name": "María Fernanda Calderón Osorio" },
+        "areaServed": [
+          { "@type": "Country", "name": "Colombia" },
+          { "@type": "Country", "name": "Spain" },
+          { "@type": "Country", "name": "Mexico" },
+          { "@type": "AdministrativeArea", "name": "Latin America" },
+          { "@type": "City", "name": "Miami" }
+        ],
+        "serviceType": ["Web Development", "SEO", "GEO", "E-commerce", "Digital Marketing"],
         "contactPoint": {
           "@type": "ContactPoint",
           "contactType": "sales",
@@ -63,15 +65,21 @@
           "availableLanguage": ["Spanish", "English", "Portuguese"]
         },
         "sameAs": [
-          "https://seoforecommerces.co",
-          "https://wa.link/jvbd4j"
+          "https://wa.link/jvbd4j",
+          "https://www.linkedin.com/in/maria-fer-calderon/",
+          "https://www.instagram.com/mafe.ferova/",
+          "https://www.facebook.com/mafecalderon.SEO",
+          "https://www.tiktok.com/@mafe.ferova",
+          "https://www.youtube.com/@FerovaAgency"
         ],
         "knowsAbout": [
+          "Generative Engine Optimization",
+          "Ecommerce SEO",
+          "AI Search Optimization",
+          "Shopify SEO",
           "E-commerce development",
           "High-performance webapps",
-          "SEO para e-commerce",
-          "Inteligencia artificial en ventas",
-          "Digital marketing for Latin America"
+          "Inteligencia artificial en ventas"
         ]
       }
     </script>
@@ -92,24 +100,21 @@
           "addressRegion": "Cundinamarca",
           "addressCountry": "CO"
         },
-        "geo": {
-          "@type": "GeoCoordinates",
-          "latitude": 4.7110,
-          "longitude": -74.0721
-        },
         "areaServed": [
           { "@type": "Country", "name": "Colombia" },
+          { "@type": "Country", "name": "Spain" },
           { "@type": "Country", "name": "Mexico" },
           { "@type": "Country", "name": "Peru" },
           { "@type": "Country", "name": "Chile" },
           { "@type": "Country", "name": "Argentina" },
           { "@type": "Country", "name": "Brazil" },
-          { "@type": "Country", "name": "Spain" },
-          { "@type": "Country", "name": "United States" }
+          { "@type": "Country", "name": "United States" },
+          { "@type": "AdministrativeArea", "name": "Latin America" },
+          { "@type": "City", "name": "Miami" }
         ],
         "founder": {
           "@type": "Person",
-          "name": "Maria Calderon",
+          "name": "María Fernanda Calderón Osorio",
           "jobTitle": "Founder & CEO"
         },
         "telephone": "+17865787671",
@@ -120,6 +125,12 @@
           "https://www.facebook.com/mafecalderon.SEO",
           "https://www.tiktok.com/@mafe.ferova",
           "https://www.youtube.com/@FerovaAgency"
+        ],
+        "knowsAbout": [
+          "Generative Engine Optimization",
+          "Ecommerce SEO",
+          "AI Search Optimization",
+          "Shopify SEO"
         ],
         "priceRange": "$$"
       }
@@ -168,8 +179,16 @@
       ></iframe
     ></noscript>
     <!-- End Google Tag Manager (noscript) -->
-    <div id="root">
-      <!-- Esqueleto semántico estático: garantiza que Googlebot indexe contenido transaccional en la primera pasada antes de ejecutar JavaScript. Será reemplazado tras la hidratación de React. -->
+    <!--
+      root se deja vacio a proposito: vite-prerender-plugin inserta el HTML de cada
+      ruta anteponiendo el contenido real sin vaciar lo que ya hubiera dentro de root.
+      Si este div trae contenido estatico de fabrica, ese contenido queda duplicado
+      (con su propio encabezado generico) debajo del contenido real en las paginas
+      prerenderizadas. El fallback para bots o usuarios sin JS vive ahora fuera de
+      root, en el bloque noscript de abajo, donde no puede duplicarse.
+    -->
+    <div id="root"></div>
+    <noscript>
       <header>
         <a href="/" aria-label="Ferova Agency — Inicio">Ferova Agency</a>
         <nav aria-label="Navegación principal">
@@ -195,14 +214,12 @@
         <p>
           <a href="/contacto">Solicita una consultoría inicial</a> · <a href="/casos-de-exito">Ver casos de éxito</a>
         </p>
-      </main>
-      <noscript>
         <p>
           Esta web requiere JavaScript habilitado para una experiencia interactiva completa. El contenido principal
           sigue siendo accesible arriba.
         </p>
-      </noscript>
-    </div>
+      </main>
+    </noscript>
     <script type="module" src="/src/main.tsx"></script>
   </body>
 </html>

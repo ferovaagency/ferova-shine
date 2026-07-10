@@ -4,6 +4,7 @@ import Header from '@/components/layout/Header';
 import Footer from '@/components/layout/Footer';
 import ProposalModal from '@/components/ui/proposal-modal';
 import SEO from '@/components/SEO';
+import { AnswerBlock } from '@/components/ui/answer-block';
 import { StaggerContainer, StaggerItem, ScaleOnHover, PageTransition } from '@/components/ui/motion';
 import { Search, Monitor, Target, ArrowRight, CheckCircle, Palette, Tag, GraduationCap, MessageCircle, Linkedin, Bot } from 'lucide-react';
 import { trackEvent } from '@/lib/analytics';
@@ -24,15 +25,15 @@ const Servicios = ({ lang = 'es' }: ServiciosProps) => {
   const [proposalService, setProposalService] = useState('');
 
   const main: Service[] = lang === 'es' ? [
-    { icon: Search, title: 'SEO + GEO + IAO para E-commerce', description: 'Posicionamiento orgánico + Geo-localización + Answer Engine Optimization. Para vender en Google, Maps y motores de IA.', features: ['Auditoría técnica SEO', 'Keyword + intención IA', 'GEO local LATAM', 'Schema y AIO', 'Content marketing', 'Reporte mensual'], href: '/servicios/seo-ecommerce', highlight: true },
+    { icon: Search, title: 'SEO + GEO + IAO para E-commerce', description: 'Posicionamiento orgánico + Generative Engine Optimization + Answer Engine Optimization. Para vender en Google y ser citado por ChatGPT, Perplexity y Gemini.', features: ['Auditoría técnica SEO', 'Citabilidad en LLMs (GEO)', 'Schema y JSON-LD', 'Keyword + intención IA', 'Content marketing', 'Reporte mensual'], href: '/servicios/seo-ecommerce', highlight: true },
     { icon: Monitor, title: 'Diseño de Web Apps y E-commerce', description: 'Web Apps de alto rendimiento. Más rápidas, más seguras y con mejor SEO que las plataformas tradicionales.', features: ['Diseño UI/UX', 'Responsive y mobile-first', 'Core Web Vitals óptimos', 'Integración pagos', 'Catálogo y carrito', 'Mantenimiento'], href: '/servicios/diseno-web' },
     { icon: GraduationCap, title: 'Capacitación IA in-company', description: 'Tu equipo dominando IA aplicada a operaciones, ventas y estrategia. Programas en vivo de 4 horas.', features: ['Operaciones inteligentes', 'Ingeniería de ventas', 'Estrategia GEO/SEO', 'Hasta 15 personas', 'Workbook personalizado', 'Seguimiento 30 días'], href: '/capacitacion-ia', highlight: true },
   ] : lang === 'pt' ? [
-    { icon: Search, title: 'SEO + GEO + IAO para E-commerce', description: 'Posicionamento orgânico + Geo-localização + Answer Engine Optimization. Para vender no Google, Maps e motores de IA.', features: ['Auditoria técnica SEO', 'Palavra-chave + intenção IA', 'GEO local LATAM', 'Schema e AIO', 'Marketing de conteúdo', 'Relatório mensal'], href: '/pt/seo-ecommerce', highlight: true },
+    { icon: Search, title: 'SEO + GEO + IAO para E-commerce', description: 'Posicionamento orgânico + Generative Engine Optimization + Answer Engine Optimization. Para vender no Google e ser citado por ChatGPT, Perplexity e Gemini.', features: ['Auditoria técnica SEO', 'Citabilidade em LLMs (GEO)', 'Schema e JSON-LD', 'Palavra-chave + intenção IA', 'Marketing de conteúdo', 'Relatório mensal'], href: '/pt/seo-ecommerce', highlight: true },
     { icon: Monitor, title: 'Design de Web Apps e Loja Virtual', description: 'Web Apps de alto desempenho. Mais rápidas, mais seguras e com melhor SEO que as plataformas tradicionais.', features: ['Design UI/UX', 'Responsivo mobile-first', 'Core Web Vitals ótimos', 'Integração de pagamentos', 'Catálogo e carrinho', 'Manutenção'], href: '/pt/design-web' },
     { icon: GraduationCap, title: 'Treinamento IA in-company', description: 'Sua equipe dominando IA aplicada a operações, vendas e estratégia. Programas ao vivo de 4 horas.', features: ['Operações inteligentes', 'Engenharia de vendas', 'Estratégia GEO/SEO', 'Até 15 pessoas', 'Workbook personalizado', 'Acompanhamento 30 dias'], href: '/pt/treinamento-ia', highlight: true },
   ] : [
-    { icon: Search, title: 'SEO + GEO + AEO for E-commerce', description: 'Organic positioning + Geo-targeting + Answer Engine Optimization. Sell on Google, Maps and AI engines.', features: ['Technical SEO audit', 'Keyword + AI intent', 'Local GEO LATAM', 'Schema and AEO', 'Content marketing', 'Monthly report'], href: '/en/services/ecommerce-seo', highlight: true },
+    { icon: Search, title: 'SEO + GEO + AEO for E-commerce', description: 'Organic positioning + Generative Engine Optimization + Answer Engine Optimization. Sell on Google and get cited by ChatGPT, Perplexity and Gemini.', features: ['Technical SEO audit', 'LLM citability (GEO)', 'Schema and JSON-LD', 'Keyword + AI intent', 'Content marketing', 'Monthly report'], href: '/en/services/ecommerce-seo', highlight: true },
     { icon: Monitor, title: 'Web App & E-commerce Design', description: 'High-performance Web Apps. Faster, more secure and better SEO than traditional platforms.', features: ['UI/UX design', 'Responsive mobile-first', 'Optimal Core Web Vitals', 'Payment integration', 'Catalog and cart', 'Maintenance'], href: '/en/services/web-design' },
     { icon: GraduationCap, title: 'In-company AI Training', description: 'Get your team fluent in AI applied to operations, sales and strategy. Live 4-hour programs.', features: ['Smart operations', 'Sales engineering', 'GEO/SEO strategy', 'Up to 15 people', 'Custom workbook', '30-day follow-up'], href: '/en/ai-training', highlight: true },
   ];
@@ -112,14 +113,16 @@ const Servicios = ({ lang = 'es' }: ServiciosProps) => {
         <section className="py-16 md:py-20 text-center relative grid-pattern">
           <div className="absolute inset-0" style={{ background: 'radial-gradient(ellipse at 50% 30%, hsla(45, 86%, 40%, 0.06), transparent 60%)' }} />
           <div className="container mx-auto px-4 md:px-6 relative z-10">
-            <h1 className="text-4xl md:text-5xl lg:text-6xl font-display font-bold mb-6">
+            <h1 className="text-4xl md:text-5xl lg:text-6xl font-display font-bold mb-4">
               {lang === 'es' ? 'Servicios principales' : lang === 'pt' ? 'Serviços principais' : 'Main services'}
             </h1>
-            <p className="text-muted-foreground text-lg max-w-2xl mx-auto">
-              {lang === 'es' ? '4 servicios diseñados para hacer crecer tu e-commerce: visibilidad, conversión, tráfico y automatización de ventas.'
-                : lang === 'pt' ? '4 serviços para fazer sua loja virtual crescer: visibilidade, conversão, tráfego e automação de vendas.'
-                : 'Four services designed to grow your e-commerce: visibility, conversion, traffic and sales automation.'}
-            </p>
+            <div className="max-w-2xl mx-auto text-left text-muted-foreground">
+              <AnswerBlock>
+                {lang === 'es' ? '4 servicios diseñados para hacer crecer tu e-commerce: visibilidad, conversión, tráfico y automatización de ventas.'
+                  : lang === 'pt' ? '4 serviços para fazer sua loja virtual crescer: visibilidade, conversão, tráfego e automação de vendas.'
+                  : 'Four services designed to grow your e-commerce: visibility, conversion, traffic and sales automation.'}
+              </AnswerBlock>
+            </div>
           </div>
         </section>
 

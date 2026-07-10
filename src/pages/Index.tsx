@@ -67,13 +67,13 @@ type Copy = {
 
 const COPY: Record<"es" | "en" | "pt", Copy> = {
   es: {
-    seoTitle: "Consultora B2B de IA y Estrategia de Crecimiento | Ferova Agency",
+    seoTitle: "Agencia boutique de SEO y GEO para Ecommerce | Ferova Agency",
     seoDesc:
-      "Instalamos infraestructura B2B con IA para que tu equipo venda solo. Sin maquillaje digital. Diseñado para dueños sin experiencia técnica.",
-    h1a: "Hecho para empresarios que quieren ",
-    h1b: "VENDER, no solo verse bien.",
+      "Agencia boutique de SEO y GEO para ecommerce. Hacemos que tu tienda aparezca cuando tu comprador le pregunta a la IA. SEO técnico + GEO para LATAM, Miami y España.",
+    h1a: "Agencia boutique de SEO y GEO para ",
+    h1b: "ecommerce.",
     heroSub:
-      "Las agencias tradicionales están desangrando tu flujo de caja con entregables inútiles. Instalamos infraestructura B2B con IA para que tu equipo venda de forma autónoma. Piénsalo: si ChatGPT, Gemini o Perplexity no mencionan tu marca hoy, ya no existes para el mercado.",
+      "Hacemos que tu tienda aparezca cuando tu comprador le pregunta a la IA. Las agencias tradicionales te venden entregables; nosotros instalamos infraestructura de SEO y GEO para que tu marca aparezca en Google, ChatGPT, Gemini y Perplexity.",
     badges: ["+7 años de experiencia", "366% crecimiento orgánico real", "Cero pauta publicitaria"],
     ctaPrimary: "Agendar Llamada de Alineación (15 Min)",
     ctaSecondary: "Hablar por WhatsApp",
@@ -167,13 +167,13 @@ const COPY: Record<"es" | "en" | "pt", Copy> = {
     finalCtaAi: "Probar el Asesor IA",
   },
   en: {
-    seoTitle: "High-Performance Web Apps & AI for E-commerce | Ferova Agency",
+    seoTitle: "Boutique SEO & GEO Agency for E-commerce | Ferova Agency",
     seoDesc:
-      "We build ultra-fast Web Apps, SEO + GEO + AIO and in-company AI training to scale your e-commerce. 7+ years of experience, measurable results.",
-    h1a: "High-Performance Web Apps & ",
-    h1b: "AI for E-commerce",
+      "Boutique SEO & GEO agency for e-commerce. We make your store the answer when your buyer asks AI. Technical SEO + GEO for LATAM, Miami and Spain.",
+    h1a: "Boutique SEO & GEO agency for ",
+    h1b: "e-commerce.",
     heroSub:
-      "We turn your store into a sales machine: native SEO architecture, in-company AI training and clear metrics. Built for founders who want to scale, not decorate.",
+      "We make your store the answer when your buyer asks AI. Traditional agencies sell you deliverables; we install SEO and GEO infrastructure so your brand shows up on Google, ChatGPT, Gemini and Perplexity.",
     badges: ["7+ years of experience", "$3.5K/mo generated", "#1 on Google"],
     ctaPrimary: "Generate my Market Briefing (Free)",
     ctaSecondary: "Chat on WhatsApp",
@@ -266,13 +266,13 @@ const COPY: Record<"es" | "en" | "pt", Copy> = {
     finalCtaAi: "Try the AI Advisor",
   },
   pt: {
-    seoTitle: "Web Apps de Alto Desempenho e IA para E-commerce | Ferova Agency",
+    seoTitle: "Agência boutique de SEO e GEO para E-commerce | Ferova Agency",
     seoDesc:
-      "Construímos Web Apps ultrarrápidas, SEO + GEO + IAO e bots de WhatsApp com IA para escalar seu e-commerce. 7+ anos de experiência, resultados mensuráveis.",
-    h1a: "Web Apps de Alto Desempenho e ",
-    h1b: "IA para E-commerce",
+      "Agência boutique de SEO e GEO para e-commerce. Fazemos sua loja aparecer quando seu comprador pergunta à IA. SEO técnico + GEO para LATAM, Miami e Espanha.",
+    h1a: "Agência boutique de SEO e GEO para ",
+    h1b: "e-commerce.",
     heroSub:
-      "Transformamos sua loja em uma máquina de vendas: arquitetura SEO nativa, bots de WhatsApp com IA e métricas claras. Feito para fundadores que querem escalar, não maquiar.",
+      "Fazemos sua loja aparecer quando seu comprador pergunta à IA. Agências tradicionais vendem entregáveis; nós instalamos infraestrutura de SEO e GEO para sua marca aparecer no Google, ChatGPT, Gemini e Perplexity.",
     badges: ["+7 anos de experiência", "R$17 mil/mês gerados", "#1 no Google"],
     ctaPrimary: "Gerar meu Briefing de Mercado (Grátis)",
     ctaSecondary: "Falar pelo WhatsApp",

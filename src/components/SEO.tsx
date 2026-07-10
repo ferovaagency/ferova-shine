@@ -15,7 +15,7 @@ interface SEOProps {
 
 const HOSTS = {
   es: 'https://seoparaecommerce.co',
-  en: 'https://seoforecommerces.co',
+  en: 'https://seoparaecommerce.co',
   pt: 'https://seoparaecommerce.co',
 };
 
