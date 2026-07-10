@@ -179,8 +179,16 @@
       ></iframe
     ></noscript>
     <!-- End Google Tag Manager (noscript) -->
-    <div id="root">
-      <!-- Esqueleto semántico estático: garantiza que Googlebot indexe contenido transaccional en la primera pasada antes de ejecutar JavaScript. Será reemplazado tras la hidratación de React. -->
+    <!--
+      root se deja vacio a proposito: vite-prerender-plugin inserta el HTML de cada
+      ruta anteponiendo el contenido real sin vaciar lo que ya hubiera dentro de root.
+      Si este div trae contenido estatico de fabrica, ese contenido queda duplicado
+      (con su propio encabezado generico) debajo del contenido real en las paginas
+      prerenderizadas. El fallback para bots o usuarios sin JS vive ahora fuera de
+      root, en el bloque noscript de abajo, donde no puede duplicarse.
+    -->
+    <div id="root"></div>
+    <noscript>
       <header>
         <a href="/" aria-label="Ferova Agency — Inicio">Ferova Agency</a>
         <nav aria-label="Navegación principal">
@@ -206,14 +214,12 @@
         <p>
           <a href="/contacto">Solicita una consultoría inicial</a> · <a href="/casos-de-exito">Ver casos de éxito</a>
         </p>
-      </main>
-      <noscript>
         <p>
           Esta web requiere JavaScript habilitado para una experiencia interactiva completa. El contenido principal
           sigue siendo accesible arriba.
         </p>
-      </noscript>
-    </div>
+      </main>
+    </noscript>
     <script type="module" src="/src/main.tsx"></script>
   </body>
 </html>
