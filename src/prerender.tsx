@@ -34,9 +34,14 @@ async function fetchDynamicSlugs(): Promise<string[]> {
   if (url && key) {
     try {
       const headers = { apikey: key, Authorization: `Bearer ${key}` };
+      // ⚠️ blog_posts NO tiene columna `status` — se publica con `active=true` y
+      // `published_at <= now` (mismo filtro que src/pages/Blog.tsx). La query
+      // anterior (`status=eq.published`) devolvía HTTP 400 y NINGÚN post se
+      // prerenderizaba. Newsletter se lee de la vista pública ya filtrada.
+      const now = new Date().toISOString();
       const [blogRes, editionsRes] = await Promise.all([
-        fetch(`${url}/rest/v1/blog_posts?select=slug&status=eq.published`, { headers }),
-        fetch(`${url}/rest/v1/newsletter_editions?select=slug&status=eq.published`, { headers }),
+        fetch(`${url}/rest/v1/blog_posts?select=slug&active=eq.true&published_at=lte.${now}`, { headers }),
+        fetch(`${url}/rest/v1/newsletter_editions_public?select=slug`, { headers }),
       ]);
       if (blogRes.ok) {
         const posts = (await blogRes.json()) as { slug: string }[];

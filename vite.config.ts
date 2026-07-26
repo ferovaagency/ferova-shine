@@ -1,8 +1,14 @@
-import { defineConfig } from "vite";
+import { defineConfig, loadEnv, type Plugin } from "vite";
 import react from "@vitejs/plugin-react-swc";
 import path from "path";
 import { componentTagger } from "lovable-tagger";
 import { vitePrerenderPlugin } from "vite-prerender-plugin";
+// Fuente única de rutas — el prerender ahora se deriva del registro central
+// (src/config/routes.ts), no de una lista duplicada aquí. Añadir una página
+// al registro la incluye automáticamente en el HTML estático.
+import { PRERENDER_ROUTES } from "./src/config/routes";
+import { validateRoutes } from "./scripts/validate-routes";
+import { generateSitemap } from "./scripts/generate-sitemap";
 
 // Polyfills SSR a nivel de proceso Node — el bundle prerender se importa
 // dinámicamente vía `await import()` y comparte globalThis con este proceso.
@@ -35,70 +41,67 @@ import { vitePrerenderPlugin } from "vite-prerender-plugin";
   }
 }
 
-// Rutas estáticas que se prerenderizan a HTML. Blog/casos/newsletter se descubren
-// dinámicamente vía `additionalPrerenderRoutes` (ver script prerender.tsx).
-const STATIC_ROUTES = [
-  "/", "/servicios", "/servicios/seo-ecommerce", "/servicios/diseno-web",
-  "/servicios/descuentos-herramientas", "/servicios/asesorias-marketing",
-  "/servicios/optimizacion-linkedin", "/servicios/contenido-linkedin",
-  "/precios", "/casos-de-exito", "/contacto", "/blog", "/recursos", "/nosotros",
-  "/terminos", "/privacidad", "/cookies",
-  "/consultoria-estrategica", "/capacitacion-ia",
-  "/recursos/analizador-contratos", "/recursos/comparador-propuestas",
-  "/recursos/briefing-newsletter",
-  "/newsletter", "/newsletter/archivo", "/newsletter-pro",
-  "/que-es-geo", "/geo-vs-seo", "/geo-para-shopify", "/geo-para-woocommerce",
-  "/geo-para-vtex", "/estudio-visibilidad-ia-ecommerce-hispano-2026",
-  "/herramientas/calculadora-visibilidad-ia",
-  // EN
-  "/en", "/en/services", "/en/services/ecommerce-seo", "/en/services/web-design",
-  "/en/services/tool-discounts", "/en/services/marketing-consulting",
-  "/en/services/linkedin-optimization", "/en/services/linkedin-content",
-  "/en/pricing", "/en/case-studies", "/en/contact", "/en/blog", "/en/resources",
-  "/en/about", "/en/terms", "/en/privacy", "/en/cookies",
-  "/en/strategy-advisory", "/en/ai-training",
-  "/en/resources/contract-analyzer", "/en/resources/proposal-comparator",
-  "/en/resources/newsletter-briefing", "/en/newsletter", "/en/newsletter/archive",
-  "/en/newsletter-pro",
-  "/en/what-is-geo", "/en/geo-vs-seo", "/en/geo-for-shopify", "/en/geo-for-woocommerce",
-  "/en/geo-for-vtex", "/en/ai-visibility-study-hispanic-ecommerce-2026",
-  "/en/tools/ai-visibility-calculator",
-  // PT
-  "/pt", "/pt/servicos", "/pt/seo-ecommerce", "/pt/design-web", "/pt/ferramentas",
-  "/pt/consultorias", "/pt/linkedin", "/pt/conteudo-linkedin",
-  "/pt/precos", "/pt/casos-de-sucesso", "/pt/contato", "/pt/blog", "/pt/recursos",
-  "/pt/sobre-nos", "/pt/termos", "/pt/privacidade", "/pt/cookies",
-  "/pt/consultoria-estrategica", "/pt/treinamento-ia",
-  "/pt/recursos/analisador-contratos", "/pt/recursos/comparador-propostas",
-  "/pt/recursos/briefing-newsletter", "/pt/newsletter", "/pt/newsletter/arquivo",
-  "/pt/newsletter-pro",
-  "/pt/o-que-e-geo", "/pt/geo-vs-seo", "/pt/geo-para-shopify", "/pt/geo-para-woocommerce",
-  "/pt/geo-para-vtex", "/pt/estudo-visibilidade-ia-ecommerce-hispano-2026",
-  "/pt/ferramentas/calculadora-visibilidade-ia",
-];
+// Rutas estáticas que se prerenderizan a HTML — derivadas del registro central
+// (src/config/routes.ts). Blog/casos/newsletter/ediciones se descubren
+// dinámicamente vía `additionalPrerenderRoutes` (ver src/prerender.tsx).
+const STATIC_ROUTES = PRERENDER_ROUTES;
 
 // Prerender activo por defecto — ES ahora la fuente de HTML indexable para
 // buscadores y crawlers de IA. Puede desactivarse temporalmente con `PRERENDER=0`.
 const enablePrerender = process.env.PRERENDER !== "0";
 
-// https://vitejs.dev/config/
-export default defineConfig(({ mode }) => ({
-  server: {
-    host: "::",
-    port: 8080,
-  },
-  plugins: [
-    react(),
-    mode === "development" && componentTagger(),
-    mode !== "development" && enablePrerender && vitePrerenderPlugin({
-      renderTarget: "#root",
-      prerenderScript: path.resolve(__dirname, "./src/prerender.tsx"),
-      additionalPrerenderRoutes: STATIC_ROUTES,
-    }),
-  ].filter(Boolean),
-  resolve: {
-    alias: {
-      "@": path.resolve(__dirname, "./src"),
+/**
+ * Plugin SEO de build — corre SOLO en `vite build` (no en dev):
+ *  1) Valida el registro central de rutas (rompe el build si hay errores).
+ *  2) Regenera public/sitemap.xml desde ese registro (+ contenido dinámico).
+ *
+ * Se hace como plugin (y no como script `tsx` en el package.json) para NO
+ * añadir dependencias: este repo usa bun.lockb y una dep nueva en package.json
+ * que no esté en el lockfile puede romper el install en Vercel. vite.config ya
+ * compila TS, así que importar los módulos de scripts/ no cuesta nada.
+ */
+function seoBuildPlugin(env: Record<string, string>): Plugin {
+  return {
+    name: "ferova-seo-build",
+    apply: "build",
+    async buildStart() {
+      const { errors, warnings } = validateRoutes();
+      warnings.forEach((w) => this.warn(w));
+      if (errors.length) {
+        this.error(
+          `Registro de rutas inválido (src/config/routes.ts):\n - ${errors.join("\n - ")}`,
+        );
+      }
+      await generateSitemap({
+        supabaseUrl: env.VITE_SUPABASE_URL,
+        supabaseKey: env.VITE_SUPABASE_PUBLISHABLE_KEY,
+      });
     },
-  },
-}));
+  };
+}
+
+// https://vitejs.dev/config/
+export default defineConfig(({ mode }) => {
+  const env = loadEnv(mode, process.cwd(), "");
+  return {
+    server: {
+      host: "::",
+      port: 8080,
+    },
+    plugins: [
+      react(),
+      mode === "development" && componentTagger(),
+      mode !== "development" && seoBuildPlugin(env),
+      mode !== "development" && enablePrerender && vitePrerenderPlugin({
+        renderTarget: "#root",
+        prerenderScript: path.resolve(__dirname, "./src/prerender.tsx"),
+        additionalPrerenderRoutes: STATIC_ROUTES,
+      }),
+    ].filter(Boolean),
+    resolve: {
+      alias: {
+        "@": path.resolve(__dirname, "./src"),
+      },
+    },
+  };
+});

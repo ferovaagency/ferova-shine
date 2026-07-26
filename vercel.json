@@ -52,7 +52,28 @@
     { "source": "/success-stories/", "destination": "/casos-de-exito", "permanent": true },
     { "source": "/project_category/colombia/", "destination": "/casos-de-exito", "permanent": true },
     { "source": "/en-que-agencia-de-seo-confiar-para-mejorar-el-posicionamiento-local-en-colombia/", "destination": "/blog/agencia-de-ecommerce-colombia", "permanent": true },
-    { "source": "/category/guias-de-usuario/", "destination": "/", "permanent": true }
+    { "source": "/category/guias-de-usuario/", "destination": "/", "permanent": true },
+
+    { "source": "/servicios/pauta-digital", "destination": "/consultoria-estrategica", "permanent": true },
+    { "source": "/services/digital-ads", "destination": "/en/strategy-advisory", "permanent": true },
+    { "source": "/en/services/digital-ads", "destination": "/en/strategy-advisory", "permanent": true },
+    { "source": "/pt/anuncios-digitais", "destination": "/pt/consultoria-estrategica", "permanent": true },
+
+    { "source": "/servicios/diseno-logos", "destination": "/servicios/diseno-web", "permanent": true },
+    { "source": "/services/logo-design", "destination": "/en/services/web-design", "permanent": true },
+    { "source": "/en/services/logo-design", "destination": "/en/services/web-design", "permanent": true },
+    { "source": "/pt/design-logos", "destination": "/pt/design-web", "permanent": true },
+
+    { "source": "/servicios/web-economica", "destination": "/servicios/diseno-web", "permanent": true },
+    { "source": "/en/services/starter-web", "destination": "/en/services/web-design", "permanent": true },
+    { "source": "/pt/web-economica", "destination": "/pt/design-web", "permanent": true },
+
+    { "source": "/servicios/whatsapp-business", "destination": "/consultoria-estrategica", "permanent": true },
+    { "source": "/services/whatsapp-business", "destination": "/en/strategy-advisory", "permanent": true },
+    { "source": "/pt/whatsapp-business", "destination": "/pt/consultoria-estrategica", "permanent": true },
+    { "source": "/servicios/whatsapp-ia-bot", "destination": "/consultoria-estrategica", "permanent": true },
+    { "source": "/services/whatsapp-ai-bot", "destination": "/en/strategy-advisory", "permanent": true },
+    { "source": "/pt/whatsapp-ia-bot", "destination": "/pt/consultoria-estrategica", "permanent": true }
   ],
   "rewrites": [
     { "source": "/(.*)", "destination": "/index.html" }

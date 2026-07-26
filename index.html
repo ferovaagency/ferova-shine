@@ -40,19 +40,14 @@
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 
-    <!-- Hreflang -->
-    <link rel="alternate" hreflang="es-co" href="https://seoparaecommerce.co/" />
-    <link rel="alternate" hreflang="es-419" href="https://seoparaecommerce.co/" />
-    <link rel="alternate" hreflang="en" href="https://seoparaecommerce.co/en" />
-    <link rel="alternate" hreflang="pt-br" href="https://seoparaecommerce.co/pt" />
-    <link rel="alternate" hreflang="x-default" href="https://seoparaecommerce.co/" />
-
-    <meta name="language" content="Spanish" />
-
-    <meta property="og:type" content="website" />
-    <meta property="og:url" content="https://seoparaecommerce.co" />
-    <meta property="og:locale" content="es_CO" />
-    <meta name="twitter:card" content="summary_large_image" />
+    <!--
+      hreflang, canonical, og:url, og:locale, og:type y twitter:* NO se declaran
+      aquí: son específicos de cada ruta y ahora se emiten por página desde
+      src/components/SEO.tsx (react-helmet-async), derivando los hreflang del
+      registro central de rutas (src/config/routes.ts). Declararlos estáticos
+      apuntando a la home hacía que TODAS las páginas heredaran alternates y
+      og:url equivocados (p. ej. og:locale es_CO en /en y /pt).
+    -->
 
     <script type="application/ld+json">
       {
