@@ -11,6 +11,7 @@ export type AnalyticsEvent =
   | 'ai_assistant_opened' | 'ai_assistant_form_submitted' | 'ai_assistant_message_sent'
   | 'ai_assistant_escalated_whatsapp' | 'ai_assistant_product_card_clicked'
   | 'whatsapp_button_clicked' | 'cta_clicked' | 'pricing_card_clicked'
+  | 'problem_selected'
   | 'service_card_clicked' | 'case_study_clicked' | 'blog_clicked'
   | 'social_click'
   | 'resource_downloaded' | 'resource_external_clicked' | 'newsletter_pro_interested'

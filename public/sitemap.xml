@@ -33,6 +33,66 @@
   </url>
 
   <url>
+    <loc>https://seoparaecommerce.co/soluciones</loc>
+    <xhtml:link rel="alternate" hreflang="es" href="https://seoparaecommerce.co/soluciones"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://seoparaecommerce.co/en/solutions"/>
+    <xhtml:link rel="alternate" hreflang="pt" href="https://seoparaecommerce.co/pt/solucoes"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://seoparaecommerce.co/soluciones"/>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+
+  <url>
+    <loc>https://seoparaecommerce.co/en/solutions</loc>
+    <xhtml:link rel="alternate" hreflang="es" href="https://seoparaecommerce.co/soluciones"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://seoparaecommerce.co/en/solutions"/>
+    <xhtml:link rel="alternate" hreflang="pt" href="https://seoparaecommerce.co/pt/solucoes"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://seoparaecommerce.co/soluciones"/>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+
+  <url>
+    <loc>https://seoparaecommerce.co/pt/solucoes</loc>
+    <xhtml:link rel="alternate" hreflang="es" href="https://seoparaecommerce.co/soluciones"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://seoparaecommerce.co/en/solutions"/>
+    <xhtml:link rel="alternate" hreflang="pt" href="https://seoparaecommerce.co/pt/solucoes"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://seoparaecommerce.co/soluciones"/>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+
+  <url>
+    <loc>https://seoparaecommerce.co/metodo-ferova</loc>
+    <xhtml:link rel="alternate" hreflang="es" href="https://seoparaecommerce.co/metodo-ferova"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://seoparaecommerce.co/en/ferova-method"/>
+    <xhtml:link rel="alternate" hreflang="pt" href="https://seoparaecommerce.co/pt/metodo-ferova"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://seoparaecommerce.co/metodo-ferova"/>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
+  <url>
+    <loc>https://seoparaecommerce.co/en/ferova-method</loc>
+    <xhtml:link rel="alternate" hreflang="es" href="https://seoparaecommerce.co/metodo-ferova"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://seoparaecommerce.co/en/ferova-method"/>
+    <xhtml:link rel="alternate" hreflang="pt" href="https://seoparaecommerce.co/pt/metodo-ferova"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://seoparaecommerce.co/metodo-ferova"/>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
+  <url>
+    <loc>https://seoparaecommerce.co/pt/metodo-ferova</loc>
+    <xhtml:link rel="alternate" hreflang="es" href="https://seoparaecommerce.co/metodo-ferova"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://seoparaecommerce.co/en/ferova-method"/>
+    <xhtml:link rel="alternate" hreflang="pt" href="https://seoparaecommerce.co/pt/metodo-ferova"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://seoparaecommerce.co/metodo-ferova"/>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
+  <url>
     <loc>https://seoparaecommerce.co/servicios</loc>
     <xhtml:link rel="alternate" hreflang="es" href="https://seoparaecommerce.co/servicios"/>
     <xhtml:link rel="alternate" hreflang="en" href="https://seoparaecommerce.co/en/services"/>

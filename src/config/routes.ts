@@ -90,6 +90,15 @@ export const ROUTES: RouteDef[] = [
   // ── Core ──────────────────────────────────────────────────────────────
   { id: "home", type: "core", indexable: true, prerender: true, priority: 1.0, changefreq: "weekly",
     paths: { es: "/", en: "/en", pt: "/pt" } },
+
+  // ── Fase 1: nuevas puertas de entrada (Sprint 2) ──────────────────────
+  // /soluciones = hub por problema empresarial (no por servicio).
+  // /metodo-ferova = cómo trabaja Ferova (diferenciación).
+  { id: "soluciones", type: "solution", indexable: true, prerender: true, priority: 0.9,
+    paths: { es: "/soluciones", en: "/en/solutions", pt: "/pt/solucoes" } },
+  { id: "metodo-ferova", type: "method", indexable: true, prerender: true, priority: 0.8,
+    paths: { es: "/metodo-ferova", en: "/en/ferova-method", pt: "/pt/metodo-ferova" } },
+
   { id: "servicios", type: "service", indexable: true, prerender: true, priority: 0.9,
     paths: { es: "/servicios", en: "/en/services", pt: "/pt/servicos" } },
   { id: "precios", type: "core", indexable: true, prerender: true, priority: 0.8,

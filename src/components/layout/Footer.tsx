@@ -29,6 +29,8 @@ const Footer = ({ currentLang, lang }: FooterProps) => {
         { name: 'Contenido LinkedIn', href: '/servicios/contenido-linkedin' },
       ],
       compLinks: [
+        { name: 'Soluciones', href: '/soluciones' },
+        { name: 'Método Ferova', href: '/metodo-ferova' },
         { name: 'Precios', href: '/precios' },
         { name: 'Casos de Éxito', href: '/casos-de-exito' },
         { name: 'Blog', href: '/blog' },
@@ -55,6 +57,8 @@ const Footer = ({ currentLang, lang }: FooterProps) => {
         { name: 'LinkedIn Content', href: '/en/services/linkedin-content' },
       ],
       compLinks: [
+        { name: 'Solutions', href: '/en/solutions' },
+        { name: 'Ferova Method', href: '/en/ferova-method' },
         { name: 'Pricing', href: '/en/pricing' },
         { name: 'Case Studies', href: '/en/case-studies' },
         { name: 'Blog', href: '/en/blog' },
@@ -81,6 +85,8 @@ const Footer = ({ currentLang, lang }: FooterProps) => {
         { name: 'Conteúdo LinkedIn', href: '/pt/conteudo-linkedin' },
       ],
       compLinks: [
+        { name: 'Soluções', href: '/pt/solucoes' },
+        { name: 'Método Ferova', href: '/pt/metodo-ferova' },
         { name: 'Preços', href: '/pt/precos' },
         { name: 'Casos de Sucesso', href: '/pt/casos-de-sucesso' },
         { name: 'Blog', href: '/pt/blog' },

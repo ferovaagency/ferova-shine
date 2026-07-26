@@ -31,8 +31,9 @@ export default function Header({ currentLang, lang }: HeaderProps) {
       agencyLabel: "Agencia (Infraestructura IA)",
       primary: [
         { label: "Inicio", href: "/" },
+        { label: "Soluciones", href: "/soluciones" },
+        { label: "Método", href: "/metodo-ferova" },
         { label: "Estrategia (Consultorías)", href: "/consultoria-estrategica" },
-        { label: "Capacitación IA", href: "/capacitacion-ia" },
         { label: "Precios", href: "/precios" },
         { label: "Recursos", href: "/recursos" },
         { label: "Contacto", href: "/contacto" },
@@ -48,8 +49,9 @@ export default function Header({ currentLang, lang }: HeaderProps) {
       agencyLabel: "Agency (AI Infrastructure)",
       primary: [
         { label: "Home", href: "/en" },
+        { label: "Solutions", href: "/en/solutions" },
+        { label: "Method", href: "/en/ferova-method" },
         { label: "Strategy (Advisory)", href: "/en/strategy-advisory" },
-        { label: "AI Training", href: "/en/ai-training" },
         { label: "Pricing", href: "/en/pricing" },
         { label: "Resources", href: "/en/resources" },
         { label: "Contact", href: "/en/contact" },
@@ -65,8 +67,9 @@ export default function Header({ currentLang, lang }: HeaderProps) {
       agencyLabel: "Agência (Infraestrutura IA)",
       primary: [
         { label: "Início", href: "/pt" },
+        { label: "Soluções", href: "/pt/solucoes" },
+        { label: "Método", href: "/pt/metodo-ferova" },
         { label: "Estratégia (Consultoria)", href: "/pt/consultoria-estrategica" },
-        { label: "Treinamento em IA", href: "/pt/treinamento-ia" },
         { label: "Preços", href: "/pt/precos" },
         { label: "Recursos", href: "/pt/recursos" },
         { label: "Contato", href: "/pt/contato" },

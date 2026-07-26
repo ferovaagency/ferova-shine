@@ -58,6 +58,8 @@ import GeoParaWooCommerce from "./pages/GeoParaWooCommerce";
 import GeoParaVtex from "./pages/GeoParaVtex";
 import EstudioVisibilidadIA from "./pages/EstudioVisibilidadIA";
 import CalculadoraVisibilidadIA from "./pages/CalculadoraVisibilidadIA";
+import Soluciones from "./pages/Soluciones";
+import MetodoFerova from "./pages/MetodoFerova";
 
 const queryClient = new QueryClient();
 
@@ -87,6 +89,15 @@ interface AppProps {
 const AppRoutes = ({ hostLang }: { hostLang: "es" | "en" | "pt" }) => (
   <Routes>
     <Route path="/" element={<Index lang={hostLang} />} />
+
+    {/* Fase 1 (Sprint 2): nuevas puertas de entrada */}
+    <Route path="/soluciones" element={<Soluciones lang="es" />} />
+    <Route path="/en/solutions" element={<Soluciones lang="en" />} />
+    <Route path="/pt/solucoes" element={<Soluciones lang="pt" />} />
+    <Route path="/metodo-ferova" element={<MetodoFerova lang="es" />} />
+    <Route path="/en/ferova-method" element={<MetodoFerova lang="en" />} />
+    <Route path="/pt/metodo-ferova" element={<MetodoFerova lang="pt" />} />
+
     <Route path="/servicios" element={<Servicios lang={hostLang} />} />
     <Route path="/services" element={<Servicios lang={hostLang} />} />
     <Route path="/servicios/seo-ecommerce" element={<SeoEcommerce lang={hostLang} />} />
