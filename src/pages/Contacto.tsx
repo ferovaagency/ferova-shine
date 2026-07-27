@@ -5,6 +5,7 @@ import { Mail, MessageCircle, MapPin, Send, CheckCircle2 } from 'lucide-react';
 import SEO from '@/components/SEO';
 import { supabase } from '@/integrations/supabase/client';
 import { trackEvent } from '@/lib/analytics';
+import { logLead } from '@/lib/adminInbox';
 
 const WHATSAPP_URL = 'https://wa.link/jvbd4j';
 
@@ -89,6 +90,18 @@ const Contacto = ({ lang = 'es' }: Props) => {
     } catch {
       /* no bloquear al usuario si Brevo falla: el mensaje ya salió por WhatsApp */
     }
+    // Registro en la bandeja unificada del admin.
+    await logLead({
+      source: 'contact',
+      name: formData.name,
+      email: formData.email,
+      summary: formData.message ? formData.message.slice(0, 160) : 'Solicitud de contacto',
+      payload: {
+        website: formData.website, country: formData.country, budget: formData.budget,
+        message: formData.message, lang,
+        page: typeof window !== 'undefined' ? window.location.pathname : undefined,
+      },
+    });
     trackEvent('lead_submitted', { source: 'contact_form', lang });
     setSending(false);
     setSent(true);

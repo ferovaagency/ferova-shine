@@ -5,6 +5,7 @@ import { Link } from 'react-router-dom';
 import { supabase } from '@/integrations/supabase/client';
 import { toast } from 'sonner';
 import { trackEvent } from '@/lib/analytics';
+import { logLead } from '@/lib/adminInbox';
 
 interface Props {
   lang?: 'es' | 'en' | 'pt';
@@ -95,6 +96,7 @@ const ExitIntentPopup = ({ lang = 'es' }: Props) => {
         body: { email: email.trim(), name: name.trim(), source: 'popup', attributes: { LANG: lang } },
       });
       if (error) throw error;
+      await logLead({ source: 'newsletter', name: name.trim(), email: email.trim(), summary: 'Suscripción al newsletter (exit popup)', payload: { form: 'exit_popup', lang } });
       trackEvent('newsletter_signup', { source: 'exit_popup', lang });
       toast.success(t.success);
       setName(''); setEmail(''); setConsent(false);

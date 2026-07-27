@@ -10,6 +10,7 @@ import {
 } from "lucide-react";
 import { trackEvent } from "@/lib/analytics";
 import { supabase } from "@/integrations/supabase/client";
+import { logLead } from "@/lib/adminInbox";
 import { WHATSAPP_URL } from "@/content/home";
 
 type Lang = "es" | "en" | "pt";
@@ -367,6 +368,22 @@ const DiagnosticoEmpresarial = ({ lang = "es" }: DiagnosticoProps) => {
     } catch {
       /* no bloquear al usuario si Brevo falla: el lead sigue por WhatsApp */
     }
+    // Registro en la bandeja unificada del admin (con todas las respuestas).
+    await logLead({
+      source: "diagnostic",
+      name: form.name,
+      email: form.email,
+      phone: form.whatsapp,
+      company: form.company,
+      summary: t.results[category].title,
+      payload: {
+        category,
+        objective: form.objective,
+        website: form.website,
+        answers: answers.map((a, i) => ({ q: t.questions[i]?.q, a })),
+        language: lang,
+      },
+    });
     trackEvent("lead_submitted", { source: "diagnostico", category, language: lang });
     setSending(false);
     setStep(total + 3);

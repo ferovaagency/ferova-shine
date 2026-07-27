@@ -1,5 +1,5 @@
 import { useEffect, useState, useCallback } from "react";
-import { Loader2, Check, Inbox as InboxIcon, RefreshCw } from "lucide-react";
+import { Loader2, Check, Inbox as InboxIcon, RefreshCw, Eye, X, Copy, MessageCircle, Mail } from "lucide-react";
 import AdminLayout from "@/components/admin/AdminLayout";
 import SourceBadge from "@/components/admin/SourceBadge";
 import { supabase } from "@/integrations/supabase/client";
@@ -15,6 +15,8 @@ interface Lead {
   summary: string | null;
   status: "pending" | "completed";
   created_at: string;
+  completed_at?: string | null;
+  payload?: Record<string, unknown> | null;
 }
 
 type Filter = "all" | "contact" | "diagnostic" | "ai_advisor" | "newsletter" | "completed";
@@ -33,6 +35,7 @@ const AdminLeads = () => {
   const [loading, setLoading] = useState(true);
   const [tableMissing, setTableMissing] = useState(false);
   const [filter, setFilter] = useState<Filter>("all");
+  const [selected, setSelected] = useState<Lead | null>(null);
 
   const load = useCallback(async () => {
     setLoading(true);
@@ -73,10 +76,16 @@ const AdminLeads = () => {
         .update({ status: "completed", completed_at: new Date().toISOString() })
         .eq("id", id);
       setLeads((prev) => prev.filter((l) => l.id !== id));
+      setSelected((s) => (s?.id === id ? null : s));
     } catch { /* noop */ }
   };
 
   const fmt = (d: string) => { try { return new Date(d).toLocaleDateString("es-CO", { day: "2-digit", month: "short", year: "numeric" }); } catch { return d; } };
+  const phoneDigits = (p?: string | null) => (p ?? "").replace(/\D/g, "");
+  const copyLead = (l: Lead) => {
+    const txt = [l.name, l.company, l.email, l.phone, l.summary].filter(Boolean).join(" · ");
+    try { void navigator.clipboard.writeText(txt); } catch { /* noop */ }
+  };
 
   return (
     <AdminLayout title="Leads">
@@ -142,17 +151,91 @@ const AdminLeads = () => {
                   </td>
                   <td className="px-4 py-3"><SourceBadge source={l.source} /></td>
                   <td className="px-4 py-3 text-muted-foreground max-w-xs"><span className="line-clamp-2">{l.summary || "—"}</span></td>
-                  <td className="px-4 py-3 text-right">
-                    {l.status === "pending" && (
-                      <button onClick={() => markDone(l.id)} className="inline-flex items-center gap-1.5 text-xs font-medium rounded-full border border-border px-3 py-1.5 hover:border-gold/50 hover:text-gold transition-colors">
-                        <Check className="w-3.5 h-3.5" /> Listo
+                  <td className="px-4 py-3">
+                    <div className="flex items-center justify-end gap-2">
+                      <button onClick={() => setSelected(l)} className="inline-flex items-center gap-1.5 text-xs font-medium rounded-full border border-border px-3 py-1.5 hover:border-gold/50 hover:text-gold transition-colors">
+                        <Eye className="w-3.5 h-3.5" /> Ver
                       </button>
-                    )}
+                      {l.status === "pending" && (
+                        <button onClick={() => markDone(l.id)} className="inline-flex items-center gap-1.5 text-xs font-medium rounded-full border border-border px-3 py-1.5 hover:border-gold/50 hover:text-gold transition-colors">
+                          <Check className="w-3.5 h-3.5" /> Listo
+                        </button>
+                      )}
+                    </div>
                   </td>
                 </tr>
               ))}
             </tbody>
           </table>
+        </div>
+      )}
+
+      {/* Panel de detalle del lead */}
+      {selected && (
+        <div className="fixed inset-0 z-50 flex justify-end">
+          <div className="absolute inset-0 bg-black/50" onClick={() => setSelected(null)} />
+          <div className="relative w-full max-w-md bg-card border-l border-border/60 h-full overflow-y-auto">
+            <div className="flex items-center justify-between px-5 py-4 border-b border-border/60 sticky top-0 bg-card">
+              <div className="flex items-center gap-2">
+                <SourceBadge source={selected.source} />
+                <span className="text-xs text-muted-foreground">{fmt(selected.created_at)}</span>
+              </div>
+              <button onClick={() => setSelected(null)} aria-label="Cerrar"><X className="w-5 h-5 text-muted-foreground hover:text-foreground" /></button>
+            </div>
+
+            <div className="p-5 space-y-5">
+              <div>
+                <h2 className="text-lg font-display font-bold text-foreground">{selected.name || "Sin nombre"}</h2>
+                {selected.company && <p className="text-sm text-muted-foreground">{selected.company}</p>}
+                <div className="mt-2 space-y-1 text-sm text-muted-foreground">
+                  {selected.email && <div>{selected.email}</div>}
+                  {selected.phone && <div>{selected.phone}</div>}
+                </div>
+              </div>
+
+              {selected.summary && (
+                <div>
+                  <p className="text-xs uppercase tracking-wide text-muted-foreground mb-1">Resumen</p>
+                  <p className="text-sm text-foreground">{selected.summary}</p>
+                </div>
+              )}
+
+              {selected.payload && Object.keys(selected.payload).length > 0 && (
+                <div>
+                  <p className="text-xs uppercase tracking-wide text-muted-foreground mb-2">Detalle</p>
+                  <div className="space-y-2">
+                    {Object.entries(selected.payload).map(([k, v]) => (
+                      <div key={k} className="text-sm">
+                        <span className="text-muted-foreground">{k}: </span>
+                        <span className="text-foreground break-words">{typeof v === "object" ? JSON.stringify(v) : String(v)}</span>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              )}
+
+              <div className="grid grid-cols-2 gap-2 pt-2 border-t border-border/40">
+                <button onClick={() => copyLead(selected)} className="inline-flex items-center justify-center gap-1.5 text-sm rounded-xl border border-border px-3 py-2 hover:border-gold/50 hover:text-gold transition-colors">
+                  <Copy className="w-4 h-4" /> Copiar
+                </button>
+                {phoneDigits(selected.phone) && (
+                  <a href={`https://wa.me/${phoneDigits(selected.phone)}`} target="_blank" rel="noopener noreferrer" className="inline-flex items-center justify-center gap-1.5 text-sm rounded-xl border border-border px-3 py-2 hover:border-gold/50 hover:text-gold transition-colors">
+                    <MessageCircle className="w-4 h-4" /> WhatsApp
+                  </a>
+                )}
+                {selected.email && (
+                  <a href={`mailto:${selected.email}`} className="inline-flex items-center justify-center gap-1.5 text-sm rounded-xl border border-border px-3 py-2 hover:border-gold/50 hover:text-gold transition-colors">
+                    <Mail className="w-4 h-4" /> Email
+                  </a>
+                )}
+                {selected.status === "pending" && (
+                  <button onClick={() => markDone(selected.id)} className="inline-flex items-center justify-center gap-1.5 text-sm rounded-xl bg-gold text-primary-foreground px-3 py-2 font-medium">
+                    <Check className="w-4 h-4" /> Listo
+                  </button>
+                )}
+              </div>
+            </div>
+          </div>
         </div>
       )}
     </AdminLayout>
