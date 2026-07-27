@@ -96,6 +96,13 @@ export const ROUTES: RouteDef[] = [
   // /metodo-ferova = cómo trabaja Ferova (diferenciación).
   { id: "soluciones", type: "solution", indexable: true, prerender: true, priority: 0.9,
     paths: { es: "/soluciones", en: "/en/solutions", pt: "/pt/solucoes" } },
+  // Puerta comercial principal (Sprint 4): diagnóstico interactivo + captura.
+  { id: "diagnostico-empresarial", type: "solution", indexable: true, prerender: true, priority: 0.9,
+    paths: {
+      es: "/soluciones/diagnostico-empresarial",
+      en: "/en/solutions/business-diagnosis",
+      pt: "/pt/solucoes/diagnostico-empresarial",
+    } },
   { id: "metodo-ferova", type: "method", indexable: true, prerender: true, priority: 0.8,
     paths: { es: "/metodo-ferova", en: "/en/ferova-method", pt: "/pt/metodo-ferova" } },
 

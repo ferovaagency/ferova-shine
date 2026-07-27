@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 import { Sparkles, MessageCircle, Award, TrendingUp, Trophy, ArrowRight } from "lucide-react";
-import { HOME, WHATSAPP_URL, solucionesHref, type Lang } from "@/content/home";
+import { HOME, WHATSAPP_URL, diagnosticoHref, type Lang } from "@/content/home";
 import { trackEvent } from "@/lib/analytics";
 
 /**
@@ -45,7 +45,7 @@ const HomeHero = ({ lang }: { lang: Lang }) => {
 
         <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center items-center">
           <Link
-            to={solucionesHref(lang)}
+            to={diagnosticoHref(lang)}
             onClick={() => trackEvent("cta_clicked", { cta: "diagnostico", section: "hero", language: lang })}
             className="btn-gold w-full sm:w-auto inline-flex items-center justify-center gap-2"
           >

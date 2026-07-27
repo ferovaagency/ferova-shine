@@ -321,6 +321,13 @@ export function solucionesHref(lang: Lang): string {
 export function metodoHref(lang: Lang): string {
   return lang === "en" ? "/en/ferova-method" : lang === "pt" ? "/pt/metodo-ferova" : "/metodo-ferova";
 }
+export function diagnosticoHref(lang: Lang): string {
+  return lang === "en"
+    ? "/en/solutions/business-diagnosis"
+    : lang === "pt"
+    ? "/pt/solucoes/diagnostico-empresarial"
+    : "/soluciones/diagnostico-empresarial";
+}
 export function contactoHref(lang: Lang): string {
   return lang === "en" ? "/en/contact" : lang === "pt" ? "/pt/contato" : "/contacto";
 }
