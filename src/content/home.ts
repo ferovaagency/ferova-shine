@@ -123,9 +123,9 @@ export const HOME: Record<Lang, HomeContent> = {
       ],
       testimonial: {
         text: '"Pasamos de no aparecer en Google a generar 14 millones de pesos al mes en orgánico. Ferova no vende humo: vende arquitectura, contenido y resultados. Es el mejor ROI que hemos tenido en 5 años."',
-        name: "Ana María Osorio",
-        role: "Fundadora, marca de cosmética natural",
-        initials: "AO",
+        name: "Fundadora · Cosmética natural",
+        role: "Cliente Ferova · Colombia",
+        initials: "CN",
       },
     },
     faq: {
@@ -204,9 +204,9 @@ export const HOME: Record<Lang, HomeContent> = {
       ],
       testimonial: {
         text: "\"We went from invisible on Google to generating $3.5K/month in organic. Ferova doesn't sell hype: they sell architecture, content and results. Best ROI we've had in 5 years.\"",
-        name: "Ana María Osorio",
-        role: "Founder, natural cosmetics brand",
-        initials: "AO",
+        name: "Founder · Natural cosmetics",
+        role: "Ferova client · Colombia",
+        initials: "CN",
       },
     },
     faq: {
@@ -285,9 +285,9 @@ export const HOME: Record<Lang, HomeContent> = {
       ],
       testimonial: {
         text: '"Saímos do invisível no Google para gerar R$17 mil por mês em orgânico. A Ferova não vende fumaça: vende arquitetura, conteúdo e resultados. Melhor ROI dos últimos 5 anos."',
-        name: "Ana María Osorio",
-        role: "Fundadora, marca de cosmética natural",
-        initials: "AO",
+        name: "Fundadora · Cosmética natural",
+        role: "Cliente Ferova · Colombia",
+        initials: "CN",
       },
     },
     faq: {
