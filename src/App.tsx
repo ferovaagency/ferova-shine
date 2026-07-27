@@ -62,6 +62,8 @@ import Soluciones from "./pages/Soluciones";
 import MetodoFerova from "./pages/MetodoFerova";
 import DiagnosticoEmpresarial from "./pages/DiagnosticoEmpresarial";
 import Productos from "./pages/Productos";
+import AdminLeads from "./pages/admin/AdminLeads";
+import AdminCases from "./pages/admin/AdminCases";
 
 const queryClient = new QueryClient();
 
@@ -134,7 +136,13 @@ const AppRoutes = ({ hostLang }: { hostLang: "es" | "en" | "pt" }) => (
     <Route path="/contact" element={<Contacto lang={hostLang} />} />
     <Route path="/blog" element={<Blog lang={hostLang} />} />
     <Route path="/blog/:slug" element={<BlogPost lang={hostLang} />} />
-    <Route path="/admin-blog" element={<AdminGuard><AdminBlog lang={hostLang} /></AdminGuard>} />
+    {/* Panel admin unificado (Ferova Admin). /admin abre la bandeja de leads. */}
+    <Route path="/admin" element={<Navigate replace to="/admin/leads" />} />
+    <Route path="/admin/leads" element={<AdminGuard><AdminLeads /></AdminGuard>} />
+    <Route path="/admin/casos" element={<AdminGuard><AdminCases /></AdminGuard>} />
+    <Route path="/admin/blog" element={<AdminGuard><AdminBlog lang={hostLang} /></AdminGuard>} />
+    {/* Compatibilidad: la ruta antigua /admin-blog redirige a /admin/blog */}
+    <Route path="/admin-blog" element={<Navigate replace to="/admin/blog" />} />
     <Route path="/recursos" element={<Recursos lang={hostLang} />} />
     <Route path="/resources" element={<Recursos lang={hostLang} />} />
     <Route path="/nosotros" element={<SobreNosotros lang={hostLang} />} />
@@ -162,7 +170,7 @@ const AppRoutes = ({ hostLang }: { hostLang: "es" | "en" | "pt" }) => (
     <Route path="/en/contact" element={<Contacto lang="en" />} />
     <Route path="/en/blog" element={<Blog lang="en" />} />
     <Route path="/en/blog/:slug" element={<BlogPost lang="en" />} />
-    <Route path="/en/admin-blog" element={<AdminGuard><AdminBlog lang="en" /></AdminGuard>} />
+    <Route path="/en/admin-blog" element={<Navigate replace to="/admin/blog" />} />
     <Route path="/en/resources" element={<Recursos lang="en" />} />
     <Route path="/en/about" element={<SobreNosotros lang="en" />} />
     <Route path="/en/terms" element={<Terminos lang="en" />} />
