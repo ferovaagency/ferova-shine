@@ -1,14 +1,19 @@
 import { useState } from 'react';
 import Header from '@/components/layout/Header';
 import Footer from '@/components/layout/Footer';
-import { Mail, MessageCircle, MapPin, Send, Calendar } from 'lucide-react';
+import { Mail, MessageCircle, MapPin, Send, CheckCircle2 } from 'lucide-react';
 import SEO from '@/components/SEO';
+import { supabase } from '@/integrations/supabase/client';
+import { trackEvent } from '@/lib/analytics';
+
+const WHATSAPP_URL = 'https://wa.link/jvbd4j';
 
 interface Props { lang?: 'es' | 'en' | 'pt'; }
 
 const Contacto = ({ lang = 'es' }: Props) => {
   const [formData, setFormData] = useState({ name: '', email: '', website: '', country: '', budget: '', message: '', consent: false });
   const [sending, setSending] = useState(false);
+  const [sent, setSent] = useState(false);
 
   const t = lang === 'es' ? {
     title: 'Hablemos de tu proyecto',
@@ -58,9 +63,35 @@ const Contacto = ({ lang = 'es' }: Props) => {
     e.preventDefault();
     if (!formData.consent) return;
     setSending(true);
-    await new Promise(r => setTimeout(r, 1500));
+
+    // Entrega fiable del mensaje completo por WhatsApp (no hay sink de servidor;
+    // el formulario ANTES solo hacía un setTimeout+alert y perdía todos los leads).
+    // Se abre en el mismo gesto de submit para no ser bloqueado por el navegador.
+    const waLines = [
+      lang === 'es' ? 'Hola Ferova, escribo desde el formulario de contacto:'
+        : lang === 'pt' ? 'Olá Ferova, escrevo pelo formulário de contato:'
+        : 'Hi Ferova, I am writing from the contact form:',
+      `• ${t.name}: ${formData.name}`,
+      `• ${t.email}: ${formData.email}`,
+      formData.website ? `• ${t.website}: ${formData.website}` : '',
+      formData.country ? `• ${t.country}: ${formData.country}` : '',
+      formData.budget ? `• ${t.budget}: ${formData.budget}` : '',
+      `• ${t.message}: ${formData.message}`,
+    ].filter(Boolean);
+    const waUrl = `${WHATSAPP_URL}?text=${encodeURIComponent(waLines.join('\n'))}`;
+    window.open(waUrl, '_blank', 'noopener');
+
+    // Captura del lead en Brevo con atributos seguros (LANG existe en la cuenta).
+    try {
+      await supabase.functions.invoke('brevo-sync', {
+        body: { email: formData.email.trim(), name: formData.name.trim(), source: 'contact_form', attributes: { LANG: lang } },
+      });
+    } catch {
+      /* no bloquear al usuario si Brevo falla: el mensaje ya salió por WhatsApp */
+    }
+    trackEvent('lead_submitted', { source: 'contact_form', lang });
     setSending(false);
-    alert(lang === 'es' ? '¡Mensaje enviado!' : lang === 'pt' ? 'Mensagem enviada!' : 'Message sent!');
+    setSent(true);
     setFormData({ name: '', email: '', website: '', country: '', budget: '', message: '', consent: false });
   };
 
@@ -86,6 +117,24 @@ const Contacto = ({ lang = 'es' }: Props) => {
             </div>
 
             <div className="grid lg:grid-cols-5 gap-10 max-w-6xl mx-auto">
+              {sent ? (
+                <div className="lg:col-span-3 glass-card p-8 md:p-10 flex flex-col items-center justify-center text-center">
+                  <div className="w-16 h-16 rounded-full bg-gold/10 flex items-center justify-center mb-5">
+                    <CheckCircle2 className="w-8 h-8 text-gold" />
+                  </div>
+                  <h2 className="text-2xl font-display font-bold mb-3">
+                    {lang === 'es' ? '¡Mensaje en camino!' : lang === 'pt' ? 'Mensagem a caminho!' : 'Message on its way!'}
+                  </h2>
+                  <p className="text-muted-foreground max-w-md">
+                    {lang === 'es' ? 'Abrimos WhatsApp con tu mensaje para que lo envíes y te respondamos en menos de 24 horas. Si no se abrió, escríbenos directo.'
+                      : lang === 'pt' ? 'Abrimos o WhatsApp com sua mensagem para você enviar e respondermos em menos de 24 horas. Se não abriu, fale conosco direto.'
+                      : 'We opened WhatsApp with your message so you can send it and we reply within 24 hours. If it did not open, message us directly.'}
+                  </p>
+                  <a href="https://wa.link/jvbd4j" target="_blank" rel="noopener noreferrer" className="btn-gold mt-6 inline-flex items-center gap-2">
+                    <MessageCircle className="w-4 h-4" /> WhatsApp
+                  </a>
+                </div>
+              ) : (
               <form onSubmit={handleSubmit} className="lg:col-span-3 glass-card p-8 md:p-10 space-y-5">
                 <div className="grid sm:grid-cols-2 gap-5">
                   <input type="text" required placeholder={t.name} value={formData.name} onChange={e => setFormData({ ...formData, name: e.target.value })} className={inputCls} />
@@ -107,6 +156,7 @@ const Contacto = ({ lang = 'es' }: Props) => {
                   <Send className="w-4 h-4" /> {sending ? t.sending : t.send}
                 </button>
               </form>
+              )}
 
               <div className="lg:col-span-2 space-y-6">
                 <h2 className="font-display font-semibold text-lg mb-2">{t.contactTitle}</h2>
