@@ -153,6 +153,36 @@
   </url>
 
   <url>
+    <loc>https://seoparaecommerce.co/productos</loc>
+    <xhtml:link rel="alternate" hreflang="es" href="https://seoparaecommerce.co/productos"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://seoparaecommerce.co/en/products"/>
+    <xhtml:link rel="alternate" hreflang="pt" href="https://seoparaecommerce.co/pt/produtos"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://seoparaecommerce.co/productos"/>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
+  <url>
+    <loc>https://seoparaecommerce.co/en/products</loc>
+    <xhtml:link rel="alternate" hreflang="es" href="https://seoparaecommerce.co/productos"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://seoparaecommerce.co/en/products"/>
+    <xhtml:link rel="alternate" hreflang="pt" href="https://seoparaecommerce.co/pt/produtos"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://seoparaecommerce.co/productos"/>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
+  <url>
+    <loc>https://seoparaecommerce.co/pt/produtos</loc>
+    <xhtml:link rel="alternate" hreflang="es" href="https://seoparaecommerce.co/productos"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://seoparaecommerce.co/en/products"/>
+    <xhtml:link rel="alternate" hreflang="pt" href="https://seoparaecommerce.co/pt/produtos"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://seoparaecommerce.co/productos"/>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
+  <url>
     <loc>https://seoparaecommerce.co/precios</loc>
     <xhtml:link rel="alternate" hreflang="es" href="https://seoparaecommerce.co/precios"/>
     <xhtml:link rel="alternate" hreflang="en" href="https://seoparaecommerce.co/en/pricing"/>

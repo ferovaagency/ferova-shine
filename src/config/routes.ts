@@ -108,6 +108,10 @@ export const ROUTES: RouteDef[] = [
 
   { id: "servicios", type: "service", indexable: true, prerender: true, priority: 0.9,
     paths: { es: "/servicios", en: "/en/services", pt: "/pt/servicos" } },
+  // Fase 9 (Sprint 6): productos e ingresos recurrentes. Aún NO en la nav
+  // principal (plan Paso 23) — vive en el footer.
+  { id: "productos", type: "product", indexable: true, prerender: true, priority: 0.8,
+    paths: { es: "/productos", en: "/en/products", pt: "/pt/produtos" } },
   { id: "precios", type: "core", indexable: true, prerender: true, priority: 0.8,
     paths: { es: "/precios", en: "/en/pricing", pt: "/pt/precos" } },
   { id: "casos-de-exito", type: "content", indexable: true, prerender: true, priority: 0.8, changefreq: "monthly",

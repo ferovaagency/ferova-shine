@@ -31,6 +31,7 @@ const Footer = ({ currentLang, lang }: FooterProps) => {
       compLinks: [
         { name: 'Soluciones', href: '/soluciones' },
         { name: 'Método Ferova', href: '/metodo-ferova' },
+        { name: 'Productos', href: '/productos' },
         { name: 'Precios', href: '/precios' },
         { name: 'Casos de Éxito', href: '/casos-de-exito' },
         { name: 'Blog', href: '/blog' },
@@ -59,6 +60,7 @@ const Footer = ({ currentLang, lang }: FooterProps) => {
       compLinks: [
         { name: 'Solutions', href: '/en/solutions' },
         { name: 'Ferova Method', href: '/en/ferova-method' },
+        { name: 'Products', href: '/en/products' },
         { name: 'Pricing', href: '/en/pricing' },
         { name: 'Case Studies', href: '/en/case-studies' },
         { name: 'Blog', href: '/en/blog' },
@@ -87,6 +89,7 @@ const Footer = ({ currentLang, lang }: FooterProps) => {
       compLinks: [
         { name: 'Soluções', href: '/pt/solucoes' },
         { name: 'Método Ferova', href: '/pt/metodo-ferova' },
+        { name: 'Produtos', href: '/pt/produtos' },
         { name: 'Preços', href: '/pt/precos' },
         { name: 'Casos de Sucesso', href: '/pt/casos-de-sucesso' },
         { name: 'Blog', href: '/pt/blog' },

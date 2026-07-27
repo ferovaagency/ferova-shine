@@ -9,6 +9,7 @@ Ferova Agency construye webapps modernas con IA integrada para tiendas online, o
 - [Inicio](/): Propuesta de valor, casos y servicios.
 - [Soluciones](/soluciones): Punto de entrada por problema empresarial (clientes, visibilidad, conversión, automatización, IA, diagnóstico).
 - [Método Ferova](/metodo-ferova): Cómo trabaja Ferova — diagnóstico antes que servicio: entendemos, encontramos la causa, elegimos, implementamos, medimos, aprendemos.
+- [Productos](/productos): Ferova One (sistema operativo con IA: finanzas, CRM y asistente) y herramientas gratuitas de visibilidad IA, contratos y propuestas.
 - [Servicios](/servicios): Catálogo completo de servicios.
 - [Precios](/precios): Planes multimoneda (USD, COP, BRL, EUR).
 - [Sobre nosotros](/nosotros): Quiénes somos y nuestra metodología.

@@ -61,6 +61,7 @@ import CalculadoraVisibilidadIA from "./pages/CalculadoraVisibilidadIA";
 import Soluciones from "./pages/Soluciones";
 import MetodoFerova from "./pages/MetodoFerova";
 import DiagnosticoEmpresarial from "./pages/DiagnosticoEmpresarial";
+import Productos from "./pages/Productos";
 
 const queryClient = new QueryClient();
 
@@ -99,6 +100,10 @@ const AppRoutes = ({ hostLang }: { hostLang: "es" | "en" | "pt" }) => (
     <Route path="/soluciones/diagnostico-empresarial" element={<DiagnosticoEmpresarial lang="es" />} />
     <Route path="/en/solutions/business-diagnosis" element={<DiagnosticoEmpresarial lang="en" />} />
     <Route path="/pt/solucoes/diagnostico-empresarial" element={<DiagnosticoEmpresarial lang="pt" />} />
+    {/* Fase 9 (Sprint 6): productos */}
+    <Route path="/productos" element={<Productos lang="es" />} />
+    <Route path="/en/products" element={<Productos lang="en" />} />
+    <Route path="/pt/produtos" element={<Productos lang="pt" />} />
     <Route path="/metodo-ferova" element={<MetodoFerova lang="es" />} />
     <Route path="/en/ferova-method" element={<MetodoFerova lang="en" />} />
     <Route path="/pt/metodo-ferova" element={<MetodoFerova lang="pt" />} />
