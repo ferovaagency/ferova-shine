@@ -130,11 +130,13 @@
     box-shadow: 0 0 20px hsla(45, 86%, 40%, 0.15), 0 0 60px hsla(45, 86%, 40%, 0.05);
   }
 
-  /* Force light-on-dark tokens for sections with dark inline backgrounds */
+  /* Force light-on-dark tokens for sections with dark inline backgrounds.
+     Texto principal en blanco puro y secundario bien claro para máximo
+     contraste sobre fondos oscuros. */
   .dark-section {
-    --foreground: 0 0% 95%;
-    --card-foreground: 0 0% 95%;
-    --muted-foreground: 0 0% 60%;
+    --foreground: 0 0% 100%;
+    --card-foreground: 0 0% 100%;
+    --muted-foreground: 0 0% 82%;
     --border: 243 20% 22%;
   }
 

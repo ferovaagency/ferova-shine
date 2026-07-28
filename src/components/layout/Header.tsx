@@ -1,14 +1,9 @@
 import { useState } from "react";
 import { Link, useLocation } from "react-router-dom";
-import { Menu, X, ChevronDown } from "lucide-react";
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
+import { Menu, X, Sparkles } from "lucide-react";
 import logoLight from "@/assets/ferova-logo.png.png";
 import { useAnalytics } from "@/hooks/useAnalytics";
+import { trackEvent } from "@/lib/analytics";
 
 interface HeaderProps {
   currentLang?: "es" | "en" | "pt";
@@ -16,97 +11,66 @@ interface HeaderProps {
 }
 
 type NavItem = { label: string; href: string };
+type NavCfg = { primary: NavItem[]; cta: NavItem };
+
+/**
+ * Menú principal — arquitectura por intención (plan Fase 1):
+ * Qué necesitas · Qué hacemos · Resultados · Método · Recursos + CTA diagnóstico.
+ * Sin dropdowns ni servicios sueltos: todo eso vive en /servicios y el footer.
+ */
+const NAV: Record<"es" | "en" | "pt", NavCfg> = {
+  es: {
+    primary: [
+      { label: "Qué necesitas", href: "/soluciones" },
+      { label: "Qué hacemos", href: "/servicios" },
+      { label: "Resultados", href: "/casos-de-exito" },
+      { label: "Método", href: "/metodo-ferova" },
+      { label: "Recursos", href: "/recursos" },
+    ],
+    cta: { label: "Diagnosticar mi empresa", href: "/soluciones/diagnostico-empresarial" },
+  },
+  en: {
+    primary: [
+      { label: "What you need", href: "/en/solutions" },
+      { label: "What we do", href: "/en/services" },
+      { label: "Results", href: "/en/case-studies" },
+      { label: "Method", href: "/en/ferova-method" },
+      { label: "Resources", href: "/en/resources" },
+    ],
+    cta: { label: "Diagnose my business", href: "/en/solutions/business-diagnosis" },
+  },
+  pt: {
+    primary: [
+      { label: "O que você precisa", href: "/pt/solucoes" },
+      { label: "O que fazemos", href: "/pt/servicos" },
+      { label: "Resultados", href: "/pt/casos-de-sucesso" },
+      { label: "Método", href: "/pt/metodo-ferova" },
+      { label: "Recursos", href: "/pt/recursos" },
+    ],
+    cta: { label: "Diagnosticar minha empresa", href: "/pt/solucoes/diagnostico-empresarial" },
+  },
+};
 
 export default function Header({ currentLang, lang }: HeaderProps) {
   const locale = lang ?? currentLang ?? "es";
   const location = useLocation();
   const [mobileOpen, setMobileOpen] = useState(false);
-  const [mobileAgencyOpen, setMobileAgencyOpen] = useState(false);
   const { trackLanguageChange } = useAnalytics();
 
   const homeHref = locale === "pt" ? "/pt" : locale === "en" ? "/en" : "/";
-
-  const NAV: Record<"es" | "en" | "pt", { primary: NavItem[]; agencyLabel: string; agencyItems: NavItem[] }> = {
-    es: {
-      agencyLabel: "Agencia (Infraestructura IA)",
-      primary: [
-        { label: "Inicio", href: "/" },
-        { label: "Soluciones", href: "/soluciones" },
-        { label: "Método", href: "/metodo-ferova" },
-        { label: "Estrategia (Consultorías)", href: "/consultoria-estrategica" },
-        { label: "Precios", href: "/precios" },
-        { label: "Recursos", href: "/recursos" },
-        { label: "Contacto", href: "/contacto" },
-      ],
-      agencyItems: [
-        { label: "Desarrollo Web / E-commerce", href: "/servicios/diseno-web" },
-        { label: "SEO / AIO Mensual", href: "/servicios/seo-ecommerce" },
-        { label: "Optimización de LinkedIn", href: "/servicios/optimizacion-linkedin" },
-        { label: "Contenido LinkedIn", href: "/servicios/contenido-linkedin" },
-      ],
-    },
-    en: {
-      agencyLabel: "Agency (AI Infrastructure)",
-      primary: [
-        { label: "Home", href: "/en" },
-        { label: "Solutions", href: "/en/solutions" },
-        { label: "Method", href: "/en/ferova-method" },
-        { label: "Strategy (Advisory)", href: "/en/strategy-advisory" },
-        { label: "Pricing", href: "/en/pricing" },
-        { label: "Resources", href: "/en/resources" },
-        { label: "Contact", href: "/en/contact" },
-      ],
-      agencyItems: [
-        { label: "Web / E-commerce Development", href: "/en/services/web-design" },
-        { label: "Monthly SEO / AIO", href: "/en/services/ecommerce-seo" },
-        { label: "LinkedIn Optimization", href: "/en/services/linkedin-optimization" },
-        { label: "LinkedIn Content", href: "/en/services/linkedin-content" },
-      ],
-    },
-    pt: {
-      agencyLabel: "Agência (Infraestrutura IA)",
-      primary: [
-        { label: "Início", href: "/pt" },
-        { label: "Soluções", href: "/pt/solucoes" },
-        { label: "Método", href: "/pt/metodo-ferova" },
-        { label: "Estratégia (Consultoria)", href: "/pt/consultoria-estrategica" },
-        { label: "Preços", href: "/pt/precos" },
-        { label: "Recursos", href: "/pt/recursos" },
-        { label: "Contato", href: "/pt/contato" },
-      ],
-      agencyItems: [
-        { label: "Desenvolvimento Web / E-commerce", href: "/pt/design-web" },
-        { label: "SEO / AIO Mensal", href: "/pt/seo-ecommerce" },
-        { label: "Otimização de LinkedIn", href: "/pt/linkedin" },
-        { label: "Conteúdo LinkedIn", href: "/pt/conteudo-linkedin" },
-      ],
-    },
-  };
-
   const cfg = NAV[locale];
 
   const langSwitchLinks =
     locale === "pt"
-      ? [
-          { label: "ES", href: "/" },
-          { label: "EN", href: "/en" },
-        ]
+      ? [{ label: "ES", href: "/" }, { label: "EN", href: "/en" }]
       : locale === "en"
-      ? [
-          { label: "ES", href: "/" },
-          { label: "PT", href: "/pt" },
-        ]
-      : [
-          { label: "EN", href: "/en" },
-          { label: "PT", href: "/pt" },
-        ];
+      ? [{ label: "ES", href: "/" }, { label: "PT", href: "/pt" }]
+      : [{ label: "EN", href: "/en" }, { label: "PT", href: "/pt" }];
 
   const isActive = (href: string) =>
-    href === "/" || href === "/en" || href === "/pt"
-      ? location.pathname === href
-      : location.pathname === href || location.pathname.startsWith(`${href}/`);
+    location.pathname === href || location.pathname.startsWith(`${href}/`);
 
-  const agencyActive = cfg.agencyItems.some((i) => isActive(i.href));
+  const onCta = () => trackEvent("cta_clicked", { cta: "diagnostico", section: "header", language: locale });
 
   return (
     <header className="fixed inset-x-0 top-0 z-50 border-b border-border/60 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/80">
@@ -126,25 +90,7 @@ export default function Header({ currentLang, lang }: HeaderProps) {
             </Link>
           ))}
 
-          <DropdownMenu>
-            <DropdownMenuTrigger
-              className={`inline-flex items-center gap-1 text-sm transition-colors outline-none ${
-                agencyActive ? "text-foreground" : "text-muted-foreground hover:text-foreground"
-              }`}
-            >
-              {cfg.agencyLabel}
-              <ChevronDown className="h-3.5 w-3.5" />
-            </DropdownMenuTrigger>
-            <DropdownMenuContent align="end" className="w-64">
-              {cfg.agencyItems.map((it) => (
-                <DropdownMenuItem key={it.href} asChild>
-                  <Link to={it.href} className="cursor-pointer">{it.label}</Link>
-                </DropdownMenuItem>
-              ))}
-            </DropdownMenuContent>
-          </DropdownMenu>
-
-          <div className="flex items-center gap-1 ml-2 border-l border-border/50 pl-4">
+          <div className="flex items-center gap-1 ml-1 border-l border-border/50 pl-4">
             {langSwitchLinks.map((l) => (
               <Link
                 key={l.label}
@@ -156,6 +102,10 @@ export default function Header({ currentLang, lang }: HeaderProps) {
               </Link>
             ))}
           </div>
+
+          <Link to={cfg.cta.href} onClick={onCta} className="btn-gold ml-1 inline-flex items-center gap-1.5 !px-4 !py-2 text-sm">
+            <Sparkles className="w-4 h-4" /> {cfg.cta.label}
+          </Link>
         </nav>
 
         <button
@@ -183,33 +133,15 @@ export default function Header({ currentLang, lang }: HeaderProps) {
               </Link>
             ))}
 
-            <button
-              type="button"
-              onClick={() => setMobileAgencyOpen((v) => !v)}
-              className={`flex items-center justify-between rounded-xl px-4 py-3 text-sm transition-colors ${
-                agencyActive ? "bg-accent text-accent-foreground" : "text-muted-foreground hover:bg-accent hover:text-accent-foreground"
-              }`}
-              aria-expanded={mobileAgencyOpen}
+            <Link
+              to={cfg.cta.href}
+              onClick={() => { onCta(); setMobileOpen(false); }}
+              className="btn-gold mt-2 inline-flex items-center justify-center gap-1.5"
             >
-              <span>{cfg.agencyLabel}</span>
-              <ChevronDown className={`h-4 w-4 transition-transform ${mobileAgencyOpen ? "rotate-180" : ""}`} />
-            </button>
-            {mobileAgencyOpen && (
-              <div className="ml-3 border-l border-border/50 pl-3 flex flex-col gap-1">
-                {cfg.agencyItems.map((it) => (
-                  <Link
-                    key={it.href}
-                    to={it.href}
-                    onClick={() => setMobileOpen(false)}
-                    className="rounded-lg px-3 py-2 text-sm text-muted-foreground hover:bg-accent hover:text-accent-foreground"
-                  >
-                    {it.label}
-                  </Link>
-                ))}
-              </div>
-            )}
+              <Sparkles className="w-4 h-4" /> {cfg.cta.label}
+            </Link>
 
-            <div className="flex gap-2 mt-2 pt-2 border-t border-border/50">
+            <div className="flex gap-2 mt-3 pt-3 border-t border-border/50">
               {langSwitchLinks.map((l) => (
                 <Link
                   key={l.label}
