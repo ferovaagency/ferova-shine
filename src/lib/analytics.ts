@@ -13,6 +13,7 @@ export type AnalyticsEvent =
   | 'whatsapp_button_clicked' | 'cta_clicked' | 'pricing_card_clicked'
   | 'problem_selected'
   | 'diagnostic_started' | 'diagnostic_completed' | 'lead_submitted' | 'meeting_clicked'
+  | 'tool_started' | 'tool_completed' | 'result_shown' | 'report_requested'
   | 'service_card_clicked' | 'case_study_clicked' | 'blog_clicked'
   | 'social_click'
   | 'resource_downloaded' | 'resource_external_clicked' | 'newsletter_pro_interested'

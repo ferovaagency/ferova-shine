@@ -187,6 +187,16 @@ export const ROUTES: RouteDef[] = [
       pt: "/pt/recursos/briefing-newsletter",
     } },
 
+  // ── Laboratorio Ferova (Sprint de diseño: hub de herramientas) ─────────
+  { id: "laboratorio-ferova", type: "tool", indexable: true, prerender: true, priority: 0.8,
+    paths: { es: "/recursos/herramientas", en: "/en/resources/tools", pt: "/pt/recursos/ferramentas" } },
+  { id: "calc-valor-hora", type: "tool", indexable: true, prerender: true, priority: 0.8,
+    paths: {
+      es: "/recursos/herramientas/calculadora-valor-hora-freelancer",
+      en: "/en/resources/tools/freelance-hourly-rate-calculator",
+      pt: "/pt/recursos/ferramentas/calculadora-valor-hora-freelancer",
+    } },
+
   // ── Newsletter ────────────────────────────────────────────────────────
   { id: "newsletter", type: "newsletter", indexable: true, prerender: true, priority: 0.6,
     paths: { es: "/newsletter", en: "/en/newsletter", pt: "/pt/newsletter" } },

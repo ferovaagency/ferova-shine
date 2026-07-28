@@ -64,6 +64,8 @@ import DiagnosticoEmpresarial from "./pages/DiagnosticoEmpresarial";
 import Productos from "./pages/Productos";
 import AdminLeads from "./pages/admin/AdminLeads";
 import AdminCases from "./pages/admin/AdminCases";
+import LaboratorioFerova from "./pages/tools/LaboratorioFerova";
+import CalculadoraValorHora from "./pages/tools/CalculadoraValorHora";
 
 const queryClient = new QueryClient();
 
@@ -102,6 +104,14 @@ const AppRoutes = ({ hostLang }: { hostLang: "es" | "en" | "pt" }) => (
     <Route path="/soluciones/diagnostico-empresarial" element={<DiagnosticoEmpresarial lang="es" />} />
     <Route path="/en/solutions/business-diagnosis" element={<DiagnosticoEmpresarial lang="en" />} />
     <Route path="/pt/solucoes/diagnostico-empresarial" element={<DiagnosticoEmpresarial lang="pt" />} />
+    {/* Laboratorio Ferova: hub de herramientas + calculadoras */}
+    <Route path="/recursos/herramientas" element={<LaboratorioFerova lang="es" />} />
+    <Route path="/en/resources/tools" element={<LaboratorioFerova lang="en" />} />
+    <Route path="/pt/recursos/ferramentas" element={<LaboratorioFerova lang="pt" />} />
+    <Route path="/recursos/herramientas/calculadora-valor-hora-freelancer" element={<CalculadoraValorHora lang="es" />} />
+    <Route path="/en/resources/tools/freelance-hourly-rate-calculator" element={<CalculadoraValorHora lang="en" />} />
+    <Route path="/pt/recursos/ferramentas/calculadora-valor-hora-freelancer" element={<CalculadoraValorHora lang="pt" />} />
+
     {/* Fase 9 (Sprint 6): productos */}
     <Route path="/productos" element={<Productos lang="es" />} />
     <Route path="/en/products" element={<Productos lang="en" />} />

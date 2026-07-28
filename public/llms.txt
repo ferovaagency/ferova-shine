@@ -36,6 +36,11 @@ Ferova Agency construye webapps modernas con IA integrada para tiendas online, o
 - [Estudio de Visibilidad IA en Ecommerce Hispano 2026](/estudio-visibilidad-ia-ecommerce-hispano-2026): Metodología abierta y resultados públicos.
 - [Calculadora de Visibilidad IA](/herramientas/calculadora-visibilidad-ia): Diagnóstico rápido de citabilidad de tu tienda.
 
+## Laboratorio Ferova (herramientas gratuitas)
+
+- [Laboratorio Ferova](/recursos/herramientas): Hub de calculadoras y diagnósticos gratuitos.
+- [Calculadora de valor por hora para freelancers](/recursos/herramientas/calculadora-valor-hora-freelancer): Cuánto cobrar por hora según gastos, impuestos, vacaciones y margen.
+
 ## Contenido
 
 - [Blog de Ecommerce](/blog): Guías sobre SEO, web apps, IA y conversión.

@@ -903,6 +903,66 @@
   </url>
 
   <url>
+    <loc>https://seoparaecommerce.co/recursos/herramientas</loc>
+    <xhtml:link rel="alternate" hreflang="es" href="https://seoparaecommerce.co/recursos/herramientas"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://seoparaecommerce.co/en/resources/tools"/>
+    <xhtml:link rel="alternate" hreflang="pt" href="https://seoparaecommerce.co/pt/recursos/ferramentas"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://seoparaecommerce.co/recursos/herramientas"/>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
+  <url>
+    <loc>https://seoparaecommerce.co/en/resources/tools</loc>
+    <xhtml:link rel="alternate" hreflang="es" href="https://seoparaecommerce.co/recursos/herramientas"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://seoparaecommerce.co/en/resources/tools"/>
+    <xhtml:link rel="alternate" hreflang="pt" href="https://seoparaecommerce.co/pt/recursos/ferramentas"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://seoparaecommerce.co/recursos/herramientas"/>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
+  <url>
+    <loc>https://seoparaecommerce.co/pt/recursos/ferramentas</loc>
+    <xhtml:link rel="alternate" hreflang="es" href="https://seoparaecommerce.co/recursos/herramientas"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://seoparaecommerce.co/en/resources/tools"/>
+    <xhtml:link rel="alternate" hreflang="pt" href="https://seoparaecommerce.co/pt/recursos/ferramentas"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://seoparaecommerce.co/recursos/herramientas"/>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
+  <url>
+    <loc>https://seoparaecommerce.co/recursos/herramientas/calculadora-valor-hora-freelancer</loc>
+    <xhtml:link rel="alternate" hreflang="es" href="https://seoparaecommerce.co/recursos/herramientas/calculadora-valor-hora-freelancer"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://seoparaecommerce.co/en/resources/tools/freelance-hourly-rate-calculator"/>
+    <xhtml:link rel="alternate" hreflang="pt" href="https://seoparaecommerce.co/pt/recursos/ferramentas/calculadora-valor-hora-freelancer"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://seoparaecommerce.co/recursos/herramientas/calculadora-valor-hora-freelancer"/>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
+  <url>
+    <loc>https://seoparaecommerce.co/en/resources/tools/freelance-hourly-rate-calculator</loc>
+    <xhtml:link rel="alternate" hreflang="es" href="https://seoparaecommerce.co/recursos/herramientas/calculadora-valor-hora-freelancer"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://seoparaecommerce.co/en/resources/tools/freelance-hourly-rate-calculator"/>
+    <xhtml:link rel="alternate" hreflang="pt" href="https://seoparaecommerce.co/pt/recursos/ferramentas/calculadora-valor-hora-freelancer"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://seoparaecommerce.co/recursos/herramientas/calculadora-valor-hora-freelancer"/>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
+  <url>
+    <loc>https://seoparaecommerce.co/pt/recursos/ferramentas/calculadora-valor-hora-freelancer</loc>
+    <xhtml:link rel="alternate" hreflang="es" href="https://seoparaecommerce.co/recursos/herramientas/calculadora-valor-hora-freelancer"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://seoparaecommerce.co/en/resources/tools/freelance-hourly-rate-calculator"/>
+    <xhtml:link rel="alternate" hreflang="pt" href="https://seoparaecommerce.co/pt/recursos/ferramentas/calculadora-valor-hora-freelancer"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://seoparaecommerce.co/recursos/herramientas/calculadora-valor-hora-freelancer"/>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
+  <url>
     <loc>https://seoparaecommerce.co/newsletter</loc>
     <xhtml:link rel="alternate" hreflang="es" href="https://seoparaecommerce.co/newsletter"/>
     <xhtml:link rel="alternate" hreflang="en" href="https://seoparaecommerce.co/en/newsletter"/>
