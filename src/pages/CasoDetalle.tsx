@@ -99,7 +99,7 @@ const CasoDetalle = ({ lang = 'es' }: Props) => {
                     {/* Visual impact bars */}
                     <div className="space-y-3 pt-6 border-t border-border/40">
                       <p className="text-xs uppercase tracking-wide text-muted-foreground mb-3">
-                        {lang === 'es' ? 'Impacto relativo' : lang === 'pt' ? 'Impacto relativo' : 'Relative impact'}
+                        {lang === 'pt' ? 'Impacto relativo' : 'Relative impact'}
                       </p>
                       {(() => {
                         const parsed = caso.results.map((r) => {
