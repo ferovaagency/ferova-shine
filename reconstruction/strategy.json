@@ -1,0 +1,123 @@
+{
+  "version": "0.1.0",
+  "status": "planning_only",
+  "productionChangesAuthorized": false,
+  "sites": {
+    "seo": {
+      "domain": "seoparaecommerce.co",
+      "purpose": "Consultoría SEO senior para ecommerce y agencias",
+      "primaryLanguage": "es",
+      "secondaryLanguages": ["en_selective"],
+      "currency": "USD"
+    },
+    "corporate": {
+      "domain": "ferova.com.co",
+      "purpose": "Oferta corporativa, productos, software, desarrollo e IA no estrictamente SEO",
+      "projectRequirement": "independent_repository_and_deployment"
+    }
+  },
+  "targetSeoArchitecture": [
+    { "path": "/", "status": "rebuild", "intent": "Consultoría SEO senior" },
+    { "path": "/servicios/seo-ecommerce", "status": "rebuild", "intent": "SEO para ecommerce" },
+    { "path": "/seo-para-agencias", "status": "create", "intent": "Partner SEO senior y white label" },
+    { "path": "/auditoria-seo-tecnica", "status": "create", "intent": "Auditoría técnica profunda" },
+    { "path": "/migraciones-seo", "status": "create", "intent": "Prevención y acompañamiento de migraciones" },
+    { "path": "/soluciones", "status": "rebuild", "intent": "Problemas SEO resueltos" },
+    { "path": "/casos-de-exito", "status": "rebuild", "intent": "Hub de evidencia filtrable" },
+    { "path": "/metodo-ferova", "status": "rebuild", "intent": "Método aplicado a SEO" },
+    { "path": "/recursos", "status": "rebuild", "intent": "Hub de conocimiento SEO" },
+    { "path": "/recursos/herramientas", "status": "rebuild", "intent": "Herramientas estrictamente SEO" },
+    { "path": "/recursos/herramientas/evaluador-preparacion-ai-search", "status": "create", "intent": "Evaluación de preparación para AI Search" },
+    { "path": "/blog", "status": "rebuild", "intent": "Archivo editorial SEO" },
+    { "path": "/sobre-nosotros", "status": "create", "intent": "Mafe, Ferova y credenciales verificables" },
+    { "path": "/precios", "status": "rebuild", "intent": "Modalidades de consultoría en USD" },
+    { "path": "/contacto", "status": "rebuild", "intent": "Captación y calificación" }
+  ],
+  "targetCorporateArchitecture": [
+    { "path": "/", "status": "create", "intent": "Presentación corporativa de Ferova" },
+    { "path": "/productos", "status": "create", "intent": "Productos y software de Ferova" },
+    { "path": "/servicios/desarrollo-web", "status": "create", "intent": "Desarrollo web y Web Apps" },
+    { "path": "/servicios/capacitacion-ia", "status": "create", "intent": "Capacitación e implementación de IA" },
+    { "path": "/servicios/consultoria", "status": "create", "intent": "Consultoría empresarial y digital no SEO" },
+    { "path": "/recursos", "status": "create", "intent": "Recursos corporativos" },
+    { "path": "/recursos/herramientas", "status": "create", "intent": "Herramientas operativas trasladadas" },
+    { "path": "/newsletter", "status": "conditional", "intent": "Newsletter corporativa si continúa" },
+    { "path": "/sobre-ferova", "status": "create", "intent": "Empresa, equipo y credenciales corporativas" },
+    { "path": "/contacto", "status": "create", "intent": "Captación de proyectos no SEO" }
+  ],
+  "transferRules": [
+    {
+      "match": "exact",
+      "paths": ["/productos", "/en/products", "/pt/produtos"],
+      "decision": "move_to_ferova",
+      "destination": "https://ferova.com.co/productos",
+      "condition": "receiver_must_exist_and_match_intent"
+    },
+    {
+      "match": "prefix",
+      "paths": ["/servicios/diseno-web", "/en/services/web-design", "/pt/design-web"],
+      "decision": "move_to_ferova",
+      "destination": "https://ferova.com.co/servicios/desarrollo-web",
+      "condition": "receiver_must_exist_and_match_intent"
+    },
+    {
+      "match": "prefix",
+      "paths": ["/capacitacion-ia", "/en/ai-training", "/pt/treinamento-ia"],
+      "decision": "move_to_ferova",
+      "destination": "https://ferova.com.co/servicios/capacitacion-ia",
+      "condition": "receiver_must_exist_and_match_intent"
+    },
+    {
+      "match": "prefix",
+      "paths": [
+        "/recursos/herramientas/calculadora-valor-hora-freelancer",
+        "/en/resources/tools/freelance-hourly-rate-calculator",
+        "/pt/recursos/ferramentas/calculadora-valor-hora-freelancer",
+        "/recursos/analizador-contratos",
+        "/en/resources/contract-analyzer",
+        "/pt/recursos/analisador-contratos",
+        "/recursos/comparador-propuestas",
+        "/en/resources/proposal-comparator",
+        "/pt/recursos/comparador-propostas",
+        "/recursos/briefing-newsletter",
+        "/en/resources/newsletter-briefing",
+        "/pt/recursos/briefing-newsletter"
+      ],
+      "decision": "move_to_ferova",
+      "destination": "https://ferova.com.co/recursos/herramientas",
+      "condition": "map_each_tool_to_an_equivalent_receiver"
+    },
+    {
+      "match": "prefix",
+      "paths": ["/newsletter", "/en/newsletter", "/pt/newsletter", "/newsletter-pro", "/en/newsletter-pro", "/pt/newsletter-pro"],
+      "decision": "move_to_ferova_conditional",
+      "destination": "https://ferova.com.co/newsletter",
+      "condition": "confirm_newsletter_continues"
+    },
+    {
+      "match": "prefix",
+      "paths": [
+        "/servicios/pauta-digital",
+        "/en/services/digital-ads",
+        "/pt/anuncios-digitais",
+        "/servicios/optimizacion-linkedin",
+        "/en/services/linkedin-optimization",
+        "/pt/linkedin",
+        "/servicios/contenido-linkedin",
+        "/en/services/linkedin-content",
+        "/pt/conteudo-linkedin"
+      ],
+      "decision": "retire_or_move_pending_evidence",
+      "destination": "",
+      "condition": "validate_search_console_backlinks_conversions_and_receiver"
+    }
+  ],
+  "nonNegotiableGates": [
+    "No 301 or 410 before SEO evidence review",
+    "No bulk redirect to either homepage",
+    "No external redirect before an equivalent receiver is live",
+    "No production, DNS or credential changes during Phase 0",
+    "Public blog, resources and cases must return crawlable first-response HTML",
+    "Every public case metric requires source, date, definition and permission"
+  ]
+}

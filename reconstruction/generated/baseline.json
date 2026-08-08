@@ -1,0 +1,60 @@
+{
+  "strategyVersion": "0.1.0",
+  "productionChangesAuthorized": false,
+  "sitemapUrlCount": 161,
+  "languages": {
+    "es": 85,
+    "en": 38,
+    "pt": 38
+  },
+  "decisions": {
+    "keep_and_rebuild": 10,
+    "language_scope_review": 52,
+    "manual_seo_review": 63,
+    "move_to_ferova": 21,
+    "retire_or_move_pending_evidence": 6,
+    "move_to_ferova_conditional": 9
+  },
+  "appRouteDeclarations": 162,
+  "routeRegistryEntries": 38,
+  "targetSeoPages": 15,
+  "targetCorporatePages": 10,
+  "targetSeoPagesNotPresentInCurrentSitemap": [
+    "/seo-para-agencias",
+    "/auditoria-seo-tecnica",
+    "/migraciones-seo",
+    "/recursos/herramientas/evaluador-preparacion-ai-search",
+    "/sobre-nosotros"
+  ],
+  "currentSupabaseObjects": [
+    "ai_conversations",
+    "blog_posts",
+    "email_send_log",
+    "email_send_state",
+    "email_unsubscribe_tokens",
+    "newsletter_editions",
+    "newsletter_subscribers",
+    "suppressed_emails",
+    "user_roles",
+    "newsletter_editions_public",
+    "blog_slugify",
+    "delete_email",
+    "email_queue_dispatch",
+    "enqueue_email",
+    "has_role",
+    "move_to_dlq",
+    "read_email_batch"
+  ],
+  "missingCaseStudyObjects": [
+    "case_studies",
+    "case_metrics",
+    "metric_snapshots",
+    "case_timeline_events",
+    "evidence_assets",
+    "case_change_log",
+    "consents"
+  ],
+  "knownFrontendBackendMismatch": [
+    "admin_inbox is referenced by the frontend but absent from generated database types"
+  ]
+}
