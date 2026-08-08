@@ -39,16 +39,16 @@ async function fetchDynamicSlugs(): Promise<string[]> {
       // anterior (`status=eq.published`) devolvía HTTP 400 y NINGÚN post se
       // prerenderizaba. Newsletter se lee de la vista pública ya filtrada.
       const now = new Date().toISOString();
-      const [blogRes, editionsRes] = await Promise.all([
-        fetch(`${url}/rest/v1/blog_posts?select=slug&active=eq.true&published_at=lte.${now}`, { headers }),
+      const [blogRes, editionsRes, casesRes] = await Promise.all([
+        fetch(`${url}/rest/v1/blog_posts?select=slug,language&active=eq.true&published_at=lte.${now}`, { headers }),
         fetch(`${url}/rest/v1/newsletter_editions_public?select=slug`, { headers }),
+        fetch(`${url}/rest/v1/case_studies_public?select=slug`, { headers }),
       ]);
       if (blogRes.ok) {
-        const posts = (await blogRes.json()) as { slug: string }[];
-        posts.forEach((p) => {
-          routes.push(`/blog/${p.slug}`, `/en/blog/${p.slug}`, `/pt/blog/${p.slug}`);
-        });
+        const posts = (await blogRes.json()) as { slug: string; language: "es" | "en" }[];
+        posts.forEach((p) => routes.push(p.language === "en" ? `/en/blog/${p.slug}` : `/blog/${p.slug}`));
       }
+      if (casesRes.ok) ((await casesRes.json()) as { slug: string }[]).forEach((item) => routes.push(`/casos-de-exito/${item.slug}`));
       if (editionsRes.ok) {
         const eds = (await editionsRes.json()) as { slug: string }[];
         eds.forEach((e) => {

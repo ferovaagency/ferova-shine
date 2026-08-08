@@ -68,6 +68,7 @@ export type Database = {
           excerpt_pt: string | null
           id: string
           keyword: string | null
+          language: string
           meta_description: string | null
           meta_description_en: string | null
           meta_description_pt: string | null
@@ -95,6 +96,7 @@ export type Database = {
           excerpt_pt?: string | null
           id?: string
           keyword?: string | null
+          language?: string
           meta_description?: string | null
           meta_description_en?: string | null
           meta_description_pt?: string | null
@@ -122,6 +124,7 @@ export type Database = {
           excerpt_pt?: string | null
           id?: string
           keyword?: string | null
+          language?: string
           meta_description?: string | null
           meta_description_en?: string | null
           meta_description_pt?: string | null

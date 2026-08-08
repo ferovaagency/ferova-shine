@@ -3,6 +3,7 @@ import { supabase } from "./client";
 
 export type CmsRole = "owner" | "editor" | "reviewer";
 export type ContentStatus = "draft" | "in_review" | "approved" | "scheduled" | "published" | "archived";
+export type CaseResultHighlight = { label: string; value: string; context?: string };
 
 export type CmsCaseStudy = {
   id: string;
@@ -18,6 +19,7 @@ export type CmsCaseStudy = {
   learnings: string;
   limitations: string | null;
   service_keys: string[];
+  result_highlights: CaseResultHighlight[];
   started_at: string | null;
   last_observation_at: string | null;
   scheduled_for: string | null;
@@ -46,6 +48,12 @@ type CmsDatabase = {
         Row: CmsCaseStudy;
         Insert: CmsCaseInsert;
         Update: CmsCaseUpdate;
+        Relationships: [];
+      };
+      consents: {
+        Row: { id: string; client_or_representative: string; publication_scope: string; permitted_data: string[]; granted_at: string; expires_at: string | null; authorization_file_path: string | null; revoked_at: string | null; notes: string | null; created_at: string; created_by: string };
+        Insert: { id?: string; client_or_representative: string; publication_scope: string; permitted_data?: string[]; granted_at: string; expires_at?: string | null; authorization_file_path?: string | null; revoked_at?: string | null; notes?: string | null; created_at?: string; created_by: string };
+        Update: { client_or_representative?: string; publication_scope?: string; permitted_data?: string[]; granted_at?: string; expires_at?: string | null; authorization_file_path?: string | null; revoked_at?: string | null; notes?: string | null };
         Relationships: [];
       };
     };

@@ -1,12 +1,12 @@
 import { FormEvent, useEffect, useState } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
-import { AlertCircle, ArrowLeft, CheckCircle2, Loader2, Save } from "lucide-react";
+import { AlertCircle, ArrowLeft, CheckCircle2, Loader2, Save, Send } from "lucide-react";
 import { toast } from "sonner";
 import AdminLayout from "@/components/admin/AdminLayout";
 import { supabase } from "@/integrations/supabase/client";
-import { caseCms, type CmsCaseStudy, type ContentStatus } from "@/integrations/supabase/cms-types";
+import { caseCms, type CaseResultHighlight, type CmsCaseStudy, type ContentStatus } from "@/integrations/supabase/cms-types";
 
-type FormState = Pick<CmsCaseStudy, "slug" | "client_public_name" | "sector" | "country" | "summary" | "challenge" | "diagnosis" | "intervention" | "learnings" | "limitations" | "service_keys" | "started_at" | "last_observation_at">;
+type FormState = Pick<CmsCaseStudy, "slug" | "client_public_name" | "sector" | "country" | "summary" | "challenge" | "diagnosis" | "intervention" | "learnings" | "limitations" | "service_keys" | "result_highlights" | "started_at" | "last_observation_at">;
 
 const EMPTY_FORM: FormState = {
   slug: "",
@@ -20,6 +20,7 @@ const EMPTY_FORM: FormState = {
   learnings: "",
   limitations: "",
   service_keys: [],
+  result_highlights: [],
   started_at: null,
   last_observation_at: null,
 };
@@ -34,6 +35,8 @@ export default function AdminCaseEditor() {
   const [loading, setLoading] = useState(Boolean(id));
   const [saving, setSaving] = useState(false);
   const [migrationPending, setMigrationPending] = useState(false);
+  const [consentName, setConsentName] = useState("");
+  const [consentConfirmed, setConsentConfirmed] = useState(false);
 
   useEffect(() => {
     if (!id) return;
@@ -56,6 +59,7 @@ export default function AdminCaseEditor() {
           learnings: data.learnings,
           limitations: data.limitations,
           service_keys: data.service_keys,
+          result_highlights: data.result_highlights ?? [],
           started_at: data.started_at,
           last_observation_at: data.last_observation_at,
         });
@@ -114,6 +118,24 @@ export default function AdminCaseEditor() {
     void save("draft");
   };
 
+  const publish = async () => {
+    if (!id) { toast.error("Guarda primero el caso para poder publicarlo."); return; }
+    if (!consentName.trim() || !consentConfirmed) { toast.error("Confirma el consentimiento y registra quién autorizó la publicación."); return; }
+    if (form.result_highlights.length === 0) { toast.error("Agrega al menos un resultado verificable."); return; }
+    setSaving(true);
+    const { data: { session } } = await supabase.auth.getSession();
+    if (!session?.user) { toast.error("Tu sesión expiró."); setSaving(false); return; }
+    const { data: consent, error: consentError } = await caseCms.from("consents").insert({
+      client_or_representative: consentName.trim(), publication_scope: "Publicación del caso de éxito y sus resultados en seoparaecommerce.co", permitted_data: ["identidad autorizada", "narrativa", "resultados destacados"], granted_at: new Date().toISOString().slice(0, 10), created_by: session.user.id,
+    }).select("id").single();
+    if (consentError || !consent) { toast.error(consentError?.message || "No fue posible registrar el consentimiento."); setSaving(false); return; }
+    const approval = await caseCms.from("case_studies").update({ ...form, status: "approved", consent_id: consent.id, approved_by: session.user.id, approved_at: new Date().toISOString(), owner_id: session.user.id }).eq("id", id);
+    if (approval.error) { toast.error(approval.error.message); setSaving(false); return; }
+    const publication = await caseCms.from("case_studies").update({ status: "published", published_at: new Date().toISOString(), consent_id: consent.id, approved_by: session.user.id, approved_at: new Date().toISOString() }).eq("id", id);
+    if (publication.error) toast.error(publication.error.message); else { setStatus("published"); toast.success("Caso y resultados publicados."); }
+    setSaving(false);
+  };
+
   if (loading) return <AdminLayout title="Caso de éxito"><div className="flex justify-center py-16"><Loader2 className="h-6 w-6 animate-spin" /></div></AdminLayout>;
 
   return (
@@ -151,6 +173,12 @@ export default function AdminCaseEditor() {
             <Field label="Aprendizajes"><textarea rows={4} className={fieldClass} value={form.learnings} onChange={(e) => update("learnings", e.target.value)} /></Field>
             <Field label="Limitaciones"><textarea rows={3} className={fieldClass} value={form.limitations ?? ""} onChange={(e) => update("limitations", e.target.value)} placeholder="Aclara atribución, periodos incompletos o factores externos." /></Field>
           </section>
+
+          <section className="glass-card p-5 sm:p-6">
+            <h2 className="font-display text-lg font-semibold">Resultados publicados</h2>
+            <p className="mt-2 text-sm text-muted-foreground">Un resultado por línea, en formato: indicador | valor | contexto.</p>
+            <textarea rows={7} className={`${fieldClass} font-mono`} value={form.result_highlights.map((item) => `${item.label} | ${item.value} | ${item.context ?? ""}`).join("\n")} onChange={(e) => update("result_highlights", e.target.value.split("\n").filter(Boolean).map((line): CaseResultHighlight => { const [label = "", value = "", context = ""] = line.split("|").map((part) => part.trim()); return { label, value, context }; }).filter((item) => item.label && item.value))} placeholder="Tráfico orgánico | +48 % | Comparación interanual\nErrores críticos | 0 | Tras la migración" />
+          </section>
         </div>
 
         <aside className="space-y-5">
@@ -163,14 +191,10 @@ export default function AdminCaseEditor() {
             </div>
           </section>
           <section className="glass-card p-5">
-            <h2 className="font-semibold">Antes de publicar</h2>
-            <ul className="mt-3 space-y-3 text-sm text-muted-foreground">
-              <li>○ Consentimiento vigente del cliente</li>
-              <li>○ Métricas con línea base y fuente</li>
-              <li>○ Evidencia vinculada y revisada</li>
-              <li>○ Aprobación de Reviewer u Owner</li>
-            </ul>
-            <p className="mt-4 text-xs text-muted-foreground">Estos módulos se habilitan después de crear el caso base.</p>
+            <h2 className="font-semibold">Consentimiento y publicación</h2>
+            <Field label="Persona que autoriza"><input className={fieldClass} value={consentName} onChange={(e) => setConsentName(e.target.value)} placeholder="Nombre del cliente o representante" /></Field>
+            <label className="mt-4 flex items-start gap-3 text-sm text-muted-foreground"><input type="checkbox" className="mt-1" checked={consentConfirmed} onChange={(e) => setConsentConfirmed(e.target.checked)} /><span>Confirmo que existe autorización para publicar la narrativa y los resultados incluidos.</span></label>
+            <button type="button" disabled={saving || migrationPending || !id || status === "published"} onClick={() => void publish()} className="mt-5 inline-flex w-full items-center justify-center gap-2 rounded-xl bg-emerald-600 px-4 py-2.5 text-sm font-medium text-white disabled:opacity-50"><Send className="h-4 w-4" /> {status === "published" ? "Publicado" : "Aprobar y publicar"}</button>
           </section>
         </aside>
       </form>

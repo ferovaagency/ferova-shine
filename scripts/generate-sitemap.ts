@@ -101,20 +101,24 @@ async function fetchDynamic(supabaseUrl?: string, supabaseKey?: string): Promise
     // publica con active=true + published_at<=now (NO existe columna `status`);
     // las ediciones se leen de la vista pública ya filtrada.
     const now = new Date().toISOString();
-    const [blogRes, edRes] = await Promise.all([
-      fetch(`${url}/rest/v1/blog_posts?select=slug&active=eq.true&published_at=lte.${now}`, { headers }),
+    const [blogRes, edRes, casesRes] = await Promise.all([
+      fetch(`${url}/rest/v1/blog_posts?select=slug,language&active=eq.true&published_at=lte.${now}`, { headers }),
       fetch(`${url}/rest/v1/newsletter_editions_public?select=slug`, { headers }),
+      fetch(`${url}/rest/v1/case_studies_public?select=slug`, { headers }),
     ]);
     if (blogRes.ok) {
-      const posts = (await blogRes.json()) as { slug: string }[];
+      const posts = (await blogRes.json()) as { slug: string; language: "es" | "en" }[];
       for (const p of posts) {
         entries.push({
-          loc: `/blog/${p.slug}`,
-          alternates: { es: `/blog/${p.slug}`, en: `/en/blog/${p.slug}`, pt: `/pt/blog/${p.slug}` },
+          loc: p.language === "en" ? `/en/blog/${p.slug}` : `/blog/${p.slug}`,
           priority: 0.7,
           changefreq: "monthly",
         });
       }
+    }
+    if (casesRes.ok) {
+      const publishedCases = (await casesRes.json()) as { slug: string }[];
+      for (const item of publishedCases) entries.push({ loc: `/casos-de-exito/${item.slug}`, priority: 0.7, changefreq: "monthly" });
     }
     if (edRes.ok) {
       const eds = (await edRes.json()) as { slug: string }[];

@@ -51,6 +51,7 @@ const Blog = ({ lang = 'es' }: Props) => {
         const { data } = await supabase
           .from('blog_posts')
           .select('slug, title, excerpt, author, category, content, created_at, published_at')
+          .eq('language', lang === 'en' ? 'en' : 'es')
           .eq('active', true)
           .lte('published_at', new Date().toISOString())
           .order('published_at', { ascending: false })

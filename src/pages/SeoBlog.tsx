@@ -32,7 +32,7 @@ export default function SeoBlog() {
   useEffect(() => {
     let active = true;
     const load = async () => {
-      const { data } = await supabase.from("blog_posts").select("slug, title, excerpt, category, content, published_at").eq("active", true).lte("published_at", new Date().toISOString()).order("published_at", { ascending: false }).limit(50);
+      const { data } = await supabase.from("blog_posts").select("slug, title, excerpt, category, content, published_at").eq("language", "es").eq("active", true).lte("published_at", new Date().toISOString()).order("published_at", { ascending: false }).limit(50);
       if (!active || !data) return;
       setDbPosts(data.map((p) => ({ slug: p.slug, title: p.title, excerpt: p.excerpt || "Artículo del archivo editorial SEO.", category: categoryFromDb(p.category), readTime: readTime(p.content || ""), publishedAt: p.published_at || undefined })));
     };

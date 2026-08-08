@@ -37,7 +37,8 @@ import BlogPost from "./pages/BlogPost";
 import Recursos from "./pages/Recursos";
 import SobreNosotros from "./pages/SobreNosotros";
 import NewsletterPro from "./pages/NewsletterPro";
-import AdminBlog from "./pages/AdminBlog";
+import AdminBlogList from "./pages/admin/AdminBlogList";
+import AdminBlogEditor from "./pages/admin/AdminBlogEditor";
 import VCard from "./pages/VCard";
 import NewsletterPage from "./pages/NewsletterPage";
 import NewsletterArchivePage from "./pages/NewsletterArchivePage";
@@ -167,9 +168,9 @@ const AppRoutes = ({ hostLang }: { hostLang: "es" | "en" | "pt" }) => (
     <Route path="/admin/casos" element={<AdminGuard><AdminCases /></AdminGuard>} />
     <Route path="/admin/casos/nuevo" element={<AdminGuard><AdminCaseEditor /></AdminGuard>} />
     <Route path="/admin/casos/:id/editar" element={<AdminGuard><AdminCaseEditor /></AdminGuard>} />
-    <Route path="/admin/blog" element={<AdminGuard><AdminBlog lang={hostLang} /></AdminGuard>} />
-    {/* Compatibilidad: la ruta antigua /admin-blog redirige a /admin/blog */}
-    <Route path="/admin-blog" element={<Navigate replace to="/admin/blog" />} />
+    <Route path="/admin/blog" element={<AdminGuard><AdminBlogList /></AdminGuard>} />
+    <Route path="/admin/blog/nuevo" element={<AdminGuard><AdminBlogEditor /></AdminGuard>} />
+    <Route path="/admin/blog/:id/editar" element={<AdminGuard><AdminBlogEditor /></AdminGuard>} />
     <Route path="/recursos" element={<SeoResources />} />
     <Route path="/resources" element={<Recursos lang={hostLang} />} />
     <Route path="/nosotros" element={<SobreNosotros lang={hostLang} />} />
@@ -198,7 +199,6 @@ const AppRoutes = ({ hostLang }: { hostLang: "es" | "en" | "pt" }) => (
     <Route path="/en/contact" element={<Contacto lang="en" />} />
     <Route path="/en/blog" element={<Blog lang="en" />} />
     <Route path="/en/blog/:slug" element={<BlogPost lang="en" />} />
-    <Route path="/en/admin-blog" element={<Navigate replace to="/admin/blog" />} />
     <Route path="/en/resources" element={<Recursos lang="en" />} />
     <Route path="/en/about" element={<SobreNosotros lang="en" />} />
     <Route path="/en/terms" element={<Terminos lang="en" />} />
@@ -217,8 +217,8 @@ const AppRoutes = ({ hostLang }: { hostLang: "es" | "en" | "pt" }) => (
     <Route path="/pt/casos-de-sucesso" element={<CasosDeExito lang="pt" />} />
     <Route path="/pt/casos-de-sucesso/:id" element={<CasoDetalle lang="pt" />} />
     <Route path="/pt/contato" element={<Contacto lang="pt" />} />
-    <Route path="/pt/blog" element={<Blog lang="pt" />} />
-    <Route path="/pt/blog/:slug" element={<BlogPost lang="pt" />} />
+    <Route path="/pt/blog" element={<Navigate replace to="/blog" />} />
+    <Route path="/pt/blog/:slug" element={<Navigate replace to="/blog" />} />
     <Route path="/pt/recursos" element={<Recursos lang="pt" />} />
     <Route path="/pt/sobre-nos" element={<SobreNosotros lang="pt" />} />
     <Route path="/pt/termos" element={<Terminos lang="pt" />} />
