@@ -1,5 +1,7 @@
 # Reconstrucción de seoparaecommerce.co
 
+El sistema visual de la reconstrucción se documenta en [`design-system.md`](./design-system.md).
+
 Este directorio es la fuente de verdad técnica para la reconstrucción. Su estado inicial es exclusivamente de planificación e inventario: no autoriza cambios de producción, DNS, credenciales ni redirecciones.
 
 ## Separación de propiedades

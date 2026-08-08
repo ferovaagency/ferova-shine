@@ -77,10 +77,13 @@ export default function Header({ currentLang, lang }: HeaderProps) {
       <div className="container mx-auto flex h-20 items-center justify-between px-4 md:px-6">
         <Link to={homeHref} className="flex items-center gap-3" onClick={() => setMobileOpen(false)}>
           {locale === "es" ? (
-            <span className="leading-none">
-              <span className="block font-display text-base font-bold tracking-[0.08em] text-foreground sm:text-lg">SEO PARA ECOMMERCE</span>
-              <span className="mt-1 block text-[10px] font-semibold uppercase tracking-[0.24em] text-blue-600">by Ferova</span>
-            </span>
+            <>
+              <span className="seo-brand-mark" aria-hidden="true"><img src={logoLight} alt="" /></span>
+              <span className="leading-none">
+                <span className="block font-display text-base font-bold tracking-[0.08em] text-foreground sm:text-lg">SEO PARA ECOMMERCE</span>
+                <span className="mt-1 block text-[10px] font-semibold uppercase tracking-[0.24em] text-[#8c6905]">by Ferova</span>
+              </span>
+            </>
           ) : (
             <img src={logoLight} alt="Ferova Agency" className="h-12 w-auto sm:h-14" />
           )}

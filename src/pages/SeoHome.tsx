@@ -47,7 +47,7 @@ const steps = [
 ];
 
 const SeoHome = () => (
-  <div className="min-h-screen bg-white text-slate-950">
+  <div className="seo-brand min-h-screen bg-white text-slate-950">
     <SEO
       title="Consultora SEO Senior para Ecommerce y Agencias | Ferova"
       description="Consultoría SEO senior para ecommerce y agencias: auditorías técnicas, arquitectura, migraciones, crecimiento orgánico y preparación para AI Search."
@@ -65,7 +65,7 @@ const SeoHome = () => (
     <Header lang="es" />
 
     <main>
-      <section className="relative overflow-hidden bg-[#071a2f] pb-24 pt-36 text-white md:pb-32 md:pt-44">
+      <section className="seo-brand-hero relative overflow-hidden bg-[#071a2f] pb-24 pt-36 text-white md:pb-32 md:pt-44">
         <div className="absolute -right-24 top-16 h-80 w-80 rounded-full bg-cyan-400/10 blur-3xl" />
         <div className="absolute -left-20 bottom-0 h-72 w-72 rounded-full bg-blue-600/20 blur-3xl" />
         <div className="container relative mx-auto grid items-end gap-14 px-4 md:px-6 lg:grid-cols-[1fr_340px]">
@@ -89,7 +89,7 @@ const SeoHome = () => (
               </Link>
             </div>
           </div>
-          <aside className="rounded-2xl border border-white/10 bg-white/[0.06] p-6 backdrop-blur">
+          <aside className="seo-glass-panel rounded-2xl p-6">
             <p className="text-sm font-semibold text-cyan-300">Intervención senior directa</p>
             <ul className="mt-5 space-y-4 text-sm leading-6 text-slate-300">
               {["Decisiones basadas en evidencia", "Prioridades claras para el equipo", "SEO técnico conectado con negocio"].map((item) => (
@@ -118,7 +118,7 @@ const SeoHome = () => (
                 "Backlogs extensos sin criterio de impacto o dependencia.",
                 "Migraciones y cambios técnicos sin control de riesgo orgánico.",
               ].map((item) => (
-                <div key={item} className="rounded-2xl border border-slate-200 bg-slate-50 p-6 text-sm leading-6 text-slate-700">
+                <div key={item} className="seo-bento-card rounded-2xl p-6 text-sm leading-6 text-slate-700">
                   {item}
                 </div>
               ))}
@@ -138,7 +138,7 @@ const SeoHome = () => (
           </div>
           <div className="mt-12 grid gap-5 md:grid-cols-2">
             {services.map(({ icon: Icon, title, description, href }) => (
-              <Link key={href} to={href} className="group rounded-2xl border border-slate-200 bg-white p-7 transition hover:-translate-y-1 hover:border-blue-300 hover:shadow-xl hover:shadow-slate-200/60">
+              <Link key={href} to={href} className="seo-bento-card group rounded-2xl p-7">
                 <div className="flex items-start justify-between gap-6">
                   <span className="rounded-xl bg-blue-50 p-3 text-blue-700"><Icon className="h-6 w-6" /></span>
                   <ArrowRight className="h-5 w-5 text-slate-400 transition group-hover:translate-x-1 group-hover:text-blue-700" />
@@ -173,7 +173,7 @@ const SeoHome = () => (
         </div>
       </section>
 
-      <section className="bg-[#071a2f] py-20 text-white md:py-28">
+      <section className="seo-brand-hero relative overflow-hidden bg-[#071a2f] py-20 text-white md:py-28">
         <div className="container mx-auto grid gap-12 px-4 md:px-6 lg:grid-cols-[1fr_0.85fr] lg:items-center lg:gap-20">
           <div>
             <p className="text-xs font-semibold uppercase tracking-[0.2em] text-cyan-300">SEO + AI Search</p>
@@ -183,7 +183,7 @@ const SeoHome = () => (
               Evaluar preparación para AI Search <ArrowRight className="h-4 w-4" />
             </Link>
           </div>
-          <div className="rounded-3xl border border-white/10 bg-white/[0.06] p-8">
+          <div className="seo-glass-panel rounded-3xl p-8">
             <Bot className="h-10 w-10 text-cyan-300" />
             <h3 className="mt-7 font-display text-2xl font-bold">Una capa del sistema SEO</h3>
             <p className="mt-4 leading-7 text-slate-300">El evaluador es una autoevaluación orientativa. Para conocer visibilidad, menciones y brechas competitivas se necesita medición y análisis específico.</p>
