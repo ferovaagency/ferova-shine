@@ -1,31 +1,7 @@
 <!doctype html>
 <html lang="es">
   <head>
-    <!-- Google Tag Manager -->
-    <script>
-      (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
-          new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
-          j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
-          'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
-          })(window,document,'script','dataLayer','GTM-59CS8MFN');
-    </script>
-    <!-- End Google Tag Manager -->
-    <!-- Sortlist Radar -->
-    <script>
-      !function(e){"use strict";var a=e&&e.namespace;if(a&&e.profileId&&e.cdn){var r=window[a];if(r&&Array.isArray(r)||(r=window[a]=[]),!r.initialized&&!r._loaded)if(r._loaded)console&&console.warn("[Radar] Duplicate initialization attempted");else{r._loaded=!0;["track","page","identify","group","alias","ready","debug","on","off","once","trackClick","trackSubmit","trackLink","trackForm","pageview","screen","reset","register","setAnonymousId","addSourceMiddleware","addIntegrationMiddleware","addDestinationMiddleware"].forEach((function(e){var i;r[e]=(i=e,function(){var e=window[a];if(e.initialized)return e[i].apply(e,arguments);var r=[].slice.call(arguments);return r.unshift(i),e.push(r),e})})),r.bootstrap=function(){var a=document.createElement("script");a.async=!0,a.type="text/javascript",a.id="__radar__",a.dataset.settings=JSON.stringify(e),a.src="https://"+e.cdn+"/releases/latest/radar.min.js";var r=document.scripts[0];r.parentNode.insertBefore(a,r)},r.bootstrap()}}else"undefined"!=typeof console&&console.error("[Radar] Configuration incomplete")}({
-        "cdn": "collector.sortlist.com",
-        "apiEndpoint": "radar.sortlist.com",
-        "profileId": "roMUHc2t0Ak",
-        "namespace": "SortlistRadar",
-        features: {
-          sessionTracking: true,
-          formTracking: true,
-          clickTracking: true,
-          downloadTracking: true,
-        },
-      });
-    </script>
-    <!-- End Sortlist Radar -->
+    <!-- Tracking is loaded only after an explicit cookie choice. -->
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Ferova Agency – Web Apps de Alto Rendimiento para E-commerce</title>
@@ -152,44 +128,8 @@
          tags específicos; el prerender los serializa al HTML estático. -->
 
 
-    <!-- Google tag (gtag.js) with Consent Mode v2 default denied -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-FPTVQ5XHE6"></script>
-    <script>
-      window.dataLayer = window.dataLayer || [];
-      function gtag(){dataLayer.push(arguments);}
-      gtag('consent', 'default', {
-        ad_storage: 'denied',
-        ad_user_data: 'denied',
-        ad_personalization: 'denied',
-        analytics_storage: 'denied',
-        functionality_storage: 'granted',
-        security_storage: 'granted',
-        wait_for_update: 500
-      });
-      try {
-        var c = JSON.parse(localStorage.getItem('cookie_consent') || '{}');
-        gtag('consent', 'update', {
-          analytics_storage: c.analytics ? 'granted' : 'denied',
-          ad_storage: c.marketing ? 'granted' : 'denied',
-          ad_user_data: c.marketing ? 'granted' : 'denied',
-          ad_personalization: c.marketing ? 'granted' : 'denied'
-        });
-      } catch(e) {}
-      gtag('js', new Date());
-      gtag('config', 'G-FPTVQ5XHE6');
-    </script>
   </head>
   <body>
-    <!-- Google Tag Manager (noscript) -->
-    <noscript
-      ><iframe
-        src="https://www.googletagmanager.com/ns.html?id=GTM-59CS8MFN"
-        height="0"
-        width="0"
-        style="display:none;visibility:hidden"
-      ></iframe
-    ></noscript>
-    <!-- End Google Tag Manager (noscript) -->
     <!--
       root se deja vacio a proposito: vite-prerender-plugin inserta el HTML de cada
       ruta anteponiendo el contenido real sin vaciar lo que ya hubiera dentro de root.

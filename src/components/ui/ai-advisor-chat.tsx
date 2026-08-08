@@ -15,8 +15,8 @@ const CHAT_URL = `${import.meta.env.VITE_SUPABASE_URL}/functions/v1/ai-sales-adv
 const t = {
   es: {
     title: 'Fera · Cotizaciones',
-    subtitle: 'Capacidad especializada para agencias',
-    welcome: 'Hola. Soy **Fera**, el asistente de cotización de Ferova.\n\nCuéntame qué capacidad necesita tu agencia: SEO técnico para uno de tus clientes, mantenimiento web mensual o producción de landing pages.',
+    subtitle: 'Asistente con IA para agencias',
+    welcome: 'Soy **Fera**, el asistente con inteligencia artificial de Ferova. No soy una persona y puedo equivocarme; el alcance y el precio siempre los revisa una persona. No envíes datos sensibles. Puedes escribir **AGENTE** cuando quieras hablar con alguien del equipo. Consulta nuestra [política de privacidad](/privacidad#ia).\n\n¿Qué capacidad necesita tu agencia?',
     placeholder: 'Escribe tu mensaje...',
     badge: 'Cotizar con Fera',
     error: 'Hubo un error. Intenta de nuevo.',
@@ -28,8 +28,8 @@ const t = {
   },
   en: {
     title: 'Fera · Quotes',
-    subtitle: 'Specialist capacity for agencies',
-    welcome: "Hi. I'm **Fera**, Ferova's quoting assistant.\n\nTell me what capacity your agency needs: technical SEO for a client, monthly website maintenance, or landing-page production.",
+    subtitle: 'AI assistant for agencies',
+    welcome: "I'm **Fera**, Ferova's AI quoting assistant. I'm not a person and I can make mistakes; a person always reviews scope and pricing. Do not send sensitive data. Type **AGENT** whenever you want a team member. Read our [privacy policy](/en/privacy#ai).\n\nWhat capacity does your agency need?",
     placeholder: 'Type your message...',
     badge: 'Quote with Fera',
     error: 'Something went wrong. Please try again.',
@@ -40,16 +40,16 @@ const t = {
     ],
   },
   pt: {
-    title: 'Fera · Consultora IA',
-    subtitle: 'Sua consultora digital',
-    welcome: "Olá! 👋 Sou a **Fera**, sua consultora digital da Ferova Agency.\n\nMe conte sobre o seu negócio e vou te ajudar a encontrar a melhor estratégia de crescimento. Que tipo de negócio você tem?",
+    title: 'Fera · Orçamentos',
+    subtitle: 'Assistente com IA para agências',
+    welcome: 'Sou a **Fera**, assistente de orçamento com inteligência artificial da Ferova. Não sou uma pessoa e posso cometer erros; uma pessoa sempre revisa escopo e preço. Não envie dados sensíveis. Escreva **AGENTE** para falar com a equipe.\n\nDe qual capacidade sua agência precisa?',
     placeholder: 'Digite sua mensagem...',
     badge: 'Consultora IA',
     error: 'Ocorreu um erro. Tente novamente.',
     suggestions: [
-      'Preciso de mais clientes',
-      'Minha marca não parece profissional',
-      'Quero aparecer no Google',
+      'SEO técnico para um cliente',
+      'Manutenção web mensal',
+      'Preciso de landing pages',
     ],
   },
 };
@@ -241,7 +241,7 @@ const AiAdvisorChat = ({ lang = 'es' }: AiAdvisorChatProps) => {
           aria-label={txt.badge}
         >
           <Bot className="w-4 h-4 lg:w-5 lg:h-5" />
-          <span>👋 {txt.badge}</span>
+          <span>{txt.badge}</span>
         </button>
       )}
 
@@ -367,7 +367,7 @@ const AiAdvisorChat = ({ lang = 'es' }: AiAdvisorChatProps) => {
               </button>
             </div>
             <p className="text-[10px] text-muted-foreground mt-2 text-center">
-              Powered by Ferova AI
+              {lang === 'en' ? 'AI can make mistakes · Human review available' : lang === 'pt' ? 'A IA pode cometer erros · Revisão humana disponível' : 'La IA puede equivocarse · Revisión humana disponible'}
             </p>
           </div>
         </div>

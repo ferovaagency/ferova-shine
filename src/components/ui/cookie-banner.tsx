@@ -5,47 +5,100 @@ import { Cookie, X, Settings, Check } from 'lucide-react';
 import { trackEvent } from '@/lib/analytics';
 
 export type CookieConsent = {
+  version: '2.0';
   essential: true;
   analytics: boolean;
   marketing: boolean;
   functional: boolean;
   timestamp: string;
+  expiresAt: string;
 };
 
 const STORAGE_KEY = 'cookie_consent';
+const CONSENT_MONTHS = 12;
 
 export function getCookieConsent(): CookieConsent | null {
   try {
     const raw = localStorage.getItem(STORAGE_KEY);
     if (!raw) return null;
-    return JSON.parse(raw) as CookieConsent;
+    const consent = JSON.parse(raw) as CookieConsent;
+    if (consent.version !== '2.0' || !consent.expiresAt || Date.parse(consent.expiresAt) <= Date.now()) {
+      localStorage.removeItem(STORAGE_KEY);
+      return null;
+    }
+    return consent;
   } catch { return null; }
 }
 
 function saveConsent(c: CookieConsent) {
   localStorage.setItem(STORAGE_KEY, JSON.stringify(c));
   window.dispatchEvent(new CustomEvent('cookie-consent-changed', { detail: c }));
-  applyAnalyticsConsent(c.analytics);
+  applyConsent(c);
 }
 
-function applyAnalyticsConsent(allowed: boolean) {
-  // Google Analytics consent mode v2
-  if (typeof window !== 'undefined' && typeof (window as any).gtag === 'function') {
-    (window as any).gtag('consent', 'update', {
-      analytics_storage: allowed ? 'granted' : 'denied',
-      ad_storage: allowed ? 'granted' : 'denied',
-    });
+function ensureGtag() {
+  window.dataLayer = window.dataLayer || [];
+  window.gtag = window.gtag || ((...args: unknown[]) => window.dataLayer?.push(args));
+}
+
+function injectScript(id: string, src: string) {
+  if (document.getElementById(id)) return;
+  const script = document.createElement('script');
+  script.id = id;
+  script.async = true;
+  script.src = src;
+  document.head.appendChild(script);
+}
+
+function loadAnalytics() {
+  ensureGtag();
+  injectScript('ferova-ga4', 'https://www.googletagmanager.com/gtag/js?id=G-FPTVQ5XHE6');
+  window.gtag?.('js', new Date());
+  window.gtag?.('config', 'G-FPTVQ5XHE6', { anonymize_ip: true });
+  if (!document.getElementById('ferova-sortlist')) {
+    const script = document.createElement('script');
+    script.id = 'ferova-sortlist';
+    script.async = true;
+    script.src = 'https://collector.sortlist.com/releases/latest/radar.min.js';
+    script.dataset.settings = JSON.stringify({ apiEndpoint: 'radar.sortlist.com', profileId: 'roMUHc2t0Ak', namespace: 'SortlistRadar', features: { sessionTracking: true, formTracking: true, clickTracking: true, downloadTracking: true } });
+    document.head.appendChild(script);
   }
+}
+
+function loadMarketing() {
+  if (document.getElementById('ferova-gtm')) return;
+  window.dataLayer = window.dataLayer || [];
+  window.dataLayer.push({ 'gtm.start': Date.now(), event: 'gtm.js' });
+  injectScript('ferova-gtm', 'https://www.googletagmanager.com/gtm.js?id=GTM-59CS8MFN');
+}
+
+function clearOptionalCookies() {
+  ['_ga', '_gid', '_gat', '_fbp', '_gcl_au'].forEach((name) => {
+    document.cookie = `${name}=; Max-Age=0; path=/; SameSite=Lax`;
+  });
+}
+
+function applyConsent(c: Pick<CookieConsent, 'analytics' | 'marketing'>) {
+  ensureGtag();
+  window.gtag?.('consent', 'update', {
+    analytics_storage: c.analytics ? 'granted' : 'denied',
+    ad_storage: c.marketing ? 'granted' : 'denied',
+    ad_user_data: c.marketing ? 'granted' : 'denied',
+    ad_personalization: c.marketing ? 'granted' : 'denied',
+  });
+  if (c.analytics) loadAnalytics();
+  if (c.marketing) loadMarketing();
+  if (!c.analytics && !c.marketing) clearOptionalCookies();
 }
 
 interface Props { lang?: 'es' | 'en' | 'pt'; }
 
 const T = {
   es: {
-    title: 'Usamos cookies',
-    body: 'Usamos cookies esenciales para el funcionamiento del sitio y, con tu consentimiento, cookies analíticas y de marketing para mejorar tu experiencia.',
+    title: 'Tu privacidad, en pocas palabras',
+    body: 'Las esenciales mantienen el sitio funcionando. Analítica y marketing permanecen apagados hasta que tú los autorices.',
     accept: 'Aceptar todas',
-    essential: 'Solo esenciales',
+    essential: 'Rechazar opcionales',
     configure: 'Configurar',
     policy: 'Política de cookies',
     save: 'Guardar preferencias',
@@ -57,10 +110,10 @@ const T = {
     },
   },
   en: {
-    title: 'We use cookies',
-    body: 'We use essential cookies for the site to work and, with your consent, analytics and marketing cookies to improve your experience.',
+    title: 'Your privacy, in brief',
+    body: 'Essential storage keeps the site working. Analytics and marketing stay off until you allow them.',
     accept: 'Accept all',
-    essential: 'Essential only',
+    essential: 'Reject optional',
     configure: 'Configure',
     policy: 'Cookie policy',
     save: 'Save preferences',
@@ -92,26 +145,20 @@ const CookieBanner = ({ lang = 'es' }: Props) => {
   const t = T[lang];
   const [visible, setVisible] = useState(false);
   const [settingsOpen, setSettingsOpen] = useState(false);
-  const [analytics, setAnalytics] = useState(true);
-  const [marketing, setMarketing] = useState(true);
-  const [functional, setFunctional] = useState(true);
+  const [analytics, setAnalytics] = useState(false);
+  const [marketing, setMarketing] = useState(false);
+  const [functional, setFunctional] = useState(false);
 
   const policyHref = lang === 'en' ? '/en/cookies' : lang === 'pt' ? '/pt/cookies' : '/cookies';
 
   useEffect(() => {
-    // Init GA consent mode default to denied until user accepts
-    if (typeof (window as any).gtag === 'function') {
-      (window as any).gtag('consent', 'default', {
-        analytics_storage: 'denied',
-        ad_storage: 'denied',
-        wait_for_update: 500,
-      });
-    }
+    ensureGtag();
+    window.gtag?.('consent', 'default', { analytics_storage: 'denied', ad_storage: 'denied', ad_user_data: 'denied', ad_personalization: 'denied', functionality_storage: 'granted', security_storage: 'granted' });
     const current = getCookieConsent();
     if (!current) {
       setVisible(true);
     } else {
-      applyAnalyticsConsent(current.analytics);
+      applyConsent(current);
       setAnalytics(current.analytics);
       setMarketing(current.marketing);
       setFunctional(current.functional);
@@ -124,11 +171,13 @@ const CookieBanner = ({ lang = 'es' }: Props) => {
 
   const persist = useCallback((c: Partial<CookieConsent>) => {
     const next: CookieConsent = {
+      version: '2.0',
       essential: true,
       analytics: c.analytics ?? false,
       marketing: c.marketing ?? false,
       functional: c.functional ?? false,
       timestamp: new Date().toISOString(),
+      expiresAt: new Date(new Date().setMonth(new Date().getMonth() + CONSENT_MONTHS)).toISOString(),
     };
     saveConsent(next);
     setVisible(false);
@@ -157,11 +206,7 @@ const CookieBanner = ({ lang = 'es' }: Props) => {
               <div className="flex-1 min-w-0">
                 <div className="flex items-start justify-between gap-2">
                   <h3 className="font-display font-bold text-sm text-foreground">{t.title}</h3>
-                  {!settingsOpen && (
-                    <button onClick={() => setVisible(false)} className="text-muted-foreground hover:text-foreground" aria-label="x">
-                      <X className="w-4 h-4" />
-                    </button>
-                  )}
+                  {!settingsOpen && <button onClick={essentialOnly} className="text-muted-foreground hover:text-foreground" aria-label={t.essential}><X className="w-4 h-4" /></button>}
                 </div>
                 <p className="text-xs text-muted-foreground mt-1 leading-relaxed">
                   {t.body}{' '}
@@ -200,8 +245,8 @@ const CookieBanner = ({ lang = 'es' }: Props) => {
                     </button>
                   ) : (
                     <>
-                      <button onClick={acceptAll} className="btn-gold text-xs !py-2 !px-4">{t.accept}</button>
-                      <button onClick={essentialOnly} className="text-xs px-4 py-2 rounded-full border border-border text-foreground hover:bg-accent">
+                      <button onClick={acceptAll} className="text-xs px-4 py-2 rounded-full border border-gold bg-gold text-[#3c3c3b] font-semibold hover:bg-gold/90">{t.accept}</button>
+                      <button onClick={essentialOnly} className="text-xs px-4 py-2 rounded-full border border-gold text-foreground font-semibold hover:bg-gold/10">
                         {t.essential}
                       </button>
                       <button onClick={() => setSettingsOpen(true)} className="text-xs px-4 py-2 rounded-full text-muted-foreground hover:text-foreground flex items-center gap-1.5">

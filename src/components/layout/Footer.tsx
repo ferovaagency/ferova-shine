@@ -37,7 +37,7 @@ const Footer = ({ currentLang, lang }: FooterProps) => {
       ],
       legalLinks: [
         { name: 'Términos y Condiciones', href: '/terminos' },
-        { name: 'Privacidad', href: '/privacidad' },
+        { name: 'Privacidad e IA', href: '/privacidad#ia' },
         { name: 'Cookies', href: '/cookies' },
       ],
     },
@@ -62,7 +62,7 @@ const Footer = ({ currentLang, lang }: FooterProps) => {
       ],
       legalLinks: [
         { name: 'Terms & Conditions', href: '/en/terms' },
-        { name: 'Privacy', href: '/en/privacy' },
+        { name: 'Privacy & AI', href: '/en/privacy#ai' },
         { name: 'Cookies', href: '/en/cookies' },
       ],
     },
