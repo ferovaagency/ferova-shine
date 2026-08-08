@@ -30,7 +30,7 @@ const Privacidad = ({ lang = 'es' }: Props) => {
               Persona natural comerciante con RUT activo.<br />
               Dirección comercial: Bogotá D.C., Colombia.<br />
               Correo: <a href="mailto:gerencia@seoparaecommerce.co">gerencia@seoparaecommerce.co</a><br />
-              WhatsApp: <a href="https://wa.link/jvbd4j" target="_blank" rel="noopener noreferrer">+1 786 578 7671</a><br />
+              WhatsApp: <a href="https://wa.me/17865787671" target="_blank" rel="noopener noreferrer">+1 786 578 7671</a><br />
               Sitio web: <a href="https://seoparaecommerce.co">https://seoparaecommerce.co</a>
             </p>
 

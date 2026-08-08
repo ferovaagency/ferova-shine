@@ -73,7 +73,7 @@ const ContenidoLinkedin = ({ lang = 'es' }: Props) => {
     period: 'monthly' as const,
   };
 
-  const whatsappUrl = 'https://wa.link/jvbd4j?text=' + encodeURIComponent(
+  const whatsappUrl = 'https://wa.me/17865787671?text=' + encodeURIComponent(
     lang === 'es' ? 'Hola Ferova, quiero el plan de Creación de Contenido LinkedIn.'
     : lang === 'pt' ? 'Olá Ferova, quero o plano de Criação de Conteúdo LinkedIn.'
     : 'Hi Ferova, I want the LinkedIn Content Creation plan.'

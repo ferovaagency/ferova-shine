@@ -7,7 +7,7 @@ import { supabase } from '@/integrations/supabase/client';
 import { trackEvent } from '@/lib/analytics';
 import { logLead } from '@/lib/adminInbox';
 
-const WHATSAPP_URL = 'https://wa.link/jvbd4j';
+const WHATSAPP_URL = 'https://wa.me/17865787671';
 
 interface Props { lang?: 'es' | 'en' | 'pt'; }
 
@@ -143,7 +143,7 @@ const Contacto = ({ lang = 'es' }: Props) => {
                       : lang === 'pt' ? 'Abrimos o WhatsApp com sua mensagem para você enviar e respondermos em menos de 24 horas. Se não abriu, fale conosco direto.'
                       : 'We opened WhatsApp with your message so you can send it and we reply within 24 hours. If it did not open, message us directly.'}
                   </p>
-                  <a href="https://wa.link/jvbd4j" target="_blank" rel="noopener noreferrer" className="btn-gold mt-6 inline-flex items-center gap-2">
+                  <a href="https://wa.me/17865787671" target="_blank" rel="noopener noreferrer" className="btn-gold mt-6 inline-flex items-center gap-2">
                     <MessageCircle className="w-4 h-4" /> WhatsApp
                   </a>
                 </div>
@@ -173,7 +173,7 @@ const Contacto = ({ lang = 'es' }: Props) => {
 
               <div className="lg:col-span-2 space-y-6">
                 <h2 className="font-display font-semibold text-lg mb-2">{t.contactTitle}</h2>
-                <a href="https://wa.link/jvbd4j" target="_blank" rel="noopener noreferrer" className="glass-card p-5 flex items-center gap-4 hover:border-gold/30 transition-all block">
+                <a href="https://wa.me/17865787671" target="_blank" rel="noopener noreferrer" className="glass-card p-5 flex items-center gap-4 hover:border-gold/30 transition-all block">
                   <div className="w-12 h-12 rounded-xl flex items-center justify-center" style={{ background: 'hsla(142, 70%, 45%, 0.1)' }}>
                     <MessageCircle className="w-6 h-6" style={{ color: '#25D366' }} />
                   </div>

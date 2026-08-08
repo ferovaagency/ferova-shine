@@ -11,7 +11,7 @@ import type { Lang } from '@/lib/pricing';
 
 interface Props { lang?: Lang }
 
-const WHATSAPP_URL = 'https://wa.link/jvbd4j';
+const WHATSAPP_URL = 'https://wa.me/17865787671';
 
 const T: Record<Lang, {
   seoTitle: string; seoDesc: string; h1: string; answer: string;

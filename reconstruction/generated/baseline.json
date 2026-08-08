@@ -1,20 +1,19 @@
 {
   "strategyVersion": "0.1.0",
   "productionChangesAuthorized": false,
-  "sitemapUrlCount": 166,
+  "sitemapUrlCount": 128,
   "languages": {
     "es": 90,
-    "en": 38,
-    "pt": 38
+    "en": 38
   },
   "decisions": {
     "keep_and_rebuild": 10,
-    "language_scope_review": 52,
+    "language_scope_review": 26,
     "manual_seo_review": 63,
-    "move_to_ferova": 21,
+    "move_to_ferova": 14,
     "target_create": 5,
-    "retire_or_move_pending_evidence": 6,
-    "move_to_ferova_conditional": 9
+    "retire_or_move_pending_evidence": 4,
+    "move_to_ferova_conditional": 6
   },
   "appRouteDeclarations": 169,
   "routeRegistryEntries": 43,

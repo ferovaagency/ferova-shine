@@ -10,7 +10,7 @@ import type { Lang } from '@/lib/pricing';
 
 interface Props { lang?: Lang }
 
-const WHATSAPP_URL = 'https://wa.link/jvbd4j?text=';
+const WHATSAPP_URL = 'https://wa.me/17865787671?text=';
 
 type QId = 'schema' | 'content' | 'offsite' | 'faq' | 'known';
 

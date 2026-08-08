@@ -217,7 +217,7 @@ export default function DescuentosHerramientas({ lang = 'es' }: Props) {
             to="/asesorias"
             className="inline-flex items-center gap-2 px-6 py-3 rounded-xl bg-amber-500 hover:bg-amber-600 text-white font-semibold transition"
           >
-            Agendar asesoría <ExternalLink className="w-4 h-4" />
+            Solicitar cotización <ExternalLink className="w-4 h-4" />
           </Link>
         </div>
       </section>

@@ -10,7 +10,7 @@ import type { Lang } from '@/lib/pricing';
 
 interface Props { lang?: Lang }
 
-const WHATSAPP_URL = 'https://wa.link/jvbd4j?text=' + encodeURIComponent('Hola Ferova, quiero que mi tienda participe en el Estudio de Visibilidad IA 2026.');
+const WHATSAPP_URL = 'https://wa.me/17865787671?text=' + encodeURIComponent('Hola Ferova, quiero que mi tienda participe en el Estudio de Visibilidad IA 2026.');
 
 const T: Record<Lang, {
   seoTitle: string; seoDesc: string; eyebrow: string; h1: string; answer: string;

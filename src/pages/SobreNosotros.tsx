@@ -33,7 +33,7 @@ const SobreNosotros = ({ lang = 'es' }: Props) => {
     linkedinTitle: 'Conoce a Maria Fer Calderón', linkedinSub: 'Fundadora y estratega SEO de Ferova Agency', linkedinRole: 'SEO Strategist & Founder',
     linkedinBio: 'Especialista en SEO para E-commerce con experiencia en posicionamiento orgánico, pauta digital y diseño web. Apasionada por transformar negocios digitales con estrategias basadas en datos.',
     linkedinBtn: 'Ver perfil en LinkedIn',
-    ctaTitle: '¿Listo para hacer crecer tu e-commerce?', ctaSub: 'Agenda una asesoría gratuita y descubre cuánto puede crecer tu tienda online.', ctaBtn: 'Agendar Asesoría',
+    ctaTitle: '¿Listo para hacer crecer tu e-commerce?', ctaSub: 'Solicita una cotización y recibe alcance, precio y próximos pasos.', ctaBtn: 'Solicitar cotización',
   } : lang === 'pt' ? {
     badge: 'Agência Boutique de SEO para E-commerce',
     title: 'Sobre a Ferova Agency', sub: 'Nascemos em setembro de 2025 para aumentar as vendas dos e-commerces com SEO especializado.',
@@ -57,7 +57,7 @@ const SobreNosotros = ({ lang = 'es' }: Props) => {
     linkedinTitle: 'Conheça Maria Fer Calderón', linkedinSub: 'Fundadora e estrategista SEO da Ferova Agency', linkedinRole: 'SEO Strategist & Founder',
     linkedinBio: 'Especialista em SEO para e-commerce com experiência em posicionamento orgânico, tráfego pago e desenvolvimento web. Apaixonada por transformar negócios digitais com estratégias baseadas em dados.',
     linkedinBtn: 'Ver perfil no LinkedIn',
-    ctaTitle: 'Pronto para fazer seu e-commerce crescer?', ctaSub: 'Agende uma consultoria gratuita e descubra quanto sua loja virtual pode crescer.', ctaBtn: 'Agendar Consultoria',
+    ctaTitle: 'Pronto para fazer seu e-commerce crescer?', ctaSub: 'Agende uma consultoria gratuita e descubra quanto sua loja virtual pode crescer.', ctaBtn: 'Solicitar orçamento',
   } : {
     badge: 'Boutique E-commerce SEO Agency',
     title: 'About Ferova Agency', sub: 'We were born in September 2025 to increase E-commerce sales through specialized SEO.',
@@ -81,10 +81,10 @@ const SobreNosotros = ({ lang = 'es' }: Props) => {
     linkedinTitle: 'Meet Maria Fer Calderón', linkedinSub: 'Founder & SEO Strategist at Ferova Agency', linkedinRole: 'SEO Strategist & Founder',
     linkedinBio: 'E-commerce SEO specialist with experience in organic positioning, digital advertising and web design. Passionate about transforming digital businesses with data-driven strategies.',
     linkedinBtn: 'View LinkedIn Profile',
-    ctaTitle: 'Ready to grow your e-commerce?', ctaSub: 'Book a free consultation and discover how much your online store can grow.', ctaBtn: 'Book a Consultation',
+    ctaTitle: 'Ready to grow your e-commerce?', ctaSub: 'Book a free consultation and discover how much your online store can grow.', ctaBtn: 'Request a quote',
   };
 
-  const whatsappUrl = 'https://wa.link/jvbd4j?text=' + encodeURIComponent(
+  const whatsappUrl = 'https://wa.me/17865787671?text=' + encodeURIComponent(
     lang === 'es' ? 'Hola Ferova, quiero agendar una asesoría.' : lang === 'pt' ? 'Olá Ferova, quero agendar uma consultoria.' : 'Hi Ferova, I want to book a consultation.'
   );
 

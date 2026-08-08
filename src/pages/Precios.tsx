@@ -6,7 +6,7 @@ import { trackEvent } from '@/lib/analytics';
 
 interface Props { lang?: 'es' | 'en' | 'pt'; }
 
-const WA = 'https://wa.link/jvbd4j';
+const WA = 'https://wa.me/17865787671';
 
 type Tier = {
   id: string;

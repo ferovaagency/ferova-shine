@@ -10,7 +10,7 @@ import { trackEvent } from "@/lib/analytics";
 
 interface Props { lang?: Lang }
 
-const WHATSAPP_URL = "https://wa.link/jvbd4j";
+const WHATSAPP_URL = "https://wa.me/17865787671";
 const FAKE_LOADING_MS = 3500;
 const STEP_MS = Math.round(FAKE_LOADING_MS / 3); // ~1167ms cada paso
 

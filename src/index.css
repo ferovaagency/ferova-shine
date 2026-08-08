@@ -324,7 +324,7 @@
   border-radius: 0.75rem;
   background: linear-gradient(135deg, #d2a51c 0%, #c0930e 58%, #a97805 100%);
   padding: 0.75rem 1.5rem;
-  color: #2f2d56;
+  color: #3c3c3b;
   font-weight: 700;
   transition: background-color 180ms ease, transform 180ms ease, box-shadow 180ms ease;
 }
@@ -371,7 +371,7 @@
 :is(.seo-brand, body:has(.seo-brand-mark)) {
   --seo-ink: #3c3c3b;
   --seo-wine: #541014;
-  --seo-navy: #2f2d56;
+  --seo-navy: #541014;
   --seo-brown: #6a4c30;
   --seo-gold: #c0930e;
   --seo-cream: #fbf7ef;
@@ -393,7 +393,7 @@
   background-image:
     radial-gradient(circle at 78% 18%, rgb(192 147 14 / 18%), transparent 34%),
     radial-gradient(circle at 10% 88%, rgb(84 16 20 / 38%), transparent 36%),
-    linear-gradient(135deg, #242243 0%, #2f2d56 55%, #3a3157 100%);
+    linear-gradient(135deg, #262524 0%, #541014 58%, #6a4c30 100%);
 }
 
 .seo-brand-hero::after {
@@ -460,7 +460,7 @@
 .seo-bento-card:hover {
   transform: translateY(-4px);
   border-color: rgb(192 147 14 / 42%);
-  box-shadow: 0 24px 60px rgb(47 45 86 / 13%);
+  box-shadow: 0 24px 60px rgb(84 16 20 / 13%);
 }
 
 .seo-bento-card:hover::before { opacity: 1; }
@@ -484,6 +484,72 @@
   object-position: left center;
 }
 
+.seo-agency-hero {
+  background:
+    radial-gradient(circle at 72% 20%, rgb(192 147 14 / 18%), transparent 28%),
+    radial-gradient(circle at 18% 82%, rgb(106 76 48 / 32%), transparent 38%),
+    linear-gradient(135deg, #242322 0%, #3c2020 48%, #541014 100%);
+  perspective: 1200px;
+}
+
+.seo-hero-visual {
+  position: relative;
+  transform-style: preserve-3d;
+  animation: seo-hero-float 8s cubic-bezier(.4,0,.2,1) infinite alternate;
+}
+
+.seo-hero-visual img {
+  border: 1px solid rgb(224 189 82 / 20%);
+  transform: rotateY(-4deg) rotateX(2deg);
+  box-shadow: 0 40px 100px rgb(0 0 0 / 38%);
+}
+
+.seo-float-card {
+  position: absolute;
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  gap: .55rem;
+  border: 1px solid rgb(224 189 82 / 28%);
+  border-radius: 999px;
+  background: rgb(36 35 34 / 78%);
+  padding: .7rem 1rem;
+  color: #f7f0e5;
+  font-size: .78rem;
+  font-weight: 700;
+  box-shadow: 0 18px 50px rgb(0 0 0 / 30%);
+  backdrop-filter: blur(14px);
+}
+
+.seo-float-card svg { color: #e0bd52; }
+.seo-float-card-one { left: -1rem; top: 16%; animation: seo-chip-float 4.6s ease-in-out infinite; }
+.seo-float-card-two { bottom: 10%; right: -1rem; animation: seo-chip-float 5.4s ease-in-out .6s infinite reverse; }
+
+.seo-depth-image {
+  transform: perspective(1000px) rotateY(3deg) rotateX(1deg);
+  transition: transform 500ms cubic-bezier(.2,.8,.2,1), box-shadow 500ms ease;
+}
+
+.seo-depth-image:hover {
+  transform: perspective(1000px) rotateY(0) rotateX(0) translateY(-5px);
+  box-shadow: 0 32px 80px rgb(84 16 20 / 22%);
+}
+
+@keyframes seo-hero-float {
+  from { transform: translate3d(0, 0, 0) rotateZ(-.25deg); }
+  to { transform: translate3d(0, -10px, 0) rotateZ(.35deg); }
+}
+
+@keyframes seo-chip-float {
+  0%, 100% { transform: translate3d(0, 0, 35px); }
+  50% { transform: translate3d(0, -10px, 50px); }
+}
+
+@media (max-width: 640px) {
+  .seo-float-card { display: none; }
+  .seo-hero-visual img { transform: none; }
+}
+
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after {
     scroll-behavior: auto !important;
@@ -491,4 +557,6 @@
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
   }
+  .seo-hero-visual,
+  .seo-float-card { animation: none !important; }
 }

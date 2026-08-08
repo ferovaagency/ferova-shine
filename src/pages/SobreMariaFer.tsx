@@ -532,7 +532,7 @@ const SobreMariaFer = ({ lang = "es" }: SobreMariaFerProps) => {
                 {/* Contact buttons */}
                 <div className="flex flex-col sm:flex-row gap-2 mb-4">
                   <a
-                    href="https://wa.link/jvbd4j."
+                    href="https://wa.me/17865787671."
                     target="_blank"
                     rel="noopener noreferrer"
                     className="flex-1 bg-[#C0930E] text-black rounded-full px-4 py-2.5 font-semibold shadow-sm hover:opacity-90 transition-all inline-flex items-center justify-center gap-2 text-sm"
@@ -886,7 +886,7 @@ const SobreMariaFer = ({ lang = "es" }: SobreMariaFerProps) => {
 
               <div className="space-y-3 md:space-y-4">
                 <a
-                  href="https://wa.link/jvbd4j"
+                  href="https://wa.me/17865787671"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="flex items-center gap-3 md:gap-4 p-3 md:p-4 bg-white/10 rounded-xl hover:bg-white/20 transition-colors"
@@ -1029,7 +1029,7 @@ const SobreMariaFer = ({ lang = "es" }: SobreMariaFerProps) => {
       <div className="lg:hidden fixed bottom-0 left-0 right-0 z-40 bg-white border-t border-neutral-200 shadow-lg">
         <div className="grid grid-cols-2 gap-px bg-neutral-200">
           <a
-            href="https://wa.link/jvbd4j"
+            href="https://wa.me/17865787671"
             target="_blank"
             rel="noopener noreferrer"
             className="flex items-center justify-center gap-2 bg-white py-4 hover:bg-neutral-50 transition-colors"

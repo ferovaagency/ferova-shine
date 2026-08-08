@@ -30,7 +30,7 @@ export const SEO_SPECIALTIES: Record<SeoSpecialtyKind, SeoSpecialtyContent> = {
       { title: "Auditoría y diagnóstico", description: "Crawl, indexación, arquitectura, renderizado, datos estructurados y riesgos priorizados." },
       { title: "Arquitectura y estrategia", description: "Decisiones sobre categorías, facetas, enlazado interno, contenido y crecimiento orgánico." },
       { title: "Soporte en migraciones", description: "Inventario, equivalencias, redirects, QA y monitoreo para proteger activos orgánicos." },
-      { title: "Acompañamiento al equipo", description: "Revisión de implementación, sesiones técnicas y documentación lista para cliente." },
+      { title: "Capacidad web recurrente", description: "Mantenimiento mensual, correcciones y landing pages listas para que la agencia entregue a sus clientes." },
     ],
     process: [
       { title: "Alineamos el alcance", description: "Definimos rol, confidencialidad, entregables, interlocutores y nivel de exposición." },
@@ -39,7 +39,9 @@ export const SEO_SPECIALTIES: Record<SeoSpecialtyKind, SeoSpecialtyContent> = {
     ],
     faqs: [
       { question: "¿Puedes trabajar bajo marca blanca?", answer: "Sí. El modelo puede ser completamente white label, soporte interno o participación visible, según el acuerdo con la agencia." },
-      { question: "¿Reemplazas al equipo SEO de la agencia?", answer: "No. Entro como capacidad senior especializada para decisiones o proyectos que requieren más profundidad técnica." },
+      { question: "¿Qué habilidades puede contratar una agencia?", answer: "SEO técnico, auditorías, migraciones, SEO para ecommerce, mantenimiento web mensual y diseño o desarrollo de landing pages." },
+      { question: "¿Cómo se define el precio?", answer: "El precio se prepara según la habilidad, la plataforma, el número de clientes o entregables, la fecha y la modalidad de colaboración. Puede cotizarse por proyecto, volumen, bolsa de horas o capacidad mensual." },
+      { question: "¿Qué experiencia se puede presentar al cliente final?", answer: "Antes de contratar se comparte experiencia relevante sin revelar información confidencial. Los casos identificables, cifras y marcas solo se usan con autorización escrita." },
       { question: "¿Trabajas con agencias fuera de Colombia?", answer: "Sí. El trabajo puede realizarse de forma remota con equipos y clientes en distintos países, con alcance y horarios definidos." },
     ],
   },

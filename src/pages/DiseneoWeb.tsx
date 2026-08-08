@@ -131,7 +131,7 @@ const DiseneoWeb = ({ lang = 'es' }: Props) => {
     finalSub: 'Tell us about your project and we respond in under 24 hours.',
   };
 
-  const waUrl = 'https://wa.link/jvbd4j?text=' + encodeURIComponent(
+  const waUrl = 'https://wa.me/17865787671?text=' + encodeURIComponent(
     lang === 'es' ? 'Hola Ferova, quiero información sobre Desarrollo Web / E-commerce.'
     : lang === 'pt' ? 'Olá Ferova, quero informações sobre Desenvolvimento Web / E-commerce.'
     : 'Hi Ferova, I want info on Web / E-commerce Development.'

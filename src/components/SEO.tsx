@@ -1,5 +1,5 @@
 import { Helmet } from 'react-helmet-async';
-import { SITE_ORIGIN, LANGS, alternatesFor, type Lang } from '@/config/routes';
+import { SITE_ORIGINS, LANGS, alternatesFor, type Lang } from '@/config/routes';
 
 /** Etiqueta hreflang emitida por idioma. `es` es el x-default. */
 const HREFLANG: Record<Lang, string> = { es: 'es', en: 'en', pt: 'pt' };
@@ -51,9 +51,9 @@ const LOCALES: Record<Lang, string> = {
 export const DEFAULT_OG_IMAGE =
   'https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/08f64c97-01f2-4ae5-81b2-980286698158/id-preview-a7002c7d--6db5856a-1fbb-46ce-9318-d56343dc0fff.lovable.app-1773444142730.png';
 
-function toAbsolute(url: string): string {
+function toAbsolute(url: string, lang: Lang): string {
   if (/^https?:\/\//i.test(url)) return url;
-  return `${SITE_ORIGIN}${url.startsWith('/') ? url : '/' + url}`;
+  return `${SITE_ORIGINS[lang]}${url.startsWith('/') ? url : '/' + url}`;
 }
 
 const SEO = ({
@@ -68,8 +68,8 @@ const SEO = ({
   alternates,
   breadcrumbs,
 }: SEOProps) => {
-  const url = toAbsolute(path);
-  const ogImage = toAbsolute(image || DEFAULT_OG_IMAGE);
+  const url = toAbsolute(path, lang);
+  const ogImage = toAbsolute(image || DEFAULT_OG_IMAGE, lang);
 
   // hreflang: explícitos > registro central. Solo se emiten si hay equivalencias
   // reales — nunca adivinando prefijos (evita canonicals cruzados o rotos).
@@ -77,7 +77,7 @@ const SEO = ({
   const hreflangs = altMap
     ? LANGS.filter((l) => altMap[l]).map((l) => ({
         code: HREFLANG[l],
-        href: toAbsolute(altMap[l] as string),
+        href: toAbsolute(altMap[l] as string, l),
         isDefault: l === 'es',
       }))
     : [];
@@ -94,7 +94,7 @@ const SEO = ({
             '@type': 'ListItem',
             position: i + 1,
             name: b.name,
-            item: toAbsolute(b.path),
+            item: toAbsolute(b.path, lang),
           })),
         }
       : null;

@@ -55,7 +55,7 @@ const Servicios = ({ lang = 'es' }: ServiciosProps) => {
     { icon: GraduationCap, title: 'Marketing Consulting', description: 'Strategic 1-on-1 consulting to scale your business.', features: ['Diagnosis', 'Strategy', 'Action plan', '1-on-1 sessions', 'Follow-up'], href: '/en/services/marketing-consulting' },
   ];
 
-  const waUrl = 'https://wa.link/jvbd4j?text=' + encodeURIComponent(
+  const waUrl = 'https://wa.me/17865787671?text=' + encodeURIComponent(
     lang === 'es' ? 'Hola Ferova, quiero agendar una asesoría.'
     : lang === 'pt' ? 'Olá Ferova, quero agendar uma consultoria.'
     : 'Hi Ferova, I would like to book a consultation.'
@@ -177,7 +177,7 @@ const Servicios = ({ lang = 'es' }: ServiciosProps) => {
                 className="btn-gold flex items-center justify-center gap-2"
               >
                 <MessageCircle className="w-5 h-5" />
-                {lang === 'es' ? 'Agendar Asesoría' : lang === 'pt' ? 'Agendar Consultoria' : 'Book Consultation'}
+                {lang === 'es' ? 'Solicitar cotización' : lang === 'pt' ? 'Solicitar orçamento' : 'Request a quote'}
               </a>
               <Link
                 to={lang === 'es' ? '/contacto' : lang === 'pt' ? '/pt/contato' : '/en/contact'}

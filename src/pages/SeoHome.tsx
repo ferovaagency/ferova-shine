@@ -1,211 +1,95 @@
 import { Link } from "react-router-dom";
-import {
-  ArrowRight,
-  Bot,
-  CheckCircle2,
-  FileSearch,
-  GitBranch,
-  Network,
-  Search,
-} from "lucide-react";
+import { ArrowRight, CheckCircle2, Code2, FileSearch, LayoutTemplate, MessageSquareQuote, ShieldCheck, Wrench } from "lucide-react";
 import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
 import SEO from "@/components/SEO";
+import heroVisual from "@/assets/seo-agency-hero-3d.webp";
+import deliveryVisual from "@/assets/agency-delivery-services-3d.webp";
 
-const services = [
-  {
-    icon: Search,
-    title: "SEO para ecommerce",
-    description: "Estrategia orgánica conectada con categorías, productos, arquitectura y objetivos comerciales.",
-    href: "/servicios/seo-ecommerce",
-  },
-  {
-    icon: Network,
-    title: "SEO para agencias",
-    description: "Dirección senior y capacidad técnica especializada para complementar a tu equipo.",
-    href: "/seo-para-agencias",
-  },
-  {
-    icon: FileSearch,
-    title: "Auditoría SEO técnica",
-    description: "Diagnóstico priorizado para encontrar bloqueos de rastreo, indexación, arquitectura y rendimiento.",
-    href: "/auditoria-seo-tecnica",
-  },
-  {
-    icon: GitBranch,
-    title: "Migraciones SEO",
-    description: "Planificación, acompañamiento y control para proteger señales orgánicas durante un cambio crítico.",
-    href: "/migraciones-seo",
-  },
+const capabilities = [
+  { icon: FileSearch, title: "SEO técnico white label", text: "Auditorías, arquitectura, indexación, migraciones y QA técnico entregados bajo tu marca o como especialista visible.", href: "/auditoria-seo-tecnica" },
+  { icon: Wrench, title: "Mantenimiento web mensual", text: "Correcciones, rendimiento, seguridad, actualizaciones y soporte continuo para los sitios de tus clientes.", href: "/seo-para-agencias" },
+  { icon: LayoutTemplate, title: "Diseño de landing pages", text: "Landing pages rápidas, medibles y listas para campañas, contenidos o captación de leads de tus clientes.", href: "/servicios/diseno-web" },
+  { icon: Code2, title: "Capacidad técnica flexible", text: "Apoyo por proyecto o bolsa mensual para absorber picos de trabajo sin ampliar nómina ni improvisar proveedores.", href: "/seo-para-agencias" },
 ];
 
-const steps = [
-  ["01", "Entender el negocio", "Objetivos, restricciones, mercado, tecnología y capacidad real del equipo."],
-  ["02", "Encontrar la causa", "Datos y revisión técnica para separar síntomas, oportunidades y problemas estructurales."],
-  ["03", "Priorizar decisiones", "Un plan ejecutable según impacto, esfuerzo, dependencia y riesgo."],
-  ["04", "Acompañar la ejecución", "Criterio senior durante la implementación y validación de resultados."],
+const faq = [
+  { q: "¿Puedes trabajar bajo la marca de mi agencia?", a: "Sí. Podemos trabajar de forma completamente white label, como apoyo interno o presentarnos como especialista técnico ante el cliente cuando la agencia lo prefiera." },
+  { q: "¿Qué información necesitas para cotizar?", a: "La habilidad requerida, cantidad de clientes o entregables, plataforma, fechas, nivel de contacto con el cliente final y si necesitas una capacidad puntual o mensual." },
+  { q: "¿Puedo contratar solo mantenimiento web o landing pages?", a: "Sí. La contratación puede concentrarse en una sola capacidad: mantenimiento mensual, landing pages, SEO técnico, migraciones o una combinación definida por volumen." },
+  { q: "¿Cómo manejas la confidencialidad y los accesos?", a: "El alcance define canales, responsables, permisos mínimos y tratamiento de información. Podemos firmar NDA y trabajar con accesos revocables administrados por la agencia." },
+  { q: "¿Entregas precios antes de una llamada?", a: "Fera recopila el alcance y permite preparar una cotización inicial. Si existen dependencias técnicas, se solicitan los datos faltantes antes de confirmar precio y cronograma." },
 ];
 
-const SeoHome = () => (
-  <div className="seo-brand min-h-screen bg-white text-slate-950">
-    <SEO
-      title="Consultora SEO Senior para Ecommerce y Agencias | Ferova"
-      description="Consultoría SEO senior para ecommerce y agencias: auditorías técnicas, arquitectura, migraciones, crecimiento orgánico y preparación para AI Search."
-      path="/"
-      lang="es"
-      jsonLd={{
-        "@context": "https://schema.org",
-        "@type": "ProfessionalService",
-        name: "SEO para Ecommerce by Ferova",
-        url: "https://seoparaecommerce.co/",
-        areaServed: ["Colombia", "Latin America", "United States"],
-        serviceType: ["SEO para ecommerce", "Auditoría SEO técnica", "Migraciones SEO", "Consultoría SEO para agencias"],
-      }}
-    />
-    <Header lang="es" />
+const openFera = () => window.dispatchEvent(new CustomEvent("open-fera-quote"));
 
-    <main>
-      <section className="seo-brand-hero relative overflow-hidden bg-[#071a2f] pb-24 pt-36 text-white md:pb-32 md:pt-44">
-        <div className="absolute -right-24 top-16 h-80 w-80 rounded-full bg-cyan-400/10 blur-3xl" />
-        <div className="absolute -left-20 bottom-0 h-72 w-72 rounded-full bg-blue-600/20 blur-3xl" />
-        <div className="container relative mx-auto grid items-end gap-14 px-4 md:px-6 lg:grid-cols-[1fr_340px]">
-          <div className="max-w-4xl">
-            <p className="mb-6 text-xs font-semibold uppercase tracking-[0.22em] text-cyan-300">
-              Senior SEO Consulting · Ecommerce · Technical SEO · AI Search
-            </p>
-            <h1 className="max-w-4xl font-display text-4xl font-bold leading-[1.08] tracking-tight sm:text-5xl md:text-7xl">
-              SEO senior para ecommerce y agencias que necesitan resolver problemas complejos.
-            </h1>
-            <p className="mt-7 max-w-3xl text-lg leading-8 text-slate-300 md:text-xl">
-              Trabajo directamente con equipos de marketing y agencias en auditorías técnicas, arquitectura SEO,
-              migraciones, crecimiento orgánico y visibilidad en Google y motores de IA.
-            </p>
-            <div className="mt-10 flex flex-col gap-3 sm:flex-row">
-              <Link to="/contacto" className="seo-primary-button">
-                Evaluar mi proyecto <ArrowRight className="h-4 w-4" />
-              </Link>
-              <Link to="/casos-de-exito" className="seo-secondary-button">
-                Ver casos reales
-              </Link>
-            </div>
-          </div>
-          <aside className="seo-glass-panel rounded-2xl p-6">
-            <p className="text-sm font-semibold text-cyan-300">Intervención senior directa</p>
-            <ul className="mt-5 space-y-4 text-sm leading-6 text-slate-300">
-              {["Decisiones basadas en evidencia", "Prioridades claras para el equipo", "SEO técnico conectado con negocio"].map((item) => (
-                <li key={item} className="flex gap-3">
-                  <CheckCircle2 className="mt-0.5 h-5 w-5 shrink-0 text-cyan-300" /> {item}
-                </li>
-              ))}
-            </ul>
-          </aside>
-        </div>
-      </section>
+export default function SeoHome() {
+  const professionalService = {
+    "@context": "https://schema.org",
+    "@type": "ProfessionalService",
+    name: "SEO para Agencias by Ferova",
+    url: "https://seoparaecommerce.co/",
+    areaServed: ["Latin America", "Spain", "United States"],
+    serviceType: ["SEO técnico white label", "Mantenimiento web mensual", "Diseño de landing pages", "Migraciones SEO"],
+    telephone: "+1-786-578-7671",
+    email: "gerencia@seoparaecommerce.co",
+  };
+  const faqSchema = { "@context": "https://schema.org", "@type": "FAQPage", mainEntity: faq.map((item) => ({ "@type": "Question", name: item.q, acceptedAnswer: { "@type": "Answer", text: item.a } })) };
 
-      <section className="py-20 md:py-28">
-        <div className="container mx-auto px-4 md:px-6">
-          <div className="grid gap-10 lg:grid-cols-[0.85fr_1.15fr] lg:gap-20">
+  return (
+    <div className="seo-brand min-h-screen text-slate-950">
+      <SEO title="SEO técnico y producción web white label para agencias | Ferova" description="Capacidad especializada para agencias: SEO técnico, mantenimiento web mensual, migraciones y diseño de landing pages bajo marca blanca." path="/" lang="es" image={heroVisual} jsonLd={[professionalService, faqSchema]} />
+      <Header lang="es" />
+      <main>
+        <section className="seo-agency-hero relative overflow-hidden pb-24 pt-36 text-white md:pb-28 md:pt-44">
+          <div className="container relative z-10 mx-auto grid items-center gap-12 px-4 md:px-6 lg:grid-cols-[0.95fr_1.05fr]">
             <div>
-              <p className="seo-kicker">Diagnóstico antes que volumen</p>
-              <h2 className="mt-4 font-display text-3xl font-bold tracking-tight md:text-5xl">
-                No necesitas más tareas SEO. Necesitas saber qué está frenando el crecimiento.
-              </h2>
+              <p className="mb-6 text-xs font-bold uppercase tracking-[0.22em] text-[#e0bd52]">Capacidad senior · White label · Entrega para agencias</p>
+              <h1 className="font-display text-4xl font-bold leading-[1.06] tracking-tight sm:text-5xl md:text-7xl">La capacidad técnica que tu agencia puede vender sin ampliar su nómina.</h1>
+              <p className="mt-7 max-w-2xl text-lg leading-8 text-white/75 md:text-xl">SEO técnico, mantenimiento web y landing pages para los clientes de tu agencia, con alcance, confidencialidad y precios definidos antes de empezar.</p>
+              <div className="mt-10 flex flex-col gap-3 sm:flex-row">
+                <button type="button" onClick={openFera} className="seo-primary-button">Cotizar con Fera <MessageSquareQuote className="h-4 w-4" /></button>
+                <Link to="/seo-para-agencias" className="seo-secondary-button">Ver habilidades disponibles</Link>
+              </div>
             </div>
-            <div className="grid gap-4 sm:grid-cols-2">
-              {[
-                "Problemas de rastreo o indexación que pasan desapercibidos.",
-                "Arquitecturas que no reflejan la demanda ni el catálogo real.",
-                "Backlogs extensos sin criterio de impacto o dependencia.",
-                "Migraciones y cambios técnicos sin control de riesgo orgánico.",
-              ].map((item) => (
-                <div key={item} className="seo-bento-card rounded-2xl p-6 text-sm leading-6 text-slate-700">
-                  {item}
-                </div>
+            <div className="seo-hero-visual" aria-hidden="true">
+              <img src={heroVisual} alt="" width="1536" height="1024" fetchPriority="high" className="h-auto w-full rounded-[2rem] object-cover shadow-2xl" />
+              <div className="seo-float-card seo-float-card-one"><ShieldCheck className="h-5 w-5" /><span>White label</span></div>
+              <div className="seo-float-card seo-float-card-two"><CheckCircle2 className="h-5 w-5" /><span>Alcance trazable</span></div>
+            </div>
+          </div>
+        </section>
+
+        <section className="py-20 md:py-28">
+          <div className="container mx-auto px-4 md:px-6">
+            <p className="seo-kicker">Lo que contratan las agencias</p>
+            <div className="mt-4 flex flex-col justify-between gap-5 md:flex-row md:items-end">
+              <h2 className="max-w-3xl font-display text-3xl font-bold md:text-5xl">Capacidad especializada por proyecto o como extensión mensual del equipo.</h2>
+              <p className="max-w-md text-slate-600">Tú conservas la relación con el cliente. Ferova aporta ejecución, documentación y criterio técnico.</p>
+            </div>
+            <div className="mt-12 grid gap-5 md:grid-cols-2">
+              {capabilities.map(({ icon: Icon, title, text, href }) => (
+                <Link key={title} to={href} className="seo-bento-card group rounded-3xl p-7 md:p-9">
+                  <div className="flex items-start justify-between"><span className="rounded-2xl bg-[#f1e5ce] p-3 text-[#6a4c30]"><Icon className="h-7 w-7" /></span><ArrowRight className="h-5 w-5 transition-transform group-hover:translate-x-1" /></div>
+                  <h3 className="mt-8 font-display text-2xl font-bold">{title}</h3><p className="mt-3 leading-7 text-slate-600">{text}</p>
+                </Link>
               ))}
             </div>
           </div>
-        </div>
-      </section>
+        </section>
 
-      <section className="bg-slate-50 py-20 md:py-28">
-        <div className="container mx-auto px-4 md:px-6">
-          <p className="seo-kicker">Especialidades</p>
-          <div className="mt-4 flex flex-col justify-between gap-5 md:flex-row md:items-end">
-            <h2 className="max-w-2xl font-display text-3xl font-bold tracking-tight md:text-5xl">
-              Consultoría enfocada en los puntos donde el SEO se vuelve crítico.
-            </h2>
-            <p className="max-w-md text-slate-600">Cada servicio parte del problema, no de un paquete genérico de tareas.</p>
+        <section className="bg-[#f4eadb] py-20 md:py-28">
+          <div className="container mx-auto grid max-w-6xl gap-12 px-4 md:px-6 lg:grid-cols-[1fr_.9fr] lg:items-center">
+            <img src={deliveryVisual} alt="Representación 3D de SEO técnico, mantenimiento web y diseño de landing pages" width="1536" height="1024" loading="lazy" className="seo-depth-image rounded-[2rem] shadow-xl" />
+            <div><p className="seo-kicker">Cómo se contrata</p><h2 className="mt-4 font-display text-3xl font-bold md:text-5xl">Dime qué habilidad falta, para cuántos clientes y cuándo debe estar lista.</h2><ul className="mt-7 space-y-4 text-slate-700">{["Alcance puntual, bolsa de horas o retainer mensual.", "Trabajo white label, interno o visible ante el cliente.", "Precio y cronograma según volumen, accesos y complejidad.", "Canales directos por correo, WhatsApp o Slack."].map((item) => <li key={item} className="flex gap-3"><CheckCircle2 className="mt-0.5 h-5 w-5 shrink-0 text-[#8c6905]" />{item}</li>)}</ul><button type="button" onClick={openFera} className="seo-primary-button mt-9">Solicitar cotización <ArrowRight className="h-4 w-4" /></button></div>
           </div>
-          <div className="mt-12 grid gap-5 md:grid-cols-2">
-            {services.map(({ icon: Icon, title, description, href }) => (
-              <Link key={href} to={href} className="seo-bento-card group rounded-2xl p-7">
-                <div className="flex items-start justify-between gap-6">
-                  <span className="rounded-xl bg-blue-50 p-3 text-blue-700"><Icon className="h-6 w-6" /></span>
-                  <ArrowRight className="h-5 w-5 text-slate-400 transition group-hover:translate-x-1 group-hover:text-blue-700" />
-                </div>
-                <h3 className="mt-8 font-display text-2xl font-bold">{title}</h3>
-                <p className="mt-3 leading-7 text-slate-600">{description}</p>
-              </Link>
-            ))}
-          </div>
-        </div>
-      </section>
+        </section>
 
-      <section className="py-20 md:py-28">
-        <div className="container mx-auto px-4 md:px-6">
-          <div className="grid gap-12 lg:grid-cols-[0.8fr_1.2fr] lg:gap-20">
-            <div>
-              <p className="seo-kicker">Cómo trabajo</p>
-              <h2 className="mt-4 font-display text-3xl font-bold tracking-tight md:text-5xl">Del diagnóstico a una ejecución que el equipo puede sostener.</h2>
-              <p className="mt-6 leading-7 text-slate-600">El método organiza la investigación, la priorización y el acompañamiento sin separar el SEO de las decisiones comerciales y técnicas.</p>
-              <Link to="/metodo-ferova" className="mt-8 inline-flex items-center gap-2 font-semibold text-blue-700 hover:text-blue-900">Conocer el método <ArrowRight className="h-4 w-4" /></Link>
-            </div>
-            <ol className="divide-y divide-slate-200 border-y border-slate-200">
-              {steps.map(([number, title, description]) => (
-                <li key={number} className="grid gap-3 py-6 sm:grid-cols-[56px_190px_1fr] sm:items-start">
-                  <span className="font-mono text-sm text-blue-700">{number}</span>
-                  <h3 className="font-display text-lg font-bold">{title}</h3>
-                  <p className="text-sm leading-6 text-slate-600">{description}</p>
-                </li>
-              ))}
-            </ol>
-          </div>
-        </div>
-      </section>
+        <section className="py-20 md:py-28"><div className="container mx-auto max-w-5xl px-4 md:px-6"><p className="seo-kicker">Preguntas de contratación</p><h2 className="mt-4 font-display text-3xl font-bold md:text-5xl">Habilidades, experiencia, operación y precio.</h2><div className="mt-10 divide-y divide-[#6a4c30]/20 border-y border-[#6a4c30]/20">{faq.map((item) => <article key={item.q} className="py-6"><h3 className="font-display text-xl font-bold">{item.q}</h3><p className="mt-3 leading-7 text-slate-600">{item.a}</p></article>)}</div></div></section>
 
-      <section className="seo-brand-hero relative overflow-hidden bg-[#071a2f] py-20 text-white md:py-28">
-        <div className="container mx-auto grid gap-12 px-4 md:px-6 lg:grid-cols-[1fr_0.85fr] lg:items-center lg:gap-20">
-          <div>
-            <p className="text-xs font-semibold uppercase tracking-[0.2em] text-cyan-300">SEO + AI Search</p>
-            <h2 className="mt-4 font-display text-3xl font-bold tracking-tight md:text-5xl">La búsqueda cambia. Los fundamentos técnicos y la autoridad siguen importando.</h2>
-            <p className="mt-6 max-w-2xl text-lg leading-8 text-slate-300">Integro la preparación para respuestas de ChatGPT, Gemini, Claude y Perplexity dentro de una estrategia SEO sólida: contenido claro, entidades comprensibles, evidencia y presencia multifuente. Sin promesas de aparición ni atajos.</p>
-            <Link to="/recursos/herramientas/evaluador-preparacion-ai-search" className="seo-primary-button mt-9">
-              Evaluar preparación para AI Search <ArrowRight className="h-4 w-4" />
-            </Link>
-          </div>
-          <div className="seo-glass-panel rounded-3xl p-8">
-            <Bot className="h-10 w-10 text-cyan-300" />
-            <h3 className="mt-7 font-display text-2xl font-bold">Una capa del sistema SEO</h3>
-            <p className="mt-4 leading-7 text-slate-300">El evaluador es una autoevaluación orientativa. Para conocer visibilidad, menciones y brechas competitivas se necesita medición y análisis específico.</p>
-          </div>
-        </div>
-      </section>
-
-      <section className="py-20 md:py-28">
-        <div className="container mx-auto px-4 text-center md:px-6">
-          <p className="seo-kicker">Siguiente paso</p>
-          <h2 className="mx-auto mt-4 max-w-3xl font-display text-3xl font-bold tracking-tight md:text-5xl">Conversemos sobre el problema que necesitas resolver.</h2>
-          <p className="mx-auto mt-6 max-w-2xl leading-7 text-slate-600">Cuéntame qué está cambiando, qué ya intentaste y dónde necesita apoyo tu equipo. Revisaremos si una intervención senior tiene sentido.</p>
-          <div className="mt-9 flex flex-col justify-center gap-3 sm:flex-row">
-            <Link to="/contacto" className="seo-primary-button">Evaluar mi proyecto <ArrowRight className="h-4 w-4" /></Link>
-            <Link to="/casos-de-exito" className="inline-flex items-center justify-center rounded-lg border border-slate-300 px-6 py-3 font-semibold text-slate-800 transition hover:border-blue-500 hover:text-blue-700">Ver casos reales</Link>
-          </div>
-        </div>
-      </section>
-    </main>
-
-    <Footer lang="es" />
-  </div>
-);
-
-export default SeoHome;
+        <section className="bg-[#541014] py-20 text-white"><div className="container mx-auto flex max-w-6xl flex-col items-start justify-between gap-8 px-4 md:flex-row md:items-end md:px-6"><div><p className="text-xs font-bold uppercase tracking-[.2em] text-[#e0bd52]">Cotización inicial</p><h2 className="mt-4 max-w-3xl font-display text-3xl font-bold md:text-5xl">Cuéntale a Fera qué necesita entregar tu agencia.</h2><p className="mt-4 max-w-2xl text-white/70">Fera recopila el alcance para preparar precio, disponibilidad y próximos pasos. No es una evaluación ni una sesión de asesoría.</p></div><button type="button" onClick={openFera} className="seo-primary-button shrink-0">Cotizar con Fera <MessageSquareQuote className="h-4 w-4" /></button></div></section>
+      </main>
+      <Footer lang="es" />
+    </div>
+  );
+}

@@ -277,7 +277,7 @@ const NewsletterPage = ({ lang = 'es' }: Props) => {
                     </li>
                   ))}
                 </ul>
-                <a href={`https://wa.link/jvbd4j?text=${encodeURIComponent(proWaMsg[currency])}`} target="_blank" rel="noopener noreferrer" onClick={() => trackNewsletter('subscribe_paid', 'pro')} className="btn-gold w-full block text-center">
+                <a href={`https://wa.me/17865787671?text=${encodeURIComponent(proWaMsg[currency])}`} target="_blank" rel="noopener noreferrer" onClick={() => trackNewsletter('subscribe_paid', 'pro')} className="btn-gold w-full block text-center">
                   <MessageCircle className="inline h-4 w-4 mr-2 -mt-0.5" />{l.proBtn} — {proPrices[currency]}
                 </a>
                 <p className="text-xs text-muted-foreground text-center mt-3">{l.proNote}</p>

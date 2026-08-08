@@ -24,10 +24,10 @@ export default function SeoAbout() {
       <Header lang="es" />
 
       <main className="pt-20">
-        <section className="bg-[#071a2f] py-20 text-white md:py-28">
+        <section className="bg-[#541014] py-20 text-white md:py-28">
           <div className="container mx-auto grid max-w-6xl gap-12 px-4 md:px-6 lg:grid-cols-[1.15fr_.85fr] lg:items-end">
             <div>
-              <p className="text-xs font-semibold uppercase tracking-[0.22em] text-cyan-300">Sobre nosotros</p>
+              <p className="text-xs font-semibold uppercase tracking-[0.22em] text-[#e0bd52]">Sobre nosotros</p>
               <h1 className="mt-5 font-display text-4xl font-bold leading-tight tracking-tight md:text-6xl">Criterio senior para decisiones SEO que no admiten improvisación.</h1>
             </div>
             <p className="text-lg leading-8 text-slate-300">SEO para Ecommerce es la práctica especializada de Ferova para trabajar directamente con ecommerce, equipos de marketing y agencias en problemas orgánicos complejos.</p>
@@ -39,8 +39,8 @@ export default function SeoAbout() {
             <div>
               <p className="seo-kicker">Dirección directa</p>
               <h2 className="mt-4 font-display text-3xl font-bold md:text-5xl">Maria Fer Calderón</h2>
-              <p className="mt-3 font-semibold text-blue-700">Fundadora y estratega SEO de Ferova</p>
-              <a href="https://www.linkedin.com/in/maria-fer-calderon/" target="_blank" rel="noopener noreferrer" className="mt-7 inline-flex items-center gap-2 font-semibold text-slate-700 hover:text-blue-700">
+              <p className="mt-3 font-semibold text-[#6a4c30]">Fundadora y estratega SEO de Ferova</p>
+              <a href="https://www.linkedin.com/in/maria-fer-calderon/" target="_blank" rel="noopener noreferrer" className="mt-7 inline-flex items-center gap-2 font-semibold text-slate-700 hover:text-[#6a4c30]">
                 <Linkedin className="h-5 w-5" /> Ver perfil en LinkedIn
               </a>
             </div>
@@ -58,7 +58,7 @@ export default function SeoAbout() {
             <div className="mt-10 grid gap-4 md:grid-cols-2">
               {principles.map((principle) => (
                 <div key={principle} className="flex gap-4 rounded-2xl border border-slate-200 bg-white p-6">
-                  <CheckCircle2 className="mt-0.5 h-5 w-5 shrink-0 text-teal-600" />
+                  <CheckCircle2 className="mt-0.5 h-5 w-5 shrink-0 text-[#8c6905]" />
                   <p className="leading-7 text-slate-700">{principle}</p>
                 </div>
               ))}
@@ -70,7 +70,7 @@ export default function SeoAbout() {
           <div className="container mx-auto px-4 md:px-6">
             <h2 className="mx-auto max-w-3xl font-display text-3xl font-bold md:text-5xl">¿Hay un problema SEO complejo detrás de tu próximo proyecto?</h2>
             <p className="mx-auto mt-5 max-w-2xl leading-7 text-slate-600">Conversemos para entender el contexto y determinar si una intervención senior es el siguiente paso correcto.</p>
-            <Link to="/contacto" className="seo-primary-button mt-9">Evaluar mi proyecto <ArrowRight className="h-4 w-4" /></Link>
+            <Link to="/contacto" className="seo-primary-button mt-9">Solicitar cotización <ArrowRight className="h-4 w-4" /></Link>
           </div>
         </section>
       </main>

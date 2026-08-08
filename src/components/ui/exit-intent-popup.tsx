@@ -1,177 +1,71 @@
-import { useState, useEffect } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
-import { X, Mail, Sparkles } from 'lucide-react';
-import { Link } from 'react-router-dom';
-import { supabase } from '@/integrations/supabase/client';
-import { toast } from 'sonner';
-import { trackEvent } from '@/lib/analytics';
-import { logLead } from '@/lib/adminInbox';
+import { useEffect, useState } from "react";
+import { AnimatePresence, motion } from "framer-motion";
+import { ArrowUpRight, Linkedin, X } from "lucide-react";
+import { trackEvent } from "@/lib/analytics";
 
-interface Props {
-  lang?: 'es' | 'en' | 'pt';
-}
+interface Props { lang?: "es" | "en" | "pt" }
 
-const T = {
+const PROFILE = "https://www.linkedin.com/in/maria-fer-calderon/";
+
+const COPY = {
   es: {
-    title: 'Recibe el newsletter gratis de Ferova',
-    sub: 'Estrategias reales de SEO, GEO e IAO para hacer crecer tu ecommerce. Cero spam, una vez por semana.',
-    name: 'Tu nombre',
-    email: 'Tu correo electrónico',
-    consent: 'Autorizo el tratamiento de mis datos según la',
-    privacy: 'política de privacidad',
-    btn: 'Suscribirme gratis',
-    noThanks: 'No quiero suscribirme',
-    success: '¡Listo! Revisa tu correo.',
-    error: 'Hubo un error. Intenta de nuevo.',
-    consentRequired: 'Debes autorizar el tratamiento de datos.',
+    title: "Sigue el trabajo detrás de cada entrega",
+    body: "En LinkedIn comparto aprendizajes sobre SEO técnico, operaciones white label, mantenimiento web y producción digital para agencias.",
+    button: "Seguir a María Fer en LinkedIn",
+    dismiss: "Continuar en el sitio",
   },
   en: {
-    title: 'Get the free Ferova newsletter',
-    sub: 'Real SEO, GEO and AIO strategies to grow your ecommerce. Zero spam, once a week.',
-    name: 'Your name',
-    email: 'Your email',
-    consent: 'I authorize the processing of my data according to the',
-    privacy: 'privacy policy',
-    btn: 'Subscribe for free',
-    noThanks: "I don't want to subscribe",
-    success: 'Done! Check your inbox.',
-    error: 'There was an error. Try again.',
-    consentRequired: 'You must authorize data processing.',
+    title: "Follow the work behind every delivery",
+    body: "On LinkedIn I share technical SEO, white-label operations and web delivery lessons for agencies.",
+    button: "Follow María Fer on LinkedIn",
+    dismiss: "Continue browsing",
   },
   pt: {
-    title: 'Receba o newsletter grátis da Ferova',
-    sub: 'Estratégias reais de SEO, GEO e IAO para fazer seu ecommerce crescer. Zero spam, uma vez por semana.',
-    name: 'Seu nome',
-    email: 'Seu e-mail',
-    consent: 'Autorizo o tratamento dos meus dados conforme a',
-    privacy: 'política de privacidade',
-    btn: 'Assinar grátis',
-    noThanks: 'Não quero assinar',
-    success: 'Pronto! Verifique sua caixa de entrada.',
-    error: 'Houve um erro. Tente novamente.',
-    consentRequired: 'Você precisa autorizar o tratamento de dados.',
+    title: "Acompanhe o trabalho por trás de cada entrega",
+    body: "No LinkedIn compartilho aprendizados sobre SEO técnico, operações white label e produção web para agências.",
+    button: "Seguir María Fer no LinkedIn",
+    dismiss: "Continuar no site",
   },
 };
 
-const ExitIntentPopup = ({ lang = 'es' }: Props) => {
-  const t = T[lang];
+export default function ExitIntentPopup({ lang = "es" }: Props) {
   const [show, setShow] = useState(false);
-  const [dismissed, setDismissed] = useState(false);
-  const [name, setName] = useState('');
-  const [email, setEmail] = useState('');
-  const [consent, setConsent] = useState(false);
-  const [loading, setLoading] = useState(false);
+  const copy = COPY[lang];
 
   useEffect(() => {
-    if (dismissed) return;
-    if (sessionStorage.getItem('exit-intent-shown')) return;
-
-    const handler = (e: MouseEvent) => {
-      if (e.clientY <= 5) {
+    if (sessionStorage.getItem("linkedin-exit-shown")) return;
+    const handler = (event: MouseEvent) => {
+      if (event.clientY <= 5) {
         setShow(true);
-        sessionStorage.setItem('exit-intent-shown', 'true');
-        trackEvent('popup_shown', { type: 'exit_intent' });
+        sessionStorage.setItem("linkedin-exit-shown", "true");
+        trackEvent("popup_shown", { type: "linkedin_follow", lang });
       }
     };
-    const timeout = setTimeout(() => {
-      document.addEventListener('mouseleave', handler);
-    }, 5000);
-    return () => {
-      clearTimeout(timeout);
-      document.removeEventListener('mouseleave', handler);
-    };
-  }, [dismissed]);
+    const timeout = window.setTimeout(() => document.addEventListener("mouseleave", handler), 7000);
+    return () => { window.clearTimeout(timeout); document.removeEventListener("mouseleave", handler); };
+  }, [lang]);
 
-  const close = () => { setShow(false); setDismissed(true); trackEvent('popup_closed'); };
-
-  const privacyHref = lang === 'en' ? '/en/privacy' : lang === 'pt' ? '/pt/privacidade' : '/privacidad';
-
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    if (!consent) { toast.error(t.consentRequired); return; }
-    if (!email.trim()) return;
-    setLoading(true);
-    try {
-      const { error } = await supabase.functions.invoke('brevo-sync', {
-        body: { email: email.trim(), name: name.trim(), source: 'popup', attributes: { LANG: lang } },
-      });
-      if (error) throw error;
-      await logLead({ source: 'newsletter', name: name.trim(), email: email.trim(), summary: 'Suscripción al newsletter (exit popup)', payload: { form: 'exit_popup', lang } });
-      trackEvent('newsletter_signup', { source: 'exit_popup', lang });
-      toast.success(t.success);
-      setName(''); setEmail(''); setConsent(false);
-      setShow(false); setDismissed(true);
-    } catch (err) {
-      console.error(err);
-      toast.error(t.error);
-    } finally {
-      setLoading(false);
-    }
-  };
+  const close = () => { setShow(false); trackEvent("popup_closed", { type: "linkedin_follow" }); };
 
   return (
     <AnimatePresence>
       {show && (
-        <motion.div
-          initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
-          className="fixed inset-0 z-[100] flex items-center justify-center p-4"
-          style={{ background: 'rgba(0,0,0,0.6)', backdropFilter: 'blur(4px)' }}
-          onClick={close}
-        >
-          <motion.div
-            initial={{ scale: 0.9, opacity: 0 }} animate={{ scale: 1, opacity: 1 }} exit={{ scale: 0.9, opacity: 0 }}
-            className="relative w-full max-w-md rounded-2xl p-8 border bg-card border-border"
-            onClick={(e) => e.stopPropagation()}
-          >
-            <button onClick={close} className="absolute top-4 right-4 text-muted-foreground hover:text-foreground" aria-label="Cerrar">
-              <X className="w-5 h-5" />
-            </button>
-
-            <div className="text-center">
-              <div className="w-16 h-16 rounded-2xl flex items-center justify-center mx-auto mb-5 bg-gold/15">
-                <Sparkles className="w-8 h-8 text-gold" />
-              </div>
-              <h3 className="text-xl font-display font-bold mb-3 text-foreground">{t.title}</h3>
-              <p className="text-sm leading-relaxed mb-6 text-muted-foreground">{t.sub}</p>
-
-              <form onSubmit={handleSubmit} className="space-y-3 text-left">
-                <input
-                  type="text" required placeholder={t.name} value={name} onChange={(e) => setName(e.target.value)}
-                  maxLength={120}
-                  className="w-full px-5 py-3 rounded-full text-sm bg-background border border-border focus:outline-none focus:ring-2 focus:ring-gold/40 text-foreground"
-                />
-                <input
-                  type="email" required placeholder={t.email} value={email} onChange={(e) => setEmail(e.target.value)}
-                  maxLength={254}
-                  className="w-full px-5 py-3 rounded-full text-sm bg-background border border-border focus:outline-none focus:ring-2 focus:ring-gold/40 text-foreground"
-                />
-                <label className="flex items-start gap-2 text-xs text-muted-foreground cursor-pointer px-1">
-                  <input
-                    type="checkbox" checked={consent} onChange={(e) => setConsent(e.target.checked)}
-                    className="mt-0.5 accent-gold"
-                  />
-                  <span>
-                    {t.consent}{' '}
-                    <Link to={privacyHref} className="underline text-gold hover:text-gold/80" target="_blank" rel="noopener noreferrer">
-                      {t.privacy}
-                    </Link>.
-                  </span>
-                </label>
-                <button type="submit" disabled={loading} className="btn-gold w-full !py-3 flex items-center justify-center gap-2 text-sm disabled:opacity-50">
-                  <Mail className="w-4 h-4" />
-                  {loading ? '...' : t.btn}
-                </button>
-              </form>
-
-              <button onClick={close} className="mt-4 text-xs underline text-muted-foreground hover:text-foreground">
-                {t.noThanks}
-              </button>
+        <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className="fixed inset-0 z-[100] flex items-center justify-center bg-black/65 p-4 backdrop-blur-sm" onClick={close}>
+          <motion.div initial={{ opacity: 0, rotateX: -8, y: 24 }} animate={{ opacity: 1, rotateX: 0, y: 0 }} exit={{ opacity: 0, y: 16 }} transition={{ type: "spring", stiffness: 220, damping: 22 }} className="relative w-full max-w-md overflow-hidden rounded-3xl border border-[#c0930e]/30 bg-[#fbf7ef] p-8 shadow-2xl" onClick={(event) => event.stopPropagation()}>
+            <div className="absolute -right-16 -top-16 h-40 w-40 rounded-full bg-[#c0930e]/20 blur-3xl" />
+            <button onClick={close} className="absolute right-4 top-4 rounded-full p-2 text-[#3c3c3b]/60 hover:bg-black/5 hover:text-[#3c3c3b]" aria-label="Cerrar"><X className="h-5 w-5" /></button>
+            <div className="relative">
+              <span className="inline-flex h-14 w-14 items-center justify-center rounded-2xl bg-[#541014] text-white shadow-lg"><Linkedin className="h-7 w-7" /></span>
+              <h2 className="mt-6 font-display text-3xl font-bold text-[#3c3c3b]">{copy.title}</h2>
+              <p className="mt-4 leading-7 text-[#3c3c3b]/70">{copy.body}</p>
+              <a href={PROFILE} target="_blank" rel="noopener noreferrer" onClick={() => trackEvent("linkedin_follow_clicked", { source: "exit_popup", lang })} className="seo-primary-button mt-7 w-full">
+                {copy.button} <ArrowUpRight className="h-4 w-4" />
+              </a>
+              <button onClick={close} className="mt-4 w-full text-sm text-[#3c3c3b]/60 underline underline-offset-4">{copy.dismiss}</button>
             </div>
           </motion.div>
         </motion.div>
       )}
     </AnimatePresence>
   );
-};
-
-export default ExitIntentPopup;
+}

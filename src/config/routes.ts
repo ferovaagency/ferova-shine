@@ -29,10 +29,16 @@
  */
 
 export type Lang = "es" | "en" | "pt";
-export const LANGS: Lang[] = ["es", "en", "pt"];
+/** Mercados públicos mantenidos: español e inglés. Portugués queda como legado fuera del SEO. */
+export const LANGS: Lang[] = ["es", "en"];
 
 /** El dominio de producción es único para los 3 idiomas (path-based i18n). */
 export const SITE_ORIGIN = "https://seoparaecommerce.co";
+export const SITE_ORIGINS: Record<Lang, string> = {
+  es: "https://seoparaecommerce.co",
+  en: "https://seoforecommerces.co",
+  pt: "https://seoparaecommerce.co",
+};
 
 export type RouteType =
   | "core" // home, contacto, nosotros, precios

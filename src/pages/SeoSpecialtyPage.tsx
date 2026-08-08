@@ -20,7 +20,7 @@ export default function SeoSpecialtyPage({ kind }: { kind: SeoSpecialtyKind }) {
   };
 
   return (
-    <div className="min-h-screen bg-background text-foreground">
+    <div className="seo-brand min-h-screen bg-background text-foreground">
       <SEO
         title={`${content.title} | SEO Para Ecommerce`}
         description={content.description}
@@ -35,15 +35,15 @@ export default function SeoSpecialtyPage({ kind }: { kind: SeoSpecialtyKind }) {
       <Header lang="es" />
 
       <main className="pt-20">
-        <section className="relative overflow-hidden bg-[#071427] py-20 text-white md:py-28">
-          <div className="absolute inset-0 opacity-40 [background-image:radial-gradient(circle_at_20%_20%,rgba(37,99,235,.45),transparent_36%),radial-gradient(circle_at_80%_70%,rgba(45,212,191,.22),transparent_32%)]" />
+        <section className="relative overflow-hidden bg-[#541014] py-20 text-white md:py-28">
+          <div className="absolute inset-0 opacity-50 [background-image:radial-gradient(circle_at_20%_20%,rgba(192,147,14,.36),transparent_36%),radial-gradient(circle_at_80%_70%,rgba(106,76,48,.3),transparent_32%)]" />
           <div className="container relative mx-auto max-w-6xl px-4 md:px-6">
-            <p className="mb-6 text-xs font-semibold tracking-[0.22em] text-[#64ebff]">{content.eyebrow}</p>
+            <p className="mb-6 text-xs font-semibold tracking-[0.22em] text-[#e0bd52]">{content.eyebrow}</p>
             <h1 className="max-w-5xl text-4xl font-bold leading-[1.05] md:text-6xl lg:text-7xl">{content.title}</h1>
             <p className="mt-7 max-w-3xl text-lg leading-relaxed text-slate-300 md:text-xl">{content.description}</p>
             <div className="mt-9 flex flex-col gap-3 sm:flex-row">
               <Link to="/contacto" className="seo-primary-button inline-flex items-center justify-center gap-2">
-                Evaluar mi proyecto <ArrowRight className="h-4 w-4" />
+                Solicitar cotización <ArrowRight className="h-4 w-4" />
               </Link>
               <Link to="/casos-de-exito" className="seo-secondary-button inline-flex items-center justify-center">Ver casos reales</Link>
             </div>
@@ -65,7 +65,7 @@ export default function SeoSpecialtyPage({ kind }: { kind: SeoSpecialtyKind }) {
               {content.deliverables.map((item, index) => {
                 const Icon = ICONS[index] ?? CheckCircle2;
                 return <article key={item.title} className="rounded-2xl border border-border bg-card p-7">
-                  <Icon className="h-6 w-6 text-[#2563eb]" />
+                  <Icon className="h-6 w-6 text-[#6a4c30]" />
                   <h3 className="mt-8 text-xl">{item.title}</h3>
                   <p className="mt-3 leading-relaxed text-muted-foreground">{item.description}</p>
                 </article>;
@@ -74,12 +74,12 @@ export default function SeoSpecialtyPage({ kind }: { kind: SeoSpecialtyKind }) {
           </div>
         </section>
 
-        <section className="bg-[#eef5ff] py-20 text-[#071427] md:py-24">
+        <section className="bg-[#f4eadb] py-20 text-[#3c3c3b] md:py-24">
           <div className="container mx-auto max-w-6xl px-4 md:px-6">
             <div className="grid gap-10 lg:grid-cols-2">
               <div><p className="seo-kicker">RESULTADO OPERATIVO</p><h2 className="mt-3 text-3xl md:text-5xl">Menos opinión. Más evidencia y criterios compartidos.</h2></div>
               <div className="space-y-4">
-                {content.outcomes.map((outcome) => <div key={outcome} className="flex gap-3 rounded-xl bg-white p-5 shadow-sm"><CheckCircle2 className="mt-0.5 h-5 w-5 shrink-0 text-[#0f8f83]" /><p>{outcome}</p></div>)}
+                {content.outcomes.map((outcome) => <div key={outcome} className="flex gap-3 rounded-xl bg-white p-5 shadow-sm"><CheckCircle2 className="mt-0.5 h-5 w-5 shrink-0 text-[#8c6905]" /><p>{outcome}</p></div>)}
               </div>
             </div>
           </div>
@@ -89,7 +89,7 @@ export default function SeoSpecialtyPage({ kind }: { kind: SeoSpecialtyKind }) {
           <div className="container mx-auto max-w-6xl px-4 md:px-6">
             <p className="seo-kicker">PROCESO</p><h2 className="mt-3 text-3xl md:text-5xl">Un proceso corto, visible y transferible.</h2>
             <div className="mt-12 grid gap-8 md:grid-cols-3">
-              {content.process.map((step, index) => <article key={step.title} className="border-t-2 border-[#2563eb] pt-6"><span className="font-mono text-sm text-[#2563eb]">0{index + 1}</span><h3 className="mt-5 text-xl">{step.title}</h3><p className="mt-3 leading-relaxed text-muted-foreground">{step.description}</p></article>)}
+              {content.process.map((step, index) => <article key={step.title} className="border-t-2 border-[#c0930e] pt-6"><span className="font-mono text-sm text-[#6a4c30]">0{index + 1}</span><h3 className="mt-5 text-xl">{step.title}</h3><p className="mt-3 leading-relaxed text-muted-foreground">{step.description}</p></article>)}
             </div>
           </div>
         </section>
@@ -103,10 +103,10 @@ export default function SeoSpecialtyPage({ kind }: { kind: SeoSpecialtyKind }) {
           </div>
         </section>
 
-        <section className="bg-[#071427] py-20 text-white">
+        <section className="bg-[#541014] py-20 text-white">
           <div className="container mx-auto flex max-w-6xl flex-col items-start justify-between gap-8 px-4 md:flex-row md:items-end md:px-6">
-            <div><p className="text-xs font-semibold tracking-[0.22em] text-[#64ebff]">SIGUIENTE PASO</p><h2 className="mt-4 max-w-3xl text-3xl md:text-5xl">Conversemos sobre el problema antes de definir tareas.</h2></div>
-            <Link to="/contacto" className="seo-primary-button shrink-0">Evaluar mi proyecto</Link>
+            <div><p className="text-xs font-semibold tracking-[0.22em] text-[#e0bd52]">SIGUIENTE PASO</p><h2 className="mt-4 max-w-3xl text-3xl md:text-5xl">Cuéntanos qué habilidad y capacidad necesita tu agencia.</h2></div>
+            <Link to="/contacto" className="seo-primary-button shrink-0">Solicitar cotización</Link>
           </div>
         </section>
       </main>

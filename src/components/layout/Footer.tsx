@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import { Mail, MapPin, Instagram, Linkedin, Facebook, Youtube, MessageCircle } from 'lucide-react';
+import { Mail, MapPin, Instagram, Linkedin, Facebook, Youtube, MessageCircle, MessagesSquare } from 'lucide-react';
 import logoLight from '@/assets/ferova-logo.png.png';
 import { useAnalytics } from '@/hooks/useAnalytics';
 import { trackEvent } from '@/lib/analytics';
@@ -15,27 +15,25 @@ const Footer = ({ currentLang, lang }: FooterProps) => {
 
   const t: Record<string, { tagline: string; services: string; company: string; legal: string; rights: string; servLinks: { name: string; href: string }[]; compLinks: { name: string; href: string }[]; legalLinks: { name: string; href: string }[] }> = {
     es: {
-      tagline: 'Consultoría SEO senior para ecommerce y agencias que necesitan resolver problemas complejos.',
+      tagline: 'Capacidad técnica white label para agencias: SEO, mantenimiento web y landing pages.',
       services: 'Especialidades',
       company: 'Explorar',
       legal: 'Legal',
       rights: 'Todos los derechos reservados.',
       servLinks: [
-        { name: 'SEO para ecommerce', href: '/servicios/seo-ecommerce' },
-        { name: 'SEO para agencias', href: '/seo-para-agencias' },
-        { name: 'Auditoría SEO técnica', href: '/auditoria-seo-tecnica' },
+        { name: 'SEO técnico white label', href: '/auditoria-seo-tecnica' },
+        { name: 'SEO para clientes de agencias', href: '/seo-para-agencias' },
+        { name: 'Mantenimiento web mensual', href: '/servicios/diseno-web' },
+        { name: 'Diseño de landing pages', href: '/servicios/diseno-web' },
         { name: 'Migraciones SEO', href: '/migraciones-seo' },
-        { name: 'Evaluador AI Search', href: '/recursos/herramientas/evaluador-preparacion-ai-search' },
       ],
       compLinks: [
-        { name: 'Soluciones', href: '/soluciones' },
-        { name: 'Método Ferova', href: '/metodo-ferova' },
-        { name: 'Casos de Éxito', href: '/casos-de-exito' },
-        { name: 'Recursos', href: '/recursos' },
-        { name: 'Blog', href: '/blog' },
-        { name: 'Sobre nosotros', href: '/sobre-nosotros' },
-        { name: 'Precios', href: '/precios' },
-        { name: 'Contacto', href: '/contacto' },
+        { name: 'Capacidades para agencias', href: '/seo-para-agencias' },
+        { name: 'Experiencia y entregas', href: '/casos-de-exito' },
+        { name: 'Recursos SEO en español', href: '/recursos' },
+        { name: 'Artículos de SEO técnico', href: '/blog' },
+        { name: 'Método de colaboración', href: '/metodo-ferova' },
+        { name: 'Solicitar cotización', href: '/contacto' },
       ],
       legalLinks: [
         { name: 'Términos y Condiciones', href: '/terminos' },
@@ -44,28 +42,23 @@ const Footer = ({ currentLang, lang }: FooterProps) => {
       ],
     },
     en: {
-      tagline: 'High-performance Web Apps for e-commerce. SEO, design and digital strategy.',
+      tagline: 'White-label specialist capacity for agencies: technical SEO, web maintenance and landing pages.',
       services: 'Services',
       company: 'Company',
       legal: 'Legal',
       rights: 'All rights reserved.',
       servLinks: [
-        { name: 'Strategy (Advisory)', href: '/en/strategy-advisory' },
-        { name: 'AI Training', href: '/en/ai-training' },
-        { name: 'Web / E-commerce Development', href: '/en/services/web-design' },
-        { name: 'Monthly SEO / AIO', href: '/en/services/ecommerce-seo' },
-        { name: 'LinkedIn Optimization', href: '/en/services/linkedin-optimization' },
-        { name: 'LinkedIn Content', href: '/en/services/linkedin-content' },
+        { name: 'Technical SEO', href: '/en/services/ecommerce-seo' },
+        { name: 'Monthly web maintenance', href: '/en/services/web-design' },
+        { name: 'Landing-page production', href: '/en/services/web-design' },
+        { name: 'E-commerce SEO', href: '/en/services/ecommerce-seo' },
       ],
       compLinks: [
-        { name: 'Solutions', href: '/en/solutions' },
-        { name: 'Ferova Method', href: '/en/ferova-method' },
-        { name: 'Products', href: '/en/products' },
-        { name: 'Free tools', href: '/en/resources/tools' },
-        { name: 'Pricing', href: '/en/pricing' },
-        { name: 'Case Studies', href: '/en/case-studies' },
-        { name: 'Blog', href: '/en/blog' },
-        { name: 'Contact', href: '/en/contact' },
+        { name: 'Capabilities', href: '/en/solutions' },
+        { name: 'Delivery method', href: '/en/ferova-method' },
+        { name: 'Agency experience', href: '/en/case-studies' },
+        { name: 'SEO resources', href: '/en/resources' },
+        { name: 'Request a quote', href: '/en/contact' },
       ],
       legalLinks: [
         { name: 'Terms & Conditions', href: '/en/terms' },
@@ -115,8 +108,8 @@ const Footer = ({ currentLang, lang }: FooterProps) => {
             <Link to={locale === 'pt' ? '/pt' : locale === 'en' ? '/en' : '/'}>
               {locale === 'es' ? (
                 <span className="leading-none">
-                  <span className="block font-display text-xl font-bold tracking-[0.08em] text-foreground">SEO PARA ECOMMERCE</span>
-                  <span className="mt-2 block text-[10px] font-semibold uppercase tracking-[0.24em] text-blue-600">by Ferova</span>
+                  <span className="block font-display text-xl font-bold tracking-[0.08em] text-foreground">SEO PARA AGENCIAS</span>
+                  <span className="mt-2 block text-[10px] font-semibold uppercase tracking-[0.24em] text-gold">by Ferova</span>
                 </span>
               ) : (
                 <img src={logoLight} alt="Ferova Agency" className="h-16 w-auto" />
@@ -127,8 +120,11 @@ const Footer = ({ currentLang, lang }: FooterProps) => {
               <a href="mailto:gerencia@seoparaecommerce.co" className="flex items-center gap-2 transition-colors hover:text-gold">
                 <Mail className="h-4 w-4" /> gerencia@seoparaecommerce.co
               </a>
-              <a href="https://wa.link/jvbd4j" target="_blank" rel="noopener noreferrer" onClick={() => trackEvent('whatsapp_button_clicked', { source: 'footer', label: 'phone_link' })} className="flex items-center gap-2 transition-colors hover:text-gold">
+              <a href="https://wa.me/17865787671" target="_blank" rel="noopener noreferrer" onClick={() => trackEvent('whatsapp_button_clicked', { source: 'footer', label: 'phone_link' })} className="flex items-center gap-2 transition-colors hover:text-gold">
                 <MessageCircle className="h-4 w-4" /> +1 (786) 578-7671
+              </a>
+              <a href="https://ferovaagency.slack.com/team/U0BFL50JL4X" target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 transition-colors hover:text-gold">
+                <MessagesSquare className="h-4 w-4" /> Slack de Ferova
               </a>
               <div className="flex items-center gap-2">
                 <MapPin className="h-4 w-4 flex-shrink-0" /> Bogotá, Colombia · Brasil · Estados Unidos
@@ -136,7 +132,8 @@ const Footer = ({ currentLang, lang }: FooterProps) => {
             </div>
             <div className="mt-4 flex flex-wrap gap-3">
               {([
-                { Icon: MessageCircle, name: 'whatsapp', url: 'https://wa.link/jvbd4j' },
+                { Icon: MessageCircle, name: 'whatsapp', url: 'https://wa.me/17865787671' },
+                { Icon: MessagesSquare, name: 'slack', url: 'https://ferovaagency.slack.com/team/U0BFL50JL4X' },
                 { Icon: Linkedin, name: 'linkedin', url: 'https://www.linkedin.com/in/maria-fer-calderon/' },
                 { Icon: Instagram, name: 'instagram', url: 'https://www.instagram.com/mafe.ferova/' },
                 { Icon: Facebook, name: 'facebook', url: 'https://www.facebook.com/mafecalderon.SEO' },

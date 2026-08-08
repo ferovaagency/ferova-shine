@@ -138,12 +138,12 @@ const CasoDetalle = ({ lang = 'es' }: Props) => {
                 <motion.a
                   whileHover={{ scale: 1.05 }}
                   whileTap={{ scale: 0.97 }}
-                  href="https://wa.link/jvbd4j"
+                  href="https://wa.me/17865787671"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="btn-gold inline-flex items-center gap-2"
                 >
-                  <MessageCircle className="w-5 h-5" /> {lang === 'es' ? 'Agendar Asesoría' : 'Book a Consultation'}
+                  <MessageCircle className="w-5 h-5" /> {lang === 'es' ? 'Solicitar cotización' : 'Request a quote'}
                 </motion.a>
               </AnimatedSection>
             </div>

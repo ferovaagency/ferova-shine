@@ -187,8 +187,8 @@ const CasosDeExito = ({ lang = 'es' }: Props) => {
               <h2 className="text-3xl md:text-4xl font-display font-bold mb-6">
                 {lang === 'es' ? '¿Tu e-commerce podría ser el próximo?' : lang === 'pt' ? 'Seu e-commerce pode ser o próximo?' : 'Could your e-commerce be next?'}
               </h2>
-              <motion.a whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.97 }} href="https://wa.link/jvbd4j" target="_blank" rel="noopener noreferrer" className="btn-gold inline-flex items-center gap-2">
-                <MessageCircle className="w-5 h-5" /> {lang === 'es' ? 'Agendar Asesoría' : lang === 'pt' ? 'Agendar Consultoria' : 'Book a Consultation'}
+              <motion.a whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.97 }} href="https://wa.me/17865787671" target="_blank" rel="noopener noreferrer" className="btn-gold inline-flex items-center gap-2">
+                <MessageCircle className="w-5 h-5" /> {lang === 'es' ? 'Solicitar cotización' : lang === 'pt' ? 'Solicitar orçamento' : 'Request a quote'}
               </motion.a>
             </AnimatedSection>
           </div>

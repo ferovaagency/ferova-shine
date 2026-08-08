@@ -10,7 +10,7 @@ import type { Lang } from '@/lib/pricing';
 
 interface Props { lang?: Lang }
 
-const WHATSAPP_URL = 'https://wa.link/jvbd4j?text=' + encodeURIComponent('Hola Ferova, tengo una tienda WooCommerce y quiero GEO.');
+const WHATSAPP_URL = 'https://wa.me/17865787671?text=' + encodeURIComponent('Hola Ferova, tengo una tienda WooCommerce y quiero GEO.');
 
 const T: Record<Lang, {
   seoTitle: string; seoDesc: string; eyebrow: string; h1: string; answer: string;

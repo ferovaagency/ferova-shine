@@ -5,28 +5,16 @@
   <url>
     <loc>https://seoparaecommerce.co/</loc>
     <xhtml:link rel="alternate" hreflang="es" href="https://seoparaecommerce.co/"/>
-    <xhtml:link rel="alternate" hreflang="en" href="https://seoparaecommerce.co/en"/>
-    <xhtml:link rel="alternate" hreflang="pt" href="https://seoparaecommerce.co/pt"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://seoforecommerces.co/en"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://seoparaecommerce.co/"/>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
   </url>
 
   <url>
-    <loc>https://seoparaecommerce.co/en</loc>
+    <loc>https://seoforecommerces.co/en</loc>
     <xhtml:link rel="alternate" hreflang="es" href="https://seoparaecommerce.co/"/>
-    <xhtml:link rel="alternate" hreflang="en" href="https://seoparaecommerce.co/en"/>
-    <xhtml:link rel="alternate" hreflang="pt" href="https://seoparaecommerce.co/pt"/>
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://seoparaecommerce.co/"/>
-    <changefreq>weekly</changefreq>
-    <priority>1.0</priority>
-  </url>
-
-  <url>
-    <loc>https://seoparaecommerce.co/pt</loc>
-    <xhtml:link rel="alternate" hreflang="es" href="https://seoparaecommerce.co/"/>
-    <xhtml:link rel="alternate" hreflang="en" href="https://seoparaecommerce.co/en"/>
-    <xhtml:link rel="alternate" hreflang="pt" href="https://seoparaecommerce.co/pt"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://seoforecommerces.co/en"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://seoparaecommerce.co/"/>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
@@ -35,28 +23,16 @@
   <url>
     <loc>https://seoparaecommerce.co/soluciones</loc>
     <xhtml:link rel="alternate" hreflang="es" href="https://seoparaecommerce.co/soluciones"/>
-    <xhtml:link rel="alternate" hreflang="en" href="https://seoparaecommerce.co/en/solutions"/>
-    <xhtml:link rel="alternate" hreflang="pt" href="https://seoparaecommerce.co/pt/solucoes"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://seoforecommerces.co/en/solutions"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://seoparaecommerce.co/soluciones"/>
     <changefreq>monthly</changefreq>
     <priority>0.9</priority>
   </url>
 
   <url>
-    <loc>https://seoparaecommerce.co/en/solutions</loc>
+    <loc>https://seoforecommerces.co/en/solutions</loc>
     <xhtml:link rel="alternate" hreflang="es" href="https://seoparaecommerce.co/soluciones"/>
-    <xhtml:link rel="alternate" hreflang="en" href="https://seoparaecommerce.co/en/solutions"/>
-    <xhtml:link rel="alternate" hreflang="pt" href="https://seoparaecommerce.co/pt/solucoes"/>
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://seoparaecommerce.co/soluciones"/>
-    <changefreq>monthly</changefreq>
-    <priority>0.9</priority>
-  </url>
-
-  <url>
-    <loc>https://seoparaecommerce.co/pt/solucoes</loc>
-    <xhtml:link rel="alternate" hreflang="es" href="https://seoparaecommerce.co/soluciones"/>
-    <xhtml:link rel="alternate" hreflang="en" href="https://seoparaecommerce.co/en/solutions"/>
-    <xhtml:link rel="alternate" hreflang="pt" href="https://seoparaecommerce.co/pt/solucoes"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://seoforecommerces.co/en/solutions"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://seoparaecommerce.co/soluciones"/>
     <changefreq>monthly</changefreq>
     <priority>0.9</priority>
@@ -65,28 +41,16 @@
   <url>
     <loc>https://seoparaecommerce.co/soluciones/diagnostico-empresarial</loc>
     <xhtml:link rel="alternate" hreflang="es" href="https://seoparaecommerce.co/soluciones/diagnostico-empresarial"/>
-    <xhtml:link rel="alternate" hreflang="en" href="https://seoparaecommerce.co/en/solutions/business-diagnosis"/>
-    <xhtml:link rel="alternate" hreflang="pt" href="https://seoparaecommerce.co/pt/solucoes/diagnostico-empresarial"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://seoforecommerces.co/en/solutions/business-diagnosis"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://seoparaecommerce.co/soluciones/diagnostico-empresarial"/>
     <changefreq>monthly</changefreq>
     <priority>0.9</priority>
   </url>
 
   <url>
-    <loc>https://seoparaecommerce.co/en/solutions/business-diagnosis</loc>
+    <loc>https://seoforecommerces.co/en/solutions/business-diagnosis</loc>
     <xhtml:link rel="alternate" hreflang="es" href="https://seoparaecommerce.co/soluciones/diagnostico-empresarial"/>
-    <xhtml:link rel="alternate" hreflang="en" href="https://seoparaecommerce.co/en/solutions/business-diagnosis"/>
-    <xhtml:link rel="alternate" hreflang="pt" href="https://seoparaecommerce.co/pt/solucoes/diagnostico-empresarial"/>
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://seoparaecommerce.co/soluciones/diagnostico-empresarial"/>
-    <changefreq>monthly</changefreq>
-    <priority>0.9</priority>
-  </url>
-
-  <url>
-    <loc>https://seoparaecommerce.co/pt/solucoes/diagnostico-empresarial</loc>
-    <xhtml:link rel="alternate" hreflang="es" href="https://seoparaecommerce.co/soluciones/diagnostico-empresarial"/>
-    <xhtml:link rel="alternate" hreflang="en" href="https://seoparaecommerce.co/en/solutions/business-diagnosis"/>
-    <xhtml:link rel="alternate" hreflang="pt" href="https://seoparaecommerce.co/pt/solucoes/diagnostico-empresarial"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://seoforecommerces.co/en/solutions/business-diagnosis"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://seoparaecommerce.co/soluciones/diagnostico-empresarial"/>
     <changefreq>monthly</changefreq>
     <priority>0.9</priority>
@@ -95,28 +59,16 @@
   <url>
     <loc>https://seoparaecommerce.co/metodo-ferova</loc>
     <xhtml:link rel="alternate" hreflang="es" href="https://seoparaecommerce.co/metodo-ferova"/>
-    <xhtml:link rel="alternate" hreflang="en" href="https://seoparaecommerce.co/en/ferova-method"/>
-    <xhtml:link rel="alternate" hreflang="pt" href="https://seoparaecommerce.co/pt/metodo-ferova"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://seoforecommerces.co/en/ferova-method"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://seoparaecommerce.co/metodo-ferova"/>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
 
   <url>
-    <loc>https://seoparaecommerce.co/en/ferova-method</loc>
+    <loc>https://seoforecommerces.co/en/ferova-method</loc>
     <xhtml:link rel="alternate" hreflang="es" href="https://seoparaecommerce.co/metodo-ferova"/>
-    <xhtml:link rel="alternate" hreflang="en" href="https://seoparaecommerce.co/en/ferova-method"/>
-    <xhtml:link rel="alternate" hreflang="pt" href="https://seoparaecommerce.co/pt/metodo-ferova"/>
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://seoparaecommerce.co/metodo-ferova"/>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-  </url>
-
-  <url>
-    <loc>https://seoparaecommerce.co/pt/metodo-ferova</loc>
-    <xhtml:link rel="alternate" hreflang="es" href="https://seoparaecommerce.co/metodo-ferova"/>
-    <xhtml:link rel="alternate" hreflang="en" href="https://seoparaecommerce.co/en/ferova-method"/>
-    <xhtml:link rel="alternate" hreflang="pt" href="https://seoparaecommerce.co/pt/metodo-ferova"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://seoforecommerces.co/en/ferova-method"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://seoparaecommerce.co/metodo-ferova"/>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
@@ -125,28 +77,16 @@
   <url>
     <loc>https://seoparaecommerce.co/servicios</loc>
     <xhtml:link rel="alternate" hreflang="es" href="https://seoparaecommerce.co/servicios"/>
-    <xhtml:link rel="alternate" hreflang="en" href="https://seoparaecommerce.co/en/services"/>
-    <xhtml:link rel="alternate" hreflang="pt" href="https://seoparaecommerce.co/pt/servicos"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://seoforecommerces.co/en/services"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://seoparaecommerce.co/servicios"/>
     <changefreq>monthly</changefreq>
     <priority>0.9</priority>
   </url>
 
   <url>
-    <loc>https://seoparaecommerce.co/en/services</loc>
+    <loc>https://seoforecommerces.co/en/services</loc>
     <xhtml:link rel="alternate" hreflang="es" href="https://seoparaecommerce.co/servicios"/>
-    <xhtml:link rel="alternate" hreflang="en" href="https://seoparaecommerce.co/en/services"/>
-    <xhtml:link rel="alternate" hreflang="pt" href="https://seoparaecommerce.co/pt/servicos"/>
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://seoparaecommerce.co/servicios"/>
-    <changefreq>monthly</changefreq>
-    <priority>0.9</priority>
-  </url>
-
-  <url>
-    <loc>https://seoparaecommerce.co/pt/servicos</loc>
-    <xhtml:link rel="alternate" hreflang="es" href="https://seoparaecommerce.co/servicios"/>
-    <xhtml:link rel="alternate" hreflang="en" href="https://seoparaecommerce.co/en/services"/>
-    <xhtml:link rel="alternate" hreflang="pt" href="https://seoparaecommerce.co/pt/servicos"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://seoforecommerces.co/en/services"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://seoparaecommerce.co/servicios"/>
     <changefreq>monthly</changefreq>
     <priority>0.9</priority>
@@ -155,28 +95,16 @@
   <url>
     <loc>https://seoparaecommerce.co/productos</loc>
     <xhtml:link rel="alternate" hreflang="es" href="https://seoparaecommerce.co/productos"/>
-    <xhtml:link rel="alternate" hreflang="en" href="https://seoparaecommerce.co/en/products"/>
-    <xhtml:link rel="alternate" hreflang="pt" href="https://seoparaecommerce.co/pt/produtos"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://seoforecommerces.co/en/products"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://seoparaecommerce.co/productos"/>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
 
   <url>
-    <loc>https://seoparaecommerce.co/en/products</loc>
+    <loc>https://seoforecommerces.co/en/products</loc>
     <xhtml:link rel="alternate" hreflang="es" href="https://seoparaecommerce.co/productos"/>
-    <xhtml:link rel="alternate" hreflang="en" href="https://seoparaecommerce.co/en/products"/>
-    <xhtml:link rel="alternate" hreflang="pt" href="https://seoparaecommerce.co/pt/produtos"/>
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://seoparaecommerce.co/productos"/>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-  </url>
-
-  <url>
-    <loc>https://seoparaecommerce.co/pt/produtos</loc>
-    <xhtml:link rel="alternate" hreflang="es" href="https://seoparaecommerce.co/productos"/>
-    <xhtml:link rel="alternate" hreflang="en" href="https://seoparaecommerce.co/en/products"/>
-    <xhtml:link rel="alternate" hreflang="pt" href="https://seoparaecommerce.co/pt/produtos"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://seoforecommerces.co/en/products"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://seoparaecommerce.co/productos"/>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
@@ -185,28 +113,16 @@
   <url>
     <loc>https://seoparaecommerce.co/precios</loc>
     <xhtml:link rel="alternate" hreflang="es" href="https://seoparaecommerce.co/precios"/>
-    <xhtml:link rel="alternate" hreflang="en" href="https://seoparaecommerce.co/en/pricing"/>
-    <xhtml:link rel="alternate" hreflang="pt" href="https://seoparaecommerce.co/pt/precos"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://seoforecommerces.co/en/pricing"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://seoparaecommerce.co/precios"/>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
 
   <url>
-    <loc>https://seoparaecommerce.co/en/pricing</loc>
+    <loc>https://seoforecommerces.co/en/pricing</loc>
     <xhtml:link rel="alternate" hreflang="es" href="https://seoparaecommerce.co/precios"/>
-    <xhtml:link rel="alternate" hreflang="en" href="https://seoparaecommerce.co/en/pricing"/>
-    <xhtml:link rel="alternate" hreflang="pt" href="https://seoparaecommerce.co/pt/precos"/>
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://seoparaecommerce.co/precios"/>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-  </url>
-
-  <url>
-    <loc>https://seoparaecommerce.co/pt/precos</loc>
-    <xhtml:link rel="alternate" hreflang="es" href="https://seoparaecommerce.co/precios"/>
-    <xhtml:link rel="alternate" hreflang="en" href="https://seoparaecommerce.co/en/pricing"/>
-    <xhtml:link rel="alternate" hreflang="pt" href="https://seoparaecommerce.co/pt/precos"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://seoforecommerces.co/en/pricing"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://seoparaecommerce.co/precios"/>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
@@ -215,28 +131,16 @@
   <url>
     <loc>https://seoparaecommerce.co/casos-de-exito</loc>
     <xhtml:link rel="alternate" hreflang="es" href="https://seoparaecommerce.co/casos-de-exito"/>
-    <xhtml:link rel="alternate" hreflang="en" href="https://seoparaecommerce.co/en/case-studies"/>
-    <xhtml:link rel="alternate" hreflang="pt" href="https://seoparaecommerce.co/pt/casos-de-sucesso"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://seoforecommerces.co/en/case-studies"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://seoparaecommerce.co/casos-de-exito"/>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
 
   <url>
-    <loc>https://seoparaecommerce.co/en/case-studies</loc>
+    <loc>https://seoforecommerces.co/en/case-studies</loc>
     <xhtml:link rel="alternate" hreflang="es" href="https://seoparaecommerce.co/casos-de-exito"/>
-    <xhtml:link rel="alternate" hreflang="en" href="https://seoparaecommerce.co/en/case-studies"/>
-    <xhtml:link rel="alternate" hreflang="pt" href="https://seoparaecommerce.co/pt/casos-de-sucesso"/>
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://seoparaecommerce.co/casos-de-exito"/>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-  </url>
-
-  <url>
-    <loc>https://seoparaecommerce.co/pt/casos-de-sucesso</loc>
-    <xhtml:link rel="alternate" hreflang="es" href="https://seoparaecommerce.co/casos-de-exito"/>
-    <xhtml:link rel="alternate" hreflang="en" href="https://seoparaecommerce.co/en/case-studies"/>
-    <xhtml:link rel="alternate" hreflang="pt" href="https://seoparaecommerce.co/pt/casos-de-sucesso"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://seoforecommerces.co/en/case-studies"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://seoparaecommerce.co/casos-de-exito"/>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
@@ -245,28 +149,16 @@
   <url>
     <loc>https://seoparaecommerce.co/contacto</loc>
     <xhtml:link rel="alternate" hreflang="es" href="https://seoparaecommerce.co/contacto"/>
-    <xhtml:link rel="alternate" hreflang="en" href="https://seoparaecommerce.co/en/contact"/>
-    <xhtml:link rel="alternate" hreflang="pt" href="https://seoparaecommerce.co/pt/contato"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://seoforecommerces.co/en/contact"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://seoparaecommerce.co/contacto"/>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
 
   <url>
-    <loc>https://seoparaecommerce.co/en/contact</loc>
+    <loc>https://seoforecommerces.co/en/contact</loc>
     <xhtml:link rel="alternate" hreflang="es" href="https://seoparaecommerce.co/contacto"/>
-    <xhtml:link rel="alternate" hreflang="en" href="https://seoparaecommerce.co/en/contact"/>
-    <xhtml:link rel="alternate" hreflang="pt" href="https://seoparaecommerce.co/pt/contato"/>
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://seoparaecommerce.co/contacto"/>
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-
-  <url>
-    <loc>https://seoparaecommerce.co/pt/contato</loc>
-    <xhtml:link rel="alternate" hreflang="es" href="https://seoparaecommerce.co/contacto"/>
-    <xhtml:link rel="alternate" hreflang="en" href="https://seoparaecommerce.co/en/contact"/>
-    <xhtml:link rel="alternate" hreflang="pt" href="https://seoparaecommerce.co/pt/contato"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://seoforecommerces.co/en/contact"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://seoparaecommerce.co/contacto"/>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
@@ -275,28 +167,16 @@
   <url>
     <loc>https://seoparaecommerce.co/blog</loc>
     <xhtml:link rel="alternate" hreflang="es" href="https://seoparaecommerce.co/blog"/>
-    <xhtml:link rel="alternate" hreflang="en" href="https://seoparaecommerce.co/en/blog"/>
-    <xhtml:link rel="alternate" hreflang="pt" href="https://seoparaecommerce.co/pt/blog"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://seoforecommerces.co/en/blog"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://seoparaecommerce.co/blog"/>
     <changefreq>daily</changefreq>
     <priority>0.8</priority>
   </url>
 
   <url>
-    <loc>https://seoparaecommerce.co/en/blog</loc>
+    <loc>https://seoforecommerces.co/en/blog</loc>
     <xhtml:link rel="alternate" hreflang="es" href="https://seoparaecommerce.co/blog"/>
-    <xhtml:link rel="alternate" hreflang="en" href="https://seoparaecommerce.co/en/blog"/>
-    <xhtml:link rel="alternate" hreflang="pt" href="https://seoparaecommerce.co/pt/blog"/>
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://seoparaecommerce.co/blog"/>
-    <changefreq>daily</changefreq>
-    <priority>0.8</priority>
-  </url>
-
-  <url>
-    <loc>https://seoparaecommerce.co/pt/blog</loc>
-    <xhtml:link rel="alternate" hreflang="es" href="https://seoparaecommerce.co/blog"/>
-    <xhtml:link rel="alternate" hreflang="en" href="https://seoparaecommerce.co/en/blog"/>
-    <xhtml:link rel="alternate" hreflang="pt" href="https://seoparaecommerce.co/pt/blog"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://seoforecommerces.co/en/blog"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://seoparaecommerce.co/blog"/>
     <changefreq>daily</changefreq>
     <priority>0.8</priority>
@@ -305,28 +185,16 @@
   <url>
     <loc>https://seoparaecommerce.co/recursos</loc>
     <xhtml:link rel="alternate" hreflang="es" href="https://seoparaecommerce.co/recursos"/>
-    <xhtml:link rel="alternate" hreflang="en" href="https://seoparaecommerce.co/en/resources"/>
-    <xhtml:link rel="alternate" hreflang="pt" href="https://seoparaecommerce.co/pt/recursos"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://seoforecommerces.co/en/resources"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://seoparaecommerce.co/recursos"/>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
 
   <url>
-    <loc>https://seoparaecommerce.co/en/resources</loc>
+    <loc>https://seoforecommerces.co/en/resources</loc>
     <xhtml:link rel="alternate" hreflang="es" href="https://seoparaecommerce.co/recursos"/>
-    <xhtml:link rel="alternate" hreflang="en" href="https://seoparaecommerce.co/en/resources"/>
-    <xhtml:link rel="alternate" hreflang="pt" href="https://seoparaecommerce.co/pt/recursos"/>
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://seoparaecommerce.co/recursos"/>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
-
-  <url>
-    <loc>https://seoparaecommerce.co/pt/recursos</loc>
-    <xhtml:link rel="alternate" hreflang="es" href="https://seoparaecommerce.co/recursos"/>
-    <xhtml:link rel="alternate" hreflang="en" href="https://seoparaecommerce.co/en/resources"/>
-    <xhtml:link rel="alternate" hreflang="pt" href="https://seoparaecommerce.co/pt/recursos"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://seoforecommerces.co/en/resources"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://seoparaecommerce.co/recursos"/>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
@@ -335,28 +203,16 @@
   <url>
     <loc>https://seoparaecommerce.co/nosotros</loc>
     <xhtml:link rel="alternate" hreflang="es" href="https://seoparaecommerce.co/nosotros"/>
-    <xhtml:link rel="alternate" hreflang="en" href="https://seoparaecommerce.co/en/about"/>
-    <xhtml:link rel="alternate" hreflang="pt" href="https://seoparaecommerce.co/pt/sobre-nos"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://seoforecommerces.co/en/about"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://seoparaecommerce.co/nosotros"/>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
 
   <url>
-    <loc>https://seoparaecommerce.co/en/about</loc>
+    <loc>https://seoforecommerces.co/en/about</loc>
     <xhtml:link rel="alternate" hreflang="es" href="https://seoparaecommerce.co/nosotros"/>
-    <xhtml:link rel="alternate" hreflang="en" href="https://seoparaecommerce.co/en/about"/>
-    <xhtml:link rel="alternate" hreflang="pt" href="https://seoparaecommerce.co/pt/sobre-nos"/>
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://seoparaecommerce.co/nosotros"/>
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-
-  <url>
-    <loc>https://seoparaecommerce.co/pt/sobre-nos</loc>
-    <xhtml:link rel="alternate" hreflang="es" href="https://seoparaecommerce.co/nosotros"/>
-    <xhtml:link rel="alternate" hreflang="en" href="https://seoparaecommerce.co/en/about"/>
-    <xhtml:link rel="alternate" hreflang="pt" href="https://seoparaecommerce.co/pt/sobre-nos"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://seoforecommerces.co/en/about"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://seoparaecommerce.co/nosotros"/>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
@@ -365,28 +221,16 @@
   <url>
     <loc>https://seoparaecommerce.co/servicios/seo-ecommerce</loc>
     <xhtml:link rel="alternate" hreflang="es" href="https://seoparaecommerce.co/servicios/seo-ecommerce"/>
-    <xhtml:link rel="alternate" hreflang="en" href="https://seoparaecommerce.co/en/services/ecommerce-seo"/>
-    <xhtml:link rel="alternate" hreflang="pt" href="https://seoparaecommerce.co/pt/seo-ecommerce"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://seoforecommerces.co/en/services/ecommerce-seo"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://seoparaecommerce.co/servicios/seo-ecommerce"/>
     <changefreq>monthly</changefreq>
     <priority>0.9</priority>
   </url>
 
   <url>
-    <loc>https://seoparaecommerce.co/en/services/ecommerce-seo</loc>
+    <loc>https://seoforecommerces.co/en/services/ecommerce-seo</loc>
     <xhtml:link rel="alternate" hreflang="es" href="https://seoparaecommerce.co/servicios/seo-ecommerce"/>
-    <xhtml:link rel="alternate" hreflang="en" href="https://seoparaecommerce.co/en/services/ecommerce-seo"/>
-    <xhtml:link rel="alternate" hreflang="pt" href="https://seoparaecommerce.co/pt/seo-ecommerce"/>
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://seoparaecommerce.co/servicios/seo-ecommerce"/>
-    <changefreq>monthly</changefreq>
-    <priority>0.9</priority>
-  </url>
-
-  <url>
-    <loc>https://seoparaecommerce.co/pt/seo-ecommerce</loc>
-    <xhtml:link rel="alternate" hreflang="es" href="https://seoparaecommerce.co/servicios/seo-ecommerce"/>
-    <xhtml:link rel="alternate" hreflang="en" href="https://seoparaecommerce.co/en/services/ecommerce-seo"/>
-    <xhtml:link rel="alternate" hreflang="pt" href="https://seoparaecommerce.co/pt/seo-ecommerce"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://seoforecommerces.co/en/services/ecommerce-seo"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://seoparaecommerce.co/servicios/seo-ecommerce"/>
     <changefreq>monthly</changefreq>
     <priority>0.9</priority>
@@ -427,28 +271,16 @@
   <url>
     <loc>https://seoparaecommerce.co/servicios/diseno-web</loc>
     <xhtml:link rel="alternate" hreflang="es" href="https://seoparaecommerce.co/servicios/diseno-web"/>
-    <xhtml:link rel="alternate" hreflang="en" href="https://seoparaecommerce.co/en/services/web-design"/>
-    <xhtml:link rel="alternate" hreflang="pt" href="https://seoparaecommerce.co/pt/design-web"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://seoforecommerces.co/en/services/web-design"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://seoparaecommerce.co/servicios/diseno-web"/>
     <changefreq>monthly</changefreq>
     <priority>0.9</priority>
   </url>
 
   <url>
-    <loc>https://seoparaecommerce.co/en/services/web-design</loc>
+    <loc>https://seoforecommerces.co/en/services/web-design</loc>
     <xhtml:link rel="alternate" hreflang="es" href="https://seoparaecommerce.co/servicios/diseno-web"/>
-    <xhtml:link rel="alternate" hreflang="en" href="https://seoparaecommerce.co/en/services/web-design"/>
-    <xhtml:link rel="alternate" hreflang="pt" href="https://seoparaecommerce.co/pt/design-web"/>
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://seoparaecommerce.co/servicios/diseno-web"/>
-    <changefreq>monthly</changefreq>
-    <priority>0.9</priority>
-  </url>
-
-  <url>
-    <loc>https://seoparaecommerce.co/pt/design-web</loc>
-    <xhtml:link rel="alternate" hreflang="es" href="https://seoparaecommerce.co/servicios/diseno-web"/>
-    <xhtml:link rel="alternate" hreflang="en" href="https://seoparaecommerce.co/en/services/web-design"/>
-    <xhtml:link rel="alternate" hreflang="pt" href="https://seoparaecommerce.co/pt/design-web"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://seoforecommerces.co/en/services/web-design"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://seoparaecommerce.co/servicios/diseno-web"/>
     <changefreq>monthly</changefreq>
     <priority>0.9</priority>
@@ -457,28 +289,16 @@
   <url>
     <loc>https://seoparaecommerce.co/consultoria-estrategica</loc>
     <xhtml:link rel="alternate" hreflang="es" href="https://seoparaecommerce.co/consultoria-estrategica"/>
-    <xhtml:link rel="alternate" hreflang="en" href="https://seoparaecommerce.co/en/strategy-advisory"/>
-    <xhtml:link rel="alternate" hreflang="pt" href="https://seoparaecommerce.co/pt/consultoria-estrategica"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://seoforecommerces.co/en/strategy-advisory"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://seoparaecommerce.co/consultoria-estrategica"/>
     <changefreq>monthly</changefreq>
     <priority>0.9</priority>
   </url>
 
   <url>
-    <loc>https://seoparaecommerce.co/en/strategy-advisory</loc>
+    <loc>https://seoforecommerces.co/en/strategy-advisory</loc>
     <xhtml:link rel="alternate" hreflang="es" href="https://seoparaecommerce.co/consultoria-estrategica"/>
-    <xhtml:link rel="alternate" hreflang="en" href="https://seoparaecommerce.co/en/strategy-advisory"/>
-    <xhtml:link rel="alternate" hreflang="pt" href="https://seoparaecommerce.co/pt/consultoria-estrategica"/>
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://seoparaecommerce.co/consultoria-estrategica"/>
-    <changefreq>monthly</changefreq>
-    <priority>0.9</priority>
-  </url>
-
-  <url>
-    <loc>https://seoparaecommerce.co/pt/consultoria-estrategica</loc>
-    <xhtml:link rel="alternate" hreflang="es" href="https://seoparaecommerce.co/consultoria-estrategica"/>
-    <xhtml:link rel="alternate" hreflang="en" href="https://seoparaecommerce.co/en/strategy-advisory"/>
-    <xhtml:link rel="alternate" hreflang="pt" href="https://seoparaecommerce.co/pt/consultoria-estrategica"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://seoforecommerces.co/en/strategy-advisory"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://seoparaecommerce.co/consultoria-estrategica"/>
     <changefreq>monthly</changefreq>
     <priority>0.9</priority>
@@ -487,28 +307,16 @@
   <url>
     <loc>https://seoparaecommerce.co/capacitacion-ia</loc>
     <xhtml:link rel="alternate" hreflang="es" href="https://seoparaecommerce.co/capacitacion-ia"/>
-    <xhtml:link rel="alternate" hreflang="en" href="https://seoparaecommerce.co/en/ai-training"/>
-    <xhtml:link rel="alternate" hreflang="pt" href="https://seoparaecommerce.co/pt/treinamento-ia"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://seoforecommerces.co/en/ai-training"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://seoparaecommerce.co/capacitacion-ia"/>
     <changefreq>monthly</changefreq>
     <priority>0.9</priority>
   </url>
 
   <url>
-    <loc>https://seoparaecommerce.co/en/ai-training</loc>
+    <loc>https://seoforecommerces.co/en/ai-training</loc>
     <xhtml:link rel="alternate" hreflang="es" href="https://seoparaecommerce.co/capacitacion-ia"/>
-    <xhtml:link rel="alternate" hreflang="en" href="https://seoparaecommerce.co/en/ai-training"/>
-    <xhtml:link rel="alternate" hreflang="pt" href="https://seoparaecommerce.co/pt/treinamento-ia"/>
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://seoparaecommerce.co/capacitacion-ia"/>
-    <changefreq>monthly</changefreq>
-    <priority>0.9</priority>
-  </url>
-
-  <url>
-    <loc>https://seoparaecommerce.co/pt/treinamento-ia</loc>
-    <xhtml:link rel="alternate" hreflang="es" href="https://seoparaecommerce.co/capacitacion-ia"/>
-    <xhtml:link rel="alternate" hreflang="en" href="https://seoparaecommerce.co/en/ai-training"/>
-    <xhtml:link rel="alternate" hreflang="pt" href="https://seoparaecommerce.co/pt/treinamento-ia"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://seoforecommerces.co/en/ai-training"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://seoparaecommerce.co/capacitacion-ia"/>
     <changefreq>monthly</changefreq>
     <priority>0.9</priority>
@@ -517,28 +325,16 @@
   <url>
     <loc>https://seoparaecommerce.co/servicios/asesorias-marketing</loc>
     <xhtml:link rel="alternate" hreflang="es" href="https://seoparaecommerce.co/servicios/asesorias-marketing"/>
-    <xhtml:link rel="alternate" hreflang="en" href="https://seoparaecommerce.co/en/services/marketing-consulting"/>
-    <xhtml:link rel="alternate" hreflang="pt" href="https://seoparaecommerce.co/pt/consultorias"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://seoforecommerces.co/en/services/marketing-consulting"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://seoparaecommerce.co/servicios/asesorias-marketing"/>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
 
   <url>
-    <loc>https://seoparaecommerce.co/en/services/marketing-consulting</loc>
+    <loc>https://seoforecommerces.co/en/services/marketing-consulting</loc>
     <xhtml:link rel="alternate" hreflang="es" href="https://seoparaecommerce.co/servicios/asesorias-marketing"/>
-    <xhtml:link rel="alternate" hreflang="en" href="https://seoparaecommerce.co/en/services/marketing-consulting"/>
-    <xhtml:link rel="alternate" hreflang="pt" href="https://seoparaecommerce.co/pt/consultorias"/>
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://seoparaecommerce.co/servicios/asesorias-marketing"/>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
-
-  <url>
-    <loc>https://seoparaecommerce.co/pt/consultorias</loc>
-    <xhtml:link rel="alternate" hreflang="es" href="https://seoparaecommerce.co/servicios/asesorias-marketing"/>
-    <xhtml:link rel="alternate" hreflang="en" href="https://seoparaecommerce.co/en/services/marketing-consulting"/>
-    <xhtml:link rel="alternate" hreflang="pt" href="https://seoparaecommerce.co/pt/consultorias"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://seoforecommerces.co/en/services/marketing-consulting"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://seoparaecommerce.co/servicios/asesorias-marketing"/>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
@@ -547,28 +343,16 @@
   <url>
     <loc>https://seoparaecommerce.co/servicios/optimizacion-linkedin</loc>
     <xhtml:link rel="alternate" hreflang="es" href="https://seoparaecommerce.co/servicios/optimizacion-linkedin"/>
-    <xhtml:link rel="alternate" hreflang="en" href="https://seoparaecommerce.co/en/services/linkedin-optimization"/>
-    <xhtml:link rel="alternate" hreflang="pt" href="https://seoparaecommerce.co/pt/linkedin"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://seoforecommerces.co/en/services/linkedin-optimization"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://seoparaecommerce.co/servicios/optimizacion-linkedin"/>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
 
   <url>
-    <loc>https://seoparaecommerce.co/en/services/linkedin-optimization</loc>
+    <loc>https://seoforecommerces.co/en/services/linkedin-optimization</loc>
     <xhtml:link rel="alternate" hreflang="es" href="https://seoparaecommerce.co/servicios/optimizacion-linkedin"/>
-    <xhtml:link rel="alternate" hreflang="en" href="https://seoparaecommerce.co/en/services/linkedin-optimization"/>
-    <xhtml:link rel="alternate" hreflang="pt" href="https://seoparaecommerce.co/pt/linkedin"/>
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://seoparaecommerce.co/servicios/optimizacion-linkedin"/>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
-
-  <url>
-    <loc>https://seoparaecommerce.co/pt/linkedin</loc>
-    <xhtml:link rel="alternate" hreflang="es" href="https://seoparaecommerce.co/servicios/optimizacion-linkedin"/>
-    <xhtml:link rel="alternate" hreflang="en" href="https://seoparaecommerce.co/en/services/linkedin-optimization"/>
-    <xhtml:link rel="alternate" hreflang="pt" href="https://seoparaecommerce.co/pt/linkedin"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://seoforecommerces.co/en/services/linkedin-optimization"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://seoparaecommerce.co/servicios/optimizacion-linkedin"/>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
@@ -577,28 +361,16 @@
   <url>
     <loc>https://seoparaecommerce.co/servicios/contenido-linkedin</loc>
     <xhtml:link rel="alternate" hreflang="es" href="https://seoparaecommerce.co/servicios/contenido-linkedin"/>
-    <xhtml:link rel="alternate" hreflang="en" href="https://seoparaecommerce.co/en/services/linkedin-content"/>
-    <xhtml:link rel="alternate" hreflang="pt" href="https://seoparaecommerce.co/pt/conteudo-linkedin"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://seoforecommerces.co/en/services/linkedin-content"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://seoparaecommerce.co/servicios/contenido-linkedin"/>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
 
   <url>
-    <loc>https://seoparaecommerce.co/en/services/linkedin-content</loc>
+    <loc>https://seoforecommerces.co/en/services/linkedin-content</loc>
     <xhtml:link rel="alternate" hreflang="es" href="https://seoparaecommerce.co/servicios/contenido-linkedin"/>
-    <xhtml:link rel="alternate" hreflang="en" href="https://seoparaecommerce.co/en/services/linkedin-content"/>
-    <xhtml:link rel="alternate" hreflang="pt" href="https://seoparaecommerce.co/pt/conteudo-linkedin"/>
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://seoparaecommerce.co/servicios/contenido-linkedin"/>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
-
-  <url>
-    <loc>https://seoparaecommerce.co/pt/conteudo-linkedin</loc>
-    <xhtml:link rel="alternate" hreflang="es" href="https://seoparaecommerce.co/servicios/contenido-linkedin"/>
-    <xhtml:link rel="alternate" hreflang="en" href="https://seoparaecommerce.co/en/services/linkedin-content"/>
-    <xhtml:link rel="alternate" hreflang="pt" href="https://seoparaecommerce.co/pt/conteudo-linkedin"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://seoforecommerces.co/en/services/linkedin-content"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://seoparaecommerce.co/servicios/contenido-linkedin"/>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
@@ -607,28 +379,16 @@
   <url>
     <loc>https://seoparaecommerce.co/servicios/descuentos-herramientas</loc>
     <xhtml:link rel="alternate" hreflang="es" href="https://seoparaecommerce.co/servicios/descuentos-herramientas"/>
-    <xhtml:link rel="alternate" hreflang="en" href="https://seoparaecommerce.co/en/services/tool-discounts"/>
-    <xhtml:link rel="alternate" hreflang="pt" href="https://seoparaecommerce.co/pt/ferramentas"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://seoforecommerces.co/en/services/tool-discounts"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://seoparaecommerce.co/servicios/descuentos-herramientas"/>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
 
   <url>
-    <loc>https://seoparaecommerce.co/en/services/tool-discounts</loc>
+    <loc>https://seoforecommerces.co/en/services/tool-discounts</loc>
     <xhtml:link rel="alternate" hreflang="es" href="https://seoparaecommerce.co/servicios/descuentos-herramientas"/>
-    <xhtml:link rel="alternate" hreflang="en" href="https://seoparaecommerce.co/en/services/tool-discounts"/>
-    <xhtml:link rel="alternate" hreflang="pt" href="https://seoparaecommerce.co/pt/ferramentas"/>
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://seoparaecommerce.co/servicios/descuentos-herramientas"/>
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-
-  <url>
-    <loc>https://seoparaecommerce.co/pt/ferramentas</loc>
-    <xhtml:link rel="alternate" hreflang="es" href="https://seoparaecommerce.co/servicios/descuentos-herramientas"/>
-    <xhtml:link rel="alternate" hreflang="en" href="https://seoparaecommerce.co/en/services/tool-discounts"/>
-    <xhtml:link rel="alternate" hreflang="pt" href="https://seoparaecommerce.co/pt/ferramentas"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://seoforecommerces.co/en/services/tool-discounts"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://seoparaecommerce.co/servicios/descuentos-herramientas"/>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
@@ -637,28 +397,16 @@
   <url>
     <loc>https://seoparaecommerce.co/que-es-geo</loc>
     <xhtml:link rel="alternate" hreflang="es" href="https://seoparaecommerce.co/que-es-geo"/>
-    <xhtml:link rel="alternate" hreflang="en" href="https://seoparaecommerce.co/en/what-is-geo"/>
-    <xhtml:link rel="alternate" hreflang="pt" href="https://seoparaecommerce.co/pt/o-que-e-geo"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://seoforecommerces.co/en/what-is-geo"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://seoparaecommerce.co/que-es-geo"/>
     <changefreq>monthly</changefreq>
     <priority>0.9</priority>
   </url>
 
   <url>
-    <loc>https://seoparaecommerce.co/en/what-is-geo</loc>
+    <loc>https://seoforecommerces.co/en/what-is-geo</loc>
     <xhtml:link rel="alternate" hreflang="es" href="https://seoparaecommerce.co/que-es-geo"/>
-    <xhtml:link rel="alternate" hreflang="en" href="https://seoparaecommerce.co/en/what-is-geo"/>
-    <xhtml:link rel="alternate" hreflang="pt" href="https://seoparaecommerce.co/pt/o-que-e-geo"/>
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://seoparaecommerce.co/que-es-geo"/>
-    <changefreq>monthly</changefreq>
-    <priority>0.9</priority>
-  </url>
-
-  <url>
-    <loc>https://seoparaecommerce.co/pt/o-que-e-geo</loc>
-    <xhtml:link rel="alternate" hreflang="es" href="https://seoparaecommerce.co/que-es-geo"/>
-    <xhtml:link rel="alternate" hreflang="en" href="https://seoparaecommerce.co/en/what-is-geo"/>
-    <xhtml:link rel="alternate" hreflang="pt" href="https://seoparaecommerce.co/pt/o-que-e-geo"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://seoforecommerces.co/en/what-is-geo"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://seoparaecommerce.co/que-es-geo"/>
     <changefreq>monthly</changefreq>
     <priority>0.9</priority>
@@ -667,28 +415,16 @@
   <url>
     <loc>https://seoparaecommerce.co/geo-vs-seo</loc>
     <xhtml:link rel="alternate" hreflang="es" href="https://seoparaecommerce.co/geo-vs-seo"/>
-    <xhtml:link rel="alternate" hreflang="en" href="https://seoparaecommerce.co/en/geo-vs-seo"/>
-    <xhtml:link rel="alternate" hreflang="pt" href="https://seoparaecommerce.co/pt/geo-vs-seo"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://seoforecommerces.co/en/geo-vs-seo"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://seoparaecommerce.co/geo-vs-seo"/>
     <changefreq>monthly</changefreq>
     <priority>0.9</priority>
   </url>
 
   <url>
-    <loc>https://seoparaecommerce.co/en/geo-vs-seo</loc>
+    <loc>https://seoforecommerces.co/en/geo-vs-seo</loc>
     <xhtml:link rel="alternate" hreflang="es" href="https://seoparaecommerce.co/geo-vs-seo"/>
-    <xhtml:link rel="alternate" hreflang="en" href="https://seoparaecommerce.co/en/geo-vs-seo"/>
-    <xhtml:link rel="alternate" hreflang="pt" href="https://seoparaecommerce.co/pt/geo-vs-seo"/>
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://seoparaecommerce.co/geo-vs-seo"/>
-    <changefreq>monthly</changefreq>
-    <priority>0.9</priority>
-  </url>
-
-  <url>
-    <loc>https://seoparaecommerce.co/pt/geo-vs-seo</loc>
-    <xhtml:link rel="alternate" hreflang="es" href="https://seoparaecommerce.co/geo-vs-seo"/>
-    <xhtml:link rel="alternate" hreflang="en" href="https://seoparaecommerce.co/en/geo-vs-seo"/>
-    <xhtml:link rel="alternate" hreflang="pt" href="https://seoparaecommerce.co/pt/geo-vs-seo"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://seoforecommerces.co/en/geo-vs-seo"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://seoparaecommerce.co/geo-vs-seo"/>
     <changefreq>monthly</changefreq>
     <priority>0.9</priority>
@@ -697,28 +433,16 @@
   <url>
     <loc>https://seoparaecommerce.co/geo-para-shopify</loc>
     <xhtml:link rel="alternate" hreflang="es" href="https://seoparaecommerce.co/geo-para-shopify"/>
-    <xhtml:link rel="alternate" hreflang="en" href="https://seoparaecommerce.co/en/geo-for-shopify"/>
-    <xhtml:link rel="alternate" hreflang="pt" href="https://seoparaecommerce.co/pt/geo-para-shopify"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://seoforecommerces.co/en/geo-for-shopify"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://seoparaecommerce.co/geo-para-shopify"/>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
 
   <url>
-    <loc>https://seoparaecommerce.co/en/geo-for-shopify</loc>
+    <loc>https://seoforecommerces.co/en/geo-for-shopify</loc>
     <xhtml:link rel="alternate" hreflang="es" href="https://seoparaecommerce.co/geo-para-shopify"/>
-    <xhtml:link rel="alternate" hreflang="en" href="https://seoparaecommerce.co/en/geo-for-shopify"/>
-    <xhtml:link rel="alternate" hreflang="pt" href="https://seoparaecommerce.co/pt/geo-para-shopify"/>
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://seoparaecommerce.co/geo-para-shopify"/>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-  </url>
-
-  <url>
-    <loc>https://seoparaecommerce.co/pt/geo-para-shopify</loc>
-    <xhtml:link rel="alternate" hreflang="es" href="https://seoparaecommerce.co/geo-para-shopify"/>
-    <xhtml:link rel="alternate" hreflang="en" href="https://seoparaecommerce.co/en/geo-for-shopify"/>
-    <xhtml:link rel="alternate" hreflang="pt" href="https://seoparaecommerce.co/pt/geo-para-shopify"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://seoforecommerces.co/en/geo-for-shopify"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://seoparaecommerce.co/geo-para-shopify"/>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
@@ -727,28 +451,16 @@
   <url>
     <loc>https://seoparaecommerce.co/geo-para-woocommerce</loc>
     <xhtml:link rel="alternate" hreflang="es" href="https://seoparaecommerce.co/geo-para-woocommerce"/>
-    <xhtml:link rel="alternate" hreflang="en" href="https://seoparaecommerce.co/en/geo-for-woocommerce"/>
-    <xhtml:link rel="alternate" hreflang="pt" href="https://seoparaecommerce.co/pt/geo-para-woocommerce"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://seoforecommerces.co/en/geo-for-woocommerce"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://seoparaecommerce.co/geo-para-woocommerce"/>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
 
   <url>
-    <loc>https://seoparaecommerce.co/en/geo-for-woocommerce</loc>
+    <loc>https://seoforecommerces.co/en/geo-for-woocommerce</loc>
     <xhtml:link rel="alternate" hreflang="es" href="https://seoparaecommerce.co/geo-para-woocommerce"/>
-    <xhtml:link rel="alternate" hreflang="en" href="https://seoparaecommerce.co/en/geo-for-woocommerce"/>
-    <xhtml:link rel="alternate" hreflang="pt" href="https://seoparaecommerce.co/pt/geo-para-woocommerce"/>
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://seoparaecommerce.co/geo-para-woocommerce"/>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-  </url>
-
-  <url>
-    <loc>https://seoparaecommerce.co/pt/geo-para-woocommerce</loc>
-    <xhtml:link rel="alternate" hreflang="es" href="https://seoparaecommerce.co/geo-para-woocommerce"/>
-    <xhtml:link rel="alternate" hreflang="en" href="https://seoparaecommerce.co/en/geo-for-woocommerce"/>
-    <xhtml:link rel="alternate" hreflang="pt" href="https://seoparaecommerce.co/pt/geo-para-woocommerce"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://seoforecommerces.co/en/geo-for-woocommerce"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://seoparaecommerce.co/geo-para-woocommerce"/>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
@@ -757,28 +469,16 @@
   <url>
     <loc>https://seoparaecommerce.co/geo-para-vtex</loc>
     <xhtml:link rel="alternate" hreflang="es" href="https://seoparaecommerce.co/geo-para-vtex"/>
-    <xhtml:link rel="alternate" hreflang="en" href="https://seoparaecommerce.co/en/geo-for-vtex"/>
-    <xhtml:link rel="alternate" hreflang="pt" href="https://seoparaecommerce.co/pt/geo-para-vtex"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://seoforecommerces.co/en/geo-for-vtex"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://seoparaecommerce.co/geo-para-vtex"/>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
 
   <url>
-    <loc>https://seoparaecommerce.co/en/geo-for-vtex</loc>
+    <loc>https://seoforecommerces.co/en/geo-for-vtex</loc>
     <xhtml:link rel="alternate" hreflang="es" href="https://seoparaecommerce.co/geo-para-vtex"/>
-    <xhtml:link rel="alternate" hreflang="en" href="https://seoparaecommerce.co/en/geo-for-vtex"/>
-    <xhtml:link rel="alternate" hreflang="pt" href="https://seoparaecommerce.co/pt/geo-para-vtex"/>
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://seoparaecommerce.co/geo-para-vtex"/>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-  </url>
-
-  <url>
-    <loc>https://seoparaecommerce.co/pt/geo-para-vtex</loc>
-    <xhtml:link rel="alternate" hreflang="es" href="https://seoparaecommerce.co/geo-para-vtex"/>
-    <xhtml:link rel="alternate" hreflang="en" href="https://seoparaecommerce.co/en/geo-for-vtex"/>
-    <xhtml:link rel="alternate" hreflang="pt" href="https://seoparaecommerce.co/pt/geo-para-vtex"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://seoforecommerces.co/en/geo-for-vtex"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://seoparaecommerce.co/geo-para-vtex"/>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
@@ -787,28 +487,16 @@
   <url>
     <loc>https://seoparaecommerce.co/estudio-visibilidad-ia-ecommerce-hispano-2026</loc>
     <xhtml:link rel="alternate" hreflang="es" href="https://seoparaecommerce.co/estudio-visibilidad-ia-ecommerce-hispano-2026"/>
-    <xhtml:link rel="alternate" hreflang="en" href="https://seoparaecommerce.co/en/ai-visibility-study-hispanic-ecommerce-2026"/>
-    <xhtml:link rel="alternate" hreflang="pt" href="https://seoparaecommerce.co/pt/estudo-visibilidade-ia-ecommerce-hispano-2026"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://seoforecommerces.co/en/ai-visibility-study-hispanic-ecommerce-2026"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://seoparaecommerce.co/estudio-visibilidad-ia-ecommerce-hispano-2026"/>
     <changefreq>monthly</changefreq>
     <priority>0.9</priority>
   </url>
 
   <url>
-    <loc>https://seoparaecommerce.co/en/ai-visibility-study-hispanic-ecommerce-2026</loc>
+    <loc>https://seoforecommerces.co/en/ai-visibility-study-hispanic-ecommerce-2026</loc>
     <xhtml:link rel="alternate" hreflang="es" href="https://seoparaecommerce.co/estudio-visibilidad-ia-ecommerce-hispano-2026"/>
-    <xhtml:link rel="alternate" hreflang="en" href="https://seoparaecommerce.co/en/ai-visibility-study-hispanic-ecommerce-2026"/>
-    <xhtml:link rel="alternate" hreflang="pt" href="https://seoparaecommerce.co/pt/estudo-visibilidade-ia-ecommerce-hispano-2026"/>
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://seoparaecommerce.co/estudio-visibilidad-ia-ecommerce-hispano-2026"/>
-    <changefreq>monthly</changefreq>
-    <priority>0.9</priority>
-  </url>
-
-  <url>
-    <loc>https://seoparaecommerce.co/pt/estudo-visibilidade-ia-ecommerce-hispano-2026</loc>
-    <xhtml:link rel="alternate" hreflang="es" href="https://seoparaecommerce.co/estudio-visibilidad-ia-ecommerce-hispano-2026"/>
-    <xhtml:link rel="alternate" hreflang="en" href="https://seoparaecommerce.co/en/ai-visibility-study-hispanic-ecommerce-2026"/>
-    <xhtml:link rel="alternate" hreflang="pt" href="https://seoparaecommerce.co/pt/estudo-visibilidade-ia-ecommerce-hispano-2026"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://seoforecommerces.co/en/ai-visibility-study-hispanic-ecommerce-2026"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://seoparaecommerce.co/estudio-visibilidad-ia-ecommerce-hispano-2026"/>
     <changefreq>monthly</changefreq>
     <priority>0.9</priority>
@@ -817,28 +505,16 @@
   <url>
     <loc>https://seoparaecommerce.co/herramientas/calculadora-visibilidad-ia</loc>
     <xhtml:link rel="alternate" hreflang="es" href="https://seoparaecommerce.co/herramientas/calculadora-visibilidad-ia"/>
-    <xhtml:link rel="alternate" hreflang="en" href="https://seoparaecommerce.co/en/tools/ai-visibility-calculator"/>
-    <xhtml:link rel="alternate" hreflang="pt" href="https://seoparaecommerce.co/pt/ferramentas/calculadora-visibilidade-ia"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://seoforecommerces.co/en/tools/ai-visibility-calculator"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://seoparaecommerce.co/herramientas/calculadora-visibilidad-ia"/>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
 
   <url>
-    <loc>https://seoparaecommerce.co/en/tools/ai-visibility-calculator</loc>
+    <loc>https://seoforecommerces.co/en/tools/ai-visibility-calculator</loc>
     <xhtml:link rel="alternate" hreflang="es" href="https://seoparaecommerce.co/herramientas/calculadora-visibilidad-ia"/>
-    <xhtml:link rel="alternate" hreflang="en" href="https://seoparaecommerce.co/en/tools/ai-visibility-calculator"/>
-    <xhtml:link rel="alternate" hreflang="pt" href="https://seoparaecommerce.co/pt/ferramentas/calculadora-visibilidade-ia"/>
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://seoparaecommerce.co/herramientas/calculadora-visibilidad-ia"/>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-  </url>
-
-  <url>
-    <loc>https://seoparaecommerce.co/pt/ferramentas/calculadora-visibilidade-ia</loc>
-    <xhtml:link rel="alternate" hreflang="es" href="https://seoparaecommerce.co/herramientas/calculadora-visibilidad-ia"/>
-    <xhtml:link rel="alternate" hreflang="en" href="https://seoparaecommerce.co/en/tools/ai-visibility-calculator"/>
-    <xhtml:link rel="alternate" hreflang="pt" href="https://seoparaecommerce.co/pt/ferramentas/calculadora-visibilidade-ia"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://seoforecommerces.co/en/tools/ai-visibility-calculator"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://seoparaecommerce.co/herramientas/calculadora-visibilidad-ia"/>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
@@ -855,28 +531,16 @@
   <url>
     <loc>https://seoparaecommerce.co/recursos/analizador-contratos</loc>
     <xhtml:link rel="alternate" hreflang="es" href="https://seoparaecommerce.co/recursos/analizador-contratos"/>
-    <xhtml:link rel="alternate" hreflang="en" href="https://seoparaecommerce.co/en/resources/contract-analyzer"/>
-    <xhtml:link rel="alternate" hreflang="pt" href="https://seoparaecommerce.co/pt/recursos/analisador-contratos"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://seoforecommerces.co/en/resources/contract-analyzer"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://seoparaecommerce.co/recursos/analizador-contratos"/>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
 
   <url>
-    <loc>https://seoparaecommerce.co/en/resources/contract-analyzer</loc>
+    <loc>https://seoforecommerces.co/en/resources/contract-analyzer</loc>
     <xhtml:link rel="alternate" hreflang="es" href="https://seoparaecommerce.co/recursos/analizador-contratos"/>
-    <xhtml:link rel="alternate" hreflang="en" href="https://seoparaecommerce.co/en/resources/contract-analyzer"/>
-    <xhtml:link rel="alternate" hreflang="pt" href="https://seoparaecommerce.co/pt/recursos/analisador-contratos"/>
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://seoparaecommerce.co/recursos/analizador-contratos"/>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
-
-  <url>
-    <loc>https://seoparaecommerce.co/pt/recursos/analisador-contratos</loc>
-    <xhtml:link rel="alternate" hreflang="es" href="https://seoparaecommerce.co/recursos/analizador-contratos"/>
-    <xhtml:link rel="alternate" hreflang="en" href="https://seoparaecommerce.co/en/resources/contract-analyzer"/>
-    <xhtml:link rel="alternate" hreflang="pt" href="https://seoparaecommerce.co/pt/recursos/analisador-contratos"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://seoforecommerces.co/en/resources/contract-analyzer"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://seoparaecommerce.co/recursos/analizador-contratos"/>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
@@ -885,28 +549,16 @@
   <url>
     <loc>https://seoparaecommerce.co/recursos/comparador-propuestas</loc>
     <xhtml:link rel="alternate" hreflang="es" href="https://seoparaecommerce.co/recursos/comparador-propuestas"/>
-    <xhtml:link rel="alternate" hreflang="en" href="https://seoparaecommerce.co/en/resources/proposal-comparator"/>
-    <xhtml:link rel="alternate" hreflang="pt" href="https://seoparaecommerce.co/pt/recursos/comparador-propostas"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://seoforecommerces.co/en/resources/proposal-comparator"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://seoparaecommerce.co/recursos/comparador-propuestas"/>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
 
   <url>
-    <loc>https://seoparaecommerce.co/en/resources/proposal-comparator</loc>
+    <loc>https://seoforecommerces.co/en/resources/proposal-comparator</loc>
     <xhtml:link rel="alternate" hreflang="es" href="https://seoparaecommerce.co/recursos/comparador-propuestas"/>
-    <xhtml:link rel="alternate" hreflang="en" href="https://seoparaecommerce.co/en/resources/proposal-comparator"/>
-    <xhtml:link rel="alternate" hreflang="pt" href="https://seoparaecommerce.co/pt/recursos/comparador-propostas"/>
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://seoparaecommerce.co/recursos/comparador-propuestas"/>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
-
-  <url>
-    <loc>https://seoparaecommerce.co/pt/recursos/comparador-propostas</loc>
-    <xhtml:link rel="alternate" hreflang="es" href="https://seoparaecommerce.co/recursos/comparador-propuestas"/>
-    <xhtml:link rel="alternate" hreflang="en" href="https://seoparaecommerce.co/en/resources/proposal-comparator"/>
-    <xhtml:link rel="alternate" hreflang="pt" href="https://seoparaecommerce.co/pt/recursos/comparador-propostas"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://seoforecommerces.co/en/resources/proposal-comparator"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://seoparaecommerce.co/recursos/comparador-propuestas"/>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
@@ -915,28 +567,16 @@
   <url>
     <loc>https://seoparaecommerce.co/recursos/briefing-newsletter</loc>
     <xhtml:link rel="alternate" hreflang="es" href="https://seoparaecommerce.co/recursos/briefing-newsletter"/>
-    <xhtml:link rel="alternate" hreflang="en" href="https://seoparaecommerce.co/en/resources/newsletter-briefing"/>
-    <xhtml:link rel="alternate" hreflang="pt" href="https://seoparaecommerce.co/pt/recursos/briefing-newsletter"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://seoforecommerces.co/en/resources/newsletter-briefing"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://seoparaecommerce.co/recursos/briefing-newsletter"/>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
 
   <url>
-    <loc>https://seoparaecommerce.co/en/resources/newsletter-briefing</loc>
+    <loc>https://seoforecommerces.co/en/resources/newsletter-briefing</loc>
     <xhtml:link rel="alternate" hreflang="es" href="https://seoparaecommerce.co/recursos/briefing-newsletter"/>
-    <xhtml:link rel="alternate" hreflang="en" href="https://seoparaecommerce.co/en/resources/newsletter-briefing"/>
-    <xhtml:link rel="alternate" hreflang="pt" href="https://seoparaecommerce.co/pt/recursos/briefing-newsletter"/>
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://seoparaecommerce.co/recursos/briefing-newsletter"/>
-    <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
-  </url>
-
-  <url>
-    <loc>https://seoparaecommerce.co/pt/recursos/briefing-newsletter</loc>
-    <xhtml:link rel="alternate" hreflang="es" href="https://seoparaecommerce.co/recursos/briefing-newsletter"/>
-    <xhtml:link rel="alternate" hreflang="en" href="https://seoparaecommerce.co/en/resources/newsletter-briefing"/>
-    <xhtml:link rel="alternate" hreflang="pt" href="https://seoparaecommerce.co/pt/recursos/briefing-newsletter"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://seoforecommerces.co/en/resources/newsletter-briefing"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://seoparaecommerce.co/recursos/briefing-newsletter"/>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
@@ -945,28 +585,16 @@
   <url>
     <loc>https://seoparaecommerce.co/recursos/herramientas</loc>
     <xhtml:link rel="alternate" hreflang="es" href="https://seoparaecommerce.co/recursos/herramientas"/>
-    <xhtml:link rel="alternate" hreflang="en" href="https://seoparaecommerce.co/en/resources/tools"/>
-    <xhtml:link rel="alternate" hreflang="pt" href="https://seoparaecommerce.co/pt/recursos/ferramentas"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://seoforecommerces.co/en/resources/tools"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://seoparaecommerce.co/recursos/herramientas"/>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
 
   <url>
-    <loc>https://seoparaecommerce.co/en/resources/tools</loc>
+    <loc>https://seoforecommerces.co/en/resources/tools</loc>
     <xhtml:link rel="alternate" hreflang="es" href="https://seoparaecommerce.co/recursos/herramientas"/>
-    <xhtml:link rel="alternate" hreflang="en" href="https://seoparaecommerce.co/en/resources/tools"/>
-    <xhtml:link rel="alternate" hreflang="pt" href="https://seoparaecommerce.co/pt/recursos/ferramentas"/>
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://seoparaecommerce.co/recursos/herramientas"/>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-  </url>
-
-  <url>
-    <loc>https://seoparaecommerce.co/pt/recursos/ferramentas</loc>
-    <xhtml:link rel="alternate" hreflang="es" href="https://seoparaecommerce.co/recursos/herramientas"/>
-    <xhtml:link rel="alternate" hreflang="en" href="https://seoparaecommerce.co/en/resources/tools"/>
-    <xhtml:link rel="alternate" hreflang="pt" href="https://seoparaecommerce.co/pt/recursos/ferramentas"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://seoforecommerces.co/en/resources/tools"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://seoparaecommerce.co/recursos/herramientas"/>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
@@ -975,28 +603,16 @@
   <url>
     <loc>https://seoparaecommerce.co/recursos/herramientas/calculadora-valor-hora-freelancer</loc>
     <xhtml:link rel="alternate" hreflang="es" href="https://seoparaecommerce.co/recursos/herramientas/calculadora-valor-hora-freelancer"/>
-    <xhtml:link rel="alternate" hreflang="en" href="https://seoparaecommerce.co/en/resources/tools/freelance-hourly-rate-calculator"/>
-    <xhtml:link rel="alternate" hreflang="pt" href="https://seoparaecommerce.co/pt/recursos/ferramentas/calculadora-valor-hora-freelancer"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://seoforecommerces.co/en/resources/tools/freelance-hourly-rate-calculator"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://seoparaecommerce.co/recursos/herramientas/calculadora-valor-hora-freelancer"/>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
 
   <url>
-    <loc>https://seoparaecommerce.co/en/resources/tools/freelance-hourly-rate-calculator</loc>
+    <loc>https://seoforecommerces.co/en/resources/tools/freelance-hourly-rate-calculator</loc>
     <xhtml:link rel="alternate" hreflang="es" href="https://seoparaecommerce.co/recursos/herramientas/calculadora-valor-hora-freelancer"/>
-    <xhtml:link rel="alternate" hreflang="en" href="https://seoparaecommerce.co/en/resources/tools/freelance-hourly-rate-calculator"/>
-    <xhtml:link rel="alternate" hreflang="pt" href="https://seoparaecommerce.co/pt/recursos/ferramentas/calculadora-valor-hora-freelancer"/>
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://seoparaecommerce.co/recursos/herramientas/calculadora-valor-hora-freelancer"/>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-  </url>
-
-  <url>
-    <loc>https://seoparaecommerce.co/pt/recursos/ferramentas/calculadora-valor-hora-freelancer</loc>
-    <xhtml:link rel="alternate" hreflang="es" href="https://seoparaecommerce.co/recursos/herramientas/calculadora-valor-hora-freelancer"/>
-    <xhtml:link rel="alternate" hreflang="en" href="https://seoparaecommerce.co/en/resources/tools/freelance-hourly-rate-calculator"/>
-    <xhtml:link rel="alternate" hreflang="pt" href="https://seoparaecommerce.co/pt/recursos/ferramentas/calculadora-valor-hora-freelancer"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://seoforecommerces.co/en/resources/tools/freelance-hourly-rate-calculator"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://seoparaecommerce.co/recursos/herramientas/calculadora-valor-hora-freelancer"/>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
@@ -1005,28 +621,16 @@
   <url>
     <loc>https://seoparaecommerce.co/newsletter</loc>
     <xhtml:link rel="alternate" hreflang="es" href="https://seoparaecommerce.co/newsletter"/>
-    <xhtml:link rel="alternate" hreflang="en" href="https://seoparaecommerce.co/en/newsletter"/>
-    <xhtml:link rel="alternate" hreflang="pt" href="https://seoparaecommerce.co/pt/newsletter"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://seoforecommerces.co/en/newsletter"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://seoparaecommerce.co/newsletter"/>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
 
   <url>
-    <loc>https://seoparaecommerce.co/en/newsletter</loc>
+    <loc>https://seoforecommerces.co/en/newsletter</loc>
     <xhtml:link rel="alternate" hreflang="es" href="https://seoparaecommerce.co/newsletter"/>
-    <xhtml:link rel="alternate" hreflang="en" href="https://seoparaecommerce.co/en/newsletter"/>
-    <xhtml:link rel="alternate" hreflang="pt" href="https://seoparaecommerce.co/pt/newsletter"/>
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://seoparaecommerce.co/newsletter"/>
-    <changefreq>weekly</changefreq>
-    <priority>0.6</priority>
-  </url>
-
-  <url>
-    <loc>https://seoparaecommerce.co/pt/newsletter</loc>
-    <xhtml:link rel="alternate" hreflang="es" href="https://seoparaecommerce.co/newsletter"/>
-    <xhtml:link rel="alternate" hreflang="en" href="https://seoparaecommerce.co/en/newsletter"/>
-    <xhtml:link rel="alternate" hreflang="pt" href="https://seoparaecommerce.co/pt/newsletter"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://seoforecommerces.co/en/newsletter"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://seoparaecommerce.co/newsletter"/>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
@@ -1035,28 +639,16 @@
   <url>
     <loc>https://seoparaecommerce.co/newsletter/archivo</loc>
     <xhtml:link rel="alternate" hreflang="es" href="https://seoparaecommerce.co/newsletter/archivo"/>
-    <xhtml:link rel="alternate" hreflang="en" href="https://seoparaecommerce.co/en/newsletter/archive"/>
-    <xhtml:link rel="alternate" hreflang="pt" href="https://seoparaecommerce.co/pt/newsletter/arquivo"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://seoforecommerces.co/en/newsletter/archive"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://seoparaecommerce.co/newsletter/archivo"/>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
   </url>
 
   <url>
-    <loc>https://seoparaecommerce.co/en/newsletter/archive</loc>
+    <loc>https://seoforecommerces.co/en/newsletter/archive</loc>
     <xhtml:link rel="alternate" hreflang="es" href="https://seoparaecommerce.co/newsletter/archivo"/>
-    <xhtml:link rel="alternate" hreflang="en" href="https://seoparaecommerce.co/en/newsletter/archive"/>
-    <xhtml:link rel="alternate" hreflang="pt" href="https://seoparaecommerce.co/pt/newsletter/arquivo"/>
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://seoparaecommerce.co/newsletter/archivo"/>
-    <changefreq>weekly</changefreq>
-    <priority>0.5</priority>
-  </url>
-
-  <url>
-    <loc>https://seoparaecommerce.co/pt/newsletter/arquivo</loc>
-    <xhtml:link rel="alternate" hreflang="es" href="https://seoparaecommerce.co/newsletter/archivo"/>
-    <xhtml:link rel="alternate" hreflang="en" href="https://seoparaecommerce.co/en/newsletter/archive"/>
-    <xhtml:link rel="alternate" hreflang="pt" href="https://seoparaecommerce.co/pt/newsletter/arquivo"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://seoforecommerces.co/en/newsletter/archive"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://seoparaecommerce.co/newsletter/archivo"/>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
@@ -1065,28 +657,16 @@
   <url>
     <loc>https://seoparaecommerce.co/newsletter-pro</loc>
     <xhtml:link rel="alternate" hreflang="es" href="https://seoparaecommerce.co/newsletter-pro"/>
-    <xhtml:link rel="alternate" hreflang="en" href="https://seoparaecommerce.co/en/newsletter-pro"/>
-    <xhtml:link rel="alternate" hreflang="pt" href="https://seoparaecommerce.co/pt/newsletter-pro"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://seoforecommerces.co/en/newsletter-pro"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://seoparaecommerce.co/newsletter-pro"/>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
 
   <url>
-    <loc>https://seoparaecommerce.co/en/newsletter-pro</loc>
+    <loc>https://seoforecommerces.co/en/newsletter-pro</loc>
     <xhtml:link rel="alternate" hreflang="es" href="https://seoparaecommerce.co/newsletter-pro"/>
-    <xhtml:link rel="alternate" hreflang="en" href="https://seoparaecommerce.co/en/newsletter-pro"/>
-    <xhtml:link rel="alternate" hreflang="pt" href="https://seoparaecommerce.co/pt/newsletter-pro"/>
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://seoparaecommerce.co/newsletter-pro"/>
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-
-  <url>
-    <loc>https://seoparaecommerce.co/pt/newsletter-pro</loc>
-    <xhtml:link rel="alternate" hreflang="es" href="https://seoparaecommerce.co/newsletter-pro"/>
-    <xhtml:link rel="alternate" hreflang="en" href="https://seoparaecommerce.co/en/newsletter-pro"/>
-    <xhtml:link rel="alternate" hreflang="pt" href="https://seoparaecommerce.co/pt/newsletter-pro"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://seoforecommerces.co/en/newsletter-pro"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://seoparaecommerce.co/newsletter-pro"/>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
@@ -1095,28 +675,16 @@
   <url>
     <loc>https://seoparaecommerce.co/terminos</loc>
     <xhtml:link rel="alternate" hreflang="es" href="https://seoparaecommerce.co/terminos"/>
-    <xhtml:link rel="alternate" hreflang="en" href="https://seoparaecommerce.co/en/terms"/>
-    <xhtml:link rel="alternate" hreflang="pt" href="https://seoparaecommerce.co/pt/termos"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://seoforecommerces.co/en/terms"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://seoparaecommerce.co/terminos"/>
     <changefreq>yearly</changefreq>
     <priority>0.3</priority>
   </url>
 
   <url>
-    <loc>https://seoparaecommerce.co/en/terms</loc>
+    <loc>https://seoforecommerces.co/en/terms</loc>
     <xhtml:link rel="alternate" hreflang="es" href="https://seoparaecommerce.co/terminos"/>
-    <xhtml:link rel="alternate" hreflang="en" href="https://seoparaecommerce.co/en/terms"/>
-    <xhtml:link rel="alternate" hreflang="pt" href="https://seoparaecommerce.co/pt/termos"/>
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://seoparaecommerce.co/terminos"/>
-    <changefreq>yearly</changefreq>
-    <priority>0.3</priority>
-  </url>
-
-  <url>
-    <loc>https://seoparaecommerce.co/pt/termos</loc>
-    <xhtml:link rel="alternate" hreflang="es" href="https://seoparaecommerce.co/terminos"/>
-    <xhtml:link rel="alternate" hreflang="en" href="https://seoparaecommerce.co/en/terms"/>
-    <xhtml:link rel="alternate" hreflang="pt" href="https://seoparaecommerce.co/pt/termos"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://seoforecommerces.co/en/terms"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://seoparaecommerce.co/terminos"/>
     <changefreq>yearly</changefreq>
     <priority>0.3</priority>
@@ -1125,28 +693,16 @@
   <url>
     <loc>https://seoparaecommerce.co/privacidad</loc>
     <xhtml:link rel="alternate" hreflang="es" href="https://seoparaecommerce.co/privacidad"/>
-    <xhtml:link rel="alternate" hreflang="en" href="https://seoparaecommerce.co/en/privacy"/>
-    <xhtml:link rel="alternate" hreflang="pt" href="https://seoparaecommerce.co/pt/privacidade"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://seoforecommerces.co/en/privacy"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://seoparaecommerce.co/privacidad"/>
     <changefreq>yearly</changefreq>
     <priority>0.3</priority>
   </url>
 
   <url>
-    <loc>https://seoparaecommerce.co/en/privacy</loc>
+    <loc>https://seoforecommerces.co/en/privacy</loc>
     <xhtml:link rel="alternate" hreflang="es" href="https://seoparaecommerce.co/privacidad"/>
-    <xhtml:link rel="alternate" hreflang="en" href="https://seoparaecommerce.co/en/privacy"/>
-    <xhtml:link rel="alternate" hreflang="pt" href="https://seoparaecommerce.co/pt/privacidade"/>
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://seoparaecommerce.co/privacidad"/>
-    <changefreq>yearly</changefreq>
-    <priority>0.3</priority>
-  </url>
-
-  <url>
-    <loc>https://seoparaecommerce.co/pt/privacidade</loc>
-    <xhtml:link rel="alternate" hreflang="es" href="https://seoparaecommerce.co/privacidad"/>
-    <xhtml:link rel="alternate" hreflang="en" href="https://seoparaecommerce.co/en/privacy"/>
-    <xhtml:link rel="alternate" hreflang="pt" href="https://seoparaecommerce.co/pt/privacidade"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://seoforecommerces.co/en/privacy"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://seoparaecommerce.co/privacidad"/>
     <changefreq>yearly</changefreq>
     <priority>0.3</priority>
@@ -1155,28 +711,16 @@
   <url>
     <loc>https://seoparaecommerce.co/cookies</loc>
     <xhtml:link rel="alternate" hreflang="es" href="https://seoparaecommerce.co/cookies"/>
-    <xhtml:link rel="alternate" hreflang="en" href="https://seoparaecommerce.co/en/cookies"/>
-    <xhtml:link rel="alternate" hreflang="pt" href="https://seoparaecommerce.co/pt/cookies"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://seoforecommerces.co/en/cookies"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://seoparaecommerce.co/cookies"/>
     <changefreq>yearly</changefreq>
     <priority>0.3</priority>
   </url>
 
   <url>
-    <loc>https://seoparaecommerce.co/en/cookies</loc>
+    <loc>https://seoforecommerces.co/en/cookies</loc>
     <xhtml:link rel="alternate" hreflang="es" href="https://seoparaecommerce.co/cookies"/>
-    <xhtml:link rel="alternate" hreflang="en" href="https://seoparaecommerce.co/en/cookies"/>
-    <xhtml:link rel="alternate" hreflang="pt" href="https://seoparaecommerce.co/pt/cookies"/>
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://seoparaecommerce.co/cookies"/>
-    <changefreq>yearly</changefreq>
-    <priority>0.3</priority>
-  </url>
-
-  <url>
-    <loc>https://seoparaecommerce.co/pt/cookies</loc>
-    <xhtml:link rel="alternate" hreflang="es" href="https://seoparaecommerce.co/cookies"/>
-    <xhtml:link rel="alternate" hreflang="en" href="https://seoparaecommerce.co/en/cookies"/>
-    <xhtml:link rel="alternate" hreflang="pt" href="https://seoparaecommerce.co/pt/cookies"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://seoforecommerces.co/en/cookies"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://seoparaecommerce.co/cookies"/>
     <changefreq>yearly</changefreq>
     <priority>0.3</priority>
@@ -1185,8 +729,7 @@
   <url>
     <loc>https://seoparaecommerce.co/casos-de-exito/google-ads-arcos-desinfeccion</loc>
     <xhtml:link rel="alternate" hreflang="es" href="https://seoparaecommerce.co/casos-de-exito/google-ads-arcos-desinfeccion"/>
-    <xhtml:link rel="alternate" hreflang="en" href="https://seoparaecommerce.co/en/case-studies/google-ads-arcos-desinfeccion"/>
-    <xhtml:link rel="alternate" hreflang="pt" href="https://seoparaecommerce.co/pt/casos-de-sucesso/google-ads-arcos-desinfeccion"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://seoforecommerces.co/en/case-studies/google-ads-arcos-desinfeccion"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://seoparaecommerce.co/casos-de-exito/google-ads-arcos-desinfeccion"/>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
@@ -1195,8 +738,7 @@
   <url>
     <loc>https://seoparaecommerce.co/casos-de-exito/ecommerce-cableado-estructurado</loc>
     <xhtml:link rel="alternate" hreflang="es" href="https://seoparaecommerce.co/casos-de-exito/ecommerce-cableado-estructurado"/>
-    <xhtml:link rel="alternate" hreflang="en" href="https://seoparaecommerce.co/en/case-studies/ecommerce-cableado-estructurado"/>
-    <xhtml:link rel="alternate" hreflang="pt" href="https://seoparaecommerce.co/pt/casos-de-sucesso/ecommerce-cableado-estructurado"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://seoforecommerces.co/en/case-studies/ecommerce-cableado-estructurado"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://seoparaecommerce.co/casos-de-exito/ecommerce-cableado-estructurado"/>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
@@ -1205,8 +747,7 @@
   <url>
     <loc>https://seoparaecommerce.co/casos-de-exito/ecommerce-mascotas</loc>
     <xhtml:link rel="alternate" hreflang="es" href="https://seoparaecommerce.co/casos-de-exito/ecommerce-mascotas"/>
-    <xhtml:link rel="alternate" hreflang="en" href="https://seoparaecommerce.co/en/case-studies/ecommerce-mascotas"/>
-    <xhtml:link rel="alternate" hreflang="pt" href="https://seoparaecommerce.co/pt/casos-de-sucesso/ecommerce-mascotas"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://seoforecommerces.co/en/case-studies/ecommerce-mascotas"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://seoparaecommerce.co/casos-de-exito/ecommerce-mascotas"/>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
@@ -1215,8 +756,7 @@
   <url>
     <loc>https://seoparaecommerce.co/casos-de-exito/cliente-tecnologia-migracion-web-app</loc>
     <xhtml:link rel="alternate" hreflang="es" href="https://seoparaecommerce.co/casos-de-exito/cliente-tecnologia-migracion-web-app"/>
-    <xhtml:link rel="alternate" hreflang="en" href="https://seoparaecommerce.co/en/case-studies/cliente-tecnologia-migracion-web-app"/>
-    <xhtml:link rel="alternate" hreflang="pt" href="https://seoparaecommerce.co/pt/casos-de-sucesso/cliente-tecnologia-migracion-web-app"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://seoforecommerces.co/en/case-studies/cliente-tecnologia-migracion-web-app"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://seoparaecommerce.co/casos-de-exito/cliente-tecnologia-migracion-web-app"/>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
@@ -1225,8 +765,7 @@
   <url>
     <loc>https://seoparaecommerce.co/blog/intencion-busqueda-ecommerce-clientes-compran</loc>
     <xhtml:link rel="alternate" hreflang="es" href="https://seoparaecommerce.co/blog/intencion-busqueda-ecommerce-clientes-compran"/>
-    <xhtml:link rel="alternate" hreflang="en" href="https://seoparaecommerce.co/en/blog/intencion-busqueda-ecommerce-clientes-compran"/>
-    <xhtml:link rel="alternate" hreflang="pt" href="https://seoparaecommerce.co/pt/blog/intencion-busqueda-ecommerce-clientes-compran"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://seoforecommerces.co/en/blog/intencion-busqueda-ecommerce-clientes-compran"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://seoparaecommerce.co/blog/intencion-busqueda-ecommerce-clientes-compran"/>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
@@ -1235,8 +774,7 @@
   <url>
     <loc>https://seoparaecommerce.co/blog/trafico-sin-ventas-tienda-diagnostico-solucion</loc>
     <xhtml:link rel="alternate" hreflang="es" href="https://seoparaecommerce.co/blog/trafico-sin-ventas-tienda-diagnostico-solucion"/>
-    <xhtml:link rel="alternate" hreflang="en" href="https://seoparaecommerce.co/en/blog/trafico-sin-ventas-tienda-diagnostico-solucion"/>
-    <xhtml:link rel="alternate" hreflang="pt" href="https://seoparaecommerce.co/pt/blog/trafico-sin-ventas-tienda-diagnostico-solucion"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://seoforecommerces.co/en/blog/trafico-sin-ventas-tienda-diagnostico-solucion"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://seoparaecommerce.co/blog/trafico-sin-ventas-tienda-diagnostico-solucion"/>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
@@ -1245,8 +783,7 @@
   <url>
     <loc>https://seoparaecommerce.co/blog/aeo-answer-engine-optimization-ecommerce</loc>
     <xhtml:link rel="alternate" hreflang="es" href="https://seoparaecommerce.co/blog/aeo-answer-engine-optimization-ecommerce"/>
-    <xhtml:link rel="alternate" hreflang="en" href="https://seoparaecommerce.co/en/blog/aeo-answer-engine-optimization-ecommerce"/>
-    <xhtml:link rel="alternate" hreflang="pt" href="https://seoparaecommerce.co/pt/blog/aeo-answer-engine-optimization-ecommerce"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://seoforecommerces.co/en/blog/aeo-answer-engine-optimization-ecommerce"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://seoparaecommerce.co/blog/aeo-answer-engine-optimization-ecommerce"/>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
@@ -1255,8 +792,7 @@
   <url>
     <loc>https://seoparaecommerce.co/blog/webapps-vs-wordpress-codigo-limpio-ventas</loc>
     <xhtml:link rel="alternate" hreflang="es" href="https://seoparaecommerce.co/blog/webapps-vs-wordpress-codigo-limpio-ventas"/>
-    <xhtml:link rel="alternate" hreflang="en" href="https://seoparaecommerce.co/en/blog/webapps-vs-wordpress-codigo-limpio-ventas"/>
-    <xhtml:link rel="alternate" hreflang="pt" href="https://seoparaecommerce.co/pt/blog/webapps-vs-wordpress-codigo-limpio-ventas"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://seoforecommerces.co/en/blog/webapps-vs-wordpress-codigo-limpio-ventas"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://seoparaecommerce.co/blog/webapps-vs-wordpress-codigo-limpio-ventas"/>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
@@ -1265,8 +801,7 @@
   <url>
     <loc>https://seoparaecommerce.co/blog/google-ads-vs-meta-ads-ecommerce</loc>
     <xhtml:link rel="alternate" hreflang="es" href="https://seoparaecommerce.co/blog/google-ads-vs-meta-ads-ecommerce"/>
-    <xhtml:link rel="alternate" hreflang="en" href="https://seoparaecommerce.co/en/blog/google-ads-vs-meta-ads-ecommerce"/>
-    <xhtml:link rel="alternate" hreflang="pt" href="https://seoparaecommerce.co/pt/blog/google-ads-vs-meta-ads-ecommerce"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://seoforecommerces.co/en/blog/google-ads-vs-meta-ads-ecommerce"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://seoparaecommerce.co/blog/google-ads-vs-meta-ads-ecommerce"/>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
@@ -1275,8 +810,7 @@
   <url>
     <loc>https://seoparaecommerce.co/blog/blog-agencia-seo-disruptiva-ecommerce</loc>
     <xhtml:link rel="alternate" hreflang="es" href="https://seoparaecommerce.co/blog/blog-agencia-seo-disruptiva-ecommerce"/>
-    <xhtml:link rel="alternate" hreflang="en" href="https://seoparaecommerce.co/en/blog/blog-agencia-seo-disruptiva-ecommerce"/>
-    <xhtml:link rel="alternate" hreflang="pt" href="https://seoparaecommerce.co/pt/blog/blog-agencia-seo-disruptiva-ecommerce"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://seoforecommerces.co/en/blog/blog-agencia-seo-disruptiva-ecommerce"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://seoparaecommerce.co/blog/blog-agencia-seo-disruptiva-ecommerce"/>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
@@ -1285,8 +819,7 @@
   <url>
     <loc>https://seoparaecommerce.co/blog/como-encontrar-palabras-clave-ecommerce</loc>
     <xhtml:link rel="alternate" hreflang="es" href="https://seoparaecommerce.co/blog/como-encontrar-palabras-clave-ecommerce"/>
-    <xhtml:link rel="alternate" hreflang="en" href="https://seoparaecommerce.co/en/blog/como-encontrar-palabras-clave-ecommerce"/>
-    <xhtml:link rel="alternate" hreflang="pt" href="https://seoparaecommerce.co/pt/blog/como-encontrar-palabras-clave-ecommerce"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://seoforecommerces.co/en/blog/como-encontrar-palabras-clave-ecommerce"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://seoparaecommerce.co/blog/como-encontrar-palabras-clave-ecommerce"/>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
@@ -1295,8 +828,7 @@
   <url>
     <loc>https://seoparaecommerce.co/blog/ecommerce-seo-blog-tienda-online</loc>
     <xhtml:link rel="alternate" hreflang="es" href="https://seoparaecommerce.co/blog/ecommerce-seo-blog-tienda-online"/>
-    <xhtml:link rel="alternate" hreflang="en" href="https://seoparaecommerce.co/en/blog/ecommerce-seo-blog-tienda-online"/>
-    <xhtml:link rel="alternate" hreflang="pt" href="https://seoparaecommerce.co/pt/blog/ecommerce-seo-blog-tienda-online"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://seoforecommerces.co/en/blog/ecommerce-seo-blog-tienda-online"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://seoparaecommerce.co/blog/ecommerce-seo-blog-tienda-online"/>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
@@ -1305,8 +837,7 @@
   <url>
     <loc>https://seoparaecommerce.co/blog/ecommerce-agency-agencia-especializada-tiendas</loc>
     <xhtml:link rel="alternate" hreflang="es" href="https://seoparaecommerce.co/blog/ecommerce-agency-agencia-especializada-tiendas"/>
-    <xhtml:link rel="alternate" hreflang="en" href="https://seoparaecommerce.co/en/blog/ecommerce-agency-agencia-especializada-tiendas"/>
-    <xhtml:link rel="alternate" hreflang="pt" href="https://seoparaecommerce.co/pt/blog/ecommerce-agency-agencia-especializada-tiendas"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://seoforecommerces.co/en/blog/ecommerce-agency-agencia-especializada-tiendas"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://seoparaecommerce.co/blog/ecommerce-agency-agencia-especializada-tiendas"/>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
@@ -1315,8 +846,7 @@
   <url>
     <loc>https://seoparaecommerce.co/blog/divi-vs-elementor-tienda-online-wordpress</loc>
     <xhtml:link rel="alternate" hreflang="es" href="https://seoparaecommerce.co/blog/divi-vs-elementor-tienda-online-wordpress"/>
-    <xhtml:link rel="alternate" hreflang="en" href="https://seoparaecommerce.co/en/blog/divi-vs-elementor-tienda-online-wordpress"/>
-    <xhtml:link rel="alternate" hreflang="pt" href="https://seoparaecommerce.co/pt/blog/divi-vs-elementor-tienda-online-wordpress"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://seoforecommerces.co/en/blog/divi-vs-elementor-tienda-online-wordpress"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://seoparaecommerce.co/blog/divi-vs-elementor-tienda-online-wordpress"/>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
@@ -1325,8 +855,7 @@
   <url>
     <loc>https://seoparaecommerce.co/blog/aumentar-ventas-ecommerce-sin-publicidad</loc>
     <xhtml:link rel="alternate" hreflang="es" href="https://seoparaecommerce.co/blog/aumentar-ventas-ecommerce-sin-publicidad"/>
-    <xhtml:link rel="alternate" hreflang="en" href="https://seoparaecommerce.co/en/blog/aumentar-ventas-ecommerce-sin-publicidad"/>
-    <xhtml:link rel="alternate" hreflang="pt" href="https://seoparaecommerce.co/pt/blog/aumentar-ventas-ecommerce-sin-publicidad"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://seoforecommerces.co/en/blog/aumentar-ventas-ecommerce-sin-publicidad"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://seoparaecommerce.co/blog/aumentar-ventas-ecommerce-sin-publicidad"/>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
@@ -1335,8 +864,7 @@
   <url>
     <loc>https://seoparaecommerce.co/blog/seo-tecnico-tiendas-online</loc>
     <xhtml:link rel="alternate" hreflang="es" href="https://seoparaecommerce.co/blog/seo-tecnico-tiendas-online"/>
-    <xhtml:link rel="alternate" hreflang="en" href="https://seoparaecommerce.co/en/blog/seo-tecnico-tiendas-online"/>
-    <xhtml:link rel="alternate" hreflang="pt" href="https://seoparaecommerce.co/pt/blog/seo-tecnico-tiendas-online"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://seoforecommerces.co/en/blog/seo-tecnico-tiendas-online"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://seoparaecommerce.co/blog/seo-tecnico-tiendas-online"/>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
@@ -1345,8 +873,7 @@
   <url>
     <loc>https://seoparaecommerce.co/blog/core-web-vitals-ecommerce-ventas-2025</loc>
     <xhtml:link rel="alternate" hreflang="es" href="https://seoparaecommerce.co/blog/core-web-vitals-ecommerce-ventas-2025"/>
-    <xhtml:link rel="alternate" hreflang="en" href="https://seoparaecommerce.co/en/blog/core-web-vitals-ecommerce-ventas-2025"/>
-    <xhtml:link rel="alternate" hreflang="pt" href="https://seoparaecommerce.co/pt/blog/core-web-vitals-ecommerce-ventas-2025"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://seoforecommerces.co/en/blog/core-web-vitals-ecommerce-ventas-2025"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://seoparaecommerce.co/blog/core-web-vitals-ecommerce-ventas-2025"/>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
@@ -1355,8 +882,7 @@
   <url>
     <loc>https://seoparaecommerce.co/blog/chat-ia-ventas-automatizar-e-commerce</loc>
     <xhtml:link rel="alternate" hreflang="es" href="https://seoparaecommerce.co/blog/chat-ia-ventas-automatizar-e-commerce"/>
-    <xhtml:link rel="alternate" hreflang="en" href="https://seoparaecommerce.co/en/blog/chat-ia-ventas-automatizar-e-commerce"/>
-    <xhtml:link rel="alternate" hreflang="pt" href="https://seoparaecommerce.co/pt/blog/chat-ia-ventas-automatizar-e-commerce"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://seoforecommerces.co/en/blog/chat-ia-ventas-automatizar-e-commerce"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://seoparaecommerce.co/blog/chat-ia-ventas-automatizar-e-commerce"/>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
@@ -1365,8 +891,7 @@
   <url>
     <loc>https://seoparaecommerce.co/blog/podcasts-seo-transcripciones-indexables-google</loc>
     <xhtml:link rel="alternate" hreflang="es" href="https://seoparaecommerce.co/blog/podcasts-seo-transcripciones-indexables-google"/>
-    <xhtml:link rel="alternate" hreflang="en" href="https://seoparaecommerce.co/en/blog/podcasts-seo-transcripciones-indexables-google"/>
-    <xhtml:link rel="alternate" hreflang="pt" href="https://seoparaecommerce.co/pt/blog/podcasts-seo-transcripciones-indexables-google"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://seoforecommerces.co/en/blog/podcasts-seo-transcripciones-indexables-google"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://seoparaecommerce.co/blog/podcasts-seo-transcripciones-indexables-google"/>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
@@ -1375,8 +900,7 @@
   <url>
     <loc>https://seoparaecommerce.co/blog/servicio-pauta-digital-ecommerce</loc>
     <xhtml:link rel="alternate" hreflang="es" href="https://seoparaecommerce.co/blog/servicio-pauta-digital-ecommerce"/>
-    <xhtml:link rel="alternate" hreflang="en" href="https://seoparaecommerce.co/en/blog/servicio-pauta-digital-ecommerce"/>
-    <xhtml:link rel="alternate" hreflang="pt" href="https://seoparaecommerce.co/pt/blog/servicio-pauta-digital-ecommerce"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://seoforecommerces.co/en/blog/servicio-pauta-digital-ecommerce"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://seoparaecommerce.co/blog/servicio-pauta-digital-ecommerce"/>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
@@ -1385,8 +909,7 @@
   <url>
     <loc>https://seoparaecommerce.co/blog/agencia-seo-ecommerce-preguntas-contratar</loc>
     <xhtml:link rel="alternate" hreflang="es" href="https://seoparaecommerce.co/blog/agencia-seo-ecommerce-preguntas-contratar"/>
-    <xhtml:link rel="alternate" hreflang="en" href="https://seoparaecommerce.co/en/blog/agencia-seo-ecommerce-preguntas-contratar"/>
-    <xhtml:link rel="alternate" hreflang="pt" href="https://seoparaecommerce.co/pt/blog/agencia-seo-ecommerce-preguntas-contratar"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://seoforecommerces.co/en/blog/agencia-seo-ecommerce-preguntas-contratar"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://seoparaecommerce.co/blog/agencia-seo-ecommerce-preguntas-contratar"/>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
@@ -1395,8 +918,7 @@
   <url>
     <loc>https://seoparaecommerce.co/blog/link-building-gestoria-asesoria</loc>
     <xhtml:link rel="alternate" hreflang="es" href="https://seoparaecommerce.co/blog/link-building-gestoria-asesoria"/>
-    <xhtml:link rel="alternate" hreflang="en" href="https://seoparaecommerce.co/en/blog/link-building-gestoria-asesoria"/>
-    <xhtml:link rel="alternate" hreflang="pt" href="https://seoparaecommerce.co/pt/blog/link-building-gestoria-asesoria"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://seoforecommerces.co/en/blog/link-building-gestoria-asesoria"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://seoparaecommerce.co/blog/link-building-gestoria-asesoria"/>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
@@ -1405,8 +927,7 @@
   <url>
     <loc>https://seoparaecommerce.co/blog/wordpress-vs-magento-ecommerce</loc>
     <xhtml:link rel="alternate" hreflang="es" href="https://seoparaecommerce.co/blog/wordpress-vs-magento-ecommerce"/>
-    <xhtml:link rel="alternate" hreflang="en" href="https://seoparaecommerce.co/en/blog/wordpress-vs-magento-ecommerce"/>
-    <xhtml:link rel="alternate" hreflang="pt" href="https://seoparaecommerce.co/pt/blog/wordpress-vs-magento-ecommerce"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://seoforecommerces.co/en/blog/wordpress-vs-magento-ecommerce"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://seoparaecommerce.co/blog/wordpress-vs-magento-ecommerce"/>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
@@ -1415,8 +936,7 @@
   <url>
     <loc>https://seoparaecommerce.co/blog/creacion-sitios-web-empresas-colombia</loc>
     <xhtml:link rel="alternate" hreflang="es" href="https://seoparaecommerce.co/blog/creacion-sitios-web-empresas-colombia"/>
-    <xhtml:link rel="alternate" hreflang="en" href="https://seoparaecommerce.co/en/blog/creacion-sitios-web-empresas-colombia"/>
-    <xhtml:link rel="alternate" hreflang="pt" href="https://seoparaecommerce.co/pt/blog/creacion-sitios-web-empresas-colombia"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://seoforecommerces.co/en/blog/creacion-sitios-web-empresas-colombia"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://seoparaecommerce.co/blog/creacion-sitios-web-empresas-colombia"/>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
@@ -1425,8 +945,7 @@
   <url>
     <loc>https://seoparaecommerce.co/blog/ia-seo-ecommerce-2026</loc>
     <xhtml:link rel="alternate" hreflang="es" href="https://seoparaecommerce.co/blog/ia-seo-ecommerce-2026"/>
-    <xhtml:link rel="alternate" hreflang="en" href="https://seoparaecommerce.co/en/blog/ia-seo-ecommerce-2026"/>
-    <xhtml:link rel="alternate" hreflang="pt" href="https://seoparaecommerce.co/pt/blog/ia-seo-ecommerce-2026"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://seoforecommerces.co/en/blog/ia-seo-ecommerce-2026"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://seoparaecommerce.co/blog/ia-seo-ecommerce-2026"/>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
@@ -1435,8 +954,7 @@
   <url>
     <loc>https://seoparaecommerce.co/blog/ecommerce-agency-colombia</loc>
     <xhtml:link rel="alternate" hreflang="es" href="https://seoparaecommerce.co/blog/ecommerce-agency-colombia"/>
-    <xhtml:link rel="alternate" hreflang="en" href="https://seoparaecommerce.co/en/blog/ecommerce-agency-colombia"/>
-    <xhtml:link rel="alternate" hreflang="pt" href="https://seoparaecommerce.co/pt/blog/ecommerce-agency-colombia"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://seoforecommerces.co/en/blog/ecommerce-agency-colombia"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://seoparaecommerce.co/blog/ecommerce-agency-colombia"/>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
@@ -1445,8 +963,7 @@
   <url>
     <loc>https://seoparaecommerce.co/blog/sitio-web-seo-integrado</loc>
     <xhtml:link rel="alternate" hreflang="es" href="https://seoparaecommerce.co/blog/sitio-web-seo-integrado"/>
-    <xhtml:link rel="alternate" hreflang="en" href="https://seoparaecommerce.co/en/blog/sitio-web-seo-integrado"/>
-    <xhtml:link rel="alternate" hreflang="pt" href="https://seoparaecommerce.co/pt/blog/sitio-web-seo-integrado"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://seoforecommerces.co/en/blog/sitio-web-seo-integrado"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://seoparaecommerce.co/blog/sitio-web-seo-integrado"/>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
@@ -1455,8 +972,7 @@
   <url>
     <loc>https://seoparaecommerce.co/blog/agencia-de-ecommerce-colombia</loc>
     <xhtml:link rel="alternate" hreflang="es" href="https://seoparaecommerce.co/blog/agencia-de-ecommerce-colombia"/>
-    <xhtml:link rel="alternate" hreflang="en" href="https://seoparaecommerce.co/en/blog/agencia-de-ecommerce-colombia"/>
-    <xhtml:link rel="alternate" hreflang="pt" href="https://seoparaecommerce.co/pt/blog/agencia-de-ecommerce-colombia"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://seoforecommerces.co/en/blog/agencia-de-ecommerce-colombia"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://seoparaecommerce.co/blog/agencia-de-ecommerce-colombia"/>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
@@ -1465,8 +981,7 @@
   <url>
     <loc>https://seoparaecommerce.co/blog/ecommerce-seo-agency</loc>
     <xhtml:link rel="alternate" hreflang="es" href="https://seoparaecommerce.co/blog/ecommerce-seo-agency"/>
-    <xhtml:link rel="alternate" hreflang="en" href="https://seoparaecommerce.co/en/blog/ecommerce-seo-agency"/>
-    <xhtml:link rel="alternate" hreflang="pt" href="https://seoparaecommerce.co/pt/blog/ecommerce-seo-agency"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://seoforecommerces.co/en/blog/ecommerce-seo-agency"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://seoparaecommerce.co/blog/ecommerce-seo-agency"/>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
@@ -1475,8 +990,7 @@
   <url>
     <loc>https://seoparaecommerce.co/blog/costo-sitio-web-profesional-colombia</loc>
     <xhtml:link rel="alternate" hreflang="es" href="https://seoparaecommerce.co/blog/costo-sitio-web-profesional-colombia"/>
-    <xhtml:link rel="alternate" hreflang="en" href="https://seoparaecommerce.co/en/blog/costo-sitio-web-profesional-colombia"/>
-    <xhtml:link rel="alternate" hreflang="pt" href="https://seoparaecommerce.co/pt/blog/costo-sitio-web-profesional-colombia"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://seoforecommerces.co/en/blog/costo-sitio-web-profesional-colombia"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://seoparaecommerce.co/blog/costo-sitio-web-profesional-colombia"/>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
@@ -1485,8 +999,7 @@
   <url>
     <loc>https://seoparaecommerce.co/blog/ecommerce-seo-consultant-que-hacen-cuando-contratar</loc>
     <xhtml:link rel="alternate" hreflang="es" href="https://seoparaecommerce.co/blog/ecommerce-seo-consultant-que-hacen-cuando-contratar"/>
-    <xhtml:link rel="alternate" hreflang="en" href="https://seoparaecommerce.co/en/blog/ecommerce-seo-consultant-que-hacen-cuando-contratar"/>
-    <xhtml:link rel="alternate" hreflang="pt" href="https://seoparaecommerce.co/pt/blog/ecommerce-seo-consultant-que-hacen-cuando-contratar"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://seoforecommerces.co/en/blog/ecommerce-seo-consultant-que-hacen-cuando-contratar"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://seoparaecommerce.co/blog/ecommerce-seo-consultant-que-hacen-cuando-contratar"/>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
@@ -1495,8 +1008,7 @@
   <url>
     <loc>https://seoparaecommerce.co/blog/como-hacer-seo-ecommerce</loc>
     <xhtml:link rel="alternate" hreflang="es" href="https://seoparaecommerce.co/blog/como-hacer-seo-ecommerce"/>
-    <xhtml:link rel="alternate" hreflang="en" href="https://seoparaecommerce.co/en/blog/como-hacer-seo-ecommerce"/>
-    <xhtml:link rel="alternate" hreflang="pt" href="https://seoparaecommerce.co/pt/blog/como-hacer-seo-ecommerce"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://seoforecommerces.co/en/blog/como-hacer-seo-ecommerce"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://seoparaecommerce.co/blog/como-hacer-seo-ecommerce"/>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
@@ -1505,8 +1017,7 @@
   <url>
     <loc>https://seoparaecommerce.co/blog/experto-seo-ecommerce</loc>
     <xhtml:link rel="alternate" hreflang="es" href="https://seoparaecommerce.co/blog/experto-seo-ecommerce"/>
-    <xhtml:link rel="alternate" hreflang="en" href="https://seoparaecommerce.co/en/blog/experto-seo-ecommerce"/>
-    <xhtml:link rel="alternate" hreflang="pt" href="https://seoparaecommerce.co/pt/blog/experto-seo-ecommerce"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://seoforecommerces.co/en/blog/experto-seo-ecommerce"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://seoparaecommerce.co/blog/experto-seo-ecommerce"/>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
@@ -1515,8 +1026,7 @@
   <url>
     <loc>https://seoparaecommerce.co/blog/costo-sitio-web-profesional-colombia-2</loc>
     <xhtml:link rel="alternate" hreflang="es" href="https://seoparaecommerce.co/blog/costo-sitio-web-profesional-colombia-2"/>
-    <xhtml:link rel="alternate" hreflang="en" href="https://seoparaecommerce.co/en/blog/costo-sitio-web-profesional-colombia-2"/>
-    <xhtml:link rel="alternate" hreflang="pt" href="https://seoparaecommerce.co/pt/blog/costo-sitio-web-profesional-colombia-2"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://seoforecommerces.co/en/blog/costo-sitio-web-profesional-colombia-2"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://seoparaecommerce.co/blog/costo-sitio-web-profesional-colombia-2"/>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
@@ -1525,8 +1035,7 @@
   <url>
     <loc>https://seoparaecommerce.co/blog/seo-ecommerce-que-es</loc>
     <xhtml:link rel="alternate" hreflang="es" href="https://seoparaecommerce.co/blog/seo-ecommerce-que-es"/>
-    <xhtml:link rel="alternate" hreflang="en" href="https://seoparaecommerce.co/en/blog/seo-ecommerce-que-es"/>
-    <xhtml:link rel="alternate" hreflang="pt" href="https://seoparaecommerce.co/pt/blog/seo-ecommerce-que-es"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://seoforecommerces.co/en/blog/seo-ecommerce-que-es"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://seoparaecommerce.co/blog/seo-ecommerce-que-es"/>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
@@ -1535,8 +1044,7 @@
   <url>
     <loc>https://seoparaecommerce.co/blog/seo-para-ecommerce-guia-completa-2026</loc>
     <xhtml:link rel="alternate" hreflang="es" href="https://seoparaecommerce.co/blog/seo-para-ecommerce-guia-completa-2026"/>
-    <xhtml:link rel="alternate" hreflang="en" href="https://seoparaecommerce.co/en/blog/seo-para-ecommerce-guia-completa-2026"/>
-    <xhtml:link rel="alternate" hreflang="pt" href="https://seoparaecommerce.co/pt/blog/seo-para-ecommerce-guia-completa-2026"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://seoforecommerces.co/en/blog/seo-para-ecommerce-guia-completa-2026"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://seoparaecommerce.co/blog/seo-para-ecommerce-guia-completa-2026"/>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
@@ -1545,8 +1053,7 @@
   <url>
     <loc>https://seoparaecommerce.co/blog/seo-local-ecommerce-bogota</loc>
     <xhtml:link rel="alternate" hreflang="es" href="https://seoparaecommerce.co/blog/seo-local-ecommerce-bogota"/>
-    <xhtml:link rel="alternate" hreflang="en" href="https://seoparaecommerce.co/en/blog/seo-local-ecommerce-bogota"/>
-    <xhtml:link rel="alternate" hreflang="pt" href="https://seoparaecommerce.co/pt/blog/seo-local-ecommerce-bogota"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://seoforecommerces.co/en/blog/seo-local-ecommerce-bogota"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://seoparaecommerce.co/blog/seo-local-ecommerce-bogota"/>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
@@ -1555,8 +1062,7 @@
   <url>
     <loc>https://seoparaecommerce.co/blog/creacion-tienda-online-colombia</loc>
     <xhtml:link rel="alternate" hreflang="es" href="https://seoparaecommerce.co/blog/creacion-tienda-online-colombia"/>
-    <xhtml:link rel="alternate" hreflang="en" href="https://seoparaecommerce.co/en/blog/creacion-tienda-online-colombia"/>
-    <xhtml:link rel="alternate" hreflang="pt" href="https://seoparaecommerce.co/pt/blog/creacion-tienda-online-colombia"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://seoforecommerces.co/en/blog/creacion-tienda-online-colombia"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://seoparaecommerce.co/blog/creacion-tienda-online-colombia"/>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
@@ -1565,8 +1071,7 @@
   <url>
     <loc>https://seoparaecommerce.co/blog/ecommerce-seo-expert</loc>
     <xhtml:link rel="alternate" hreflang="es" href="https://seoparaecommerce.co/blog/ecommerce-seo-expert"/>
-    <xhtml:link rel="alternate" hreflang="en" href="https://seoparaecommerce.co/en/blog/ecommerce-seo-expert"/>
-    <xhtml:link rel="alternate" hreflang="pt" href="https://seoparaecommerce.co/pt/blog/ecommerce-seo-expert"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://seoforecommerces.co/en/blog/ecommerce-seo-expert"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://seoparaecommerce.co/blog/ecommerce-seo-expert"/>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
@@ -1575,8 +1080,7 @@
   <url>
     <loc>https://seoparaecommerce.co/blog/seo-shopify-colombia</loc>
     <xhtml:link rel="alternate" hreflang="es" href="https://seoparaecommerce.co/blog/seo-shopify-colombia"/>
-    <xhtml:link rel="alternate" hreflang="en" href="https://seoparaecommerce.co/en/blog/seo-shopify-colombia"/>
-    <xhtml:link rel="alternate" hreflang="pt" href="https://seoparaecommerce.co/pt/blog/seo-shopify-colombia"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://seoforecommerces.co/en/blog/seo-shopify-colombia"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://seoparaecommerce.co/blog/seo-shopify-colombia"/>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
@@ -1585,8 +1089,7 @@
   <url>
     <loc>https://seoparaecommerce.co/blog/seo-para-tiendas-online</loc>
     <xhtml:link rel="alternate" hreflang="es" href="https://seoparaecommerce.co/blog/seo-para-tiendas-online"/>
-    <xhtml:link rel="alternate" hreflang="en" href="https://seoparaecommerce.co/en/blog/seo-para-tiendas-online"/>
-    <xhtml:link rel="alternate" hreflang="pt" href="https://seoparaecommerce.co/pt/blog/seo-para-tiendas-online"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://seoforecommerces.co/en/blog/seo-para-tiendas-online"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://seoparaecommerce.co/blog/seo-para-tiendas-online"/>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
@@ -1595,8 +1098,7 @@
   <url>
     <loc>https://seoparaecommerce.co/blog/blog-agencia-seo-para-ecommerce</loc>
     <xhtml:link rel="alternate" hreflang="es" href="https://seoparaecommerce.co/blog/blog-agencia-seo-para-ecommerce"/>
-    <xhtml:link rel="alternate" hreflang="en" href="https://seoparaecommerce.co/en/blog/blog-agencia-seo-para-ecommerce"/>
-    <xhtml:link rel="alternate" hreflang="pt" href="https://seoparaecommerce.co/pt/blog/blog-agencia-seo-para-ecommerce"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://seoforecommerces.co/en/blog/blog-agencia-seo-para-ecommerce"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://seoparaecommerce.co/blog/blog-agencia-seo-para-ecommerce"/>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
@@ -1605,8 +1107,7 @@
   <url>
     <loc>https://seoparaecommerce.co/blog/agencia-seo-ecommerce-colombia</loc>
     <xhtml:link rel="alternate" hreflang="es" href="https://seoparaecommerce.co/blog/agencia-seo-ecommerce-colombia"/>
-    <xhtml:link rel="alternate" hreflang="en" href="https://seoparaecommerce.co/en/blog/agencia-seo-ecommerce-colombia"/>
-    <xhtml:link rel="alternate" hreflang="pt" href="https://seoparaecommerce.co/pt/blog/agencia-seo-ecommerce-colombia"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://seoforecommerces.co/en/blog/agencia-seo-ecommerce-colombia"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://seoparaecommerce.co/blog/agencia-seo-ecommerce-colombia"/>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
@@ -1615,8 +1116,7 @@
   <url>
     <loc>https://seoparaecommerce.co/blog/seo-ecommerce-colombia-estrategia</loc>
     <xhtml:link rel="alternate" hreflang="es" href="https://seoparaecommerce.co/blog/seo-ecommerce-colombia-estrategia"/>
-    <xhtml:link rel="alternate" hreflang="en" href="https://seoparaecommerce.co/en/blog/seo-ecommerce-colombia-estrategia"/>
-    <xhtml:link rel="alternate" hreflang="pt" href="https://seoparaecommerce.co/pt/blog/seo-ecommerce-colombia-estrategia"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://seoforecommerces.co/en/blog/seo-ecommerce-colombia-estrategia"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://seoparaecommerce.co/blog/seo-ecommerce-colombia-estrategia"/>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
@@ -1625,8 +1125,7 @@
   <url>
     <loc>https://seoparaecommerce.co/blog/bigcommerce-seo-guia-completa-posicionar-tienda-google</loc>
     <xhtml:link rel="alternate" hreflang="es" href="https://seoparaecommerce.co/blog/bigcommerce-seo-guia-completa-posicionar-tienda-google"/>
-    <xhtml:link rel="alternate" hreflang="en" href="https://seoparaecommerce.co/en/blog/bigcommerce-seo-guia-completa-posicionar-tienda-google"/>
-    <xhtml:link rel="alternate" hreflang="pt" href="https://seoparaecommerce.co/pt/blog/bigcommerce-seo-guia-completa-posicionar-tienda-google"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://seoforecommerces.co/en/blog/bigcommerce-seo-guia-completa-posicionar-tienda-google"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://seoparaecommerce.co/blog/bigcommerce-seo-guia-completa-posicionar-tienda-google"/>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
@@ -1635,8 +1134,7 @@
   <url>
     <loc>https://seoparaecommerce.co/blog/servicios-seo-ecommerce</loc>
     <xhtml:link rel="alternate" hreflang="es" href="https://seoparaecommerce.co/blog/servicios-seo-ecommerce"/>
-    <xhtml:link rel="alternate" hreflang="en" href="https://seoparaecommerce.co/en/blog/servicios-seo-ecommerce"/>
-    <xhtml:link rel="alternate" hreflang="pt" href="https://seoparaecommerce.co/pt/blog/servicios-seo-ecommerce"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://seoforecommerces.co/en/blog/servicios-seo-ecommerce"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://seoparaecommerce.co/blog/servicios-seo-ecommerce"/>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
@@ -1645,8 +1143,7 @@
   <url>
     <loc>https://seoparaecommerce.co/blog/servicios-seo-ecommerce-2</loc>
     <xhtml:link rel="alternate" hreflang="es" href="https://seoparaecommerce.co/blog/servicios-seo-ecommerce-2"/>
-    <xhtml:link rel="alternate" hreflang="en" href="https://seoparaecommerce.co/en/blog/servicios-seo-ecommerce-2"/>
-    <xhtml:link rel="alternate" hreflang="pt" href="https://seoparaecommerce.co/pt/blog/servicios-seo-ecommerce-2"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://seoforecommerces.co/en/blog/servicios-seo-ecommerce-2"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://seoparaecommerce.co/blog/servicios-seo-ecommerce-2"/>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>

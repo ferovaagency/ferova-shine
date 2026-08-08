@@ -14,29 +14,29 @@ const CHAT_URL = `${import.meta.env.VITE_SUPABASE_URL}/functions/v1/ai-sales-adv
 
 const t = {
   es: {
-    title: 'Fera · Asesora IA',
-    subtitle: 'Tu consultora digital',
-    welcome: '¡Hola! 👋 Soy **Fera**, tu asesora digital de Ferova Agency.\n\nCuéntame sobre tu negocio y te ayudaré a encontrar la mejor estrategia para crecer. ¿Qué tipo de negocio tienes?',
+    title: 'Fera · Cotizaciones',
+    subtitle: 'Capacidad especializada para agencias',
+    welcome: 'Hola. Soy **Fera**, el asistente de cotización de Ferova.\n\nCuéntame qué capacidad necesita tu agencia: SEO técnico para uno de tus clientes, mantenimiento web mensual o producción de landing pages.',
     placeholder: 'Escribe tu mensaje...',
-    badge: 'Asesora IA',
+    badge: 'Cotizar con Fera',
     error: 'Hubo un error. Intenta de nuevo.',
     suggestions: [
-      'Necesito más clientes',
-      'Mi marca no se ve profesional',
-      'Quiero aparecer en Google',
+      'SEO técnico para un cliente',
+      'Mantenimiento web mensual',
+      'Necesito landing pages',
     ],
   },
   en: {
-    title: 'Fera · AI Advisor',
-    subtitle: 'Your digital consultant',
-    welcome: "Hi! 👋 I'm **Fera**, your Ferova Agency digital advisor.\n\nTell me about your business and I'll help you find the best growth strategy. What type of business do you have?",
+    title: 'Fera · Quotes',
+    subtitle: 'Specialist capacity for agencies',
+    welcome: "Hi. I'm **Fera**, Ferova's quoting assistant.\n\nTell me what capacity your agency needs: technical SEO for a client, monthly website maintenance, or landing-page production.",
     placeholder: 'Type your message...',
-    badge: 'AI Advisor',
+    badge: 'Quote with Fera',
     error: 'Something went wrong. Please try again.',
     suggestions: [
-      'I need more clients',
-      'My brand looks unprofessional',
-      'I want to rank on Google',
+      'Technical SEO for a client',
+      'Monthly website maintenance',
+      'I need landing pages',
     ],
   },
   pt: {
@@ -56,7 +56,7 @@ const t = {
 
 const AiAdvisorChat = ({ lang = 'es' }: AiAdvisorChatProps) => {
   const txt = t[lang];
-  const { trackAIChat, trackWhatsApp } = useAnalytics();
+  const { trackAIChat } = useAnalytics();
   const [open, setOpen] = useState(false);
   const [messages, setMessages] = useState<Msg[]>([
     { role: 'assistant', content: txt.welcome },
@@ -66,6 +66,16 @@ const AiAdvisorChat = ({ lang = 'es' }: AiAdvisorChatProps) => {
   const [showScroll, setShowScroll] = useState(false);
   const scrollRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLTextAreaElement>(null);
+
+  useEffect(() => {
+    const openQuote = () => {
+      setOpen(true);
+      trackAIChat('open');
+      trackEvent('ai_quote_assistant_opened', { source: 'page_cta' });
+    };
+    window.addEventListener('open-fera-quote', openQuote);
+    return () => window.removeEventListener('open-fera-quote', openQuote);
+  }, [trackAIChat]);
 
   // Auto-scroll
   const scrollToBottom = useCallback(() => {
@@ -248,7 +258,7 @@ const AiAdvisorChat = ({ lang = 'es' }: AiAdvisorChatProps) => {
           <div
             className="flex items-center gap-3 px-5 py-4 border-b border-border/40"
             style={{
-              background: 'linear-gradient(135deg, hsl(243,31%,18%), hsl(243,31%,14%))',
+              background: 'linear-gradient(135deg, #3c3c3b, #541014)',
             }}
           >
             <div className="w-10 h-10 rounded-full flex items-center justify-center" style={{ background: 'linear-gradient(135deg, hsl(45,86%,40%), hsl(45,86%,52%))' }}>

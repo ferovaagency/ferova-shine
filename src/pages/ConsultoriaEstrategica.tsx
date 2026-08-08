@@ -10,7 +10,7 @@ import { trackEvent } from "@/lib/analytics";
 
 interface Props { lang?: Lang }
 
-const WHATSAPP_URL = "https://wa.link/jvbd4j";
+const WHATSAPP_URL = "https://wa.me/17865787671";
 
 const T = {
   es: {

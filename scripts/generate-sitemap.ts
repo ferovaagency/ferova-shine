@@ -22,7 +22,7 @@ import { dirname, resolve } from "node:path";
 import {
   ROUTES,
   LANGS,
-  SITE_ORIGIN,
+  SITE_ORIGINS,
   priorityOf,
   changefreqOf,
   type Lang,
@@ -43,8 +43,12 @@ function xmlEscape(s: string): string {
   return s.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
 }
 
-function abs(path: string): string {
-  return `${SITE_ORIGIN}${path.startsWith("/") ? path : "/" + path}`;
+function langFromPath(path: string): Lang {
+  return path === "/en" || path.startsWith("/en/") ? "en" : "es";
+}
+
+function abs(path: string, lang: Lang = langFromPath(path)): string {
+  return `${SITE_ORIGINS[lang]}${path.startsWith("/") ? path : "/" + path}`;
 }
 
 interface UrlEntry {
@@ -62,14 +66,14 @@ function renderUrl(e: UrlEntry): string {
       if (!alternate) continue;
       lines.push(
         `    <xhtml:link rel="alternate" hreflang="${HREFLANG[l]}" href="${xmlEscape(
-          abs(alternate),
+          abs(alternate, l),
         )}"/>`,
       );
     }
     if (e.alternates.es) {
       lines.push(
         `    <xhtml:link rel="alternate" hreflang="x-default" href="${xmlEscape(
-          abs(e.alternates.es),
+          abs(e.alternates.es, "es"),
         )}"/>`,
       );
     }

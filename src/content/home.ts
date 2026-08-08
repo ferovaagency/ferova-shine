@@ -312,7 +312,7 @@ export const HOME: Record<Lang, HomeContent> = {
 };
 
 /** WhatsApp link compartido por toda la home. */
-export const WHATSAPP_URL = "https://wa.link/jvbd4j";
+export const WHATSAPP_URL = "https://wa.me/17865787671";
 
 /** Helpers de rutas locales para la home. */
 export function solucionesHref(lang: Lang): string {

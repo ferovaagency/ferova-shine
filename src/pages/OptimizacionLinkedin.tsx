@@ -37,7 +37,7 @@ const OptimizacionLinkedin = ({ lang = 'es' }: Props) => {
       { icon: TrendingUp, title: 'Marca personal sólida', desc: 'Posiciónate como referente en tu industria con contenido estratégico.' },
       { icon: Briefcase, title: 'Más oportunidades', desc: 'Genera leads, ofertas laborales y alianzas de negocio.' },
     ],
-    ctaBtn: 'Agendar Asesoría',
+    ctaBtn: 'Solicitar cotización',
     ctaTitle: '¿Listo para potenciar tu LinkedIn?',
     ctaSub: 'Agenda una asesoría gratuita y descubre cómo transformar tu perfil profesional.',
   } : {
@@ -63,12 +63,12 @@ const OptimizacionLinkedin = ({ lang = 'es' }: Props) => {
       { icon: TrendingUp, title: 'Solid personal brand', desc: 'Position yourself as an industry leader with strategic content.' },
       { icon: Briefcase, title: 'More opportunities', desc: 'Generate leads, job offers and business partnerships.' },
     ],
-    ctaBtn: 'Book a Consultation',
+    ctaBtn: 'Request a quote',
     ctaTitle: 'Ready to boost your LinkedIn?',
     ctaSub: 'Book a free consultation and discover how to transform your professional profile.',
   };
 
-  const whatsappUrl = 'https://wa.link/jvbd4j?text=' + encodeURIComponent(
+  const whatsappUrl = 'https://wa.me/17865787671?text=' + encodeURIComponent(
     lang === 'es' ? 'Hola Ferova, me interesa la optimización de LinkedIn.' : 'Hi Ferova, I\'m interested in LinkedIn optimization.'
   );
 
