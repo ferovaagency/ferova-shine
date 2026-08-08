@@ -3,7 +3,7 @@ import Header from '@/components/layout/Header';
 import Footer from '@/components/layout/Footer';
 import SEO from '@/components/SEO';
 import { casesData } from './CasosDeExito';
-import { ArrowLeft, MessageCircle } from 'lucide-react';
+import { AlertTriangle, ArrowLeft, MessageCircle } from 'lucide-react';
 import { AnimatedSection, StaggerContainer, StaggerItem, PageTransition } from '@/components/ui/motion';
 import { motion } from 'framer-motion';
 
@@ -32,6 +32,7 @@ const CasoDetalle = ({ lang = 'es' }: Props) => {
 
   const detailPath = lang === 'en' ? `/en/case-studies/${caso.id}` : lang === 'pt' ? `/pt/casos-de-sucesso/${caso.id}` : `/casos-de-exito/${caso.id}`;
   const seoDesc = (caso.challenge || '').slice(0, 155);
+  const metricsPendingEvidence = lang === 'es';
 
   return (
     <PageTransition>
@@ -73,6 +74,17 @@ const CasoDetalle = ({ lang = 'es' }: Props) => {
                 <AnimatedSection delay={0.3}>
                   <div className="glass-card p-8">
                     <h2 className="text-xl font-display font-bold mb-6 text-gold">{lang === 'es' ? 'Resultados' : 'Results'}</h2>
+                    {metricsPendingEvidence ? (
+                      <div className="rounded-xl border border-amber-300/50 bg-amber-50 p-5 text-amber-950">
+                        <div className="flex items-start gap-3">
+                          <AlertTriangle className="mt-0.5 h-5 w-5 shrink-0" />
+                          <div>
+                            <h3 className="font-semibold">Métricas en validación documental</h3>
+                            <p className="mt-2 text-sm leading-6">Las cifras históricas de este caso no se muestran hasta reconciliar fuente, fecha de corte, definición y permiso de publicación. La narrativa permanece disponible como contexto del trabajo realizado.</p>
+                          </div>
+                        </div>
+                      </div>
+                    ) : <>
                     <StaggerContainer className="grid grid-cols-2 md:grid-cols-4 gap-6 mb-8">
                       {caso.results.map((r, i) => (
                         <StaggerItem key={i}>
@@ -114,6 +126,7 @@ const CasoDetalle = ({ lang = 'es' }: Props) => {
                         ));
                       })()}
                     </div>
+                    </>}
                   </div>
                 </AnimatedSection>
               </div>

@@ -64,8 +64,20 @@ import DiagnosticoEmpresarial from "./pages/DiagnosticoEmpresarial";
 import Productos from "./pages/Productos";
 import AdminLeads from "./pages/admin/AdminLeads";
 import AdminCases from "./pages/admin/AdminCases";
+import AdminCaseEditor from "./pages/admin/AdminCaseEditor";
 import LaboratorioFerova from "./pages/tools/LaboratorioFerova";
 import CalculadoraValorHora from "./pages/tools/CalculadoraValorHora";
+import SeoSpecialtyPage from "./pages/SeoSpecialtyPage";
+import SeoAbout from "./pages/SeoAbout";
+import SeoEcommerceEs from "./pages/SeoEcommerceEs";
+import SeoSolutions from "./pages/SeoSolutions";
+import SeoMethod from "./pages/SeoMethod";
+import SeoCases from "./pages/SeoCases";
+import SeoResources from "./pages/SeoResources";
+import SeoTools from "./pages/SeoTools";
+import SeoBlog from "./pages/SeoBlog";
+import SeoPricing from "./pages/SeoPricing";
+import SeoContact from "./pages/SeoContact";
 
 const queryClient = new QueryClient();
 
@@ -97,7 +109,7 @@ const AppRoutes = ({ hostLang }: { hostLang: "es" | "en" | "pt" }) => (
     <Route path="/" element={<Index lang={hostLang} />} />
 
     {/* Fase 1 (Sprint 2): nuevas puertas de entrada */}
-    <Route path="/soluciones" element={<Soluciones lang="es" />} />
+    <Route path="/soluciones" element={<SeoSolutions />} />
     <Route path="/en/solutions" element={<Soluciones lang="en" />} />
     <Route path="/pt/solucoes" element={<Soluciones lang="pt" />} />
     {/* Fase 4 (Sprint 4): diagnóstico empresarial interactivo */}
@@ -105,7 +117,7 @@ const AppRoutes = ({ hostLang }: { hostLang: "es" | "en" | "pt" }) => (
     <Route path="/en/solutions/business-diagnosis" element={<DiagnosticoEmpresarial lang="en" />} />
     <Route path="/pt/solucoes/diagnostico-empresarial" element={<DiagnosticoEmpresarial lang="pt" />} />
     {/* Laboratorio Ferova: hub de herramientas + calculadoras */}
-    <Route path="/recursos/herramientas" element={<LaboratorioFerova lang="es" />} />
+    <Route path="/recursos/herramientas" element={<SeoTools />} />
     <Route path="/en/resources/tools" element={<LaboratorioFerova lang="en" />} />
     <Route path="/pt/recursos/ferramentas" element={<LaboratorioFerova lang="pt" />} />
     <Route path="/recursos/herramientas/calculadora-valor-hora-freelancer" element={<CalculadoraValorHora lang="es" />} />
@@ -116,13 +128,16 @@ const AppRoutes = ({ hostLang }: { hostLang: "es" | "en" | "pt" }) => (
     <Route path="/productos" element={<Productos lang="es" />} />
     <Route path="/en/products" element={<Productos lang="en" />} />
     <Route path="/pt/produtos" element={<Productos lang="pt" />} />
-    <Route path="/metodo-ferova" element={<MetodoFerova lang="es" />} />
+    <Route path="/metodo-ferova" element={<SeoMethod />} />
     <Route path="/en/ferova-method" element={<MetodoFerova lang="en" />} />
     <Route path="/pt/metodo-ferova" element={<MetodoFerova lang="pt" />} />
 
     <Route path="/servicios" element={<Servicios lang={hostLang} />} />
     <Route path="/services" element={<Servicios lang={hostLang} />} />
-    <Route path="/servicios/seo-ecommerce" element={<SeoEcommerce lang={hostLang} />} />
+    <Route path="/servicios/seo-ecommerce" element={<SeoEcommerceEs />} />
+    <Route path="/seo-para-agencias" element={<SeoSpecialtyPage kind="agencies" />} />
+    <Route path="/auditoria-seo-tecnica" element={<SeoSpecialtyPage kind="audit" />} />
+    <Route path="/migraciones-seo" element={<SeoSpecialtyPage kind="migrations" />} />
     <Route path="/services/ecommerce-seo" element={<SeoEcommerce lang={hostLang} />} />
     <Route path="/servicios/diseno-web" element={<DiseneoWeb lang={hostLang} />} />
     <Route path="/services/web-design" element={<DiseneoWeb lang={hostLang} />} />
@@ -136,26 +151,29 @@ const AppRoutes = ({ hostLang }: { hostLang: "es" | "en" | "pt" }) => (
     <Route path="/services/marketing-consulting" element={<AsesoriasMarketing lang={hostLang} />} />
     <Route path="/servicios/optimizacion-linkedin" element={<OptimizacionLinkedin lang={hostLang} />} />
     <Route path="/services/linkedin-optimization" element={<OptimizacionLinkedin lang={hostLang} />} />
-    <Route path="/precios" element={<Precios lang={hostLang} />} />
+    <Route path="/precios" element={<SeoPricing />} />
     <Route path="/pricing" element={<Precios lang={hostLang} />} />
-    <Route path="/casos-de-exito" element={<CasosDeExito lang={hostLang} />} />
+    <Route path="/casos-de-exito" element={<SeoCases />} />
     <Route path="/case-studies" element={<CasosDeExito lang={hostLang} />} />
     <Route path="/casos-de-exito/:id" element={<CasoDetalle lang={hostLang} />} />
     <Route path="/case-studies/:id" element={<CasoDetalle lang={hostLang} />} />
-    <Route path="/contacto" element={<Contacto lang={hostLang} />} />
+    <Route path="/contacto" element={<SeoContact />} />
     <Route path="/contact" element={<Contacto lang={hostLang} />} />
-    <Route path="/blog" element={<Blog lang={hostLang} />} />
+    <Route path="/blog" element={<SeoBlog />} />
     <Route path="/blog/:slug" element={<BlogPost lang={hostLang} />} />
     {/* Panel admin unificado (Ferova Admin). /admin abre la bandeja de leads. */}
     <Route path="/admin" element={<Navigate replace to="/admin/leads" />} />
     <Route path="/admin/leads" element={<AdminGuard><AdminLeads /></AdminGuard>} />
     <Route path="/admin/casos" element={<AdminGuard><AdminCases /></AdminGuard>} />
+    <Route path="/admin/casos/nuevo" element={<AdminGuard><AdminCaseEditor /></AdminGuard>} />
+    <Route path="/admin/casos/:id/editar" element={<AdminGuard><AdminCaseEditor /></AdminGuard>} />
     <Route path="/admin/blog" element={<AdminGuard><AdminBlog lang={hostLang} /></AdminGuard>} />
     {/* Compatibilidad: la ruta antigua /admin-blog redirige a /admin/blog */}
     <Route path="/admin-blog" element={<Navigate replace to="/admin/blog" />} />
-    <Route path="/recursos" element={<Recursos lang={hostLang} />} />
+    <Route path="/recursos" element={<SeoResources />} />
     <Route path="/resources" element={<Recursos lang={hostLang} />} />
     <Route path="/nosotros" element={<SobreNosotros lang={hostLang} />} />
+    <Route path="/sobre-nosotros" element={<SeoAbout />} />
     <Route path="/about" element={<SobreNosotros lang={hostLang} />} />
     <Route path="/terminos" element={<Terminos lang={hostLang} />} />
     <Route path="/terms" element={<Terminos lang={hostLang} />} />
@@ -280,6 +298,7 @@ const AppRoutes = ({ hostLang }: { hostLang: "es" | "en" | "pt" }) => (
     <Route path="/pt/estudo-visibilidade-ia-ecommerce-hispano-2026" element={<EstudioVisibilidadIA lang="pt" />} />
 
     <Route path="/herramientas/calculadora-visibilidad-ia" element={<CalculadoraVisibilidadIA lang="es" />} />
+    <Route path="/recursos/herramientas/evaluador-preparacion-ai-search" element={<CalculadoraVisibilidadIA lang="es" />} />
     <Route path="/en/tools/ai-visibility-calculator" element={<CalculadoraVisibilidadIA lang="en" />} />
     <Route path="/pt/ferramentas/calculadora-visibilidade-ia" element={<CalculadoraVisibilidadIA lang="pt" />} />
 

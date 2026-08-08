@@ -49,7 +49,7 @@ function abs(path: string): string {
 
 interface UrlEntry {
   loc: string;
-  alternates?: Record<Lang, string>;
+  alternates?: Partial<Record<Lang, string>>;
   priority: number;
   changefreq: string;
 }
@@ -58,17 +58,21 @@ function renderUrl(e: UrlEntry): string {
   const lines: string[] = [`  <url>`, `    <loc>${xmlEscape(abs(e.loc))}</loc>`];
   if (e.alternates) {
     for (const l of LANGS) {
+      const alternate = e.alternates[l];
+      if (!alternate) continue;
       lines.push(
         `    <xhtml:link rel="alternate" hreflang="${HREFLANG[l]}" href="${xmlEscape(
-          abs(e.alternates[l]),
+          abs(alternate),
         )}"/>`,
       );
     }
-    lines.push(
-      `    <xhtml:link rel="alternate" hreflang="x-default" href="${xmlEscape(
-        abs(e.alternates.es),
-      )}"/>`,
-    );
+    if (e.alternates.es) {
+      lines.push(
+        `    <xhtml:link rel="alternate" hreflang="x-default" href="${xmlEscape(
+          abs(e.alternates.es),
+        )}"/>`,
+      );
+    }
   }
   lines.push(`    <changefreq>${e.changefreq}</changefreq>`);
   lines.push(`    <priority>${e.priority.toFixed(1)}</priority>`);
@@ -146,8 +150,10 @@ export async function generateSitemap(opts: GenerateSitemapOptions = {}): Promis
   for (const route of ROUTES) {
     if (!route.indexable) continue;
     for (const lang of LANGS) {
+      const path = route.paths[lang];
+      if (!path) continue;
       entries.push({
-        loc: route.paths[lang],
+        loc: path,
         alternates: route.paths,
         priority: priorityOf(route),
         changefreq: changefreqOf(route),

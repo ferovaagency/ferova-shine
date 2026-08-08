@@ -9,7 +9,7 @@
  *  ERRORES (rompen el build):
  *    - Paths duplicados entre rutas distintas.
  *    - Ids duplicados.
- *    - Un idioma faltante o un path que no empieza con "/".
+ *    - Una ruta sin ningún idioma o un path que no empieza con "/".
  *    - priority fuera de [0,1].
  *
  *  ADVERTENCIAS (no rompen el build):
@@ -42,12 +42,16 @@ export function validateRoutes(appTsxPath?: string): ValidationResult {
       errors.push(`Prioridad fuera de rango en "${route.id}": ${route.priority}`);
     }
 
+    const configuredPaths = LANGS.map((lang) => route.paths[lang]).filter(
+      (path): path is string => Boolean(path),
+    );
+    if (configuredPaths.length === 0) {
+      errors.push(`La ruta "${route.id}" no tiene ningún path configurado.`);
+    }
+
     for (const lang of LANGS) {
       const p = route.paths[lang];
-      if (!p) {
-        errors.push(`Falta path[${lang}] en "${route.id}"`);
-        continue;
-      }
+      if (!p) continue;
       if (!p.startsWith("/")) {
         errors.push(`Path no empieza con "/" en "${route.id}" (${lang}): "${p}"`);
       }

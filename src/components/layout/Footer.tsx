@@ -15,27 +15,26 @@ const Footer = ({ currentLang, lang }: FooterProps) => {
 
   const t: Record<string, { tagline: string; services: string; company: string; legal: string; rights: string; servLinks: { name: string; href: string }[]; compLinks: { name: string; href: string }[]; legalLinks: { name: string; href: string }[] }> = {
     es: {
-      tagline: 'Web Apps de alto rendimiento para e-commerce. SEO, diseño y estrategia digital.',
-      services: 'Servicios',
-      company: 'Empresa',
+      tagline: 'Consultoría SEO senior para ecommerce y agencias que necesitan resolver problemas complejos.',
+      services: 'Especialidades',
+      company: 'Explorar',
       legal: 'Legal',
       rights: 'Todos los derechos reservados.',
       servLinks: [
-        { name: 'Estrategia (Consultorías)', href: '/consultoria-estrategica' },
-        { name: 'Capacitación IA', href: '/capacitacion-ia' },
-        { name: 'Desarrollo Web / E-commerce', href: '/servicios/diseno-web' },
-        { name: 'SEO / AIO Mensual', href: '/servicios/seo-ecommerce' },
-        { name: 'Optimización LinkedIn', href: '/servicios/optimizacion-linkedin' },
-        { name: 'Contenido LinkedIn', href: '/servicios/contenido-linkedin' },
+        { name: 'SEO para ecommerce', href: '/servicios/seo-ecommerce' },
+        { name: 'SEO para agencias', href: '/seo-para-agencias' },
+        { name: 'Auditoría SEO técnica', href: '/auditoria-seo-tecnica' },
+        { name: 'Migraciones SEO', href: '/migraciones-seo' },
+        { name: 'Evaluador AI Search', href: '/recursos/herramientas/evaluador-preparacion-ai-search' },
       ],
       compLinks: [
         { name: 'Soluciones', href: '/soluciones' },
         { name: 'Método Ferova', href: '/metodo-ferova' },
-        { name: 'Productos', href: '/productos' },
-        { name: 'Herramientas gratis', href: '/recursos/herramientas' },
-        { name: 'Precios', href: '/precios' },
         { name: 'Casos de Éxito', href: '/casos-de-exito' },
+        { name: 'Recursos', href: '/recursos' },
         { name: 'Blog', href: '/blog' },
+        { name: 'Sobre nosotros', href: '/sobre-nosotros' },
+        { name: 'Precios', href: '/precios' },
         { name: 'Contacto', href: '/contacto' },
       ],
       legalLinks: [
@@ -114,7 +113,14 @@ const Footer = ({ currentLang, lang }: FooterProps) => {
         <div className="grid grid-cols-2 gap-8 md:grid-cols-4 lg:grid-cols-5">
           <div className="col-span-2 md:col-span-4 lg:col-span-2">
             <Link to={locale === 'pt' ? '/pt' : locale === 'en' ? '/en' : '/'}>
-              <img src={logoLight} alt="Ferova Agency" className="h-16 w-auto" />
+              {locale === 'es' ? (
+                <span className="leading-none">
+                  <span className="block font-display text-xl font-bold tracking-[0.08em] text-foreground">SEO PARA ECOMMERCE</span>
+                  <span className="mt-2 block text-[10px] font-semibold uppercase tracking-[0.24em] text-blue-600">by Ferova</span>
+                </span>
+              ) : (
+                <img src={logoLight} alt="Ferova Agency" className="h-16 w-auto" />
+              )}
             </Link>
             <p className="mt-3 max-w-xs text-sm text-muted-foreground">{d.tagline}</p>
             <div className="mt-4 space-y-2 text-sm text-muted-foreground">

@@ -1,9 +1,9 @@
 {
   "strategyVersion": "0.1.0",
   "productionChangesAuthorized": false,
-  "sitemapUrlCount": 161,
+  "sitemapUrlCount": 166,
   "languages": {
-    "es": 85,
+    "es": 90,
     "en": 38,
     "pt": 38
   },
@@ -12,20 +12,15 @@
     "language_scope_review": 52,
     "manual_seo_review": 63,
     "move_to_ferova": 21,
+    "target_create": 5,
     "retire_or_move_pending_evidence": 6,
     "move_to_ferova_conditional": 9
   },
-  "appRouteDeclarations": 162,
-  "routeRegistryEntries": 38,
+  "appRouteDeclarations": 169,
+  "routeRegistryEntries": 43,
   "targetSeoPages": 15,
   "targetCorporatePages": 10,
-  "targetSeoPagesNotPresentInCurrentSitemap": [
-    "/seo-para-agencias",
-    "/auditoria-seo-tecnica",
-    "/migraciones-seo",
-    "/recursos/herramientas/evaluador-preparacion-ai-search",
-    "/sobre-nosotros"
-  ],
+  "targetSeoPagesNotPresentInCurrentSitemap": [],
   "currentSupabaseObjects": [
     "ai_conversations",
     "blog_posts",

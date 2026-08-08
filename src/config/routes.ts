@@ -16,7 +16,8 @@
  *  Ahora se declara UNA vez aquí y el resto se genera.
  *
  *  Cómo añadir una página nueva:
- *    1. Añade un objeto a ROUTES con sus 3 paths (es/en/pt), type e indexable.
+ *    1. Añade un objeto a ROUTES con los paths de los idiomas que sí mantendrás,
+ *       además de type e indexable.
  *    2. Declara sus <Route> en App.tsx (esto sigue siendo manual: el registro
  *       describe la arquitectura SEO, no reemplaza al Router).
  *    3. Corre `npm run build` — sitemap y prerender se actualizan solos.
@@ -51,8 +52,11 @@ export type ChangeFreq = "daily" | "weekly" | "monthly" | "yearly";
 export interface RouteDef {
   /** Identificador estable, independiente del idioma. */
   id: string;
-  /** Path por idioma. Debe empezar con "/" y coincidir con App.tsx. */
-  paths: Record<Lang, string>;
+  /**
+   * Path por idioma. Una ruta puede existir solo en los idiomas realmente
+   * mantenidos; no se crean traducciones de relleno para completar la matriz.
+   */
+  paths: Partial<Record<Lang, string>>;
   type: RouteType;
   /** ¿Aparece en sitemap y es indexable? (false = noindex, fuera del sitemap) */
   indexable: boolean;
@@ -128,6 +132,14 @@ export const ROUTES: RouteDef[] = [
   // ── Servicios ─────────────────────────────────────────────────────────
   { id: "seo-ecommerce", type: "service", indexable: true, prerender: true, priority: 0.9,
     paths: { es: "/servicios/seo-ecommerce", en: "/en/services/ecommerce-seo", pt: "/pt/seo-ecommerce" } },
+  { id: "seo-para-agencias", type: "service", indexable: true, prerender: true, priority: 0.9,
+    paths: { es: "/seo-para-agencias" } },
+  { id: "auditoria-seo-tecnica", type: "service", indexable: true, prerender: true, priority: 0.9,
+    paths: { es: "/auditoria-seo-tecnica" } },
+  { id: "migraciones-seo", type: "service", indexable: true, prerender: true, priority: 0.9,
+    paths: { es: "/migraciones-seo" } },
+  { id: "sobre-nosotros-seo", type: "core", indexable: true, prerender: true, priority: 0.7,
+    paths: { es: "/sobre-nosotros" } },
   { id: "diseno-web", type: "service", indexable: true, prerender: true, priority: 0.9,
     paths: { es: "/servicios/diseno-web", en: "/en/services/web-design", pt: "/pt/design-web" } },
   { id: "consultoria-estrategica", type: "service", indexable: true, prerender: true, priority: 0.9,
@@ -166,6 +178,8 @@ export const ROUTES: RouteDef[] = [
       en: "/en/tools/ai-visibility-calculator",
       pt: "/pt/ferramentas/calculadora-visibilidade-ia",
     } },
+  { id: "evaluador-preparacion-ai-search", type: "tool", indexable: true, prerender: true, priority: 0.8,
+    paths: { es: "/recursos/herramientas/evaluador-preparacion-ai-search" } },
 
   // ── Recursos / herramientas ───────────────────────────────────────────
   { id: "analizador-contratos", type: "tool", indexable: true, prerender: true, priority: 0.7,
@@ -220,14 +234,17 @@ export const ROUTES: RouteDef[] = [
 
 /** Todas las rutas planas que deben prerenderizarse, en los 3 idiomas. */
 export const PRERENDER_ROUTES: string[] = ROUTES.filter((r) => r.prerender).flatMap((r) =>
-  LANGS.map((l) => r.paths[l]),
+  LANGS.map((l) => r.paths[l]).filter((path): path is string => Boolean(path)),
 );
 
 /** Índice path → { route, lang } para lookups O(1). */
 const PATH_INDEX: Map<string, { route: RouteDef; lang: Lang }> = (() => {
   const idx = new Map<string, { route: RouteDef; lang: Lang }>();
   for (const route of ROUTES) {
-    for (const lang of LANGS) idx.set(normalize(route.paths[lang]), { route, lang });
+    for (const lang of LANGS) {
+      const path = route.paths[lang];
+      if (path) idx.set(normalize(path), { route, lang });
+    }
   }
   return idx;
 })();
@@ -257,7 +274,7 @@ export function langOf(path: string): Lang {
  * Devuelve el mapa idioma→path si el path pertenece a una ruta registrada;
  * undefined para rutas dinámicas o desconocidas (el consumidor decide fallback).
  */
-export function alternatesFor(path: string): Record<Lang, string> | undefined {
+export function alternatesFor(path: string): Partial<Record<Lang, string>> | undefined {
   const hit = findRoute(path);
   return hit ? hit.route.paths : undefined;
 }

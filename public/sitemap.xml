@@ -393,6 +393,38 @@
   </url>
 
   <url>
+    <loc>https://seoparaecommerce.co/seo-para-agencias</loc>
+    <xhtml:link rel="alternate" hreflang="es" href="https://seoparaecommerce.co/seo-para-agencias"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://seoparaecommerce.co/seo-para-agencias"/>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+
+  <url>
+    <loc>https://seoparaecommerce.co/auditoria-seo-tecnica</loc>
+    <xhtml:link rel="alternate" hreflang="es" href="https://seoparaecommerce.co/auditoria-seo-tecnica"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://seoparaecommerce.co/auditoria-seo-tecnica"/>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+
+  <url>
+    <loc>https://seoparaecommerce.co/migraciones-seo</loc>
+    <xhtml:link rel="alternate" hreflang="es" href="https://seoparaecommerce.co/migraciones-seo"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://seoparaecommerce.co/migraciones-seo"/>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+
+  <url>
+    <loc>https://seoparaecommerce.co/sobre-nosotros</loc>
+    <xhtml:link rel="alternate" hreflang="es" href="https://seoparaecommerce.co/sobre-nosotros"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://seoparaecommerce.co/sobre-nosotros"/>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+
+  <url>
     <loc>https://seoparaecommerce.co/servicios/diseno-web</loc>
     <xhtml:link rel="alternate" hreflang="es" href="https://seoparaecommerce.co/servicios/diseno-web"/>
     <xhtml:link rel="alternate" hreflang="en" href="https://seoparaecommerce.co/en/services/web-design"/>
@@ -808,6 +840,14 @@
     <xhtml:link rel="alternate" hreflang="en" href="https://seoparaecommerce.co/en/tools/ai-visibility-calculator"/>
     <xhtml:link rel="alternate" hreflang="pt" href="https://seoparaecommerce.co/pt/ferramentas/calculadora-visibilidade-ia"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://seoparaecommerce.co/herramientas/calculadora-visibilidad-ia"/>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
+  <url>
+    <loc>https://seoparaecommerce.co/recursos/herramientas/evaluador-preparacion-ai-search</loc>
+    <xhtml:link rel="alternate" hreflang="es" href="https://seoparaecommerce.co/recursos/herramientas/evaluador-preparacion-ai-search"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://seoparaecommerce.co/recursos/herramientas/evaluador-preparacion-ai-search"/>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>

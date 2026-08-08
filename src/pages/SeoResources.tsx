@@ -1,0 +1,23 @@
+import { Link } from "react-router-dom";
+import { ArrowRight, BookOpen, Bot, FileSearch, GitBranch, Library, Network } from "lucide-react";
+import Header from "@/components/layout/Header";
+import Footer from "@/components/layout/Footer";
+import SEO from "@/components/SEO";
+import { SEO_EDITORIAL } from "@/content/seoEditorial";
+
+const collections = [
+  { icon: FileSearch, title: "Technical SEO", text: "Rastreo, indexación, renderizado, arquitectura y rendimiento.", href: "/blog", query: "Technical SEO" },
+  { icon: Library, title: "Ecommerce SEO", text: "Categorías, productos, facetas, demanda y crecimiento orgánico.", href: "/blog", query: "Ecommerce SEO" },
+  { icon: Network, title: "SEO for Agencies", text: "Dirección senior, QA técnico y colaboración white label.", href: "/seo-para-agencias" },
+  { icon: Bot, title: "AI Search", text: "Entidades, contenido citable, datos estructurados y medición.", href: "/recursos/herramientas/evaluador-preparacion-ai-search" },
+  { icon: GitBranch, title: "SEO Migrations", text: "Inventario, mapeo, lanzamiento y monitoreo de cambios críticos.", href: "/migraciones-seo" },
+];
+
+export default function SeoResources() {
+  return <div className="min-h-screen bg-white text-slate-950"><SEO title="Recursos de SEO técnico y ecommerce | Ferova" description="Guías, metodologías y herramientas sobre SEO técnico, ecommerce, agencias, migraciones y preparación para AI Search." path="/recursos" lang="es" breadcrumbs={[{ name: "Inicio", path: "/" }, { name: "Recursos", path: "/recursos" }]} /><Header lang="es" /><main className="pt-20">
+    <section className="bg-[#071a2f] py-20 text-white md:py-28"><div className="container mx-auto max-w-6xl px-4 md:px-6"><p className="text-xs font-semibold uppercase tracking-[.22em] text-cyan-300">Biblioteca SEO</p><h1 className="mt-5 max-w-4xl font-display text-4xl font-bold tracking-tight md:text-6xl">Recursos para tomar mejores decisiones SEO.</h1><p className="mt-7 max-w-3xl text-lg leading-8 text-slate-300">Guías y herramientas centradas en problemas técnicos y de crecimiento orgánico. Sin afiliados ni utilidades que no pertenezcan al sistema SEO.</p></div></section>
+    <section className="py-20 md:py-28"><div className="container mx-auto max-w-6xl px-4 md:px-6"><p className="seo-kicker">Explorar por tema</p><div className="mt-10 grid gap-5 md:grid-cols-2 lg:grid-cols-3">{collections.map(({ icon: Icon, title, text, href, query }) => <Link key={title} to={query ? `${href}?categoria=${encodeURIComponent(query)}` : href} className="group rounded-2xl border border-slate-200 p-7 transition hover:-translate-y-1 hover:border-blue-300 hover:shadow-xl"><Icon className="h-7 w-7 text-blue-700" /><h2 className="mt-7 font-display text-2xl font-bold">{title}</h2><p className="mt-3 leading-7 text-slate-600">{text}</p><span className="mt-6 inline-flex items-center gap-2 font-semibold text-blue-700">Explorar <ArrowRight className="h-4 w-4 transition group-hover:translate-x-1" /></span></Link>)}</div></div></section>
+    <section className="bg-slate-50 py-20 md:py-24"><div className="container mx-auto max-w-6xl px-4 md:px-6"><div className="flex flex-col justify-between gap-5 md:flex-row md:items-end"><div><p className="seo-kicker">Lecturas recomendadas</p><h2 className="mt-4 font-display text-3xl font-bold md:text-5xl">Contenido mantenido por intención.</h2></div><Link to="/blog" className="inline-flex items-center gap-2 font-semibold text-blue-700">Ver archivo editorial <ArrowRight className="h-4 w-4" /></Link></div><div className="mt-10 grid gap-5 md:grid-cols-3">{SEO_EDITORIAL.slice(0, 3).map((post) => <Link key={post.slug} to={`/blog/${post.slug}`} className="rounded-2xl border border-slate-200 bg-white p-6"><span className="text-xs font-bold uppercase tracking-wider text-blue-700">{post.category}</span><h3 className="mt-4 font-display text-xl font-bold">{post.title}</h3><p className="mt-3 text-sm leading-6 text-slate-600">{post.excerpt}</p></Link>)}</div></div></section>
+    <section className="py-20"><div className="container mx-auto grid max-w-5xl gap-8 rounded-3xl bg-[#071a2f] px-8 py-12 text-white md:grid-cols-[1fr_auto] md:items-center md:px-12"><div><BookOpen className="h-8 w-8 text-cyan-300" /><h2 className="mt-6 font-display text-3xl font-bold">Herramientas estrictamente SEO</h2><p className="mt-3 max-w-2xl text-slate-300">El laboratorio de este sitio conserva únicamente evaluadores y utilidades relacionadas con búsqueda.</p></div><Link to="/recursos/herramientas" className="seo-primary-button">Abrir herramientas <ArrowRight className="h-4 w-4" /></Link></div></section>
+  </main><Footer lang="es" /></div>;
+}

@@ -12,25 +12,25 @@ interface Props { lang?: 'es' | 'en' | 'pt'; }
 export const casesData = {
   es: [
     {
-      id: 'google-ads-arcos-desinfeccion', title: '100 llamadas y 150 mensajes diarios con Google Ads', category: 'pauta', country: 'Colombia', icon: Target,
+      id: 'google-ads-arcos-desinfeccion', title: 'Estrategia de captación para equipos de desinfección', category: 'pauta', country: 'Colombia', icon: Target,
       challenge: 'En 2020, en plena pandemia, una empresa necesitaba comercializar arcos de desinfección para carros, camiones y personas. El desafío era generar contactos directos de clientes interesados en comprar equipos de alto valor con una inversión ajustada.',
       solution: 'Diseñamos una estrategia centrada en Google Ads con campañas de búsqueda y palabras clave transaccionales. En lugar de enviar tráfico a una web, creamos un embudo directo hacia llamadas telefónicas y mensajes de WhatsApp para acortar el ciclo de cierre.',
       results: [{ metric: 'Llamadas diarias', value: '100', period: 'promedio' }, { metric: 'Mensajes WhatsApp', value: '150/día', period: 'clientes interesados' }, { metric: 'Ingresos mensuales', value: '$225M COP', period: 'promedio' }, { metric: 'ROI', value: '224x', period: 'la inversión' }],
     },
     {
-      id: 'ecommerce-cableado-estructurado', title: '15 cotizaciones diarias en e-commerce de cableado', category: 'seo', country: 'Colombia', icon: BarChart3,
+      id: 'ecommerce-cableado-estructurado', title: 'SEO técnico para un ecommerce de cableado estructurado', category: 'seo', country: 'Colombia', icon: BarChart3,
       challenge: 'E-commerce con más de 14.000 productos de partes para servidores y cableado estructurado. Los clientes buscaban por número de parte pero el sitio no aparecía en Google. Miles de errores 404 por productos eliminados afectaban la autoridad del dominio.',
       solution: 'Realizamos auditoría técnica completa, corregimos miles de errores 404, optimizamos fichas de producto por número de parte, y escalamos la indexación de todo el catálogo durante 2 años de trabajo continuo.',
       results: [{ metric: 'Posiciones #1', value: '50', period: 'referencias' }, { metric: 'Productos indexados', value: '12.486', period: 'primera página' }, { metric: 'Cotizaciones diarias', value: '10-15', period: 'constantes' }, { metric: 'Tasa de cierre', value: '93%', period: 'solicitudes' }],
     },
     {
-      id: 'ecommerce-mascotas', title: 'Triplicamos ventas en e-commerce de mascotas', category: 'seo', country: 'Colombia', icon: ShoppingCart,
+      id: 'ecommerce-mascotas', title: 'Recuperación técnica y SEO de un ecommerce de mascotas', category: 'seo', country: 'Colombia', icon: ShoppingCart,
       challenge: 'E-commerce de mascotas que pasó de facturar $45M a solo $3M mensuales (caída del 90%). El sitio desarrollado en código puro se rompía con cada actualización de WordPress. Varias agencias recomendaron migrar a Shopify, pero el cliente quería salvar su inversión.',
       solution: 'Estabilizamos el sitio, depuramos plugins innecesarios, rediseñamos completamente con Divi, restablecimos funcionalidades críticas y lanzamos estrategia SEO posicionando "Guabi para gato" en el #1 de Google en solo 2 meses.',
       results: [{ metric: 'Ventas mensuales', value: '$3M → $10M', period: '3 meses' }, { metric: 'Producto #1 Google', value: 'Guabi gato', period: '2 meses' }, { metric: 'Estabilidad del sitio', value: '100%', period: 'sin caídas' }, { metric: 'Crecimiento', value: '+233%', period: 'en ventas' }],
     },
     {
-      id: 'cliente-tecnologia-migracion-web-app', title: 'Migración a Web App: -70% costos y +180% velocidad', category: 'webapp', country: 'Colombia', icon: Rocket,
+      id: 'cliente-tecnologia-migracion-web-app', title: 'Migración de plataforma para un cliente de tecnología', category: 'webapp', country: 'Colombia', icon: Rocket,
       challenge: 'Cliente del sector tecnología con plataforma legacy en WordPress + plugins. Costos de mantenimiento mensuales superiores a $2.000 USD, caídas semanales y tiempo de carga de 8.4s que destruía la conversión.',
       solution: 'Migramos a una Web App propietaria en stack moderno (React + backend serverless). Rediseñamos la arquitectura de datos, implementamos caché en el edge y eliminamos 14 plugins innecesarios. Lanzamiento en 6 semanas sin caídas.',
       results: [{ metric: 'Costos mensuales', value: '-70%', period: 'vs WordPress' }, { metric: 'Velocidad de carga', value: '8.4s → 1.2s', period: '+180% más rápido' }, { metric: 'Conversión', value: '+42%', period: 'primeros 90 días' }, { metric: 'Uptime', value: '99.98%', period: 'sin caídas' }],

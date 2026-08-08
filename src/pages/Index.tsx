@@ -14,6 +14,7 @@ import FerovaMethodPreview from "@/components/home/FerovaMethodPreview";
 import ResultsSection from "@/components/home/ResultsSection";
 import HomeFAQ from "@/components/home/HomeFAQ";
 import FinalCTA from "@/components/home/FinalCTA";
+import SeoHome from "@/pages/SeoHome";
 
 // Secciones ya existentes reutilizadas.
 import ValueLadder from "@/components/sections/ValueLadder";
@@ -30,6 +31,8 @@ const Index = ({ lang = "es" }: IndexProps) => {
   useEffect(() => {
     trackEvent("page_view", { page: "home", lang });
   }, [lang]);
+
+  if (lang === "es") return <SeoHome />;
 
   return (
     <div className="min-h-screen flex flex-col bg-background text-foreground">

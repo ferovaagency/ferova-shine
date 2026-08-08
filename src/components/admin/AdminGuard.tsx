@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { supabase } from "@/integrations/supabase/client";
 import AdminLogin from "./AdminLogin";
 import { Loader2 } from "lucide-react";
+import { caseCms } from "@/integrations/supabase/cms-types";
 
 interface Props {
   children: React.ReactNode;
@@ -16,11 +17,11 @@ export default function AdminGuard({ children }: Props) {
       setStatus("unauth");
       return;
     }
-    const { data: roles } = await supabase
-      .from("user_roles")
-      .select("role")
-      .eq("user_id", session.user.id);
-    if (roles?.some((r) => r.role === "admin")) {
+    const [{ data: legacyRoles }, { data: cmsRoles }] = await Promise.all([
+      supabase.from("user_roles").select("role").eq("user_id", session.user.id),
+      caseCms.from("cms_user_roles").select("role").eq("user_id", session.user.id),
+    ]);
+    if (legacyRoles?.some((r) => r.role === "admin") || cmsRoles?.some((r) => ["owner", "editor", "reviewer"].includes(r.role))) {
       setStatus("ok");
     } else {
       setStatus("forbidden");
@@ -52,7 +53,7 @@ export default function AdminGuard({ children }: Props) {
       <div className="min-h-screen flex flex-col items-center justify-center gap-4 p-6 text-center">
         <h1 className="text-2xl font-semibold">Acceso restringido</h1>
         <p className="text-muted-foreground max-w-md">
-          Tu cuenta no tiene permisos de administrador. Contacta al propietario del sitio si crees que es un error.
+          Tu cuenta no tiene permisos de administración editorial. Contacta al propietario del sitio si crees que es un error.
         </p>
         <button
           className="text-sm underline text-muted-foreground"

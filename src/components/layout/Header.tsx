@@ -21,13 +21,13 @@ type NavCfg = { primary: NavItem[]; cta: NavItem };
 const NAV: Record<"es" | "en" | "pt", NavCfg> = {
   es: {
     primary: [
-      { label: "Qué necesitas", href: "/soluciones" },
-      { label: "Qué hacemos", href: "/servicios" },
-      { label: "Resultados", href: "/casos-de-exito" },
-      { label: "Método", href: "/metodo-ferova" },
-      { label: "Recursos", href: "/recursos" },
+      { label: "SEO ecommerce", href: "/servicios/seo-ecommerce" },
+      { label: "Para agencias", href: "/seo-para-agencias" },
+      { label: "Auditoría técnica", href: "/auditoria-seo-tecnica" },
+      { label: "Migraciones", href: "/migraciones-seo" },
+      { label: "Casos", href: "/casos-de-exito" },
     ],
-    cta: { label: "Diagnosticar mi empresa", href: "/soluciones/diagnostico-empresarial" },
+    cta: { label: "Evaluar mi proyecto", href: "/contacto" },
   },
   en: {
     primary: [
@@ -70,13 +70,20 @@ export default function Header({ currentLang, lang }: HeaderProps) {
   const isActive = (href: string) =>
     location.pathname === href || location.pathname.startsWith(`${href}/`);
 
-  const onCta = () => trackEvent("cta_clicked", { cta: "diagnostico", section: "header", language: locale });
+  const onCta = () => trackEvent("cta_clicked", { cta: locale === "es" ? "evaluar_proyecto" : "diagnostico", section: "header", language: locale });
 
   return (
     <header className="fixed inset-x-0 top-0 z-50 border-b border-border/60 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/80">
       <div className="container mx-auto flex h-20 items-center justify-between px-4 md:px-6">
         <Link to={homeHref} className="flex items-center gap-3" onClick={() => setMobileOpen(false)}>
-          <img src={logoLight} alt="Ferova Agency" className="h-12 w-auto sm:h-14" />
+          {locale === "es" ? (
+            <span className="leading-none">
+              <span className="block font-display text-base font-bold tracking-[0.08em] text-foreground sm:text-lg">SEO PARA ECOMMERCE</span>
+              <span className="mt-1 block text-[10px] font-semibold uppercase tracking-[0.24em] text-blue-600">by Ferova</span>
+            </span>
+          ) : (
+            <img src={logoLight} alt="Ferova Agency" className="h-12 w-auto sm:h-14" />
+          )}
         </Link>
 
         <nav className="hidden items-center gap-6 lg:flex">
@@ -103,7 +110,7 @@ export default function Header({ currentLang, lang }: HeaderProps) {
             ))}
           </div>
 
-          <Link to={cfg.cta.href} onClick={onCta} className="btn-gold ml-1 inline-flex items-center gap-1.5 !px-4 !py-2 text-sm">
+          <Link to={cfg.cta.href} onClick={onCta} className={`${locale === "es" ? "seo-primary-button" : "btn-gold"} ml-1 inline-flex items-center gap-1.5 !px-4 !py-2 text-sm`}>
             <Sparkles className="w-4 h-4" /> {cfg.cta.label}
           </Link>
         </nav>
@@ -136,7 +143,7 @@ export default function Header({ currentLang, lang }: HeaderProps) {
             <Link
               to={cfg.cta.href}
               onClick={() => { onCta(); setMobileOpen(false); }}
-              className="btn-gold mt-2 inline-flex items-center justify-center gap-1.5"
+              className={`${locale === "es" ? "seo-primary-button" : "btn-gold"} mt-2 inline-flex items-center justify-center gap-1.5`}
             >
               <Sparkles className="w-4 h-4" /> {cfg.cta.label}
             </Link>

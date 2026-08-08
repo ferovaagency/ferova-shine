@@ -22,10 +22,10 @@ const T: Record<Lang, {
   cta: string; ctaSub: string;
 }> = {
   es: {
-    seoTitle: 'Calculadora de Visibilidad IA para Ecommerce | Ferova Agency',
-    seoDesc: 'Responde 5 preguntas y descubre qué tan citable es tu tienda online para ChatGPT, Perplexity y Gemini. Gratis, resultado inmediato.',
-    h1: 'Calculadora de Visibilidad IA',
-    answer: 'Responde estas 5 preguntas sobre tu tienda online y obtén un puntaje estimado de qué tan preparada está tu marca para ser citada por ChatGPT, Perplexity y Gemini. Es una estimación rápida, no un audit completo — para eso ofrecemos un diagnóstico gratuito por WhatsApp.',
+    seoTitle: 'Evaluador de preparación para AI Search | Ferova',
+    seoDesc: 'Autoevalúa las bases técnicas, de contenido y autoridad de tu ecommerce para AI Search. Resultado orientativo; no mide menciones reales.',
+    h1: '¿Qué tan preparada está tu marca para aparecer en respuestas de IA?',
+    answer: 'Responde cinco preguntas para revisar las bases técnicas, de contenido y autoridad que pueden ayudar a que una marca sea comprendida por motores como ChatGPT, Perplexity y Gemini. Es una autoevaluación orientativa: no mide visibilidad, menciones reales ni garantiza apariciones.',
     questions: [
       { id: 'schema', label: '¿Tu web tiene datos estructurados Schema.org (Organization, Product, FAQPage)?' },
       { id: 'content', label: '¿Publicas contenido nuevo (blog, guías) al menos una vez al mes?' },
@@ -33,11 +33,11 @@ const T: Record<Lang, {
       { id: 'faq', label: '¿Tu web tiene una sección de FAQ con preguntas y respuestas directas?' },
       { id: 'known', label: '¿Sabes si ChatGPT o Perplexity mencionan tu marca hoy?' },
     ],
-    resultTitle: 'Tu puntaje de visibilidad IA',
+    resultTitle: 'Tu nivel de preparación para AI Search',
     tiers: [
-      { min: 0, label: 'Invisible para la IA', desc: 'Los modelos de IA probablemente no conocen tu marca todavía. Es el punto de partida más común — se puede resolver con una base sólida de GEO.' },
-      { min: 41, label: 'En construcción', desc: 'Tienes algunas señales, pero faltan piezas clave (schema, distribución multifuente o contenido citable) para que la IA te cite consistentemente.' },
-      { min: 81, label: 'Citable', desc: 'Tu marca tiene buenas señales de citabilidad. El siguiente paso es medir menciones frente a tu competencia y sostener el ritmo de publicación.' },
+      { min: 0, label: 'Base inicial', desc: 'Hay fundamentos por construir o validar. Este resultado orienta prioridades; no determina si una plataforma de IA conoce o menciona tu marca.' },
+      { min: 41, label: 'Preparación en desarrollo', desc: 'Ya existen algunas bases, pero conviene revisar estructura, contenido, señales externas y medición antes de sacar conclusiones sobre visibilidad.' },
+      { min: 81, label: 'Buenas bases', desc: 'Las respuestas indican una base favorable. El siguiente paso es medir menciones y brechas frente a competidores con un análisis específico.' },
     ],
     cta: 'Solicitar diagnóstico completo por WhatsApp', ctaSub: 'Enviamos tu resultado y una lectura personalizada.',
   },
@@ -85,7 +85,7 @@ const T: Record<Lang, {
 
 const CalculadoraVisibilidadIA = ({ lang = 'es' }: Props) => {
   const t = T[lang];
-  const path = lang === 'en' ? '/en/tools/ai-visibility-calculator' : lang === 'pt' ? '/pt/ferramentas/calculadora-visibilidade-ia' : '/herramientas/calculadora-visibilidad-ia';
+  const path = lang === 'en' ? '/en/tools/ai-visibility-calculator' : lang === 'pt' ? '/pt/ferramentas/calculadora-visibilidade-ia' : '/recursos/herramientas/evaluador-preparacion-ai-search';
   const [answers, setAnswers] = useState<Record<QId, boolean>>({ schema: false, content: false, offsite: false, faq: false, known: false });
 
   useEffect(() => { trackEvent('page_view', { page: 'calculadora_visibilidad_ia', lang }); }, [lang]);
@@ -96,7 +96,7 @@ const CalculadoraVisibilidadIA = ({ lang = 'es' }: Props) => {
   const toggle = (id: QId) => setAnswers((prev) => ({ ...prev, [id]: !prev[id] }));
 
   const waMsg = encodeURIComponent(
-    lang === 'es' ? `Hola Ferova, hice la Calculadora de Visibilidad IA y obtuve ${score}/100 (${tier.label}). Quiero el diagnóstico completo.`
+    lang === 'es' ? `Hola Ferova, hice el evaluador de preparación para AI Search y obtuve ${score}/100 (${tier.label}). Quiero revisar el resultado.`
     : lang === 'pt' ? `Olá Ferova, fiz a Calculadora de Visibilidade IA e obtive ${score}/100 (${tier.label}). Quero o diagnóstico completo.`
     : `Hi Ferova, I took the AI Visibility Calculator and got ${score}/100 (${tier.label}). I want the full diagnosis.`
   );
