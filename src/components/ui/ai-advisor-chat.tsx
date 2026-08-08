@@ -19,7 +19,7 @@ const t = {
     welcome: 'Soy **Fera**, el asistente con inteligencia artificial de Ferova. No soy una persona y puedo equivocarme; el alcance y el precio siempre los revisa una persona. No envíes datos sensibles. Puedes escribir **AGENTE** cuando quieras hablar con alguien del equipo. Consulta nuestra [política de privacidad](/privacidad#ia).\n\n¿Qué capacidad necesita tu agencia?',
     placeholder: 'Escribe tu mensaje...',
     badge: 'Cotizar con Fera',
-    error: 'Hubo un error. Intenta de nuevo.',
+    error: 'Fera no pudo conectar en este momento. Envía tu mensaje nuevamente o habla con una persona por [WhatsApp](https://wa.me/17865787671) o [correo](mailto:gerencia@seoparaecommerce.co).',
     suggestions: [
       'SEO técnico para un cliente',
       'Mantenimiento web mensual',
@@ -32,7 +32,7 @@ const t = {
     welcome: "I'm **Fera**, Ferova's AI quoting assistant. I'm not a person and I can make mistakes; a person always reviews scope and pricing. Do not send sensitive data. Type **AGENT** whenever you want a team member. Read our [privacy policy](/en/privacy#ai).\n\nWhat capacity does your agency need?",
     placeholder: 'Type your message...',
     badge: 'Quote with Fera',
-    error: 'Something went wrong. Please try again.',
+    error: 'Fera could not connect right now. Send your message again or contact a person through [WhatsApp](https://wa.me/17865787671) or [email](mailto:gerencia@seoparaecommerce.co).',
     suggestions: [
       'Technical SEO for a client',
       'Monthly website maintenance',
@@ -45,7 +45,7 @@ const t = {
     welcome: 'Sou a **Fera**, assistente de orçamento com inteligência artificial da Ferova. Não sou uma pessoa e posso cometer erros; uma pessoa sempre revisa escopo e preço. Não envie dados sensíveis. Escreva **AGENTE** para falar com a equipe.\n\nDe qual capacidade sua agência precisa?',
     placeholder: 'Digite sua mensagem...',
     badge: 'Consultora IA',
-    error: 'Ocorreu um erro. Tente novamente.',
+    error: 'A Fera não conseguiu se conectar agora. Envie sua mensagem novamente ou fale com uma pessoa pelo [WhatsApp](https://wa.me/17865787671) ou [e-mail](mailto:gerencia@seoparaecommerce.co).',
     suggestions: [
       'SEO técnico para um cliente',
       'Manutenção web mensal',
@@ -108,17 +108,32 @@ const AiAdvisorChat = ({ lang = 'es' }: AiAdvisorChatProps) => {
     let assistantContent = '';
 
     try {
-      const resp = await fetch(CHAT_URL, {
+      const requestAdvisor = () => fetch(CHAT_URL, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
           Authorization: `Bearer ${import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY}`,
+          apikey: import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY,
         },
         body: JSON.stringify({
           messages: newMessages.map(m => ({ role: m.role, content: m.content })),
           lang,
         }),
       });
+
+      const transientStatuses = [429, 500, 502, 503, 504];
+      let resp: Response | undefined;
+      let requestError: unknown;
+      for (let attempt = 0; attempt < 2; attempt += 1) {
+        try {
+          resp = await requestAdvisor();
+          if (!transientStatuses.includes(resp.status)) break;
+        } catch (error) {
+          requestError = error;
+        }
+        if (attempt === 0) await new Promise(resolve => window.setTimeout(resolve, 800));
+      }
+      if (!resp) throw requestError instanceof Error ? requestError : new Error('Network error');
 
       if (!resp.ok) {
         throw new Error(`HTTP ${resp.status}`);
