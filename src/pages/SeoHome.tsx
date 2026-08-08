@@ -4,6 +4,7 @@ import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
 import SEO from "@/components/SEO";
 import AgencyCapacity3D from "@/components/visuals/AgencyCapacity3D";
+import AgencyVideoElement from "@/components/visuals/AgencyVideoElement";
 import heroVisual from "@/assets/seo-agency-hero-3d.webp";
 
 const capabilities = [
@@ -76,7 +77,7 @@ export default function SeoHome() {
 
         <section className="bg-[#f4eadb] py-20 md:py-28">
           <div className="container mx-auto grid max-w-6xl gap-12 px-4 md:px-6 lg:grid-cols-[1fr_.9fr] lg:items-center">
-            <AgencyCapacity3D compact />
+            <AgencyVideoElement />
             <div><p className="seo-kicker">Cómo se contrata</p><h2 className="mt-4 font-display text-3xl font-bold md:text-5xl">Dime qué habilidad falta, para cuántos clientes y cuándo debe estar lista.</h2><ul className="mt-7 space-y-4 text-slate-700">{["Alcance puntual, bolsa de horas o retainer mensual.", "Trabajo white label, interno o visible ante el cliente.", "Precio y cronograma según volumen, accesos y complejidad.", "Canales directos por correo, WhatsApp o Slack."].map((item) => <li key={item} className="flex gap-3"><CheckCircle2 className="mt-0.5 h-5 w-5 shrink-0 text-[#8c6905]" />{item}</li>)}</ul><button type="button" onClick={openFera} className="seo-primary-button mt-9">Solicitar cotización <ArrowRight className="h-4 w-4" /></button></div>
           </div>
         </section>

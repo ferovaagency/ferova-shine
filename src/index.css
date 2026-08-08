@@ -561,6 +561,120 @@
   .seo-float-card { animation: none !important; }
 }
 
+.agency-video-element {
+  margin: 0;
+  width: 100%;
+}
+
+.agency-video-frame {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  min-height: 28rem;
+  border: 1px solid rgb(84 16 20 / 18%);
+  border-radius: 1.75rem;
+  background: #240b0d;
+  box-shadow: 0 30px 70px rgb(84 16 20 / 20%);
+}
+
+.agency-video-frame::before {
+  position: absolute;
+  z-index: 2;
+  inset: 0;
+  border: 1px solid rgb(224 189 82 / 20%);
+  border-radius: inherit;
+  content: '';
+  pointer-events: none;
+}
+
+.agency-video-media {
+  width: 100%;
+  height: 100%;
+  min-height: 28rem;
+  display: block;
+  object-fit: cover;
+}
+
+.agency-video-shade {
+  position: absolute;
+  z-index: 1;
+  inset: 0;
+  background: linear-gradient(180deg, transparent 45%, rgb(25 7 9 / 80%) 100%);
+  pointer-events: none;
+}
+
+.agency-video-label {
+  position: absolute;
+  z-index: 3;
+  left: 1.25rem;
+  bottom: 1.25rem;
+  display: grid;
+  gap: .2rem;
+  color: white;
+}
+
+.agency-video-label span {
+  color: #e0bd52;
+  font-size: .68rem;
+  font-weight: 800;
+  letter-spacing: .16em;
+  text-transform: uppercase;
+}
+
+.agency-video-label strong {
+  font-family: var(--font-display);
+  font-size: 1.2rem;
+}
+
+.agency-video-control {
+  position: absolute;
+  z-index: 4;
+  right: 1.25rem;
+  bottom: 1.25rem;
+  display: inline-flex;
+  align-items: center;
+  gap: .45rem;
+  min-height: 2.5rem;
+  padding: .6rem .8rem;
+  border: 1px solid rgb(255 255 255 / 28%);
+  border-radius: 999px;
+  background: rgb(36 11 13 / 78%);
+  color: white;
+  font-size: .72rem;
+  font-weight: 700;
+  backdrop-filter: blur(10px);
+  transition: border-color .2s ease, background .2s ease;
+}
+
+.agency-video-control:hover,
+.agency-video-control:focus-visible {
+  border-color: #e0bd52;
+  background: rgb(84 16 20 / 92%);
+  outline: none;
+}
+
+.agency-video-element figcaption {
+  margin-top: .75rem;
+  color: #6a4c30;
+  font-size: .75rem;
+  line-height: 1.4;
+}
+
+@media (max-width: 640px) {
+  .agency-video-frame,
+  .agency-video-media {
+    min-height: 22rem;
+  }
+
+  .agency-video-control span {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+  }
+}
+
 /* Interactive, code-native 3D scene. Unlike the former raster render, every
    panel below is a DOM plane positioned in a shared perspective space. */
 .agency-3d {
