@@ -829,6 +829,25 @@ body:has(.agency-site) .agency-header nav a:not(.seo-primary-button):focus-visib
   transform: translateY(-2px);
 }
 
+.agency-site .seo-primary-button:active { transform: translateY(1px); }
+
+.agency-skip-link {
+  position: fixed;
+  z-index: 100;
+  top: .75rem;
+  left: .75rem;
+  transform: translateY(-180%);
+  border-radius: .55rem;
+  padding: .75rem 1rem;
+  background: #f8f0e2;
+  color: #541014;
+  font-size: .8rem;
+  font-weight: 700;
+  transition: transform 180ms ease;
+}
+
+.agency-skip-link:focus { transform: translateY(0); }
+
 .agency-site .seo-primary-button svg,
 .agency-site .seo-secondary-button svg { width: 1rem; height: 1rem; }
 
@@ -902,9 +921,9 @@ body:has(.agency-site) .agency-header nav a:not(.seo-primary-button):focus-visib
 }
 
 .agency-hero h1 {
-  max-width: 12ch;
+  max-width: 10ch;
   margin: 0;
-  font-size: clamp(4.2rem, 6.3vw, 6.8rem);
+  font-size: clamp(4.2rem, 6.3vw, 6rem);
   font-weight: 800;
   line-height: .82;
   text-transform: uppercase;
@@ -919,6 +938,19 @@ body:has(.agency-site) .agency-header nav a:not(.seo-primary-button):focus-visib
 }
 
 .agency-hero-actions { display: flex; flex-wrap: wrap; gap: .8rem; margin-top: 2.25rem; }
+
+.agency-hero-assurance {
+  display: flex;
+  align-items: center;
+  gap: .55rem;
+  margin-top: 1rem !important;
+  color: rgb(248 240 226 / 58%) !important;
+  font-size: .76rem !important;
+  font-weight: 600;
+  line-height: 1.5 !important;
+}
+
+.agency-hero-assurance svg { width: 1rem; height: 1rem; color: var(--agency-gold-light); }
 
 .agency-console {
   --console-x: 0deg;
@@ -1012,13 +1044,89 @@ body:has(.agency-site) .agency-header nav a:not(.seo-primary-button):focus-visib
 }
 .agency-hero-anchor:hover { color: var(--agency-gold-light); }
 
+.agency-engagements,
+.agency-comparison,
 .agency-capabilities,
+.agency-pricing,
 .agency-proof,
 .agency-faq {
   width: min(1240px, calc(100% - 3rem));
   margin: 0 auto;
   padding: clamp(5rem, 9vw, 8.5rem) 0;
 }
+
+.agency-tagline {
+  padding: clamp(5.5rem, 12vw, 10rem) max(1.5rem, calc((100% - 1240px) / 2));
+  background: var(--agency-ivory);
+}
+
+.agency-tagline-copy {
+  max-width: 15ch;
+  margin: 0;
+  color: rgb(84 16 20 / 18%);
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: clamp(3.2rem, 6.7vw, 6rem);
+  font-weight: 800;
+  letter-spacing: -.035em;
+  line-height: .92;
+  text-transform: uppercase;
+  text-wrap: balance;
+}
+
+.agency-tagline-copy span {
+  transition: color 700ms cubic-bezier(.16, 1, .3, 1);
+  transition-delay: calc(var(--word-index) * 42ms);
+}
+
+.agency-tagline-copy.is-visible span { color: var(--agency-wine); }
+
+.agency-engagement-rail,
+.agency-pricing-rail {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  margin-top: 4rem;
+  overflow: hidden;
+  border: 1px solid rgb(84 16 20 / 24%);
+  background: var(--agency-charcoal);
+  color: var(--agency-ivory);
+}
+
+.agency-engagement-rail article,
+.agency-pricing-rail article {
+  min-width: 0;
+  padding: clamp(2rem, 4vw, 3.25rem);
+  border-right: 1px solid rgb(224 189 82 / 18%);
+}
+
+.agency-engagement-rail article:last-child,
+.agency-pricing-rail article:last-child { border-right: 0; }
+.agency-engagement-rail article > span { color: var(--agency-gold-light); font-size: .72rem; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; }
+.agency-engagement-rail svg { width: 1.5rem; color: var(--agency-gold-light); }
+.agency-engagement-rail h3,
+.agency-pricing-rail h2 { margin: 2rem 0 0; font-size: clamp(2rem, 3vw, 2.8rem); line-height: .95; }
+.agency-engagement-rail p,
+.agency-pricing-rail p { margin-top: 1.25rem; color: rgb(248 240 226 / 66%); font-size: .9rem; line-height: 1.7; }
+.agency-engagement-rail a,
+.agency-pricing-rail a { display: inline-flex; align-items: center; gap: .5rem; margin-top: 2rem; color: var(--agency-gold-light); font-size: .78rem; font-weight: 700; }
+.agency-engagement-rail a svg,
+.agency-pricing-rail a svg { width: 1rem; transition: transform 220ms ease; }
+.agency-engagement-rail a:hover svg,
+.agency-pricing-rail a:hover svg { transform: translateX(.3rem); }
+.agency-engagement-more { margin-top: 2rem; }
+
+.agency-comparison { border-top: 1px solid rgb(84 16 20 / 18%); }
+.agency-comparison-heading { display: grid; grid-template-columns: 1.25fr .75fr; align-items: end; gap: clamp(2rem, 8vw, 7rem); }
+.agency-comparison-heading h2 { margin: 0; font-size: clamp(3.2rem, 5.6vw, 5.6rem); font-weight: 800; line-height: .91; text-transform: uppercase; }
+.agency-comparison-heading p { color: #635c55; line-height: 1.75; }
+.agency-comparison-table-wrap { margin-top: 3.5rem; overflow-x: auto; background: var(--agency-charcoal); }
+.agency-comparison-table { width: 100%; min-width: 760px; border-collapse: collapse; color: var(--agency-ivory); text-align: left; }
+.agency-comparison-table th,
+.agency-comparison-table td { padding: 1.35rem 1.5rem; border-bottom: 1px solid rgb(224 189 82 / 15%); vertical-align: top; }
+.agency-comparison-table th { color: var(--agency-gold-light); font-size: .72rem; letter-spacing: .08em; text-transform: uppercase; }
+.agency-comparison-table td:first-child { color: rgb(248 240 226 / 58%); font-size: .78rem; font-weight: 700; text-transform: uppercase; }
+.agency-comparison-table td { font-size: .88rem; line-height: 1.6; }
+.agency-comparison-note { margin: 0; padding: 1.4rem 1.5rem; border-top: 3px solid var(--agency-gold); background: #efe5d5; color: #635c55; font-size: .85rem; line-height: 1.65; }
+.agency-comparison-note strong { color: var(--agency-wine); }
 
 .agency-section-heading {
   display: grid;
@@ -1148,6 +1256,91 @@ body:has(.agency-site) .agency-header nav a:not(.seo-primary-button):focus-visib
 .agency-final-copy p { max-width: 58ch; margin-top: 1.5rem; color: rgb(248 240 226 / 68%); line-height: 1.7; }
 .agency-final-cta .seo-primary-button { flex: 0 0 auto; }
 
+.agency-subpage-hero,
+.agency-contact-hero {
+  padding: clamp(5rem, 9vw, 8rem) 1.5rem;
+  background: var(--agency-wine);
+  color: var(--agency-ivory);
+}
+
+.agency-subpage-hero > div,
+.agency-contact-hero > div { width: min(1240px, 100%); margin: 0 auto; }
+.agency-subpage-hero h1,
+.agency-contact-hero h1 { max-width: 12ch; margin: 0; font-size: clamp(4rem, 7vw, 6rem); font-weight: 800; line-height: .87; text-transform: uppercase; }
+.agency-subpage-hero p,
+.agency-contact-hero p { max-width: 60ch; margin: 2rem 0; color: rgb(248 240 226 / 72%); font-size: 1.05rem; line-height: 1.75; }
+
+.agency-pricing-icon {
+  display: grid;
+  width: 3rem;
+  height: 3rem;
+  place-items: center;
+  border: 1px solid rgb(224 189 82 / 28%);
+  color: var(--agency-gold-light);
+}
+.agency-pricing-icon svg { width: 1.35rem; }
+.agency-pricing-rail article > strong { display: block; margin-top: 1.6rem; color: var(--agency-gold-light); font-size: .92rem; }
+.agency-pricing-rail article > span { display: block; margin-top: .45rem; color: rgb(248 240 226 / 55%); font-size: .75rem; line-height: 1.5; }
+.agency-pricing-rail ul { display: grid; gap: .75rem; margin: 1.6rem 0 0; padding: 0; list-style: none; }
+.agency-pricing-rail li { display: flex; gap: .6rem; color: rgb(248 240 226 / 78%); font-size: .8rem; line-height: 1.5; }
+.agency-pricing-rail li svg { flex: 0 0 auto; width: .9rem; color: var(--agency-gold-light); }
+
+.agency-price-explainer {
+  display: grid;
+  grid-template-columns: 1.2fr .8fr;
+  gap: clamp(3rem, 9vw, 8rem);
+  padding: clamp(5rem, 9vw, 8rem) max(1.5rem, calc((100% - 1240px) / 2));
+  background: var(--agency-ivory);
+}
+.agency-price-explainer h2 { max-width: 11ch; margin: 0; font-size: clamp(3.1rem, 5vw, 5rem); font-weight: 800; line-height: .92; text-transform: uppercase; }
+.agency-price-explainer p { max-width: 62ch; margin-top: 1.5rem; color: #635c55; line-height: 1.75; }
+.agency-price-factors { padding-left: 2rem; border-left: 1px solid rgb(84 16 20 / 22%); }
+.agency-price-factors h3 { margin: 0; font-size: 2rem; text-transform: uppercase; }
+.agency-price-factors ul { display: grid; gap: 0; margin: 1.5rem 0 0; padding: 0; border-top: 1px solid rgb(84 16 20 / 18%); list-style: none; }
+.agency-price-factors li { padding: 1rem 0; border-bottom: 1px solid rgb(84 16 20 / 18%); font-size: .86rem; font-weight: 600; }
+
+.agency-pricing-truth {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 1.5rem;
+  width: min(1240px, calc(100% - 3rem));
+  margin: 0 auto clamp(5rem, 9vw, 8rem);
+  padding: 2rem;
+  border: 1px solid rgb(84 16 20 / 24%);
+}
+.agency-pricing-truth > svg { width: 2rem; color: var(--agency-wine); }
+.agency-pricing-truth h2 { margin: 0; font-size: clamp(2rem, 3.5vw, 3.2rem); line-height: 1; text-transform: uppercase; }
+.agency-pricing-truth p { max-width: 80ch; margin-top: .85rem; color: #635c55; line-height: 1.7; }
+
+.agency-quote-form,
+.agency-form-success,
+.agency-contact-aside > div {
+  border: 1px solid rgb(84 16 20 / 20%);
+  background: var(--agency-paper);
+}
+.agency-quote-form { display: grid; gap: 1.25rem; padding: clamp(1.5rem, 4vw, 2.5rem); }
+.agency-quote-form > label,
+.agency-quote-form div > label { color: var(--agency-charcoal); font-size: .78rem; font-weight: 700; }
+.agency-quote-form input,
+.agency-quote-form select,
+.agency-quote-form textarea { min-height: 3rem; border-radius: .55rem; background: #fffdf8; }
+.agency-consent { display: flex; align-items: flex-start; gap: .7rem; color: #635c55 !important; font-weight: 500 !important; line-height: 1.55; }
+.agency-consent input { width: 1rem; min-height: 1rem; margin-top: .12rem; accent-color: var(--agency-wine); }
+.agency-consent a { color: var(--agency-wine); text-decoration: underline; text-underline-offset: .2rem; }
+.agency-form-success { display: grid; align-content: center; justify-items: start; min-height: 30rem; padding: clamp(2rem, 5vw, 4rem); }
+.agency-form-success > svg { width: 2.5rem; color: var(--agency-wine); }
+.agency-form-success h2 { margin: 1.5rem 0 0; font-size: clamp(2.5rem, 5vw, 4rem); text-transform: uppercase; }
+.agency-form-success p { max-width: 56ch; margin: 1rem 0 2rem; color: #635c55; line-height: 1.7; }
+.agency-contact-aside { display: grid; align-content: start; gap: 1px; background: rgb(84 16 20 / 16%); }
+.agency-contact-aside > div { padding: 2rem; }
+.agency-contact-aside h2 { margin: 0; font-size: 2.3rem; text-transform: uppercase; }
+.agency-contact-aside ul { display: grid; gap: .75rem; margin: 1.5rem 0 0; padding-left: 1.15rem; color: #635c55; font-size: .84rem; line-height: 1.6; }
+.agency-contact-aside > a { display: flex; align-items: center; gap: 1rem; padding: 1.25rem 1.5rem; background: var(--agency-charcoal); color: var(--agency-ivory); }
+.agency-contact-aside > a:hover { background: var(--agency-wine); }
+.agency-contact-aside > a > svg { width: 1.25rem; color: var(--agency-gold-light); }
+.agency-contact-aside span { display: grid; gap: .2rem; min-width: 0; }
+.agency-contact-aside small { overflow-wrap: anywhere; color: rgb(248 240 226 / 62%); }
+
 .agency-footer {
   --background: 30 18% 93%;
   --card: 35 37% 93%;
@@ -1187,18 +1380,30 @@ body:has(.agency-site) .agency-header nav a:not(.seo-primary-button):focus-visib
 @media (max-width: 800px) {
   .agency-hero { padding-top: 8rem; padding-bottom: 3rem; }
   .agency-hero-shell,
+  .agency-engagements,
+  .agency-comparison,
   .agency-capabilities,
+  .agency-pricing,
   .agency-proof,
-  .agency-faq { width: min(100% - 2rem, 680px); }
+  .agency-faq { width: min(calc(100% - 2rem), 680px); }
   .agency-hero h1 { font-size: clamp(3.8rem, 14vw, 6rem); }
   .agency-console { width: 124%; margin: -1rem -12% 0; }
   .agency-console-readout { right: 9%; bottom: 0; }
   .agency-console-readout span { font-size: 0; }
   .agency-console-readout svg { width: 1rem; height: 1rem; }
   .agency-section-heading,
+  .agency-comparison-heading,
   .agency-routing-shell,
+  .agency-price-explainer,
   .agency-proof,
   .agency-faq { grid-template-columns: 1fr; }
+  .agency-engagement-rail,
+  .agency-pricing-rail { grid-template-columns: 1fr; }
+  .agency-engagement-rail article,
+  .agency-pricing-rail article { border-right: 0; border-bottom: 1px solid rgb(224 189 82 / 18%); }
+  .agency-engagement-rail article:last-child,
+  .agency-pricing-rail article:last-child { border-bottom: 0; }
+  .agency-price-factors { padding-left: 0; border-left: 0; }
   .agency-capability-row { grid-template-columns: 3.5rem 1fr 1.4rem; gap: 1rem; padding: 1.5rem 0; }
   .agency-capability-mode { grid-column: 2 / 4; }
   .agency-proof-media { order: 2; }
@@ -1212,6 +1417,13 @@ body:has(.agency-site) .agency-header nav a:not(.seo-primary-button):focus-visib
   .agency-hero-copy > p { margin-top: 1.4rem; font-size: .95rem; }
   .agency-hero-actions { align-items: stretch; flex-direction: column; }
   .agency-hero-actions > * { width: 100%; }
+  .agency-tagline { padding-inline: 1rem; }
+  .agency-tagline-copy { font-size: clamp(2.75rem, 14vw, 4rem); }
+  .agency-subpage-hero,
+  .agency-contact-hero { padding-inline: 1rem; }
+  .agency-subpage-hero h1,
+  .agency-contact-hero h1 { font-size: clamp(3rem, 15vw, 4.1rem); }
+  .agency-pricing-truth { grid-template-columns: 1fr; width: calc(100% - 2rem); }
   .agency-console { width: 145%; margin: -.5rem -22.5% 0; }
   .agency-console-image { mask-image: linear-gradient(90deg, transparent 0, black 12%, black 100%); }
   .agency-console-readout { right: 15%; }
@@ -1242,4 +1454,5 @@ body:has(.cookie-consent-panel) .whatsapp-trigger { bottom: 16rem !important; }
 @media (prefers-reduced-motion: reduce) {
   .agency-console-stage { transform: none; transition: none; }
   .agency-console-signal span { animation: none; opacity: .8; }
+  .agency-tagline-copy span { transition: none; }
 }

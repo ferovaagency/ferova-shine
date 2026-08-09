@@ -16,12 +16,11 @@ const NAV: Record<"es" | "en" | "pt", NavCfg> = {
   es: {
     primary: [
       { label: "Capacidades", href: "/seo-para-agencias" },
-      { label: "SEO técnico", href: "/auditoria-seo-tecnica" },
-      { label: "Migraciones", href: "/migraciones-seo" },
+      { label: "Modalidades", href: "/precios" },
       { label: "Experiencia", href: "/casos-de-exito" },
       { label: "Recursos", href: "/recursos" },
     ],
-    cta: { label: "Solicitar cotización", href: "/contacto" },
+    cta: { label: "Cotizar horas o tareas", href: "/contacto" },
   },
   en: {
     primary: [
@@ -55,6 +54,9 @@ export default function Header({ currentLang, lang }: HeaderProps) {
 
   return (
     <header className={`fixed inset-x-0 top-0 z-50 ${locale === "es" ? "agency-header" : "border-b border-border/60 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/80"}`}>
+      <a href="#contenido-principal" className="agency-skip-link">
+        {locale === "en" ? "Skip to content" : locale === "pt" ? "Pular para o conteúdo" : "Saltar al contenido"}
+      </a>
       <div className="container mx-auto flex h-20 items-center justify-between px-4 md:px-6">
         <Link to={homeHref} className="flex items-center gap-3" onClick={() => setMobileOpen(false)}>
           {locale === "es" ? (

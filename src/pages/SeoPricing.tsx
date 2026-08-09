@@ -1,21 +1,84 @@
 import { Link } from "react-router-dom";
-import { ArrowRight, Check, Compass, FileSearch, MessagesSquare, ShieldCheck } from "lucide-react";
+import { ArrowRight, CalendarClock, Check, ClipboardCheck, Layers3, ShieldCheck } from "lucide-react";
 import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
 import SEO from "@/components/SEO";
 import { trackEvent } from "@/lib/analytics";
 
 const modalities = [
-  { id: "session", icon: MessagesSquare, title: "Sesión de dirección SEO", price: "USD 150", note: "60 minutos · pago único", text: "Para revisar una decisión concreta, desbloquear al equipo o validar un enfoque antes de ejecutarlo.", items: ["Contexto previo por formulario", "Sesión de trabajo directa", "Conclusiones y próximos pasos", "Sin promesas de resultado"] },
-  { id: "audit", icon: FileSearch, title: "Auditoría SEO técnica", price: "Desde USD 450", note: "Alcance según plataforma y tamaño", text: "Para localizar bloqueos y convertir hallazgos técnicos en un roadmap defendible.", items: ["Rastreo e indexación", "Arquitectura y enlazado", "Priorización por impacto y riesgo", "Presentación de hallazgos"] },
-  { id: "advisory", icon: Compass, title: "Acompañamiento SEO senior", price: "Desde USD 1.000/mes", note: "Cupos y alcance limitados", text: "Para equipos o agencias que necesitan dirección continua, QA y apoyo en decisiones complejas.", items: ["Dirección estratégica", "Revisión de backlog", "QA de implementaciones", "Seguimiento y medición"] },
+  {
+    id: "tarea", icon: ClipboardCheck, title: "Por tarea cerrada", price: "Precio por alcance", note: "Una entrega concreta, una fecha y criterios de aceptación",
+    text: "La forma más simple de empezar cuando sabes qué debe salir.",
+    items: ["Auditoría o diagnóstico técnico", "Landing page o lote definido", "QA de migración", "Corrección o implementación puntual"],
+  },
+  {
+    id: "horas", icon: Layers3, title: "Bolsa de horas", price: "Capacidad reservada", note: "Las tareas se priorizan dentro del bloque acordado",
+    text: "Para backlogs que cambian y requieren más de una habilidad durante el periodo.",
+    items: ["Priorización compartida del backlog", "Registro de tareas atendidas", "SEO, web y QA dentro del alcance", "Renovación según necesidad real"],
+  },
+  {
+    id: "mensual", icon: CalendarClock, title: "Capacidad mensual", price: "Bloque recurrente", note: "Continuidad sin crear un cargo permanente",
+    text: "Para agencias con demanda frecuente que necesitan un ritmo estable de producción.",
+    items: ["Capacidad recurrente acordada", "Mantenimiento y SEO técnico", "Producción de landings", "Ritmo y responsables definidos"],
+  },
 ];
 
 export default function SeoPricing() {
-  return <div className="min-h-screen bg-white text-slate-950"><SEO title="Precios de consultoría SEO senior en USD | Ferova" description="Modalidades de consultoría SEO senior: sesión de dirección, auditoría técnica y acompañamiento para ecommerce y agencias. Valores en USD." path="/precios" lang="es" breadcrumbs={[{ name: "Inicio", path: "/" }, { name: "Precios", path: "/precios" }]} /><Header lang="es" /><main className="pt-20">
-    <section className="bg-[#541014] py-20 text-white md:py-28"><div className="container mx-auto max-w-6xl px-4 text-center md:px-6"><p className="text-xs font-semibold uppercase tracking-[.22em] text-[#e0bd52]">Modalidades en USD</p><h1 className="mx-auto mt-5 max-w-4xl font-display text-4xl font-bold tracking-tight md:text-6xl">Elige el nivel de intervención que necesita tu equipo.</h1><p className="mx-auto mt-7 max-w-3xl text-lg leading-8 text-slate-300">Los valores orientan la conversación inicial. El alcance final depende de la plataforma, el tamaño del catálogo, la evidencia disponible y la capacidad de implementación.</p></div></section>
-    <section className="py-20 md:py-28"><div className="container mx-auto grid max-w-6xl gap-6 px-4 md:px-6 lg:grid-cols-3">{modalities.map(({ id, icon: Icon, title, price, note, text, items }, index) => <article key={id} className={`flex flex-col rounded-2xl p-7 ${index === 1 ? "border-2 border-[#c0930e] shadow-xl shadow-[#f1e5ce]" : "border border-slate-200"}`}><Icon className="h-7 w-7 text-[#6a4c30]" /><h2 className="mt-7 font-display text-2xl font-bold">{title}</h2><p className="mt-5 font-display text-3xl font-bold text-[#6a4c30]">{price}</p><p className="mt-1 text-xs text-slate-500">{note}</p><p className="mt-5 leading-7 text-slate-600">{text}</p><ul className="mt-6 flex-1 space-y-3">{items.map((item) => <li key={item} className="flex gap-2 text-sm text-slate-700"><Check className="mt-0.5 h-4 w-4 shrink-0 text-[#8c6905]" />{item}</li>)}</ul><Link to={`/contacto?modalidad=${id}`} onClick={() => trackEvent("pricing_card_clicked", { tier: id, lang: "es" })} className="seo-primary-button mt-8">Solicitar precio y alcance <ArrowRight className="h-4 w-4" /></Link></article>)}</div></section>
-    <section className="bg-slate-50 py-20"><div className="container mx-auto grid max-w-5xl gap-8 px-4 md:grid-cols-[auto_1fr] md:items-start md:px-6"><ShieldCheck className="h-10 w-10 text-[#8c6905]" /><div><h2 className="font-display text-3xl font-bold">Lo que ningún precio compra</h2><p className="mt-4 leading-7 text-slate-600">No se venden posiciones, tráfico garantizado ni menciones en motores de IA. La consultoría entrega análisis, criterio, acompañamiento y un sistema de medición proporcional al alcance contratado.</p></div></div></section>
-    <section className="py-20 text-center"><div className="container mx-auto px-4 md:px-6"><h2 className="mx-auto max-w-3xl font-display text-3xl font-bold md:text-5xl">Si el alcance no está claro, empecemos por el problema.</h2><Link to="/contacto" className="seo-primary-button mt-9">Solicitar cotización <ArrowRight className="h-4 w-4" /></Link></div></section>
-  </main><Footer lang="es" /></div>;
+  const offerCatalog = {
+    "@context": "https://schema.org", "@type": "Service", name: "SEO y producción web por horas o tareas para agencias", provider: { "@type": "Organization", name: "Ferova Agency" },
+    audience: { "@type": "BusinessAudience", audienceType: "Agencias" },
+    hasOfferCatalog: { "@type": "OfferCatalog", name: "Modalidades de contratación", itemListElement: modalities.map((item) => ({ "@type": "Offer", name: item.title, itemOffered: { "@type": "Service", name: item.title, description: item.text } })) },
+  };
+
+  return (
+    <div className="seo-brand agency-site min-h-screen">
+      <SEO title="SEO por horas y tareas para agencias | Modalidades Ferova" description="Compara contratación por tarea, bolsa de horas y capacidad mensual para SEO técnico, mantenimiento web, landings y migraciones white label." path="/precios" lang="es" jsonLd={offerCatalog} breadcrumbs={[{ name: "Inicio", path: "/" }, { name: "Modalidades", path: "/precios" }]} />
+      <Header lang="es" />
+      <main id="contenido-principal" className="pt-20">
+        <section className="agency-subpage-hero">
+          <div>
+            <h1>Contrata por tarea, horas o capacidad mensual.</h1>
+            <p>No necesitas adivinar un plan. Describe el backlog y recibe la unidad de contratación que mejor corresponde al volumen, la fecha y la especialidad requerida.</p>
+            <Link to="/contacto" className="seo-primary-button">Cotizar mi backlog <ArrowRight aria-hidden="true" /></Link>
+          </div>
+        </section>
+
+        <section className="agency-pricing">
+          <div className="agency-section-heading">
+            <h2>Tres maneras de comprar capacidad senior.</h2>
+            <p>El precio final se confirma antes de empezar y depende de la habilidad, el volumen, la plataforma, los accesos y el nivel de interacción con el cliente final.</p>
+          </div>
+          <div className="agency-pricing-rail">
+            {modalities.map(({ id, icon: Icon, title, price, note, text, items }) => (
+              <article key={id}>
+                <div className="agency-pricing-icon"><Icon aria-hidden="true" /></div>
+                <h2>{title}</h2>
+                <strong>{price}</strong>
+                <span>{note}</span>
+                <p>{text}</p>
+                <ul>{items.map((item) => <li key={item}><Check aria-hidden="true" />{item}</li>)}</ul>
+                <Link to={`/contacto?contratacion=${id}`} onClick={() => trackEvent("pricing_card_clicked", { tier: id, lang: "es" })}>Cotizar {title.toLowerCase()} <ArrowRight aria-hidden="true" /></Link>
+              </article>
+            ))}
+          </div>
+        </section>
+
+        <section className="agency-price-explainer">
+          <div><h2>¿Por qué no publicamos una tarifa única?</h2><p>Una hora de QA sobre un sitio estable no tiene las mismas dependencias que una migración, una landing o una auditoría de un ecommerce grande. Una tarifa aislada ocultaría esas diferencias.</p></div>
+          <div className="agency-price-factors"><h3>La cotización separa</h3><ul><li>Unidad de contratación</li><li>Entregables y supuestos</li><li>Accesos y responsables</li><li>Fecha y disponibilidad</li></ul></div>
+        </section>
+
+        <section className="agency-pricing-truth">
+          <ShieldCheck aria-hidden="true" />
+          <div><h2>Capacidad flexible no significa promesas flexibles.</h2><p>No vendemos posiciones, tráfico garantizado ni menciones en motores de IA. Vendemos trabajo especializado, criterios de aceptación, documentación y una modalidad proporcional al alcance.</p></div>
+        </section>
+
+        <section className="agency-final-cta">
+          <div className="agency-final-copy"><h2>Empieza con una tarea. Amplía solo si lo necesitas.</h2><p>Comparte el trabajo pendiente y recibe una recomendación de modalidad, alcance, precio y disponibilidad.</p></div>
+          <Link to="/contacto" className="seo-primary-button">Cotizar horas o tareas <ArrowRight aria-hidden="true" /></Link>
+        </section>
+      </main>
+      <Footer lang="es" />
+    </div>
+  );
 }

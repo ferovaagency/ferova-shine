@@ -15,12 +15,13 @@ const Footer = ({ currentLang, lang }: FooterProps) => {
 
   const t: Record<string, { tagline: string; services: string; company: string; legal: string; rights: string; servLinks: { name: string; href: string }[]; compLinks: { name: string; href: string }[]; legalLinks: { name: string; href: string }[] }> = {
     es: {
-      tagline: 'Capacidad técnica white label para agencias: SEO, mantenimiento web y landing pages.',
+      tagline: 'Capacidad técnica por tarea, horas o mes para agencias: SEO, mantenimiento web y landing pages.',
       services: 'Especialidades',
       company: 'Explorar',
       legal: 'Legal',
       rights: 'Todos los derechos reservados.',
       servLinks: [
+        { name: 'SEO por horas y tareas', href: '/precios' },
         { name: 'SEO técnico white label', href: '/auditoria-seo-tecnica' },
         { name: 'SEO para clientes de agencias', href: '/seo-para-agencias' },
         { name: 'Mantenimiento web mensual', href: '/servicios/diseno-web' },
@@ -33,7 +34,7 @@ const Footer = ({ currentLang, lang }: FooterProps) => {
         { name: 'Recursos SEO en español', href: '/recursos' },
         { name: 'Artículos de SEO técnico', href: '/blog' },
         { name: 'Método de colaboración', href: '/metodo-ferova' },
-        { name: 'Solicitar cotización', href: '/contacto' },
+        { name: 'Cotizar horas o tareas', href: '/contacto' },
       ],
       legalLinks: [
         { name: 'Términos y Condiciones', href: '/terminos' },
