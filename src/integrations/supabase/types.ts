@@ -140,6 +140,137 @@ export type Database = {
         }
         Relationships: []
       }
+      case_studies: {
+        Row: {
+          approved_at: string | null
+          approved_by: string | null
+          challenge: string
+          client_public_name: string | null
+          consent_id: string | null
+          country: string | null
+          created_at: string
+          diagnosis: string
+          id: string
+          intervention: string
+          last_observation_at: string | null
+          learnings: string
+          limitations: string | null
+          owner_id: string
+          published_at: string | null
+          result_highlights: Json
+          scheduled_for: string | null
+          sector: string
+          service_keys: string[]
+          slug: string
+          started_at: string | null
+          status: Database["public"]["Enums"]["content_status"]
+          summary: string
+          updated_at: string
+        }
+        Insert: {
+          approved_at?: string | null
+          approved_by?: string | null
+          challenge?: string
+          client_public_name?: string | null
+          consent_id?: string | null
+          country?: string | null
+          created_at?: string
+          diagnosis?: string
+          id?: string
+          intervention?: string
+          last_observation_at?: string | null
+          learnings?: string
+          limitations?: string | null
+          owner_id: string
+          published_at?: string | null
+          result_highlights?: Json
+          scheduled_for?: string | null
+          sector: string
+          service_keys?: string[]
+          slug: string
+          started_at?: string | null
+          status?: Database["public"]["Enums"]["content_status"]
+          summary: string
+          updated_at?: string
+        }
+        Update: {
+          approved_at?: string | null
+          approved_by?: string | null
+          challenge?: string
+          client_public_name?: string | null
+          consent_id?: string | null
+          country?: string | null
+          created_at?: string
+          diagnosis?: string
+          id?: string
+          intervention?: string
+          last_observation_at?: string | null
+          learnings?: string
+          limitations?: string | null
+          owner_id?: string
+          published_at?: string | null
+          result_highlights?: Json
+          scheduled_for?: string | null
+          sector?: string
+          service_keys?: string[]
+          slug?: string
+          started_at?: string | null
+          status?: Database["public"]["Enums"]["content_status"]
+          summary?: string
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "case_studies_consent_id_fkey"
+            columns: ["consent_id"]
+            isOneToOne: false
+            referencedRelation: "consents"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      consents: {
+        Row: {
+          authorization_file_path: string | null
+          client_or_representative: string
+          created_at: string
+          created_by: string
+          expires_at: string | null
+          granted_at: string
+          id: string
+          notes: string | null
+          permitted_data: string[]
+          publication_scope: string
+          revoked_at: string | null
+        }
+        Insert: {
+          authorization_file_path?: string | null
+          client_or_representative: string
+          created_at?: string
+          created_by: string
+          expires_at?: string | null
+          granted_at: string
+          id?: string
+          notes?: string | null
+          permitted_data?: string[]
+          publication_scope: string
+          revoked_at?: string | null
+        }
+        Update: {
+          authorization_file_path?: string | null
+          client_or_representative?: string
+          created_at?: string
+          created_by?: string
+          expires_at?: string | null
+          granted_at?: string
+          id?: string
+          notes?: string | null
+          permitted_data?: string[]
+          publication_scope?: string
+          revoked_at?: string | null
+        }
+        Relationships: []
+      }
       email_send_log: {
         Row: {
           created_at: string
@@ -352,6 +483,66 @@ export type Database = {
       }
     }
     Views: {
+      case_studies_public: {
+        Row: {
+          challenge: string | null
+          client_public_name: string | null
+          country: string | null
+          diagnosis: string | null
+          id: string | null
+          intervention: string | null
+          last_observation_at: string | null
+          learnings: string | null
+          limitations: string | null
+          published_at: string | null
+          result_highlights: Json | null
+          sector: string | null
+          service_keys: string[] | null
+          slug: string | null
+          started_at: string | null
+          summary: string | null
+          updated_at: string | null
+        }
+        Insert: {
+          challenge?: string | null
+          client_public_name?: string | null
+          country?: string | null
+          diagnosis?: string | null
+          id?: string | null
+          intervention?: string | null
+          last_observation_at?: string | null
+          learnings?: string | null
+          limitations?: string | null
+          published_at?: string | null
+          result_highlights?: Json | null
+          sector?: string | null
+          service_keys?: string[] | null
+          slug?: string | null
+          started_at?: string | null
+          summary?: string | null
+          updated_at?: string | null
+        }
+        Update: {
+          challenge?: string | null
+          client_public_name?: string | null
+          country?: string | null
+          diagnosis?: string | null
+          id?: string | null
+          intervention?: string | null
+          last_observation_at?: string | null
+          learnings?: string | null
+          limitations?: string | null
+          published_at?: string | null
+          result_highlights?: Json | null
+          sector?: string | null
+          service_keys?: string[] | null
+          slug?: string | null
+          started_at?: string | null
+          summary?: string | null
+          updated_at?: string | null
+        }
+        Relationships: []
+      }
       newsletter_editions_public: {
         Row: {
           created_at: string | null
@@ -436,6 +627,13 @@ export type Database = {
     }
     Enums: {
       app_role: "admin" | "user"
+      content_status:
+        | "draft"
+        | "in_review"
+        | "approved"
+        | "scheduled"
+        | "published"
+        | "archived"
     }
     CompositeTypes: {
       [_ in never]: never
@@ -564,6 +762,14 @@ export const Constants = {
   public: {
     Enums: {
       app_role: ["admin", "user"],
+      content_status: [
+        "draft",
+        "in_review",
+        "approved",
+        "scheduled",
+        "published",
+        "archived",
+      ],
     },
   },
 } as const
