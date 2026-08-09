@@ -140,6 +140,354 @@ export type Database = {
         }
         Relationships: []
       }
+      case_change_log: {
+        Row: {
+          action: string
+          actor_id: string | null
+          after_data: Json | null
+          before_data: Json | null
+          created_at: string
+          entity: string
+          entity_id: string
+          id: number
+        }
+        Insert: {
+          action: string
+          actor_id?: string | null
+          after_data?: Json | null
+          before_data?: Json | null
+          created_at?: string
+          entity: string
+          entity_id: string
+          id?: never
+        }
+        Update: {
+          action?: string
+          actor_id?: string | null
+          after_data?: Json | null
+          before_data?: Json | null
+          created_at?: string
+          entity?: string
+          entity_id?: string
+          id?: never
+        }
+        Relationships: []
+      }
+      case_metrics: {
+        Row: {
+          case_id: string
+          created_at: string
+          created_by: string
+          definition: string
+          display_order: number
+          id: string
+          key: string
+          name: string
+          public_visible: boolean
+          unit: Database["public"]["Enums"]["metric_unit"]
+        }
+        Insert: {
+          case_id: string
+          created_at?: string
+          created_by: string
+          definition: string
+          display_order?: number
+          id?: string
+          key: string
+          name: string
+          public_visible?: boolean
+          unit: Database["public"]["Enums"]["metric_unit"]
+        }
+        Update: {
+          case_id?: string
+          created_at?: string
+          created_by?: string
+          definition?: string
+          display_order?: number
+          id?: string
+          key?: string
+          name?: string
+          public_visible?: boolean
+          unit?: Database["public"]["Enums"]["metric_unit"]
+        }
+        Relationships: [
+          {
+            foreignKeyName: "case_metrics_case_id_fkey"
+            columns: ["case_id"]
+            isOneToOne: false
+            referencedRelation: "case_studies"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "case_metrics_case_id_fkey"
+            columns: ["case_id"]
+            isOneToOne: false
+            referencedRelation: "case_studies_public"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      case_reviews: {
+        Row: {
+          case_id: string
+          comment: string
+          created_at: string
+          decision: string
+          id: string
+          reviewer_id: string
+        }
+        Insert: {
+          case_id: string
+          comment: string
+          created_at?: string
+          decision: string
+          id?: string
+          reviewer_id: string
+        }
+        Update: {
+          case_id?: string
+          comment?: string
+          created_at?: string
+          decision?: string
+          id?: string
+          reviewer_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "case_reviews_case_id_fkey"
+            columns: ["case_id"]
+            isOneToOne: false
+            referencedRelation: "case_studies"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "case_reviews_case_id_fkey"
+            columns: ["case_id"]
+            isOneToOne: false
+            referencedRelation: "case_studies_public"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      case_studies: {
+        Row: {
+          approved_at: string | null
+          approved_by: string | null
+          challenge: string
+          client_public_name: string | null
+          consent_id: string | null
+          country: string | null
+          created_at: string
+          diagnosis: string
+          id: string
+          intervention: string
+          last_observation_at: string | null
+          learnings: string
+          limitations: string | null
+          owner_id: string
+          published_at: string | null
+          result_highlights: Json
+          scheduled_for: string | null
+          sector: string
+          service_keys: string[]
+          slug: string
+          started_at: string | null
+          status: Database["public"]["Enums"]["content_status"]
+          summary: string
+          updated_at: string
+        }
+        Insert: {
+          approved_at?: string | null
+          approved_by?: string | null
+          challenge?: string
+          client_public_name?: string | null
+          consent_id?: string | null
+          country?: string | null
+          created_at?: string
+          diagnosis?: string
+          id?: string
+          intervention?: string
+          last_observation_at?: string | null
+          learnings?: string
+          limitations?: string | null
+          owner_id: string
+          published_at?: string | null
+          result_highlights?: Json
+          scheduled_for?: string | null
+          sector: string
+          service_keys?: string[]
+          slug: string
+          started_at?: string | null
+          status?: Database["public"]["Enums"]["content_status"]
+          summary: string
+          updated_at?: string
+        }
+        Update: {
+          approved_at?: string | null
+          approved_by?: string | null
+          challenge?: string
+          client_public_name?: string | null
+          consent_id?: string | null
+          country?: string | null
+          created_at?: string
+          diagnosis?: string
+          id?: string
+          intervention?: string
+          last_observation_at?: string | null
+          learnings?: string
+          limitations?: string | null
+          owner_id?: string
+          published_at?: string | null
+          result_highlights?: Json
+          scheduled_for?: string | null
+          sector?: string
+          service_keys?: string[]
+          slug?: string
+          started_at?: string | null
+          status?: Database["public"]["Enums"]["content_status"]
+          summary?: string
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "case_studies_consent_id_fkey"
+            columns: ["consent_id"]
+            isOneToOne: false
+            referencedRelation: "consents"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      case_timeline_events: {
+        Row: {
+          case_id: string
+          created_at: string
+          created_by: string
+          description: string
+          display_order: number
+          event_date: string
+          event_type: string
+          evidence_asset_id: string | null
+          id: string
+          public_visible: boolean
+          title: string
+        }
+        Insert: {
+          case_id: string
+          created_at?: string
+          created_by: string
+          description: string
+          display_order?: number
+          event_date: string
+          event_type: string
+          evidence_asset_id?: string | null
+          id?: string
+          public_visible?: boolean
+          title: string
+        }
+        Update: {
+          case_id?: string
+          created_at?: string
+          created_by?: string
+          description?: string
+          display_order?: number
+          event_date?: string
+          event_type?: string
+          evidence_asset_id?: string | null
+          id?: string
+          public_visible?: boolean
+          title?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "case_timeline_events_case_id_fkey"
+            columns: ["case_id"]
+            isOneToOne: false
+            referencedRelation: "case_studies"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "case_timeline_events_case_id_fkey"
+            columns: ["case_id"]
+            isOneToOne: false
+            referencedRelation: "case_studies_public"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "case_timeline_evidence_fk"
+            columns: ["evidence_asset_id"]
+            isOneToOne: false
+            referencedRelation: "evidence_assets"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      cms_user_roles: {
+        Row: {
+          created_at: string
+          created_by: string | null
+          id: string
+          role: Database["public"]["Enums"]["cms_role"]
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          created_by?: string | null
+          id?: string
+          role: Database["public"]["Enums"]["cms_role"]
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          created_by?: string | null
+          id?: string
+          role?: Database["public"]["Enums"]["cms_role"]
+          user_id?: string
+        }
+        Relationships: []
+      }
+      consents: {
+        Row: {
+          authorization_file_path: string | null
+          client_or_representative: string
+          created_at: string
+          created_by: string
+          expires_at: string | null
+          granted_at: string
+          id: string
+          notes: string | null
+          permitted_data: string[]
+          publication_scope: string
+          revoked_at: string | null
+        }
+        Insert: {
+          authorization_file_path?: string | null
+          client_or_representative: string
+          created_at?: string
+          created_by: string
+          expires_at?: string | null
+          granted_at: string
+          id?: string
+          notes?: string | null
+          permitted_data?: string[]
+          publication_scope: string
+          revoked_at?: string | null
+        }
+        Update: {
+          authorization_file_path?: string | null
+          client_or_representative?: string
+          created_at?: string
+          created_by?: string
+          expires_at?: string | null
+          granted_at?: string
+          id?: string
+          notes?: string | null
+          permitted_data?: string[]
+          publication_scope?: string
+          revoked_at?: string | null
+        }
+        Relationships: []
+      }
       email_send_log: {
         Row: {
           created_at: string
@@ -226,6 +574,157 @@ export type Database = {
           used_at?: string | null
         }
         Relationships: []
+      }
+      evidence_assets: {
+        Row: {
+          asset_type: string
+          case_id: string
+          checksum: string | null
+          created_at: string
+          created_by: string
+          file_path_or_url: string
+          id: string
+          public_visible: boolean
+          publication_permission: boolean
+          redaction_applied: boolean
+          source_date: string
+          source_name: string
+        }
+        Insert: {
+          asset_type: string
+          case_id: string
+          checksum?: string | null
+          created_at?: string
+          created_by: string
+          file_path_or_url: string
+          id?: string
+          public_visible?: boolean
+          publication_permission?: boolean
+          redaction_applied?: boolean
+          source_date: string
+          source_name: string
+        }
+        Update: {
+          asset_type?: string
+          case_id?: string
+          checksum?: string | null
+          created_at?: string
+          created_by?: string
+          file_path_or_url?: string
+          id?: string
+          public_visible?: boolean
+          publication_permission?: boolean
+          redaction_applied?: boolean
+          source_date?: string
+          source_name?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "evidence_assets_case_id_fkey"
+            columns: ["case_id"]
+            isOneToOne: false
+            referencedRelation: "case_studies"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "evidence_assets_case_id_fkey"
+            columns: ["case_id"]
+            isOneToOne: false
+            referencedRelation: "case_studies_public"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      metric_snapshots: {
+        Row: {
+          confidence_level: string
+          created_at: string
+          created_by: string
+          cutoff_date: string
+          evidence_asset_id: string | null
+          id: string
+          methodology_note: string
+          metric_id: string
+          numeric_value: number | null
+          period_end: string
+          period_start: string
+          permission_confirmed: boolean
+          previous_numeric_value: number | null
+          published_at: string | null
+          source_name: string
+          status: Database["public"]["Enums"]["snapshot_status"]
+          supersedes_snapshot_id: string | null
+          text_value: string | null
+          verified_at: string | null
+          verified_by: string | null
+        }
+        Insert: {
+          confidence_level: string
+          created_at?: string
+          created_by: string
+          cutoff_date: string
+          evidence_asset_id?: string | null
+          id?: string
+          methodology_note: string
+          metric_id: string
+          numeric_value?: number | null
+          period_end: string
+          period_start: string
+          permission_confirmed?: boolean
+          previous_numeric_value?: number | null
+          published_at?: string | null
+          source_name: string
+          status?: Database["public"]["Enums"]["snapshot_status"]
+          supersedes_snapshot_id?: string | null
+          text_value?: string | null
+          verified_at?: string | null
+          verified_by?: string | null
+        }
+        Update: {
+          confidence_level?: string
+          created_at?: string
+          created_by?: string
+          cutoff_date?: string
+          evidence_asset_id?: string | null
+          id?: string
+          methodology_note?: string
+          metric_id?: string
+          numeric_value?: number | null
+          period_end?: string
+          period_start?: string
+          permission_confirmed?: boolean
+          previous_numeric_value?: number | null
+          published_at?: string | null
+          source_name?: string
+          status?: Database["public"]["Enums"]["snapshot_status"]
+          supersedes_snapshot_id?: string | null
+          text_value?: string | null
+          verified_at?: string | null
+          verified_by?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "metric_snapshots_evidence_fk"
+            columns: ["evidence_asset_id"]
+            isOneToOne: false
+            referencedRelation: "evidence_assets"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "metric_snapshots_metric_id_fkey"
+            columns: ["metric_id"]
+            isOneToOne: false
+            referencedRelation: "case_metrics"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "metric_snapshots_supersedes_snapshot_id_fkey"
+            columns: ["supersedes_snapshot_id"]
+            isOneToOne: false
+            referencedRelation: "metric_snapshots"
+            referencedColumns: ["id"]
+          },
+        ]
       }
       newsletter_editions: {
         Row: {
@@ -352,6 +851,66 @@ export type Database = {
       }
     }
     Views: {
+      case_studies_public: {
+        Row: {
+          challenge: string | null
+          client_public_name: string | null
+          country: string | null
+          diagnosis: string | null
+          id: string | null
+          intervention: string | null
+          last_observation_at: string | null
+          learnings: string | null
+          limitations: string | null
+          published_at: string | null
+          result_highlights: Json | null
+          sector: string | null
+          service_keys: string[] | null
+          slug: string | null
+          started_at: string | null
+          summary: string | null
+          updated_at: string | null
+        }
+        Insert: {
+          challenge?: string | null
+          client_public_name?: string | null
+          country?: string | null
+          diagnosis?: string | null
+          id?: string | null
+          intervention?: string | null
+          last_observation_at?: string | null
+          learnings?: string | null
+          limitations?: string | null
+          published_at?: string | null
+          result_highlights?: Json | null
+          sector?: string | null
+          service_keys?: string[] | null
+          slug?: string | null
+          started_at?: string | null
+          summary?: string | null
+          updated_at?: string | null
+        }
+        Update: {
+          challenge?: string | null
+          client_public_name?: string | null
+          country?: string | null
+          diagnosis?: string | null
+          id?: string | null
+          intervention?: string | null
+          last_observation_at?: string | null
+          learnings?: string | null
+          limitations?: string | null
+          published_at?: string | null
+          result_highlights?: Json | null
+          sector?: string | null
+          service_keys?: string[] | null
+          slug?: string | null
+          started_at?: string | null
+          summary?: string | null
+          updated_at?: string | null
+        }
+        Relationships: []
+      }
       newsletter_editions_public: {
         Row: {
           created_at: string | null
@@ -436,6 +995,22 @@ export type Database = {
     }
     Enums: {
       app_role: "admin" | "user"
+      cms_role: "owner" | "editor" | "reviewer"
+      content_status:
+        | "draft"
+        | "in_review"
+        | "approved"
+        | "scheduled"
+        | "published"
+        | "archived"
+      metric_unit:
+        | "percentage"
+        | "number"
+        | "usd"
+        | "seconds"
+        | "position"
+        | "text"
+      snapshot_status: "draft" | "verified" | "published" | "superseded"
     }
     CompositeTypes: {
       [_ in never]: never
@@ -564,6 +1139,24 @@ export const Constants = {
   public: {
     Enums: {
       app_role: ["admin", "user"],
+      cms_role: ["owner", "editor", "reviewer"],
+      content_status: [
+        "draft",
+        "in_review",
+        "approved",
+        "scheduled",
+        "published",
+        "archived",
+      ],
+      metric_unit: [
+        "percentage",
+        "number",
+        "usd",
+        "seconds",
+        "position",
+        "text",
+      ],
+      snapshot_status: ["draft", "verified", "published", "superseded"],
     },
   },
 } as const
