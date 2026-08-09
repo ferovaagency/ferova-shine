@@ -101,7 +101,7 @@ const Footer = ({ currentLang, lang }: FooterProps) => {
   const d = t[locale] ?? t.es;
 
   return (
-    <footer className="border-t border-border/50 bg-card">
+    <footer className={`border-t border-border/50 bg-card ${locale === 'es' ? 'agency-footer' : ''}`}>
       <div className="container mx-auto px-4 py-12 md:px-6 md:py-16">
         <div className="grid grid-cols-2 gap-8 md:grid-cols-4 lg:grid-cols-5">
           <div className="col-span-2 md:col-span-4 lg:col-span-2">

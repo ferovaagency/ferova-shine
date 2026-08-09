@@ -31,7 +31,7 @@ export function WhatsAppButton({
 
   const base =
     placement === 'sticky'
-      ? 'fixed bottom-6 right-6 z-50 w-14 h-14 rounded-full shadow-lg flex items-center justify-center'
+      ? 'whatsapp-trigger fixed bottom-6 right-6 z-50 w-14 h-14 rounded-full shadow-lg flex items-center justify-center'
       : 'inline-flex items-center gap-2 px-5 py-3 rounded-xl font-medium transition-all hover:scale-[1.02]';
 
   return (

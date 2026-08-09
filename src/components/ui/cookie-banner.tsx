@@ -96,7 +96,7 @@ interface Props { lang?: 'es' | 'en' | 'pt'; }
 const T = {
   es: {
     title: 'Tu privacidad, en pocas palabras',
-    body: 'Las esenciales mantienen el sitio funcionando. Analítica y marketing permanecen apagados hasta que tú los autorices.',
+    body: 'Las opcionales permanecen apagadas hasta que tú las autorices.',
     accept: 'Aceptar todas',
     essential: 'Rechazar opcionales',
     configure: 'Configurar',
@@ -196,11 +196,11 @@ const CookieBanner = ({ lang = 'es' }: Props) => {
           animate={{ y: 0, opacity: 1 }}
           exit={{ y: 100, opacity: 0 }}
           transition={{ type: 'spring', damping: 22 }}
-          className="fixed bottom-4 left-4 right-4 md:left-6 md:right-auto md:max-w-md z-[90]"
+          className="cookie-consent-panel fixed bottom-4 left-4 right-4 md:left-6 md:right-auto md:max-w-md z-[90]"
         >
-          <div className="bg-card border border-border rounded-2xl shadow-2xl p-5">
+          <div className="bg-card border border-border rounded-2xl shadow-2xl p-4">
             <div className="flex items-start gap-3">
-              <div className="w-10 h-10 rounded-xl bg-gold/15 flex items-center justify-center shrink-0">
+              <div className="cookie-banner-icon w-10 h-10 rounded-xl bg-gold/15 flex items-center justify-center shrink-0">
                 <Cookie className="w-5 h-5 text-gold" />
               </div>
               <div className="flex-1 min-w-0">

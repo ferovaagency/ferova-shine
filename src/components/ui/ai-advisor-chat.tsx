@@ -227,10 +227,10 @@ const AiAdvisorChat = ({ lang = 'es' }: AiAdvisorChatProps) => {
       {/* Floating trigger — positioned above WhatsApp button on mobile, left side on desktop */}
       <button
         onClick={() => { const next = !open; setOpen(next); if (next) { trackAIChat('open'); trackEvent('ai_assistant_opened'); } }}
-        className={`fixed z-50 rounded-full shadow-2xl transition-all duration-300 hover:scale-110 group
+        className={`fera-trigger fixed z-50 rounded-full shadow-2xl transition-all duration-300 hover:scale-110 group
           ${open ? 'scale-0 opacity-0' : 'scale-100 opacity-100'}
-          bottom-24 right-6 lg:bottom-8 lg:left-6 lg:right-auto
-          w-14 h-14 lg:w-16 lg:h-16
+          bottom-24 right-6 lg:bottom-6 lg:right-24
+          w-14 h-14
           flex items-center justify-center`}
         style={{
           background: 'linear-gradient(135deg, hsl(45,86%,40%), hsl(45,86%,52%))',
@@ -243,23 +243,6 @@ const AiAdvisorChat = ({ lang = 'es' }: AiAdvisorChatProps) => {
       </button>
 
       {/* Badge label — big, visible, eye-catching on mobile and desktop */}
-      {!open && (
-        <button
-          onClick={() => { setOpen(true); trackAIChat('open'); trackEvent('ai_assistant_opened'); }}
-          className="fixed z-50 flex items-center gap-2 rounded-full px-4 py-2.5 shadow-xl text-sm font-bold text-white animate-pulse
-            bottom-[7rem] right-[5.5rem]
-            lg:bottom-12 lg:left-[6rem] lg:right-auto lg:px-5 lg:py-3 lg:text-base"
-          style={{
-            background: 'linear-gradient(135deg, hsl(45,86%,40%), hsl(45,86%,52%))',
-            boxShadow: '0 8px 24px hsla(45,86%,40%,0.45)',
-          }}
-          aria-label={txt.badge}
-        >
-          <Bot className="w-4 h-4 lg:w-5 lg:h-5" />
-          <span>{txt.badge}</span>
-        </button>
-      )}
-
       {/* Chat panel */}
       {open && (
         <div
@@ -321,9 +304,9 @@ const AiAdvisorChat = ({ lang = 'es' }: AiAdvisorChatProps) => {
             {loading && !messages[messages.length - 1]?.content && (
               <div className="flex justify-start">
                 <div className="bg-muted rounded-2xl rounded-bl-md px-4 py-3 flex gap-1">
-                  <span className="w-2 h-2 bg-muted-foreground/40 rounded-full animate-bounce [animation-delay:0ms]" />
-                  <span className="w-2 h-2 bg-muted-foreground/40 rounded-full animate-bounce [animation-delay:150ms]" />
-                  <span className="w-2 h-2 bg-muted-foreground/40 rounded-full animate-bounce [animation-delay:300ms]" />
+                  <span className="fera-loading-dot [animation-delay:0ms]" />
+                  <span className="fera-loading-dot [animation-delay:180ms]" />
+                  <span className="fera-loading-dot [animation-delay:360ms]" />
                 </div>
               </div>
             )}
