@@ -863,6 +863,7 @@ export type Database = {
           learnings: string | null
           limitations: string | null
           published_at: string | null
+          result_highlights: Json | null
           sector: string | null
           service_keys: string[] | null
           slug: string | null
@@ -881,6 +882,7 @@ export type Database = {
           learnings?: string | null
           limitations?: string | null
           published_at?: string | null
+          result_highlights?: Json | null
           sector?: string | null
           service_keys?: string[] | null
           slug?: string | null
@@ -899,6 +901,7 @@ export type Database = {
           learnings?: string | null
           limitations?: string | null
           published_at?: string | null
+          result_highlights?: Json | null
           sector?: string | null
           service_keys?: string[] | null
           slug?: string | null
