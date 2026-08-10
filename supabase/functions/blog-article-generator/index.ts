@@ -3,10 +3,12 @@ import { createClient } from "npm:@supabase/supabase-js@2";
 
 const corsHeaders = {
   "Access-Control-Allow-Origin": "*",
-  "Access-Control-Allow-Headers": "authorization, x-client-info, apikey, content-type, x-supabase-client-platform, x-supabase-client-platform-version, x-supabase-client-runtime, x-supabase-client-runtime-version",
+  "Access-Control-Allow-Headers":
+    "authorization, x-client-info, apikey, content-type, x-supabase-client-platform, x-supabase-client-platform-version, x-supabase-client-runtime, x-supabase-client-runtime-version",
 };
 
 type GeneratePayload = {
+  site?: "ferova";
   title?: string;
   keyword?: string;
   category?: string;
@@ -16,6 +18,7 @@ type GeneratePayload = {
 };
 
 type GenerateCasePayload = {
+  site?: "ferova";
   title?: string;
   sector?: string;
   country?: string;
@@ -27,6 +30,7 @@ type GenerateCasePayload = {
 };
 
 type GenerateNewsletterPayload = {
+  site?: "ferova";
   editionNumber?: number;
   title?: string;
   subjectLine?: string;
@@ -41,7 +45,8 @@ const jsonResponse = (body: unknown, status = 200) =>
     headers: { ...corsHeaders, "Content-Type": "application/json" },
   });
 
-const safeString = (value: unknown) => (typeof value === "string" ? value.trim() : "");
+const safeString = (value: unknown) =>
+  typeof value === "string" ? value.trim() : "";
 
 const slugify = (value: string) =>
   value
@@ -53,7 +58,11 @@ const slugify = (value: string) =>
     .replace(/-{2,}/g, "-")
     .slice(0, 80);
 
-const stripHtml = (value: string) => value.replace(/<[^>]*>/g, " ").replace(/\s+/g, " ").trim();
+const stripHtml = (value: string) =>
+  value
+    .replace(/<[^>]*>/g, " ")
+    .replace(/\s+/g, " ")
+    .trim();
 
 const truncate = (value: string, max: number) => {
   if (value.length <= max) return value;
@@ -199,16 +208,28 @@ Incluir 2-4 enlaces internos hacia páginas vigentes y relevantes del sitio:
 10. ACTUALIDAD: si el tema es sensible a fechas (tendencias, herramientas, regulaciones), menciona explícitamente el año actual y aclara que el lector debe verificar cambios recientes.
 `;
 
-const buildSystemPrompt = (lang: "es" | "en" | "pt") => {
-  const langNote = lang === "en"
-    ? "Write the article entirely in English."
-    : lang === "pt"
-    ? "Escreva o artigo inteiramente em português brasileiro."
-    : "Escribe el artículo enteramente en español.";
+const FEROVA_PRODUCT_CONTEXT = `
+CONTEXTO EXCLUSIVO DE FEROVA.COM.CO:
+- Ferova diseña productos, automatizaciones, integraciones y software a medida para conectar información, procesos y decisiones.
+- Ferova One es el producto principal y está en construcción activa. Librero IA está en definición. Ferova Brain es infraestructura interna, no un producto vendible.
+- Audiencia: freelancers, consultores, agencias y pequeñas empresas que quieren operar con más estructura, claridad y control.
+- No presentes a Ferova como una agencia SEO ni enlaces servicios de SEO para agencias.
+- Enlaces internos permitidos: /productos/ferova-one, /productos/librero-ia, /soluciones/sistemas-a-medida, /soluciones/automatizacion-ia, /recursos, /casos-de-exito, /contacto.
+- No inventes disponibilidad, clientes, métricas, integraciones, capacidades o fechas. Distingue claramente lo disponible, lo que está en construcción y lo que está en definición.
+`;
+
+const buildSystemPrompt = (lang: "es" | "en" | "pt", site?: "ferova") => {
+  const langNote =
+    lang === "en"
+      ? "Write the article entirely in English."
+      : lang === "pt"
+        ? "Escreva o artigo inteiramente em português brasileiro."
+        : "Escribe el artículo enteramente en español.";
 
   return `Eres el editor SEO senior de Ferova Agency. Devuelve SOLO JSON válido, sin markdown, sin comentarios y sin texto extra.
 
 ${GUIA_EDITORIAL}
+${site === "ferova" ? FEROVA_PRODUCT_CONTEXT : ""}
 
 ${langNote}
 
@@ -279,7 +300,18 @@ ${ideas || "Sin ideas específicas proporcionadas."}
 OBLIGATORIO: Responde las 3 preguntas obligatorias ANTES de escribir. Sigue la Guía Editorial Ferova 2025 estrictamente. Comienza con una afirmación (Sujeto+Verbo+Predicado). Incluye enlaces internos. Genera entre 800-1200 palabras. Valida: "¿Este contenido realmente ayuda a una empresa a tomar mejores decisiones digitales?"`;
 };
 
-const buildCaseSystemPrompt = () => `Eres el editor senior de casos de éxito de SEO Para Agencias by Ferova. Devuelve SOLO JSON válido.
+const buildCaseSystemPrompt = (site?: "ferova") =>
+  site === "ferova"
+    ? `Eres el editor senior de casos de Ferova. Devuelve SOLO JSON válido.
+
+${FEROVA_PRODUCT_CONTEXT}
+Redacta un caso verificable sobre un sistema, producto, automatización o integración. Usa únicamente los hechos aportados. No inventes cifras, clientes, fechas ni atribución causal. Si falta evidencia, explica la limitación. El caso debe dejar claro el problema operativo, el diseño del sistema, la intervención y el aprendizaje.
+
+JSON esperado:
+{
+  "slug": "", "client_public_name": "", "sector": "", "country": "", "summary": "", "challenge": "", "diagnosis": "", "intervention": "", "learnings": "", "limitations": "", "service_keys": [], "result_highlights": []
+}`
+    : `Eres el editor senior de casos de éxito de SEO Para Agencias by Ferova. Devuelve SOLO JSON válido.
 
 Usa como principios obligatorios de calidad la GUÍA EDITORIAL FEROVA: lenguaje directo, profesional y específico; contexto antes que promoción; términos técnicos explicados; utilidad real; estructura lógica; cero relleno; cero clickbait; cero promesas; cero cifras, clientes, fechas, fuentes o resultados inventados.
 
@@ -301,7 +333,9 @@ JSON esperado:
   "result_highlights": [{ "label": "", "value": "", "context": "" }]
 }`;
 
-const buildCaseUserPrompt = (payload: GenerateCasePayload) => `Convierte estos datos en un caso editable y verificable:
+const buildCaseUserPrompt = (
+  payload: GenerateCasePayload,
+) => `Convierte estos datos en un caso editable y verificable:
 - título o cliente público: ${safeString(payload.title) || "Cliente confidencial"}
 - sector: ${safeString(payload.sector)}
 - país: ${safeString(payload.country)}
@@ -313,7 +347,20 @@ const buildCaseUserPrompt = (payload: GenerateCasePayload) => `Convierte estos d
 
 Conserva todas las cifras exactamente como fueron aportadas. No publiques nombres si se indicó confidencialidad. El resumen debe explicar la necesidad de la agencia, la capacidad contratada y la entrega.`;
 
-const buildNewsletterSystemPrompt = () => `Eres la editora senior de la newsletter de SEO Para Agencias by Ferova. Devuelve SOLO JSON válido.
+const buildNewsletterSystemPrompt = (site?: "ferova") =>
+  site === "ferova"
+    ? `Eres la editora senior de la newsletter de Ferova. Devuelve SOLO JSON válido.
+
+${FEROVA_PRODUCT_CONTEXT}
+Convierte los insumos en una edición útil sobre sistemas, automatización, IA aplicada u operación. Una idea concreta por bloque, educación antes que venta y cero noticias, enlaces, cifras o herramientas inventadas.
+
+JSON esperado:
+{
+  "title": "", "subject_line": "", "topics": [""], "reading_time": 5,
+  "free_content": { "news": "", "tip": "", "tool": { "name": "", "desc": "", "url": "" } },
+  "pro_content": {}
+}`
+    : `Eres la editora senior de la newsletter de SEO Para Agencias by Ferova. Devuelve SOLO JSON válido.
 
 Aplica la GUÍA EDITORIAL FEROVA: una idea útil y concreta por bloque; tono conversado, senior y profesional; educación antes que venta; términos técnicos con contexto; nada de relleno, clickbait, cifras o fuentes inventadas. El contenido debe ayudar a dueños de agencias a decidir, entregar o vender mejor servicios de SEO técnico, mantenimiento web, landings, migraciones y ecommerce.
 
@@ -327,7 +374,9 @@ JSON esperado:
   "pro_content": { "case_study": "", "analysis": "", "resource": { "name": "", "desc": "", "url": "" }, "question": "" }
 }`;
 
-const buildNewsletterUserPrompt = (payload: GenerateNewsletterPayload) => `Crea el borrador de la edición #${payload.editionNumber ?? ""} con estos datos:
+const buildNewsletterUserPrompt = (
+  payload: GenerateNewsletterPayload,
+) => `Crea el borrador de la edición #${payload.editionNumber ?? ""} con estos datos:
 - título base: ${safeString(payload.title)}
 - asunto base: ${safeString(payload.subjectLine)}
 - plan: ${payload.plan === "pro" ? "pro" : "gratis"}
@@ -336,21 +385,37 @@ const buildNewsletterUserPrompt = (payload: GenerateNewsletterPayload) => `Crea 
 
 No inventes noticias actuales, herramientas, enlaces, estudios o casos. Si no fueron aportados, deja esos campos vacíos. Para plan gratis devuelve pro_content como objeto vacío.`;
 
-const normalizeArticle = (raw: Record<string, unknown>, fallback: GeneratePayload) => {
+const normalizeArticle = (
+  raw: Record<string, unknown>,
+  fallback: GeneratePayload,
+) => {
   const title = safeString(raw.title) || safeString(fallback.title);
   const slug = slugify(safeString(raw.slug) || title);
   const content = safeString(raw.content);
   const excerpt = truncate(safeString(raw.excerpt) || stripHtml(content), 150);
   const metaTitle = truncate(safeString(raw.meta_title) || title, 60);
-  const metaDescription = truncate(safeString(raw.meta_description) || excerpt, 160);
+  const metaDescription = truncate(
+    safeString(raw.meta_description) || excerpt,
+    160,
+  );
   const category = safeString(raw.category) || safeString(fallback.category);
   const keyword = safeString(raw.keyword) || safeString(fallback.keyword);
 
-  if (!title || !slug || !content || !excerpt || !metaTitle || !metaDescription) {
+  if (
+    !title ||
+    !slug ||
+    !content ||
+    !excerpt ||
+    !metaTitle ||
+    !metaDescription
+  ) {
     throw new Error("El artículo generado está incompleto.");
   }
 
-  const schemaArticle = (raw.schema_article && typeof raw.schema_article === "object") ? raw.schema_article : null;
+  const schemaArticle =
+    raw.schema_article && typeof raw.schema_article === "object"
+      ? raw.schema_article
+      : null;
   const intencionBusqueda = safeString(raw.intencion_busqueda);
   const aportaOriginal = safeString(raw.aporta_original);
 
@@ -374,8 +439,13 @@ const normalizeArticle = (raw: Record<string, unknown>, fallback: GeneratePayloa
   };
 };
 
-const getUniqueSlug = async (adminClient: ReturnType<typeof createClient>, baseSlug: string, excludeId?: string) => {
-  const normalizedBase = slugify(baseSlug) || `articulo-${crypto.randomUUID().slice(0, 8)}`;
+const getUniqueSlug = async (
+  adminClient: ReturnType<typeof createClient>,
+  baseSlug: string,
+  excludeId?: string,
+) => {
+  const normalizedBase =
+    slugify(baseSlug) || `articulo-${crypto.randomUUID().slice(0, 8)}`;
   let candidate = normalizedBase;
   let suffix = 1;
 
@@ -383,7 +453,7 @@ const getUniqueSlug = async (adminClient: ReturnType<typeof createClient>, baseS
     let query = adminClient
       .from("blog_posts")
       .select("slug")
-      .eq("slug", candidate)
+      .eq("slug", candidate);
     if (excludeId) query = query.neq("id", excludeId);
     const { data, error } = await query.maybeSingle();
 
@@ -406,7 +476,12 @@ serve(async (req) => {
     const SUPABASE_ANON_KEY = Deno.env.get("SUPABASE_ANON_KEY");
     const SUPABASE_SERVICE_ROLE_KEY = Deno.env.get("SUPABASE_SERVICE_ROLE_KEY");
 
-    if (!LOVABLE_API_KEY || !SUPABASE_URL || !SUPABASE_SERVICE_ROLE_KEY || !SUPABASE_ANON_KEY) {
+    if (
+      !LOVABLE_API_KEY ||
+      !SUPABASE_URL ||
+      !SUPABASE_SERVICE_ROLE_KEY ||
+      !SUPABASE_ANON_KEY
+    ) {
       throw new Error("Faltan secretos requeridos para el generador.");
     }
 
@@ -424,48 +499,75 @@ serve(async (req) => {
     if (userErr || !userData?.user) {
       return jsonResponse({ error: "Unauthorized" }, 401);
     }
+    const body = await req.json();
+    const action = safeString(body?.action);
+    const requestedSite =
+      body?.payload?.site === "ferova"
+        ? "ferova.com.co"
+        : body?.payload?.lang === "en"
+          ? "seoforecommerces.co"
+          : "seoparaecommerce.co";
     const adminClient = createClient(SUPABASE_URL, SUPABASE_SERVICE_ROLE_KEY);
-    const [{ data: roles }, { data: cmsRoles }] = await Promise.all([
-      adminClient.from("user_roles").select("role").eq("user_id", userData.user.id),
-      adminClient.from("cms_user_roles").select("role").eq("user_id", userData.user.id),
+    const [{ data: roles }, { data: siteAccess }] = await Promise.all([
+      adminClient
+        .from("user_roles")
+        .select("role")
+        .eq("user_id", userData.user.id),
+      adminClient
+        .from("cms_site_access")
+        .select("role")
+        .eq("user_id", userData.user.id)
+        .eq("site_origin", requestedSite),
     ]);
-    const legacyAdmin = roles?.some((r: { role: string }) => r.role === "admin");
-    const cmsEditor = cmsRoles?.some((r: { role: string }) => r.role === "owner" || r.role === "editor");
+    const legacyAdmin = roles?.some(
+      (r: { role: string }) => r.role === "admin",
+    );
+    const cmsEditor = siteAccess?.some(
+      (r: { role: string }) => r.role === "owner" || r.role === "editor",
+    );
     if (!legacyAdmin && !cmsEditor) {
       return jsonResponse({ error: "Forbidden" }, 403);
     }
-
-    const body = await req.json();
-    const action = safeString(body?.action);
-
-
     if (action === "generate") {
       const payload = (body?.payload ?? {}) as GeneratePayload;
-      const lang = (payload.lang === "en" || payload.lang === "pt") ? payload.lang : "es";
+      const lang =
+        payload.lang === "en" || payload.lang === "pt" ? payload.lang : "es";
 
       if (!safeString(payload.title) || !safeString(payload.keyword)) {
-        return jsonResponse({ error: "Título y keyword son obligatorios." }, 400);
+        return jsonResponse(
+          { error: "Título y keyword son obligatorios." },
+          400,
+        );
       }
 
-      const modelResponse = await fetch("https://ai.gateway.lovable.dev/v1/chat/completions", {
-        method: "POST",
-        headers: {
-          Authorization: `Bearer ${LOVABLE_API_KEY}`,
-          "Content-Type": "application/json",
+      const modelResponse = await fetch(
+        "https://ai.gateway.lovable.dev/v1/chat/completions",
+        {
+          method: "POST",
+          headers: {
+            Authorization: `Bearer ${LOVABLE_API_KEY}`,
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            model: "google/gemini-2.5-flash",
+            temperature: 0.7,
+            messages: [
+              {
+                role: "system",
+                content: buildSystemPrompt(lang, payload.site),
+              },
+              { role: "user", content: buildUserPrompt(payload) },
+            ],
+          }),
         },
-        body: JSON.stringify({
-          model: "google/gemini-2.5-flash",
-          temperature: 0.7,
-          messages: [
-            { role: "system", content: buildSystemPrompt(lang) },
-            { role: "user", content: buildUserPrompt(payload) },
-          ],
-        }),
-      });
+      );
 
       if (!modelResponse.ok) {
         if (modelResponse.status === 429) {
-          return jsonResponse({ error: "Rate limit exceeded. Try again later." }, 429);
+          return jsonResponse(
+            { error: "Rate limit exceeded. Try again later." },
+            429,
+          );
         }
         if (modelResponse.status === 402) {
           return jsonResponse({ error: "AI credits exhausted." }, 402);
@@ -478,7 +580,11 @@ serve(async (req) => {
       const rawContent = safeString(modelJson?.choices?.[0]?.message?.content);
       const parsed = extractJson(rawContent) as Record<string, unknown>;
       const article = normalizeArticle(parsed, payload);
-      article.slug = await getUniqueSlug(adminClient, article.slug, safeString(payload.excludeId) || undefined);
+      article.slug = await getUniqueSlug(
+        adminClient,
+        article.slug,
+        safeString(payload.excludeId) || undefined,
+      );
 
       const { validation_pass, validation_reason, ...articleData } = article;
 
@@ -490,30 +596,107 @@ serve(async (req) => {
 
     if (action === "generate_case") {
       const payload = (body?.payload ?? {}) as GenerateCasePayload;
-      if (!safeString(payload.facts) && !safeString(payload.challenge) && !safeString(payload.intervention)) return jsonResponse({ error: "Agrega hechos, reto o intervención antes de generar." }, 400);
-      const modelResponse = await fetch("https://ai.gateway.lovable.dev/v1/chat/completions", { method: "POST", headers: { Authorization: `Bearer ${LOVABLE_API_KEY}`, "Content-Type": "application/json" }, body: JSON.stringify({ model: "google/gemini-2.5-flash", temperature: 0.45, messages: [{ role: "system", content: buildCaseSystemPrompt() }, { role: "user", content: buildCaseUserPrompt(payload) }] }) });
-      if (!modelResponse.ok) return jsonResponse({ error: modelResponse.status === 429 ? "Límite temporal del generador. Intenta de nuevo en unos minutos." : "No fue posible generar el caso." }, modelResponse.status === 429 ? 429 : 500);
+      if (
+        !safeString(payload.facts) &&
+        !safeString(payload.challenge) &&
+        !safeString(payload.intervention)
+      )
+        return jsonResponse(
+          { error: "Agrega hechos, reto o intervención antes de generar." },
+          400,
+        );
+      const modelResponse = await fetch(
+        "https://ai.gateway.lovable.dev/v1/chat/completions",
+        {
+          method: "POST",
+          headers: {
+            Authorization: `Bearer ${LOVABLE_API_KEY}`,
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            model: "google/gemini-2.5-flash",
+            temperature: 0.45,
+            messages: [
+              { role: "system", content: buildCaseSystemPrompt(payload.site) },
+              { role: "user", content: buildCaseUserPrompt(payload) },
+            ],
+          }),
+        },
+      );
+      if (!modelResponse.ok)
+        return jsonResponse(
+          {
+            error:
+              modelResponse.status === 429
+                ? "Límite temporal del generador. Intenta de nuevo en unos minutos."
+                : "No fue posible generar el caso.",
+          },
+          modelResponse.status === 429 ? 429 : 500,
+        );
       const modelJson = await modelResponse.json();
-      const generated = extractJson(safeString(modelJson?.choices?.[0]?.message?.content)) as Record<string, unknown>;
+      const generated = extractJson(
+        safeString(modelJson?.choices?.[0]?.message?.content),
+      ) as Record<string, unknown>;
       return jsonResponse({ case_study: generated });
     }
 
     if (action === "generate_newsletter") {
       const payload = (body?.payload ?? {}) as GenerateNewsletterPayload;
-      if (!safeString(payload.title) || !safeString(payload.ideas)) return jsonResponse({ error: "Agrega un título y la información base de la edición." }, 400);
-      const modelResponse = await fetch("https://ai.gateway.lovable.dev/v1/chat/completions", { method: "POST", headers: { Authorization: `Bearer ${LOVABLE_API_KEY}`, "Content-Type": "application/json" }, body: JSON.stringify({ model: "google/gemini-2.5-flash", temperature: 0.55, messages: [{ role: "system", content: buildNewsletterSystemPrompt() }, { role: "user", content: buildNewsletterUserPrompt(payload) }] }) });
-      if (!modelResponse.ok) return jsonResponse({ error: modelResponse.status === 429 ? "Límite temporal del generador. Intenta de nuevo en unos minutos." : "No fue posible generar la edición." }, modelResponse.status === 429 ? 429 : 500);
+      if (!safeString(payload.title) || !safeString(payload.ideas))
+        return jsonResponse(
+          { error: "Agrega un título y la información base de la edición." },
+          400,
+        );
+      const modelResponse = await fetch(
+        "https://ai.gateway.lovable.dev/v1/chat/completions",
+        {
+          method: "POST",
+          headers: {
+            Authorization: `Bearer ${LOVABLE_API_KEY}`,
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            model: "google/gemini-2.5-flash",
+            temperature: 0.55,
+            messages: [
+              {
+                role: "system",
+                content: buildNewsletterSystemPrompt(payload.site),
+              },
+              { role: "user", content: buildNewsletterUserPrompt(payload) },
+            ],
+          }),
+        },
+      );
+      if (!modelResponse.ok)
+        return jsonResponse(
+          {
+            error:
+              modelResponse.status === 429
+                ? "Límite temporal del generador. Intenta de nuevo en unos minutos."
+                : "No fue posible generar la edición.",
+          },
+          modelResponse.status === 429 ? 429 : 500,
+        );
       const modelJson = await modelResponse.json();
-      const generated = extractJson(safeString(modelJson?.choices?.[0]?.message?.content)) as Record<string, unknown>;
+      const generated = extractJson(
+        safeString(modelJson?.choices?.[0]?.message?.content),
+      ) as Record<string, unknown>;
       return jsonResponse({ newsletter: generated });
     }
 
     if (action === "save") {
       const raw = (body?.payload?.article ?? {}) as Record<string, unknown>;
       const title = safeString(raw.title);
-      const slug = await getUniqueSlug(adminClient, safeString(raw.slug) || title);
+      const slug = await getUniqueSlug(
+        adminClient,
+        safeString(raw.slug) || title,
+      );
       let content = safeString(raw.content);
-      const excerpt = truncate(safeString(raw.excerpt) || stripHtml(content), 150);
+      const excerpt = truncate(
+        safeString(raw.excerpt) || stripHtml(content),
+        150,
+      );
 
       if (!title || !slug || !content) {
         return jsonResponse({ error: "Artículo incompleto." }, 400);
@@ -530,18 +713,32 @@ serve(async (req) => {
           let linksAdded = 0;
           for (const post of existingPosts) {
             if (linksAdded >= 3) break;
-            const linkedPost = post as { keyword?: unknown; title?: unknown; slug?: unknown };
-            const anchorRaw = safeString(linkedPost.keyword) || safeString(linkedPost.title);
+            const linkedPost = post as {
+              keyword?: unknown;
+              title?: unknown;
+              slug?: unknown;
+            };
+            const anchorRaw =
+              safeString(linkedPost.keyword) || safeString(linkedPost.title);
             if (!anchorRaw || anchorRaw.length < 4) continue;
             // Escape regex chars and match whole word, case-insensitive, only in paragraphs (avoid headings/existing links)
             const escaped = anchorRaw.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
-            const regex = new RegExp(`(<p[^>]*>(?:(?!</p>).)*?)\\b(${escaped})\\b((?:(?!</p>).)*?</p>)`, "i");
+            const regex = new RegExp(
+              `(<p[^>]*>(?:(?!</p>).)*?)\\b(${escaped})\\b((?:(?!</p>).)*?</p>)`,
+              "i",
+            );
             // Skip if already linked
-            const linkCheck = new RegExp(`<a[^>]*>[^<]*${escaped}[^<]*</a>`, "i");
+            const linkCheck = new RegExp(
+              `<a[^>]*>[^<]*${escaped}[^<]*</a>`,
+              "i",
+            );
             if (linkCheck.test(content)) continue;
             if (regex.test(content)) {
               const href = `/blog/${safeString(linkedPost.slug)}`;
-              content = content.replace(regex, `$1<a href="${href}" class="text-gold underline hover:opacity-80">$2</a>$3`);
+              content = content.replace(
+                regex,
+                `$1<a href="${href}" class="text-gold underline hover:opacity-80">$2</a>$3`,
+              );
               linksAdded++;
             }
           }
@@ -550,7 +747,8 @@ serve(async (req) => {
         console.warn("internal-links injection skipped:", linkErr);
       }
 
-      const publishedAt = safeString(raw.published_at) || new Date().toISOString();
+      const publishedAt =
+        safeString(raw.published_at) || new Date().toISOString();
 
       const { data, error } = await adminClient
         .from("blog_posts")
@@ -565,7 +763,10 @@ serve(async (req) => {
           category: safeString(raw.category) || null,
           keyword: safeString(raw.keyword) || null,
           meta_title: truncate(safeString(raw.meta_title) || title, 60),
-          meta_description: truncate(safeString(raw.meta_description) || excerpt, 160),
+          meta_description: truncate(
+            safeString(raw.meta_description) || excerpt,
+            160,
+          ),
           published_at: publishedAt,
         })
         .select("id, slug, title")
