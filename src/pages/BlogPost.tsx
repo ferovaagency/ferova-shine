@@ -20,7 +20,7 @@ interface PostData {
   meta_description: string | null;
 }
 
-const staticPosts: Record<string, Record<string, { title: string; author: string; date: string; readTime: string; category: string; content: string[] }>> = {
+const staticPosts: Record<string, Record<string, { title: string; seoTitle?: string; author: string; date: string; readTime: string; category: string; content: string[] }>> = {
   es: {
     'seo-ecommerce-guia-completa-2025': {
       title: 'SEO para E-commerce: Guía Completa 2025',
@@ -36,6 +36,7 @@ const staticPosts: Record<string, Record<string, { title: string; author: string
     },
     'web-apps-vs-wordpress-ecommerce': {
       title: 'Web Apps vs WordPress: ¿Cuál es mejor para tu E-commerce?',
+      seoTitle: 'Web Apps vs WordPress para E-commerce — Ferova',
       author: 'Ferova Agency', date: '10 Mar 2025', readTime: '8 min', category: 'Web Development',
       content: [
         'La elección de la plataforma correcta puede hacer o deshacer tu negocio online. En este artículo comparamos las Web Apps modernas con WordPress tradicional.',
@@ -47,6 +48,7 @@ const staticPosts: Record<string, Record<string, { title: string; author: string
     },
     'core-web-vitals-ecommerce': {
       title: 'Core Web Vitals: Cómo mejorarlos en tu tienda online',
+      seoTitle: 'Core Web Vitals para tu tienda online — Ferova',
       author: 'Ferova Agency', date: '5 Mar 2025', readTime: '10 min', category: 'Performance',
       content: [
         'Los Core Web Vitals son métricas de experiencia de usuario que Google utiliza como factor de ranking.',
@@ -71,6 +73,7 @@ const staticPosts: Record<string, Record<string, { title: string; author: string
     },
     'web-apps-vs-wordpress-ecommerce': {
       title: 'Web Apps vs WordPress: Which is better for your E-commerce?',
+      seoTitle: 'Web Apps vs WordPress for E-commerce — Ferova',
       author: 'Ferova Agency', date: 'Mar 10, 2025', readTime: '8 min', category: 'Web Development',
       content: [
         'Choosing the right platform can make or break your online business.',
@@ -80,6 +83,7 @@ const staticPosts: Record<string, Record<string, { title: string; author: string
     },
     'core-web-vitals-ecommerce': {
       title: 'Core Web Vitals: How to improve them in your online store',
+      seoTitle: 'Core Web Vitals for your online store — Ferova',
       author: 'Ferova Agency', date: 'Mar 5, 2025', readTime: '10 min', category: 'Performance',
       content: [
         'Core Web Vitals are user experience metrics that Google uses as a ranking factor.',
@@ -204,7 +208,7 @@ const BlogPost = ({ lang = 'es' }: Props) => {
     };
     return (
       <>
-        <SEO title={`${staticPost.title} — Ferova Agency`} description={staticPost.content[0]?.slice(0, 155) || staticPost.title} path={postPath} lang={lang} type="article" jsonLd={articleLd} />
+        <SEO title={staticPost.seoTitle || `${staticPost.title} — Ferova Agency`} description={staticPost.content[0]?.slice(0, 155) || staticPost.title} path={postPath} lang={lang} type="article" jsonLd={articleLd} />
         <Header currentLang={lang} />
         <main className="pt-20">
           <article className="py-8 md:py-12">
@@ -257,7 +261,17 @@ const BlogPost = ({ lang = 'es' }: Props) => {
   );
 
   const postPath = `${blogBase}/${slug}`;
-  const seoTitle = post.meta_title || `${post.title} — Ferova Agency`;
+  // Mantiene el título entre 30 y 60 caracteres, incluyendo la marca
+  const buildSeoTitle = (raw: string) => {
+    const brand = ' — Ferova Agency';
+    const full = `${raw}${brand}`;
+    if (full.length <= 60) return full;
+    const short = ' — Ferova';
+    const max = 60 - short.length;
+    const trimmed = raw.length <= max ? raw : `${raw.slice(0, max - 1).replace(/[\s,;:–-]+$/, '')}…`;
+    return `${trimmed}${short}`;
+  };
+  const seoTitle = post.meta_title || buildSeoTitle(post.title);
   const seoDesc = post.meta_description || post.content.replace(/<[^>]*>/g, ' ').slice(0, 155);
   const articleLd = {
     '@context': 'https://schema.org', '@type': 'Article',
