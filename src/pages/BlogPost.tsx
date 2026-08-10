@@ -83,6 +83,7 @@ const staticPosts: Record<string, Record<string, { title: string; seoTitle?: str
     },
     'core-web-vitals-ecommerce': {
       title: 'Core Web Vitals: How to improve them in your online store',
+      seoTitle: 'Core Web Vitals for your online store — Ferova',
       author: 'Ferova Agency', date: 'Mar 5, 2025', readTime: '10 min', category: 'Performance',
       content: [
         'Core Web Vitals are user experience metrics that Google uses as a ranking factor.',
