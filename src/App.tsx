@@ -39,6 +39,7 @@ import SobreNosotros from "./pages/SobreNosotros";
 import NewsletterPro from "./pages/NewsletterPro";
 import AdminBlogList from "./pages/admin/AdminBlogList";
 import AdminBlogEditor from "./pages/admin/AdminBlogEditor";
+import AdminDashboard from "./pages/admin/AdminDashboard";
 import VCard from "./pages/VCard";
 import NewsletterPage from "./pages/NewsletterPage";
 import NewsletterArchivePage from "./pages/NewsletterArchivePage";
@@ -162,8 +163,8 @@ const AppRoutes = ({ hostLang }: { hostLang: "es" | "en" | "pt" }) => (
     <Route path="/contact" element={<Contacto lang={hostLang} />} />
     <Route path="/blog" element={<SeoBlog />} />
     <Route path="/blog/:slug" element={<BlogPost lang={hostLang} />} />
-    {/* Panel admin unificado (Ferova Admin). /admin abre la bandeja de leads. */}
-    <Route path="/admin" element={<Navigate replace to="/admin/leads" />} />
+    {/* Panel admin unificado (Ferova Admin). */}
+    <Route path="/admin" element={<AdminGuard><AdminDashboard /></AdminGuard>} />
     <Route path="/admin/leads" element={<AdminGuard><AdminLeads /></AdminGuard>} />
     <Route path="/admin/casos" element={<AdminGuard><AdminCases /></AdminGuard>} />
     <Route path="/admin/casos/nuevo" element={<AdminGuard><AdminCaseEditor /></AdminGuard>} />
@@ -171,6 +172,7 @@ const AppRoutes = ({ hostLang }: { hostLang: "es" | "en" | "pt" }) => (
     <Route path="/admin/blog" element={<AdminGuard><AdminBlogList /></AdminGuard>} />
     <Route path="/admin/blog/nuevo" element={<AdminGuard><AdminBlogEditor /></AdminGuard>} />
     <Route path="/admin/blog/:id/editar" element={<AdminGuard><AdminBlogEditor /></AdminGuard>} />
+    <Route path="/admin/newsletter" element={<AdminGuard><NewsletterAdminPage /></AdminGuard>} />
     <Route path="/recursos" element={<SeoResources />} />
     <Route path="/resources" element={<Recursos lang={hostLang} />} />
     <Route path="/nosotros" element={<SobreNosotros lang={hostLang} />} />
@@ -226,7 +228,7 @@ const AppRoutes = ({ hostLang }: { hostLang: "es" | "en" | "pt" }) => (
     <Route path="/newsletter" element={<NewsletterPage lang={hostLang} />} />
     <Route path="/newsletter/archivo" element={<NewsletterArchivePage lang={hostLang} />} />
     <Route path="/newsletter/edicion/:slug" element={<NewsletterEditionPage lang={hostLang} />} />
-    <Route path="/newsletter/admin" element={<AdminGuard><NewsletterAdminPage /></AdminGuard>} />
+    <Route path="/newsletter/admin" element={<Navigate replace to="/admin/newsletter" />} />
     <Route path="/newsletter-pro" element={<NewsletterPro lang={hostLang} />} />
     <Route path="/en/newsletter-pro" element={<NewsletterPro lang="en" />} />
     <Route path="/pt/newsletter-pro" element={<NewsletterPro lang="pt" />} />

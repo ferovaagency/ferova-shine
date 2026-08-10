@@ -3,6 +3,7 @@ import { Bot, X, Send, Sparkles, ArrowDown } from 'lucide-react';
 import ReactMarkdown from 'react-markdown';
 import { useAnalytics } from '@/hooks/useAnalytics';
 import { trackEvent } from '@/lib/analytics';
+import { logLead } from '@/lib/adminInbox';
 
 type Msg = { role: 'user' | 'assistant'; content: string };
 
@@ -66,15 +67,19 @@ const AiAdvisorChat = ({ lang = 'es' }: AiAdvisorChatProps) => {
   const [showScroll, setShowScroll] = useState(false);
   const scrollRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLTextAreaElement>(null);
+  const contactRef = useRef<{ email?: string; phone?: string } | null>(null);
+  const leadLoggedRef = useRef(false);
 
   useEffect(() => {
-    const openQuote = () => {
+    const openQuote = (event: Event) => {
+      const prompt = (event as CustomEvent<{ prompt?: string }>).detail?.prompt?.trim();
       setOpen(true);
+      if (prompt) setInput(prompt);
       trackAIChat('open');
       trackEvent('ai_quote_assistant_opened', { source: 'page_cta' });
     };
-    window.addEventListener('open-fera-quote', openQuote);
-    return () => window.removeEventListener('open-fera-quote', openQuote);
+    window.addEventListener('open-fera-quote', openQuote as EventListener);
+    return () => window.removeEventListener('open-fera-quote', openQuote as EventListener);
   }, [trackAIChat]);
 
   // Auto-scroll
@@ -101,6 +106,18 @@ const AiAdvisorChat = ({ lang = 'es' }: AiAdvisorChatProps) => {
     trackEvent('ai_assistant_message_sent', { msg_number: messages.filter(m => m.role === 'user').length + 1 });
     const userMsg: Msg = { role: 'user', content: text.trim() };
     const newMessages = [...messages, userMsg];
+
+    const email = text.match(/[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}/i)?.[0];
+    const phone = text.match(/(?:\+?\d[\d\s().-]{7,}\d)/)?.[0];
+    if (email || phone) contactRef.current = { email, phone };
+    const consent = /\b(autorizo|acepto|doy mi autorizaci[oó]n|i authorize|i consent|yes,? i (?:authorize|consent))\b/i.test(text) || /^(s[ií]|yes)$/i.test(text.trim());
+    if (!leadLoggedRef.current && contactRef.current && consent) {
+      leadLoggedRef.current = true;
+      const scope = newMessages.filter((message) => message.role === 'user').slice(0, 10).map((message) => message.content)
+        .join(' · ').replace(/[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}/gi, '[contacto]').replace(/(?:\+?\d[\d\s().-]{7,}\d)/g, '[contacto]').slice(0, 500);
+      void logLead({ source: 'ai_advisor', email: contactRef.current.email, phone: contactRef.current.phone, summary: scope, payload: { language: lang, message_count: newMessages.length, page: window.location.pathname, consent: true } });
+      trackEvent('ai_quote_submitted', { lang, contact_method: contactRef.current.email ? 'email' : 'phone' });
+    }
     setMessages(newMessages);
     setInput('');
     setLoading(true);

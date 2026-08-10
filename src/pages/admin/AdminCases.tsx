@@ -1,6 +1,7 @@
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import { Link } from "react-router-dom";
-import { AlertCircle, ExternalLink, Loader2, Pencil, Plus, Trophy } from "lucide-react";
+import { AlertCircle, ExternalLink, Loader2, Pencil, Plus, RefreshCw, Search, Trash2, Trophy } from "lucide-react";
+import { toast } from "sonner";
 import AdminLayout from "@/components/admin/AdminLayout";
 import { caseCms, type CmsCaseStudy, type ContentStatus } from "@/integrations/supabase/cms-types";
 import { casesData } from "@/pages/CasosDeExito";
@@ -32,35 +33,41 @@ export default function AdminCases() {
   const [cases, setCases] = useState<CaseSummary[]>([]);
   const [loading, setLoading] = useState(true);
   const [migrationPending, setMigrationPending] = useState(false);
+  const [search, setSearch] = useState("");
+  const [workingId, setWorkingId] = useState<string | null>(null);
 
-  useEffect(() => {
-    let active = true;
-    const load = async () => {
+  const load = useCallback(async () => {
+      setLoading(true);
       const { data, error } = await caseCms
         .from("case_studies")
         .select("id,slug,status,client_public_name,sector,country,summary,updated_at")
         .order("updated_at", { ascending: false });
 
-      if (!active) return;
       if (error) {
         setMigrationPending(true);
       } else {
+        setMigrationPending(false);
         setCases(data ?? []);
       }
       setLoading(false);
-    };
-    void load();
-    return () => {
-      active = false;
-    };
   }, []);
+  useEffect(() => { void load(); }, [load]);
+  const visible = useMemo(() => cases.filter((item) => `${item.client_public_name} ${item.sector} ${item.country} ${item.slug}`.toLowerCase().includes(search.trim().toLowerCase())), [cases, search]);
+
+  const remove = async (item: CaseSummary) => {
+    if (!window.confirm(`¿Eliminar el caso “${item.client_public_name || item.slug}”? Esta acción no se puede deshacer.`)) return;
+    setWorkingId(item.id);
+    const { error } = await caseCms.from("case_studies").delete().eq("id", item.id);
+    if (error) toast.error(`No se pudo eliminar: ${error.message}`);
+    else { toast.success("Caso eliminado."); await load(); }
+    setWorkingId(null);
+  };
 
   return (
-    <AdminLayout title="Casos de éxito">
-      <div className="mb-6 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
-        <p className="max-w-2xl text-sm text-muted-foreground">
-          Administra casos verificables, su estado editorial y la evidencia que respalda cada resultado.
-        </p>
+    <AdminLayout title="Casos de éxito" description="Administra casos verificables, su estado editorial y la evidencia que respalda cada resultado.">
+      <div className="mb-5 flex flex-col gap-3 sm:flex-row sm:items-center">
+        <label className="relative min-w-0 flex-1"><Search className="pointer-events-none absolute left-3 top-2.5 h-4 w-4 text-muted-foreground" /><span className="sr-only">Buscar casos</span><input value={search} onChange={(event) => setSearch(event.target.value)} placeholder="Buscar cliente, sector, país o URL" className="w-full rounded-lg border border-border bg-background py-2 pl-9 pr-3 text-sm outline-none focus:border-primary/50" /></label>
+        <button onClick={() => void load()} aria-label="Actualizar" className="rounded-lg border border-border p-2 text-muted-foreground hover:text-foreground"><RefreshCw className="h-4 w-4" /></button>
         <Link
           to="/admin/casos/nuevo"
           className="inline-flex items-center justify-center gap-2 rounded-xl bg-primary px-4 py-2.5 text-sm font-medium text-primary-foreground transition-opacity hover:opacity-90"
@@ -85,7 +92,7 @@ export default function AdminCases() {
         <div className="flex justify-center py-16"><Loader2 className="h-6 w-6 animate-spin text-muted-foreground" /></div>
       ) : migrationPending ? (
         <StaticCasesFallback />
-      ) : cases.length === 0 ? (
+      ) : visible.length === 0 ? (
         <div className="glass-card px-6 py-14 text-center">
           <Trophy className="mx-auto mb-4 h-8 w-8 text-gold/70" />
           <h2 className="font-display text-xl font-semibold">Aún no hay casos en el CMS</h2>
@@ -106,7 +113,7 @@ export default function AdminCases() {
               </tr>
             </thead>
             <tbody>
-              {cases.map((item) => (
+              {visible.map((item) => (
                 <tr key={item.id} className="border-b border-border/40 hover:bg-accent/40">
                   <td className="px-4 py-3">
                     <div className="font-medium text-foreground">{item.client_public_name || "Cliente confidencial"}</div>
@@ -129,6 +136,7 @@ export default function AdminCases() {
                           <ExternalLink className="h-3.5 w-3.5" /> Ver
                         </Link>
                       )}
+                      <button title="Eliminar" aria-label={`Eliminar ${item.client_public_name || item.slug}`} disabled={workingId === item.id} onClick={() => void remove(item)} className="inline-flex items-center rounded-lg border border-border p-2 hover:border-destructive/40 hover:text-destructive disabled:opacity-50">{workingId === item.id ? <Loader2 className="h-3.5 w-3.5 animate-spin" /> : <Trash2 className="h-3.5 w-3.5" />}</button>
                     </div>
                   </td>
                 </tr>

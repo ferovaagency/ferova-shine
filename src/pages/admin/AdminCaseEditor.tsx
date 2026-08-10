@@ -1,6 +1,6 @@
 import { FormEvent, useEffect, useState } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
-import { AlertCircle, ArrowLeft, CheckCircle2, Loader2, Save, Send } from "lucide-react";
+import { AlertCircle, ArrowLeft, CheckCircle2, Loader2, Plus, Save, Send, Trash2 } from "lucide-react";
 import { toast } from "sonner";
 import AdminLayout from "@/components/admin/AdminLayout";
 import { supabase } from "@/integrations/supabase/client";
@@ -72,6 +72,9 @@ export default function AdminCaseEditor() {
   }, [id]);
 
   const update = <K extends keyof FormState>(key: K, value: FormState[K]) => setForm((current) => ({ ...current, [key]: value }));
+  const updateResult = (index: number, key: keyof CaseResultHighlight, value: string) => update("result_highlights", form.result_highlights.map((item, itemIndex) => itemIndex === index ? { ...item, [key]: value } : item));
+  const addResult = () => update("result_highlights", [...form.result_highlights, { label: "", value: "", context: "" }]);
+  const removeResult = (index: number) => update("result_highlights", form.result_highlights.filter((_, itemIndex) => itemIndex !== index));
 
   const save = async (nextStatus: "draft" | "in_review") => {
     if (!form.slug.trim() || !form.sector.trim() || !form.summary.trim()) {
@@ -175,9 +178,11 @@ export default function AdminCaseEditor() {
           </section>
 
           <section className="glass-card p-5 sm:p-6">
-            <h2 className="font-display text-lg font-semibold">Resultados publicados</h2>
-            <p className="mt-2 text-sm text-muted-foreground">Un resultado por línea, en formato: indicador | valor | contexto.</p>
-            <textarea rows={7} className={`${fieldClass} font-mono`} value={form.result_highlights.map((item) => `${item.label} | ${item.value} | ${item.context ?? ""}`).join("\n")} onChange={(e) => update("result_highlights", e.target.value.split("\n").filter(Boolean).map((line): CaseResultHighlight => { const [label = "", value = "", context = ""] = line.split("|").map((part) => part.trim()); return { label, value, context }; }).filter((item) => item.label && item.value))} placeholder="Tráfico orgánico | +48 % | Comparación interanual\nErrores críticos | 0 | Tras la migración" />
+            <div className="flex items-center justify-between gap-4"><div><h2 className="font-display text-lg font-semibold">Resultados publicados</h2><p className="mt-1 text-sm text-muted-foreground">Añade solo métricas que puedas respaldar.</p></div><button type="button" onClick={addResult} className="inline-flex shrink-0 items-center gap-2 rounded-lg border border-border px-3 py-2 text-sm hover:border-primary/40"><Plus className="h-4 w-4" /> Añadir</button></div>
+            <div className="mt-5 space-y-3">
+              {form.result_highlights.length === 0 && <div className="rounded-xl border border-dashed border-border p-6 text-center text-sm text-muted-foreground">Aún no has añadido resultados. Puedes guardar el caso como borrador.</div>}
+              {form.result_highlights.map((item, index) => <div key={index} className="grid gap-3 rounded-xl border border-border p-4 sm:grid-cols-[1fr_140px_1fr_auto] sm:items-end"><Field label="Indicador"><input className={fieldClass} value={item.label} onChange={(event) => updateResult(index, "label", event.target.value)} placeholder="Tráfico orgánico" /></Field><Field label="Valor"><input className={fieldClass} value={item.value} onChange={(event) => updateResult(index, "value", event.target.value)} placeholder="+48 %" /></Field><Field label="Contexto"><input className={fieldClass} value={item.context ?? ""} onChange={(event) => updateResult(index, "context", event.target.value)} placeholder="Comparación interanual" /></Field><button type="button" onClick={() => removeResult(index)} aria-label={`Eliminar resultado ${index + 1}`} className="mb-0.5 rounded-lg border border-border p-2.5 text-muted-foreground hover:border-destructive/40 hover:text-destructive"><Trash2 className="h-4 w-4" /></button></div>)}
+            </div>
           </section>
         </div>
 

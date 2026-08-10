@@ -316,7 +316,7 @@ const CtaBlock = ({ lang, contactPath }: { lang: string; contactPath: string }) 
         <MessageCircle className="w-5 h-5" /> WhatsApp
       </a>
       <Link to={contactPath} className="btn-outline-gold text-center">
-        {lang === 'pt' ? 'Formulário' : lang === 'en' ? 'Contact form' : 'Formulario'}
+        {lang === 'pt' ? 'Cotizar com Fera' : lang === 'en' ? 'Quote with Fera' : 'Cotizar con Fera'}
       </Link>
     </div>
   </div>

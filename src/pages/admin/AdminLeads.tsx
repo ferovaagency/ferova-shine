@@ -3,6 +3,7 @@ import { Loader2, Check, Inbox as InboxIcon, RefreshCw, Eye, X, Copy, MessageCir
 import AdminLayout from "@/components/admin/AdminLayout";
 import SourceBadge from "@/components/admin/SourceBadge";
 import { supabase } from "@/integrations/supabase/client";
+import { toast } from "sonner";
 
 /** Fila de la bandeja unificada admin_inbox. */
 interface Lead {
@@ -25,7 +26,7 @@ const FILTERS: { id: Filter; label: string }[] = [
   { id: "all", label: "Todos" },
   { id: "contact", label: "Contacto" },
   { id: "diagnostic", label: "Diagnósticos" },
-  { id: "ai_advisor", label: "Asesor IA" },
+  { id: "ai_advisor", label: "Fera" },
   { id: "newsletter", label: "Newsletter" },
   { id: "completed", label: "Completados" },
 ];
@@ -71,13 +72,14 @@ const AdminLeads = () => {
 
   const markDone = async (id: string) => {
     try {
-      await (supabase as any)
+      const { error } = await (supabase as any)
         .from("admin_inbox")
         .update({ status: "completed", completed_at: new Date().toISOString() })
         .eq("id", id);
+      if (error) { toast.error(`No se pudo completar: ${error.message}`); return; }
       setLeads((prev) => prev.filter((l) => l.id !== id));
       setSelected((s) => (s?.id === id ? null : s));
-    } catch { /* noop */ }
+    } catch { toast.error("No se pudo completar la solicitud. Revisa la conexión e inténtalo de nuevo."); }
   };
 
   const fmt = (d: string) => { try { return new Date(d).toLocaleDateString("es-CO", { day: "2-digit", month: "short", year: "numeric" }); } catch { return d; } };

@@ -1,13 +1,11 @@
 import { useState, useEffect } from 'react';
-import Header from '@/components/layout/Header';
-import Footer from '@/components/layout/Footer';
-import { PageTransition } from '@/components/ui/motion';
+import AdminLayout from '@/components/admin/AdminLayout';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Calendar } from '@/components/ui/calendar';
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
-import { CalendarIcon, Download, FileText, Users } from 'lucide-react';
+import { CalendarIcon, Download, FileText, Loader2, Newspaper, Pencil, Trash2, Users } from 'lucide-react';
 import { supabase } from '@/integrations/supabase/client';
 import { toast } from 'sonner';
 import { format } from 'date-fns';
@@ -16,6 +14,9 @@ import { cn } from '@/lib/utils';
 interface Subscriber {
   id: string; name: string; email: string; plan: string | null; lang: string | null; created_at: string;
 }
+interface EditionContent { news?: string; tip?: string; tool?: { name?: string; desc?: string; url?: string } }
+interface EditionProContent { case_study?: string; analysis?: string; resource?: { name?: string; desc?: string; url?: string }; question?: string }
+interface Edition { id: string; edition_number: number; title: string; subject_line: string | null; topics: string[]; plan: 'free' | 'pro'; reading_time: number; free_content: EditionContent; pro_content: EditionProContent | null; published: boolean; published_at: string | null; created_at: string }
 
 const NewsletterAdminPage = () => {
   // Form state
@@ -45,6 +46,10 @@ const NewsletterAdminPage = () => {
   const [question, setQuestion] = useState('');
 
   const [saving, setSaving] = useState(false);
+  const [tab, setTab] = useState('editions');
+  const [editingId, setEditingId] = useState<string | null>(null);
+  const [editions, setEditions] = useState<Edition[]>([]);
+  const [editionsLoading, setEditionsLoading] = useState(true);
 
   // Subscribers
   const [subscribers, setSubscribers] = useState<Subscriber[]>([]);
@@ -73,20 +78,50 @@ const NewsletterAdminPage = () => {
     if (!title.trim() || !editionNumber) { toast.error('Título y número de edición son requeridos.'); return; }
     setSaving(true);
     try {
-      const { error } = await supabase.from('newsletter_editions').insert(buildPayload(published));
+      const request = editingId
+        ? supabase.from('newsletter_editions').update(buildPayload(published)).eq('id', editingId)
+        : supabase.from('newsletter_editions').insert(buildPayload(published));
+      const { error } = await request;
       if (error) throw error;
       toast.success(published ? `Edición #${editionNumber} publicada` : `Borrador #${editionNumber} guardado`);
       resetForm();
-    } catch (err: any) {
-      toast.error(err?.message || 'Error al guardar');
+      await loadEditions();
+      setTab('editions');
+    } catch (err: unknown) {
+      toast.error(err instanceof Error ? err.message : 'Error al guardar');
     } finally { setSaving(false); }
   };
 
   const resetForm = () => {
+    setEditingId(null);
     setTitle(''); setSubjectLine(''); setTopic1(''); setTopic2(''); setTopic3('');
     setNews(''); setTip(''); setToolName(''); setToolDesc(''); setToolUrl('');
     setCaseStudy(''); setAnalysis(''); setResourceName(''); setResourceDesc(''); setResourceUrl(''); setQuestion('');
     setEditionNumber(prev => prev + 1);
+  };
+
+  const loadEditions = async () => {
+    setEditionsLoading(true);
+    const { data, error } = await supabase.from('newsletter_editions').select('*').order('edition_number', { ascending: false });
+    if (error) toast.error(`No se pudieron cargar las ediciones: ${error.message}`);
+    setEditions((data ?? []) as unknown as Edition[]);
+    setEditionsLoading(false);
+  };
+
+  useEffect(() => { void loadEditions(); }, []);
+
+  const editEdition = (edition: Edition) => {
+    setEditingId(edition.id); setEditionNumber(edition.edition_number); setTitle(edition.title); setSubjectLine(edition.subject_line ?? ''); setPlan(edition.plan); setReadingTime(edition.reading_time ?? 5);
+    setTopic1(edition.topics?.[0] ?? ''); setTopic2(edition.topics?.[1] ?? ''); setTopic3(edition.topics?.[2] ?? '');
+    setNews(edition.free_content?.news ?? ''); setTip(edition.free_content?.tip ?? ''); setToolName(edition.free_content?.tool?.name ?? ''); setToolDesc(edition.free_content?.tool?.desc ?? ''); setToolUrl(edition.free_content?.tool?.url ?? '');
+    setCaseStudy(edition.pro_content?.case_study ?? ''); setAnalysis(edition.pro_content?.analysis ?? ''); setResourceName(edition.pro_content?.resource?.name ?? ''); setResourceDesc(edition.pro_content?.resource?.desc ?? ''); setResourceUrl(edition.pro_content?.resource?.url ?? ''); setQuestion(edition.pro_content?.question ?? '');
+    setPubDate(edition.published_at ? new Date(edition.published_at) : new Date()); setTab('new');
+  };
+
+  const deleteEdition = async (edition: Edition) => {
+    if (!window.confirm(`¿Eliminar la edición #${edition.edition_number}? Esta acción no se puede deshacer.`)) return;
+    const { error } = await supabase.from('newsletter_editions').delete().eq('id', edition.id);
+    if (error) toast.error(`No se pudo eliminar: ${error.message}`); else { toast.success('Edición eliminada.'); await loadEditions(); }
   };
 
   const loadSubscribers = async () => {
@@ -111,21 +146,23 @@ const NewsletterAdminPage = () => {
   const proCount = subscribers.filter(s => s.plan === 'pro').length;
 
   return (
-    <PageTransition>
-      <Header lang="es" />
-      <div className="pt-28 pb-20 bg-background">
-        <div className="container mx-auto px-4 max-w-4xl">
-          <h1 className="text-2xl font-bold mb-8" style={{ fontFamily: "'Outfit', sans-serif" }}>Admin — Newsletter</h1>
-
-          <Tabs defaultValue="new" className="w-full">
+    <AdminLayout title="Newsletter" description="Crea una edición y administra la lista de suscriptores.">
+      <div className="max-w-4xl">
+          <Tabs value={tab} onValueChange={setTab} className="w-full">
             <TabsList className="mb-6">
-              <TabsTrigger value="new" className="flex items-center gap-2"><FileText className="h-4 w-4" />Nueva edición</TabsTrigger>
+              <TabsTrigger value="editions" className="flex items-center gap-2"><Newspaper className="h-4 w-4" />Ediciones</TabsTrigger>
+              <TabsTrigger value="new" className="flex items-center gap-2"><FileText className="h-4 w-4" />{editingId ? 'Editar' : 'Nueva edición'}</TabsTrigger>
               <TabsTrigger value="subs" onClick={loadSubscribers} className="flex items-center gap-2"><Users className="h-4 w-4" />Suscriptores</TabsTrigger>
             </TabsList>
+
+            <TabsContent value="editions">
+              {editionsLoading ? <div className="flex justify-center py-16"><Loader2 className="h-6 w-6 animate-spin" /></div> : editions.length === 0 ? <div className="rounded-xl border border-border bg-card p-10 text-center text-sm text-muted-foreground">Aún no hay ediciones. Crea la primera y guárdala como borrador.</div> : <div className="overflow-x-auto rounded-xl border border-border bg-card"><table className="w-full min-w-[620px] text-sm"><thead><tr className="border-b border-border text-left text-xs text-muted-foreground"><th className="px-4 py-3">Edición</th><th className="px-4 py-3">Plan</th><th className="px-4 py-3">Estado</th><th className="px-4 py-3 text-right">Acciones</th></tr></thead><tbody>{editions.map((edition) => <tr key={edition.id} className="border-b border-border/70 last:border-0"><td className="px-4 py-3"><strong>#{edition.edition_number} · {edition.title}</strong><div className="mt-1 text-xs text-muted-foreground">{edition.published_at ? format(new Date(edition.published_at), 'dd MMM yyyy') : format(new Date(edition.created_at), 'dd MMM yyyy')}</div></td><td className="px-4 py-3 text-muted-foreground">{edition.plan === 'pro' ? 'Pro' : 'Gratis'}</td><td className="px-4 py-3"><span className={`rounded-full px-2.5 py-1 text-xs ${edition.published ? 'bg-emerald-500/15 text-emerald-600' : 'bg-muted text-muted-foreground'}`}>{edition.published ? 'Publicada' : 'Borrador'}</span></td><td className="px-4 py-3"><div className="flex justify-end gap-1"><button onClick={() => editEdition(edition)} aria-label={`Editar edición ${edition.edition_number}`} className="rounded-lg border border-border p-2 hover:text-primary"><Pencil className="h-4 w-4" /></button><button onClick={() => void deleteEdition(edition)} aria-label={`Eliminar edición ${edition.edition_number}`} className="rounded-lg border border-border p-2 hover:border-destructive/40 hover:text-destructive"><Trash2 className="h-4 w-4" /></button></div></td></tr>)}</tbody></table></div>}
+            </TabsContent>
 
             {/* TAB: New edition */}
             <TabsContent value="new">
               <div className="glass-card p-6 space-y-6">
+                {editingId && <div className="flex items-center justify-between rounded-lg border border-primary/20 bg-primary/5 p-3 text-sm"><span>Estás editando una edición existente.</span><button type="button" onClick={() => { resetForm(); setTab('editions'); }} className="font-medium text-primary">Cancelar</button></div>}
                 <div className="grid sm:grid-cols-3 gap-4">
                   <div>
                     <label className="text-sm font-medium mb-1 block">Número de edición</label>
@@ -242,10 +279,8 @@ const NewsletterAdminPage = () => {
               </div>
             </TabsContent>
           </Tabs>
-        </div>
       </div>
-      <Footer lang="es" />
-    </PageTransition>
+    </AdminLayout>
   );
 };
 

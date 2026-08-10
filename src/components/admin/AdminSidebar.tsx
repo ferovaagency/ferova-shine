@@ -1,14 +1,16 @@
 import { useEffect, useState } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
-import { Inbox, Trophy, FileText, ExternalLink, LogOut } from "lucide-react";
+import { Home, Inbox, Trophy, FileText, ExternalLink, LogOut, Newspaper } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 
 type NavItem = { label: string; to: string; icon: typeof Inbox; match: string; countKey?: "leads" | "casos" | "blog" };
 
 const NAV: NavItem[] = [
-  { label: "Leads", to: "/admin/leads", icon: Inbox, match: "/admin/leads", countKey: "leads" },
+  { label: "Inicio", to: "/admin", icon: Home, match: "/admin" },
+  { label: "Solicitudes", to: "/admin/leads", icon: Inbox, match: "/admin/leads", countKey: "leads" },
   { label: "Casos de éxito", to: "/admin/casos", icon: Trophy, match: "/admin/casos", countKey: "casos" },
   { label: "Blog", to: "/admin/blog", icon: FileText, match: "/admin/blog", countKey: "blog" },
+  { label: "Newsletter", to: "/admin/newsletter", icon: Newspaper, match: "/admin/newsletter" },
 ];
 
 /**
@@ -46,7 +48,7 @@ export default function AdminSidebar() {
     return () => { alive = false; };
   }, [location.pathname]);
 
-  const isActive = (match: string) => location.pathname === match || location.pathname.startsWith(`${match}/`);
+  const isActive = (match: string) => match === "/admin" ? location.pathname === match : location.pathname === match || location.pathname.startsWith(`${match}/`);
 
   const signOut = async () => {
     await supabase.auth.signOut();
