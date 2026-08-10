@@ -337,7 +337,7 @@ const BriefingNewsletter = ({ lang = 'es' }: Props) => {
                     <div className="w-14 h-14 rounded-xl bg-primary/10 flex items-center justify-center mx-auto mb-5">
                       <Icon className="w-7 h-7 text-primary" />
                     </div>
-                    <h3 className="font-display font-bold text-xl mb-3 text-foreground">{p.title}</h3>
+                    <h2 className="font-display font-bold text-xl mb-3 text-foreground">{p.title}</h2>
                     <p className="text-muted-foreground leading-relaxed">{p.desc}</p>
                   </div>
                 );
