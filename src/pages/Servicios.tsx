@@ -71,7 +71,7 @@ const Servicios = ({ lang = 'es' }: ServiciosProps) => {
         <div className="w-12 h-12 rounded-2xl flex items-center justify-center mb-5 bg-gold/10">
           <s.icon className="w-6 h-6 text-gold" />
         </div>
-        <h3 className="text-lg font-display font-bold mb-2 text-foreground">{s.title}</h3>
+        <h2 className="text-lg font-display font-bold mb-2 text-foreground">{s.title}</h2>
         <p className="text-muted-foreground text-sm leading-relaxed mb-5">{s.description}</p>
         <ul className="space-y-1.5 mb-5">
           {s.features.map((f, j) => (
