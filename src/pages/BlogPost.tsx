@@ -261,7 +261,17 @@ const BlogPost = ({ lang = 'es' }: Props) => {
   );
 
   const postPath = `${blogBase}/${slug}`;
-  const seoTitle = post.meta_title || `${post.title} — Ferova Agency`;
+  // Mantiene el título entre 30 y 60 caracteres, incluyendo la marca
+  const buildSeoTitle = (raw: string) => {
+    const brand = ' — Ferova Agency';
+    const full = `${raw}${brand}`;
+    if (full.length <= 60) return full;
+    const short = ' — Ferova';
+    const max = 60 - short.length;
+    const trimmed = raw.length <= max ? raw : `${raw.slice(0, max - 1).replace(/[\s,;:–-]+$/, '')}…`;
+    return `${trimmed}${short}`;
+  };
+  const seoTitle = post.meta_title || buildSeoTitle(post.title);
   const seoDesc = post.meta_description || post.content.replace(/<[^>]*>/g, ' ').slice(0, 155);
   const articleLd = {
     '@context': 'https://schema.org', '@type': 'Article',
