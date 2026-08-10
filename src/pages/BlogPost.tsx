@@ -73,6 +73,7 @@ const staticPosts: Record<string, Record<string, { title: string; seoTitle?: str
     },
     'web-apps-vs-wordpress-ecommerce': {
       title: 'Web Apps vs WordPress: Which is better for your E-commerce?',
+      seoTitle: 'Web Apps vs WordPress for E-commerce — Ferova',
       author: 'Ferova Agency', date: 'Mar 10, 2025', readTime: '8 min', category: 'Web Development',
       content: [
         'Choosing the right platform can make or break your online business.',
