@@ -5,7 +5,7 @@ import { Textarea } from '@/components/ui/textarea';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Calendar } from '@/components/ui/calendar';
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
-import { CalendarIcon, Download, FileText, Loader2, Newspaper, Pencil, Trash2, Users } from 'lucide-react';
+import { CalendarIcon, Download, FileText, Loader2, Newspaper, Pencil, Sparkles, Trash2, Users } from 'lucide-react';
 import { supabase } from '@/integrations/supabase/client';
 import { toast } from 'sonner';
 import { format } from 'date-fns';
@@ -17,6 +17,7 @@ interface Subscriber {
 interface EditionContent { news?: string; tip?: string; tool?: { name?: string; desc?: string; url?: string } }
 interface EditionProContent { case_study?: string; analysis?: string; resource?: { name?: string; desc?: string; url?: string }; question?: string }
 interface Edition { id: string; edition_number: number; title: string; subject_line: string | null; topics: string[]; plan: 'free' | 'pro'; reading_time: number; free_content: EditionContent; pro_content: EditionProContent | null; published: boolean; published_at: string | null; created_at: string }
+interface GeneratedNewsletter { title?: string; subject_line?: string; topics?: string[]; reading_time?: number; free_content?: EditionContent; pro_content?: EditionProContent }
 
 const NewsletterAdminPage = () => {
   // Form state
@@ -50,6 +51,8 @@ const NewsletterAdminPage = () => {
   const [editingId, setEditingId] = useState<string | null>(null);
   const [editions, setEditions] = useState<Edition[]>([]);
   const [editionsLoading, setEditionsLoading] = useState(true);
+  const [generatorIdeas, setGeneratorIdeas] = useState('');
+  const [generating, setGenerating] = useState(false);
 
   // Subscribers
   const [subscribers, setSubscribers] = useState<Subscriber[]>([]);
@@ -97,6 +100,7 @@ const NewsletterAdminPage = () => {
     setTitle(''); setSubjectLine(''); setTopic1(''); setTopic2(''); setTopic3('');
     setNews(''); setTip(''); setToolName(''); setToolDesc(''); setToolUrl('');
     setCaseStudy(''); setAnalysis(''); setResourceName(''); setResourceDesc(''); setResourceUrl(''); setQuestion('');
+    setGeneratorIdeas('');
     setEditionNumber(prev => prev + 1);
   };
 
@@ -122,6 +126,22 @@ const NewsletterAdminPage = () => {
     if (!window.confirm(`¿Eliminar la edición #${edition.edition_number}? Esta acción no se puede deshacer.`)) return;
     const { error } = await supabase.from('newsletter_editions').delete().eq('id', edition.id);
     if (error) toast.error(`No se pudo eliminar: ${error.message}`); else { toast.success('Edición eliminada.'); await loadEditions(); }
+  };
+
+  const generateEdition = async () => {
+    if (!title.trim() || !generatorIdeas.trim()) { toast.error('Agrega un título y la información base de la edición.'); return; }
+    setGenerating(true);
+    const { data, error } = await supabase.functions.invoke('blog-article-generator', { body: { action: 'generate_newsletter', payload: { editionNumber, title, subjectLine, plan, topics: [topic1, topic2, topic3].filter(Boolean), ideas: generatorIdeas } } });
+    if (error || !data?.newsletter) toast.error(error?.message || 'El generador no devolvió la edición.');
+    else {
+      const generated = data.newsletter as GeneratedNewsletter;
+      setTitle(generated.title || title); setSubjectLine(generated.subject_line || subjectLine); setReadingTime(generated.reading_time || readingTime);
+      setTopic1(generated.topics?.[0] || topic1); setTopic2(generated.topics?.[1] || topic2); setTopic3(generated.topics?.[2] || topic3);
+      setNews(generated.free_content?.news || news); setTip(generated.free_content?.tip || tip); setToolName(generated.free_content?.tool?.name || toolName); setToolDesc(generated.free_content?.tool?.desc || toolDesc); setToolUrl(generated.free_content?.tool?.url || toolUrl);
+      if (plan === 'pro') { setCaseStudy(generated.pro_content?.case_study || caseStudy); setAnalysis(generated.pro_content?.analysis || analysis); setResourceName(generated.pro_content?.resource?.name || resourceName); setResourceDesc(generated.pro_content?.resource?.desc || resourceDesc); setResourceUrl(generated.pro_content?.resource?.url || resourceUrl); setQuestion(generated.pro_content?.question || question); }
+      toast.success('Edición generada con la guía editorial. Revísala antes de publicar.');
+    }
+    setGenerating(false);
   };
 
   const loadSubscribers = async () => {
@@ -163,6 +183,12 @@ const NewsletterAdminPage = () => {
             <TabsContent value="new">
               <div className="glass-card p-6 space-y-6">
                 {editingId && <div className="flex items-center justify-between rounded-lg border border-primary/20 bg-primary/5 p-3 text-sm"><span>Estás editando una edición existente.</span><button type="button" onClick={() => { resetForm(); setTab('editions'); }} className="font-medium text-primary">Cancelar</button></div>}
+                <section className="rounded-xl border border-border bg-muted/30 p-4">
+                  <h2 className="flex items-center gap-2 font-semibold"><Sparkles className="h-4 w-4" /> Generador editorial</h2>
+                  <p className="mt-2 text-xs leading-5 text-muted-foreground">Pega la noticia, enlaces, datos, experiencia o ideas que sí quieres usar. La IA aplicará la guía de Ferova sin inventar fuentes ni cifras.</p>
+                  <Textarea rows={6} className="mt-3" value={generatorIdeas} onChange={(event) => setGeneratorIdeas(event.target.value)} placeholder="Información base de esta edición, enlaces verificados, enfoque para agencias y CTA…" />
+                  <button type="button" onClick={() => void generateEdition()} disabled={generating} className="mt-3 inline-flex items-center justify-center gap-2 rounded-lg border border-border bg-background px-4 py-2.5 text-sm font-medium disabled:opacity-50">{generating ? <Loader2 className="h-4 w-4 animate-spin" /> : <Sparkles className="h-4 w-4" />} Generar edición completa</button>
+                </section>
                 <div className="grid sm:grid-cols-3 gap-4">
                   <div>
                     <label className="text-sm font-medium mb-1 block">Número de edición</label>

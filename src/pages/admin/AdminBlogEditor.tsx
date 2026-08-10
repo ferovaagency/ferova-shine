@@ -5,6 +5,7 @@ import { toast } from "sonner";
 import AdminLayout from "@/components/admin/AdminLayout";
 import RichTextEditor from "@/components/admin/RichTextEditor";
 import { supabase } from "@/integrations/supabase/client";
+import { SEO_EDITORIAL } from "@/content/seoEditorial";
 
 type BlogLanguage = "es" | "en";
 type FormState = { title: string; slug: string; excerpt: string; content: string; meta_title: string; meta_description: string; category: string; keyword: string; cover_image: string; author: string; language: BlogLanguage; active: boolean; published_at: string };
@@ -15,6 +16,7 @@ const slugify = (value: string) => value.toLowerCase().normalize("NFD").replace(
 export default function AdminBlogEditor() {
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
+  const isLegacy = Boolean(id?.startsWith("legacy--"));
   const inputRef = useRef<HTMLInputElement>(null);
   const [form, setForm] = useState<FormState>(emptyForm);
   const [ideas, setIdeas] = useState("");
@@ -26,24 +28,33 @@ export default function AdminBlogEditor() {
 
   useEffect(() => {
     if (!id) return;
+    if (isLegacy) {
+      const inherited = SEO_EDITORIAL.find((post) => post.slug === id.replace(/^legacy--/, ""));
+      if (inherited) {
+        setForm((current) => ({ ...current, title: inherited.title, slug: inherited.slug, excerpt: inherited.excerpt, category: inherited.category, keyword: inherited.slug.replace(/-/g, " "), active: false }));
+        setIdeas(`Desarrolla este enfoque sin inventar datos: ${inherited.excerpt}`);
+      } else toast.error("No encontramos el contenido heredado.");
+      setLoading(false);
+      return;
+    }
     void (async () => {
       const { data, error } = await supabase.from("blog_posts").select("id,title,slug,excerpt,content,meta_title,meta_description,category,keyword,cover_image,author,language,active,published_at").eq("id", id).single();
       if (error || !data) toast.error("No fue posible cargar el artículo.");
       else setForm({ title: data.title, slug: data.slug, excerpt: data.excerpt ?? "", content: data.content, meta_title: data.meta_title ?? "", meta_description: data.meta_description ?? "", category: data.category ?? "", keyword: data.keyword ?? "", cover_image: data.cover_image ?? "", author: data.author ?? "Ferova Agency", language: data.language as BlogLanguage, active: data.active, published_at: new Date(data.published_at).toISOString().slice(0, 16) });
       setLoading(false);
     })();
-  }, [id]);
+  }, [id, isLegacy]);
 
   const update = <K extends keyof FormState>(key: K, value: FormState[K]) => setForm((current) => ({ ...current, [key]: value }));
 
   const generate = async () => {
     if (!form.title.trim() || !form.keyword.trim() || !ideas.trim()) return toast.error("Completa título, keyword e ideas principales.");
     setGenerating(true);
-    const { data, error } = await supabase.functions.invoke("blog-article-generator", { body: { action: "generate", payload: { title: form.title, keyword: form.keyword, category: form.category, ideas, lang: form.language } } });
+    const { data, error } = await supabase.functions.invoke("blog-article-generator", { body: { action: "generate", payload: { title: form.title, keyword: form.keyword, category: form.category, ideas, lang: form.language, excludeId: !isLegacy ? id : undefined } } });
     if (error || !data?.article) toast.error(error?.message || "El generador no devolvió un artículo.");
     else {
       const article = data.article as Partial<FormState>;
-      setForm((current) => ({ ...current, ...article, language: current.language, active: current.active, published_at: current.published_at, cover_image: article.cover_image || current.cover_image, author: article.author || current.author }));
+      setForm((current) => ({ ...current, ...article, slug: id ? current.slug : article.slug || current.slug, language: current.language, active: current.active, published_at: current.published_at, cover_image: article.cover_image || current.cover_image, author: article.author || current.author }));
       toast.success("Borrador generado. Puedes editar todos sus campos antes de guardar.");
     }
     setGenerating(false);
@@ -64,14 +75,14 @@ export default function AdminBlogEditor() {
     if (!form.title.trim() || !form.slug.trim() || !form.content.trim()) return toast.error("Título, slug y contenido son obligatorios.");
     setSaving(true);
     const payload = { ...form, slug: slugify(form.slug), excerpt: form.excerpt || null, meta_title: form.meta_title || null, meta_description: form.meta_description || null, category: form.category || null, keyword: form.keyword || null, cover_image: form.cover_image || null, published_at: new Date(form.published_at).toISOString(), updated_at: new Date().toISOString() };
-    const result = id ? await supabase.from("blog_posts").update(payload).eq("id", id).select("id").single() : await supabase.from("blog_posts").insert(payload).select("id").single();
+    const result = id && !isLegacy ? await supabase.from("blog_posts").update(payload).eq("id", id).select("id").single() : await supabase.from("blog_posts").insert(payload).select("id").single();
     if (result.error) toast.error(result.error.message); else { toast.success(form.active ? "Artículo publicado y actualizado." : "Borrador guardado."); navigate(`/admin/blog/${result.data.id}/editar`, { replace: !id }); }
     setSaving(false);
   };
 
   if (loading) return <AdminLayout title="Artículo"><div className="flex justify-center py-16"><Loader2 className="h-6 w-6 animate-spin" /></div></AdminLayout>;
   return <AdminLayout title={id ? "Editar artículo" : "Nuevo artículo"}>
-    <div className="mb-6"><Link to="/admin/blog" className="inline-flex items-center gap-2 text-sm text-muted-foreground"><ArrowLeft className="h-4 w-4" /> Volver a artículos</Link></div>
+    <div className="mb-6"><Link to="/admin/blog" className="inline-flex items-center gap-2 text-sm text-muted-foreground"><ArrowLeft className="h-4 w-4" /> Volver a artículos</Link>{isLegacy && <p className="mt-4 rounded-xl border border-amber-500/25 bg-amber-500/10 p-4 text-sm">Este artículo conserva su URL actual. Añade tus datos, genera el borrador con IA y guárdalo para convertirlo en contenido administrable.</p>}</div>
     <form onSubmit={save} className="grid gap-6 xl:grid-cols-[minmax(0,1fr)_340px]">
       <div className="space-y-6"><section className="glass-card p-5 sm:p-6"><h2 className="font-display text-lg font-semibold">Contenido editable</h2><div className="mt-5 grid gap-4 sm:grid-cols-2">
         <Field label="Versión del sitio *"><select className={fieldClass} value={form.language} onChange={(e) => update("language", e.target.value as BlogLanguage)}><option value="es">Español — /blog</option><option value="en">Inglés — /en/blog</option></select></Field>

@@ -4,9 +4,10 @@ import { ExternalLink, FileText, Loader2, Pencil, Plus, RefreshCw, Search, Trash
 import { toast } from "sonner";
 import AdminLayout from "@/components/admin/AdminLayout";
 import { supabase } from "@/integrations/supabase/client";
+import { SEO_EDITORIAL } from "@/content/seoEditorial";
 
 type BlogLanguage = "es" | "en";
-type BlogSummary = { id: string; slug: string; title: string; language: BlogLanguage; active: boolean; published_at: string; updated_at: string };
+type BlogSummary = { id: string; slug: string; title: string; language: BlogLanguage; active: boolean; published_at: string; updated_at: string; legacy?: boolean };
 type StatusFilter = "all" | "published" | "draft";
 const publicUrl = (post: BlogSummary) => post.language === "en" ? `/en/blog/${post.slug}` : `/blog/${post.slug}`;
 
@@ -21,18 +22,25 @@ export default function AdminBlogList() {
 
   const load = useCallback(async () => {
     setLoading(true); setError("");
-    let query = supabase.from("blog_posts").select("id,slug,title,language,active,published_at,updated_at").order("updated_at", { ascending: false });
-    if (language !== "all") query = query.eq("language", language);
-    if (status !== "all") query = query.eq("active", status === "published");
+    const query = supabase.from("blog_posts").select("id,slug,title,language,active,published_at,updated_at").order("updated_at", { ascending: false });
     const { data, error: queryError } = await query;
     if (queryError) setError("No se pudieron cargar los artículos. Revisa tu conexión o los permisos del usuario.");
-    setPosts((data ?? []) as BlogSummary[]); setLoading(false);
-  }, [language, status]);
+    const databasePosts = (data ?? []) as BlogSummary[];
+    const databaseSlugs = new Set(databasePosts.map((post) => post.slug));
+    const inheritedPosts: BlogSummary[] = SEO_EDITORIAL.filter((post) => !databaseSlugs.has(post.slug)).map((post) => ({ id: `legacy--${post.slug}`, slug: post.slug, title: post.title, language: "es", active: false, published_at: "", updated_at: "", legacy: true }));
+    setPosts([...databasePosts, ...inheritedPosts]); setLoading(false);
+  }, []);
 
   useEffect(() => { void load(); }, [load]);
-  const visible = useMemo(() => posts.filter((post) => `${post.title} ${post.slug}`.toLowerCase().includes(search.trim().toLowerCase())), [posts, search]);
+  const visible = useMemo(() => posts.filter((post) => {
+    const matchesSearch = `${post.title} ${post.slug}`.toLowerCase().includes(search.trim().toLowerCase());
+    const matchesLanguage = language === "all" || post.language === language;
+    const matchesStatus = status === "all" || (status === "published" ? post.active : !post.active);
+    return matchesSearch && matchesLanguage && matchesStatus;
+  }), [posts, search, language, status]);
 
   const togglePublished = async (post: BlogSummary) => {
+    if (post.legacy) return;
     setWorkingId(post.id);
     const { error: updateError } = await supabase.from("blog_posts").update({ active: !post.active, published_at: !post.active ? new Date().toISOString() : post.published_at, updated_at: new Date().toISOString() }).eq("id", post.id);
     if (updateError) toast.error(`No se pudo actualizar: ${updateError.message}`);
@@ -41,6 +49,7 @@ export default function AdminBlogList() {
   };
 
   const remove = async (post: BlogSummary) => {
+    if (post.legacy) return;
     if (!window.confirm(`¿Eliminar “${post.title}”? Esta acción no se puede deshacer.`)) return;
     setWorkingId(post.id);
     const { error: deleteError } = await supabase.from("blog_posts").delete().eq("id", post.id);
@@ -66,7 +75,7 @@ export default function AdminBlogList() {
         <div className="rounded-xl border border-border bg-card px-6 py-14 text-center"><FileText className="mx-auto mb-4 h-8 w-8 text-primary/70" /><h2 className="text-xl font-semibold">{posts.length ? "No hay coincidencias" : "Aún no hay artículos"}</h2><p className="mt-2 text-sm text-muted-foreground">{posts.length ? "Prueba con otro título o cambia los filtros." : "Crea el primero y guárdalo como borrador hasta que esté listo."}</p></div>
       ) : (
         <div className="overflow-x-auto rounded-xl border border-border bg-card"><table className="w-full min-w-[760px] text-sm"><thead><tr className="border-b border-border text-left text-xs text-muted-foreground"><th className="px-4 py-3 font-medium">Artículo</th><th className="px-4 py-3 font-medium">Idioma</th><th className="px-4 py-3 font-medium">Estado</th><th className="px-4 py-3 font-medium">Actualización</th><th className="px-4 py-3 text-right font-medium">Acciones</th></tr></thead><tbody>
-          {visible.map((post) => <tr key={post.id} className="border-b border-border/70 last:border-0 hover:bg-muted/40"><td className="px-4 py-3"><div className="max-w-lg truncate font-medium">{post.title}</div><div className="mt-1 text-xs text-muted-foreground">{publicUrl(post)}</div></td><td className="px-4 py-3 text-muted-foreground">{post.language === "en" ? "Inglés" : "Español"}</td><td className="px-4 py-3"><button disabled={workingId === post.id} onClick={() => void togglePublished(post)} className={`rounded-full px-2.5 py-1 text-xs font-medium disabled:opacity-50 ${post.active ? "bg-emerald-500/15 text-emerald-600" : "bg-muted text-muted-foreground"}`}>{post.active ? "Publicado" : "Borrador"}</button></td><td className="px-4 py-3 text-muted-foreground">{new Intl.DateTimeFormat("es-CO", { dateStyle: "medium" }).format(new Date(post.updated_at))}</td><td className="px-4 py-3"><div className="flex justify-end gap-1"><Link title="Editar" aria-label={`Editar ${post.title}`} to={`/admin/blog/${post.id}/editar`} className="rounded-lg border border-border p-2 hover:text-primary"><Pencil className="h-4 w-4" /></Link>{post.active && <Link title="Ver publicado" aria-label={`Ver ${post.title}`} to={publicUrl(post)} target="_blank" className="rounded-lg border border-border p-2 hover:text-primary"><ExternalLink className="h-4 w-4" /></Link>}<button title="Eliminar" aria-label={`Eliminar ${post.title}`} disabled={workingId === post.id} onClick={() => void remove(post)} className="rounded-lg border border-border p-2 hover:border-destructive/40 hover:text-destructive disabled:opacity-50">{workingId === post.id ? <Loader2 className="h-4 w-4 animate-spin" /> : <Trash2 className="h-4 w-4" />}</button></div></td></tr>)}
+          {visible.map((post) => <tr key={post.id} className="border-b border-border/70 last:border-0 hover:bg-muted/40"><td className="px-4 py-3"><div className="max-w-lg truncate font-medium">{post.title}</div><div className="mt-1 text-xs text-muted-foreground">{publicUrl(post)}</div></td><td className="px-4 py-3 text-muted-foreground">{post.language === "en" ? "Inglés" : "Español"}</td><td className="px-4 py-3">{post.legacy ? <span className="rounded-full bg-amber-500/15 px-2.5 py-1 text-xs font-medium text-amber-700">Por completar</span> : <button disabled={workingId === post.id} onClick={() => void togglePublished(post)} className={`rounded-full px-2.5 py-1 text-xs font-medium disabled:opacity-50 ${post.active ? "bg-emerald-500/15 text-emerald-600" : "bg-muted text-muted-foreground"}`}>{post.active ? "Publicado" : "Borrador"}</button>}</td><td className="px-4 py-3 text-muted-foreground">{post.legacy ? "Contenido heredado" : new Intl.DateTimeFormat("es-CO", { dateStyle: "medium" }).format(new Date(post.updated_at))}</td><td className="px-4 py-3"><div className="flex justify-end gap-1"><Link title={post.legacy ? "Completar y convertir" : "Editar"} aria-label={`Editar ${post.title}`} to={`/admin/blog/${post.id}/editar`} className="inline-flex items-center gap-2 rounded-lg border border-border px-3 py-2 hover:text-primary"><Pencil className="h-4 w-4" />{post.legacy && <span className="text-xs">Completar</span>}</Link>{post.active && <Link title="Ver publicado" aria-label={`Ver ${post.title}`} to={publicUrl(post)} target="_blank" className="rounded-lg border border-border p-2 hover:text-primary"><ExternalLink className="h-4 w-4" /></Link>}{!post.legacy && <button title="Eliminar" aria-label={`Eliminar ${post.title}`} disabled={workingId === post.id} onClick={() => void remove(post)} className="rounded-lg border border-border p-2 hover:border-destructive/40 hover:text-destructive disabled:opacity-50">{workingId === post.id ? <Loader2 className="h-4 w-4 animate-spin" /> : <Trash2 className="h-4 w-4" />}</button>}</div></td></tr>)}
         </tbody></table></div>
       )}
     </AdminLayout>

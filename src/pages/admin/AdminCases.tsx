@@ -9,7 +9,9 @@ import { casesData } from "@/pages/CasosDeExito";
 type CaseSummary = Pick<
   CmsCaseStudy,
   "id" | "slug" | "status" | "client_public_name" | "sector" | "country" | "summary" | "updated_at"
->;
+> & { legacy?: boolean };
+
+const inheritedCases: CaseSummary[] = casesData.es.map((item) => ({ id: `legacy--${item.id}`, slug: item.id, status: "draft", client_public_name: item.title, sector: item.category, country: item.country, summary: item.challenge, updated_at: "", legacy: true }));
 
 const STATUS_LABEL: Record<ContentStatus, string> = {
   draft: "Borrador",
@@ -45,9 +47,12 @@ export default function AdminCases() {
 
       if (error) {
         setMigrationPending(true);
+        setCases(inheritedCases);
       } else {
         setMigrationPending(false);
-        setCases(data ?? []);
+        const databaseCases = data ?? [];
+        const slugs = new Set(databaseCases.map((item) => item.slug));
+        setCases([...databaseCases, ...inheritedCases.filter((item) => !slugs.has(item.slug))]);
       }
       setLoading(false);
   }, []);
@@ -90,8 +95,6 @@ export default function AdminCases() {
 
       {loading ? (
         <div className="flex justify-center py-16"><Loader2 className="h-6 w-6 animate-spin text-muted-foreground" /></div>
-      ) : migrationPending ? (
-        <StaticCasesFallback />
       ) : visible.length === 0 ? (
         <div className="glass-card px-6 py-14 text-center">
           <Trophy className="mx-auto mb-4 h-8 w-8 text-gold/70" />
@@ -121,22 +124,20 @@ export default function AdminCases() {
                   </td>
                   <td className="px-4 py-3 text-muted-foreground">{item.sector}{item.country ? ` · ${item.country}` : ""}</td>
                   <td className="px-4 py-3">
-                    <span className={`rounded-full px-2.5 py-1 text-xs font-medium ${STATUS_STYLE[item.status]}`}>
-                      {STATUS_LABEL[item.status]}
-                    </span>
+                    {item.legacy ? <span className="rounded-full bg-amber-500/15 px-2.5 py-1 text-xs font-medium text-amber-700">Por completar</span> : <span className={`rounded-full px-2.5 py-1 text-xs font-medium ${STATUS_STYLE[item.status]}`}>{STATUS_LABEL[item.status]}</span>}
                   </td>
-                  <td className="px-4 py-3 text-muted-foreground">{new Intl.DateTimeFormat("es-CO", { dateStyle: "medium" }).format(new Date(item.updated_at))}</td>
+                  <td className="px-4 py-3 text-muted-foreground">{item.legacy ? "Contenido heredado" : new Intl.DateTimeFormat("es-CO", { dateStyle: "medium" }).format(new Date(item.updated_at))}</td>
                   <td className="px-4 py-3 text-right">
                     <div className="flex justify-end gap-2">
                       <Link to={`/admin/casos/${item.id}/editar`} className="inline-flex items-center gap-1.5 rounded-full border border-border px-3 py-1.5 text-xs font-medium hover:border-gold/50 hover:text-gold">
-                        <Pencil className="h-3.5 w-3.5" /> Editar
+                        <Pencil className="h-3.5 w-3.5" /> {item.legacy ? "Completar" : "Editar"}
                       </Link>
                       {item.status === "published" && (
                         <Link to={`/casos-de-exito/${item.slug}`} target="_blank" className="inline-flex items-center gap-1.5 rounded-full border border-border px-3 py-1.5 text-xs font-medium hover:border-gold/50 hover:text-gold">
                           <ExternalLink className="h-3.5 w-3.5" /> Ver
                         </Link>
                       )}
-                      <button title="Eliminar" aria-label={`Eliminar ${item.client_public_name || item.slug}`} disabled={workingId === item.id} onClick={() => void remove(item)} className="inline-flex items-center rounded-lg border border-border p-2 hover:border-destructive/40 hover:text-destructive disabled:opacity-50">{workingId === item.id ? <Loader2 className="h-3.5 w-3.5 animate-spin" /> : <Trash2 className="h-3.5 w-3.5" />}</button>
+                      {!item.legacy && <button title="Eliminar" aria-label={`Eliminar ${item.client_public_name || item.slug}`} disabled={workingId === item.id} onClick={() => void remove(item)} className="inline-flex items-center rounded-lg border border-border p-2 hover:border-destructive/40 hover:text-destructive disabled:opacity-50">{workingId === item.id ? <Loader2 className="h-3.5 w-3.5 animate-spin" /> : <Trash2 className="h-3.5 w-3.5" />}</button>}
                     </div>
                   </td>
                 </tr>

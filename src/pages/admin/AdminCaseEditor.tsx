@@ -1,10 +1,11 @@
 import { FormEvent, useEffect, useState } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
-import { AlertCircle, ArrowLeft, CheckCircle2, Loader2, Plus, Save, Send, Trash2 } from "lucide-react";
+import { AlertCircle, ArrowLeft, CheckCircle2, Loader2, Plus, Save, Send, Sparkles, Trash2 } from "lucide-react";
 import { toast } from "sonner";
 import AdminLayout from "@/components/admin/AdminLayout";
 import { supabase } from "@/integrations/supabase/client";
 import { caseCms, type CaseResultHighlight, type CmsCaseStudy, type ContentStatus } from "@/integrations/supabase/cms-types";
+import { casesData } from "@/pages/CasosDeExito";
 
 type FormState = Pick<CmsCaseStudy, "slug" | "client_public_name" | "sector" | "country" | "summary" | "challenge" | "diagnosis" | "intervention" | "learnings" | "limitations" | "service_keys" | "result_highlights" | "started_at" | "last_observation_at">;
 
@@ -30,6 +31,7 @@ const fieldClass = "mt-1.5 w-full rounded-xl border border-border bg-background 
 export default function AdminCaseEditor() {
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
+  const isLegacy = Boolean(id?.startsWith("legacy--"));
   const [form, setForm] = useState<FormState>(EMPTY_FORM);
   const [status, setStatus] = useState<ContentStatus>("draft");
   const [loading, setLoading] = useState(Boolean(id));
@@ -37,9 +39,20 @@ export default function AdminCaseEditor() {
   const [migrationPending, setMigrationPending] = useState(false);
   const [consentName, setConsentName] = useState("");
   const [consentConfirmed, setConsentConfirmed] = useState(false);
+  const [generationNotes, setGenerationNotes] = useState("");
+  const [generating, setGenerating] = useState(false);
 
   useEffect(() => {
     if (!id) return;
+    if (isLegacy) {
+      const inherited = casesData.es.find((item) => item.id === id.replace(/^legacy--/, ""));
+      if (inherited) {
+        setForm((current) => ({ ...current, slug: inherited.id, client_public_name: inherited.title, sector: inherited.category, country: inherited.country, summary: inherited.challenge, challenge: inherited.challenge, intervention: inherited.solution, service_keys: [inherited.category], result_highlights: inherited.results.map((result) => ({ label: result.metric, value: result.value, context: result.period })) }));
+        setGenerationNotes(`Organiza este caso heredado para el mercado de agencias. Conserva exactamente los hechos y cifras existentes. Reto: ${inherited.challenge}\nIntervención: ${inherited.solution}`);
+      } else toast.error("No encontramos el caso heredado.");
+      setLoading(false);
+      return;
+    }
     let active = true;
     const load = async () => {
       const { data, error } = await caseCms.from("case_studies").select("*").eq("id", id).single();
@@ -69,12 +82,25 @@ export default function AdminCaseEditor() {
     };
     void load();
     return () => { active = false; };
-  }, [id]);
+  }, [id, isLegacy]);
 
   const update = <K extends keyof FormState>(key: K, value: FormState[K]) => setForm((current) => ({ ...current, [key]: value }));
   const updateResult = (index: number, key: keyof CaseResultHighlight, value: string) => update("result_highlights", form.result_highlights.map((item, itemIndex) => itemIndex === index ? { ...item, [key]: value } : item));
   const addResult = () => update("result_highlights", [...form.result_highlights, { label: "", value: "", context: "" }]);
   const removeResult = (index: number) => update("result_highlights", form.result_highlights.filter((_, itemIndex) => itemIndex !== index));
+
+  const generateCase = async () => {
+    if (!generationNotes.trim() && !form.challenge.trim() && !form.intervention.trim()) return toast.error("Agrega hechos o contexto antes de generar.");
+    setGenerating(true);
+    const { data, error } = await supabase.functions.invoke("blog-article-generator", { body: { action: "generate_case", payload: { title: form.client_public_name, sector: form.sector, country: form.country, services: form.service_keys, facts: generationNotes, challenge: form.challenge, intervention: form.intervention, results: form.result_highlights } } });
+    if (error || !data?.case_study) toast.error(error?.message || "El generador no devolvió el caso.");
+    else {
+      const generated = data.case_study as Partial<FormState>;
+      setForm((current) => ({ ...current, ...generated, slug: current.slug || generated.slug || "", result_highlights: Array.isArray(generated.result_highlights) ? generated.result_highlights : current.result_highlights, service_keys: Array.isArray(generated.service_keys) ? generated.service_keys : current.service_keys }));
+      toast.success("Caso generado con la guía editorial. Revísalo antes de guardar.");
+    }
+    setGenerating(false);
+  };
 
   const save = async (nextStatus: "draft" | "in_review") => {
     if (!form.slug.trim() || !form.sector.trim() || !form.summary.trim()) {
@@ -100,7 +126,7 @@ export default function AdminCaseEditor() {
       owner_id: session.user.id,
     };
 
-    const result = id
+    const result = id && !isLegacy
       ? await caseCms.from("case_studies").update(payload).eq("id", id).select("id").single()
       : await caseCms.from("case_studies").insert(payload).select("id").single();
 
@@ -149,6 +175,7 @@ export default function AdminCaseEditor() {
       </div>
 
       {migrationPending && <div className="glass-card mb-6 flex items-start gap-3 border border-amber-500/30 p-4 text-sm"><AlertCircle className="mt-0.5 h-4 w-4 shrink-0 text-amber-500" /><p>La interfaz está lista, pero la migración del CMS debe aplicarse antes de guardar este caso.</p></div>}
+      {isLegacy && <div className="mb-6 rounded-xl border border-amber-500/25 bg-amber-500/10 p-4 text-sm">Este caso ya aparece en el sitio como contenido heredado. Genéralo, revísalo y guárdalo para convertirlo en un caso administrable sin cambiar su URL.</div>}
 
       <form onSubmit={submit} className="grid gap-6 xl:grid-cols-[minmax(0,1fr)_320px]">
         <div className="space-y-6">
@@ -187,6 +214,12 @@ export default function AdminCaseEditor() {
         </div>
 
         <aside className="space-y-5">
+          <section className="glass-card p-5">
+            <h2 className="flex items-center gap-2 font-semibold"><Sparkles className="h-4 w-4" /> Generador editorial</h2>
+            <p className="mt-2 text-xs leading-5 text-muted-foreground">Pega hechos, entregables y contexto. La IA organiza la narrativa, pero no debe inventar clientes, cifras ni evidencia.</p>
+            <textarea rows={7} className={fieldClass} value={generationNotes} onChange={(event) => setGenerationNotes(event.target.value)} placeholder="Qué necesitaba la agencia, qué se entregó, duración, tecnología, resultados medidos y limitaciones…" />
+            <button type="button" onClick={() => void generateCase()} disabled={generating} className="mt-3 inline-flex w-full items-center justify-center gap-2 rounded-xl border border-border px-4 py-2.5 text-sm font-medium disabled:opacity-50">{generating ? <Loader2 className="h-4 w-4 animate-spin" /> : <Sparkles className="h-4 w-4" />} Generar caso completo</button>
+          </section>
           <section className="glass-card p-5">
             <h2 className="font-semibold">Flujo editorial</h2>
             <p className="mt-2 text-sm text-muted-foreground">Guardar no publica. El caso necesita consentimiento válido, evidencia y aprobación.</p>
