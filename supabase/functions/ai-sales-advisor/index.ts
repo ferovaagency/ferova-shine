@@ -14,8 +14,16 @@ function isAllowedOrigin(origin: string | null): boolean {
   if (STATIC_ALLOWED_ORIGINS.has(origin)) return true;
   try {
     const url = new URL(origin);
-    if (url.protocol === "https:" && (url.hostname === "lovable.app" || url.hostname.endsWith(".lovable.app"))) return true;
-    if ((url.protocol === "http:" || url.protocol === "https:") && (url.hostname === "localhost" || url.hostname === "127.0.0.1")) return true;
+    if (
+      url.protocol === "https:" &&
+      (url.hostname === "lovable.app" || url.hostname.endsWith(".lovable.app"))
+    )
+      return true;
+    if (
+      (url.protocol === "http:" || url.protocol === "https:") &&
+      (url.hostname === "localhost" || url.hostname === "127.0.0.1")
+    )
+      return true;
   } catch {
     return false;
   }
@@ -30,23 +38,28 @@ function buildCorsHeaders(origin: string | null): Record<string, string> {
     "Access-Control-Allow-Methods": "POST, OPTIONS",
     "Access-Control-Max-Age": "86400",
   };
-  if (isAllowedOrigin(origin)) headers["Access-Control-Allow-Origin"] = origin as string;
+  if (isAllowedOrigin(origin))
+    headers["Access-Control-Allow-Origin"] = origin as string;
   return headers;
 }
 
 // --- PII masking before sending anything to the model provider ---
-const EMAIL_RE = /[A-Za-z0-9._%+\-]+@[A-Za-z0-9.\-]+\.[A-Za-z]{2,}/g;
+const EMAIL_RE = /[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}/g;
 const CARD_RE = /\b(?:\d[ -]?){13,19}\b/g;
-const SECRET_LABEL_RE = /\b(contrase(?:ñ|n)a|password|clave|token)\b\s*[:=]?\s*\S+/gi;
+const SECRET_LABEL_RE =
+  /\b(contrase(?:ñ|n)a|password|clave|token)\b\s*[:=]?\s*\S+/gi;
 
 function maskSensitive(input: string): string {
   return input
     .replace(EMAIL_RE, "[email oculto]")
-    .replace(CARD_RE, (m) => (m.replace(/\D/g, "").length >= 13 ? "[número oculto]" : m))
+    .replace(CARD_RE, (m) =>
+      m.replace(/\D/g, "").length >= 13 ? "[número oculto]" : m,
+    )
     .replace(SECRET_LABEL_RE, (_m, label) => `${label}: [dato oculto]`);
 }
 
-const HUMAN_ESCALATION_RE = /\b(agente|agent)\b|hablar con (una |un )?(persona|humano|humana|asesor|asesora)|speak (to|with) (a )?(human|person|agent)|talk to (a )?(human|person|agent)|quiero (una |un )?(persona|humano)/i;
+const HUMAN_ESCALATION_RE =
+  /\b(agente|agent)\b|hablar con (una |un )?(persona|humano|humana|asesor|asesora)|speak (to|with) (a )?(human|person|agent)|talk to (a )?(human|person|agent)|quiero (una |un )?(persona|humano)/i;
 
 const HANDOFF_ES = `Soy Fera, una IA. Te paso con el equipo humano de Ferova:
 
@@ -182,7 +195,11 @@ function sseFromText(text: string): Response {
   const encoder = new TextEncoder();
   const stream = new ReadableStream({
     start(controller) {
-      controller.enqueue(encoder.encode(`data: ${JSON.stringify({ choices: [{ delta: { content: text } }] })}\n\n`));
+      controller.enqueue(
+        encoder.encode(
+          `data: ${JSON.stringify({ choices: [{ delta: { content: text } }] })}\n\n`,
+        ),
+      );
       controller.enqueue(encoder.encode("data: [DONE]\n\n"));
       controller.close();
     },
@@ -193,65 +210,138 @@ function sseFromText(text: string): Response {
 serve(async (req) => {
   const origin = req.headers.get("origin");
   const corsHeaders = buildCorsHeaders(origin);
-  if (req.method === "OPTIONS") return new Response(null, { headers: corsHeaders });
+  if (req.method === "OPTIONS")
+    return new Response(null, { headers: corsHeaders });
   if (origin && !isAllowedOrigin(origin)) {
-    return new Response(JSON.stringify({ error: "Origin not allowed" }), { status: 403, headers: { "Content-Type": "application/json" } });
+    return new Response(JSON.stringify({ error: "Origin not allowed" }), {
+      status: 403,
+      headers: { "Content-Type": "application/json" },
+    });
   }
   try {
     const body = await req.json().catch(() => ({}));
-    const { messages, lang, site } = body as { messages?: unknown; lang?: unknown; site?: unknown };
+    const { messages, lang, site } = body as {
+      messages?: unknown;
+      lang?: unknown;
+      site?: unknown;
+    };
     const isFerova = site === "ferova";
     const apiKey = Deno.env.get("LOVABLE_API_KEY");
     if (!apiKey) throw new Error("LOVABLE_API_KEY is not configured");
 
     const MAX_MESSAGES = 20;
     const MAX_CONTENT_LEN = 2000;
-    if (!Array.isArray(messages) || messages.length === 0 || messages.length > MAX_MESSAGES) {
-      return new Response(JSON.stringify({ error: `messages must be an array of 1-${MAX_MESSAGES} items` }), { status: 400, headers: { ...corsHeaders, "Content-Type": "application/json" } });
+    if (
+      !Array.isArray(messages) ||
+      messages.length === 0 ||
+      messages.length > MAX_MESSAGES
+    ) {
+      return new Response(
+        JSON.stringify({
+          error: `messages must be an array of 1-${MAX_MESSAGES} items`,
+        }),
+        {
+          status: 400,
+          headers: { ...corsHeaders, "Content-Type": "application/json" },
+        },
+      );
     }
     const safeMessages: { role: "user" | "assistant"; content: string }[] = [];
     for (const message of messages) {
-      if (!message || typeof message !== "object") return new Response(JSON.stringify({ error: "invalid message item" }), { status: 400, headers: { ...corsHeaders, "Content-Type": "application/json" } });
+      if (!message || typeof message !== "object")
+        return new Response(JSON.stringify({ error: "invalid message item" }), {
+          status: 400,
+          headers: { ...corsHeaders, "Content-Type": "application/json" },
+        });
       const role = (message as { role?: unknown }).role;
       const content = (message as { content?: unknown }).content;
-      if ((role !== "user" && role !== "assistant") || typeof content !== "string") return new Response(JSON.stringify({ error: "invalid role/content" }), { status: 400, headers: { ...corsHeaders, "Content-Type": "application/json" } });
-      safeMessages.push({ role, content: maskSensitive(content.slice(0, MAX_CONTENT_LEN)) });
+      if (
+        (role !== "user" && role !== "assistant") ||
+        typeof content !== "string"
+      )
+        return new Response(JSON.stringify({ error: "invalid role/content" }), {
+          status: 400,
+          headers: { ...corsHeaders, "Content-Type": "application/json" },
+        });
+      safeMessages.push({
+        role,
+        content: maskSensitive(content.slice(0, MAX_CONTENT_LEN)),
+      });
     }
 
     // Human handoff: short-circuit before contacting the provider.
     const lastUser = [...safeMessages].reverse().find((m) => m.role === "user");
     if (lastUser && HUMAN_ESCALATION_RE.test(lastUser.content)) {
       const handoff = isFerova
-        ? (lang === "en" ? FEROVA_HANDOFF_EN : FEROVA_HANDOFF_ES)
-        : (lang === "en" ? HANDOFF_EN : HANDOFF_ES);
+        ? lang === "en"
+          ? FEROVA_HANDOFF_EN
+          : FEROVA_HANDOFF_ES
+        : lang === "en"
+          ? HANDOFF_EN
+          : HANDOFF_ES;
       return new Response(sseFromText(handoff) as unknown as ReadableStream, {
         headers: { ...corsHeaders, "Content-Type": "text/event-stream" },
       });
     }
 
-    const response = await fetch("https://ai.gateway.lovable.dev/v1/chat/completions", {
-      method: "POST",
-      headers: { Authorization: `Bearer ${apiKey}`, "Content-Type": "application/json" },
-      body: JSON.stringify({
-        model: "google/gemini-3-flash-preview",
-        messages: [{
-          role: "system",
-          content: isFerova
-            ? (lang === "en" ? FEROVA_SYSTEM_PROMPT_EN : FEROVA_SYSTEM_PROMPT_ES)
-            : (lang === "en" ? SYSTEM_PROMPT_EN : SYSTEM_PROMPT_ES),
-        }, ...safeMessages],
-        stream: true,
-      }),
-    });
+    const response = await fetch(
+      "https://ai.gateway.lovable.dev/v1/chat/completions",
+      {
+        method: "POST",
+        headers: {
+          Authorization: `Bearer ${apiKey}`,
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          model: "google/gemini-3-flash-preview",
+          messages: [
+            {
+              role: "system",
+              content: isFerova
+                ? lang === "en"
+                  ? FEROVA_SYSTEM_PROMPT_EN
+                  : FEROVA_SYSTEM_PROMPT_ES
+                : lang === "en"
+                  ? SYSTEM_PROMPT_EN
+                  : SYSTEM_PROMPT_ES,
+            },
+            ...safeMessages,
+          ],
+          stream: true,
+        }),
+      },
+    );
     if (!response.ok) {
       const detail = await response.text();
       console.error("AI gateway error:", response.status, detail);
-      const status = response.status === 429 ? 429 : response.status === 402 ? 402 : 500;
-      return new Response(JSON.stringify({ error: status === 429 ? "Rate limit exceeded. Please try again shortly." : "AI service error" }), { status, headers: { ...corsHeaders, "Content-Type": "application/json" } });
+      const status =
+        response.status === 429 ? 429 : response.status === 402 ? 402 : 500;
+      return new Response(
+        JSON.stringify({
+          error:
+            status === 429
+              ? "Rate limit exceeded. Please try again shortly."
+              : "AI service error",
+        }),
+        {
+          status,
+          headers: { ...corsHeaders, "Content-Type": "application/json" },
+        },
+      );
     }
-    return new Response(response.body, { headers: { ...corsHeaders, "Content-Type": "text/event-stream" } });
+    return new Response(response.body, {
+      headers: { ...corsHeaders, "Content-Type": "text/event-stream" },
+    });
   } catch (error) {
     console.error("ai-sales-advisor error:", error);
-    return new Response(JSON.stringify({ error: error instanceof Error ? error.message : "Unknown error" }), { status: 500, headers: { ...corsHeaders, "Content-Type": "application/json" } });
+    return new Response(
+      JSON.stringify({
+        error: error instanceof Error ? error.message : "Unknown error",
+      }),
+      {
+        status: 500,
+        headers: { ...corsHeaders, "Content-Type": "application/json" },
+      },
+    );
   }
 });
