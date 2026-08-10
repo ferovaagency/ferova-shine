@@ -6,7 +6,7 @@ import SEO from "@/components/SEO";
 import AgencyDeliveryConsole from "@/components/visuals/AgencyDeliveryConsole";
 import AgencyTaglineReveal from "@/components/visuals/AgencyTaglineReveal";
 import AgencyVideoElement from "@/components/visuals/AgencyVideoElement";
-import consoleVisual from "@/assets/agency-delivery-console-hero.png";
+import ferovaLogo from "@/assets/ferova-logo.png.png";
 
 const engagements = [
   { name: "Por tarea cerrada", fit: "Cuando el entregable está claro", text: "Cotizamos alcance, fecha y QA antes de empezar. Funciona para auditorías, landings, migraciones o correcciones concretas.", query: "tarea" },
@@ -56,7 +56,7 @@ export default function SeoHome() {
 
   return (
     <div className="seo-brand agency-site min-h-screen">
-      <SEO title="Especialista SEO por horas para agencias | Ferova" description="Contrata SEO técnico, mantenimiento web y landings por tarea, bolsa de horas o capacidad mensual. White label, sin sumar un cargo full time." path="/" lang="es" image={consoleVisual} jsonLd={[professionalService, faqSchema]} />
+      <SEO title="Especialista SEO por horas para agencias | Ferova" description="Contrata SEO técnico, mantenimiento web y landings por tarea, bolsa de horas o capacidad mensual. White label, sin sumar un cargo full time." path="/" lang="es" image={ferovaLogo} jsonLd={[professionalService, faqSchema]} />
       <Header lang="es" />
 
       <main id="contenido-principal">
