@@ -11,7 +11,7 @@ serve(async (req) => {
   }
 
   try {
-    const { email, name } = await req.json();
+    const { email, name, site } = await req.json();
 
     if (!email || typeof email !== 'string' || !email.includes('@') || email.length > 254) {
       return new Response(
@@ -26,7 +26,11 @@ serve(async (req) => {
     }
 
     // Hardcoded server-side: never trust client-supplied listId.
-    const LIST_ID = Number(Deno.env.get('BREVO_LIST_NEWSLETTER') || '11');
+    const LIST_ID = Number(
+      site === 'ferova'
+        ? Deno.env.get('BREVO_LIST_FEROVA') || Deno.env.get('BREVO_LIST_NEWSLETTER') || '11'
+        : Deno.env.get('BREVO_LIST_NEWSLETTER') || '11'
+    );
 
     const response = await fetch('https://api.brevo.com/v3/contacts', {
       method: 'POST',
