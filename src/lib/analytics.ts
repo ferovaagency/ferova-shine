@@ -19,7 +19,7 @@ export type AnalyticsEvent =
   | 'resource_downloaded' | 'resource_external_clicked' | 'newsletter_pro_interested'
   | 'contact_form_submitted' | 'service_inquiry' | 'demo_requested'
   | 'cookies_accepted_all' | 'cookies_accepted_essential' | 'cookies_customized'
-  | 'quote_requested' | 'ai_quote_assistant_opened' | 'linkedin_follow_clicked'
+  | 'quote_requested' | 'ai_quote_assistant_opened' | 'ai_quote_submitted' | 'linkedin_follow_clicked'
   | 'blog_category_selected';
 
 function hasAnalyticsConsent(): boolean {
