@@ -124,6 +124,7 @@ export type Database = {
           meta_title_en: string | null
           meta_title_pt: string | null
           published_at: string
+          site_origin: string
           slug: string
           title: string
           title_en: string | null
@@ -152,6 +153,7 @@ export type Database = {
           meta_title_en?: string | null
           meta_title_pt?: string | null
           published_at?: string
+          site_origin?: string
           slug: string
           title: string
           title_en?: string | null
@@ -180,6 +182,7 @@ export type Database = {
           meta_title_en?: string | null
           meta_title_pt?: string | null
           published_at?: string
+          site_origin?: string
           slug?: string
           title?: string
           title_en?: string | null
@@ -338,6 +341,7 @@ export type Database = {
           scheduled_for: string | null
           sector: string
           service_keys: string[]
+          site_origin: string
           slug: string
           started_at: string | null
           status: Database["public"]["Enums"]["content_status"]
@@ -364,6 +368,7 @@ export type Database = {
           scheduled_for?: string | null
           sector: string
           service_keys?: string[]
+          site_origin?: string
           slug: string
           started_at?: string | null
           status?: Database["public"]["Enums"]["content_status"]
@@ -390,6 +395,7 @@ export type Database = {
           scheduled_for?: string | null
           sector?: string
           service_keys?: string[]
+          site_origin?: string
           slug?: string
           started_at?: string | null
           status?: Database["public"]["Enums"]["content_status"]
@@ -469,6 +475,30 @@ export type Database = {
             referencedColumns: ["id"]
           },
         ]
+      }
+      cms_site_access: {
+        Row: {
+          created_at: string
+          id: string
+          role: Database["public"]["Enums"]["cms_role"]
+          site_origin: string
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          role: Database["public"]["Enums"]["cms_role"]
+          site_origin: string
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          role?: Database["public"]["Enums"]["cms_role"]
+          site_origin?: string
+          user_id?: string
+        }
+        Relationships: []
       }
       cms_user_roles: {
         Row: {
@@ -785,6 +815,7 @@ export type Database = {
           published: boolean | null
           published_at: string | null
           reading_time: number | null
+          site_origin: string
           slug: string
           subject_line: string | null
           title: string
@@ -800,6 +831,7 @@ export type Database = {
           published?: boolean | null
           published_at?: string | null
           reading_time?: number | null
+          site_origin?: string
           slug: string
           subject_line?: string | null
           title: string
@@ -815,6 +847,7 @@ export type Database = {
           published?: boolean | null
           published_at?: string | null
           reading_time?: number | null
+          site_origin?: string
           slug?: string
           subject_line?: string | null
           title?: string
