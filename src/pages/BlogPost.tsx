@@ -48,6 +48,7 @@ const staticPosts: Record<string, Record<string, { title: string; seoTitle?: str
     },
     'core-web-vitals-ecommerce': {
       title: 'Core Web Vitals: Cómo mejorarlos en tu tienda online',
+      seoTitle: 'Core Web Vitals para tu tienda online — Ferova',
       author: 'Ferova Agency', date: '5 Mar 2025', readTime: '10 min', category: 'Performance',
       content: [
         'Los Core Web Vitals son métricas de experiencia de usuario que Google utiliza como factor de ranking.',
