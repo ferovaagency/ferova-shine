@@ -46,6 +46,7 @@ function buildCorsHeaders(origin: string | null): Record<string, string> {
 // --- PII masking before sending anything to the model provider ---
 const EMAIL_RE = /[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}/g;
 const CARD_RE = /\b(?:\d[ -]?){13,19}\b/g;
+const PHONE_RE = /(?:\+?\d[\d\s().-]{7,}\d)/g;
 const SECRET_LABEL_RE =
   /\b(contrase(?:ñ|n)a|password|clave|token)\b\s*[:=]?\s*\S+/gi;
 
@@ -55,6 +56,7 @@ function maskSensitive(input: string): string {
     .replace(CARD_RE, (m) =>
       m.replace(/\D/g, "").length >= 13 ? "[número oculto]" : m,
     )
+    .replace(PHONE_RE, "[teléfono oculto]")
     .replace(SECRET_LABEL_RE, (_m, label) => `${label}: [dato oculto]`);
 }
 
