@@ -14,6 +14,51 @@ export type Database = {
   }
   public: {
     Tables: {
+      admin_inbox: {
+        Row: {
+          company: string | null
+          completed_at: string | null
+          created_at: string
+          email: string | null
+          id: string
+          name: string | null
+          payload: Json | null
+          phone: string | null
+          source: string
+          source_id: string | null
+          status: string
+          summary: string | null
+        }
+        Insert: {
+          company?: string | null
+          completed_at?: string | null
+          created_at?: string
+          email?: string | null
+          id?: string
+          name?: string | null
+          payload?: Json | null
+          phone?: string | null
+          source: string
+          source_id?: string | null
+          status?: string
+          summary?: string | null
+        }
+        Update: {
+          company?: string | null
+          completed_at?: string | null
+          created_at?: string
+          email?: string | null
+          id?: string
+          name?: string | null
+          payload?: Json | null
+          phone?: string | null
+          source?: string
+          source_id?: string | null
+          status?: string
+          summary?: string | null
+        }
+        Relationships: []
+      }
       ai_conversations: {
         Row: {
           consent_data_processing: boolean
