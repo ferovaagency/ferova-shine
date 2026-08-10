@@ -20,7 +20,7 @@ interface PostData {
   meta_description: string | null;
 }
 
-const staticPosts: Record<string, Record<string, { title: string; author: string; date: string; readTime: string; category: string; content: string[] }>> = {
+const staticPosts: Record<string, Record<string, { title: string; seoTitle?: string; author: string; date: string; readTime: string; category: string; content: string[] }>> = {
   es: {
     'seo-ecommerce-guia-completa-2025': {
       title: 'SEO para E-commerce: Guía Completa 2025',
