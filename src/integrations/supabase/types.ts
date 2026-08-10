@@ -24,6 +24,7 @@ export type Database = {
           name: string | null
           payload: Json | null
           phone: string | null
+          site_origin: string
           source: string
           source_id: string | null
           status: string
@@ -38,6 +39,7 @@ export type Database = {
           name?: string | null
           payload?: Json | null
           phone?: string | null
+          site_origin?: string
           source: string
           source_id?: string | null
           status?: string
@@ -52,6 +54,7 @@ export type Database = {
           name?: string | null
           payload?: Json | null
           phone?: string | null
+          site_origin?: string
           source?: string
           source_id?: string | null
           status?: string
