@@ -36,6 +36,7 @@ const staticPosts: Record<string, Record<string, { title: string; seoTitle?: str
     },
     'web-apps-vs-wordpress-ecommerce': {
       title: 'Web Apps vs WordPress: ¿Cuál es mejor para tu E-commerce?',
+      seoTitle: 'Web Apps vs WordPress para E-commerce — Ferova',
       author: 'Ferova Agency', date: '10 Mar 2025', readTime: '8 min', category: 'Web Development',
       content: [
         'La elección de la plataforma correcta puede hacer o deshacer tu negocio online. En este artículo comparamos las Web Apps modernas con WordPress tradicional.',
