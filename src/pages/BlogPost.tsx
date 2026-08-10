@@ -208,7 +208,7 @@ const BlogPost = ({ lang = 'es' }: Props) => {
     };
     return (
       <>
-        <SEO title={`${staticPost.title} — Ferova Agency`} description={staticPost.content[0]?.slice(0, 155) || staticPost.title} path={postPath} lang={lang} type="article" jsonLd={articleLd} />
+        <SEO title={staticPost.seoTitle || `${staticPost.title} — Ferova Agency`} description={staticPost.content[0]?.slice(0, 155) || staticPost.title} path={postPath} lang={lang} type="article" jsonLd={articleLd} />
         <Header currentLang={lang} />
         <main className="pt-20">
           <article className="py-8 md:py-12">
