@@ -7,6 +7,7 @@ import { ArrowLeft, Clock, User, MessageCircle, Loader2 } from 'lucide-react';
 import { supabase } from '@/integrations/supabase/client';
 import { useAnalytics } from '@/hooks/useAnalytics';
 import SEO from '@/components/SEO';
+import { getPrerenderPost } from '@/lib/prerender-store';
 
 interface Props { lang?: 'es' | 'en' | 'pt'; }
 
@@ -101,8 +102,11 @@ const estimateReadTime = (text: string) => {
 
 const BlogPost = ({ lang = 'es' }: Props) => {
   const { slug } = useParams();
-  const [dbPost, setDbPost] = useState<PostData | null>(null);
-  const [loading, setLoading] = useState(true);
+  // En build, el prerender ya dejó el post cargado (src/prerender-content.ts).
+  // En el navegador esto es siempre null y el flujo es el de siempre.
+  const seeded = getPrerenderPost(lang, slug);
+  const [dbPost, setDbPost] = useState<PostData | null>(seeded);
+  const [loading, setLoading] = useState(!seeded);
   const [notFound, setNotFound] = useState(false);
   const { trackBlogRead } = useAnalytics();
 
@@ -113,6 +117,7 @@ const BlogPost = ({ lang = 'es' }: Props) => {
   const backLabel = lang === 'pt' ? 'Voltar ao blog' : lang === 'en' ? 'Back to blog' : 'Volver al blog';
 
   useEffect(() => {
+    if (seeded) return;
     if (staticPost || !slug) {
       setLoading(false);
       if (!staticPost && !slug) setNotFound(true);
@@ -150,7 +155,7 @@ const BlogPost = ({ lang = 'es' }: Props) => {
       }
     };
     fetchPost();
-  }, [slug, staticPost, lang]);
+  }, [slug, staticPost, lang, seeded]);
 
   // Track blog read
   useEffect(() => {

@@ -6,6 +6,8 @@ import "./prerender-polyfills"; // ⚠️ DEBE ser el primer import.
 import { renderToString } from "react-dom/server";
 import { HelmetProvider } from "react-helmet-async";
 import App from "./App";
+import { fetchDynamicSlugs } from "./prerender-content";
+import { getPrerenderPost } from "./lib/prerender-store";
 import "./index.css";
 
 type HelmetOut = {
@@ -15,65 +17,21 @@ type HelmetOut = {
   script?: { toString(): string };
 };
 
-// Slugs estáticos de casos de éxito (data/pricing.ts).
-const CASO_IDS = [
-  "google-ads-arcos-desinfeccion",
-  "ecommerce-cableado-estructurado",
-  "ecommerce-mascotas",
-  "cliente-tecnologia-migracion-web-app",
-];
-
-let dynamicSlugsCache: string[] | null = null;
-
-async function fetchDynamicSlugs(): Promise<string[]> {
-  if (dynamicSlugsCache) return dynamicSlugsCache;
-  const url = import.meta.env.VITE_SUPABASE_URL as string | undefined;
-  const key = import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY as string | undefined;
-  const routes: string[] = [];
-
-  if (url && key) {
-    try {
-      const headers = { apikey: key, Authorization: `Bearer ${key}` };
-      // ⚠️ blog_posts NO tiene columna `status` — se publica con `active=true` y
-      // `published_at <= now` (mismo filtro que src/pages/Blog.tsx). La query
-      // anterior (`status=eq.published`) devolvía HTTP 400 y NINGÚN post se
-      // prerenderizaba. Newsletter se lee de la vista pública ya filtrada.
-      const now = new Date().toISOString();
-      const [blogRes, editionsRes, casesRes] = await Promise.all([
-        fetch(`${url}/rest/v1/blog_posts?select=slug,language&active=eq.true&published_at=lte.${now}`, { headers }),
-        fetch(`${url}/rest/v1/newsletter_editions_public?select=slug`, { headers }),
-        fetch(`${url}/rest/v1/case_studies_public?select=slug`, { headers }),
-      ]);
-      if (blogRes.ok) {
-        const posts = (await blogRes.json()) as { slug: string; language: "es" | "en" }[];
-        posts.forEach((p) => routes.push(p.language === "en" ? `/en/blog/${p.slug}` : `/blog/${p.slug}`));
-      }
-      if (casesRes.ok) ((await casesRes.json()) as { slug: string }[]).forEach((item) => routes.push(`/casos-de-exito/${item.slug}`));
-      if (editionsRes.ok) {
-        const eds = (await editionsRes.json()) as { slug: string }[];
-        eds.forEach((e) => {
-          routes.push(
-            `/newsletter/edicion/${e.slug}`,
-            `/en/newsletter/edition/${e.slug}`,
-            `/pt/newsletter/edicao/${e.slug}`,
-          );
-        });
-      }
-    } catch (err) {
-      console.warn("[prerender] Supabase fetch failed:", err);
-    }
-  }
-
-  CASO_IDS.forEach((id) => {
-    routes.push(`/casos-de-exito/${id}`, `/en/case-studies/${id}`, `/pt/casos-de-sucesso/${id}`);
-  });
-
-  dynamicSlugsCache = routes;
-  return routes;
-}
+/** /blog/:slug y /en/blog/:slug — las únicas rutas de artículo que existen. */
+const BLOG_POST_URL = /^\/(?:(en)\/)?blog\/([^/]+)$/;
 
 export async function prerender(data: { url: string }) {
   const helmetContext: Record<string, unknown> = {};
+
+  // Aviso (no error) cuando se va a prerenderizar un artículo sin datos cargados:
+  // el HTML saldría con el <title> de la home y sin <h1>. Pasa con slugs que
+  // están en el listado editorial estático pero no tienen fila en blog_posts.
+  const postMatch = BLOG_POST_URL.exec(data.url);
+  if (postMatch && !getPrerenderPost(postMatch[1] ?? "es", postMatch[2])) {
+    console.warn(
+      `[prerender] ${data.url}: sin datos de blog_posts. El HTML saldrá sin título ni H1 propios.`,
+    );
+  }
 
   const html = renderToString(
     <HelmetProvider context={helmetContext as never}>
@@ -99,18 +57,25 @@ export async function prerender(data: { url: string }) {
     if (Object.keys(props).length) elements.add({ type, props });
   }
 
-  // Enlaces internos + rutas dinámicas (solo desde la primera pasada `/`).
+  // Enlaces internos descubiertos en el HTML. Es un extra: si el parser falla,
+  // el build puede seguir con el registro de rutas.
   let links: Set<string> | undefined;
   try {
     const { parseLinks } = await import("vite-prerender-plugin/parse");
     const internal = parseLinks(html).filter((h) => h.startsWith("/") && !h.startsWith("//"));
     links = new Set(internal);
-    if (data.url === "/") {
-      const dynamic = await fetchDynamicSlugs();
-      dynamic.forEach((r) => links!.add(r));
-    }
-  } catch {
-    /* opcional */
+  } catch (err) {
+    console.warn("[prerender] parseLinks no disponible:", (err as Error).message);
+  }
+
+  // Rutas dinámicas (blog, casos, newsletter). ⚠️ FUERA del try de arriba a
+  // propósito: si esto falla, el build TIENE que caerse. Antes quedaba dentro y
+  // el catch se comía el error, así que un fallo de Supabase producía un sitio
+  // completo sin artículos y con exit code 0.
+  if (data.url === "/") {
+    const dynamic = await fetchDynamicSlugs();
+    links = links ?? new Set<string>();
+    dynamic.forEach((r) => links!.add(r));
   }
 
   const lang = data.url.startsWith("/en") ? "en" : data.url.startsWith("/pt") ? "pt" : "es";
