@@ -10,6 +10,21 @@ import { fetchDynamicSlugs } from "./prerender-content";
 import { getPrerenderPost } from "./lib/prerender-store";
 import "./index.css";
 
+/**
+ * react-helmet-async devuelve los nombres de atributo tal cual los declara React
+ * (`hrefLang`, `httpEquiv`…). El HTML sigue siendo válido —los atributos no
+ * distinguen mayúsculas— pero cualquier auditoría que busque `hreflang=` en el
+ * fuente no encuentra nada, y así se reportó "cero hreflang" en producción.
+ * Se normalizan al nombre HTML real.
+ */
+const HTML_ATTR: Record<string, string> = {
+  hrefLang: "hreflang",
+  httpEquiv: "http-equiv",
+  charSet: "charset",
+  itemProp: "itemprop",
+};
+const htmlAttr = (name: string) => HTML_ATTR[name] ?? name;
+
 type HelmetOut = {
   title?: { toString(): string };
   meta?: { toString(): string };
@@ -53,7 +68,7 @@ export async function prerender(data: { url: string }) {
     const props: Record<string, string> = {};
     const attrRegex = /(\w[\w-]*)="([^"]*)"/g;
     let a: RegExpExecArray | null;
-    while ((a = attrRegex.exec(attrStr)) !== null) props[a[1]] = a[2];
+    while ((a = attrRegex.exec(attrStr)) !== null) props[htmlAttr(a[1])] = a[2];
     if (Object.keys(props).length) elements.add({ type, props });
   }
 

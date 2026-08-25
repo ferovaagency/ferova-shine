@@ -32,12 +32,23 @@ export type Lang = "es" | "en" | "pt";
 /** Mercados públicos mantenidos: español e inglés. Portugués queda como legado fuera del SEO. */
 export const LANGS: Lang[] = ["es", "en"];
 
-/** El dominio de producción es único para los 3 idiomas (path-based i18n). */
+/**
+ * El dominio de producción es único para los 3 idiomas (i18n por path):
+ * raíz = español, /en = inglés, /pt = portugués.
+ *
+ * ⚠️ Hasta 2026-08 `en` apuntaba a https://seoforecommerces.co. Como los paths
+ * de ROUTES YA incluyen el prefijo /en, la canónica salía como
+ * `https://seoforecommerces.co/en`, y la redirección de vercel.json le añadía
+ * otro prefijo: el destino real era `/en/en`, que no existe en App.tsx. Es
+ * decir, las páginas en inglés le declaraban a Google una canónica que
+ * redirigía a una URL inexistente. Decisión de SEO: dominio canónico único.
+ * seoforecommerces.co se conserva SOLO como redirección de entrada.
+ */
 export const SITE_ORIGIN = "https://seoparaecommerce.co";
 export const SITE_ORIGINS: Record<Lang, string> = {
-  es: "https://seoparaecommerce.co",
-  en: "https://seoforecommerces.co",
-  pt: "https://seoparaecommerce.co",
+  es: SITE_ORIGIN,
+  en: SITE_ORIGIN,
+  pt: SITE_ORIGIN,
 };
 
 export type RouteType =
