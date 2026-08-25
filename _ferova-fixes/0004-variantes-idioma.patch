@@ -1,0 +1,525 @@
+From 0e48e0a45c437d1de8faab74689320c32b45656d Mon Sep 17 00:00:00 2001
+From: Claude <noreply@anthropic.com>
+Date: Tue, 25 Aug 2026 02:15:27 +0000
+Subject: [PATCH 4/4] fix(blog): variantes de idioma segun el modelo real
+ (columnas _en, no filas)
+
+blog_posts tiene UNA fila por articulo (las 43 con language='es') y las
+traducciones en columnas sufijadas: title_en, content_en, excerpt_en,
+meta_title_en, meta_description_en. Filtrar por `language` no encontraba ni una
+fila inglesa, asi que /en/blog/* no se generaba nunca.
+
+- src/lib/blog-i18n.ts (nuevo): saneo de texto y seleccion de variante. title_en
+  llega envuelto en <p>: se limpia AL LEER, la base no se toca. Se avisa por log
+  cuantas filas traian HTML.
+- buildBlogVariants(): siempre la variante es; la en solo si las columnas _en
+  traen contenido; pt queda fuera porque /pt/blog/:slug es un <Navigate>.
+  Avisa cuantos articulos se quedan sin ingles (aviso, no error).
+- Los articulos traducidos son el mismo contenido en dos idiomas, asi que ahora
+  si emiten hreflang reciproco, en el HTML y en el sitemap.
+- BlogPost deja de filtrar por language en el cliente: /en/blog/:slug mostraba
+  "Article not found" al montar React aunque el HTML estatico fuera correcto.
+- prerender: desescapa entidades del title y de los atributos; el plugin las
+  vuelve a escapar y un titulo con "&" salia como "&amp;amp;".
+
+Co-Authored-By: Claude Opus 5 <noreply@anthropic.com>
+Claude-Session: https://claude.ai/code/session_014rsxMpKFTCu1sXWAQGXc68
+---
+ scripts/generate-sitemap.ts |  21 ++++---
+ src/lib/blog-i18n.ts        | 116 ++++++++++++++++++++++++++++++++++++
+ src/lib/dynamic-content.ts  | 104 ++++++++++++++++++++++++++++++--
+ src/lib/prerender-store.ts  |   2 +
+ src/pages/BlogPost.tsx      |  45 ++++++++++----
+ src/prerender-content.ts    |  26 ++++----
+ src/prerender.tsx           |   8 ++-
+ 7 files changed, 285 insertions(+), 37 deletions(-)
+ create mode 100644 src/lib/blog-i18n.ts
+
+diff --git a/scripts/generate-sitemap.ts b/scripts/generate-sitemap.ts
+index 9fe4a1d..02be68a 100644
+--- a/scripts/generate-sitemap.ts
++++ b/scripts/generate-sitemap.ts
+@@ -33,7 +33,7 @@ import {
+ } from "../src/config/routes";
+ import {
+   fetchDynamicContent,
+-  BLOG_PATHS,
++  buildBlogVariants,
+   CASE_PATHS,
+   EDITION_PATHS,
+   CASO_IDS,
+@@ -114,11 +114,18 @@ async function fetchDynamic(supabaseUrl?: string, supabaseKey?: string): Promise
+   const { posts, cases, editions, skippedLanguages } = await fetchDynamicContent(url, key, "sitemap");
+   const entries: UrlEntry[] = [];
+ 
+-  // Blog: cada artículo es independiente por idioma (índice único language+slug),
+-  // no hay equivalencia es↔en garantizada. Por eso NO se emiten alternates:
+-  // inventar un hreflang recíproco que no existe es peor que no ponerlo.
+-  for (const post of posts) {
+-    entries.push({ loc: BLOG_PATHS[post.language](post.slug), priority: 0.7, changefreq: "monthly" });
++  // Blog: una fila por artículo con sus traducciones en columnas _en. Cuando la
++  // traducción existe, ES y EN son el mismo artículo en dos idiomas, así que sí
++  // les corresponde hreflang recíproco. Cuando no existe, se lista solo el ES y
++  // sin alternates: no se inventa una equivalencia que no está.
++  for (const variant of buildBlogVariants(posts, "sitemap")) {
++    const reciprocos = Object.keys(variant.alternates).length > 1;
++    entries.push({
++      loc: variant.path,
++      alternates: reciprocos ? variant.alternates : undefined,
++      priority: 0.7,
++      changefreq: "monthly",
++    });
+   }
+   if (skippedLanguages.length) {
+     console.warn(`[sitemap] idiomas sin ruta propia, fuera del sitemap: ${skippedLanguages.join(", ")}`);
+@@ -147,7 +154,7 @@ async function fetchDynamic(supabaseUrl?: string, supabaseKey?: string): Promise
+   }
+ 
+   console.log(
+-    `[sitemap] contenido dinámico: ${posts.length} posts, ${cases.length} casos, ${editions.length} ediciones.`,
++    `[sitemap] contenido dinámico: ${posts.length} filas de blog, ${cases.length} casos, ${editions.length} ediciones.`,
+   );
+   return entries;
+ }
+diff --git a/src/lib/blog-i18n.ts b/src/lib/blog-i18n.ts
+new file mode 100644
+index 0000000..d9e41ea
+--- /dev/null
++++ b/src/lib/blog-i18n.ts
+@@ -0,0 +1,116 @@
++/**
++ * Traducciones de blog_posts — modelo real de la tabla.
++ *
++ * ⚠️ NO hay una fila por idioma. Hay UNA fila por artículo, con `language = 'es'`,
++ * y las traducciones viven en columnas sufijadas de la misma fila:
++ *   title_en / excerpt_en / content_en / meta_title_en / meta_description_en
++ *   title_pt / … (idem)
++ * Verificado contra src/integrations/supabase/types.ts (Row de blog_posts) y
++ * contra los datos reales: 43 filas, las 43 con language='es', 39 con las
++ * columnas _en pobladas.
++ *
++ * Consecuencia: la variante inglesa de un artículo NO se descubre filtrando por
++ * `language`, sino mirando si las columnas _en traen contenido.
++ */
++
++export interface BlogRowI18n {
++  title: string;
++  content: string;
++  excerpt?: string | null;
++  meta_title?: string | null;
++  meta_description?: string | null;
++  title_en?: string | null;
++  content_en?: string | null;
++  excerpt_en?: string | null;
++  meta_title_en?: string | null;
++  meta_description_en?: string | null;
++}
++
++export interface BlogVariant {
++  title: string;
++  content: string;
++  excerpt: string | null;
++  meta_title: string | null;
++  meta_description: string | null;
++}
++
++const ENTITIES: Record<string, string> = {
++  "&amp;": "&",
++  "&lt;": "<",
++  "&gt;": ">",
++  "&quot;": '"',
++  "&#39;": "'",
++  "&apos;": "'",
++  "&nbsp;": " ",
++};
++
++/**
++ * Deja texto plano: quita etiquetas, decodifica las entidades más comunes y
++ * colapsa espacios. Necesario porque hay filas con el texto envuelto en HTML
++ * (p. ej. `title_en = "<p>Ecommerce SEO Expert…</p>"`). Sin esto, ese `<p>`
++ * acabaría literal dentro del <title> y en el resultado de Google.
++ *
++ * Es saneo de LECTURA: no se toca la base. La limpieza de datos es otra decisión.
++ */
++export function decodeEntities(value: string): string {
++  return value
++    .replace(/&#(\d+);/g, (_, code) => String.fromCodePoint(Number(code)))
++    .replace(/&[a-zA-Z]+;/g, (m) => ENTITIES[m] ?? m);
++}
++
++export function stripHtml(value: string | null | undefined): string {
++  if (!value) return "";
++  return decodeEntities(value.replace(/<[^>]*>/g, " "))
++    .replace(/\s+/g, " ")
++    .trim();
++}
++
++/** ¿La fila trae HTML en algún campo que se usa como texto plano? */
++export function hasHtmlInTextFields(row: BlogRowI18n): boolean {
++  const fields = [
++    row.title,
++    row.meta_title,
++    row.meta_description,
++    row.excerpt,
++    row.title_en,
++    row.meta_title_en,
++    row.meta_description_en,
++    row.excerpt_en,
++  ];
++  return fields.some((f) => typeof f === "string" && /<[^>]+>/.test(f));
++}
++
++/** Hay variante inglesa solo si título y cuerpo en inglés traen contenido real. */
++export function hasEnglishVariant(row: BlogRowI18n): boolean {
++  return stripHtml(row.title_en).length > 0 && (row.content_en ?? "").trim().length > 0;
++}
++
++/**
++ * Devuelve los campos del idioma pedido, con los textos saneados.
++ * `content` NO se sanea: es el cuerpo del artículo y va como HTML a propósito.
++ * Devuelve null si ese idioma no existe para la fila.
++ */
++export function pickVariant(row: BlogRowI18n, lang: "es" | "en"): BlogVariant | null {
++  if (lang === "en") {
++    if (!hasEnglishVariant(row)) return null;
++    return {
++      title: stripHtml(row.title_en),
++      content: row.content_en as string,
++      excerpt: stripHtml(row.excerpt_en) || null,
++      meta_title: stripHtml(row.meta_title_en) || null,
++      meta_description: stripHtml(row.meta_description_en) || null,
++    };
++  }
++  return {
++    title: stripHtml(row.title) || row.title,
++    content: row.content,
++    excerpt: stripHtml(row.excerpt) || null,
++    meta_title: stripHtml(row.meta_title) || null,
++    meta_description: stripHtml(row.meta_description) || null,
++  };
++}
++
++/** Columnas que hay que pedirle al REST para poder armar las tres variantes. */
++export const BLOG_I18N_COLUMNS =
++  "title,content,excerpt,meta_title,meta_description," +
++  "title_en,content_en,excerpt_en,meta_title_en,meta_description_en";
+diff --git a/src/lib/dynamic-content.ts b/src/lib/dynamic-content.ts
+index 718c7a3..99e533b 100644
+--- a/src/lib/dynamic-content.ts
++++ b/src/lib/dynamic-content.ts
+@@ -15,16 +15,37 @@
+  * Search Console reporta 0 clics.
+  */
+ 
+-export interface BlogPostRow {
++import {
++  BLOG_I18N_COLUMNS,
++  hasEnglishVariant,
++  hasHtmlInTextFields,
++  pickVariant,
++  type BlogRowI18n,
++} from "./blog-i18n";
++
++export interface BlogPostRow extends BlogRowI18n {
+   slug: string;
+   language: string;
+-  title: string;
+   author: string;
+   category: string;
+-  content: string;
+   created_at: string;
++}
++
++/** Una variante publicable: idioma + ruta real + los campos ya saneados. */
++export interface BlogVariant {
++  lang: "es" | "en";
++  slug: string;
++  path: string;
++  title: string;
++  content: string;
++  excerpt: string | null;
+   meta_title: string | null;
+   meta_description: string | null;
++  author: string;
++  category: string;
++  created_at: string;
++  /** Rutas hermanas del mismo artículo (mismo slug, otra traducción). */
++  alternates: Partial<Record<"es" | "en", string>>;
+ }
+ 
+ export interface DynamicContent {
+@@ -130,7 +151,7 @@ export async function fetchDynamicContent(
+   // published_at <= now (mismo filtro que src/pages/Blog.tsx).
+   const blogUrl =
+     `${supabaseUrl}/rest/v1/blog_posts` +
+-    `?select=slug,language,title,author,category,content,created_at,meta_title,meta_description` +
++    `?select=slug,language,author,category,created_at,${BLOG_I18N_COLUMNS}` +
+     `&active=eq.true&published_at=lte.${now}`;
+ 
+   let posts: BlogPostRow[];
+@@ -172,3 +193,78 @@ export async function fetchDynamicContent(
+ 
+   return { posts: usable, cases, editions, skippedLanguages: [...skipped] };
+ }
++
++/**
++ * Convierte las filas en variantes publicables.
++ *
++ * ⚠️ La variante inglesa NO sale de filtrar `language='en'` — no existe ninguna
++ * fila así: sale de que las columnas _en de la MISMA fila traigan contenido.
++ * El portugués queda fuera aunque la fila lo tenga: `/pt/blog/:slug` es un
++ * <Navigate> a /blog (App.tsx:223), y no se lista lo que es una redirección.
++ *
++ * Avisa (no rompe) de cuántos artículos se quedan sin inglés y de cuántas filas
++ * traían HTML en campos de texto.
++ */
++export function buildBlogVariants(posts: BlogPostRow[], scope: string): BlogVariant[] {
++  const variants: BlogVariant[] = [];
++  const sinIngles: string[] = [];
++  let conHtml = 0;
++
++  for (const row of posts) {
++    if (hasHtmlInTextFields(row)) conHtml++;
++
++    const baseLang = (row.language || "es").toLowerCase() === "en" ? "en" : "es";
++    const english = baseLang === "es" && hasEnglishVariant(row);
++
++    const alternates: Partial<Record<"es" | "en", string>> = {};
++    alternates[baseLang] = BLOG_PATHS[baseLang](row.slug);
++    if (english) alternates.en = BLOG_PATHS.en(row.slug);
++
++    const base = pickVariant(row, "es")!; // columnas base de la fila
++    variants.push({
++      lang: baseLang,
++      slug: row.slug,
++      path: BLOG_PATHS[baseLang](row.slug),
++      ...base,
++      author: row.author,
++      category: row.category,
++      created_at: row.created_at,
++      alternates,
++    });
++
++    if (english) {
++      const en = pickVariant(row, "en")!;
++      variants.push({
++        lang: "en",
++        slug: row.slug,
++        path: BLOG_PATHS.en(row.slug),
++        ...en,
++        author: row.author,
++        category: row.category,
++        created_at: row.created_at,
++        alternates,
++      });
++    } else if (baseLang === "es") {
++      sinIngles.push(row.slug);
++    }
++  }
++
++  if (sinIngles.length) {
++    console.warn(
++      `[${scope}] ${sinIngles.length} de ${posts.length} artículos sin variante inglesa ` +
++        `(columnas _en vacías): ${sinIngles.join(", ")}`,
++    );
++  }
++  if (conHtml) {
++    console.warn(
++      `[${scope}] ${conHtml} filas traían HTML en campos de texto (title/meta/excerpt); ` +
++        `se saneó al usarlas. La base NO se modifica.`,
++    );
++  }
++  console.log(
++    `[${scope}] variantes de blog: ${variants.filter((v) => v.lang === "es").length} es, ` +
++      `${variants.filter((v) => v.lang === "en").length} en.`,
++  );
++
++  return variants;
++}
+diff --git a/src/lib/prerender-store.ts b/src/lib/prerender-store.ts
+index ffc32b1..0d53c58 100644
+--- a/src/lib/prerender-store.ts
++++ b/src/lib/prerender-store.ts
+@@ -24,6 +24,8 @@ export interface PrerenderPost {
+   created_at: string;
+   meta_title: string | null;
+   meta_description: string | null;
++  /** Rutas hermanas del mismo artículo, para los hreflang. */
++  alternates?: Partial<Record<"es" | "en", string>>;
+ }
+ 
+ const posts = new Map<string, PrerenderPost>();
+diff --git a/src/pages/BlogPost.tsx b/src/pages/BlogPost.tsx
+index 7b3d5dc..06eb383 100644
+--- a/src/pages/BlogPost.tsx
++++ b/src/pages/BlogPost.tsx
+@@ -8,6 +8,7 @@ import { supabase } from '@/integrations/supabase/client';
+ import { useAnalytics } from '@/hooks/useAnalytics';
+ import SEO from '@/components/SEO';
+ import { getPrerenderPost } from '@/lib/prerender-store';
++import { BLOG_I18N_COLUMNS, pickVariant, type BlogRowI18n } from '@/lib/blog-i18n';
+ 
+ interface Props { lang?: 'es' | 'en' | 'pt'; }
+ 
+@@ -19,6 +20,8 @@ interface PostData {
+   created_at: string;
+   meta_title: string | null;
+   meta_description: string | null;
++  /** Rutas hermanas del mismo artículo (mismo slug, otra traducción). */
++  alternates?: Partial<Record<'es' | 'en', string>>;
+ }
+ 
+ const staticPosts: Record<string, Record<string, { title: string; seoTitle?: string; author: string; date: string; readTime: string; category: string; content: string[] }>> = {
+@@ -126,26 +129,36 @@ const BlogPost = ({ lang = 'es' }: Props) => {
+ 
+     const fetchPost = async () => {
+       try {
++        // ⚠️ NO se filtra por `language`: hay UNA fila por artículo (language='es')
++        // y las traducciones viven en columnas _en / _pt de esa misma fila. El
++        // filtro anterior (`language='en'`) no encontraba nada nunca, así que
++        // /en/blog/:slug mostraba "Article not found" al montar React.
+         const { data, error } = await supabase
+           .from('blog_posts')
+-          .select('title, author, category, content, created_at, meta_title, meta_description')
++          .select(`slug, language, author, category, created_at, ${BLOG_I18N_COLUMNS}`)
+           .eq('slug', slug)
+-          .eq('language', lang === 'en' ? 'en' : 'es')
+           .eq('active', true)
+           .lte('published_at', new Date().toISOString())
+-          .maybeSingle();
++          .limit(1);
+ 
+-        if (error || !data) {
++        const row = data?.[0] as (BlogRowI18n & { author: string; category: string; created_at: string }) | undefined;
++        const variant = row ? pickVariant(row, lang === 'en' ? 'en' : 'es') : null;
++
++        if (error || !variant) {
+           setNotFound(true);
+         } else {
++          const hasEn = Boolean(pickVariant(row!, 'en'));
+           setDbPost({
+-            title: data.title,
+-            author: data.author,
+-            category: data.category,
+-            content: data.content,
+-            created_at: data.created_at,
+-            meta_title: data.meta_title,
+-            meta_description: data.meta_description,
++            title: variant.title,
++            author: row!.author,
++            category: row!.category,
++            content: variant.content,
++            created_at: row!.created_at,
++            meta_title: variant.meta_title,
++            meta_description: variant.meta_description,
++            alternates: hasEn
++              ? { es: `/blog/${slug}`, en: `/en/blog/${slug}` }
++              : { es: `/blog/${slug}` },
+           });
+         }
+       } catch {
+@@ -288,7 +301,15 @@ const BlogPost = ({ lang = 'es' }: Props) => {
+ 
+   return (
+     <>
+-      <SEO title={seoTitle} description={seoDesc} path={postPath} lang={lang} type="article" jsonLd={articleLd} />
++      <SEO
++        title={seoTitle}
++        description={seoDesc}
++        path={postPath}
++        lang={lang}
++        type="article"
++        jsonLd={articleLd}
++        alternates={post.alternates}
++      />
+       <Header currentLang={lang} />
+       <main className="pt-20">
+         <article className="py-8 md:py-12">
+diff --git a/src/prerender-content.ts b/src/prerender-content.ts
+index 3b2afe2..cc3b8b9 100644
+--- a/src/prerender-content.ts
++++ b/src/prerender-content.ts
+@@ -8,7 +8,7 @@
+  */
+ import {
+   fetchDynamicContent,
+-  BLOG_PATHS,
++  buildBlogVariants,
+   CASE_PATHS,
+   EDITION_PATHS,
+   CASO_IDS,
+@@ -26,16 +26,18 @@ export async function fetchDynamicSlugs(): Promise<string[]> {
+   const { posts, cases, editions, skippedLanguages } = await fetchDynamicContent(url, key, "prerender");
+   const routes: string[] = [];
+ 
+-  for (const post of posts) {
+-    routes.push(BLOG_PATHS[post.language](post.slug));
+-    setPrerenderPost(post.language, post.slug, {
+-      title: post.title,
+-      author: post.author,
+-      category: post.category,
+-      content: post.content,
+-      created_at: post.created_at,
+-      meta_title: post.meta_title,
+-      meta_description: post.meta_description,
++  // Una fila por artículo, hasta dos rutas por fila (es + en si hay traducción).
++  for (const variant of buildBlogVariants(posts, "prerender")) {
++    routes.push(variant.path);
++    setPrerenderPost(variant.lang, variant.slug, {
++      title: variant.title,
++      author: variant.author,
++      category: variant.category,
++      content: variant.content,
++      created_at: variant.created_at,
++      meta_title: variant.meta_title,
++      meta_description: variant.meta_description,
++      alternates: variant.alternates,
+     });
+   }
+ 
+@@ -52,7 +54,7 @@ export async function fetchDynamicSlugs(): Promise<string[]> {
+   CASO_IDS.forEach((id) => all(CASE_PATHS, id));
+ 
+   console.log(
+-    `[prerender] contenido dinámico: ${posts.length} posts, ${cases.length} casos, ${editions.length} ediciones.`,
++    `[prerender] contenido dinámico: ${posts.length} filas de blog, ${cases.length} casos, ${editions.length} ediciones.`,
+   );
+ 
+   cache = [...new Set(routes)];
+diff --git a/src/prerender.tsx b/src/prerender.tsx
+index 69eebf7..82d643e 100644
+--- a/src/prerender.tsx
++++ b/src/prerender.tsx
+@@ -8,6 +8,7 @@ import { HelmetProvider } from "react-helmet-async";
+ import App from "./App";
+ import { fetchDynamicSlugs } from "./prerender-content";
+ import { getPrerenderPost } from "./lib/prerender-store";
++import { decodeEntities } from "./lib/blog-i18n";
+ import "./index.css";
+ 
+ /**
+@@ -55,8 +56,11 @@ export async function prerender(data: { url: string }) {
+   );
+ 
+   const helmet = (helmetContext as { helmet?: HelmetOut }).helmet;
++  // El texto se lee del HTML que emite helmet (ya escapado) y el plugin lo vuelve
++  // a escapar al escribirlo (serializeElement → enc). Sin desescapar aquí, un
++  // título con "&" acaba como "&amp;amp;" en el <title>.
+   const titleMatch = helmet?.title?.toString().match(/<title[^>]*>([^<]*)<\/title>/);
+-  const title = titleMatch?.[1];
++  const title = titleMatch?.[1] ? decodeEntities(titleMatch[1]) : undefined;
+ 
+   // Extraer descripción, canonical y og:* del helmet como elementos individuales.
+   const rawHead = (helmet?.meta?.toString() ?? "") + (helmet?.link?.toString() ?? "");
+@@ -68,7 +72,7 @@ export async function prerender(data: { url: string }) {
+     const props: Record<string, string> = {};
+     const attrRegex = /(\w[\w-]*)="([^"]*)"/g;
+     let a: RegExpExecArray | null;
+-    while ((a = attrRegex.exec(attrStr)) !== null) props[htmlAttr(a[1])] = a[2];
++    while ((a = attrRegex.exec(attrStr)) !== null) props[htmlAttr(a[1])] = decodeEntities(a[2]);
+     if (Object.keys(props).length) elements.add({ type, props });
+   }
+ 
+-- 
+2.43.0
+

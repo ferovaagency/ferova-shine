@@ -1,0 +1,409 @@
+From 30d8cbf76af0dfb1cdd05f3bcc4a1a1154a1a98c Mon Sep 17 00:00:00 2001
+From: Claude <noreply@anthropic.com>
+Date: Mon, 24 Aug 2026 16:32:50 +0000
+Subject: [PATCH 1/3] fix(prerender): fallar ruidosamente y prerenderizar
+ articulos con sus datos
+
+- fetchDynamicSlugs sale del try/catch que se comia el error y ahora lanza si
+  faltan credenciales, si Supabase responde !ok o si blog_posts devuelve 0 filas.
+- El prerender carga el post y BlogPost lo lee de forma sincrona, asi el HTML
+  estatico lleva title, meta description y H1 del articulo (antes: spinner).
+- Variantes de idioma solo donde existe la ruta real (es/en en blog; pt es
+  redireccion) y los casos de Supabase generan las tres variantes.
+
+Co-Authored-By: Claude Opus 5 <noreply@anthropic.com>
+Claude-Session: https://claude.ai/code/session_014rsxMpKFTCu1sXWAQGXc68
+---
+ src/lib/prerender-store.ts |  45 +++++++++++
+ src/pages/BlogPost.tsx     |  11 ++-
+ src/prerender-content.ts   | 157 +++++++++++++++++++++++++++++++++++++
+ src/prerender.tsx          |  91 +++++++--------------
+ 4 files changed, 238 insertions(+), 66 deletions(-)
+ create mode 100644 src/lib/prerender-store.ts
+ create mode 100644 src/prerender-content.ts
+
+diff --git a/src/lib/prerender-store.ts b/src/lib/prerender-store.ts
+new file mode 100644
+index 0000000..ffc32b1
+--- /dev/null
++++ b/src/lib/prerender-store.ts
+@@ -0,0 +1,45 @@
++/**
++ * Almacén de datos SSR — SOLO se llena durante el build (src/prerender.tsx).
++ *
++ * Por qué existe: las páginas de contenido (BlogPost) piden sus datos a Supabase
++ * dentro de un `useEffect`. En `renderToString` los efectos NO corren, así que la
++ * página se renderizaba siempre en su estado de carga (un spinner) y nunca montaba
++ * <SEO>, por lo que el HTML estático salía con el <title> por defecto del index.html
++ * (el de la home) y sin <h1>. Es decir: aunque la ruta se prerenderizara, para
++ * Google el artículo no existía.
++ *
++ * Con esto, el prerender deja el post ya cargado aquí y el componente lo lee de
++ * forma síncrona en el primer render.
++ *
++ * En el navegador este módulo queda vacío: `main.tsx` usa `createRoot` (no
++ * `hydrateRoot`), así que React descarta el HTML prerenderizado y vuelve a pedir
++ * los datos como siempre. No hay riesgo de mismatch de hidratación.
++ */
++
++export interface PrerenderPost {
++  title: string;
++  author: string;
++  category: string;
++  content: string;
++  created_at: string;
++  meta_title: string | null;
++  meta_description: string | null;
++}
++
++const posts = new Map<string, PrerenderPost>();
++
++const key = (lang: string, slug: string) => `${lang}:${slug}`;
++
++export function setPrerenderPost(lang: string, slug: string, post: PrerenderPost): void {
++  posts.set(key(lang, slug), post);
++}
++
++/** Devuelve el post precargado en build, o null en el navegador. */
++export function getPrerenderPost(lang: string, slug: string | undefined): PrerenderPost | null {
++  if (!slug) return null;
++  return posts.get(key(lang, slug)) ?? null;
++}
++
++export function prerenderPostCount(): number {
++  return posts.size;
++}
+diff --git a/src/pages/BlogPost.tsx b/src/pages/BlogPost.tsx
+index 42798de..7b3d5dc 100644
+--- a/src/pages/BlogPost.tsx
++++ b/src/pages/BlogPost.tsx
+@@ -7,6 +7,7 @@ import { ArrowLeft, Clock, User, MessageCircle, Loader2 } from 'lucide-react';
+ import { supabase } from '@/integrations/supabase/client';
+ import { useAnalytics } from '@/hooks/useAnalytics';
+ import SEO from '@/components/SEO';
++import { getPrerenderPost } from '@/lib/prerender-store';
+ 
+ interface Props { lang?: 'es' | 'en' | 'pt'; }
+ 
+@@ -101,8 +102,11 @@ const estimateReadTime = (text: string) => {
+ 
+ const BlogPost = ({ lang = 'es' }: Props) => {
+   const { slug } = useParams();
+-  const [dbPost, setDbPost] = useState<PostData | null>(null);
+-  const [loading, setLoading] = useState(true);
++  // En build, el prerender ya dejó el post cargado (src/prerender-content.ts).
++  // En el navegador esto es siempre null y el flujo es el de siempre.
++  const seeded = getPrerenderPost(lang, slug);
++  const [dbPost, setDbPost] = useState<PostData | null>(seeded);
++  const [loading, setLoading] = useState(!seeded);
+   const [notFound, setNotFound] = useState(false);
+   const { trackBlogRead } = useAnalytics();
+ 
+@@ -113,6 +117,7 @@ const BlogPost = ({ lang = 'es' }: Props) => {
+   const backLabel = lang === 'pt' ? 'Voltar ao blog' : lang === 'en' ? 'Back to blog' : 'Volver al blog';
+ 
+   useEffect(() => {
++    if (seeded) return;
+     if (staticPost || !slug) {
+       setLoading(false);
+       if (!staticPost && !slug) setNotFound(true);
+@@ -150,7 +155,7 @@ const BlogPost = ({ lang = 'es' }: Props) => {
+       }
+     };
+     fetchPost();
+-  }, [slug, staticPost, lang]);
++  }, [slug, staticPost, lang, seeded]);
+ 
+   // Track blog read
+   useEffect(() => {
+diff --git a/src/prerender-content.ts b/src/prerender-content.ts
+new file mode 100644
+index 0000000..fab1c4e
+--- /dev/null
++++ b/src/prerender-content.ts
+@@ -0,0 +1,157 @@
++/**
++ * Descubrimiento de contenido dinámico para el prerender (build).
++ *
++ * Regla de oro de este archivo: **fallar ruidosamente**. Un build que termina
++ * bien pero deja el sitio sin HTML indexable para el blog es peor que un build
++ * roto: nadie se entera hasta que Search Console reporta 0 clics. Antes, si la
++ * consulta a Supabase devolvía 400 (o RLS devolvía lista vacía), el build
++ * seguía y publicaba un sitio sin artículos. Ahora lanza y corta el build.
++ *
++ * Puerta de escape: `PRERENDER_ALLOW_EMPTY_CONTENT=1` (solo para builds locales
++ * sin acceso a Supabase). NO se debe usar en Vercel.
++ */
++import { setPrerenderPost, type PrerenderPost } from "./lib/prerender-store";
++
++/** Slugs estáticos de casos de éxito (viven en data/pricing.ts, no en Supabase). */
++export const CASO_IDS = [
++  "google-ads-arcos-desinfeccion",
++  "ecommerce-cableado-estructurado",
++  "ecommerce-mascotas",
++  "cliente-tecnologia-migracion-web-app",
++];
++
++/**
++ * Rutas reales por idioma. Solo se listan las que EXISTEN como ruta renderizable
++ * en src/App.tsx. `/pt/blog/:slug` está declarada como <Navigate> a `/blog`
++ * (App.tsx:223), así que prerenderizarla generaría HTML de una redirección.
++ */
++const BLOG_PATHS: Record<string, (slug: string) => string> = {
++  es: (s) => `/blog/${s}`,
++  en: (s) => `/en/blog/${s}`,
++};
++
++const CASE_PATHS: ((slug: string) => string)[] = [
++  (s) => `/casos-de-exito/${s}`,
++  (s) => `/en/case-studies/${s}`,
++  (s) => `/pt/casos-de-sucesso/${s}`,
++];
++
++const EDITION_PATHS: ((slug: string) => string)[] = [
++  (s) => `/newsletter/edicion/${s}`,
++  (s) => `/en/newsletter/edition/${s}`,
++  (s) => `/pt/newsletter/edicao/${s}`,
++];
++
++interface BlogRow extends PrerenderPost {
++  slug: string;
++  language: string;
++}
++
++const allowEmpty = () =>
++  (import.meta.env.PRERENDER_ALLOW_EMPTY_CONTENT as string | undefined) === "1" ||
++  (typeof process !== "undefined" && process.env?.PRERENDER_ALLOW_EMPTY_CONTENT === "1");
++
++function fail(message: string): never {
++  throw new Error(`[prerender] ${message}`);
++}
++
++async function getJson<T>(url: string, headers: Record<string, string>, what: string): Promise<T> {
++  let res: Response;
++  try {
++    res = await fetch(url, { headers });
++  } catch (err) {
++    return fail(`no se pudo consultar ${what}: ${(err as Error).message}\n  URL: ${url}`);
++  }
++  if (!res.ok) {
++    const body = await res.text().catch(() => "");
++    return fail(`${what} devolvió HTTP ${res.status}: ${body.slice(0, 500)}\n  URL: ${url}`);
++  }
++  return (await res.json()) as T;
++}
++
++let cache: string[] | null = null;
++
++/**
++ * Devuelve todas las rutas dinámicas a prerenderizar y deja los posts cargados
++ * en el store SSR para que BlogPost renderice el artículo real (y no un spinner).
++ */
++export async function fetchDynamicSlugs(): Promise<string[]> {
++  if (cache) return cache;
++
++  const url = import.meta.env.VITE_SUPABASE_URL as string | undefined;
++  const key = import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY as string | undefined;
++  const routes: string[] = [];
++
++  if (!url || !key) {
++    if (!allowEmpty()) {
++      fail(
++        "faltan VITE_SUPABASE_URL o VITE_SUPABASE_PUBLISHABLE_KEY en el entorno de build. " +
++          "Sin ellas no se puede descubrir el contenido dinámico y el sitio se publicaría sin blog indexable.",
++      );
++    }
++    console.warn("[prerender] sin credenciales de Supabase y PRERENDER_ALLOW_EMPTY_CONTENT=1: solo rutas estáticas.");
++  } else {
++    const headers = { apikey: key, Authorization: `Bearer ${key}` };
++    const now = new Date().toISOString();
++
++    // blog_posts NO tiene columna `status`: se publica con active=true y
++    // published_at <= now (mismo filtro que src/pages/Blog.tsx).
++    const blogUrl =
++      `${url}/rest/v1/blog_posts` +
++      `?select=slug,language,title,author,category,content,created_at,meta_title,meta_description` +
++      `&active=eq.true&published_at=lte.${now}`;
++
++    const [posts, editions, cases] = await Promise.all([
++      getJson<BlogRow[]>(blogUrl, headers, "blog_posts"),
++      getJson<{ slug: string }[]>(`${url}/rest/v1/newsletter_editions_public?select=slug`, headers, "newsletter_editions_public"),
++      getJson<{ slug: string }[]>(`${url}/rest/v1/case_studies_public?select=slug`, headers, "case_studies_public"),
++    ]);
++
++    if (!posts.length && !allowEmpty()) {
++      fail(
++        `blog_posts devolvió 0 filas publicadas (HTTP 200). Puede ser RLS bloqueando al rol anon ` +
++          `o que no haya posts con active=true y published_at <= ${now}. ` +
++          `Publicar así deja el blog entero sin HTML indexable.`,
++      );
++    }
++
++    const skippedLangs = new Set<string>();
++    for (const post of posts) {
++      const lang = (post.language || "es").toLowerCase();
++      const toPath = BLOG_PATHS[lang];
++      if (!toPath) {
++        // p. ej. `pt`: existe la fila pero /pt/blog/:slug es una redirección.
++        skippedLangs.add(lang);
++        continue;
++      }
++      routes.push(toPath(post.slug));
++      setPrerenderPost(lang, post.slug, {
++        title: post.title,
++        author: post.author,
++        category: post.category,
++        content: post.content,
++        created_at: post.created_at,
++        meta_title: post.meta_title,
++        meta_description: post.meta_description,
++      });
++    }
++    if (skippedLangs.size) {
++      console.warn(
++        `[prerender] idiomas sin ruta propia, no prerenderizados: ${[...skippedLangs].join(", ")}`,
++      );
++    }
++
++    cases.forEach((c) => CASE_PATHS.forEach((p) => routes.push(p(c.slug))));
++    editions.forEach((e) => EDITION_PATHS.forEach((p) => routes.push(p(e.slug))));
++
++    console.log(
++      `[prerender] contenido dinámico: ${posts.length} posts, ${cases.length} casos, ${editions.length} ediciones ` +
++        `→ ${routes.length} rutas.`,
++    );
++  }
++
++  CASO_IDS.forEach((id) => CASE_PATHS.forEach((p) => routes.push(p(id))));
++
++  cache = [...new Set(routes)];
++  return cache;
++}
+diff --git a/src/prerender.tsx b/src/prerender.tsx
+index f427932..7a1fd61 100644
+--- a/src/prerender.tsx
++++ b/src/prerender.tsx
+@@ -6,6 +6,8 @@ import "./prerender-polyfills"; // ⚠️ DEBE ser el primer import.
+ import { renderToString } from "react-dom/server";
+ import { HelmetProvider } from "react-helmet-async";
+ import App from "./App";
++import { fetchDynamicSlugs } from "./prerender-content";
++import { getPrerenderPost } from "./lib/prerender-store";
+ import "./index.css";
+ 
+ type HelmetOut = {
+@@ -15,66 +17,22 @@ type HelmetOut = {
+   script?: { toString(): string };
+ };
+ 
+-// Slugs estáticos de casos de éxito (data/pricing.ts).
+-const CASO_IDS = [
+-  "google-ads-arcos-desinfeccion",
+-  "ecommerce-cableado-estructurado",
+-  "ecommerce-mascotas",
+-  "cliente-tecnologia-migracion-web-app",
+-];
+-
+-let dynamicSlugsCache: string[] | null = null;
+-
+-async function fetchDynamicSlugs(): Promise<string[]> {
+-  if (dynamicSlugsCache) return dynamicSlugsCache;
+-  const url = import.meta.env.VITE_SUPABASE_URL as string | undefined;
+-  const key = import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY as string | undefined;
+-  const routes: string[] = [];
+-
+-  if (url && key) {
+-    try {
+-      const headers = { apikey: key, Authorization: `Bearer ${key}` };
+-      // ⚠️ blog_posts NO tiene columna `status` — se publica con `active=true` y
+-      // `published_at <= now` (mismo filtro que src/pages/Blog.tsx). La query
+-      // anterior (`status=eq.published`) devolvía HTTP 400 y NINGÚN post se
+-      // prerenderizaba. Newsletter se lee de la vista pública ya filtrada.
+-      const now = new Date().toISOString();
+-      const [blogRes, editionsRes, casesRes] = await Promise.all([
+-        fetch(`${url}/rest/v1/blog_posts?select=slug,language&active=eq.true&published_at=lte.${now}`, { headers }),
+-        fetch(`${url}/rest/v1/newsletter_editions_public?select=slug`, { headers }),
+-        fetch(`${url}/rest/v1/case_studies_public?select=slug`, { headers }),
+-      ]);
+-      if (blogRes.ok) {
+-        const posts = (await blogRes.json()) as { slug: string; language: "es" | "en" }[];
+-        posts.forEach((p) => routes.push(p.language === "en" ? `/en/blog/${p.slug}` : `/blog/${p.slug}`));
+-      }
+-      if (casesRes.ok) ((await casesRes.json()) as { slug: string }[]).forEach((item) => routes.push(`/casos-de-exito/${item.slug}`));
+-      if (editionsRes.ok) {
+-        const eds = (await editionsRes.json()) as { slug: string }[];
+-        eds.forEach((e) => {
+-          routes.push(
+-            `/newsletter/edicion/${e.slug}`,
+-            `/en/newsletter/edition/${e.slug}`,
+-            `/pt/newsletter/edicao/${e.slug}`,
+-          );
+-        });
+-      }
+-    } catch (err) {
+-      console.warn("[prerender] Supabase fetch failed:", err);
+-    }
+-  }
+-
+-  CASO_IDS.forEach((id) => {
+-    routes.push(`/casos-de-exito/${id}`, `/en/case-studies/${id}`, `/pt/casos-de-sucesso/${id}`);
+-  });
+-
+-  dynamicSlugsCache = routes;
+-  return routes;
+-}
++/** /blog/:slug y /en/blog/:slug — las únicas rutas de artículo que existen. */
++const BLOG_POST_URL = /^\/(?:(en)\/)?blog\/([^/]+)$/;
+ 
+ export async function prerender(data: { url: string }) {
+   const helmetContext: Record<string, unknown> = {};
+ 
++  // Aviso (no error) cuando se va a prerenderizar un artículo sin datos cargados:
++  // el HTML saldría con el <title> de la home y sin <h1>. Pasa con slugs que
++  // están en el listado editorial estático pero no tienen fila en blog_posts.
++  const postMatch = BLOG_POST_URL.exec(data.url);
++  if (postMatch && !getPrerenderPost(postMatch[1] ?? "es", postMatch[2])) {
++    console.warn(
++      `[prerender] ${data.url}: sin datos de blog_posts. El HTML saldrá sin título ni H1 propios.`,
++    );
++  }
++
+   const html = renderToString(
+     <HelmetProvider context={helmetContext as never}>
+       <App url={data.url} />
+@@ -99,18 +57,25 @@ export async function prerender(data: { url: string }) {
+     if (Object.keys(props).length) elements.add({ type, props });
+   }
+ 
+-  // Enlaces internos + rutas dinámicas (solo desde la primera pasada `/`).
++  // Enlaces internos descubiertos en el HTML. Es un extra: si el parser falla,
++  // el build puede seguir con el registro de rutas.
+   let links: Set<string> | undefined;
+   try {
+     const { parseLinks } = await import("vite-prerender-plugin/parse");
+     const internal = parseLinks(html).filter((h) => h.startsWith("/") && !h.startsWith("//"));
+     links = new Set(internal);
+-    if (data.url === "/") {
+-      const dynamic = await fetchDynamicSlugs();
+-      dynamic.forEach((r) => links!.add(r));
+-    }
+-  } catch {
+-    /* opcional */
++  } catch (err) {
++    console.warn("[prerender] parseLinks no disponible:", (err as Error).message);
++  }
++
++  // Rutas dinámicas (blog, casos, newsletter). ⚠️ FUERA del try de arriba a
++  // propósito: si esto falla, el build TIENE que caerse. Antes quedaba dentro y
++  // el catch se comía el error, así que un fallo de Supabase producía un sitio
++  // completo sin artículos y con exit code 0.
++  if (data.url === "/") {
++    const dynamic = await fetchDynamicSlugs();
++    links = links ?? new Set<string>();
++    dynamic.forEach((r) => links!.add(r));
+   }
+ 
+   const lang = data.url.startsWith("/en") ? "en" : data.url.startsWith("/pt") ? "pt" : "es";
+-- 
+2.43.0
+

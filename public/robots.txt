@@ -79,6 +79,24 @@ Disallow: /admin
 Disallow: /en/admin-blog
 Disallow: /pt/admin-blog
 
+User-agent: ClaudeBot
+Allow: /
+Disallow: /admin
+Disallow: /en/admin-blog
+Disallow: /pt/admin-blog
+
+User-agent: OAI-SearchBot
+Allow: /
+Disallow: /admin
+Disallow: /en/admin-blog
+Disallow: /pt/admin-blog
+
+User-agent: Applebot-Extended
+Allow: /
+Disallow: /admin
+Disallow: /en/admin-blog
+Disallow: /pt/admin-blog
+
 User-agent: *
 Allow: /
 Disallow: /admin

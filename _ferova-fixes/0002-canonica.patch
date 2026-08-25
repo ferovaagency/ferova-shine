@@ -1,0 +1,123 @@
+From 689b042e47170ac846e93e95acf97fb7bdfa9d64 Mon Sep 17 00:00:00 2001
+From: Claude <noreply@anthropic.com>
+Date: Tue, 25 Aug 2026 01:58:02 +0000
+Subject: [PATCH 2/3] fix(seo): canonica y hreflang bajo el dominio unico
+ seoparaecommerce.co
+
+- SITE_ORIGINS deja de apuntar a seoforecommerces.co para `en`: los paths de
+  ROUTES ya traen el prefijo /en, asi que la canonica salia como
+  seoforecommerces.co/en y la redireccion la volvia /en/en, una URL inexistente.
+- vercel.json: la redireccion de seoforecommerces.co ya no duplica el prefijo.
+  /en y /en/* pasan tal cual; la raiz y el resto de paths se mapean bajo /en.
+- El prerender escribe hreflang en minusculas (react-helmet devolvia hrefLang),
+  para que las auditorias que buscan `hreflang=` lo encuentren.
+
+Co-Authored-By: Claude Opus 5 <noreply@anthropic.com>
+Claude-Session: https://claude.ai/code/session_014rsxMpKFTCu1sXWAQGXc68
+---
+ src/config/routes.ts | 19 +++++++++++++++----
+ src/prerender.tsx    | 17 ++++++++++++++++-
+ vercel.json          | 20 ++++++++------------
+ 3 files changed, 39 insertions(+), 17 deletions(-)
+
+diff --git a/src/config/routes.ts b/src/config/routes.ts
+index d20862c..18cdcff 100644
+--- a/src/config/routes.ts
++++ b/src/config/routes.ts
+@@ -32,12 +32,23 @@ export type Lang = "es" | "en" | "pt";
+ /** Mercados públicos mantenidos: español e inglés. Portugués queda como legado fuera del SEO. */
+ export const LANGS: Lang[] = ["es", "en"];
+ 
+-/** El dominio de producción es único para los 3 idiomas (path-based i18n). */
++/**
++ * El dominio de producción es único para los 3 idiomas (i18n por path):
++ * raíz = español, /en = inglés, /pt = portugués.
++ *
++ * ⚠️ Hasta 2026-08 `en` apuntaba a https://seoforecommerces.co. Como los paths
++ * de ROUTES YA incluyen el prefijo /en, la canónica salía como
++ * `https://seoforecommerces.co/en`, y la redirección de vercel.json le añadía
++ * otro prefijo: el destino real era `/en/en`, que no existe en App.tsx. Es
++ * decir, las páginas en inglés le declaraban a Google una canónica que
++ * redirigía a una URL inexistente. Decisión de SEO: dominio canónico único.
++ * seoforecommerces.co se conserva SOLO como redirección de entrada.
++ */
+ export const SITE_ORIGIN = "https://seoparaecommerce.co";
+ export const SITE_ORIGINS: Record<Lang, string> = {
+-  es: "https://seoparaecommerce.co",
+-  en: "https://seoforecommerces.co",
+-  pt: "https://seoparaecommerce.co",
++  es: SITE_ORIGIN,
++  en: SITE_ORIGIN,
++  pt: SITE_ORIGIN,
+ };
+ 
+ export type RouteType =
+diff --git a/src/prerender.tsx b/src/prerender.tsx
+index 7a1fd61..69eebf7 100644
+--- a/src/prerender.tsx
++++ b/src/prerender.tsx
+@@ -10,6 +10,21 @@ import { fetchDynamicSlugs } from "./prerender-content";
+ import { getPrerenderPost } from "./lib/prerender-store";
+ import "./index.css";
+ 
++/**
++ * react-helmet-async devuelve los nombres de atributo tal cual los declara React
++ * (`hrefLang`, `httpEquiv`…). El HTML sigue siendo válido —los atributos no
++ * distinguen mayúsculas— pero cualquier auditoría que busque `hreflang=` en el
++ * fuente no encuentra nada, y así se reportó "cero hreflang" en producción.
++ * Se normalizan al nombre HTML real.
++ */
++const HTML_ATTR: Record<string, string> = {
++  hrefLang: "hreflang",
++  httpEquiv: "http-equiv",
++  charSet: "charset",
++  itemProp: "itemprop",
++};
++const htmlAttr = (name: string) => HTML_ATTR[name] ?? name;
++
+ type HelmetOut = {
+   title?: { toString(): string };
+   meta?: { toString(): string };
+@@ -53,7 +68,7 @@ export async function prerender(data: { url: string }) {
+     const props: Record<string, string> = {};
+     const attrRegex = /(\w[\w-]*)="([^"]*)"/g;
+     let a: RegExpExecArray | null;
+-    while ((a = attrRegex.exec(attrStr)) !== null) props[a[1]] = a[2];
++    while ((a = attrRegex.exec(attrStr)) !== null) props[htmlAttr(a[1])] = a[2];
+     if (Object.keys(props).length) elements.add({ type, props });
+   }
+ 
+diff --git a/vercel.json b/vercel.json
+index 18be76b..db2f2da 100644
+--- a/vercel.json
++++ b/vercel.json
+@@ -1,18 +1,14 @@
+ {
+   "$schema": "https://openapi.vercel.sh/vercel.json",
+   "redirects": [
+-    {
+-      "source": "/:path*",
+-      "has": [{ "type": "host", "value": "seoforecommerces.co" }],
+-      "destination": "https://seoparaecommerce.co/en/:path*",
+-      "permanent": true
+-    },
+-    {
+-      "source": "/:path*",
+-      "has": [{ "type": "host", "value": "www.seoforecommerces.co" }],
+-      "destination": "https://seoparaecommerce.co/en/:path*",
+-      "permanent": true
+-    },
++    { "source": "/en", "has": [{ "type": "host", "value": "seoforecommerces.co" }], "destination": "https://seoparaecommerce.co/en", "permanent": true },
++    { "source": "/en", "has": [{ "type": "host", "value": "www.seoforecommerces.co" }], "destination": "https://seoparaecommerce.co/en", "permanent": true },
++    { "source": "/en/:path*", "has": [{ "type": "host", "value": "seoforecommerces.co" }], "destination": "https://seoparaecommerce.co/en/:path*", "permanent": true },
++    { "source": "/en/:path*", "has": [{ "type": "host", "value": "www.seoforecommerces.co" }], "destination": "https://seoparaecommerce.co/en/:path*", "permanent": true },
++    { "source": "/", "has": [{ "type": "host", "value": "seoforecommerces.co" }], "destination": "https://seoparaecommerce.co/en", "permanent": true },
++    { "source": "/", "has": [{ "type": "host", "value": "www.seoforecommerces.co" }], "destination": "https://seoparaecommerce.co/en", "permanent": true },
++    { "source": "/:path*", "has": [{ "type": "host", "value": "seoforecommerces.co" }], "destination": "https://seoparaecommerce.co/en/:path*", "permanent": true },
++    { "source": "/:path*", "has": [{ "type": "host", "value": "www.seoforecommerces.co" }], "destination": "https://seoparaecommerce.co/en/:path*", "permanent": true },
+     { "source": "/como-encontrar-palabras-clave-ecommerce/feed", "destination": "/blog/como-encontrar-palabras-clave-ecommerce", "permanent": true },
+     { "source": "/como-encontrar-palabras-clave-ecommerce/feed/", "destination": "/blog/como-encontrar-palabras-clave-ecommerce", "permanent": true },
+     { "source": "/como-encontrar-palabras-clave-ecommerce", "destination": "/blog/como-encontrar-palabras-clave-ecommerce", "permanent": true },
+-- 
+2.43.0
+
