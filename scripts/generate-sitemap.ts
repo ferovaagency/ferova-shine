@@ -33,7 +33,7 @@ import {
 } from "../src/config/routes";
 import {
   fetchDynamicContent,
-  BLOG_PATHS,
+  buildBlogVariants,
   CASE_PATHS,
   EDITION_PATHS,
   CASO_IDS,
@@ -114,11 +114,18 @@ async function fetchDynamic(supabaseUrl?: string, supabaseKey?: string): Promise
   const { posts, cases, editions, skippedLanguages } = await fetchDynamicContent(url, key, "sitemap");
   const entries: UrlEntry[] = [];
 
-  // Blog: cada artículo es independiente por idioma (índice único language+slug),
-  // no hay equivalencia es↔en garantizada. Por eso NO se emiten alternates:
-  // inventar un hreflang recíproco que no existe es peor que no ponerlo.
-  for (const post of posts) {
-    entries.push({ loc: BLOG_PATHS[post.language](post.slug), priority: 0.7, changefreq: "monthly" });
+  // Blog: una fila por artículo con sus traducciones en columnas _en. Cuando la
+  // traducción existe, ES y EN son el mismo artículo en dos idiomas, así que sí
+  // les corresponde hreflang recíproco. Cuando no existe, se lista solo el ES y
+  // sin alternates: no se inventa una equivalencia que no está.
+  for (const variant of buildBlogVariants(posts, "sitemap")) {
+    const reciprocos = Object.keys(variant.alternates).length > 1;
+    entries.push({
+      loc: variant.path,
+      alternates: reciprocos ? variant.alternates : undefined,
+      priority: 0.7,
+      changefreq: "monthly",
+    });
   }
   if (skippedLanguages.length) {
     console.warn(`[sitemap] idiomas sin ruta propia, fuera del sitemap: ${skippedLanguages.join(", ")}`);
@@ -147,7 +154,7 @@ async function fetchDynamic(supabaseUrl?: string, supabaseKey?: string): Promise
   }
 
   console.log(
-    `[sitemap] contenido dinámico: ${posts.length} posts, ${cases.length} casos, ${editions.length} ediciones.`,
+    `[sitemap] contenido dinámico: ${posts.length} filas de blog, ${cases.length} casos, ${editions.length} ediciones.`,
   );
   return entries;
 }

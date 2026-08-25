@@ -15,16 +15,37 @@
  * Search Console reporta 0 clics.
  */
 
-export interface BlogPostRow {
+import {
+  BLOG_I18N_COLUMNS,
+  hasEnglishVariant,
+  hasHtmlInTextFields,
+  pickVariant,
+  type BlogRowI18n,
+} from "./blog-i18n";
+
+export interface BlogPostRow extends BlogRowI18n {
   slug: string;
   language: string;
-  title: string;
   author: string;
   category: string;
-  content: string;
   created_at: string;
+}
+
+/** Una variante publicable: idioma + ruta real + los campos ya saneados. */
+export interface BlogVariant {
+  lang: "es" | "en";
+  slug: string;
+  path: string;
+  title: string;
+  content: string;
+  excerpt: string | null;
   meta_title: string | null;
   meta_description: string | null;
+  author: string;
+  category: string;
+  created_at: string;
+  /** Rutas hermanas del mismo artículo (mismo slug, otra traducción). */
+  alternates: Partial<Record<"es" | "en", string>>;
 }
 
 export interface DynamicContent {
@@ -130,7 +151,7 @@ export async function fetchDynamicContent(
   // published_at <= now (mismo filtro que src/pages/Blog.tsx).
   const blogUrl =
     `${supabaseUrl}/rest/v1/blog_posts` +
-    `?select=slug,language,title,author,category,content,created_at,meta_title,meta_description` +
+    `?select=slug,language,author,category,created_at,${BLOG_I18N_COLUMNS}` +
     `&active=eq.true&published_at=lte.${now}`;
 
   let posts: BlogPostRow[];
@@ -171,4 +192,79 @@ export async function fetchDynamicContent(
   }
 
   return { posts: usable, cases, editions, skippedLanguages: [...skipped] };
+}
+
+/**
+ * Convierte las filas en variantes publicables.
+ *
+ * ⚠️ La variante inglesa NO sale de filtrar `language='en'` — no existe ninguna
+ * fila así: sale de que las columnas _en de la MISMA fila traigan contenido.
+ * El portugués queda fuera aunque la fila lo tenga: `/pt/blog/:slug` es un
+ * <Navigate> a /blog (App.tsx:223), y no se lista lo que es una redirección.
+ *
+ * Avisa (no rompe) de cuántos artículos se quedan sin inglés y de cuántas filas
+ * traían HTML en campos de texto.
+ */
+export function buildBlogVariants(posts: BlogPostRow[], scope: string): BlogVariant[] {
+  const variants: BlogVariant[] = [];
+  const sinIngles: string[] = [];
+  let conHtml = 0;
+
+  for (const row of posts) {
+    if (hasHtmlInTextFields(row)) conHtml++;
+
+    const baseLang = (row.language || "es").toLowerCase() === "en" ? "en" : "es";
+    const english = baseLang === "es" && hasEnglishVariant(row);
+
+    const alternates: Partial<Record<"es" | "en", string>> = {};
+    alternates[baseLang] = BLOG_PATHS[baseLang](row.slug);
+    if (english) alternates.en = BLOG_PATHS.en(row.slug);
+
+    const base = pickVariant(row, "es")!; // columnas base de la fila
+    variants.push({
+      lang: baseLang,
+      slug: row.slug,
+      path: BLOG_PATHS[baseLang](row.slug),
+      ...base,
+      author: row.author,
+      category: row.category,
+      created_at: row.created_at,
+      alternates,
+    });
+
+    if (english) {
+      const en = pickVariant(row, "en")!;
+      variants.push({
+        lang: "en",
+        slug: row.slug,
+        path: BLOG_PATHS.en(row.slug),
+        ...en,
+        author: row.author,
+        category: row.category,
+        created_at: row.created_at,
+        alternates,
+      });
+    } else if (baseLang === "es") {
+      sinIngles.push(row.slug);
+    }
+  }
+
+  if (sinIngles.length) {
+    console.warn(
+      `[${scope}] ${sinIngles.length} de ${posts.length} artículos sin variante inglesa ` +
+        `(columnas _en vacías): ${sinIngles.join(", ")}`,
+    );
+  }
+  if (conHtml) {
+    console.warn(
+      `[${scope}] ${conHtml} filas traían HTML en campos de texto (title/meta/excerpt); ` +
+        `se saneó al usarlas. La base NO se modifica.`,
+    );
+  }
+  console.log(
+    `[${scope}] variantes de blog: ${variants.filter((v) => v.lang === "es").length} es, ` +
+      `${variants.filter((v) => v.lang === "en").length} en.`,
+  );
+
+  return variants;
 }

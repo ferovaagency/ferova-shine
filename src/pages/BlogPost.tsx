@@ -8,6 +8,7 @@ import { supabase } from '@/integrations/supabase/client';
 import { useAnalytics } from '@/hooks/useAnalytics';
 import SEO from '@/components/SEO';
 import { getPrerenderPost } from '@/lib/prerender-store';
+import { BLOG_I18N_COLUMNS, pickVariant, type BlogRowI18n } from '@/lib/blog-i18n';
 
 interface Props { lang?: 'es' | 'en' | 'pt'; }
 
@@ -19,6 +20,8 @@ interface PostData {
   created_at: string;
   meta_title: string | null;
   meta_description: string | null;
+  /** Rutas hermanas del mismo artículo (mismo slug, otra traducción). */
+  alternates?: Partial<Record<'es' | 'en', string>>;
 }
 
 const staticPosts: Record<string, Record<string, { title: string; seoTitle?: string; author: string; date: string; readTime: string; category: string; content: string[] }>> = {
@@ -126,26 +129,36 @@ const BlogPost = ({ lang = 'es' }: Props) => {
 
     const fetchPost = async () => {
       try {
+        // ⚠️ NO se filtra por `language`: hay UNA fila por artículo (language='es')
+        // y las traducciones viven en columnas _en / _pt de esa misma fila. El
+        // filtro anterior (`language='en'`) no encontraba nada nunca, así que
+        // /en/blog/:slug mostraba "Article not found" al montar React.
         const { data, error } = await supabase
           .from('blog_posts')
-          .select('title, author, category, content, created_at, meta_title, meta_description')
+          .select(`slug, language, author, category, created_at, ${BLOG_I18N_COLUMNS}`)
           .eq('slug', slug)
-          .eq('language', lang === 'en' ? 'en' : 'es')
           .eq('active', true)
           .lte('published_at', new Date().toISOString())
-          .maybeSingle();
+          .limit(1);
 
-        if (error || !data) {
+        const row = data?.[0] as (BlogRowI18n & { author: string; category: string; created_at: string }) | undefined;
+        const variant = row ? pickVariant(row, lang === 'en' ? 'en' : 'es') : null;
+
+        if (error || !variant) {
           setNotFound(true);
         } else {
+          const hasEn = Boolean(pickVariant(row!, 'en'));
           setDbPost({
-            title: data.title,
-            author: data.author,
-            category: data.category,
-            content: data.content,
-            created_at: data.created_at,
-            meta_title: data.meta_title,
-            meta_description: data.meta_description,
+            title: variant.title,
+            author: row!.author,
+            category: row!.category,
+            content: variant.content,
+            created_at: row!.created_at,
+            meta_title: variant.meta_title,
+            meta_description: variant.meta_description,
+            alternates: hasEn
+              ? { es: `/blog/${slug}`, en: `/en/blog/${slug}` }
+              : { es: `/blog/${slug}` },
           });
         }
       } catch {
@@ -288,7 +301,15 @@ const BlogPost = ({ lang = 'es' }: Props) => {
 
   return (
     <>
-      <SEO title={seoTitle} description={seoDesc} path={postPath} lang={lang} type="article" jsonLd={articleLd} />
+      <SEO
+        title={seoTitle}
+        description={seoDesc}
+        path={postPath}
+        lang={lang}
+        type="article"
+        jsonLd={articleLd}
+        alternates={post.alternates}
+      />
       <Header currentLang={lang} />
       <main className="pt-20">
         <article className="py-8 md:py-12">

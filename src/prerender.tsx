@@ -8,6 +8,7 @@ import { HelmetProvider } from "react-helmet-async";
 import App from "./App";
 import { fetchDynamicSlugs } from "./prerender-content";
 import { getPrerenderPost } from "./lib/prerender-store";
+import { decodeEntities } from "./lib/blog-i18n";
 import "./index.css";
 
 /**
@@ -55,8 +56,11 @@ export async function prerender(data: { url: string }) {
   );
 
   const helmet = (helmetContext as { helmet?: HelmetOut }).helmet;
+  // El texto se lee del HTML que emite helmet (ya escapado) y el plugin lo vuelve
+  // a escapar al escribirlo (serializeElement → enc). Sin desescapar aquí, un
+  // título con "&" acaba como "&amp;amp;" en el <title>.
   const titleMatch = helmet?.title?.toString().match(/<title[^>]*>([^<]*)<\/title>/);
-  const title = titleMatch?.[1];
+  const title = titleMatch?.[1] ? decodeEntities(titleMatch[1]) : undefined;
 
   // Extraer descripción, canonical y og:* del helmet como elementos individuales.
   const rawHead = (helmet?.meta?.toString() ?? "") + (helmet?.link?.toString() ?? "");
@@ -68,7 +72,7 @@ export async function prerender(data: { url: string }) {
     const props: Record<string, string> = {};
     const attrRegex = /(\w[\w-]*)="([^"]*)"/g;
     let a: RegExpExecArray | null;
-    while ((a = attrRegex.exec(attrStr)) !== null) props[htmlAttr(a[1])] = a[2];
+    while ((a = attrRegex.exec(attrStr)) !== null) props[htmlAttr(a[1])] = decodeEntities(a[2]);
     if (Object.keys(props).length) elements.add({ type, props });
   }
 

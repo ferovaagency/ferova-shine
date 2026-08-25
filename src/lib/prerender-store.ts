@@ -24,6 +24,8 @@ export interface PrerenderPost {
   created_at: string;
   meta_title: string | null;
   meta_description: string | null;
+  /** Rutas hermanas del mismo artículo, para los hreflang. */
+  alternates?: Partial<Record<"es" | "en", string>>;
 }
 
 const posts = new Map<string, PrerenderPost>();

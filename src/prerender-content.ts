@@ -8,7 +8,7 @@
  */
 import {
   fetchDynamicContent,
-  BLOG_PATHS,
+  buildBlogVariants,
   CASE_PATHS,
   EDITION_PATHS,
   CASO_IDS,
@@ -26,16 +26,18 @@ export async function fetchDynamicSlugs(): Promise<string[]> {
   const { posts, cases, editions, skippedLanguages } = await fetchDynamicContent(url, key, "prerender");
   const routes: string[] = [];
 
-  for (const post of posts) {
-    routes.push(BLOG_PATHS[post.language](post.slug));
-    setPrerenderPost(post.language, post.slug, {
-      title: post.title,
-      author: post.author,
-      category: post.category,
-      content: post.content,
-      created_at: post.created_at,
-      meta_title: post.meta_title,
-      meta_description: post.meta_description,
+  // Una fila por artículo, hasta dos rutas por fila (es + en si hay traducción).
+  for (const variant of buildBlogVariants(posts, "prerender")) {
+    routes.push(variant.path);
+    setPrerenderPost(variant.lang, variant.slug, {
+      title: variant.title,
+      author: variant.author,
+      category: variant.category,
+      content: variant.content,
+      created_at: variant.created_at,
+      meta_title: variant.meta_title,
+      meta_description: variant.meta_description,
+      alternates: variant.alternates,
     });
   }
 
@@ -52,7 +54,7 @@ export async function fetchDynamicSlugs(): Promise<string[]> {
   CASO_IDS.forEach((id) => all(CASE_PATHS, id));
 
   console.log(
-    `[prerender] contenido dinámico: ${posts.length} posts, ${cases.length} casos, ${editions.length} ediciones.`,
+    `[prerender] contenido dinámico: ${posts.length} filas de blog, ${cases.length} casos, ${editions.length} ediciones.`,
   );
 
   cache = [...new Set(routes)];
