@@ -10,10 +10,14 @@
  *  /servicios, /precios, /contacto, /blog, casi todos los /en y /pt, newsletter,
  *  herramientas…).
  *
- *  Incluye contenido DINÁMICO best-effort (blog + ediciones de newsletter
- *  publicadas en Supabase, y los casos de éxito estáticos), igual que
- *  src/prerender.tsx. Si no hay credenciales o la red falla, cae con elegancia
- *  a solo-estático — NUNCA rompe el build.
+ *  Incluye contenido DINÁMICO (blog + ediciones + casos de Supabase) leído con
+ *  la MISMA consulta que el prerender: src/lib/dynamic-content.ts.
+ *
+ *  ⚠️ Ya NO es best-effort. Antes, si la consulta fallaba o RLS devolvía lista
+ *  vacía, el sitemap salía solo-estático y el build terminaba con exit 0: así se
+ *  publicó un sitemap de 45 URLs de /blog, ninguna de /en/blog, mientras Search
+ *  Console marcaba 40 artículos como "Descubierta, actualmente sin indexar".
+ *  Ahora el build se cae con el detalle del fallo.
  * ============================================================================
  */
 import { writeFileSync } from "node:fs";
@@ -27,17 +31,16 @@ import {
   changefreqOf,
   type Lang,
 } from "../src/config/routes";
+import {
+  fetchDynamicContent,
+  BLOG_PATHS,
+  CASE_PATHS,
+  EDITION_PATHS,
+  CASO_IDS,
+} from "../src/lib/dynamic-content";
 
 /** hreflang codes emitidos en el sitemap (coinciden con SEO.tsx). */
 const HREFLANG: Record<Lang, string> = { es: "es", en: "en", pt: "pt" };
-
-/** Casos de éxito estáticos (espejo de src/prerender.tsx → CASO_IDS). */
-const CASO_IDS = [
-  "google-ads-arcos-desinfeccion",
-  "ecommerce-cableado-estructurado",
-  "ecommerce-mascotas",
-  "cliente-tecnologia-migracion-web-app",
-];
 
 function xmlEscape(s: string): string {
   return s.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
@@ -84,60 +87,68 @@ function renderUrl(e: UrlEntry): string {
   return lines.join("\n");
 }
 
+/**
+ * Solo se listan variantes en los idiomas de `LANGS` (es, en). El portugués es
+ * legado declarado fuera del SEO en src/config/routes.ts, así que no entra al
+ * sitemap ni siquiera cuando la ruta existe.
+ */
+const SITEMAP_LANGS = LANGS.filter((l) => l !== "pt");
+
+/** Alternates solo con los idiomas que existen de verdad para ese contenido. */
+function altsFrom(paths: Record<string, (s: string) => string>, slug: string) {
+  const out: Partial<Record<Lang, string>> = {};
+  for (const l of SITEMAP_LANGS) {
+    const build = paths[l];
+    if (build) out[l] = build(slug);
+  }
+  return out;
+}
+
 async function fetchDynamic(supabaseUrl?: string, supabaseKey?: string): Promise<UrlEntry[]> {
   const url = supabaseUrl || process.env.VITE_SUPABASE_URL || process.env.SUPABASE_URL;
   const key =
     supabaseKey ||
     process.env.VITE_SUPABASE_PUBLISHABLE_KEY ||
     process.env.SUPABASE_PUBLISHABLE_KEY;
+
+  const { posts, cases, editions, skippedLanguages } = await fetchDynamicContent(url, key, "sitemap");
   const entries: UrlEntry[] = [];
-  if (!url || !key) {
-    console.warn("[sitemap] Sin credenciales Supabase — sitemap solo-estático.");
-    return entries;
+
+  // Blog: cada artículo es independiente por idioma (índice único language+slug),
+  // no hay equivalencia es↔en garantizada. Por eso NO se emiten alternates:
+  // inventar un hreflang recíproco que no existe es peor que no ponerlo.
+  for (const post of posts) {
+    entries.push({ loc: BLOG_PATHS[post.language](post.slug), priority: 0.7, changefreq: "monthly" });
   }
-  const headers = { apikey: key, Authorization: `Bearer ${key}` };
-  try {
-    // Mismo filtro que src/pages/Blog.tsx y src/prerender.tsx: blog_posts se
-    // publica con active=true + published_at<=now (NO existe columna `status`);
-    // las ediciones se leen de la vista pública ya filtrada.
-    const now = new Date().toISOString();
-    const [blogRes, edRes, casesRes] = await Promise.all([
-      fetch(`${url}/rest/v1/blog_posts?select=slug,language&active=eq.true&published_at=lte.${now}`, { headers }),
-      fetch(`${url}/rest/v1/newsletter_editions_public?select=slug`, { headers }),
-      fetch(`${url}/rest/v1/case_studies_public?select=slug`, { headers }),
-    ]);
-    if (blogRes.ok) {
-      const posts = (await blogRes.json()) as { slug: string; language: "es" | "en" }[];
-      for (const p of posts) {
-        entries.push({
-          loc: p.language === "en" ? `/en/blog/${p.slug}` : `/blog/${p.slug}`,
-          priority: 0.7,
-          changefreq: "monthly",
-        });
-      }
-    }
-    if (casesRes.ok) {
-      const publishedCases = (await casesRes.json()) as { slug: string }[];
-      for (const item of publishedCases) entries.push({ loc: `/casos-de-exito/${item.slug}`, priority: 0.7, changefreq: "monthly" });
-    }
-    if (edRes.ok) {
-      const eds = (await edRes.json()) as { slug: string }[];
-      for (const e of eds) {
-        entries.push({
-          loc: `/newsletter/edicion/${e.slug}`,
-          alternates: {
-            es: `/newsletter/edicion/${e.slug}`,
-            en: `/en/newsletter/edition/${e.slug}`,
-            pt: `/pt/newsletter/edicao/${e.slug}`,
-          },
-          priority: 0.5,
-          changefreq: "monthly",
-        });
-      }
-    }
-  } catch (err) {
-    console.warn("[sitemap] Fetch dinámico falló, sigo solo-estático:", err);
+  if (skippedLanguages.length) {
+    console.warn(`[sitemap] idiomas sin ruta propia, fuera del sitemap: ${skippedLanguages.join(", ")}`);
   }
+
+  // Casos y ediciones: una <url> por idioma listable, con sus alternates.
+  for (const item of cases) {
+    for (const l of SITEMAP_LANGS) {
+      entries.push({
+        loc: CASE_PATHS[l](item.slug),
+        alternates: altsFrom(CASE_PATHS, item.slug),
+        priority: 0.7,
+        changefreq: "monthly",
+      });
+    }
+  }
+  for (const ed of editions) {
+    for (const l of SITEMAP_LANGS) {
+      entries.push({
+        loc: EDITION_PATHS[l](ed.slug),
+        alternates: altsFrom(EDITION_PATHS, ed.slug),
+        priority: 0.5,
+        changefreq: "monthly",
+      });
+    }
+  }
+
+  console.log(
+    `[sitemap] contenido dinámico: ${posts.length} posts, ${cases.length} casos, ${editions.length} ediciones.`,
+  );
   return entries;
 }
 
@@ -169,24 +180,26 @@ export async function generateSitemap(opts: GenerateSitemapOptions = {}): Promis
     }
   }
 
-  // 2) Casos de éxito estáticos.
+  // 2) Casos de éxito estáticos — una <url> por idioma listable.
   for (const id of CASO_IDS) {
-    entries.push({
-      loc: `/casos-de-exito/${id}`,
-      alternates: {
-        es: `/casos-de-exito/${id}`,
-        en: `/en/case-studies/${id}`,
-        pt: `/pt/casos-de-sucesso/${id}`,
-      },
-      priority: 0.7,
-      changefreq: "monthly",
-    });
+    for (const l of SITEMAP_LANGS) {
+      entries.push({
+        loc: CASE_PATHS[l](id),
+        alternates: altsFrom(CASE_PATHS, id),
+        priority: 0.7,
+        changefreq: "monthly",
+      });
+    }
   }
 
-  // 3) Dinámico (blog + newsletter) best-effort.
+  // 3) Dinámico (blog + casos + newsletter). Si falla, revienta el build.
   entries.push(...(await fetchDynamic(opts.supabaseUrl, opts.supabaseKey)));
 
-  const body = entries.map(renderUrl).join("\n\n");
+  // Una <loc> por URL: el registro y el contenido dinámico pueden solaparse.
+  const seen = new Set<string>();
+  const unique = entries.filter((e) => (seen.has(e.loc) ? false : (seen.add(e.loc), true)));
+
+  const body = unique.map(renderUrl).join("\n\n");
   const xml = `<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
         xmlns:xhtml="http://www.w3.org/1999/xhtml">
@@ -197,6 +210,6 @@ ${body}
 `;
 
   writeFileSync(out, xml, "utf8");
-  console.log(`[sitemap] ${entries.length} URLs escritas en ${out}`);
-  return entries.length;
+  console.log(`[sitemap] ${unique.length} URLs escritas en ${out}`);
+  return unique.length;
 }
