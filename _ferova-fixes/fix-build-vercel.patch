@@ -1,0 +1,242 @@
+From 1b58f14729c6a333f5bf85e8c333c17fd6e4832f Mon Sep 17 00:00:00 2001
+From: Ferova Dev <dev@ferova.co>
+Date: Fri, 28 Aug 2026 18:01:19 +0000
+Subject: [PATCH] fix(build): imprimir la causa real del fallo de red y no
+ tumbar el build por fuentes opcionales
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+
+Dos cambios en src/lib/dynamic-content.ts:
+
+1) `fetch failed` ya no se pierde. Node envuelve todo fallo de transporte en un
+   TypeError genérico y guarda el detalle en `error.cause`. `describeError()`
+   desenvuelve la cadena (cause anidada y AggregateError.errors) e imprime
+   code/errno/syscall/hostname/address/port. Sin eso, el log de Vercel decía
+   "fetch failed" y no había forma de distinguir DNS de firewall de TLS.
+
+2) Fatalidad por fuente, no por tipo de fallo. `blog_posts` sigue siendo crítica:
+   vacía o inalcanzable, el build se cae. `newsletter_editions_public` y
+   `case_studies_public` son opcionales: vacías es un estado legítimo del negocio
+   (hoy hay 0 ediciones) y si no se pueden consultar se avisa fuerte en el log y
+   el build sigue sin esas URLs.
+
+Además:
+- Promise.allSettled en vez de Promise.all: con `all`, la primera fuente que
+  rechaza ocultaba el estado de las otras dos (por eso el log decía "index 1"
+  sin decir nada de blog_posts).
+- 3 intentos con backoff 400/1200 ms solo para fallos transitorios (red, 5xx,
+  429). Un 4xx no se reintenta.
+
+Riesgo asumido: si la consulta de ediciones o casos falla de forma transitoria,
+ese deploy publica sin esas URLs en el sitemap ni su HTML prerenderizado, y solo
+queda constancia en el log del build.
+---
+ src/lib/dynamic-content.ts | 165 ++++++++++++++++++++++++++++++-------
+ 1 file changed, 133 insertions(+), 32 deletions(-)
+
+diff --git a/src/lib/dynamic-content.ts b/src/lib/dynamic-content.ts
+index 99e533b..f31e000 100644
+--- a/src/lib/dynamic-content.ts
++++ b/src/lib/dynamic-content.ts
+@@ -10,9 +10,12 @@
+  * se ejecuta desde vite.config, donde ese objeto no existe. Las credenciales
+  * entran por parámetro.
+  *
+- * Regla: **falla ruidosamente**. Un build que termina bien pero deja el sitio sin
+- * artículos indexables es peor que un build roto: nadie se entera hasta que
+- * Search Console reporta 0 clics.
++ * Regla: **falla ruidosamente, pero solo donde duele**. Un build que termina bien
++ * pero deja el sitio sin artículos indexables es peor que un build roto: nadie se
++ * entera hasta que Search Console reporta 0 clics. Por eso `blog_posts` vacía o
++ * inalcanzable tumba el build. Las demás fuentes (ediciones de newsletter, casos)
++ * pueden estar legítimamente vacías y un hipo de red suyo NO debe bloquear todo
++ * despliegue del sitio: se avisa fuerte en el log y el build sigue.
+  */
+ 
+ import {
+@@ -100,29 +103,106 @@ function fail(scope: string, message: string): never {
+   throw new Error(`[${scope}] ${message}`);
+ }
+ 
++/**
++ * Node envuelve TODO fallo de transporte en un genérico `TypeError: fetch failed`
++ * y guarda el detalle real (`ENOTFOUND`, `ECONNREFUSED`, `UND_ERR_CONNECT_TIMEOUT`,
++ * `unable to verify the first certificate`…) en `error.cause`, a veces anidado o
++ * dentro de un `AggregateError.errors`. Sin desenvolverlo, el log de Vercel dice
++ * "fetch failed" y no hay forma de saber si fue DNS, firewall, TLS o timeout.
++ */
++export function describeError(err: unknown, depth = 0): string {
++  if (depth > 4) return "…";
++  if (!(err instanceof Error)) return String(err);
++  const e = err as Error & {
++    code?: string;
++    errno?: number;
++    syscall?: string;
++    hostname?: string;
++    address?: string;
++    port?: number;
++    cause?: unknown;
++    errors?: unknown[];
++  };
++  const meta = [
++    e.code && `code=${e.code}`,
++    e.errno !== undefined && `errno=${e.errno}`,
++    e.syscall && `syscall=${e.syscall}`,
++    e.hostname && `hostname=${e.hostname}`,
++    e.address && `address=${e.address}`,
++    e.port !== undefined && `port=${e.port}`,
++  ].filter(Boolean) as string[];
++
++  let out = `${e.name}: ${e.message}`;
++  if (meta.length) out += ` (${meta.join(" ")})`;
++
++  const pad = "  ".repeat(depth + 1);
++  if (Array.isArray(e.errors) && e.errors.length) {
++    out += e.errors.map((sub) => `\n${pad}↳ agregado: ${describeError(sub, depth + 1)}`).join("");
++  }
++  if (e.cause !== undefined && e.cause !== null) {
++    out += `\n${pad}↳ causa: ${describeError(e.cause, depth + 1)}`;
++  }
++  return out;
++}
++
++/** Fallo de transporte o de status al consultar UNA fuente. Lo distingue de "consulté y no hay nada". */
++export class SourceUnavailableError extends Error {
++  constructor(readonly source: string, readonly url: string, readonly detail: string) {
++    super(`no se pudo consultar ${source}: ${detail}\n  URL: ${url}`);
++    this.name = "SourceUnavailableError";
++  }
++}
++
++const RETRY_ATTEMPTS = 3;
++const RETRY_DELAYS_MS = [400, 1200];
++const sleep = (ms: number) => new Promise((r) => setTimeout(r, ms));
++
++/**
++ * Consulta una fuente. Reintenta SOLO lo que puede ser transitorio (error de red,
++ * 5xx, 429). Un 4xx —tabla que no existe, RLS, clave mala— no se reintenta: no va
++ * a cambiar de opinión en 400 ms y reintentarlo solo alarga el build.
++ */
+ async function getJson<T>(
+   url: string,
+   headers: Record<string, string>,
+   what: string,
+-  scope: string,
+ ): Promise<T> {
+-  let res: Response;
+-  try {
+-    res = await fetch(url, { headers });
+-  } catch (err) {
+-    return fail(scope, `no se pudo consultar ${what}: ${(err as Error).message}\n  URL: ${url}`);
+-  }
+-  if (!res.ok) {
+-    const body = await res.text().catch(() => "");
+-    return fail(scope, `${what} devolvió HTTP ${res.status}: ${body.slice(0, 500)}\n  URL: ${url}`);
++  let detail = "sin detalle";
++  for (let attempt = 1; attempt <= RETRY_ATTEMPTS; attempt++) {
++    let transitorio = true;
++    try {
++      const res = await fetch(url, { headers });
++      if (res.ok) return (await res.json()) as T;
++      const body = await res.text().catch(() => "");
++      detail = `HTTP ${res.status}: ${body.slice(0, 500)}`;
++      transitorio = res.status >= 500 || res.status === 429;
++    } catch (err) {
++      detail = describeError(err);
++    }
++    if (!transitorio) break;
++    if (attempt < RETRY_ATTEMPTS) {
++      console.warn(`[dynamic-content] ${what}: intento ${attempt}/${RETRY_ATTEMPTS} falló (${detail.split("\n")[0]}), reintento…`);
++      await sleep(RETRY_DELAYS_MS[attempt - 1] ?? 1200);
++    }
+   }
+-  return (await res.json()) as T;
++  throw new SourceUnavailableError(what, url, detail);
+ }
+ 
+ /**
+- * Trae el contenido publicado. Lanza si faltan credenciales, si cualquier
+- * consulta responde distinto de 200, o si `blog_posts` devuelve cero filas.
+- * `PRERENDER_ALLOW_EMPTY_CONTENT=1` degrada esos tres casos a warning — solo
++ * Fatalidad POR FUENTE, no por tipo de fallo:
++ *  - `blog_posts` es la única fuente crítica. Vacía o inalcanzable, tumba el build:
++ *    publicar el sitio sin sus ~45 artículos indexables es el fallo silencioso que
++ *    veníamos arrastrando.
++ *  - `newsletter_editions_public` y `case_studies_public` son opcionales. Vacías es
++ *    un estado legítimo del negocio (hoy hay 0 ediciones) e inalcanzables solo
++ *    cuestan sus URLs en ese deploy, no el deploy entero.
++ */
++
++/**
++ * Trae el contenido publicado. Lanza si faltan credenciales, si `blog_posts` no se
++ * puede consultar, o si `blog_posts` devuelve cero filas. Las fuentes opcionales
++ * que fallen o vengan vacías se registran y el build sigue.
++ * `PRERENDER_ALLOW_EMPTY_CONTENT=1` degrada también lo crítico a warning — solo
+  * para builds locales sin acceso a Supabase, NUNCA en Vercel.
+  */
+ export async function fetchDynamicContent(
+@@ -153,24 +233,45 @@ export async function fetchDynamicContent(
+     `${supabaseUrl}/rest/v1/blog_posts` +
+     `?select=slug,language,author,category,created_at,${BLOG_I18N_COLUMNS}` +
+     `&active=eq.true&published_at=lte.${now}`;
++  const editionsUrl = `${supabaseUrl}/rest/v1/newsletter_editions_public?select=slug`;
++  const casesUrl = `${supabaseUrl}/rest/v1/case_studies_public?select=slug`;
+ 
+-  let posts: BlogPostRow[];
+-  let editions: { slug: string }[];
+-  let cases: { slug: string }[];
+-  try {
+-    [posts, editions, cases] = await Promise.all([
+-      getJson<BlogPostRow[]>(blogUrl, headers, "blog_posts", scope),
+-      getJson<{ slug: string }[]>(`${supabaseUrl}/rest/v1/newsletter_editions_public?select=slug`, headers, "newsletter_editions_public", scope),
+-      getJson<{ slug: string }[]>(`${supabaseUrl}/rest/v1/case_studies_public?select=slug`, headers, "case_studies_public", scope),
+-    ]);
+-  } catch (err) {
+-    // La puerta de escape existe para trabajar sin acceso a Supabase, así que
+-    // también cubre el fallo de red o el HTTP != 200. En Vercel va apagada.
+-    if (!allowEmptyContent()) throw err;
+-    console.warn(`[${scope}] PRERENDER_ALLOW_EMPTY_CONTENT=1, sigo sin contenido dinámico: ${(err as Error).message}`);
+-    return empty;
++  // allSettled y NO all: con Promise.all la primera fuente que rechaza oculta el
++  // estado de las otras dos, y el log de Vercel acaba señalando "index 1" cuando
++  // pueden estar fallando las tres. Aquí se ve el estado de cada una.
++  const [blogRes, editionsRes, casesRes] = await Promise.allSettled([
++    getJson<BlogPostRow[]>(blogUrl, headers, "blog_posts"),
++    getJson<{ slug: string }[]>(editionsUrl, headers, "newsletter_editions_public"),
++    getJson<{ slug: string }[]>(casesUrl, headers, "case_studies_public"),
++  ]);
++
++  /** Fuente opcional: si falla, se avisa fuerte y se sigue con lista vacía. */
++  function optional(res: PromiseSettledResult<{ slug: string }[]>, name: string): { slug: string }[] {
++    if (res.status === "fulfilled") {
++      if (!res.value.length) {
++        console.warn(`[${scope}] ${name} devolvió 0 filas (HTTP 200). Es un estado válido: no hay contenido de esa fuente. El build sigue.`);
++      }
++      return res.value;
++    }
++    console.warn(
++      `[${scope}] ADVERTENCIA: ${describeError(res.reason)}\n` +
++        `  ${name} queda FUERA del sitemap y del prerender en este deploy. El build sigue porque no es fuente crítica.`,
++    );
++    return [];
++  }
++
++  const editions = optional(editionsRes, "newsletter_editions_public");
++  const cases = optional(casesRes, "case_studies_public");
++
++  if (blogRes.status === "rejected") {
++    if (!allowEmptyContent()) {
++      fail(scope, `${describeError(blogRes.reason)}\n  blog_posts es fuente crítica: sin ella el sitio se publicaría sin artículos indexables.`);
++    }
++    console.warn(`[${scope}] PRERENDER_ALLOW_EMPTY_CONTENT=1, sigo sin blog: ${describeError(blogRes.reason)}`);
++    return { ...empty, cases, editions };
+   }
+ 
++  const posts = blogRes.value;
+   if (!posts.length) {
+     if (!allowEmptyContent()) {
+       fail(
+-- 
+2.43.0
+
