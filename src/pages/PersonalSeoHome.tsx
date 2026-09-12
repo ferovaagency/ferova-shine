@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { ArrowRight, Check, ChevronDown, FileCheck2, Layers3, ListChecks, MessageCircle, ShieldCheck } from "lucide-react";
+import { ArrowRight, Check, ChevronDown, FileCheck2, Layers3, MessageCircle, ShieldCheck } from "lucide-react";
 import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
 import SEO from "@/components/SEO";

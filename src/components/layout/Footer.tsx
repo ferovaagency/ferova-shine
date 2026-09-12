@@ -15,7 +15,7 @@ const Footer = ({ currentLang, lang }: FooterProps) => {
 
   const t: Record<string, { tagline: string; services: string; company: string; legal: string; rights: string; servLinks: { name: string; href: string }[]; compLinks: { name: string; href: string }[]; legalLinks: { name: string; href: string }[] }> = {
     es: {
-      tagline: 'Capacidad técnica por tarea, horas o mes para agencias: SEO, mantenimiento web y landing pages.',
+      tagline: 'Criterio técnico y ejecución clara para resolver SEO y proyectos web con confianza.',
       services: 'Especialidades',
       company: 'Explorar',
       legal: 'Legal',
@@ -108,9 +108,9 @@ const Footer = ({ currentLang, lang }: FooterProps) => {
           <div className="col-span-2 md:col-span-4 lg:col-span-2">
             <Link to={locale === 'pt' ? '/pt' : locale === 'en' ? '/en' : '/'}>
               {locale === 'es' ? (
-                <span className="leading-none">
-                  <span className="block font-display text-xl font-bold tracking-[0.08em] text-foreground">SEO PARA AGENCIAS</span>
-                  <span className="mt-2 block text-[10px] font-semibold uppercase tracking-[0.24em] text-gold">by Ferova</span>
+                <span className="personal-footer-wordmark leading-none">
+                  <span className="block font-display text-xl font-bold tracking-[0.08em] text-foreground">MARÍA FER</span>
+                  <span className="mt-2 block text-[10px] font-semibold uppercase tracking-[0.24em] text-gold">SEO técnico · Ferova</span>
                 </span>
               ) : (
                 <img src={logoLight} alt="Ferova Agency" className="h-16 w-auto" />

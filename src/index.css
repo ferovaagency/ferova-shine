@@ -578,6 +578,26 @@
 
 /* Personal María Fer home */
 .personal-home { background: #faf5eb; color: #282423; }
+
+.personal-header {
+  background: rgba(250, 245, 235, .94);
+  border-bottom: 1px solid rgba(84, 16, 20, .12);
+  color: #541014;
+  backdrop-filter: blur(14px);
+}
+.personal-header .text-foreground { color: #541014; }
+.personal-header .text-muted-foreground { color: rgba(84, 16, 20, .72); }
+.personal-header nav a:not(.seo-primary-button):hover,
+.personal-header nav a:not(.seo-primary-button):focus-visible { color: #541014; }
+.personal-header .seo-primary-button { background: #541014; color: #fffaf3; }
+.personal-header-wordmark { display: inline-flex; flex-direction: column; gap: .28rem; line-height: 1; }
+.personal-header-wordmark > span { font-family: var(--font-display, Georgia, serif); font-size: 1.05rem; font-weight: 700; letter-spacing: .12em; }
+.personal-header-wordmark small { color: #8c6905; font-size: .58rem; font-weight: 700; letter-spacing: .18em; text-transform: uppercase; }
+.personal-menu-button { border-color: rgba(84, 16, 20, .28); background: rgba(255,255,255,.35); color: #541014; }
+.personal-mobile-menu { border-color: rgba(84, 16, 20, .12); background: #faf5eb; }
+.personal-mobile-menu .text-muted-foreground { color: rgba(84, 16, 20, .72); }
+.personal-mobile-menu .seo-primary-button { background: #541014; color: #fffaf3; }
+.personal-footer-wordmark { display: inline-flex; flex-direction: column; }
 .personal-shell { width: min(1180px, calc(100% - 3rem)); margin: 0 auto; }
 .personal-hero { padding: 8.5rem 0 5rem; background: #faf5eb; }
 .personal-hero-grid,.personal-two-col { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: clamp(2rem, 7vw, 6rem); align-items: center; }

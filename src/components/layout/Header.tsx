@@ -53,20 +53,17 @@ export default function Header({ currentLang, lang }: HeaderProps) {
   const onCta = () => trackEvent("quote_requested", { section: "header", language: locale });
 
   return (
-    <header className={`fixed inset-x-0 top-0 z-50 ${locale === "es" ? "agency-header" : "border-b border-border/60 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/80"}`}>
+    <header className={`fixed inset-x-0 top-0 z-50 ${locale === "es" ? "personal-header" : "border-b border-border/60 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/80"}`}>
       <a href="#contenido-principal" className="agency-skip-link">
         {locale === "en" ? "Skip to content" : locale === "pt" ? "Pular para o conteúdo" : "Saltar al contenido"}
       </a>
       <div className="container mx-auto flex h-20 items-center justify-between px-4 md:px-6">
         <Link to={homeHref} className="flex items-center gap-3" onClick={() => setMobileOpen(false)}>
           {locale === "es" ? (
-            <>
-              <span className="seo-brand-mark" aria-hidden="true"><img src={logoLight} alt="" /></span>
-              <span className="leading-none">
-                <span className="block font-display text-base font-bold tracking-[0.08em] text-foreground sm:text-lg">SEO PARA AGENCIAS</span>
-                <span className="mt-1 block text-[10px] font-semibold uppercase tracking-[0.24em] text-[#8c6905]">by Ferova</span>
-              </span>
-            </>
+            <span className="personal-header-wordmark" aria-label="María Fer · SEO técnico · Ferova">
+              <span>MARÍA FER</span>
+              <small>SEO técnico · Ferova</small>
+            </span>
           ) : (
             <img src={logoLight} alt="Ferova Agency" className="h-12 w-auto sm:h-14" />
           )}
@@ -83,13 +80,13 @@ export default function Header({ currentLang, lang }: HeaderProps) {
           </Link>
         </nav>
 
-        <button type="button" className={`inline-flex h-10 w-10 items-center justify-center rounded-full border lg:hidden ${locale === "es" ? "agency-menu-button" : "border-border bg-card text-foreground"}`} onClick={() => setMobileOpen((value) => !value)} aria-label={locale === "en" ? "Open menu" : "Abrir menú"} aria-expanded={mobileOpen}>
+        <button type="button" className={`inline-flex h-10 w-10 items-center justify-center rounded-full border lg:hidden ${locale === "es" ? "personal-menu-button" : "border-border bg-card text-foreground"}`} onClick={() => setMobileOpen((value) => !value)} aria-label={locale === "en" ? "Open menu" : "Abrir menú"} aria-expanded={mobileOpen}>
           {mobileOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
         </button>
       </div>
 
       {mobileOpen && (
-        <div className={`max-h-[calc(100vh-5rem)] overflow-y-auto border-t lg:hidden ${locale === "es" ? "agency-mobile-menu" : "border-border/60 bg-background"}`}>
+        <div className={`max-h-[calc(100vh-5rem)] overflow-y-auto border-t lg:hidden ${locale === "es" ? "personal-mobile-menu" : "border-border/60 bg-background"}`}>
           <nav className="container mx-auto flex flex-col gap-1 px-4 py-4 md:px-6">
             {cfg.primary.map((item) => (
               <Link key={item.href} to={item.href} onClick={() => setMobileOpen(false)} className={`rounded-xl px-4 py-3 text-sm transition-colors ${isActive(item.href) ? "bg-accent text-accent-foreground" : "text-muted-foreground hover:bg-accent hover:text-accent-foreground"}`}>
