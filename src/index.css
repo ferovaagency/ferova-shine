@@ -550,6 +550,32 @@
   .seo-hero-visual img { transform: none; }
 }
 
+/* Personal hero: la persona explica la capacidad antes que la consola. */
+.agency-personal-portrait {
+  position: relative;
+  margin: 0;
+  overflow: hidden;
+  border: 1px solid rgb(224 189 82 / 24%);
+  background: var(--agency-wine);
+  box-shadow: 0 20px 50px rgb(43 10 13 / 24%);
+}
+.agency-personal-portrait img {
+  display: block;
+  width: 100%;
+  aspect-ratio: 4 / 5;
+  object-fit: cover;
+  object-position: 52% 38%;
+}
+.agency-personal-portrait figcaption {
+  padding: .75rem 1rem;
+  color: var(--agency-ivory);
+  font-size: .78rem;
+  letter-spacing: .04em;
+}
+@media (max-width: 700px) {
+  .agency-personal-portrait img { aspect-ratio: 16 / 11; object-position: 50% 34%; }
+}
+
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after {
     scroll-behavior: auto !important;

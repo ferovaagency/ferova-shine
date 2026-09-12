@@ -7,6 +7,7 @@ import AgencyDeliveryConsole from "@/components/visuals/AgencyDeliveryConsole";
 import AgencyTaglineReveal from "@/components/visuals/AgencyTaglineReveal";
 import AgencyVideoElement from "@/components/visuals/AgencyVideoElement";
 import ferovaLogo from "@/assets/ferova-logo.png.png";
+import mafeHero from "@/assets/mafe-ferova-hero.png";
 
 const engagements = [
   { name: "Por tarea cerrada", fit: "Cuando el entregable está claro", text: "Cotizamos alcance, fecha y QA antes de empezar. Funciona para auditorías, landings, migraciones o correcciones concretas.", query: "tarea" },
@@ -56,22 +57,25 @@ export default function SeoHome() {
 
   return (
     <div className="seo-brand agency-site min-h-screen">
-      <SEO title="Especialista SEO por horas para agencias | Ferova" description="Contrata SEO técnico, mantenimiento web y landings por tarea, bolsa de horas o capacidad mensual. White label, sin sumar un cargo full time." path="/" lang="es" image={ferovaLogo} jsonLd={[professionalService, faqSchema]} />
+      <SEO title="María Fer · SEO técnico y proyectos web para agencias | Ferova" description="Conoce a María Fer: criterio técnico, implementación y entregas documentadas para agencias, por tarea, horas o capacidad mensual." path="/" lang="es" image={ferovaLogo} jsonLd={[professionalService, faqSchema]} />
       <Header lang="es" />
 
       <main id="contenido-principal">
         <section className="agency-hero">
           <div className="agency-hero-shell">
             <div className="agency-hero-copy">
-              <div className="agency-status-line" aria-label="Formas de contratación"><span>Por tarea</span><span>Bolsa de horas</span><span>Capacidad mensual</span></div>
-              <h1>Entrega más sin contratar otro full time.</h1>
-              <p>Contrata una especialista senior para SEO técnico, mantenimiento web, landings y migraciones. Pagas por la capacidad que necesitas, con alcance y precio definidos antes de empezar.</p>
+              <div className="agency-status-line" aria-label="Especialidades de María Fer"><span>SEO técnico</span><span>Proyectos web</span><span>Migraciones</span></div>
+              <h1>Soy María Fer. Me sumo a tu equipo para resolver SEO y web.</h1>
+              <p>Trabajo contigo por tarea, horas o mes. Aporto criterio técnico, implementación y entregas documentadas para que tu agencia conserve el control.</p>
               <div className="agency-hero-actions">
-                <button type="button" onClick={openFera} className="seo-primary-button">Cotizar horas o tareas <MessageSquareQuote aria-hidden="true" /></button>
+                <button type="button" onClick={openFera} className="seo-primary-button">Cuéntame tu proyecto <MessageSquareQuote aria-hidden="true" /></button>
               </div>
-              <p className="agency-hero-assurance"><TimerReset aria-hidden="true" /> Puedes empezar con una sola tarea delimitada.</p>
+              <p className="agency-hero-assurance"><TimerReset aria-hidden="true" /> Colaboración directa · White label disponible.</p>
             </div>
-            <AgencyDeliveryConsole />
+            <figure className="agency-personal-portrait">
+              <img src={mafeHero} alt="María Fer en un espacio de trabajo de Ferova" />
+              <figcaption>María Fer · SEO técnico y proyectos web</figcaption>
+            </figure>
           </div>
           <a className="agency-hero-anchor" href="#modalidades">Ver cómo contratar <span aria-hidden="true">↓</span></a>
         </section>

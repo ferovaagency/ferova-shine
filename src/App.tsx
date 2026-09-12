@@ -70,6 +70,7 @@ import AdminCaseEditor from "./pages/admin/AdminCaseEditor";
 import LaboratorioFerova from "./pages/tools/LaboratorioFerova";
 import CalculadoraValorHora from "./pages/tools/CalculadoraValorHora";
 import SeoSpecialtyPage from "./pages/SeoSpecialtyPage";
+import PositioningPage from "./pages/PositioningPage";
 import SeoAbout from "./pages/SeoAbout";
 import SeoEcommerceEs from "./pages/SeoEcommerceEs";
 import SeoSolutions from "./pages/SeoSolutions";
@@ -140,6 +141,8 @@ const AppRoutes = ({ hostLang }: { hostLang: "es" | "en" | "pt" }) => (
     <Route path="/seo-para-agencias" element={<SeoSpecialtyPage kind="agencies" />} />
     <Route path="/auditoria-seo-tecnica" element={<SeoSpecialtyPage kind="audit" />} />
     <Route path="/migraciones-seo" element={<SeoSpecialtyPage kind="migrations" />} />
+    {/* Páginas de posicionamiento — ver src/content/positioning.ts */}
+    <Route path="/en/outsource-seo-services" element={<PositioningPage kind="outsource-seo-services" />} />
     <Route path="/services/ecommerce-seo" element={<SeoEcommerce lang={hostLang} />} />
     <Route path="/servicios/diseno-web" element={<DiseneoWeb lang={hostLang} />} />
     <Route path="/services/web-design" element={<DiseneoWeb lang={hostLang} />} />

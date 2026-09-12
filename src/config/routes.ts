@@ -153,6 +153,14 @@ export const ROUTES: RouteDef[] = [
     paths: { es: "/seo-para-agencias" } },
   { id: "auditoria-seo-tecnica", type: "service", indexable: true, prerender: true, priority: 0.9,
     paths: { es: "/auditoria-seo-tecnica" } },
+
+  // ── Páginas de posicionamiento (plantilla PositioningPage) ────────────
+  // Atacan consultas de comparación en EE.UU. Contenido en src/content/positioning.ts.
+  // ⚠️ indexable/prerender en false MIENTRAS falten los datos con fuente
+  // (tabla de tarifas y bloque de prueba). Ver los TODO del archivo de
+  // contenido. Cuando lleguen las fuentes, ambos pasan a true en un commit.
+  { id: "outsource-seo-services", type: "service", indexable: false, prerender: false, priority: 0.9,
+    paths: { en: "/en/outsource-seo-services" } },
   { id: "migraciones-seo", type: "service", indexable: true, prerender: true, priority: 0.9,
     paths: { es: "/migraciones-seo" } },
   { id: "sobre-nosotros-seo", type: "core", indexable: true, prerender: true, priority: 0.7,
