@@ -576,6 +576,79 @@
   .agency-personal-portrait img { aspect-ratio: 16 / 11; object-position: 50% 34%; }
 }
 
+/* Personal María Fer home */
+.personal-home { background: #faf5eb; color: #282423; }
+.personal-shell { width: min(1180px, calc(100% - 3rem)); margin: 0 auto; }
+.personal-hero { padding: 8.5rem 0 5rem; background: #faf5eb; }
+.personal-hero-grid,.personal-two-col { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: clamp(2rem, 7vw, 6rem); align-items: center; }
+.personal-copy { max-width: 640px; }
+.personal-eyebrow { margin: 0 0 1.25rem; color: #6a4c30; font-size: .72rem; font-weight: 700; letter-spacing: .16em; text-transform: uppercase; }
+.personal-copy h1,.personal-section-heading h2,.personal-two-col h2,.personal-contact h2 { margin: 0; color: #541014; font-family: "Barlow Condensed", sans-serif; font-weight: 700; letter-spacing: -.025em; line-height: .94; }
+.personal-copy h1 { max-width: 12ch; font-size: clamp(3.4rem, 6vw, 6rem); }
+.personal-copy h1 em { font-style: normal; color: #6a4c30; }
+.personal-lede { max-width: 56ch; margin: 1.6rem 0 0; font-size: 1.08rem; line-height: 1.75; }
+.personal-actions { display: flex; flex-wrap: wrap; align-items: center; gap: 1.25rem; margin-top: 2rem; }
+.personal-button { display: inline-flex; align-items: center; justify-content: center; gap: .55rem; min-height: 3.25rem; padding: .8rem 1.2rem; border: 0; border-radius: .45rem; font-weight: 700; cursor: pointer; }
+.personal-button svg,.personal-link svg { width: 1rem; }
+.personal-button-gold { background: #c0930e; color: #211b0b; }
+.personal-button-gold:hover { background: #e0bd52; }
+.personal-link { display: inline-flex; align-items: center; gap: .55rem; border: 0; border-bottom: 1px solid #9b8775; background: transparent; color: #541014; font-weight: 700; padding: .2rem 0; }
+.personal-assurance { display: flex; align-items: center; gap: .5rem; margin-top: 1.4rem; color: #6a4c30; font-size: .78rem; }
+.personal-assurance svg { width: 1rem; color: #c0930e; }
+.personal-portrait { margin: 0; overflow: hidden; border: 1px solid rgb(84 16 20 / 20%); background: #e7ddd0; box-shadow: 0 20px 50px rgb(43 10 13 / 15%); }
+.personal-portrait img { display: block; width: 100%; height: auto; aspect-ratio: 3 / 2; object-fit: contain; background: #d9cec0; }
+.personal-portrait figcaption { padding: .8rem 1rem; color: #541014; font-size: .78rem; }
+.personal-proof { padding: 5rem 0; border-top: 1px solid #d5c9b9; }
+.personal-section-heading { display: flex; align-items: end; justify-content: space-between; gap: 2rem; margin-bottom: 2rem; }
+.personal-section-heading h2,.personal-two-col h2 { max-width: 16ch; font-size: clamp(2.5rem, 4vw, 4rem); }
+.personal-section-heading > div > p:last-child { margin: .8rem 0 0; }
+.personal-section-heading > span,.personal-note { color: #6a4c30; font-size: .75rem; }
+.personal-case-grid { display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); gap: 1.25rem; }
+.personal-case { padding: 1.6rem; border: 1px solid #d5c9b9; background: #fffaf1; }
+.personal-case > span { color: #6a4c30; font-size: .7rem; font-weight: 700; letter-spacing: .14em; }
+.personal-case h3 { margin: .65rem 0 1.2rem; color: #282423; font-family: "Barlow Condensed",sans-serif; font-size: 2rem; line-height: 1; }
+.personal-case > div { display: flex; gap: 1rem; align-items: start; padding-top: 1rem; border-top: 1px solid #d5c9b9; }
+.personal-case > div > svg { flex: 0 0 auto; width: 2rem; color: #c0930e; }
+.personal-case ol { margin: 0; padding-left: 1.2rem; color: #6a4c30; font-size: .88rem; line-height: 1.9; }
+.personal-case .personal-link { margin-top: 1.4rem; }
+.personal-note { margin: 1rem 0 0; }
+.personal-modes { padding: 5rem 0; background: #efe7dc; }
+.personal-two-col { align-items: start; }
+.personal-two-col > div > p:not(.personal-eyebrow) { max-width: 48ch; line-height: 1.75; }
+.personal-tabs { display: flex; gap: 1.5rem; border-bottom: 1px solid #bbaa93; }
+.personal-tabs button { min-height: 3rem; padding: .5rem .1rem .8rem; border: 0; border-bottom: 2px solid transparent; background: transparent; color: #6a4c30; font-weight: 700; cursor: pointer; }
+.personal-tabs button[aria-selected=true] { border-color: #541014; color: #541014; }
+.personal-mode-panel { padding-top: 1.5rem; }
+.personal-mode-panel h3 { margin: 0; color: #541014; font-family: "Barlow Condensed",sans-serif; font-size: 2rem; }
+.personal-mode-panel ul { margin: 1rem 0; padding: 0; list-style: none; }
+.personal-mode-panel li { display: flex; align-items: center; gap: .5rem; margin: .45rem 0; }
+.personal-mode-panel li svg { width: 1rem; color: #c0930e; }
+.personal-about { padding: 5rem 0; }
+.personal-faq { padding: 5rem 0; background: #fffaf1; }
+.personal-faq details { border-top: 1px solid #d5c9b9; padding: 1rem 0; }
+.personal-faq summary { display: flex; align-items: center; justify-content: space-between; gap: 1rem; cursor: pointer; color: #541014; font-weight: 700; list-style: none; }
+.personal-faq summary::-webkit-details-marker { display: none; }
+.personal-faq summary svg { width: 1rem; transition: transform .2s; }
+.personal-faq details[open] summary svg { transform: rotate(180deg); }
+.personal-faq details p { max-width: 60ch; margin: .8rem 0 0; line-height: 1.7; }
+.personal-contact { padding: 4.5rem 0; background: #541014; color: #f8f0e2; }
+.personal-contact-inner { display: flex; align-items: center; justify-content: space-between; gap: 2rem; }
+.personal-contact h2 { color: #f8f0e2; font-size: clamp(2.8rem, 4.5vw, 4.8rem); max-width: 11ch; }
+.personal-contact .personal-eyebrow { color: #e0bd52; }
+.personal-contact p:not(.personal-eyebrow) { max-width: 44ch; color: #ead8cd; }
+@media (max-width: 800px) {
+  .personal-shell { width: min(100% - 2rem, 640px); }
+  .personal-hero { padding-top: 7rem; }
+  .personal-hero-grid,.personal-two-col { grid-template-columns: 1fr; gap: 2.5rem; }
+  .personal-copy h1 { font-size: clamp(3.25rem, 15vw, 5rem); }
+  .personal-portrait img { aspect-ratio: 3 / 2; object-fit: contain; }
+  .personal-section-heading { display: block; }
+  .personal-section-heading > span { display: block; margin-top: 1rem; }
+  .personal-case-grid { grid-template-columns: 1fr; }
+  .personal-contact-inner { display: grid; }
+  .personal-contact .personal-button { width: 100%; }
+}
+
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after {
     scroll-behavior: auto !important;

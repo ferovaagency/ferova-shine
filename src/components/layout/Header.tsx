@@ -15,12 +15,12 @@ type NavCfg = { primary: NavItem[]; cta: NavItem };
 const NAV: Record<"es" | "en" | "pt", NavCfg> = {
   es: {
     primary: [
-      { label: "Capacidades", href: "/seo-para-agencias" },
-      { label: "Modalidades", href: "/precios" },
-      { label: "Experiencia", href: "/casos-de-exito" },
+      { label: "Mi trabajo", href: "/#trabajo" },
+      { label: "Cómo te ayudo", href: "/#ayuda" },
+      { label: "Sobre mí", href: "/#sobre-mi" },
       { label: "Recursos", href: "/recursos" },
     ],
-    cta: { label: "Cotizar horas o tareas", href: "/contacto" },
+    cta: { label: "Hablemos", href: "/#contacto" },
   },
   en: {
     primary: [
