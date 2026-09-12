@@ -120,7 +120,7 @@ const Contacto = ({ lang = 'es' }: Props) => {
     <>
       <SEO title={seo.t} description={seo.d} path={seo.p} lang={lang} />
       <Header currentLang={lang} />
-      <main className="pt-20">
+      <main className="personal-interior-page pt-20">
         <section className="py-20 md:py-28 relative grid-pattern">
           <div className="absolute inset-0" style={{ background: 'radial-gradient(ellipse at 50% 30%, hsla(45, 86%, 40%, 0.06), transparent 60%)' }} />
           <div className="container mx-auto px-4 md:px-6 relative z-10">

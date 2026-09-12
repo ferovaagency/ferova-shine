@@ -34,7 +34,7 @@ export default function SeoSpecialtyPage({ kind }: { kind: SeoSpecialtyKind }) {
       />
       <Header lang="es" />
 
-      <main className="pt-20">
+      <main className="personal-interior-page pt-20">
         <section className="relative overflow-hidden bg-[#541014] py-20 text-white md:py-28">
           <div className="absolute inset-0 opacity-50 [background-image:radial-gradient(circle_at_20%_20%,rgba(192,147,14,.36),transparent_36%),radial-gradient(circle_at_80%_70%,rgba(106,76,48,.3),transparent_32%)]" />
           <div className="container relative mx-auto max-w-6xl px-4 md:px-6">

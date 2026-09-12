@@ -598,6 +598,43 @@
 .personal-mobile-menu .text-muted-foreground { color: rgba(84, 16, 20, .72); }
 .personal-mobile-menu .seo-primary-button { background: #541014; color: #fffaf3; }
 .personal-footer-wordmark { display: inline-flex; flex-direction: column; }
+
+/* Shared interior-page treatment for the Spanish service, resource and proof pages. */
+.personal-interior-page {
+  background: #faf5eb;
+  color: #282423;
+}
+.personal-interior-page h1,
+.personal-interior-page h2,
+.personal-interior-page h3,
+.personal-interior-page h4 { font-family: var(--font-display, Georgia, serif); color: #541014; }
+.personal-interior-page > section:first-of-type h1,
+.personal-interior-page .agency-subpage-hero h1 { color: #fffaf3; }
+.personal-interior-page [class*="bg-[#541014]"] h1,
+.personal-interior-page [class*="bg-[#541014]"] h2,
+.personal-interior-page [class*="bg-[#541014]"] h3 { color: #fffaf3; }
+.personal-interior-page .text-muted-foreground,
+.personal-interior-page .text-slate-600,
+.personal-interior-page .text-slate-500 { color: #635c55; }
+.personal-interior-page .text-white,
+.personal-interior-page h1.text-white,
+.personal-interior-page h2.text-white,
+.personal-interior-page h3.text-white { color: #fffaf3; }
+.personal-interior-page .seo-kicker { color: #8c6905; }
+.personal-interior-page .seo-primary-button { background: #541014; color: #fffaf3; border-radius: 999px; box-shadow: 0 10px 24px rgba(84,16,20,.16); }
+.personal-interior-page .seo-secondary-button { border-color: rgba(255,250,243,.48); border-radius: 999px; }
+.personal-interior-page .seo-bento-card,
+.personal-interior-page article.rounded-2xl,
+.personal-interior-page .glass-card {
+  border-color: rgba(84,16,20,.16);
+  background: #fffaf3;
+  box-shadow: 0 14px 34px rgba(84,16,20,.07);
+}
+.personal-interior-page .seo-bento-card:hover { border-color: rgba(140,105,5,.52); box-shadow: 0 18px 38px rgba(84,16,20,.12); }
+.personal-interior-page .bg-slate-50 { background: #f3e9dc; }
+.personal-interior-page .agency-pricing-rail { border-radius: 1.5rem; box-shadow: 0 18px 42px rgba(84,16,20,.14); }
+.personal-interior-page .agency-pricing-icon { border-radius: 999px; }
+.personal-interior-page section { scroll-margin-top: 6rem; }
 .personal-shell { width: min(1180px, calc(100% - 3rem)); margin: 0 auto; }
 .personal-hero { padding: 8.5rem 0 5rem; background: #faf5eb; }
 .personal-hero-grid,.personal-two-col { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: clamp(2rem, 7vw, 6rem); align-items: center; }

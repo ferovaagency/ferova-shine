@@ -34,7 +34,7 @@ export default function SeoPricing() {
     <div className="seo-brand agency-site min-h-screen">
       <SEO title="SEO por horas y tareas para agencias | Modalidades Ferova" description="Compara contratación por tarea, bolsa de horas y capacidad mensual para SEO técnico, mantenimiento web, landings y migraciones white label." path="/precios" lang="es" jsonLd={offerCatalog} breadcrumbs={[{ name: "Inicio", path: "/" }, { name: "Modalidades", path: "/precios" }]} />
       <Header lang="es" />
-      <main id="contenido-principal" className="pt-20">
+      <main id="contenido-principal" className="personal-interior-page pt-20">
         <section className="agency-subpage-hero">
           <div>
             <h1>Contrata por tarea, horas o capacidad mensual.</h1>

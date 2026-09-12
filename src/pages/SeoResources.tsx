@@ -23,7 +23,7 @@ const categoryLabel: Record<string, string> = {
 
 export default function SeoResources() {
   return (
-    <div className="seo-brand min-h-screen text-slate-950">
+    <div className="seo-brand personal-interior-page min-h-screen text-slate-950">
       <SEO title="Recursos SEO para agencias y ecommerce | Ferova" description="Guías y herramientas en español sobre SEO técnico, ecommerce, trabajo white label, migraciones y búsqueda con IA." path="/recursos" lang="es" breadcrumbs={[{ name: "Inicio", path: "/" }, { name: "Recursos", path: "/recursos" }]} />
       <Header lang="es" />
       <main className="pt-20">
