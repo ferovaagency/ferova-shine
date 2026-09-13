@@ -3,6 +3,10 @@ import "./redesign-case-story.css";
 export default function RedesignCaseStory() {
   return (
     <section className="redesign-case" aria-label="Caso anónimo de rediseño web y SEO">
+      <div className="redesign-case-heading">
+        <h2>Caso real: rediseño web y SEO de una tienda online</h2>
+        <p>Así reconstruí una tienda con fallos y trabajé su SEO técnico. Explora mi intervención y la evolución de sus ventas entre enero y mayo de 2025.</p>
+      </div>
       <iframe
         src="/case-stories/redisenio-web.html?embed=1"
         title="Historia interactiva: rediseño de una tienda y evolución de sus ventas"

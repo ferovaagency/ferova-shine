@@ -1,4 +1,7 @@
 .redesign-case{width:min(1200px,100%);margin:24px auto;color:#541014;scroll-margin-top:90px}
+.redesign-case-heading{padding:0 22px 20px}
+.redesign-case-heading h2{margin:0 0 12px;font-size:clamp(26px,3vw,40px);line-height:1.15;color:#541014;text-wrap:balance}
+.redesign-case-heading p{margin:0;max-width:75ch;color:#635c55;font-size:16px;line-height:1.6}
 .redesign-case-frame{display:block;width:100%;height:clamp(420px,calc(100svh - 90px),760px);border:1px solid #54101422;border-radius:16px;background:#faf5eb}
 .redesign-case-data{padding:16px 22px;background:#faf5eb;font-size:14px;line-height:1.65}
 .redesign-case-data summary{cursor:pointer;font-weight:600;padding:8px 0}
