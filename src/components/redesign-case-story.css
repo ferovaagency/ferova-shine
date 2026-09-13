@@ -1,0 +1,9 @@
+.redesign-case{width:min(1200px,100%);margin:24px auto;color:#541014;scroll-margin-top:90px}
+.redesign-case-frame{display:block;width:100%;height:clamp(420px,calc(100svh - 90px),760px);border:1px solid #54101422;border-radius:16px;background:#faf5eb}
+.redesign-case-data{padding:16px 22px;background:#faf5eb;font-size:14px;line-height:1.65}
+.redesign-case-data summary{cursor:pointer;font-weight:600;padding:8px 0}
+.redesign-case-data table{border-collapse:collapse;width:min(100%,600px);margin:20px 0;text-align:left}
+.redesign-case-data th,.redesign-case-data td{padding:8px;border-bottom:1px solid #54101422}
+.redesign-case-data caption{text-align:left;margin-bottom:8px}
+.redesign-case-data p{max-width:80ch}
+@media(max-width:760px){.redesign-case-frame{height:clamp(420px,calc(100svh - 85px),660px)}}
