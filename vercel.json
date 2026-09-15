@@ -1,77 +1,539 @@
 {
   "$schema": "https://openapi.vercel.sh/vercel.json",
   "redirects": [
-    { "source": "/en", "has": [{ "type": "host", "value": "seoforecommerces.co" }], "destination": "https://seoparaecommerce.co/en", "permanent": true },
-    { "source": "/en", "has": [{ "type": "host", "value": "www.seoforecommerces.co" }], "destination": "https://seoparaecommerce.co/en", "permanent": true },
-    { "source": "/en/:path*", "has": [{ "type": "host", "value": "seoforecommerces.co" }], "destination": "https://seoparaecommerce.co/en/:path*", "permanent": true },
-    { "source": "/en/:path*", "has": [{ "type": "host", "value": "www.seoforecommerces.co" }], "destination": "https://seoparaecommerce.co/en/:path*", "permanent": true },
-    { "source": "/", "has": [{ "type": "host", "value": "seoforecommerces.co" }], "destination": "https://seoparaecommerce.co/en", "permanent": true },
-    { "source": "/", "has": [{ "type": "host", "value": "www.seoforecommerces.co" }], "destination": "https://seoparaecommerce.co/en", "permanent": true },
-    { "source": "/:path*", "has": [{ "type": "host", "value": "seoforecommerces.co" }], "destination": "https://seoparaecommerce.co/en/:path*", "permanent": true },
-    { "source": "/:path*", "has": [{ "type": "host", "value": "www.seoforecommerces.co" }], "destination": "https://seoparaecommerce.co/en/:path*", "permanent": true },
-    { "source": "/como-encontrar-palabras-clave-ecommerce/feed", "destination": "/blog/como-encontrar-palabras-clave-ecommerce", "permanent": true },
-    { "source": "/como-encontrar-palabras-clave-ecommerce/feed/", "destination": "/blog/como-encontrar-palabras-clave-ecommerce", "permanent": true },
-    { "source": "/como-encontrar-palabras-clave-ecommerce", "destination": "/blog/como-encontrar-palabras-clave-ecommerce", "permanent": true },
-    { "source": "/como-encontrar-palabras-clave-ecommerce/", "destination": "/blog/como-encontrar-palabras-clave-ecommerce", "permanent": true },
-
-    { "source": "/project/caso-de-exito-de-google-ads", "destination": "/casos-de-exito/google-ads-arcos-desinfeccion", "permanent": true },
-    { "source": "/project/caso-de-exito-de-google-ads/", "destination": "/casos-de-exito/google-ads-arcos-desinfeccion", "permanent": true },
-
-    { "source": "/project/caso-de-exito-ecommerce-de-cableado-estructurado", "destination": "/casos-de-exito/ecommerce-cableado-estructurado", "permanent": true },
-    { "source": "/project/caso-de-exito-ecommerce-de-cableado-estructurado/", "destination": "/casos-de-exito/ecommerce-cableado-estructurado", "permanent": true },
-
-    { "source": "/project/caso-de-exito-ecommerce-de-mascotas", "destination": "/casos-de-exito/ecommerce-mascotas", "permanent": true },
-    { "source": "/project/caso-de-exito-ecommerce-de-mascotas/", "destination": "/casos-de-exito/ecommerce-mascotas", "permanent": true },
-
-    { "source": "/aumentar-ventas-ecommerce-sin-publicidad", "destination": "/blog/aumentar-ventas-ecommerce-sin-publicidad", "permanent": true },
-    { "source": "/aumentar-ventas-ecommerce-sin-publicidad/", "destination": "/blog/aumentar-ventas-ecommerce-sin-publicidad", "permanent": true },
-
-    { "source": "/como-aumentar-visitas-sitio-web-2025", "destination": "/", "permanent": true },
-    { "source": "/como-aumentar-visitas-sitio-web-2025/", "destination": "/", "permanent": true },
-
-    { "source": "/seo-tecnico-tiendas-online", "destination": "/blog/seo-tecnico-tiendas-online", "permanent": true },
-    { "source": "/seo-tecnico-tiendas-online/", "destination": "/blog/seo-tecnico-tiendas-online", "permanent": true },
-
-    { "source": "/divi-vs-elementor-sitio-web-2025", "destination": "/blog/divi-vs-elementor-tienda-online-wordpress", "permanent": true },
-    { "source": "/divi-vs-elementor-sitio-web-2025/", "destination": "/blog/divi-vs-elementor-tienda-online-wordpress", "permanent": true },
-
-    { "source": "/google-ads-vs-meta-ads-2025", "destination": "/blog/google-ads-vs-meta-ads-ecommerce", "permanent": true },
-    { "source": "/2025/09/13/entrada-3/", "destination": "/blog", "permanent": true },
-    { "source": "/2025/09/07/hello-world/", "destination": "/blog", "permanent": true },
-    { "source": "/en/entrada-3/", "destination": "/blog", "permanent": true },
-    { "source": "/e-commerce-seo/", "destination": "/servicios/seo-ecommerce", "permanent": true },
-    { "source": "/la-antiguedad-del-dominio-afecta-el-posicionamiento-en-google/", "destination": "/blog/como-hacer-seo-ecommerce", "permanent": true },
-    { "source": "/asesoria-de-marketing-1-a-1/", "destination": "/servicios/asesorias-marketing", "permanent": true },
-    { "source": "/wordpress-vs-shopify-en-2025/", "destination": "/blog", "permanent": true },
-    { "source": "/politica-de-cookies-ue/", "destination": "/cookies", "permanent": true },
-    { "source": "/project_category/seo/", "destination": "/casos-de-exito", "permanent": true },
-    { "source": "/success-stories/", "destination": "/casos-de-exito", "permanent": true },
-    { "source": "/project_category/colombia/", "destination": "/casos-de-exito", "permanent": true },
-    { "source": "/en-que-agencia-de-seo-confiar-para-mejorar-el-posicionamiento-local-en-colombia/", "destination": "/blog/agencia-de-ecommerce-colombia", "permanent": true },
-    { "source": "/category/guias-de-usuario/", "destination": "/", "permanent": true },
-
-    { "source": "/servicios/pauta-digital", "destination": "/consultoria-estrategica", "permanent": true },
-    { "source": "/services/digital-ads", "destination": "/en/strategy-advisory", "permanent": true },
-    { "source": "/en/services/digital-ads", "destination": "/en/strategy-advisory", "permanent": true },
-    { "source": "/pt/anuncios-digitais", "destination": "/pt/consultoria-estrategica", "permanent": true },
-
-    { "source": "/servicios/diseno-logos", "destination": "/servicios/diseno-web", "permanent": true },
-    { "source": "/services/logo-design", "destination": "/en/services/web-design", "permanent": true },
-    { "source": "/en/services/logo-design", "destination": "/en/services/web-design", "permanent": true },
-    { "source": "/pt/design-logos", "destination": "/pt/design-web", "permanent": true },
-
-    { "source": "/servicios/web-economica", "destination": "/servicios/diseno-web", "permanent": true },
-    { "source": "/en/services/starter-web", "destination": "/en/services/web-design", "permanent": true },
-    { "source": "/pt/web-economica", "destination": "/pt/design-web", "permanent": true },
-
-    { "source": "/servicios/whatsapp-business", "destination": "/consultoria-estrategica", "permanent": true },
-    { "source": "/services/whatsapp-business", "destination": "/en/strategy-advisory", "permanent": true },
-    { "source": "/pt/whatsapp-business", "destination": "/pt/consultoria-estrategica", "permanent": true },
-    { "source": "/servicios/whatsapp-ia-bot", "destination": "/consultoria-estrategica", "permanent": true },
-    { "source": "/services/whatsapp-ai-bot", "destination": "/en/strategy-advisory", "permanent": true },
-    { "source": "/pt/whatsapp-ia-bot", "destination": "/pt/consultoria-estrategica", "permanent": true }
+    {
+      "source": "/consultoria-estrategica",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/en/strategy-advisory",
+      "destination": "/en",
+      "permanent": true
+    },
+    {
+      "source": "/pt/consultoria-estrategica",
+      "destination": "/pt",
+      "permanent": true
+    },
+    {
+      "source": "/capacitacion-ia",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/en/ai-training",
+      "destination": "/en",
+      "permanent": true
+    },
+    {
+      "source": "/pt/treinamento-ia",
+      "destination": "/pt",
+      "permanent": true
+    },
+    {
+      "source": "/servicios/asesorias-marketing",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/en/services/marketing-consulting",
+      "destination": "/en",
+      "permanent": true
+    },
+    {
+      "source": "/pt/consultorias",
+      "destination": "/pt",
+      "permanent": true
+    },
+    {
+      "source": "/servicios/optimizacion-linkedin",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/en/services/linkedin-optimization",
+      "destination": "/en",
+      "permanent": true
+    },
+    {
+      "source": "/pt/linkedin",
+      "destination": "/pt",
+      "permanent": true
+    },
+    {
+      "source": "/servicios/contenido-linkedin",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/en/services/linkedin-content",
+      "destination": "/en",
+      "permanent": true
+    },
+    {
+      "source": "/pt/conteudo-linkedin",
+      "destination": "/pt",
+      "permanent": true
+    },
+    {
+      "source": "/servicios/diseno-web",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/en/services/web-design",
+      "destination": "/en",
+      "permanent": true
+    },
+    {
+      "source": "/pt/design-web",
+      "destination": "/pt",
+      "permanent": true
+    },
+    {
+      "source": "/soluciones",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/en/solutions",
+      "destination": "/en",
+      "permanent": true
+    },
+    {
+      "source": "/pt/solucoes",
+      "destination": "/pt",
+      "permanent": true
+    },
+    {
+      "source": "/soluciones/diagnostico-empresarial",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/en/solutions/business-diagnosis",
+      "destination": "/en",
+      "permanent": true
+    },
+    {
+      "source": "/pt/solucoes/diagnostico-empresarial",
+      "destination": "/pt",
+      "permanent": true
+    },
+    {
+      "source": "/metodo-ferova",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/en/ferova-method",
+      "destination": "/en",
+      "permanent": true
+    },
+    {
+      "source": "/pt/metodo-ferova",
+      "destination": "/pt",
+      "permanent": true
+    },
+    {
+      "source": "/servicios",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/en/services",
+      "destination": "/en",
+      "permanent": true
+    },
+    {
+      "source": "/pt/servicos",
+      "destination": "/pt",
+      "permanent": true
+    },
+    {
+      "source": "/productos",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/en/products",
+      "destination": "/en",
+      "permanent": true
+    },
+    {
+      "source": "/pt/produtos",
+      "destination": "/pt",
+      "permanent": true
+    },
+    {
+      "source": "/servicios/descuentos-herramientas",
+      "destination": "/recursos",
+      "permanent": true
+    },
+    {
+      "source": "/en/services/tool-discounts",
+      "destination": "/en/resources",
+      "permanent": true
+    },
+    {
+      "source": "/pt/ferramentas",
+      "destination": "/pt/recursos",
+      "permanent": true
+    },
+    {
+      "source": "/nosotros",
+      "destination": "/sobre-nosotros",
+      "permanent": true
+    },
+    {
+      "source": "/en/about",
+      "destination": "/sobre-nosotros",
+      "permanent": true
+    },
+    {
+      "source": "/pt/sobre-nos",
+      "destination": "/sobre-nosotros",
+      "permanent": true
+    },
+    {
+      "source": "/en",
+      "has": [
+        {
+          "type": "host",
+          "value": "seoforecommerces.co"
+        }
+      ],
+      "destination": "https://seoparaecommerce.co/en",
+      "permanent": true
+    },
+    {
+      "source": "/en",
+      "has": [
+        {
+          "type": "host",
+          "value": "www.seoforecommerces.co"
+        }
+      ],
+      "destination": "https://seoparaecommerce.co/en",
+      "permanent": true
+    },
+    {
+      "source": "/en/:path*",
+      "has": [
+        {
+          "type": "host",
+          "value": "seoforecommerces.co"
+        }
+      ],
+      "destination": "https://seoparaecommerce.co/en/:path*",
+      "permanent": true
+    },
+    {
+      "source": "/en/:path*",
+      "has": [
+        {
+          "type": "host",
+          "value": "www.seoforecommerces.co"
+        }
+      ],
+      "destination": "https://seoparaecommerce.co/en/:path*",
+      "permanent": true
+    },
+    {
+      "source": "/",
+      "has": [
+        {
+          "type": "host",
+          "value": "seoforecommerces.co"
+        }
+      ],
+      "destination": "https://seoparaecommerce.co/en",
+      "permanent": true
+    },
+    {
+      "source": "/",
+      "has": [
+        {
+          "type": "host",
+          "value": "www.seoforecommerces.co"
+        }
+      ],
+      "destination": "https://seoparaecommerce.co/en",
+      "permanent": true
+    },
+    {
+      "source": "/:path*",
+      "has": [
+        {
+          "type": "host",
+          "value": "seoforecommerces.co"
+        }
+      ],
+      "destination": "https://seoparaecommerce.co/en/:path*",
+      "permanent": true
+    },
+    {
+      "source": "/:path*",
+      "has": [
+        {
+          "type": "host",
+          "value": "www.seoforecommerces.co"
+        }
+      ],
+      "destination": "https://seoparaecommerce.co/en/:path*",
+      "permanent": true
+    },
+    {
+      "source": "/como-encontrar-palabras-clave-ecommerce/feed",
+      "destination": "/blog/como-encontrar-palabras-clave-ecommerce",
+      "permanent": true
+    },
+    {
+      "source": "/como-encontrar-palabras-clave-ecommerce/feed/",
+      "destination": "/blog/como-encontrar-palabras-clave-ecommerce",
+      "permanent": true
+    },
+    {
+      "source": "/como-encontrar-palabras-clave-ecommerce",
+      "destination": "/blog/como-encontrar-palabras-clave-ecommerce",
+      "permanent": true
+    },
+    {
+      "source": "/como-encontrar-palabras-clave-ecommerce/",
+      "destination": "/blog/como-encontrar-palabras-clave-ecommerce",
+      "permanent": true
+    },
+    {
+      "source": "/project/caso-de-exito-de-google-ads",
+      "destination": "/casos-de-exito/google-ads-arcos-desinfeccion",
+      "permanent": true
+    },
+    {
+      "source": "/project/caso-de-exito-de-google-ads/",
+      "destination": "/casos-de-exito/google-ads-arcos-desinfeccion",
+      "permanent": true
+    },
+    {
+      "source": "/project/caso-de-exito-ecommerce-de-cableado-estructurado",
+      "destination": "/casos-de-exito/ecommerce-cableado-estructurado",
+      "permanent": true
+    },
+    {
+      "source": "/project/caso-de-exito-ecommerce-de-cableado-estructurado/",
+      "destination": "/casos-de-exito/ecommerce-cableado-estructurado",
+      "permanent": true
+    },
+    {
+      "source": "/project/caso-de-exito-ecommerce-de-mascotas",
+      "destination": "/casos-de-exito/ecommerce-mascotas",
+      "permanent": true
+    },
+    {
+      "source": "/project/caso-de-exito-ecommerce-de-mascotas/",
+      "destination": "/casos-de-exito/ecommerce-mascotas",
+      "permanent": true
+    },
+    {
+      "source": "/aumentar-ventas-ecommerce-sin-publicidad",
+      "destination": "/blog/aumentar-ventas-ecommerce-sin-publicidad",
+      "permanent": true
+    },
+    {
+      "source": "/aumentar-ventas-ecommerce-sin-publicidad/",
+      "destination": "/blog/aumentar-ventas-ecommerce-sin-publicidad",
+      "permanent": true
+    },
+    {
+      "source": "/como-aumentar-visitas-sitio-web-2025",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/como-aumentar-visitas-sitio-web-2025/",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/seo-tecnico-tiendas-online",
+      "destination": "/blog/seo-tecnico-tiendas-online",
+      "permanent": true
+    },
+    {
+      "source": "/seo-tecnico-tiendas-online/",
+      "destination": "/blog/seo-tecnico-tiendas-online",
+      "permanent": true
+    },
+    {
+      "source": "/divi-vs-elementor-sitio-web-2025",
+      "destination": "/blog/divi-vs-elementor-tienda-online-wordpress",
+      "permanent": true
+    },
+    {
+      "source": "/divi-vs-elementor-sitio-web-2025/",
+      "destination": "/blog/divi-vs-elementor-tienda-online-wordpress",
+      "permanent": true
+    },
+    {
+      "source": "/google-ads-vs-meta-ads-2025",
+      "destination": "/blog/google-ads-vs-meta-ads-ecommerce",
+      "permanent": true
+    },
+    {
+      "source": "/2025/09/13/entrada-3/",
+      "destination": "/blog",
+      "permanent": true
+    },
+    {
+      "source": "/2025/09/07/hello-world/",
+      "destination": "/blog",
+      "permanent": true
+    },
+    {
+      "source": "/en/entrada-3/",
+      "destination": "/blog",
+      "permanent": true
+    },
+    {
+      "source": "/e-commerce-seo/",
+      "destination": "/servicios/seo-ecommerce",
+      "permanent": true
+    },
+    {
+      "source": "/la-antiguedad-del-dominio-afecta-el-posicionamiento-en-google/",
+      "destination": "/blog/como-hacer-seo-ecommerce",
+      "permanent": true
+    },
+    {
+      "source": "/asesoria-de-marketing-1-a-1/",
+      "destination": "/servicios/asesorias-marketing",
+      "permanent": true
+    },
+    {
+      "source": "/wordpress-vs-shopify-en-2025/",
+      "destination": "/blog",
+      "permanent": true
+    },
+    {
+      "source": "/politica-de-cookies-ue/",
+      "destination": "/cookies",
+      "permanent": true
+    },
+    {
+      "source": "/project_category/seo/",
+      "destination": "/casos-de-exito",
+      "permanent": true
+    },
+    {
+      "source": "/success-stories/",
+      "destination": "/casos-de-exito",
+      "permanent": true
+    },
+    {
+      "source": "/project_category/colombia/",
+      "destination": "/casos-de-exito",
+      "permanent": true
+    },
+    {
+      "source": "/en-que-agencia-de-seo-confiar-para-mejorar-el-posicionamiento-local-en-colombia/",
+      "destination": "/blog/agencia-de-ecommerce-colombia",
+      "permanent": true
+    },
+    {
+      "source": "/category/guias-de-usuario/",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/servicios/pauta-digital",
+      "destination": "/consultoria-estrategica",
+      "permanent": true
+    },
+    {
+      "source": "/services/digital-ads",
+      "destination": "/en/strategy-advisory",
+      "permanent": true
+    },
+    {
+      "source": "/en/services/digital-ads",
+      "destination": "/en/strategy-advisory",
+      "permanent": true
+    },
+    {
+      "source": "/pt/anuncios-digitais",
+      "destination": "/pt/consultoria-estrategica",
+      "permanent": true
+    },
+    {
+      "source": "/servicios/diseno-logos",
+      "destination": "/servicios/diseno-web",
+      "permanent": true
+    },
+    {
+      "source": "/services/logo-design",
+      "destination": "/en/services/web-design",
+      "permanent": true
+    },
+    {
+      "source": "/en/services/logo-design",
+      "destination": "/en/services/web-design",
+      "permanent": true
+    },
+    {
+      "source": "/pt/design-logos",
+      "destination": "/pt/design-web",
+      "permanent": true
+    },
+    {
+      "source": "/servicios/web-economica",
+      "destination": "/servicios/diseno-web",
+      "permanent": true
+    },
+    {
+      "source": "/en/services/starter-web",
+      "destination": "/en/services/web-design",
+      "permanent": true
+    },
+    {
+      "source": "/pt/web-economica",
+      "destination": "/pt/design-web",
+      "permanent": true
+    },
+    {
+      "source": "/servicios/whatsapp-business",
+      "destination": "/consultoria-estrategica",
+      "permanent": true
+    },
+    {
+      "source": "/services/whatsapp-business",
+      "destination": "/en/strategy-advisory",
+      "permanent": true
+    },
+    {
+      "source": "/pt/whatsapp-business",
+      "destination": "/pt/consultoria-estrategica",
+      "permanent": true
+    },
+    {
+      "source": "/servicios/whatsapp-ia-bot",
+      "destination": "/consultoria-estrategica",
+      "permanent": true
+    },
+    {
+      "source": "/services/whatsapp-ai-bot",
+      "destination": "/en/strategy-advisory",
+      "permanent": true
+    },
+    {
+      "source": "/pt/whatsapp-ia-bot",
+      "destination": "/pt/consultoria-estrategica",
+      "permanent": true
+    }
   ],
   "rewrites": [
-    { "source": "/(.*)", "destination": "/index.html" }
+    {
+      "source": "/(.*)",
+      "destination": "/index.html"
+    }
   ]
 }

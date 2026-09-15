@@ -3,12 +3,14 @@ import { ArrowRight, CheckCircle2, FileSearch, GitBranch, Network, ShieldCheck }
 import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
 import SEO from "@/components/SEO";
-import { SEO_SPECIALTIES, type SeoSpecialtyKind } from "@/content/seoSpecialties";
+import { SEO_SPECIALTIES, SEO_SPECIALTY_UI, type SeoSpecialtyKind } from "@/content/seoSpecialties";
+import type { Lang } from "@/config/routes";
 
 const ICONS = [FileSearch, Network, ShieldCheck, GitBranch];
 
-export default function SeoSpecialtyPage({ kind }: { kind: SeoSpecialtyKind }) {
-  const content = SEO_SPECIALTIES[kind];
+export default function SeoSpecialtyPage({ kind, lang = "es" }: { kind: SeoSpecialtyKind; lang?: Lang }) {
+  const content = SEO_SPECIALTIES[lang][kind];
+  const ui = SEO_SPECIALTY_UI[lang];
   const faqLd = {
     "@context": "https://schema.org",
     "@type": "FAQPage",
@@ -22,19 +24,19 @@ export default function SeoSpecialtyPage({ kind }: { kind: SeoSpecialtyKind }) {
   return (
     <div className="seo-brand min-h-screen bg-background text-foreground">
       <SEO
-        title={`${content.title} | SEO Para Ecommerce`}
+        title={`${content.title} | ${ui.siteName}`}
         description={content.description}
         path={content.path}
-        lang="es"
+        lang={lang}
         jsonLd={faqLd}
         breadcrumbs={[
-          { name: "Inicio", path: "/" },
+          { name: ui.home, path: lang === "en" ? "/en" : "/" },
           { name: content.eyebrow, path: content.path },
         ]}
       />
-      <Header lang="es" />
+      <Header lang={lang} />
 
-      <main className="personal-interior-page pt-20">
+      <main className="pt-20">
         <section className="relative overflow-hidden bg-[#541014] py-20 text-white md:py-28">
           <div className="absolute inset-0 opacity-50 [background-image:radial-gradient(circle_at_20%_20%,rgba(192,147,14,.36),transparent_36%),radial-gradient(circle_at_80%_70%,rgba(106,76,48,.3),transparent_32%)]" />
           <div className="container relative mx-auto max-w-6xl px-4 md:px-6">
@@ -42,25 +44,25 @@ export default function SeoSpecialtyPage({ kind }: { kind: SeoSpecialtyKind }) {
             <h1 className="max-w-5xl text-4xl font-bold leading-[1.05] md:text-6xl lg:text-7xl">{content.title}</h1>
             <p className="mt-7 max-w-3xl text-lg leading-relaxed text-slate-300 md:text-xl">{content.description}</p>
             <div className="mt-9 flex flex-col gap-3 sm:flex-row">
-              <Link to="/contacto" className="seo-primary-button inline-flex items-center justify-center gap-2">
-                Solicitar cotización <ArrowRight className="h-4 w-4" />
+              <Link to={lang === "en" ? "/en/contact" : "/contacto"} className="seo-primary-button inline-flex items-center justify-center gap-2">
+                {ui.ctaPrimary} <ArrowRight className="h-4 w-4" />
               </Link>
-              <Link to="/casos-de-exito" className="seo-secondary-button inline-flex items-center justify-center">Ver casos reales</Link>
+              <Link to={lang === "en" ? "/en/case-studies" : "/casos-de-exito"} className="seo-secondary-button inline-flex items-center justify-center">{ui.ctaSecondary}</Link>
             </div>
           </div>
         </section>
 
         <section className="border-b border-border bg-card py-16 md:py-20">
           <div className="container mx-auto grid max-w-6xl gap-10 px-4 md:grid-cols-[.85fr_1.15fr] md:px-6">
-            <div><p className="seo-kicker">EL PROBLEMA</p><h2 className="mt-3 text-3xl md:text-4xl">Primero entendemos la decisión que está en riesgo.</h2></div>
+            <div><p className="seo-kicker">{ui.problemKicker}</p><h2 className="mt-3 text-3xl md:text-4xl">{ui.problemTitle}</h2></div>
             <p className="text-lg leading-relaxed text-muted-foreground">{content.problem}</p>
           </div>
         </section>
 
         <section className="py-20 md:py-28">
           <div className="container mx-auto max-w-6xl px-4 md:px-6">
-            <p className="seo-kicker">QUÉ RECIBES</p>
-            <h2 className="mt-3 max-w-3xl text-3xl md:text-5xl">Entregables pensados para tomar decisiones y ejecutar.</h2>
+            <p className="seo-kicker">{ui.deliverablesKicker}</p>
+            <h2 className="mt-3 max-w-3xl text-3xl md:text-5xl">{ui.deliverablesTitle}</h2>
             <div className="mt-12 grid gap-5 md:grid-cols-2">
               {content.deliverables.map((item, index) => {
                 const Icon = ICONS[index] ?? CheckCircle2;
@@ -77,7 +79,7 @@ export default function SeoSpecialtyPage({ kind }: { kind: SeoSpecialtyKind }) {
         <section className="bg-[#f4eadb] py-20 text-[#3c3c3b] md:py-24">
           <div className="container mx-auto max-w-6xl px-4 md:px-6">
             <div className="grid gap-10 lg:grid-cols-2">
-              <div><p className="seo-kicker">RESULTADO OPERATIVO</p><h2 className="mt-3 text-3xl md:text-5xl">Menos opinión. Más evidencia y criterios compartidos.</h2></div>
+              <div><p className="seo-kicker">{ui.outcomesKicker}</p><h2 className="mt-3 text-3xl md:text-5xl">{ui.outcomesTitle}</h2></div>
               <div className="space-y-4">
                 {content.outcomes.map((outcome) => <div key={outcome} className="flex gap-3 rounded-xl bg-white p-5 shadow-sm"><CheckCircle2 className="mt-0.5 h-5 w-5 shrink-0 text-[#8c6905]" /><p>{outcome}</p></div>)}
               </div>
@@ -87,7 +89,7 @@ export default function SeoSpecialtyPage({ kind }: { kind: SeoSpecialtyKind }) {
 
         <section className="py-20 md:py-28">
           <div className="container mx-auto max-w-6xl px-4 md:px-6">
-            <p className="seo-kicker">PROCESO</p><h2 className="mt-3 text-3xl md:text-5xl">Un proceso corto, visible y transferible.</h2>
+            <p className="seo-kicker">{ui.processKicker}</p><h2 className="mt-3 text-3xl md:text-5xl">{ui.processTitle}</h2>
             <div className="mt-12 grid gap-8 md:grid-cols-3">
               {content.process.map((step, index) => <article key={step.title} className="border-t-2 border-[#c0930e] pt-6"><span className="font-mono text-sm text-[#6a4c30]">0{index + 1}</span><h3 className="mt-5 text-xl">{step.title}</h3><p className="mt-3 leading-relaxed text-muted-foreground">{step.description}</p></article>)}
             </div>
@@ -96,7 +98,7 @@ export default function SeoSpecialtyPage({ kind }: { kind: SeoSpecialtyKind }) {
 
         <section className="border-y border-border bg-card py-20">
           <div className="container mx-auto max-w-4xl px-4 md:px-6">
-            <p className="seo-kicker">PREGUNTAS FRECUENTES</p>
+            <p className="seo-kicker">{ui.faqKicker}</p>
             <div className="mt-8 divide-y divide-border">
               {content.faqs.map((faq) => <article key={faq.question} className="py-6"><h2 className="text-xl">{faq.question}</h2><p className="mt-3 leading-relaxed text-muted-foreground">{faq.answer}</p></article>)}
             </div>
@@ -105,12 +107,12 @@ export default function SeoSpecialtyPage({ kind }: { kind: SeoSpecialtyKind }) {
 
         <section className="bg-[#541014] py-20 text-white">
           <div className="container mx-auto flex max-w-6xl flex-col items-start justify-between gap-8 px-4 md:flex-row md:items-end md:px-6">
-            <div><p className="text-xs font-semibold tracking-[0.22em] text-[#e0bd52]">SIGUIENTE PASO</p><h2 className="mt-4 max-w-3xl text-3xl md:text-5xl">Cuéntanos qué habilidad y capacidad necesita tu agencia.</h2></div>
-            <Link to="/contacto" className="seo-primary-button shrink-0">Solicitar cotización</Link>
+            <div><p className="text-xs font-semibold tracking-[0.22em] text-[#e0bd52]">{ui.nextKicker}</p><h2 className="mt-4 max-w-3xl text-3xl md:text-5xl">{ui.nextTitle}</h2></div>
+            <Link to={lang === "en" ? "/en/contact" : "/contacto"} className="seo-primary-button shrink-0">{ui.ctaPrimary}</Link>
           </div>
         </section>
       </main>
-      <Footer lang="es" />
+      <Footer lang={lang} />
     </div>
   );
 }

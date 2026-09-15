@@ -48,9 +48,6 @@ import NewsletterAdminPage from "./pages/NewsletterAdminPage";
 import BriefingNewsletter from "./pages/BriefingNewsletter";
 import Privacidad from "./pages/Privacidad";
 import Cookies from "./pages/Cookies";
-import ConsultoriaEstrategica from "./pages/ConsultoriaEstrategica";
-import CapacitacionIA from "./pages/CapacitacionIA";
-import ContenidoLinkedin from "./pages/ContenidoLinkedin";
 import AnalizadorContratos from "./pages/AnalizadorContratos";
 import ComparadorPropuestas from "./pages/ComparadorPropuestas";
 import QueEsGeo from "./pages/QueEsGeo";
@@ -60,10 +57,6 @@ import GeoParaWooCommerce from "./pages/GeoParaWooCommerce";
 import GeoParaVtex from "./pages/GeoParaVtex";
 import EstudioVisibilidadIA from "./pages/EstudioVisibilidadIA";
 import CalculadoraVisibilidadIA from "./pages/CalculadoraVisibilidadIA";
-import Soluciones from "./pages/Soluciones";
-import MetodoFerova from "./pages/MetodoFerova";
-import DiagnosticoEmpresarial from "./pages/DiagnosticoEmpresarial";
-import Productos from "./pages/Productos";
 import AdminLeads from "./pages/admin/AdminLeads";
 import AdminCases from "./pages/admin/AdminCases";
 import AdminCaseEditor from "./pages/admin/AdminCaseEditor";
@@ -73,8 +66,6 @@ import SeoSpecialtyPage from "./pages/SeoSpecialtyPage";
 import PositioningPage from "./pages/PositioningPage";
 import SeoAbout from "./pages/SeoAbout";
 import SeoEcommerceEs from "./pages/SeoEcommerceEs";
-import SeoSolutions from "./pages/SeoSolutions";
-import SeoMethod from "./pages/SeoMethod";
 import SeoCases from "./pages/SeoCases";
 import SeoResources from "./pages/SeoResources";
 import SeoTools from "./pages/SeoTools";
@@ -112,13 +103,7 @@ const AppRoutes = ({ hostLang }: { hostLang: "es" | "en" | "pt" }) => (
     <Route path="/" element={<Index lang={hostLang} />} />
 
     {/* Fase 1 (Sprint 2): nuevas puertas de entrada */}
-    <Route path="/soluciones" element={<SeoSolutions />} />
-    <Route path="/en/solutions" element={<Soluciones lang="en" />} />
-    <Route path="/pt/solucoes" element={<Soluciones lang="pt" />} />
     {/* Fase 4 (Sprint 4): diagnóstico empresarial interactivo */}
-    <Route path="/soluciones/diagnostico-empresarial" element={<DiagnosticoEmpresarial lang="es" />} />
-    <Route path="/en/solutions/business-diagnosis" element={<DiagnosticoEmpresarial lang="en" />} />
-    <Route path="/pt/solucoes/diagnostico-empresarial" element={<DiagnosticoEmpresarial lang="pt" />} />
     {/* Laboratorio Ferova: hub de herramientas + calculadoras */}
     <Route path="/recursos/herramientas" element={<SeoTools />} />
     <Route path="/en/resources/tools" element={<LaboratorioFerova lang="en" />} />
@@ -128,33 +113,26 @@ const AppRoutes = ({ hostLang }: { hostLang: "es" | "en" | "pt" }) => (
     <Route path="/pt/recursos/ferramentas/calculadora-valor-hora-freelancer" element={<CalculadoraValorHora lang="pt" />} />
 
     {/* Fase 9 (Sprint 6): productos */}
-    <Route path="/productos" element={<Productos lang="es" />} />
-    <Route path="/en/products" element={<Productos lang="en" />} />
-    <Route path="/pt/produtos" element={<Productos lang="pt" />} />
-    <Route path="/metodo-ferova" element={<SeoMethod />} />
-    <Route path="/en/ferova-method" element={<MetodoFerova lang="en" />} />
-    <Route path="/pt/metodo-ferova" element={<MetodoFerova lang="pt" />} />
 
-    <Route path="/servicios" element={<Servicios lang={hostLang} />} />
     <Route path="/services" element={<Servicios lang={hostLang} />} />
     <Route path="/servicios/seo-ecommerce" element={<SeoEcommerceEs />} />
-    <Route path="/seo-para-agencias" element={<SeoSpecialtyPage kind="agencies" />} />
-    <Route path="/auditoria-seo-tecnica" element={<SeoSpecialtyPage kind="audit" />} />
-    <Route path="/migraciones-seo" element={<SeoSpecialtyPage kind="migrations" />} />
+    <Route path="/seo-para-agencias" element={<SeoSpecialtyPage kind="agencies" lang="es" />} />
+    <Route path="/auditoria-seo-tecnica" element={<SeoSpecialtyPage kind="audit" lang="es" />} />
+    <Route path="/migraciones-seo" element={<SeoSpecialtyPage kind="migrations" lang="es" />} />
+    {/* Equivalentes en inglés — slugs alineados a keyword verificada (ver seoSpecialties.ts) */}
+    <Route path="/en/white-label-seo-for-agencies" element={<SeoSpecialtyPage kind="agencies" lang="en" />} />
+    <Route path="/en/technical-seo-audit-services" element={<SeoSpecialtyPage kind="audit" lang="en" />} />
+    <Route path="/en/seo-migration-services" element={<SeoSpecialtyPage kind="migrations" lang="en" />} />
     {/* Páginas de posicionamiento — ver src/content/positioning.ts */}
     <Route path="/en/outsource-seo-services" element={<PositioningPage kind="outsource-seo-services" />} />
     <Route path="/services/ecommerce-seo" element={<SeoEcommerce lang={hostLang} />} />
-    <Route path="/servicios/diseno-web" element={<DiseneoWeb lang={hostLang} />} />
     <Route path="/services/web-design" element={<DiseneoWeb lang={hostLang} />} />
     <Route path="/servicios/pauta-digital" element={<Navigate replace to="/consultoria-estrategica" />} />
     <Route path="/services/digital-ads" element={<Navigate replace to="/en/strategy-advisory" />} />
     <Route path="/servicios/diseno-logos" element={<Navigate replace to="/servicios/diseno-web" />} />
     <Route path="/services/logo-design" element={<Navigate replace to="/en/services/web-design" />} />
-    <Route path="/servicios/descuentos-herramientas" element={<DescuentosHerramientas lang={hostLang} />} />
     <Route path="/services/tool-discounts" element={<DescuentosHerramientas lang={hostLang} />} />
-    <Route path="/servicios/asesorias-marketing" element={<AsesoriasMarketing lang={hostLang} />} />
     <Route path="/services/marketing-consulting" element={<AsesoriasMarketing lang={hostLang} />} />
-    <Route path="/servicios/optimizacion-linkedin" element={<OptimizacionLinkedin lang={hostLang} />} />
     <Route path="/services/linkedin-optimization" element={<OptimizacionLinkedin lang={hostLang} />} />
     <Route path="/precios" element={<SeoPricing />} />
     <Route path="/pricing" element={<Precios lang={hostLang} />} />
@@ -178,7 +156,6 @@ const AppRoutes = ({ hostLang }: { hostLang: "es" | "en" | "pt" }) => (
     <Route path="/admin/newsletter" element={<AdminGuard><NewsletterAdminPage /></AdminGuard>} />
     <Route path="/recursos" element={<SeoResources />} />
     <Route path="/resources" element={<Recursos lang={hostLang} />} />
-    <Route path="/nosotros" element={<SobreNosotros lang={hostLang} />} />
     <Route path="/sobre-nosotros" element={<SeoAbout />} />
     <Route path="/about" element={<SobreNosotros lang={hostLang} />} />
     <Route path="/terminos" element={<Terminos lang={hostLang} />} />
@@ -190,14 +167,9 @@ const AppRoutes = ({ hostLang }: { hostLang: "es" | "en" | "pt" }) => (
     <Route path="/pt/whatsapp-ia-bot" element={<Navigate replace to="/pt/consultoria-estrategica" />} />
 
     <Route path="/en" element={<Index lang="en" />} />
-    <Route path="/en/services" element={<Servicios lang="en" />} />
     <Route path="/en/services/ecommerce-seo" element={<SeoEcommerce lang="en" />} />
-    <Route path="/en/services/web-design" element={<DiseneoWeb lang="en" />} />
     <Route path="/en/services/digital-ads" element={<Navigate replace to="/en/strategy-advisory" />} />
     <Route path="/en/services/logo-design" element={<Navigate replace to="/en/services/web-design" />} />
-    <Route path="/en/services/tool-discounts" element={<DescuentosHerramientas lang="en" />} />
-    <Route path="/en/services/marketing-consulting" element={<AsesoriasMarketing lang="en" />} />
-    <Route path="/en/services/linkedin-optimization" element={<OptimizacionLinkedin lang="en" />} />
     <Route path="/en/pricing" element={<Precios lang="en" />} />
     <Route path="/en/case-studies" element={<CasosDeExito lang="en" />} />
     <Route path="/en/case-studies/:id" element={<CasoDetalle lang="en" />} />
@@ -205,18 +177,12 @@ const AppRoutes = ({ hostLang }: { hostLang: "es" | "en" | "pt" }) => (
     <Route path="/en/blog" element={<Blog lang="en" />} />
     <Route path="/en/blog/:slug" element={<BlogPost lang="en" />} />
     <Route path="/en/resources" element={<Recursos lang="en" />} />
-    <Route path="/en/about" element={<SobreNosotros lang="en" />} />
     <Route path="/en/terms" element={<Terminos lang="en" />} />
 
     <Route path="/pt" element={<Index lang="pt" />} />
-    <Route path="/pt/servicos" element={<Servicios lang="pt" />} />
     <Route path="/pt/seo-ecommerce" element={<SeoEcommerce lang="pt" />} />
-    <Route path="/pt/design-web" element={<DiseneoWeb lang="pt" />} />
     <Route path="/pt/anuncios-digitais" element={<Navigate replace to="/pt/consultoria-estrategica" />} />
     <Route path="/pt/design-logos" element={<Navigate replace to="/pt/design-web" />} />
-    <Route path="/pt/ferramentas" element={<DescuentosHerramientas lang="pt" />} />
-    <Route path="/pt/consultorias" element={<AsesoriasMarketing lang="pt" />} />
-    <Route path="/pt/linkedin" element={<OptimizacionLinkedin lang="pt" />} />
     <Route path="/pt/whatsapp-business" element={<Navigate replace to="/pt/consultoria-estrategica" />} />
     <Route path="/pt/precos" element={<Precios lang="pt" />} />
     <Route path="/pt/casos-de-sucesso" element={<CasosDeExito lang="pt" />} />
@@ -225,7 +191,6 @@ const AppRoutes = ({ hostLang }: { hostLang: "es" | "en" | "pt" }) => (
     <Route path="/pt/blog" element={<Navigate replace to="/blog" />} />
     <Route path="/pt/blog/:slug" element={<Navigate replace to="/blog" />} />
     <Route path="/pt/recursos" element={<Recursos lang="pt" />} />
-    <Route path="/pt/sobre-nos" element={<SobreNosotros lang="pt" />} />
     <Route path="/pt/termos" element={<Terminos lang="pt" />} />
 
     <Route path="/newsletter" element={<NewsletterPage lang={hostLang} />} />
@@ -255,17 +220,8 @@ const AppRoutes = ({ hostLang }: { hostLang: "es" | "en" | "pt" }) => (
     <Route path="/pt/privacidade" element={<Privacidad lang="pt" />} />
     <Route path="/pt/cookies" element={<Cookies lang="pt" />} />
 
-    <Route path="/consultoria-estrategica" element={<ConsultoriaEstrategica lang="es" />} />
-    <Route path="/en/strategy-advisory" element={<ConsultoriaEstrategica lang="en" />} />
-    <Route path="/pt/consultoria-estrategica" element={<ConsultoriaEstrategica lang="pt" />} />
 
-    <Route path="/capacitacion-ia" element={<CapacitacionIA lang="es" />} />
-    <Route path="/en/ai-training" element={<CapacitacionIA lang="en" />} />
-    <Route path="/pt/treinamento-ia" element={<CapacitacionIA lang="pt" />} />
 
-    <Route path="/servicios/contenido-linkedin" element={<ContenidoLinkedin lang="es" />} />
-    <Route path="/en/services/linkedin-content" element={<ContenidoLinkedin lang="en" />} />
-    <Route path="/pt/conteudo-linkedin" element={<ContenidoLinkedin lang="pt" />} />
 
     <Route path="/recursos/analizador-contratos" element={<AnalizadorContratos lang="es" />} />
     <Route path="/en/resources/contract-analyzer" element={<AnalizadorContratos lang="en" />} />

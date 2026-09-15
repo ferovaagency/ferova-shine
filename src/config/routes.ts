@@ -112,27 +112,7 @@ export const ROUTES: RouteDef[] = [
   { id: "home", type: "core", indexable: true, prerender: true, priority: 1.0, changefreq: "weekly",
     paths: { es: "/", en: "/en", pt: "/pt" } },
 
-  // ── Fase 1: nuevas puertas de entrada (Sprint 2) ──────────────────────
-  // /soluciones = hub por problema empresarial (no por servicio).
-  // /metodo-ferova = cómo trabaja Ferova (diferenciación).
-  { id: "soluciones", type: "solution", indexable: true, prerender: true, priority: 0.9,
-    paths: { es: "/soluciones", en: "/en/solutions", pt: "/pt/solucoes" } },
-  // Puerta comercial principal (Sprint 4): diagnóstico interactivo + captura.
-  { id: "diagnostico-empresarial", type: "solution", indexable: true, prerender: true, priority: 0.9,
-    paths: {
-      es: "/soluciones/diagnostico-empresarial",
-      en: "/en/solutions/business-diagnosis",
-      pt: "/pt/solucoes/diagnostico-empresarial",
-    } },
-  { id: "metodo-ferova", type: "method", indexable: true, prerender: true, priority: 0.8,
-    paths: { es: "/metodo-ferova", en: "/en/ferova-method", pt: "/pt/metodo-ferova" } },
 
-  { id: "servicios", type: "service", indexable: true, prerender: true, priority: 0.9,
-    paths: { es: "/servicios", en: "/en/services", pt: "/pt/servicos" } },
-  // Fase 9 (Sprint 6): productos e ingresos recurrentes. Aún NO en la nav
-  // principal (plan Paso 23) — vive en el footer.
-  { id: "productos", type: "product", indexable: true, prerender: true, priority: 0.8,
-    paths: { es: "/productos", en: "/en/products", pt: "/pt/produtos" } },
   { id: "precios", type: "core", indexable: true, prerender: true, priority: 0.8,
     paths: { es: "/precios", en: "/en/pricing", pt: "/pt/precos" } },
   { id: "casos-de-exito", type: "content", indexable: true, prerender: true, priority: 0.8, changefreq: "monthly",
@@ -143,16 +123,16 @@ export const ROUTES: RouteDef[] = [
     paths: { es: "/blog", en: "/en/blog", pt: "/pt/blog" } },
   { id: "recursos", type: "resource", indexable: true, prerender: true, priority: 0.7,
     paths: { es: "/recursos", en: "/en/resources", pt: "/pt/recursos" } },
-  { id: "nosotros", type: "core", indexable: true, prerender: true, priority: 0.6,
-    paths: { es: "/nosotros", en: "/en/about", pt: "/pt/sobre-nos" } },
 
   // ── Servicios ─────────────────────────────────────────────────────────
   { id: "seo-ecommerce", type: "service", indexable: true, prerender: true, priority: 0.9,
     paths: { es: "/servicios/seo-ecommerce", en: "/en/services/ecommerce-seo", pt: "/pt/seo-ecommerce" } },
+  // EN alineado a keyword verificada: "white label seo for agencies" 880/mes · KD 15 · CPC $42.28
   { id: "seo-para-agencias", type: "service", indexable: true, prerender: true, priority: 0.9,
-    paths: { es: "/seo-para-agencias" } },
+    paths: { es: "/seo-para-agencias", en: "/en/white-label-seo-for-agencies" } },
+  // EN: "technical seo audit services" 480/mes · KD 27 · CPC $28.32 (término hermano, $129)
   { id: "auditoria-seo-tecnica", type: "service", indexable: true, prerender: true, priority: 0.9,
-    paths: { es: "/auditoria-seo-tecnica" } },
+    paths: { es: "/auditoria-seo-tecnica", en: "/en/technical-seo-audit-services" } },
 
   // ── Páginas de posicionamiento (plantilla PositioningPage) ────────────
   // Atacan consultas de comparación en EE.UU. Contenido en src/content/positioning.ts.
@@ -161,24 +141,11 @@ export const ROUTES: RouteDef[] = [
   // contenido. Cuando lleguen las fuentes, ambos pasan a true en un commit.
   { id: "outsource-seo-services", type: "service", indexable: false, prerender: false, priority: 0.9,
     paths: { en: "/en/outsource-seo-services" } },
+  // EN: "seo migration services" 170/mes · KD 21 · CPC $32.92
   { id: "migraciones-seo", type: "service", indexable: true, prerender: true, priority: 0.9,
-    paths: { es: "/migraciones-seo" } },
+    paths: { es: "/migraciones-seo", en: "/en/seo-migration-services" } },
   { id: "sobre-nosotros-seo", type: "core", indexable: true, prerender: true, priority: 0.7,
     paths: { es: "/sobre-nosotros" } },
-  { id: "diseno-web", type: "service", indexable: true, prerender: true, priority: 0.9,
-    paths: { es: "/servicios/diseno-web", en: "/en/services/web-design", pt: "/pt/design-web" } },
-  { id: "consultoria-estrategica", type: "service", indexable: true, prerender: true, priority: 0.9,
-    paths: { es: "/consultoria-estrategica", en: "/en/strategy-advisory", pt: "/pt/consultoria-estrategica" } },
-  { id: "capacitacion-ia", type: "service", indexable: true, prerender: true, priority: 0.9,
-    paths: { es: "/capacitacion-ia", en: "/en/ai-training", pt: "/pt/treinamento-ia" } },
-  { id: "asesorias-marketing", type: "service", indexable: true, prerender: true, priority: 0.7,
-    paths: { es: "/servicios/asesorias-marketing", en: "/en/services/marketing-consulting", pt: "/pt/consultorias" } },
-  { id: "optimizacion-linkedin", type: "service", indexable: true, prerender: true, priority: 0.7,
-    paths: { es: "/servicios/optimizacion-linkedin", en: "/en/services/linkedin-optimization", pt: "/pt/linkedin" } },
-  { id: "contenido-linkedin", type: "service", indexable: true, prerender: true, priority: 0.7,
-    paths: { es: "/servicios/contenido-linkedin", en: "/en/services/linkedin-content", pt: "/pt/conteudo-linkedin" } },
-  { id: "descuentos-herramientas", type: "resource", indexable: true, prerender: true, priority: 0.6,
-    paths: { es: "/servicios/descuentos-herramientas", en: "/en/services/tool-discounts", pt: "/pt/ferramentas" } },
 
   // ── Clúster GEO ───────────────────────────────────────────────────────
   { id: "que-es-geo", type: "geo", indexable: true, prerender: true, priority: 0.9,
