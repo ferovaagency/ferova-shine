@@ -144,8 +144,10 @@ export const ROUTES: RouteDef[] = [
   // EN: "seo migration services" 170/mes · KD 21 · CPC $32.92
   { id: "migraciones-seo", type: "service", indexable: true, prerender: true, priority: 0.9,
     paths: { es: "/migraciones-seo", en: "/en/seo-migration-services" } },
+  // /nosotros y /en/about se retiraron (301 aquí): eran la página "sobre" de la
+  // agencia y competían con esta, que es la del posicionamiento nuevo.
   { id: "sobre-nosotros-seo", type: "core", indexable: true, prerender: true, priority: 0.7,
-    paths: { es: "/sobre-nosotros" } },
+    paths: { es: "/sobre-nosotros", en: "/en/about-me" } },
 
   // ── Clúster GEO ───────────────────────────────────────────────────────
   { id: "que-es-geo", type: "geo", indexable: true, prerender: true, priority: 0.9,

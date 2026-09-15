@@ -156,7 +156,8 @@ const AppRoutes = ({ hostLang }: { hostLang: "es" | "en" | "pt" }) => (
     <Route path="/admin/newsletter" element={<AdminGuard><NewsletterAdminPage /></AdminGuard>} />
     <Route path="/recursos" element={<SeoResources />} />
     <Route path="/resources" element={<Recursos lang={hostLang} />} />
-    <Route path="/sobre-nosotros" element={<SeoAbout />} />
+    <Route path="/sobre-nosotros" element={<SeoAbout lang="es" />} />
+    <Route path="/en/about-me" element={<SeoAbout lang="en" />} />
     <Route path="/about" element={<SobreNosotros lang={hostLang} />} />
     <Route path="/terminos" element={<Terminos lang={hostLang} />} />
     <Route path="/terms" element={<Terminos lang={hostLang} />} />

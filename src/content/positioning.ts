@@ -228,8 +228,6 @@ export const POSITIONING: Record<PositioningKind, PositioningContent> = {
       to: "/contacto",
     },
 
-    // Pendiente: URL de LinkedIn de la autora. Vacío = no se emite `sameAs`,
-    // que es preferible a emitir una URL inventada.
-    authorSameAs: [],
+    authorSameAs: ["https://www.linkedin.com/in/maria-fer-calderon/"],
   },
 };
