@@ -30,26 +30,18 @@ import AsesoriasMarketing from "./pages/AsesoriasMarketing";
 import OptimizacionLinkedin from "./pages/OptimizacionLinkedin";
 import CasosDeExito from "./pages/CasosDeExito";
 import CasoDetalle from "./pages/CasoDetalle";
-import Precios from "./pages/Precios";
 import Contacto from "./pages/Contacto";
 import Blog from "./pages/Blog";
 import BlogPost from "./pages/BlogPost";
 import Recursos from "./pages/Recursos";
 import SobreNosotros from "./pages/SobreNosotros";
-import NewsletterPro from "./pages/NewsletterPro";
 import AdminBlogList from "./pages/admin/AdminBlogList";
 import AdminBlogEditor from "./pages/admin/AdminBlogEditor";
 import AdminDashboard from "./pages/admin/AdminDashboard";
 import VCard from "./pages/VCard";
-import NewsletterPage from "./pages/NewsletterPage";
-import NewsletterArchivePage from "./pages/NewsletterArchivePage";
-import NewsletterEditionPage from "./pages/NewsletterEditionPage";
 import NewsletterAdminPage from "./pages/NewsletterAdminPage";
-import BriefingNewsletter from "./pages/BriefingNewsletter";
 import Privacidad from "./pages/Privacidad";
 import Cookies from "./pages/Cookies";
-import AnalizadorContratos from "./pages/AnalizadorContratos";
-import ComparadorPropuestas from "./pages/ComparadorPropuestas";
 import QueEsGeo from "./pages/QueEsGeo";
 import GeoVsSeo from "./pages/GeoVsSeo";
 import GeoParaShopify from "./pages/GeoParaShopify";
@@ -60,17 +52,13 @@ import CalculadoraVisibilidadIA from "./pages/CalculadoraVisibilidadIA";
 import AdminLeads from "./pages/admin/AdminLeads";
 import AdminCases from "./pages/admin/AdminCases";
 import AdminCaseEditor from "./pages/admin/AdminCaseEditor";
-import LaboratorioFerova from "./pages/tools/LaboratorioFerova";
-import CalculadoraValorHora from "./pages/tools/CalculadoraValorHora";
 import SeoSpecialtyPage from "./pages/SeoSpecialtyPage";
 import PositioningPage from "./pages/PositioningPage";
 import SeoAbout from "./pages/SeoAbout";
 import SeoEcommerceEs from "./pages/SeoEcommerceEs";
 import SeoCases from "./pages/SeoCases";
 import SeoResources from "./pages/SeoResources";
-import SeoTools from "./pages/SeoTools";
 import SeoBlog from "./pages/SeoBlog";
-import SeoPricing from "./pages/SeoPricing";
 import SeoContact from "./pages/SeoContact";
 
 const queryClient = new QueryClient();
@@ -105,12 +93,6 @@ const AppRoutes = ({ hostLang }: { hostLang: "es" | "en" | "pt" }) => (
     {/* Fase 1 (Sprint 2): nuevas puertas de entrada */}
     {/* Fase 4 (Sprint 4): diagnóstico empresarial interactivo */}
     {/* Laboratorio Ferova: hub de herramientas + calculadoras */}
-    <Route path="/recursos/herramientas" element={<SeoTools />} />
-    <Route path="/en/resources/tools" element={<LaboratorioFerova lang="en" />} />
-    <Route path="/pt/recursos/ferramentas" element={<LaboratorioFerova lang="pt" />} />
-    <Route path="/recursos/herramientas/calculadora-valor-hora-freelancer" element={<CalculadoraValorHora lang="es" />} />
-    <Route path="/en/resources/tools/freelance-hourly-rate-calculator" element={<CalculadoraValorHora lang="en" />} />
-    <Route path="/pt/recursos/ferramentas/calculadora-valor-hora-freelancer" element={<CalculadoraValorHora lang="pt" />} />
 
     {/* Fase 9 (Sprint 6): productos */}
 
@@ -127,15 +109,13 @@ const AppRoutes = ({ hostLang }: { hostLang: "es" | "en" | "pt" }) => (
     <Route path="/en/outsource-seo-services" element={<PositioningPage kind="outsource-seo-services" />} />
     <Route path="/services/ecommerce-seo" element={<SeoEcommerce lang={hostLang} />} />
     <Route path="/services/web-design" element={<DiseneoWeb lang={hostLang} />} />
-    <Route path="/servicios/pauta-digital" element={<Navigate replace to="/consultoria-estrategica" />} />
-    <Route path="/services/digital-ads" element={<Navigate replace to="/en/strategy-advisory" />} />
-    <Route path="/servicios/diseno-logos" element={<Navigate replace to="/servicios/diseno-web" />} />
-    <Route path="/services/logo-design" element={<Navigate replace to="/en/services/web-design" />} />
+    <Route path="/servicios/pauta-digital" element={<Navigate replace to="/" />} />
+    <Route path="/services/digital-ads" element={<Navigate replace to="/en" />} />
+    <Route path="/servicios/diseno-logos" element={<Navigate replace to="/" />} />
+    <Route path="/services/logo-design" element={<Navigate replace to="/en" />} />
     <Route path="/services/tool-discounts" element={<DescuentosHerramientas lang={hostLang} />} />
     <Route path="/services/marketing-consulting" element={<AsesoriasMarketing lang={hostLang} />} />
     <Route path="/services/linkedin-optimization" element={<OptimizacionLinkedin lang={hostLang} />} />
-    <Route path="/precios" element={<SeoPricing />} />
-    <Route path="/pricing" element={<Precios lang={hostLang} />} />
     <Route path="/casos-de-exito" element={<SeoCases />} />
     <Route path="/case-studies" element={<CasosDeExito lang={hostLang} />} />
     <Route path="/casos-de-exito/:id" element={<CasoDetalle lang={hostLang} />} />
@@ -161,17 +141,16 @@ const AppRoutes = ({ hostLang }: { hostLang: "es" | "en" | "pt" }) => (
     <Route path="/about" element={<SobreNosotros lang={hostLang} />} />
     <Route path="/terminos" element={<Terminos lang={hostLang} />} />
     <Route path="/terms" element={<Terminos lang={hostLang} />} />
-    <Route path="/servicios/whatsapp-business" element={<Navigate replace to="/consultoria-estrategica" />} />
-    <Route path="/services/whatsapp-business" element={<Navigate replace to="/en/strategy-advisory" />} />
-    <Route path="/servicios/whatsapp-ia-bot" element={<Navigate replace to="/consultoria-estrategica" />} />
-    <Route path="/services/whatsapp-ai-bot" element={<Navigate replace to="/en/strategy-advisory" />} />
-    <Route path="/pt/whatsapp-ia-bot" element={<Navigate replace to="/pt/consultoria-estrategica" />} />
+    <Route path="/servicios/whatsapp-business" element={<Navigate replace to="/" />} />
+    <Route path="/services/whatsapp-business" element={<Navigate replace to="/en" />} />
+    <Route path="/servicios/whatsapp-ia-bot" element={<Navigate replace to="/" />} />
+    <Route path="/services/whatsapp-ai-bot" element={<Navigate replace to="/en" />} />
+    <Route path="/pt/whatsapp-ia-bot" element={<Navigate replace to="/pt" />} />
 
     <Route path="/en" element={<Index lang="en" />} />
     <Route path="/en/services/ecommerce-seo" element={<SeoEcommerce lang="en" />} />
-    <Route path="/en/services/digital-ads" element={<Navigate replace to="/en/strategy-advisory" />} />
-    <Route path="/en/services/logo-design" element={<Navigate replace to="/en/services/web-design" />} />
-    <Route path="/en/pricing" element={<Precios lang="en" />} />
+    <Route path="/en/services/digital-ads" element={<Navigate replace to="/en" />} />
+    <Route path="/en/services/logo-design" element={<Navigate replace to="/en" />} />
     <Route path="/en/case-studies" element={<CasosDeExito lang="en" />} />
     <Route path="/en/case-studies/:id" element={<CasoDetalle lang="en" />} />
     <Route path="/en/contact" element={<Contacto lang="en" />} />
@@ -182,10 +161,9 @@ const AppRoutes = ({ hostLang }: { hostLang: "es" | "en" | "pt" }) => (
 
     <Route path="/pt" element={<Index lang="pt" />} />
     <Route path="/pt/seo-ecommerce" element={<SeoEcommerce lang="pt" />} />
-    <Route path="/pt/anuncios-digitais" element={<Navigate replace to="/pt/consultoria-estrategica" />} />
-    <Route path="/pt/design-logos" element={<Navigate replace to="/pt/design-web" />} />
-    <Route path="/pt/whatsapp-business" element={<Navigate replace to="/pt/consultoria-estrategica" />} />
-    <Route path="/pt/precos" element={<Precios lang="pt" />} />
+    <Route path="/pt/anuncios-digitais" element={<Navigate replace to="/pt" />} />
+    <Route path="/pt/design-logos" element={<Navigate replace to="/pt" />} />
+    <Route path="/pt/whatsapp-business" element={<Navigate replace to="/pt" />} />
     <Route path="/pt/casos-de-sucesso" element={<CasosDeExito lang="pt" />} />
     <Route path="/pt/casos-de-sucesso/:id" element={<CasoDetalle lang="pt" />} />
     <Route path="/pt/contato" element={<Contacto lang="pt" />} />
@@ -194,25 +172,10 @@ const AppRoutes = ({ hostLang }: { hostLang: "es" | "en" | "pt" }) => (
     <Route path="/pt/recursos" element={<Recursos lang="pt" />} />
     <Route path="/pt/termos" element={<Terminos lang="pt" />} />
 
-    <Route path="/newsletter" element={<NewsletterPage lang={hostLang} />} />
-    <Route path="/newsletter/archivo" element={<NewsletterArchivePage lang={hostLang} />} />
-    <Route path="/newsletter/edicion/:slug" element={<NewsletterEditionPage lang={hostLang} />} />
     <Route path="/newsletter/admin" element={<Navigate replace to="/admin/newsletter" />} />
-    <Route path="/newsletter-pro" element={<NewsletterPro lang={hostLang} />} />
-    <Route path="/en/newsletter-pro" element={<NewsletterPro lang="en" />} />
-    <Route path="/pt/newsletter-pro" element={<NewsletterPro lang="pt" />} />
-    <Route path="/en/newsletter" element={<NewsletterPage lang="en" />} />
-    <Route path="/en/newsletter/archive" element={<NewsletterArchivePage lang="en" />} />
-    <Route path="/en/newsletter/edition/:slug" element={<NewsletterEditionPage lang="en" />} />
-    <Route path="/pt/newsletter" element={<NewsletterPage lang="pt" />} />
-    <Route path="/pt/newsletter/arquivo" element={<NewsletterArchivePage lang="pt" />} />
-    <Route path="/pt/newsletter/edicao/:slug" element={<NewsletterEditionPage lang="pt" />} />
 
     <Route path="/contacto-digital" element={<VCard />} />
 
-    <Route path="/recursos/briefing-newsletter" element={<BriefingNewsletter lang={hostLang} />} />
-    <Route path="/en/resources/newsletter-briefing" element={<BriefingNewsletter lang="en" />} />
-    <Route path="/pt/recursos/briefing-newsletter" element={<BriefingNewsletter lang="pt" />} />
 
     <Route path="/privacidad" element={<Privacidad lang={hostLang} />} />
     <Route path="/cookies" element={<Cookies lang={hostLang} />} />
@@ -224,16 +187,10 @@ const AppRoutes = ({ hostLang }: { hostLang: "es" | "en" | "pt" }) => (
 
 
 
-    <Route path="/recursos/analizador-contratos" element={<AnalizadorContratos lang="es" />} />
-    <Route path="/en/resources/contract-analyzer" element={<AnalizadorContratos lang="en" />} />
-    <Route path="/pt/recursos/analisador-contratos" element={<AnalizadorContratos lang="pt" />} />
-    <Route path="/recursos/comparador-propuestas" element={<ComparadorPropuestas lang="es" />} />
-    <Route path="/en/resources/proposal-comparator" element={<ComparadorPropuestas lang="en" />} />
-    <Route path="/pt/recursos/comparador-propostas" element={<ComparadorPropuestas lang="pt" />} />
 
-    <Route path="/servicios/web-economica" element={<Navigate replace to="/servicios/diseno-web" />} />
-    <Route path="/en/services/starter-web" element={<Navigate replace to="/en/services/web-design" />} />
-    <Route path="/pt/web-economica" element={<Navigate replace to="/pt/design-web" />} />
+    <Route path="/servicios/web-economica" element={<Navigate replace to="/" />} />
+    <Route path="/en/services/starter-web" element={<Navigate replace to="/en" />} />
+    <Route path="/pt/web-economica" element={<Navigate replace to="/pt" />} />
 
     <Route path="/que-es-geo" element={<QueEsGeo lang="es" />} />
     <Route path="/en/what-is-geo" element={<QueEsGeo lang="en" />} />

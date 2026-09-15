@@ -2,6 +2,161 @@
   "$schema": "https://openapi.vercel.sh/vercel.json",
   "redirects": [
     {
+      "source": "/pricing",
+      "destination": "/en/contact",
+      "permanent": true
+    },
+    {
+      "source": "/precios",
+      "destination": "/contacto",
+      "permanent": true
+    },
+    {
+      "source": "/en/pricing",
+      "destination": "/en/contact",
+      "permanent": true
+    },
+    {
+      "source": "/pt/precos",
+      "destination": "/pt/contato",
+      "permanent": true
+    },
+    {
+      "source": "/newsletter",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/en/newsletter",
+      "destination": "/en",
+      "permanent": true
+    },
+    {
+      "source": "/pt/newsletter",
+      "destination": "/pt",
+      "permanent": true
+    },
+    {
+      "source": "/newsletter/archivo",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/en/newsletter/archive",
+      "destination": "/en",
+      "permanent": true
+    },
+    {
+      "source": "/pt/newsletter/arquivo",
+      "destination": "/pt",
+      "permanent": true
+    },
+    {
+      "source": "/newsletter-pro",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/en/newsletter-pro",
+      "destination": "/en",
+      "permanent": true
+    },
+    {
+      "source": "/pt/newsletter-pro",
+      "destination": "/pt",
+      "permanent": true
+    },
+    {
+      "source": "/recursos/analizador-contratos",
+      "destination": "/recursos",
+      "permanent": true
+    },
+    {
+      "source": "/en/resources/contract-analyzer",
+      "destination": "/en/resources",
+      "permanent": true
+    },
+    {
+      "source": "/pt/recursos/analisador-contratos",
+      "destination": "/pt/recursos",
+      "permanent": true
+    },
+    {
+      "source": "/recursos/comparador-propuestas",
+      "destination": "/recursos",
+      "permanent": true
+    },
+    {
+      "source": "/en/resources/proposal-comparator",
+      "destination": "/en/resources",
+      "permanent": true
+    },
+    {
+      "source": "/pt/recursos/comparador-propostas",
+      "destination": "/pt/recursos",
+      "permanent": true
+    },
+    {
+      "source": "/recursos/herramientas",
+      "destination": "/recursos",
+      "permanent": true
+    },
+    {
+      "source": "/en/resources/tools",
+      "destination": "/en/resources",
+      "permanent": true
+    },
+    {
+      "source": "/pt/recursos/ferramentas",
+      "destination": "/pt/recursos",
+      "permanent": true
+    },
+    {
+      "source": "/recursos/herramientas/calculadora-valor-hora-freelancer",
+      "destination": "/recursos",
+      "permanent": true
+    },
+    {
+      "source": "/en/resources/tools/freelance-hourly-rate-calculator",
+      "destination": "/en/resources",
+      "permanent": true
+    },
+    {
+      "source": "/pt/recursos/ferramentas/calculadora-valor-hora-freelancer",
+      "destination": "/pt/recursos",
+      "permanent": true
+    },
+    {
+      "source": "/recursos/briefing-newsletter",
+      "destination": "/recursos",
+      "permanent": true
+    },
+    {
+      "source": "/en/resources/newsletter-briefing",
+      "destination": "/en/resources",
+      "permanent": true
+    },
+    {
+      "source": "/pt/recursos/briefing-newsletter",
+      "destination": "/pt/recursos",
+      "permanent": true
+    },
+    {
+      "source": "/newsletter/edicion/:slug",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/en/newsletter/edition/:slug",
+      "destination": "/en",
+      "permanent": true
+    },
+    {
+      "source": "/pt/newsletter/edicao/:slug",
+      "destination": "/pt",
+      "permanent": true
+    },
+    {
       "source": "/consultoria-estrategica",
       "destination": "/",
       "permanent": true

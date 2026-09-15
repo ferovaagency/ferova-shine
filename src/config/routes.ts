@@ -113,8 +113,6 @@ export const ROUTES: RouteDef[] = [
     paths: { es: "/", en: "/en", pt: "/pt" } },
 
 
-  { id: "precios", type: "core", indexable: true, prerender: true, priority: 0.8,
-    paths: { es: "/precios", en: "/en/pricing", pt: "/pt/precos" } },
   { id: "casos-de-exito", type: "content", indexable: true, prerender: true, priority: 0.8, changefreq: "monthly",
     paths: { es: "/casos-de-exito", en: "/en/case-studies", pt: "/pt/casos-de-sucesso" } },
   { id: "contacto", type: "core", indexable: true, prerender: true, priority: 0.6,
@@ -175,43 +173,8 @@ export const ROUTES: RouteDef[] = [
   { id: "evaluador-preparacion-ai-search", type: "tool", indexable: true, prerender: true, priority: 0.8,
     paths: { es: "/recursos/herramientas/evaluador-preparacion-ai-search" } },
 
-  // ── Recursos / herramientas ───────────────────────────────────────────
-  { id: "analizador-contratos", type: "tool", indexable: true, prerender: true, priority: 0.7,
-    paths: {
-      es: "/recursos/analizador-contratos",
-      en: "/en/resources/contract-analyzer",
-      pt: "/pt/recursos/analisador-contratos",
-    } },
-  { id: "comparador-propuestas", type: "tool", indexable: true, prerender: true, priority: 0.7,
-    paths: {
-      es: "/recursos/comparador-propuestas",
-      en: "/en/resources/proposal-comparator",
-      pt: "/pt/recursos/comparador-propostas",
-    } },
-  { id: "briefing-newsletter", type: "resource", indexable: true, prerender: true, priority: 0.8, changefreq: "weekly",
-    paths: {
-      es: "/recursos/briefing-newsletter",
-      en: "/en/resources/newsletter-briefing",
-      pt: "/pt/recursos/briefing-newsletter",
-    } },
 
-  // ── Laboratorio Ferova (Sprint de diseño: hub de herramientas) ─────────
-  { id: "laboratorio-ferova", type: "tool", indexable: true, prerender: true, priority: 0.8,
-    paths: { es: "/recursos/herramientas", en: "/en/resources/tools", pt: "/pt/recursos/ferramentas" } },
-  { id: "calc-valor-hora", type: "tool", indexable: true, prerender: true, priority: 0.8,
-    paths: {
-      es: "/recursos/herramientas/calculadora-valor-hora-freelancer",
-      en: "/en/resources/tools/freelance-hourly-rate-calculator",
-      pt: "/pt/recursos/ferramentas/calculadora-valor-hora-freelancer",
-    } },
 
-  // ── Newsletter ────────────────────────────────────────────────────────
-  { id: "newsletter", type: "newsletter", indexable: true, prerender: true, priority: 0.6,
-    paths: { es: "/newsletter", en: "/en/newsletter", pt: "/pt/newsletter" } },
-  { id: "newsletter-archivo", type: "newsletter", indexable: true, prerender: true, priority: 0.5,
-    paths: { es: "/newsletter/archivo", en: "/en/newsletter/archive", pt: "/pt/newsletter/arquivo" } },
-  { id: "newsletter-pro", type: "newsletter", indexable: true, prerender: true, priority: 0.6, changefreq: "monthly",
-    paths: { es: "/newsletter-pro", en: "/en/newsletter-pro", pt: "/pt/newsletter-pro" } },
 
   // ── Legal ─────────────────────────────────────────────────────────────
   { id: "terminos", type: "legal", indexable: true, prerender: true,
