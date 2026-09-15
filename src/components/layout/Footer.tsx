@@ -3,6 +3,7 @@ import { Mail, MapPin, Instagram, Linkedin, Facebook, Youtube, MessageCircle, Me
 import logoLight from '@/assets/ferova-logo.png.png';
 import { useAnalytics } from '@/hooks/useAnalytics';
 import { trackEvent } from '@/lib/analytics';
+import LanguageSwitcher from '@/components/layout/LanguageSwitcher';
 
 interface FooterProps {
   currentLang?: 'es' | 'en' | 'pt';
@@ -172,6 +173,7 @@ const Footer = ({ currentLang, lang }: FooterProps) => {
 
         <div className="mt-12 border-t border-border/30 pt-8 flex flex-col sm:flex-row items-center justify-between gap-3">
           <p className="text-xs text-muted-foreground">© {new Date().getFullYear()} Ferova Agency. {d.rights}</p>
+          <LanguageSwitcher lang={locale} variant="footer" />
           <button onClick={() => window.dispatchEvent(new CustomEvent('open-cookie-settings'))} className="text-xs text-muted-foreground hover:text-gold underline">
             {locale === 'pt' ? 'Configurar cookies' : locale === 'en' ? 'Cookie settings' : 'Configurar cookies'}
           </button>

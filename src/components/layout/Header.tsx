@@ -3,6 +3,7 @@ import { Link, useLocation } from "react-router-dom";
 import { ArrowUpRight, Menu, X } from "lucide-react";
 import logoLight from "@/assets/ferova-logo.png.png";
 import { trackEvent } from "@/lib/analytics";
+import LanguageSwitcher from "@/components/layout/LanguageSwitcher";
 
 interface HeaderProps {
   currentLang?: "es" | "en" | "pt";
@@ -75,6 +76,7 @@ export default function Header({ currentLang, lang }: HeaderProps) {
               {item.label}
             </Link>
           ))}
+          <LanguageSwitcher lang={locale} className="ml-1" />
           <Link to={cfg.cta.href} onClick={onCta} className={`${locale === "es" ? "seo-primary-button" : "btn-gold"} ml-1 inline-flex items-center gap-1.5 !px-4 !py-2 text-sm`}>
             {cfg.cta.label} <ArrowUpRight className="h-4 w-4" />
           </Link>
@@ -96,6 +98,7 @@ export default function Header({ currentLang, lang }: HeaderProps) {
             <Link to={cfg.cta.href} onClick={() => { onCta(); setMobileOpen(false); }} className={`${locale === "es" ? "seo-primary-button" : "btn-gold"} mt-2 inline-flex items-center justify-center gap-1.5`}>
               {cfg.cta.label} <ArrowUpRight className="h-4 w-4" />
             </Link>
+            <LanguageSwitcher lang={locale} className="mt-3 justify-center" onNavigate={() => setMobileOpen(false)} />
           </nav>
         </div>
       )}

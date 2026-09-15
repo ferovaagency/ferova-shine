@@ -304,6 +304,45 @@ export function alternatesFor(path: string): Partial<Record<Lang, string>> | und
   return hit ? hit.route.paths : undefined;
 }
 
+/**
+ * Rutas DINÁMICAS: no viven en ROUTES (sus slugs salen de Supabase en build),
+ * pero su equivalencia entre idiomas sí es mecánica. Se declara aquí para que
+ * el selector de idioma funcione también en un artículo o en un caso, que es
+ * justo donde más se necesita: alguien que llega a un post desde Google.
+ *
+ * El orden importa: el prefijo más largo primero, porque /en/newsletter/edition
+ * también empieza por /en/newsletter.
+ */
+const DYNAMIC_PAIRS: { es: string; en: string }[] = [
+  { es: "/newsletter/edicion/", en: "/en/newsletter/edition/" },
+  { es: "/casos-de-exito/", en: "/en/case-studies/" },
+  { es: "/blog/", en: "/en/blog/" },
+];
+
+/**
+ * Equivalencias de idioma para CUALQUIER path: primero el registro estático,
+ * y si no está, las rutas dinámicas. Devuelve undefined cuando la página no
+ * tiene equivalente real — y eso es una respuesta válida, no un fallo: el
+ * selector debe esconderse ahí en vez de mandar al usuario al home.
+ */
+export function alternatesForAnyPath(path: string): Partial<Record<Lang, string>> | undefined {
+  const stat = alternatesFor(path);
+  if (stat) return stat;
+
+  const p = normalize(path);
+  for (const pair of DYNAMIC_PAIRS) {
+    if (p.startsWith(pair.en)) {
+      const slug = p.slice(pair.en.length);
+      if (slug) return { es: pair.es + slug, en: p };
+    }
+    if (p.startsWith(pair.es)) {
+      const slug = p.slice(pair.es.length);
+      if (slug) return { es: p, en: pair.en + slug };
+    }
+  }
+  return undefined;
+}
+
 /** Prioridad efectiva de sitemap para una ruta. */
 export function priorityOf(route: RouteDef): number {
   return route.priority ?? TYPE_DEFAULTS[route.type].priority;
