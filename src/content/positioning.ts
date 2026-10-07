@@ -44,6 +44,22 @@ export interface RateRow {
   date: string;
 }
 
+export interface CostLine {
+  /** Componente del costo. */
+  label: string;
+  /** Rango o valor. Nunca un precio de Ferova. */
+  value: string;
+  /** Nota aclaratoria. */
+  note?: string;
+}
+
+/** Canal de contacto externo. Ninguno es un enlace a un tercero editorial. */
+export interface Channel {
+  label: string;
+  detail: string;
+  href: string;
+}
+
 export interface ComparisonTable {
   /** Encabezados de las columnas comparadas (sin la columna de criterio). */
   options: string[];
@@ -96,6 +112,19 @@ export interface PositioningContent {
   /** Bloque 11 */
   finalCta: { heading: string; label: string; to: string };
 
+  /**
+   * Bloque de desglose de costo. Vacío = la sección no se renderiza.
+   * ⚠️ Sólo rangos de MERCADO de terceros, con fuente y fecha. Nunca un precio
+   * de Ferova: no hay tarifario propio y publicar uno contradiría la FAQ.
+   */
+  costBreakdown?: { heading: string; intro: string; source: string; columns: [string, string]; inHouse: CostLine[]; outsourced: CostLine[] };
+
+  /** Canales de contacto directos. Vacío = la sección no se renderiza. */
+  channels?: { heading: string; intro: string; items: Channel[] };
+
+  /** Enlaces internos relacionados, al cierre. */
+  related?: { heading: string; items: { label: string; to: string }[] };
+
   /** Autoría para el schema Person. Vacío = no se emite `sameAs`. */
   authorSameAs: string[];
 }
@@ -111,7 +140,7 @@ export const POSITIONING: Record<PositioningKind, PositioningContent> = {
     metaDescription:
       "What outsourcing SEO really means for an agency, how the three models compare, and when each one is the wrong call. Written by a senior SEO who works white label.",
 
-    eyebrow: "Senior SEO · White label · Medellín, Colombia",
+    eyebrow: "Senior SEO · White label · Bogotá, Colombia",
     h1: "Outsource SEO Services Without Losing Control of the Account",
     lede:
       "A senior SEO who plugs into your agency's process, works under your brand, and hands back decisions your team can defend in front of the client.",
@@ -230,4 +259,6 @@ export const POSITIONING: Record<PositioningKind, PositioningContent> = {
 
     authorSameAs: ["https://www.linkedin.com/in/maria-fer-calderon/"],
   },
+
+
 };

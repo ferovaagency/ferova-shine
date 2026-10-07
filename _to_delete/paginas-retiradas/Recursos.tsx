@@ -6,7 +6,6 @@ import { AnimatedSection, StaggerContainer, StaggerItem, ScaleOnHover, PageTrans
 import { motion } from 'framer-motion';
 import { Mail, Newspaper, Star, Search, Rocket, ExternalLink, LucideIcon } from 'lucide-react';
 import SEO from '@/components/SEO';
-import RecursosB2BGrid from '@/components/sections/RecursosB2BGrid';
 
 interface Props { lang?: 'es' | 'en' | 'pt'; }
 
@@ -258,7 +257,6 @@ const Recursos = ({ lang = 'es' }: Props) => {
       <main className="pt-20">
 
         {/* Sección B2B: grid de 4 recursos con modal Brevo */}
-        <RecursosB2BGrid lang={lang ?? 'es'} />
 
 
         {/* Hero */}

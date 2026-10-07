@@ -139,6 +139,11 @@ export const ROUTES: RouteDef[] = [
   // contenido. Cuando lleguen las fuentes, ambos pasan a true en un commit.
   { id: "outsource-seo-services", type: "service", indexable: false, prerender: false, priority: 0.9,
     paths: { en: "/en/outsource-seo-services" } },
+  // Landing de apoyo. Indexable: el termino comparativo no tiene demanda, pero
+  // la pagina sostiene a /en/white-label-seo-for-agencies y apunta a
+  // "white label seo pricing" (90/mes, KD 19).
+  { id: "white-label-vs-in-house", type: "service", indexable: true, prerender: true, priority: 0.7,
+    paths: { en: "/en/white-label-seo-vs-in-house" } },
   // EN: "seo migration services" 170/mes · KD 21 · CPC $32.92
   { id: "migraciones-seo", type: "service", indexable: true, prerender: true, priority: 0.9,
     paths: { es: "/migraciones-seo", en: "/en/seo-migration-services" } },

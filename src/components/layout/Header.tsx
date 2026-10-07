@@ -13,34 +13,40 @@ interface HeaderProps {
 type NavItem = { label: string; href: string };
 type NavCfg = { primary: NavItem[]; cta: NavItem };
 
+/**
+ * Menú principal. Los tres idiomas tienen la MISMA estructura: no es una
+ * traducción de menús distintos, es el mismo menú en cada idioma.
+ *
+ * Todos los destinos son páginas vivas. Antes 'Capabilities' llevaba a
+ * /en/services y 'Pricing' a /en/pricing, retiradas ambas: el usuario acababa
+ * en la home o en una página de contacto rotulada como precios.
+ */
 const NAV: Record<"es" | "en" | "pt", NavCfg> = {
   es: {
     primary: [
       { label: "Mi trabajo", href: "/#trabajo" },
       { label: "Cómo te ayudo", href: "/#ayuda" },
-      { label: "Sobre mí", href: "/#sobre-mi" },
+      { label: "Para agencias", href: "/seo-para-agencias" },
       { label: "Recursos", href: "/recursos" },
     ],
     cta: { label: "Hablemos", href: "/#contacto" },
   },
   en: {
     primary: [
-      { label: "Capabilities", href: "/en/services" },
-      { label: "Ecommerce SEO", href: "/en/services/ecommerce-seo" },
-      { label: "Experience", href: "/en/case-studies" },
+      { label: "My work", href: "/en#trabajo" },
+      { label: "How I help", href: "/en#ayuda" },
+      { label: "For agencies", href: "/en/white-label-seo-for-agencies" },
       { label: "Resources", href: "/en/resources" },
-      { label: "Pricing", href: "/en/pricing" },
     ],
-    cta: { label: "Request a quote", href: "/en/contact" },
+    cta: { label: "Let's talk", href: "/en#contacto" },
   },
   pt: {
     primary: [
-      { label: "Serviços", href: "/pt/servicos" },
       { label: "SEO ecommerce", href: "/pt/seo-ecommerce" },
       { label: "Experiência", href: "/pt/casos-de-sucesso" },
       { label: "Recursos", href: "/pt/recursos" },
     ],
-    cta: { label: "Solicitar proposta", href: "/pt/contato" },
+    cta: { label: "Falar agora", href: "/pt/contato" },
   },
 };
 

@@ -36,7 +36,7 @@ export default function PersonalSeoHome({ lang = "es" }: { lang?: Lang }) {
     name: "María Fer Calderón",
     jobTitle: lang === "en" ? "Senior technical SEO consultant" : "Especialista SEO técnico y proyectos web",
     worksFor: { "@type": "Organization", name: "Ferova Agency" },
-    address: { "@type": "PostalAddress", addressLocality: "Medellín", addressCountry: "CO" },
+    address: { "@type": "PostalAddress", addressLocality: "Bogotá", addressCountry: "CO" },
     sameAs: [LINKEDIN],
     url: `${SITE_ORIGIN}${c.path}`,
   };

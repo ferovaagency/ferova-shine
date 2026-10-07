@@ -43,7 +43,7 @@ const COPY = {
     home: "Home", crumb: "About me",
     eyebrow: "About me",
     h1: "Senior judgement for SEO decisions that cannot be improvised.",
-    lede: "I work directly with ecommerce teams, marketing teams and agencies on complex organic problems, as an independent specialist based in Medellín, Colombia.",
+    lede: "I work directly with ecommerce teams, marketing teams and agencies on complex organic problems, as an independent specialist based in Bogotá, Colombia.",
     roleKicker: "You deal with me directly",
     role: "Founder and SEO strategist at Ferova",
     linkedin: "View LinkedIn profile",
@@ -75,7 +75,7 @@ export default function SeoAbout({ lang = "es" }: { lang?: Lang }) {
     name: "María Fer Calderón",
     jobTitle: lang === "en" ? "Senior technical SEO consultant" : "Estratega SEO senior",
     worksFor: { "@type": "Organization", name: "Ferova Agency" },
-    address: { "@type": "PostalAddress", addressLocality: "Medellín", addressCountry: "CO" },
+    address: { "@type": "PostalAddress", addressLocality: "Bogotá", addressCountry: "CO" },
     sameAs: [LINKEDIN],
   };
   return (

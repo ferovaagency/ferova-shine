@@ -39,7 +39,7 @@ export default function PositioningPage({ kind }: { kind: PositioningKind }) {
     jobTitle: "Senior SEO Consultant",
     address: {
       "@type": "PostalAddress",
-      addressLocality: "Medellín",
+      addressLocality: "Bogotá",
       addressCountry: "CO",
     },
     url: `${SITE_ORIGIN}${c.path}`,
@@ -154,6 +154,35 @@ export default function PositioningPage({ kind }: { kind: PositioningKind }) {
           </section>
         )}
 
+        {/* 05b · desglose de costo — se omite si no hay datos */}
+        {c.costBreakdown && (
+          <section className="bg-[#f4eadb] py-16 text-[#3c3c3b] md:py-20">
+            <div className="container mx-auto max-w-6xl px-4 md:px-6">
+              <p className="seo-kicker">{c.costBreakdown.heading}</p>
+              <h2 className="mt-3 max-w-3xl text-3xl md:text-4xl">{c.costBreakdown.intro}</h2>
+              <div className="mt-9 grid gap-5 md:grid-cols-2">
+                {([["inHouse", 0], ["outsourced", 1]] as const).map(([key, i]) => (
+                  <article key={key} className="rounded-2xl border border-border bg-white p-7">
+                    <h3 className="font-display text-xl font-bold text-[#541014]">{c.costBreakdown!.columns[i]}</h3>
+                    <dl className="mt-5 divide-y divide-border">
+                      {c.costBreakdown![key].map((line) => (
+                        <div key={line.label} className="py-3">
+                          <div className="flex flex-wrap items-baseline justify-between gap-2">
+                            <dt className="font-semibold">{line.label}</dt>
+                            <dd className="font-mono text-sm tabular-nums">{line.value}</dd>
+                          </div>
+                          {line.note && <p className="mt-1 text-sm text-muted-foreground">{line.note}</p>}
+                        </div>
+                      ))}
+                    </dl>
+                  </article>
+                ))}
+              </div>
+              <p className="mt-6 max-w-[70ch] text-sm text-muted-foreground">{c.costBreakdown.source}</p>
+            </div>
+          </section>
+        )}
+
         {/* 06 · comparativa honesta + 07 · CTA intermedio */}
         <section className="py-16 md:py-20">
           <div className="container mx-auto max-w-6xl px-4 md:px-6">
@@ -243,6 +272,52 @@ export default function PositioningPage({ kind }: { kind: PositioningKind }) {
             </div>
           </div>
         </section>
+
+        {/* 10b · canales de contacto directos (los únicos enlaces externos) */}
+        {c.channels && (
+          <section className="py-16 md:py-20">
+            <div className="container mx-auto max-w-6xl px-4 md:px-6">
+              <p className="seo-kicker">{c.channels.heading}</p>
+              <h2 className="mt-3 text-3xl md:text-4xl">{c.channels.intro}</h2>
+              <div className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+                {c.channels.items.map((ch) => (
+                  <a
+                    key={ch.label}
+                    href={ch.href}
+                    target={ch.href.startsWith("mailto:") ? undefined : "_blank"}
+                    rel={ch.href.startsWith("mailto:") ? undefined : "noopener noreferrer"}
+                    data-cta={`channel-${ch.label.toLowerCase()}`}
+                    className="group rounded-2xl border border-border bg-card p-6 transition-colors hover:border-[#c0930e]"
+                  >
+                    <p className="font-display text-lg font-bold">{ch.label}</p>
+                    <p className="mt-2 break-words text-sm leading-6 text-muted-foreground">{ch.detail}</p>
+                    <span className="mt-4 inline-flex items-center gap-1 text-sm font-semibold text-[#541014]">
+                      Open <ArrowRight className="h-3.5 w-3.5 transition group-hover:translate-x-1" />
+                    </span>
+                  </a>
+                ))}
+              </div>
+            </div>
+          </section>
+        )}
+
+        {/* 10c · enlaces internos relacionados */}
+        {c.related && (
+          <section className="border-t border-border bg-card py-12">
+            <div className="container mx-auto max-w-6xl px-4 md:px-6">
+              <p className="seo-kicker">{c.related.heading}</p>
+              <ul className="mt-5 flex flex-wrap gap-x-6 gap-y-3">
+                {c.related.items.map((r) => (
+                  <li key={r.to}>
+                    <Link to={r.to} className="border-b border-[#c0930e] pb-0.5 font-semibold text-[#541014]">
+                      {r.label}
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          </section>
+        )}
 
         {/* 11 · CTA final */}
         <section className="bg-[#541014] py-16 text-white md:py-20">

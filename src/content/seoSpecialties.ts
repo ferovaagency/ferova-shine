@@ -12,6 +12,8 @@ export type SeoSpecialtyContent = {
   deliverables: { title: string; description: string }[];
   process: { title: string; description: string }[];
   faqs: { question: string; answer: string }[];
+  /** Enlaces internos relacionados al cierre. Vacio = no se renderiza. */
+  relatedLinks?: { label: string; to: string }[];
 };
 
 const ES: Record<SeoSpecialtyKind, SeoSpecialtyContent> = {
@@ -154,6 +156,12 @@ const EN: Record<SeoSpecialtyKind, SeoSpecialtyContent> = {
       { question: "What experience can I show my client?", answer: "Relevant experience is shared before contracting without exposing confidential information. Identifiable cases, figures and brands are only used with written authorization." },
       { question: "Do you work with agencies outside Colombia?", answer: "Yes. Work is remote with teams and clients in other countries, with scope and overlap hours agreed up front." },
     ],
+    relatedLinks: [
+      { label: "White label vs in-house: cost, control and risk", to: "/en/white-label-seo-vs-in-house" },
+      { label: "Outsource SEO services", to: "/en/outsource-seo-services" },
+      { label: "Technical SEO audit services", to: "/en/technical-seo-audit-services" },
+      { label: "SEO migration services", to: "/en/seo-migration-services" },
+    ],
   },
   audit: {
     path: "/en/technical-seo-audit-services",
@@ -226,6 +234,7 @@ export const SEO_SPECIALTY_UI: Record<Lang, {
   outcomesKicker: string; outcomesTitle: string;
   processKicker: string; processTitle: string;
   faqKicker: string;
+  relatedKicker: string;
   nextKicker: string; nextTitle: string;
 }> = {
   es: {
@@ -236,6 +245,7 @@ export const SEO_SPECIALTY_UI: Record<Lang, {
     outcomesKicker: "RESULTADO OPERATIVO", outcomesTitle: "Menos opinión. Más evidencia y criterios compartidos.",
     processKicker: "PROCESO", processTitle: "Un proceso corto, visible y transferible.",
     faqKicker: "PREGUNTAS FRECUENTES",
+    relatedKicker: "RELACIONADO",
     nextKicker: "SIGUIENTE PASO", nextTitle: "Cuéntanos qué habilidad y capacidad necesita tu agencia.",
   },
   en: {
@@ -246,6 +256,7 @@ export const SEO_SPECIALTY_UI: Record<Lang, {
     outcomesKicker: "OPERATIONAL OUTCOME", outcomesTitle: "Less opinion. More evidence and shared criteria.",
     processKicker: "PROCESS", processTitle: "A short process you can see and hand over.",
     faqKicker: "FREQUENT QUESTIONS",
+    relatedKicker: "RELATED",
     nextKicker: "NEXT STEP", nextTitle: "Tell me what skill and capacity your agency needs.",
   },
   pt: {
@@ -256,6 +267,7 @@ export const SEO_SPECIALTY_UI: Record<Lang, {
     outcomesKicker: "RESULTADO OPERACIONAL", outcomesTitle: "Menos opinião. Mais evidência.",
     processKicker: "PROCESSO", processTitle: "Um processo curto, visível e transferível.",
     faqKicker: "PERGUNTAS FREQUENTES",
+    relatedKicker: "RELACIONADO",
     nextKicker: "PRÓXIMO PASSO", nextTitle: "Conte qual habilidade sua agência precisa.",
   },
 };

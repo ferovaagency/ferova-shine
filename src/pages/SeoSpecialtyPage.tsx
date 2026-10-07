@@ -105,6 +105,24 @@ export default function SeoSpecialtyPage({ kind, lang = "es" }: { kind: SeoSpeci
           </div>
         </section>
 
+        {/* Enlaces internos relacionados. Se omite si la pieza no los declara. */}
+        {content.relatedLinks && content.relatedLinks.length > 0 && (
+          <section className="border-t border-border bg-card py-12">
+            <div className="container mx-auto max-w-6xl px-4 md:px-6">
+              <p className="seo-kicker">{ui.relatedKicker}</p>
+              <ul className="mt-5 flex flex-wrap gap-x-6 gap-y-3">
+                {content.relatedLinks.map((r) => (
+                  <li key={r.to}>
+                    <Link to={r.to} className="border-b border-[#c0930e] pb-0.5 font-semibold text-[#541014]">
+                      {r.label}
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          </section>
+        )}
+
         <section className="bg-[#541014] py-20 text-white">
           <div className="container mx-auto flex max-w-6xl flex-col items-start justify-between gap-8 px-4 md:flex-row md:items-end md:px-6">
             <div><p className="text-xs font-semibold tracking-[0.22em] text-[#e0bd52]">{ui.nextKicker}</p><h2 className="mt-4 max-w-3xl text-3xl md:text-5xl">{ui.nextTitle}</h2></div>

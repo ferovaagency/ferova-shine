@@ -22,10 +22,8 @@ import ClientOnly from "@/components/ClientOnly";
 import Index from "./pages/Index";
 import NotFound from "./pages/NotFound";
 import Terminos from "./pages/Terminos";
-import Servicios from "./pages/Servicios";
 import SeoEcommerce from "./pages/SeoEcommerce";
 import DiseneoWeb from "./pages/DiseneoWeb";
-import DescuentosHerramientas from "./pages/DescuentosHerramientas";
 import AsesoriasMarketing from "./pages/AsesoriasMarketing";
 import OptimizacionLinkedin from "./pages/OptimizacionLinkedin";
 import CasosDeExito from "./pages/CasosDeExito";
@@ -33,7 +31,6 @@ import CasoDetalle from "./pages/CasoDetalle";
 import Contacto from "./pages/Contacto";
 import Blog from "./pages/Blog";
 import BlogPost from "./pages/BlogPost";
-import Recursos from "./pages/Recursos";
 import SobreNosotros from "./pages/SobreNosotros";
 import AdminBlogList from "./pages/admin/AdminBlogList";
 import AdminBlogEditor from "./pages/admin/AdminBlogEditor";
@@ -54,6 +51,7 @@ import AdminCases from "./pages/admin/AdminCases";
 import AdminCaseEditor from "./pages/admin/AdminCaseEditor";
 import SeoSpecialtyPage from "./pages/SeoSpecialtyPage";
 import PositioningPage from "./pages/PositioningPage";
+import WhiteLabelVsInHouse from "./pages/WhiteLabelVsInHouse";
 import SeoAbout from "./pages/SeoAbout";
 import SeoEcommerceEs from "./pages/SeoEcommerceEs";
 import SeoCases from "./pages/SeoCases";
@@ -96,7 +94,6 @@ const AppRoutes = ({ hostLang }: { hostLang: "es" | "en" | "pt" }) => (
 
     {/* Fase 9 (Sprint 6): productos */}
 
-    <Route path="/services" element={<Servicios lang={hostLang} />} />
     <Route path="/servicios/seo-ecommerce" element={<SeoEcommerceEs />} />
     <Route path="/seo-para-agencias" element={<SeoSpecialtyPage kind="agencies" lang="es" />} />
     <Route path="/auditoria-seo-tecnica" element={<SeoSpecialtyPage kind="audit" lang="es" />} />
@@ -107,13 +104,13 @@ const AppRoutes = ({ hostLang }: { hostLang: "es" | "en" | "pt" }) => (
     <Route path="/en/seo-migration-services" element={<SeoSpecialtyPage kind="migrations" lang="en" />} />
     {/* Páginas de posicionamiento — ver src/content/positioning.ts */}
     <Route path="/en/outsource-seo-services" element={<PositioningPage kind="outsource-seo-services" />} />
+    <Route path="/en/white-label-seo-vs-in-house" element={<WhiteLabelVsInHouse />} />
     <Route path="/services/ecommerce-seo" element={<SeoEcommerce lang={hostLang} />} />
     <Route path="/services/web-design" element={<DiseneoWeb lang={hostLang} />} />
     <Route path="/servicios/pauta-digital" element={<Navigate replace to="/" />} />
     <Route path="/services/digital-ads" element={<Navigate replace to="/en" />} />
     <Route path="/servicios/diseno-logos" element={<Navigate replace to="/" />} />
     <Route path="/services/logo-design" element={<Navigate replace to="/en" />} />
-    <Route path="/services/tool-discounts" element={<DescuentosHerramientas lang={hostLang} />} />
     <Route path="/services/marketing-consulting" element={<AsesoriasMarketing lang={hostLang} />} />
     <Route path="/services/linkedin-optimization" element={<OptimizacionLinkedin lang={hostLang} />} />
     <Route path="/casos-de-exito" element={<SeoCases />} />
@@ -134,8 +131,8 @@ const AppRoutes = ({ hostLang }: { hostLang: "es" | "en" | "pt" }) => (
     <Route path="/admin/blog/nuevo" element={<AdminGuard><AdminBlogEditor /></AdminGuard>} />
     <Route path="/admin/blog/:id/editar" element={<AdminGuard><AdminBlogEditor /></AdminGuard>} />
     <Route path="/admin/newsletter" element={<AdminGuard><NewsletterAdminPage /></AdminGuard>} />
-    <Route path="/recursos" element={<SeoResources />} />
-    <Route path="/resources" element={<Recursos lang={hostLang} />} />
+    <Route path="/recursos" element={<SeoResources lang="es" />} />
+    <Route path="/resources" element={<SeoResources lang="en" />} />
     <Route path="/sobre-nosotros" element={<SeoAbout lang="es" />} />
     <Route path="/en/about-me" element={<SeoAbout lang="en" />} />
     <Route path="/about" element={<SobreNosotros lang={hostLang} />} />
@@ -156,7 +153,7 @@ const AppRoutes = ({ hostLang }: { hostLang: "es" | "en" | "pt" }) => (
     <Route path="/en/contact" element={<Contacto lang="en" />} />
     <Route path="/en/blog" element={<Blog lang="en" />} />
     <Route path="/en/blog/:slug" element={<BlogPost lang="en" />} />
-    <Route path="/en/resources" element={<Recursos lang="en" />} />
+    <Route path="/en/resources" element={<SeoResources lang="en" />} />
     <Route path="/en/terms" element={<Terminos lang="en" />} />
 
     <Route path="/pt" element={<Index lang="pt" />} />
@@ -169,7 +166,7 @@ const AppRoutes = ({ hostLang }: { hostLang: "es" | "en" | "pt" }) => (
     <Route path="/pt/contato" element={<Contacto lang="pt" />} />
     <Route path="/pt/blog" element={<Navigate replace to="/blog" />} />
     <Route path="/pt/blog/:slug" element={<Navigate replace to="/blog" />} />
-    <Route path="/pt/recursos" element={<Recursos lang="pt" />} />
+    <Route path="/pt/recursos" element={<SeoResources lang="es" />} />
     <Route path="/pt/termos" element={<Terminos lang="pt" />} />
 
     <Route path="/newsletter/admin" element={<Navigate replace to="/admin/newsletter" />} />
