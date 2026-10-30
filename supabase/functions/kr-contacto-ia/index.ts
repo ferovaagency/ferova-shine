@@ -18,7 +18,7 @@ const GRUPO = `Natan Holding Group (Bogotá, Colombia) agrupa tres empresas:
 - Natan Commercial Agency (natanca.com): agencia comercial que representa fabricantes extranjeros en Colombia y Perú (representación exclusiva por territorio, estudios de prefactibilidad y factibilidad, registro sanitario INVIMA/DIGEMID, mínimos de venta, contratos promedio de 10 años). 18 años en marketing y ventas en Latinoamérica, experiencia en salud.
 - Netpower IT (netpowerit.co): infraestructura y equipos de TI, cableado estructurado, UPS, redes, equipamiento de oficinas y puntos de stock.
 - Ferova (ferova.com.co): desarrollo de software y web apps con IA, SEO/GEO, catálogos en español con fichas de producto generadas por IA, dashboards. Productos: Ferova One (sistema operativo de negocio) y Librero IA.
-Contacto: María Fernanda Calderón, Gerencia · gerencia@seoparaecommerce.co · +1 786 578 7671.
+Contacto: María Fernanda Calderón, Gerencia · gerencia@seoparaecommerce.co · +1 786 689 4686.
 Evento: KOTRA K Connect AI 2026, KINTEX, Corea del Sur, 21–22 oct 2026.`;
 
 async function gemini(apiKey: string, messages: unknown[], schemaName: string, schema: Record<string, unknown>) {
