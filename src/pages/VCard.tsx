@@ -11,10 +11,10 @@ export default function VCard() {
     nombre: 'Maria Fernanda Calderon',
     cargo: 'Especialista en GEO y Webapps',
     empresa: 'Ferova Agency',
-    telefono: '+17865787671',
+    telefono: '+17866894686',
     email: 'gerencia@seoparaecommerce.co',
     web: 'https://seoparaecommerce.co',
-    whatsapp: '17865787671',
+    whatsapp: '17866894686',
   };
 
   const handleAccion = () => {
@@ -28,7 +28,7 @@ export default function VCard() {
     const mensaje = encodeURIComponent(
       `Hola Maria, soy ${nombre.trim()} fue un gusto conocerte, sigamos en contacto`
     );
-    window.open(`https://wa.me/17865787671?text=${mensaje}`, '_blank');
+    window.open(`https://wa.me/17866894686?text=${mensaje}`, '_blank');
 
     // 2 — Descargar .vcf al mismo tiempo
     const vcard = [

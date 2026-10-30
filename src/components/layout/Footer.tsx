@@ -112,7 +112,7 @@ const Footer = ({ currentLang, lang }: FooterProps) => {
               <a href="mailto:gerencia@seoparaecommerce.co" className="flex items-center gap-2 transition-colors hover:text-gold">
                 <Mail className="h-4 w-4" /> gerencia@seoparaecommerce.co
               </a>
-              <a href="https://wa.me/17865787671" target="_blank" rel="noopener noreferrer" onClick={() => trackEvent('whatsapp_button_clicked', { source: 'footer', label: 'phone_link' })} className="flex items-center gap-2 transition-colors hover:text-gold">
+              <a href="https://wa.me/17866894686" target="_blank" rel="noopener noreferrer" onClick={() => trackEvent('whatsapp_button_clicked', { source: 'footer', label: 'phone_link' })} className="flex items-center gap-2 transition-colors hover:text-gold">
                 <MessageCircle className="h-4 w-4" /> +1 (786) 578-7671
               </a>
               <a href="https://ferovaagency.slack.com/team/U0BFL50JL4X" target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 transition-colors hover:text-gold">
@@ -124,7 +124,7 @@ const Footer = ({ currentLang, lang }: FooterProps) => {
             </div>
             <div className="mt-4 flex flex-wrap gap-3">
               {([
-                { Icon: MessageCircle, name: 'whatsapp', url: 'https://wa.me/17865787671' },
+                { Icon: MessageCircle, name: 'whatsapp', url: 'https://wa.me/17866894686' },
                 { Icon: MessagesSquare, name: 'slack', url: 'https://ferovaagency.slack.com/team/U0BFL50JL4X' },
                 { Icon: Linkedin, name: 'linkedin', url: 'https://www.linkedin.com/in/maria-fer-calderon/' },
                 { Icon: Instagram, name: 'instagram', url: 'https://www.instagram.com/mafe.ferova/' },

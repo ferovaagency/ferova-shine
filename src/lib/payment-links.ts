@@ -1,5 +1,5 @@
 const WA = (msg: string) =>
-  `https://wa.me/17865787671?text=${encodeURIComponent(msg)}`;
+  `https://wa.me/17866894686?text=${encodeURIComponent(msg)}`;
 
 export const paymentLinks = {
   // ===== B2B High-ticket (modelo principal) =====

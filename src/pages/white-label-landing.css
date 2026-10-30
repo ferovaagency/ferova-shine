@@ -114,7 +114,9 @@
 
 /* tarjetas de modalidad */
 .wl-cards{margin-top:40px;display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
-.wl-card{background:#fff;border:1px solid var(--wl-line);border-radius:20px;padding:28px;
+/* color propio: si esta tarjeta acaba en una seccion oscura, el texto no se
+   vuelve blanco sobre blanco. */
+.wl-card{color:var(--wl-ink);background:#fff;border:1px solid var(--wl-line);border-radius:20px;padding:28px;
   transition:transform .25s,box-shadow .25s}
 .wl-card:hover{transform:translateY(-4px);box-shadow:0 18px 40px rgba(60,40,10,.1)}
 .wl-card .num{font-family:ui-monospace,monospace;font-size:13px;color:var(--wl-brown);font-weight:600}

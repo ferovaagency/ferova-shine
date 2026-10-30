@@ -243,7 +243,7 @@ export const WL_CHANNELS = {
   kick: "Reach me directly",
   h2: "No form in between. Pick whichever is least friction for you.",
   items: [
-    { n: "WhatsApp", dd: "Fastest for a quick scope question", href: "https://wa.me/17865787671", go: "Open" },
+    { n: "WhatsApp", dd: "Fastest for a quick scope question", href: "https://wa.me/17866894686", go: "Open" },
     { n: "Email", dd: "gerencia@seoparaecommerce.co", href: "mailto:gerencia@seoparaecommerce.co", go: "Write" },
     { n: "LinkedIn", dd: "María Fer Calderón", href: "https://www.linkedin.com/in/maria-fer-calderon/", go: "Connect" },
     // ⚠️ Esta URL exige ser miembro del workspace: un prospecto rebota. Para

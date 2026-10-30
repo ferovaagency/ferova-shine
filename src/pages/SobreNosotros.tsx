@@ -84,7 +84,7 @@ const SobreNosotros = ({ lang = 'es' }: Props) => {
     ctaTitle: 'Ready to grow your e-commerce?', ctaSub: 'Book a free consultation and discover how much your online store can grow.', ctaBtn: 'Request a quote',
   };
 
-  const whatsappUrl = 'https://wa.me/17865787671?text=' + encodeURIComponent(
+  const whatsappUrl = 'https://wa.me/17866894686?text=' + encodeURIComponent(
     lang === 'es' ? 'Hola Ferova, quiero agendar una asesoría.' : lang === 'pt' ? 'Olá Ferova, quero agendar uma consultoria.' : 'Hi Ferova, I want to book a consultation.'
   );
 

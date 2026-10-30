@@ -20,7 +20,7 @@ const t = {
     welcome: 'Soy **Fera**, el asistente con inteligencia artificial de Ferova. No soy una persona y puedo equivocarme; el alcance y el precio siempre los revisa una persona. No envíes datos sensibles. Puedes escribir **AGENTE** cuando quieras hablar con alguien del equipo. Consulta nuestra [política de privacidad](/privacidad#ia).\n\n¿Qué capacidad necesita tu agencia?',
     placeholder: 'Escribe tu mensaje...',
     badge: 'Cotizar con Fera',
-    error: 'Fera no pudo conectar en este momento. Envía tu mensaje nuevamente o habla con una persona por [WhatsApp](https://wa.me/17865787671) o [correo](mailto:gerencia@seoparaecommerce.co).',
+    error: 'Fera no pudo conectar en este momento. Envía tu mensaje nuevamente o habla con una persona por [WhatsApp](https://wa.me/17866894686) o [correo](mailto:gerencia@seoparaecommerce.co).',
     suggestions: [
       'SEO técnico para un cliente',
       'Mantenimiento web mensual',
@@ -33,7 +33,7 @@ const t = {
     welcome: "I'm **Fera**, Ferova's AI quoting assistant. I'm not a person and I can make mistakes; a person always reviews scope and pricing. Do not send sensitive data. Type **AGENT** whenever you want a team member. Read our [privacy policy](/en/privacy#ai).\n\nWhat capacity does your agency need?",
     placeholder: 'Type your message...',
     badge: 'Quote with Fera',
-    error: 'Fera could not connect right now. Send your message again or contact a person through [WhatsApp](https://wa.me/17865787671) or [email](mailto:gerencia@seoparaecommerce.co).',
+    error: 'Fera could not connect right now. Send your message again or contact a person through [WhatsApp](https://wa.me/17866894686) or [email](mailto:gerencia@seoparaecommerce.co).',
     suggestions: [
       'Technical SEO for a client',
       'Monthly website maintenance',
@@ -46,7 +46,7 @@ const t = {
     welcome: 'Sou a **Fera**, assistente de orçamento com inteligência artificial da Ferova. Não sou uma pessoa e posso cometer erros; uma pessoa sempre revisa escopo e preço. Não envie dados sensíveis. Escreva **AGENTE** para falar com a equipe.\n\nDe qual capacidade sua agência precisa?',
     placeholder: 'Digite sua mensagem...',
     badge: 'Consultora IA',
-    error: 'A Fera não conseguiu se conectar agora. Envie sua mensagem novamente ou fale com uma pessoa pelo [WhatsApp](https://wa.me/17865787671) ou [e-mail](mailto:gerencia@seoparaecommerce.co).',
+    error: 'A Fera não conseguiu se conectar agora. Envie sua mensagem novamente ou fale com uma pessoa pelo [WhatsApp](https://wa.me/17866894686) ou [e-mail](mailto:gerencia@seoparaecommerce.co).',
     suggestions: [
       'SEO técnico para um cliente',
       'Manutenção web mensal',
