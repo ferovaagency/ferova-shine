@@ -10,8 +10,8 @@
  * ========================================================================== */
 
 .wl{
-  --wl-ink:#3c3c3b; --wl-wine:#541014; --wl-wine-d:#3a0b0e; --wl-brown:#6a4c30;
-  --wl-gold:#c0930e; --wl-gold-s:#e0bd52; --wl-cream:#fbf7ef; --wl-sand:#f4eadb;
+  --wl-ink:#242421; --wl-wine:#201f1b; --wl-wine-d:#171715; --wl-brown:#705518;
+  --wl-gold:#c0930e; --wl-gold-s:#e0bd52; --wl-cream:#ffffff; --wl-sand:#f6f5f1;
   --wl-line:#e5dcc9; --wl-muted:#6f6a63;
   background:var(--wl-cream); color:var(--wl-ink);
   font-family:'Inter',system-ui,-apple-system,sans-serif; font-size:17px; line-height:1.7;
@@ -137,7 +137,7 @@
 /* cta intermedio */
 .wl-mid{margin-top:48px;border-radius:22px;padding:34px 36px;display:flex;gap:24px;
   align-items:center;justify-content:space-between;flex-wrap:wrap;
-  background:linear-gradient(135deg,#541014,#78191f 60%,#541014);color:#fff}
+  background:linear-gradient(135deg,#201f1b,#78191f 60%,#201f1b);color:#fff}
 .wl-mid p{font-family:'Nexa','Outfit',sans-serif;font-size:clamp(19px,2.2vw,25px);font-weight:700;
   max-width:34ch;color:#fff}
 

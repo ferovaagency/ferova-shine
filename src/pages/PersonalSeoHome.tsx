@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { ArrowRight, Check, ChevronDown, MessageCircle, ShieldCheck } from "lucide-react";
-import CaseStory from "@/components/CaseStory";
+import PortfolioHighlights from "@/components/PortfolioHighlights";
 import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
 import SEO from "@/components/SEO";
@@ -83,9 +83,7 @@ export default function PersonalSeoHome({ lang = "es" }: { lang?: Lang }) {
 
         <section className="personal-proof" id="trabajo">
           <div className="personal-shell">
-            <CaseStory data={c.cases.redesign} />
-            <CaseStory data={c.cases.recovery} />
-            <CaseStory data={c.cases.maintenance} />
+            <PortfolioHighlights lang={lang} />
           </div>
         </section>
 

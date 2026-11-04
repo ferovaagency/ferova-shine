@@ -1,3 +1,4 @@
+import PortfolioHighlights from "@/components/PortfolioHighlights";
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import Header from '@/components/layout/Header';
@@ -129,6 +130,7 @@ const CasosDeExito = ({ lang = 'es' }: Props) => {
             </AnimatedSection>
           </div>
         </section>
+        <div className="personal-shell py-12"><PortfolioHighlights lang={lang} /></div>
 
         <section className="py-20 md:py-28">
           <div className="container mx-auto px-4 md:px-6">

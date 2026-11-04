@@ -696,6 +696,7 @@
     }
   ],
   "rewrites": [
+    { "source": "/portafolio", "destination": "/portafolio/index.html" },
     {
       "source": "/(.*)",
       "destination": "/index.html"

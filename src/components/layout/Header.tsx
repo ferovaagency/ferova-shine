@@ -24,7 +24,7 @@ type NavCfg = { primary: NavItem[]; cta: NavItem };
 const NAV: Record<"es" | "en" | "pt", NavCfg> = {
   es: {
     primary: [
-      { label: "Mi trabajo", href: "/#trabajo" },
+      { label: "Portafolio", href: "/portafolio/?lang=es" },
       { label: "Cómo te ayudo", href: "/#ayuda" },
       { label: "Para agencias", href: "/seo-para-agencias" },
       { label: "Recursos", href: "/recursos" },
@@ -33,7 +33,7 @@ const NAV: Record<"es" | "en" | "pt", NavCfg> = {
   },
   en: {
     primary: [
-      { label: "My work", href: "/en#trabajo" },
+      { label: "Portfolio", href: "/portafolio/?lang=en" },
       { label: "How I help", href: "/en#ayuda" },
       { label: "For agencies", href: "/en/white-label-seo-for-agencies" },
       { label: "Resources", href: "/en/resources" },
@@ -43,7 +43,7 @@ const NAV: Record<"es" | "en" | "pt", NavCfg> = {
   pt: {
     primary: [
       { label: "SEO ecommerce", href: "/pt/seo-ecommerce" },
-      { label: "Experiência", href: "/pt/casos-de-sucesso" },
+      { label: "Portfólio", href: "/portafolio/?lang=pt" },
       { label: "Recursos", href: "/pt/recursos" },
     ],
     cta: { label: "Falar agora", href: "/pt/contato" },
@@ -78,7 +78,7 @@ export default function Header({ currentLang, lang }: HeaderProps) {
 
         <nav className="hidden items-center gap-6 lg:flex" aria-label="Navegación principal">
           {cfg.primary.map((item) => (
-            <Link key={item.href} to={item.href} className={`text-sm transition-colors ${isActive(item.href) ? "text-foreground" : "text-muted-foreground hover:text-foreground"}`}>
+            <Link key={item.href} reloadDocument={item.href.startsWith("/portafolio/")} to={item.href} className={`text-sm transition-colors ${isActive(item.href) ? "text-foreground" : "text-muted-foreground hover:text-foreground"}`}>
               {item.label}
             </Link>
           ))}
@@ -97,7 +97,7 @@ export default function Header({ currentLang, lang }: HeaderProps) {
         <div className={`max-h-[calc(100vh-5rem)] overflow-y-auto border-t lg:hidden ${locale === "es" ? "personal-mobile-menu" : "border-border/60 bg-background"}`}>
           <nav className="container mx-auto flex flex-col gap-1 px-4 py-4 md:px-6">
             {cfg.primary.map((item) => (
-              <Link key={item.href} to={item.href} onClick={() => setMobileOpen(false)} className={`rounded-xl px-4 py-3 text-sm transition-colors ${isActive(item.href) ? "bg-accent text-accent-foreground" : "text-muted-foreground hover:bg-accent hover:text-accent-foreground"}`}>
+              <Link key={item.href} reloadDocument={item.href.startsWith("/portafolio/")} to={item.href} onClick={() => setMobileOpen(false)} className={`rounded-xl px-4 py-3 text-sm transition-colors ${isActive(item.href) ? "bg-accent text-accent-foreground" : "text-muted-foreground hover:bg-accent hover:text-accent-foreground"}`}>
                 {item.label}
               </Link>
             ))}

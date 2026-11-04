@@ -78,6 +78,7 @@ const AiAdvisorChat = ({ lang = 'es' }: AiAdvisorChatProps) => {
       trackAIChat('open');
       trackEvent('ai_quote_assistant_opened', { source: 'page_cta' });
     };
+    if (window.location.hash === '#fera') setOpen(true);
     window.addEventListener('open-fera-quote', openQuote as EventListener);
     return () => window.removeEventListener('open-fera-quote', openQuote as EventListener);
   }, [trackAIChat]);

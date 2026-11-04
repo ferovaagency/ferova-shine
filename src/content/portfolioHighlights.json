@@ -1,0 +1,80 @@
+{
+  "es": [
+    {
+      "id": "netpower-it",
+      "name": "Netpower IT",
+      "value": "0 → 13 M",
+      "desc": "COP en ventas mensuales según el cliente, tres meses después de la primera venta."
+    },
+    {
+      "id": "all-for-all",
+      "name": "All For All",
+      "value": "0 → ventas",
+      "desc": "de un WordPress sin tráfico a ventas web y por WhatsApp"
+    },
+    {
+      "id": "preescolares-florida",
+      "name": "Tres preescolares de Florida",
+      "value": "5 % → 50 %",
+      "desc": "de visibilidad en IA para uno de los tres preescolares, en las consultas locales analizadas."
+    },
+    {
+      "id": "caro-color",
+      "name": "Caro Color",
+      "value": "≈100",
+      "desc": "reseñas positivas en menos de un mes"
+    }
+  ],
+  "en": [
+    {
+      "id": "netpower-it",
+      "name": "Netpower IT",
+      "value": "0 → 13 M",
+      "desc": "COP in monthly sales reported by the client three months after the first sale."
+    },
+    {
+      "id": "all-for-all",
+      "name": "All For All",
+      "value": "0 → sales",
+      "desc": "from a WordPress store with no traffic to web and WhatsApp sales"
+    },
+    {
+      "id": "preescolares-florida",
+      "name": "Three Florida preschools",
+      "value": "5% → 50%",
+      "desc": "AI visibility for one preschool across the tracked local queries."
+    },
+    {
+      "id": "caro-color",
+      "name": "Caro Color",
+      "value": "≈100",
+      "desc": "positive reviews in under a month"
+    }
+  ],
+  "pt": [
+    {
+      "id": "netpower-it",
+      "name": "Netpower IT",
+      "value": "0 → 13 M",
+      "desc": "COP em vendas mensais informadas pelo cliente três meses após a primeira venda."
+    },
+    {
+      "id": "all-for-all",
+      "name": "All For All",
+      "value": "0 → vendas",
+      "desc": "de um WordPress sem tráfego a vendas pelo site e pelo WhatsApp"
+    },
+    {
+      "id": "preescolares-florida",
+      "name": "Três pré-escolas na Flórida",
+      "value": "5 % → 50 %",
+      "desc": "de visibilidade em IA para uma das pré-escolas nas consultas locais monitoradas."
+    },
+    {
+      "id": "caro-color",
+      "name": "Caro Color",
+      "value": "≈100",
+      "desc": "avaliações positivas em menos de um mês"
+    }
+  ]
+}
