@@ -193,6 +193,13 @@ CONVERSATION:
 - Then ask for an email or WhatsApp in one question. In the next message request explicit permission to use the details only to answer the request. Once authorized, confirm the summary was sent to the team.
 - If the need is not a fit, say so honestly and offer the human channel. Do not redirect to SEO Para Agencias unless the visitor specifically needs SEO capacity for agency clients.`;
 
+const FEROVA_LANGUAGES = {
+  es: { instruction: "Responde siempre en español.", handoff: FEROVA_HANDOFF_ES },
+  en: { instruction: "Always reply in English.", handoff: FEROVA_HANDOFF_EN },
+  pt: { instruction: "Responda sempre em português do Brasil, inclusive quando a pergunta estiver em outro idioma.", handoff: "Sou a Fera, assistente de IA. Para falar com uma pessoa da Ferova pelo WhatsApp: https://wa.me/17866894686" },
+  ko: { instruction: "사용자가 다른 언어로 질문하더라도 모든 답변을 자연스럽고 정중한 한국어로 작성하세요.", handoff: "저는 Ferova의 AI 상담 도우미 Fera입니다. 담당자와 직접 상담하려면 WhatsApp으로 메시지를 보내 주세요: https://wa.me/17866894686" },
+} as const;
+
 function sseFromText(text: string): Response {
   const encoder = new TextEncoder();
   const stream = new ReadableStream({
@@ -228,6 +235,9 @@ serve(async (req) => {
       site?: unknown;
     };
     const isFerova = site === "ferova";
+    const language = lang === "en" || lang === "pt" || lang === "ko" ? lang : "es";
+    const languageRules = FEROVA_LANGUAGES[language];
+    if (isFerova) corsHeaders["Content-Language"] = language;
     const apiKey = Deno.env.get("LOVABLE_API_KEY");
     if (!apiKey) throw new Error("LOVABLE_API_KEY is not configured");
 
@@ -273,11 +283,9 @@ serve(async (req) => {
 
     // Human handoff: short-circuit before contacting the provider.
     const lastUser = [...safeMessages].reverse().find((m) => m.role === "user");
-    if (lastUser && HUMAN_ESCALATION_RE.test(lastUser.content)) {
+    if (lastUser && (HUMAN_ESCALATION_RE.test(lastUser.content) || (isFerova && /atendente|falar com (uma pessoa|alguém|um humano)|상담원|담당자|사람과 상담/i.test(lastUser.content)))) {
       const handoff = isFerova
-        ? lang === "en"
-          ? FEROVA_HANDOFF_EN
-          : FEROVA_HANDOFF_ES
+        ? languageRules.handoff
         : lang === "en"
           ? HANDOFF_EN
           : HANDOFF_ES;
@@ -300,9 +308,7 @@ serve(async (req) => {
             {
               role: "system",
               content: isFerova
-                ? lang === "en"
-                  ? FEROVA_SYSTEM_PROMPT_EN
-                  : FEROVA_SYSTEM_PROMPT_ES
+                ? (language === "es" ? FEROVA_SYSTEM_PROMPT_ES : FEROVA_SYSTEM_PROMPT_EN.replace("professional English", "professional language")) + "\n\n" + languageRules.instruction
                 : lang === "en"
                   ? SYSTEM_PROMPT_EN
                   : SYSTEM_PROMPT_ES,
