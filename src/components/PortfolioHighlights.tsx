@@ -10,7 +10,8 @@ const labels = {
 
 export default function PortfolioHighlights({ lang = "es" }: { lang?: Lang }) {
   const [eyebrow, title, explore, view] = labels[lang];
-  const href = `/portafolio/?lang=${lang}`;
+  // El portafolio vive en ferova.com.co, que es la versión principal e indexable.
+  const href = `https://ferova.com.co/portafolio?lang=${lang}`;
   return (
     <section className="portfolio-highlights">
       <div className="portfolio-heading">
