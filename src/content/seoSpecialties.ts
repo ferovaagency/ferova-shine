@@ -4,13 +4,34 @@ export type SeoSpecialtyKind = "agencies" | "audit" | "migrations";
 
 export type SeoSpecialtyContent = {
   path: string;
+  /** <title> exacto. Si falta: `${title} | siteName`. */
+  metaTitle?: string;
   eyebrow: string;
   title: string;
   description: string;
   problem: string;
   outcomes: string[];
   deliverables: { title: string; description: string }[];
-  process: { title: string; description: string }[];
+  /** `time`: plazo opcional del paso, se muestra junto al número. */
+  process: { title: string; description: string; time?: string }[];
+  /** Precios públicos. Si existe, se renderiza y entra en el schema Service. */
+  pricing?: {
+    kicker: string;
+    title: string;
+    intro: string;
+    serviceName: string;
+    plans: { name: string; price: number; unit: string; description: string }[];
+    guarantee: string;
+    currencyNote: string;
+  };
+  /** Pruebas con cifras y su fuente. Siempre anonimizadas salvo autorización. */
+  proof?: {
+    kicker: string;
+    title: string;
+    items: { label: string; before: string; after: string; metric: string; context: string }[];
+    note: string;
+    cta: { label: string; href: string };
+  };
   faqs: { question: string; answer: string }[];
   /** Enlaces internos relacionados al cierre. Vacio = no se renderiza. */
   relatedLinks?: { label: string; to: string }[];
@@ -19,34 +40,79 @@ export type SeoSpecialtyContent = {
 const ES: Record<SeoSpecialtyKind, SeoSpecialtyContent> = {
   agencies: {
     path: "/seo-para-agencias",
-    eyebrow: "PARTNER SEO SENIOR · WHITE LABEL",
-    title: "La capacidad SEO senior que tu agencia necesita sin ampliar su nómina.",
+    metaTitle: "SEO marca blanca para agencias: ecommerce y SEO técnico | Ferova",
+    eyebrow: "SEO MARCA BLANCA · ECOMMERCE Y SEO TÉCNICO",
+    title: "SEO marca blanca para agencias que venden ecommerce y SEO técnico.",
     description:
-      "Acompaño a agencias que necesitan resolver auditorías, arquitectura, ecommerce y migraciones complejas bajo su marca o como especialista visible ante el cliente.",
+      "Servicio de SEO marca blanca para agencias: auditorías, arquitectura de catálogos y migraciones entregadas bajo tu marca, con tu logo en cada reporte. Trabajo técnico senior, precios publicados y garantía por escrito.",
     problem:
-      "Cuando el proyecto supera el SEO operativo, el riesgo no es solo retrasarse: es recomendar una migración, una arquitectura o una solución técnica sin suficiente profundidad para defenderla.",
+      "La mayoría de los programas de SEO marca blanca están pensados para negocios locales: mapas, citaciones y reseñas. El ecommerce se rompe en otros lugares: navegación facetada, miles de URLs de producto, variantes duplicadas y migraciones de plataforma. Recomendar ahí sin suficiente profundidad es como una agencia pierde un cliente.",
     outcomes: [
-      "Más capacidad para asumir proyectos técnicamente exigentes.",
+      "Capacidad para vender y entregar proyectos de ecommerce técnicamente exigentes.",
       "Diagnósticos y recomendaciones que el equipo puede explicar y ejecutar.",
-      "Participación flexible: white label, soporte interno o especialista ante cliente.",
+      "Participación flexible: marca blanca total, soporte interno o especialista visible.",
+      "SEO técnico limpio, dentro de las directrices de Google: sin clics simulados ni atajos.",
     ],
     deliverables: [
-      { title: "Auditoría y diagnóstico", description: "Crawl, indexación, arquitectura, renderizado, datos estructurados y riesgos priorizados." },
-      { title: "Arquitectura y estrategia", description: "Decisiones sobre categorías, facetas, enlazado interno, contenido y crecimiento orgánico." },
-      { title: "Soporte en migraciones", description: "Inventario, equivalencias, redirects, QA y monitoreo para proteger activos orgánicos." },
-      { title: "Capacidad web recurrente", description: "Mantenimiento mensual, correcciones y landing pages listas para que la agencia entregue a sus clientes." },
+      { title: "Auditoría técnica", description: "Rastreo, indexación, renderizado, datos estructurados, Core Web Vitals y riesgos priorizados, en un reporte con el logo de tu agencia." },
+      { title: "Arquitectura de catálogo", description: "Categorías, facetas, filtros, paginación, variantes de producto y enlazado interno para tiendas con miles de URLs." },
+      { title: "Migraciones de plataforma", description: "Inventario, equivalencias, redirects, QA en staging y monitoreo post-lanzamiento en Shopify, WooCommerce y WordPress." },
+      { title: "Capacidad recurrente", description: "Un bloque mensual de horas senior para correcciones, revisiones y landing pages que tu agencia entrega como propias." },
     ],
     process: [
-      { title: "Alineamos el alcance", description: "Definimos rol, confidencialidad, entregables, interlocutores y nivel de exposición." },
-      { title: "Diagnóstico basado en evidencia", description: "Trabajamos con datos, crawls, Search Console y contexto técnico real." },
-      { title: "Transferimos decisiones", description: "El equipo recibe prioridades, criterios y soporte para ejecutar sin dependencia permanente." },
+      { title: "Brief", time: "día 0", description: "Me cuentas el cliente, el objetivo y la fecha. Acordamos por escrito el rol, la visibilidad y los entregables." },
+      { title: "NDA y accesos", time: "día 1", description: "Firmo tu NDA antes de entrar a cualquier cuenta. Compartes Search Console, analítica y la plataforma." },
+      { title: "Auditoría técnica", time: "en 5 días", description: "Rastreo, contraste de datos y revisión manual de las plantillas que generan ventas." },
+      { title: "Reporte con tu logo", time: "misma semana", description: "Hallazgos con evidencia, prioridad y criterio de aceptación, con la marca de tu agencia y listos para presentar." },
+      { title: "Entrega y soporte", time: "continuo", description: "Lo explico a tu equipo y acompaño la implementación como bloque mensual o por sitio." },
     ],
+    pricing: {
+      kicker: "PRECIOS",
+      title: "Precios de SEO marca blanca publicados. Sin llamada previa para conocer la cifra.",
+      intro: "Tres formas de trabajar. Los precios son lo que paga tu agencia; tú defines el precio de reventa a tu cliente.",
+      serviceName: "SEO marca blanca para agencias",
+      plans: [
+        { name: "Auditoría técnica", price: 750, unit: "por sitio", description: "Auditoría técnica de un sitio, entregada bajo tu marca con un plan de acción priorizado." },
+        { name: "Bloque de 20 horas", price: 1000, unit: "al mes", description: "Veinte horas senior al mes para auditorías, arquitectura, migraciones, correcciones y revisiones entre tus clientes." },
+        { name: "Por sitio, agencias nuevas", price: 500, unit: "al mes", description: "SEO técnico continuo para el sitio de un cliente, para agencias que empiezan su primer proyecto conmigo." },
+      ],
+      guarantee: "Garantía por escrito: si el entregable no se puede revender a tu cliente tal cual, bajo tu marca, no se cobra.",
+      currencyNote: "Precios en dólares estadounidenses (USD), facturados en USD.",
+    },
+    proof: {
+      kicker: "RESULTADOS",
+      title: "Lo que ha movido el trabajo, con la fuente junto a cada cifra.",
+      items: [
+        {
+          label: "Tienda online · rediseño + SEO técnico",
+          before: "COP 1,0 M",
+          after: "COP 13,3 M",
+          metric: "Ventas online mensuales, enero → mayo 2025",
+          context: "Rediseño en WordPress, limpieza de plugins y SEO técnico en sitemap, robots.txt y URLs rotas. También hubo campañas a WhatsApp, así que el crecimiento no se atribuye solo al SEO.",
+        },
+        {
+          label: "Servicios profesionales · recuperación SEO",
+          before: "153",
+          after: "1.180",
+          metric: "Clics orgánicos, noviembre 2024 → mayo 2025",
+          context: "Limpieza de enlaces maliciosos inyectados, migración de hosting y SEO técnico. Las impresiones pasaron de 4.300 a 22.000 y la posición media de 23,9 a 10,2 entre los mismos dos reportes.",
+        },
+      ],
+      note: "Fuentes: registros de ventas e informes de seguimiento compartidos por los clientes. Clientes anonimizados; los casos identificables solo se publican con autorización escrita.",
+      cta: { label: "Ver el portafolio completo", href: "https://ferova.com.co/portafolio?lang=es" },
+    },
     faqs: [
-      { question: "¿Puedes trabajar bajo marca blanca?", answer: "Sí. El modelo puede ser completamente white label, soporte interno o participación visible, según el acuerdo con la agencia." },
-      { question: "¿Qué habilidades puede contratar una agencia?", answer: "SEO técnico, auditorías, migraciones, SEO para ecommerce, mantenimiento web mensual y diseño o desarrollo de landing pages." },
-      { question: "¿Cómo se define el precio?", answer: "El precio se prepara según la habilidad, la plataforma, el número de clientes o entregables, la fecha y la modalidad de colaboración. Puede cotizarse por proyecto, volumen, bolsa de horas o capacidad mensual." },
-      { question: "¿Qué experiencia se puede presentar al cliente final?", answer: "Antes de contratar se comparte experiencia relevante sin revelar información confidencial. Los casos identificables, cifras y marcas solo se usan con autorización escrita." },
-      { question: "¿Trabajas con agencias fuera de Colombia?", answer: "Sí. El trabajo puede realizarse de forma remota con equipos y clientes en distintos países, con alcance y horarios definidos." },
+      { question: "¿Qué es el SEO marca blanca?", answer: "Trabajo SEO que una agencia revende con su propia marca. Yo hago el trabajo técnico y estratégico; tu agencia lo presenta como propio, con tu logo en cada reporte." },
+      { question: "¿Puedes trabajar bajo marca blanca total?", answer: "Sí. El modelo puede ser marca blanca total, soporte interno o participación visible ante el cliente, según lo que acordemos por escrito." },
+      { question: "¿Firmas NDA?", answer: "Sí, antes de recibir cualquier dato o acceso del cliente. Puedo firmar el NDA de tu agencia o proponer uno." },
+      { question: "¿Cuánto cuesta?", answer: "La auditoría técnica de un sitio cuesta USD 750. El bloque de 20 horas, USD 1.000 al mes. El trabajo continuo por sitio para agencias nuevas, USD 500 al mes." },
+      { question: "¿Cómo funciona la garantía?", answer: "Si el entregable no se puede revender a tu cliente tal cual, bajo tu marca, no se cobra. La garantía queda en el alcance escrito que firmamos antes de empezar." },
+      { question: "¿Trabajas con Shopify y WooCommerce?", answer: "Sí, con ambas y con WordPress. Navegación facetada, variantes de producto, estructura de colecciones y categorías, y migraciones entre plataformas son el centro del trabajo." },
+      { question: "¿Haces migraciones de catálogos grandes?", answer: "Sí. He trabajado catálogos de más de 14.000 productos. Para tiendas con cientos de miles de URLs, el brief dimensiona el trabajo: inventario por plantilla, equivalencias por reglas y redirects probados en staging." },
+      { question: "¿Qué pasa cuando termina el contrato?", answer: "Tu agencia conserva todos los entregables, documentos y reportes. Entrego los pendientes y la documentación para que tu equipo siga sin mí." },
+      { question: "¿Haces SEO local o campañas en Google Maps?", answer: "No es mi foco. Me especializo en ecommerce y SEO técnico. Para campañas centradas en Google Maps, te conviene un proveedor de SEO local." },
+      { question: "¿Usas manipulación de CTR u otros atajos?", answer: "No. Nada de clics simulados, interacción falsa ni esquemas de enlaces. Es SEO técnico y de contenido dentro de las directrices de Google." },
+      { question: "¿Trabajas con agencias fuera de Colombia?", answer: "Sí. El trabajo es remoto con agencias y clientes en otros países, incluida España, con alcance y horarios definidos." },
     ],
   },
   audit: {
@@ -127,40 +193,88 @@ const ES: Record<SeoSpecialtyKind, SeoSpecialtyContent> = {
 const EN: Record<SeoSpecialtyKind, SeoSpecialtyContent> = {
   agencies: {
     path: "/en/white-label-seo-for-agencies",
-    eyebrow: "SENIOR SEO PARTNER · WHITE LABEL",
-    title: "The senior SEO capacity your agency needs without adding to payroll.",
+    metaTitle: "White Label SEO Services for Ecommerce & Technical SEO | Ferova",
+    eyebrow: "WHITE LABEL SEO SERVICES · ECOMMERCE & TECHNICAL SEO",
+    title: "White label SEO services for agencies that sell ecommerce and technical SEO.",
     description:
-      "I work with agencies that need audits, architecture, ecommerce and complex migrations resolved under their brand — or as a named specialist in front of their client.",
+      "White label SEO services for agencies: audits, catalogue architecture and platform migrations delivered under your brand, with your logo on every report. Senior technical work, published prices and a written guarantee.",
     problem:
-      "When a project outgrows operational SEO, the risk isn't only falling behind. It's recommending a migration, an architecture or a technical fix without enough depth to defend it when the client pushes back.",
+      "Most white label SEO programs are built for local businesses: maps, citations and reviews. Ecommerce breaks in other places — faceted navigation, thousands of product URLs, duplicate variants, platform migrations. Recommending a fix there without enough depth is how an agency loses a client. That work needs a senior technical profile most agencies don't have on payroll.",
     outcomes: [
-      "Capacity to take on technically demanding projects.",
+      "Capacity to sell and deliver technically demanding ecommerce projects.",
       "Diagnoses and recommendations your team can explain and execute.",
-      "Flexible involvement: white label, internal support, or visible specialist.",
+      "Flexible involvement: fully white label, internal support, or a named specialist.",
+      "Clean technical SEO within Google's guidelines — no simulated clicks or shortcuts.",
     ],
     deliverables: [
-      { title: "Audit and diagnosis", description: "Crawl, indexation, architecture, rendering, structured data and prioritised risks." },
-      { title: "Architecture and strategy", description: "Decisions on categories, facets, internal linking, content and organic growth." },
-      { title: "Migration support", description: "Inventory, URL mapping, redirects, QA and monitoring to protect organic assets." },
-      { title: "Recurring web capacity", description: "Monthly maintenance, fixes and landing pages ready for your agency to hand over." },
+      { title: "Technical audit", description: "Crawl, indexation, rendering, structured data, Core Web Vitals and prioritised risks, delivered as a report with your agency's logo." },
+      { title: "Catalogue architecture", description: "Categories, facets, filters, pagination, product variants and internal linking for stores with thousands of URLs." },
+      { title: "Platform migrations", description: "Inventory, URL mapping, redirects, staging QA and post-launch monitoring for Shopify, WooCommerce and WordPress moves." },
+      { title: "Recurring capacity", description: "A monthly block of senior hours for fixes, reviews and landing pages your agency hands over as its own work." },
     ],
     process: [
-      { title: "Agree the scope", description: "We define role, confidentiality, deliverables, who speaks to the client and how visible I am." },
-      { title: "Evidence-based diagnosis", description: "We work from data, crawls, Search Console and the real technical context." },
-      { title: "Hand over decisions", description: "Your team gets priorities, criteria and support to execute without permanent dependency." },
+      { title: "Brief", time: "day 0", description: "You send the client, the goal and the deadline. We agree role, visibility and deliverables in writing." },
+      { title: "NDA and access", time: "day 1", description: "I sign your NDA before touching any account. You share Search Console, analytics and platform access." },
+      { title: "Technical audit", time: "within 5 days", description: "Crawl, data cross-check and manual review of the templates that carry revenue." },
+      { title: "Report with your logo", time: "same week", description: "Findings with evidence, priority and acceptance criteria, in your agency's branding, ready to present." },
+      { title: "Delivery and support", time: "ongoing", description: "I walk your team through it and support implementation as a monthly block or per site." },
     ],
+    pricing: {
+      kicker: "PRICING",
+      title: "Published white label SEO pricing. No discovery call needed to know the number.",
+      intro: "Three ways to work together. All prices are what your agency pays; you set the resale price to your client.",
+      serviceName: "White label SEO services",
+      plans: [
+        { name: "Technical audit", price: 750, unit: "per site", description: "One-off technical audit of a single site, delivered under your brand with a prioritised action plan." },
+        { name: "20-hour block", price: 1000, unit: "per month", description: "Twenty senior hours a month for audits, architecture, migration work, fixes and reviews across your clients." },
+        { name: "Per site, new agency partners", price: 500, unit: "per month", description: "Ongoing technical SEO for one client site, for agencies starting their first white label project with me." },
+      ],
+      guarantee: "Written guarantee: if a deliverable can't be resold to your client as-is, under your brand, you don't pay for it.",
+      currencyNote: "Prices in US dollars, invoiced in USD.",
+    },
+    proof: {
+      kicker: "RESULTS",
+      title: "What the work has moved, with the source next to each figure.",
+      items: [
+        {
+          label: "Online store · redesign + technical SEO",
+          before: "COP 1.0M",
+          after: "COP 13.3M",
+          metric: "Monthly online sales, January → May 2025",
+          context: "WordPress redesign, plugin cleanup and technical SEO on sitemap, robots.txt and broken URLs. Paid campaigns to WhatsApp also ran, so the growth isn't attributed to SEO alone.",
+        },
+        {
+          label: "Professional services · SEO recovery",
+          before: "153",
+          after: "1,180",
+          metric: "Organic clicks, November 2024 → May 2025",
+          context: "Cleanup of injected malicious links, hosting migration and technical SEO. Impressions went from 4,300 to 22,000 and average position from 23.9 to 10.2 between the same two reports.",
+        },
+      ],
+      note: "Sources: sales records and tracking reports shared by the clients. Clients anonymised; identifiable cases are only published with written authorisation.",
+      cta: { label: "See the full portfolio", href: "https://ferova.com.co/portafolio?lang=en" },
+    },
     faqs: [
+      { question: "What are white label SEO services?", answer: "SEO work an agency resells under its own brand. I do the technical and strategic work; your agency presents it to the client as its own, with your logo on every report." },
       { question: "Can you work fully white label?", answer: "Yes. The arrangement can be fully white label, internal support only, or a named specialist your client meets directly. It is agreed in writing before the project starts." },
-      { question: "What skills can an agency contract?", answer: "Technical SEO, audits, migrations, ecommerce SEO, monthly web maintenance, and landing page design or development." },
-      { question: "How is pricing defined?", answer: "Pricing depends on the skill, the platform, the number of clients or deliverables, the timeline and the collaboration model. It can be quoted per project, by volume, as an hour bank or as monthly capacity." },
-      { question: "What experience can I show my client?", answer: "Relevant experience is shared before contracting without exposing confidential information. Identifiable cases, figures and brands are only used with written authorization." },
-      { question: "Do you work with agencies outside Colombia?", answer: "Yes. Work is remote with teams and clients in other countries, with scope and overlap hours agreed up front." },
+      { question: "Do you sign an NDA?", answer: "Yes, before receiving any client data or account access. I can sign your agency's NDA or provide one." },
+      { question: "What does my client see?", answer: "Only your brand. Reports, documents and presentations carry your agency's logo and voice. I only appear in front of the client if you want me to." },
+      { question: "How much do your white label SEO services cost?", answer: "A technical audit of one site is USD 750. A 20-hour monthly block is USD 1,000. Ongoing work on one site for new agency partners is USD 500 per month." },
+      { question: "How does the guarantee work?", answer: "If a deliverable can't be resold to your client as-is, under your brand, you don't pay for it. The guarantee is part of the written scope we agree before starting." },
+      { question: "Do you handle large catalogue migrations?", answer: "Yes. I've worked with catalogues of more than 14,000 products. For stores with hundreds of thousands of URLs, the brief sizes the work: inventory by template, rule-based URL mapping and redirects tested on staging before launch." },
+      { question: "Do you work with Shopify and WooCommerce?", answer: "Yes, both, as well as WordPress. Faceted navigation, product variants, collection and category structure, and migrations between platforms are the core of the work." },
+      { question: "Do you work US business hours?", answer: "I'm based in Colombia (UTC−5), which overlaps with the US Eastern and Central working day. Meeting times and response windows are agreed in the brief." },
+      { question: "How do we pay?", answer: "Prices are in US dollars and invoices are issued in USD." },
+      { question: "What happens when the contract ends?", answer: "Your agency keeps every deliverable, document and report. I hand over open items and the documentation your team needs to continue without me." },
+      { question: "Do you do local SEO or Google Maps campaigns?", answer: "It isn't my focus. I specialise in ecommerce and technical SEO. For campaigns built around Google Maps rankings, a local SEO provider is a better fit." },
+      { question: "Do you use CTR manipulation or other shortcuts?", answer: "No. No simulated clicks, fake user interaction or link schemes. The work is technical and content SEO within Google's guidelines, so your agency never has to explain a penalty to a client." },
+      { question: "Do you work with agencies outside Colombia?", answer: "Yes. Work is remote with agencies and clients in other countries, with scope and overlap hours agreed up front." },
     ],
     relatedLinks: [
       { label: "White label vs in-house: cost, control and risk", to: "/en/white-label-seo-vs-in-house" },
-      { label: "Outsource SEO services", to: "/en/outsource-seo-services" },
       { label: "Technical SEO audit services", to: "/en/technical-seo-audit-services" },
       { label: "SEO migration services", to: "/en/seo-migration-services" },
+      { label: "About María Fernanda Calderón", to: "/en/about-me" },
     ],
   },
   audit: {

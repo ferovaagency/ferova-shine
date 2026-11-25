@@ -2,7 +2,7 @@ import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
+import { BrowserRouter, Routes, Route, Navigate, useLocation } from "react-router-dom";
 import { StaticRouter } from "react-router-dom/server";
 import ExitIntentPopup from "@/components/ui/exit-intent-popup";
 import SocialProofToasts from "@/components/ui/social-proof-toasts";
@@ -222,17 +222,37 @@ const AppRoutes = ({ hostLang }: { hostLang: "es" | "en" | "pt" }) => (
   </Routes>
 );
 
+/**
+ * Widgets globales en el idioma de la ruta. Con solo `hostLang` salían en
+ * español en las páginas /en/* de seoparaecommerce.co (aviso de cookies,
+ * popup, chat): un bloque en español dentro de una página en inglés. Aquí el
+ * prefijo de la ruta manda y `hostLang` queda como valor por defecto; se
+ * recalcula en cada navegación porque usa useLocation.
+ */
+const GlobalWidgets = ({ hostLang }: { hostLang: "es" | "en" | "pt" }) => {
+  const { pathname } = useLocation();
+  const lang =
+    pathname === "/en" || pathname.startsWith("/en/")
+      ? "en"
+      : pathname === "/pt" || pathname.startsWith("/pt/")
+        ? "pt"
+        : hostLang;
+  return (
+    <ClientOnly>
+      <ExitIntentPopup lang={lang} />
+      <SocialProofToasts lang={lang} />
+      <AiAdvisorChat lang={lang} />
+      <CookieBanner lang={lang} />
+      <ChatWidget lang={lang} />
+    </ClientOnly>
+  );
+};
+
 const AppInner = ({ hostLang }: { hostLang: "es" | "en" | "pt" }) => (
   <>
     <RouteTracker />
     {/* Widgets globales solo client-side — no aparecen en HTML prerender. */}
-    <ClientOnly>
-      <ExitIntentPopup lang={hostLang} />
-      <SocialProofToasts lang={hostLang} />
-      <AiAdvisorChat lang={hostLang} />
-      <CookieBanner lang={hostLang} />
-      <ChatWidget lang={hostLang} />
-    </ClientOnly>
+    <GlobalWidgets hostLang={hostLang} />
     <ScrollToTop />
     <AppRoutes hostLang={hostLang} />
   </>
