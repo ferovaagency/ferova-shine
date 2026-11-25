@@ -190,7 +190,7 @@ const Contacto = ({ lang = 'es' }: Props) => {
                   <div className="w-12 h-12 rounded-xl flex items-center justify-center" style={{ background: 'hsla(45, 86%, 40%, 0.1)' }}>
                     <MapPin className="w-6 h-6 text-gold" />
                   </div>
-                  <div><p className="font-display font-semibold text-foreground">Bogotá, Colombia · Brasil · Estados Unidos</p></div>
+                  <div><p className="font-display font-semibold text-foreground">North Point, Torre 2, Of. 1002</p><p className="text-muted-foreground text-sm">Cra. 7 #158-78, Bogotá · {lang === 'en' ? 'Visits by appointment' : lang === 'pt' ? 'Visitas com agendamento' : 'Visitas con cita previa'}</p></div>
                 </div>
               </div>
             </div>

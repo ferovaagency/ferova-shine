@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useMemo } from "react";
 import { useSearchParams } from "react-router-dom";
-import { Bot, CheckCircle2, LockKeyhole, MessageSquareText } from "lucide-react";
+import { Bot, CheckCircle2, LockKeyhole, MapPin, MessageSquareText } from "lucide-react";
 import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
 import SEO from "@/components/SEO";
@@ -47,6 +47,13 @@ export default function SeoContact() {
             <Step icon={MessageSquareText} title="Describe la necesidad" text="Habilidad, volumen, plataforma, fecha y forma de colaboración." />
             <Step icon={CheckCircle2} title="Fera ordena el brief" text="Te pregunta solo lo necesario para preparar una cotización útil." />
             <Step icon={LockKeyhole} title="Una persona confirma" text="Revisamos el alcance y respondemos con precio y disponibilidad." />
+          </div>
+          <div className="mx-auto mt-8 flex max-w-4xl items-start gap-3 rounded-2xl border border-[#6a4c30]/20 bg-white p-6 px-4 md:px-6">
+            <MapPin className="mt-0.5 h-5 w-5 shrink-0 text-[#9a7410]" />
+            <div>
+              <p className="font-semibold text-[#541014]">Oficina en North Point, Torre 2, Of. 1002</p>
+              <p className="mt-1 text-sm text-slate-600">Cra. 7 #158-78, Bogotá · Visitas con cita previa.</p>
+            </div>
           </div>
           <p className="mx-auto mt-6 max-w-2xl px-4 text-center text-sm text-slate-600">Fera es un sistema de IA y puede equivocarse. No toma decisiones económicas ni reemplaza la revisión humana. No compartas contraseñas ni información sensible.</p>
         </section>

@@ -119,7 +119,11 @@ const Footer = ({ currentLang, lang }: FooterProps) => {
                 <MessagesSquare className="h-4 w-4" /> Slack de Ferova
               </a>
               <div className="flex items-center gap-2">
-                <MapPin className="h-4 w-4 flex-shrink-0" /> Bogotá, Colombia · Brasil · Estados Unidos
+                <MapPin className="h-4 w-4 flex-shrink-0" />
+                <span>
+                  North Point, Torre 2, Of. 1002 · Cra. 7 #158-78, Bogotá
+                  <span className="block text-xs">{locale === 'en' ? 'Visits by appointment' : locale === 'pt' ? 'Visitas com agendamento' : 'Visitas con cita previa'} · Colombia · Brasil · Estados Unidos</span>
+                </span>
               </div>
             </div>
             <div className="mt-4 flex flex-wrap gap-3">
