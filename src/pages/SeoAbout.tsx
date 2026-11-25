@@ -147,6 +147,7 @@ export default function SeoAbout({ lang = "es" }: { lang?: Lang }) {
       name: "Ferova Agency",
       sameAs: DIRECTORIES.map((directory) => directory.url),
     },
+    image: "https://seoparaecommerce.co/brand/maria-fernanda-calderon.webp",
     address: { "@type": "PostalAddress", addressCountry: "CO" },
     sameAs: [LINKEDIN, FOUNDER.ferovaProfile],
     hasCredential: CREDENTIALS.map((credential) => ({
@@ -166,6 +167,7 @@ export default function SeoAbout({ lang = "es" }: { lang?: Lang }) {
         path={t.path}
         lang={lang}
         jsonLd={personLd}
+        image="https://seoparaecommerce.co/brand/maria-fernanda-calderon-og.jpg"
         breadcrumbs={[{ name: t.home, path: lang === "en" ? "/en" : "/" }, { name: t.crumb, path: t.path }]}
       />
       <Header lang={lang} />
@@ -184,6 +186,14 @@ export default function SeoAbout({ lang = "es" }: { lang?: Lang }) {
         <section className="py-20 md:py-28">
           <div className="container mx-auto grid max-w-6xl gap-12 px-4 md:px-6 lg:grid-cols-[.8fr_1.2fr] lg:gap-20">
             <div>
+              <img
+                src="/brand/maria-fernanda-calderon.webp"
+                alt={lang === "en" ? "María Fernanda Calderón, Fractional SEO at Ferova, working on her laptop with her two cats and two dogs" : "María Fernanda Calderón, Fractional SEO en Ferova, trabajando en su portátil con sus dos gatos y sus dos perros"}
+                width={800}
+                height={800}
+                loading="lazy"
+                className="mb-8 aspect-square w-full max-w-sm rounded-2xl object-cover"
+              />
               <p className="seo-kicker">{t.roleKicker}</p>
               <h2 className="mt-4 font-display text-3xl font-bold md:text-5xl">{FOUNDER.name}</h2>
               <p className="mt-3 font-semibold text-[#6a4c30]">{t.role}</p>
