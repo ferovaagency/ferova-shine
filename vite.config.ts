@@ -9,6 +9,7 @@ import { vitePrerenderPlugin } from "vite-prerender-plugin";
 import { PRERENDER_ROUTES } from "./src/config/routes";
 import { validateRoutes } from "./scripts/validate-routes";
 import { generateSitemap } from "./scripts/generate-sitemap";
+import { generateLlms } from "./scripts/generate-llms";
 
 // Polyfills SSR a nivel de proceso Node — el bundle prerender se importa
 // dinámicamente vía `await import()` y comparte globalThis con este proceso.
@@ -54,6 +55,8 @@ const enablePrerender = process.env.PRERENDER !== "0";
  * Plugin SEO de build — corre SOLO en `vite build` (no en dev):
  *  1) Valida el registro central de rutas (rompe el build si hay errores).
  *  2) Regenera public/sitemap.xml desde ese registro (+ contenido dinámico).
+ *  3) Regenera public/llms.txt desde ese registro (rompe el build si una ruta
+ *     indexable no tiene descripción o si una URL redirige).
  *
  * Se hace como plugin (y no como script `tsx` en el package.json) para NO
  * añadir dependencias: este repo usa bun.lockb y una dep nueva en package.json
@@ -71,6 +74,10 @@ function seoBuildPlugin(env: Record<string, string>): Plugin {
         this.error(
           `Registro de rutas inválido (src/config/routes.ts):\n - ${errors.join("\n - ")}`,
         );
+      }
+      const llms = generateLlms();
+      if (llms.errors.length) {
+        this.error(`llms.txt inválido:\n - ${llms.errors.join("\n - ")}`);
       }
       await generateSitemap({
         supabaseUrl: env.VITE_SUPABASE_URL,

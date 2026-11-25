@@ -1,67 +1,78 @@
-# Ferova Agency
+# SEO para Ecommerce by Ferova · María Fernanda Calderón
 
-> Agencia boutique de SEO, web apps de alto rendimiento e IA para ecommerce en Colombia, Latam y EEUU. Entrega en 1 semana. Fundada por María Fer Calderón.
+> María Fernanda Calderón (María Fer Calderón) es Fractional Senior Technical SEO. Trabaja en white label para agencias de marketing, enfocada en ecommerce y SEO técnico: auditorías técnicas, arquitectura de catálogo y migraciones de plataforma, entregadas bajo la marca de la agencia.
 
-Ferova Agency construye webapps modernas con IA integrada para tiendas online, optimiza SEO técnico y de contenido para ecommerce, y ofrece pauta digital en Google, Meta, TikTok y LinkedIn. Operamos en español, inglés y portugués.
+Trabajo directo con María Fer Calderón, especialista independiente con 7 años en SEO y marketing digital. Remoto, con agencias y clientes en varios países. No hace SEO local ni campañas centradas en Google Maps. El sitio está en español (raíz) y en inglés (/en).
 
-## Páginas principales
+## Precios publicados
 
-- [Inicio](/): Propuesta de valor, casos y servicios.
-- [Soluciones](/soluciones): Punto de entrada por problema empresarial (clientes, visibilidad, conversión, automatización, IA, diagnóstico).
-- [Método Ferova](/metodo-ferova): Cómo trabaja Ferova — diagnóstico antes que servicio: entendemos, encontramos la causa, elegimos, implementamos, medimos, aprendemos.
-- [Productos](/productos): Ferova One (sistema operativo con IA: finanzas, CRM y asistente) y Librero IA (librero con IA para lectores: organiza tu lista y recomienda según tu estado), más herramientas gratuitas de visibilidad IA, contratos y propuestas.
-- [Servicios](/servicios): Catálogo completo de servicios.
-- [Precios](/precios): Planes multimoneda (USD, COP, BRL, EUR).
-- [Sobre nosotros](/nosotros): Quiénes somos y nuestra metodología.
-- [Sobre María Fer Calderón](/sobre-maria-fer): Perfil de la fundadora.
-- [Contacto](/contacto): Formulario y canales directos.
+Tres formas de trabajar. Los precios son lo que paga tu agencia; tú defines el precio de reventa a tu cliente.
+
+- Auditoría técnica: USD 750 por sitio. Auditoría técnica de un sitio, entregada bajo tu marca con un plan de acción priorizado.
+- Bloque de 20 horas: USD 1.250 al mes. Veinte horas senior al mes para auditorías, arquitectura, migraciones, correcciones y revisiones entre tus clientes.
+- Por sitio, agencias nuevas: USD 500 al mes. SEO técnico continuo para el sitio de un cliente, para agencias que empiezan su primer proyecto conmigo.
+
+Garantía por escrito: si el entregable no se puede revender a tu cliente tal cual, bajo tu marca, no se cobra. Precios en dólares estadounidenses (USD), facturados en USD.
 
 ## Servicios
 
-- [SEO para Ecommerce](/servicios/seo-ecommerce): Posicionamiento orgánico para tiendas online.
-- [Diseño Web / Web Apps](/servicios/diseno-web): Web apps ultrarrápidas optimizadas para vender.
-- [Consultoría Estratégica](/consultoria-estrategica): Mentoría y asesoría 1a1 para fundadores.
-- [Capacitación IA in-company](/capacitacion-ia): Programas en vivo de IA aplicada para equipos B2B.
-- [Optimización de LinkedIn](/servicios/optimizacion-linkedin): Marca personal en LinkedIn.
-- [Contenido LinkedIn](/servicios/contenido-linkedin): Gestión mensual de contenido B2B.
-- [Descuentos en Herramientas](/servicios/descuentos-herramientas): Acceso a herramientas premium.
+- [SEO para ecommerce](https://seoparaecommerce.co/servicios/seo-ecommerce): Consultoría SEO senior para ecommerce: arquitectura de catálogo, SEO técnico, migraciones, contenido y preparación para AI Search.
+- [Ecommerce SEO (EN)](https://seoparaecommerce.co/en/services/ecommerce-seo): SEO for online stores aimed at Google rankings and at being cited by ChatGPT, Perplexity and AI Overviews, with GEO included.
+- [SEO marca blanca para agencias](https://seoparaecommerce.co/seo-para-agencias): Servicio de SEO marca blanca para agencias: auditorías, arquitectura de catálogos y migraciones entregadas bajo tu marca, con tu logo en cada reporte. Trabajo técnico senior, precios publicados y garantía por escrito.
+- [White label SEO for agencies (EN)](https://seoparaecommerce.co/en/white-label-seo-for-agencies): White label SEO services for agencies: audits, catalogue architecture and platform migrations delivered under your brand, with your logo on every report. Senior technical work, published prices and a written guarantee.
+- [Auditoría SEO técnica](https://seoparaecommerce.co/auditoria-seo-tecnica): Una auditoría técnica profunda para convertir problemas de rastreo, indexación, arquitectura y rendimiento en un plan de decisiones priorizado.
+- [Technical SEO audit services (EN)](https://seoparaecommerce.co/en/technical-seo-audit-services): A deep technical audit that turns crawling, indexation, architecture and performance problems into a prioritised set of decisions.
+- [Migraciones SEO](https://seoparaecommerce.co/migraciones-seo): Planificación, inventario, mapeo de URLs, QA y monitoreo para reducir el riesgo SEO antes, durante y después de una migración.
+- [SEO migration services (EN)](https://seoparaecommerce.co/en/seo-migration-services): Planning, inventory, URL mapping, QA and monitoring to reduce SEO risk before, during and after a migration.
 
-## GEO (Generative Engine Optimization)
+## Comparativas (inglés)
 
-- [¿Qué es GEO?](/que-es-geo): Definición de Generative Engine Optimization y sus 4 pilares.
-- [GEO vs SEO](/geo-vs-seo): Tabla comparativa de objetivo, canal, señales y métricas.
-- [GEO para Shopify](/geo-para-shopify): Schema Product/Offer y feeds para tiendas Shopify.
-- [GEO para WooCommerce](/geo-para-woocommerce): Consolidación de schema para tiendas WordPress/WooCommerce.
-- [GEO para VTEX](/geo-para-vtex): GEO enterprise para operaciones VTEX en LATAM.
-- [Estudio de Visibilidad IA en Ecommerce Hispano 2026](/estudio-visibilidad-ia-ecommerce-hispano-2026): Metodología abierta y resultados públicos.
-- [Calculadora de Visibilidad IA](/herramientas/calculadora-visibilidad-ia): Diagnóstico rápido de citabilidad de tu tienda.
+- [Map Ranking alternative for ecommerce white label SEO](https://seoparaecommerce.co/en/map-ranking-alternative): Map Ranking is built for local SEO and Google Maps. If your agency's clients are online stores, compare scope, prices and fit with an ecommerce and technical SEO white label partner.
+- [White label SEO vs in-house SEO](https://seoparaecommerce.co/en/white-label-seo-vs-in-house): Comparing cost, control and technical risk: what a senior in-house SEO hire really costs against wholesale white-label production, and how to scope either one.
 
-## Laboratorio Ferova (herramientas gratuitas)
+## Sobre María Fernanda Calderón
 
-- [Laboratorio Ferova](/recursos/herramientas): Hub de calculadoras y diagnósticos gratuitos.
-- [Calculadora de valor por hora para freelancers](/recursos/herramientas/calculadora-valor-hora-freelancer): Cuánto cobrar por hora según gastos, impuestos, vacaciones y margen.
+- [Sobre María Fer Calderón](https://seoparaecommerce.co/sobre-nosotros): Perfil de María Fernanda Calderón, Fractional Senior Technical SEO con 7 años en SEO y marketing digital: especialidades, principios de trabajo, formación y certificaciones.
+- [About María Fer Calderón (EN)](https://seoparaecommerce.co/en/about-me): Profile of María Fernanda Calderón, Fractional Senior Technical SEO with 7 years in SEO and digital marketing: specialties, working principles, education and certifications.
+- [Portafolio](https://ferova.com.co/portafolio): Proyectos seleccionados de María Fer Calderón, publicados en ferova.com.co.
+- [LinkedIn](https://www.linkedin.com/in/maria-fer-calderon/): Perfil profesional, credenciales y recomendaciones.
 
-## Contenido
+## Búsqueda con IA (GEO)
 
-- [Blog de Ecommerce](/blog): Guías sobre SEO, web apps, IA y conversión.
-- [Casos de éxito](/casos-de-exito): Resultados reales de clientes.
-- [Recursos gratuitos](/recursos): Plantillas, guías y herramientas.
-- [Newsletter Pro](/newsletter-pro): Newsletter premium para fundadores de ecommerce.
+- [¿Qué es GEO?](https://seoparaecommerce.co/que-es-geo): Definición de Generative Engine Optimization: optimizar una marca para que la citen ChatGPT, Perplexity, Gemini y Claude; pilares y diferencias con el SEO.
+- [What is GEO? (EN)](https://seoparaecommerce.co/en/what-is-geo): Definition of Generative Engine Optimization: optimizing a brand to be cited by ChatGPT, Perplexity, Gemini and Claude; pillars and how it differs from SEO.
+- [GEO vs SEO](https://seoparaecommerce.co/geo-vs-seo): Comparación de objetivo, canal, señales y métricas de GEO y SEO para decidir cuál necesita un ecommerce.
+- [GEO vs SEO (EN)](https://seoparaecommerce.co/en/geo-vs-seo): Comparison of goal, channel, signals and metrics for GEO and SEO, to decide which an ecommerce needs.
+- [GEO para Shopify](https://seoparaecommerce.co/geo-para-shopify): GEO para tiendas Shopify: metafields, schema Product/Offer y feeds estructurados para que los LLM citen el catálogo.
+- [GEO for Shopify (EN)](https://seoparaecommerce.co/en/geo-for-shopify): GEO for Shopify stores: metafields, Product/Offer schema and structured feeds so LLMs can cite the catalog.
+- [GEO para WooCommerce](https://seoparaecommerce.co/geo-para-woocommerce): GEO para tiendas WooCommerce/WordPress: schema sin conflictos entre plugins, feeds de producto y contenido citable por IA.
+- [GEO for WooCommerce (EN)](https://seoparaecommerce.co/en/geo-for-woocommerce): GEO for WooCommerce/WordPress stores: schema without plugin conflicts, product feeds and AI-citable content.
+- [GEO para VTEX](https://seoparaecommerce.co/geo-para-vtex): GEO para operaciones VTEX en LATAM: catálogos grandes, VTEX IO, arquitectura headless y datos estructurados a escala.
+- [GEO for VTEX (EN)](https://seoparaecommerce.co/en/geo-for-vtex): GEO for VTEX operations in LATAM: large catalogs, VTEX IO, headless architecture and structured data at scale.
+- [Estudio de visibilidad IA en ecommerce hispano 2026](https://seoparaecommerce.co/estudio-visibilidad-ia-ecommerce-hispano-2026): Metodología abierta para medir si ChatGPT, Perplexity, Gemini y Claude citan a tiendas online hispanohablantes, con consultas no branded por categoría.
+- [AI visibility study of Spanish-speaking ecommerce 2026 (EN)](https://seoparaecommerce.co/en/ai-visibility-study-hispanic-ecommerce-2026): Open methodology to measure whether ChatGPT, Perplexity, Gemini and Claude cite Spanish-speaking online stores, using non-branded queries by category.
+- [Evaluador de preparación para AI Search](https://seoparaecommerce.co/herramientas/calculadora-visibilidad-ia): Autoevaluación gratuita de las bases técnicas, de contenido y de autoridad de un ecommerce para AI Search. Resultado orientativo; no mide menciones reales.
+- [AI visibility calculator (EN)](https://seoparaecommerce.co/en/tools/ai-visibility-calculator): Free questionnaire that estimates how citable an online store is for ChatGPT, Perplexity and Gemini.
+- [Evaluador de preparación para AI Search (recursos)](https://seoparaecommerce.co/recursos/herramientas/evaluador-preparacion-ai-search): La misma autoevaluación de preparación para AI Search, enlazada desde la sección de recursos.
 
-## English
+## Contenido, casos y contacto
 
-- [Home (EN)](https://seoparaecommerce.co/en): English version of the site.
-- [Services (EN)](https://seoparaecommerce.co/en/services): Service catalog in English.
-- [Pricing (EN)](https://seoparaecommerce.co/en/pricing): Multi-currency pricing.
-
-## Português
-
-- [Início (PT)](/pt): Versão em português.
-- [Serviços (PT)](/pt/servicos): Catálogo de serviços.
-- [Preços (PT)](/pt/precos): Planos em BRL.
+- [Inicio](https://seoparaecommerce.co/): Criterio técnico, implementación y entregas documentadas para agencias. Trabaja con María Fer por tarea, horas o capacidad mensual.
+- [Home (EN)](https://seoparaecommerce.co/en): Technical judgement, implementation and documented deliverables for agencies. Work with María Fer by task, by hours, or as monthly capacity. White label available.
+- [Experiencia con agencias](https://seoparaecommerce.co/casos-de-exito): Experiencia white label en SEO técnico, mantenimiento web y landing pages por tarea, bolsa de horas o capacidad mensual para agencias.
+- [Case studies (EN)](https://seoparaecommerce.co/en/case-studies): Client case studies with the work done and its results.
+- [Contacto](https://seoparaecommerce.co/contacto): Formulario para describir la habilidad, el volumen y la fecha que necesita la agencia, y recibir alcance, precio y disponibilidad.
+- [Contact (EN)](https://seoparaecommerce.co/en/contact): Contact form and direct channels.
+- [Blog](https://seoparaecommerce.co/blog): Análisis y guías sobre SEO técnico, ecommerce, trabajo con agencias, migraciones y búsqueda con IA.
+- [Blog (EN)](https://seoparaecommerce.co/en/blog): Articles on SEO, ecommerce and AI search in English.
+- [Recursos](https://seoparaecommerce.co/recursos): Guías y herramientas sobre SEO técnico, ecommerce, trabajo white label, migraciones y búsqueda con IA.
+- [Resources (EN)](https://seoparaecommerce.co/en/resources): Guides and tools on technical SEO, ecommerce, white-label work, migrations and AI search.
 
 ## Optional
 
-- [Política de Privacidad](/privacidad)
-- [Cookies](/cookies)
-- [Términos](/terminos)
+- [Términos](https://seoparaecommerce.co/terminos)
+- [Terms (EN)](https://seoparaecommerce.co/en/terms)
+- [Política de privacidad](https://seoparaecommerce.co/privacidad)
+- [Privacy policy (EN)](https://seoparaecommerce.co/en/privacy)
+- [Cookies](https://seoparaecommerce.co/cookies)
+- [Cookies (EN)](https://seoparaecommerce.co/en/cookies)
