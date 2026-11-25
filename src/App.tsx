@@ -5,7 +5,6 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route, Navigate, useLocation } from "react-router-dom";
 import { StaticRouter } from "react-router-dom/server";
 import ExitIntentPopup from "@/components/ui/exit-intent-popup";
-import SocialProofToasts from "@/components/ui/social-proof-toasts";
 import { lazy, Suspense } from "react";
 // Lazy: react-markdown (dependencia transitiva) toca `document` en tiempo de
 // import, lo que romperia el SSG.
@@ -245,7 +244,6 @@ const GlobalWidgets = ({ hostLang }: { hostLang: "es" | "en" | "pt" }) => {
   return (
     <ClientOnly>
       <ExitIntentPopup lang={lang} />
-      <SocialProofToasts lang={lang} />
       <AiAdvisorChat lang={lang} />
       <CookieBanner lang={lang} />
       <ChatWidget lang={lang} />
