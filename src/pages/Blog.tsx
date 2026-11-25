@@ -7,7 +7,7 @@ import ReadingProgress from '@/components/ui/reading-progress';
 import { SkeletonBlogCard } from '@/components/ui/skeleton-card';
 import { Clock, ArrowRight, User, Search } from 'lucide-react';
 import { Input } from '@/components/ui/input';
-import { supabase } from '@/integrations/supabase/client';
+import { getSupabase } from '@/integrations/supabase/lazy';
 import SEO from '@/components/SEO';
 
 interface Props { lang?: 'es' | 'en' | 'pt'; }
@@ -48,6 +48,7 @@ const Blog = ({ lang = 'es' }: Props) => {
   useEffect(() => {
     const fetchPosts = async () => {
       try {
+        const supabase = await getSupabase();
         const { data } = await supabase
           .from('blog_posts')
           .select('slug, title, excerpt, author, category, content, created_at, published_at')

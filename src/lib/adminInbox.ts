@@ -1,4 +1,4 @@
-import { supabase } from "@/integrations/supabase/client";
+import { getSupabase } from "@/integrations/supabase/lazy";
 
 /**
  * Registro en la bandeja unificada del admin (tabla `admin_inbox`).
@@ -35,6 +35,7 @@ const clean = (v?: string) => {
 
 export async function logLead(input: LogLeadInput): Promise<void> {
   try {
+    const supabase = await getSupabase();
     await (supabase as any).from("admin_inbox").insert({
       source: input.source,
       source_id: clean(input.source_id),

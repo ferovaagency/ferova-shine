@@ -7,7 +7,8 @@ import { casesData } from './CasosDeExito';
 import { AlertTriangle, ArrowLeft, MessageCircle } from 'lucide-react';
 import { AnimatedSection, StaggerContainer, StaggerItem, PageTransition } from '@/components/ui/motion';
 import { motion } from 'framer-motion';
-import { caseCms, type CaseResultHighlight } from '@/integrations/supabase/cms-types';
+import type { CaseResultHighlight } from '@/integrations/supabase/cms-types';
+import { getCaseCms } from '@/integrations/supabase/lazy';
 
 interface Props { lang?: 'es' | 'en' | 'pt'; }
 
@@ -22,6 +23,7 @@ const CasoDetalle = ({ lang = 'es' }: Props) => {
   useEffect(() => {
     if (lang !== 'es' || !id) return;
     void (async () => {
+      const caseCms = await getCaseCms();
       const { data } = await caseCms.from('case_studies').select('slug,client_public_name,sector,country,summary,challenge,diagnosis,intervention,learnings,limitations,result_highlights').eq('slug', id).eq('status', 'published').maybeSingle();
       setDynamicCase(data as typeof dynamicCase);
       setCmsChecked(true);

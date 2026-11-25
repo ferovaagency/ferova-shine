@@ -4,7 +4,7 @@ import Header from '@/components/layout/Header';
 import Footer from '@/components/layout/Footer';
 import AdBanner from '@/components/ui/ad-banner';
 import { ArrowLeft, Clock, User, MessageCircle, Loader2 } from 'lucide-react';
-import { supabase } from '@/integrations/supabase/client';
+import { getSupabase } from '@/integrations/supabase/lazy';
 import { useAnalytics } from '@/hooks/useAnalytics';
 import SEO from '@/components/SEO';
 import { getPrerenderPost } from '@/lib/prerender-store';
@@ -133,6 +133,7 @@ const BlogPost = ({ lang = 'es' }: Props) => {
         // y las traducciones viven en columnas _en / _pt de esa misma fila. El
         // filtro anterior (`language='en'`) no encontraba nada nunca, así que
         // /en/blog/:slug mostraba "Article not found" al montar React.
+        const supabase = await getSupabase();
         const { data, error } = await supabase
           .from('blog_posts')
           .select(`slug, language, author, category, created_at, ${BLOG_I18N_COLUMNS}`)

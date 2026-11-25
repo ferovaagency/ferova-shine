@@ -10,7 +10,8 @@ import Footer from "@/components/layout/Footer";
 import SEO from "@/components/SEO";
 import AgencyCapacity3D from "@/components/visuals/AgencyCapacity3D";
 import deliveryVisual from "@/assets/agency-delivery-services-3d.webp";
-import { caseCms, type CaseResultHighlight } from "@/integrations/supabase/cms-types";
+import type { CaseResultHighlight } from "@/integrations/supabase/cms-types";
+import { getCaseCms } from "@/integrations/supabase/lazy";
 
 type PublishedCase = { id: string; slug: string; client_public_name: string | null; sector: string; country: string | null; summary: string; result_highlights: CaseResultHighlight[] };
 
@@ -43,7 +44,7 @@ const cases = [
 
 export default function SeoCases() {
   const [publishedCases, setPublishedCases] = useState<PublishedCase[]>([]);
-  useEffect(() => { void (async () => { const { data } = await caseCms.from("case_studies").select("id,slug,client_public_name,sector,country,summary,result_highlights").eq("status", "published").order("published_at", { ascending: false }); setPublishedCases((data ?? []) as PublishedCase[]); })(); }, []);
+  useEffect(() => { void (async () => { const caseCms = await getCaseCms(); const { data } = await caseCms.from("case_studies").select("id,slug,client_public_name,sector,country,summary,result_highlights").eq("status", "published").order("published_at", { ascending: false }); setPublishedCases((data ?? []) as PublishedCase[]); })(); }, []);
   const itemList = {
     "@context": "https://schema.org",
     "@type": "ItemList",
