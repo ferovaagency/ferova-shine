@@ -6,13 +6,22 @@ import { BrowserRouter, Routes, Route, Navigate, useLocation } from "react-route
 import { StaticRouter } from "react-router-dom/server";
 import ExitIntentPopup from "@/components/ui/exit-intent-popup";
 import SocialProofToasts from "@/components/ui/social-proof-toasts";
-import { lazy } from "react";
+import { lazy, Suspense } from "react";
 // Lazy: react-markdown (dependencia transitiva) toca `document` en tiempo de
 // import, lo que romperia el SSG.
 const AiAdvisorChat = lazy(() => import("@/components/ui/ai-advisor-chat"));
+// Panel de administración bajo demanda: no se prerenderiza ni lo ve nadie fuera
+// del equipo, así que no tiene por qué ir en el JavaScript inicial del sitio.
+const AdminGuard = lazy(() => import("./components/admin/AdminGuard"));
+const AdminBlogList = lazy(() => import("./pages/admin/AdminBlogList"));
+const AdminBlogEditor = lazy(() => import("./pages/admin/AdminBlogEditor"));
+const AdminDashboard = lazy(() => import("./pages/admin/AdminDashboard"));
+const NewsletterAdminPage = lazy(() => import("./pages/NewsletterAdminPage"));
+const AdminLeads = lazy(() => import("./pages/admin/AdminLeads"));
+const AdminCases = lazy(() => import("./pages/admin/AdminCases"));
+const AdminCaseEditor = lazy(() => import("./pages/admin/AdminCaseEditor"));
 import { getLangFromHostname } from "@/hooks/use-lang-from-host";
 import ScrollToTop from "./components/ScrollToTop";
-import AdminGuard from "./components/admin/AdminGuard";
 import CookieBanner from "@/components/ui/cookie-banner";
 import ChatWidget from "@/components/ui/chat-widget";
 import { useScrollTracking } from "@/hooks/useScrollTracking";
@@ -32,11 +41,7 @@ import Contacto from "./pages/Contacto";
 import Blog from "./pages/Blog";
 import BlogPost from "./pages/BlogPost";
 import SobreNosotros from "./pages/SobreNosotros";
-import AdminBlogList from "./pages/admin/AdminBlogList";
-import AdminBlogEditor from "./pages/admin/AdminBlogEditor";
-import AdminDashboard from "./pages/admin/AdminDashboard";
 import VCard from "./pages/VCard";
-import NewsletterAdminPage from "./pages/NewsletterAdminPage";
 import Privacidad from "./pages/Privacidad";
 import Cookies from "./pages/Cookies";
 import QueEsGeo from "./pages/QueEsGeo";
@@ -46,11 +51,9 @@ import GeoParaWooCommerce from "./pages/GeoParaWooCommerce";
 import GeoParaVtex from "./pages/GeoParaVtex";
 import EstudioVisibilidadIA from "./pages/EstudioVisibilidadIA";
 import CalculadoraVisibilidadIA from "./pages/CalculadoraVisibilidadIA";
-import AdminLeads from "./pages/admin/AdminLeads";
-import AdminCases from "./pages/admin/AdminCases";
-import AdminCaseEditor from "./pages/admin/AdminCaseEditor";
 import SeoSpecialtyPage from "./pages/SeoSpecialtyPage";
 import PositioningPage from "./pages/PositioningPage";
+import BestProvidersPage from "./pages/BestProvidersPage";
 import WhiteLabelVsInHouse from "./pages/WhiteLabelVsInHouse";
 import SeoAbout from "./pages/SeoAbout";
 import SeoEcommerceEs from "./pages/SeoEcommerceEs";
@@ -105,6 +108,7 @@ const AppRoutes = ({ hostLang }: { hostLang: "es" | "en" | "pt" }) => (
     {/* Páginas de posicionamiento — ver src/content/positioning.ts */}
     <Route path="/en/outsource-seo-services" element={<PositioningPage kind="outsource-seo-services" />} />
     <Route path="/en/map-ranking-alternative" element={<PositioningPage kind="map-ranking-alternative" />} />
+    <Route path="/en/best-white-label-seo-providers-for-ecommerce" element={<BestProvidersPage />} />
     <Route path="/en/white-label-seo-vs-in-house" element={<WhiteLabelVsInHouse />} />
     <Route path="/services/ecommerce-seo" element={<SeoEcommerce lang={hostLang} />} />
     <Route path="/services/web-design" element={<DiseneoWeb lang={hostLang} />} />
@@ -123,15 +127,15 @@ const AppRoutes = ({ hostLang }: { hostLang: "es" | "en" | "pt" }) => (
     <Route path="/blog" element={<SeoBlog />} />
     <Route path="/blog/:slug" element={<BlogPost lang={hostLang} />} />
     {/* Panel admin unificado (Ferova Admin). */}
-    <Route path="/admin" element={<AdminGuard><AdminDashboard /></AdminGuard>} />
-    <Route path="/admin/leads" element={<AdminGuard><AdminLeads /></AdminGuard>} />
-    <Route path="/admin/casos" element={<AdminGuard><AdminCases /></AdminGuard>} />
-    <Route path="/admin/casos/nuevo" element={<AdminGuard><AdminCaseEditor /></AdminGuard>} />
-    <Route path="/admin/casos/:id/editar" element={<AdminGuard><AdminCaseEditor /></AdminGuard>} />
-    <Route path="/admin/blog" element={<AdminGuard><AdminBlogList /></AdminGuard>} />
-    <Route path="/admin/blog/nuevo" element={<AdminGuard><AdminBlogEditor /></AdminGuard>} />
-    <Route path="/admin/blog/:id/editar" element={<AdminGuard><AdminBlogEditor /></AdminGuard>} />
-    <Route path="/admin/newsletter" element={<AdminGuard><NewsletterAdminPage /></AdminGuard>} />
+    <Route path="/admin" element={<Suspense fallback={null}><AdminGuard><AdminDashboard /></AdminGuard></Suspense>} />
+    <Route path="/admin/leads" element={<Suspense fallback={null}><AdminGuard><AdminLeads /></AdminGuard></Suspense>} />
+    <Route path="/admin/casos" element={<Suspense fallback={null}><AdminGuard><AdminCases /></AdminGuard></Suspense>} />
+    <Route path="/admin/casos/nuevo" element={<Suspense fallback={null}><AdminGuard><AdminCaseEditor /></AdminGuard></Suspense>} />
+    <Route path="/admin/casos/:id/editar" element={<Suspense fallback={null}><AdminGuard><AdminCaseEditor /></AdminGuard></Suspense>} />
+    <Route path="/admin/blog" element={<Suspense fallback={null}><AdminGuard><AdminBlogList /></AdminGuard></Suspense>} />
+    <Route path="/admin/blog/nuevo" element={<Suspense fallback={null}><AdminGuard><AdminBlogEditor /></AdminGuard></Suspense>} />
+    <Route path="/admin/blog/:id/editar" element={<Suspense fallback={null}><AdminGuard><AdminBlogEditor /></AdminGuard></Suspense>} />
+    <Route path="/admin/newsletter" element={<Suspense fallback={null}><AdminGuard><NewsletterAdminPage /></AdminGuard></Suspense>} />
     <Route path="/recursos" element={<SeoResources lang="es" />} />
     <Route path="/resources" element={<SeoResources lang="en" />} />
     <Route path="/sobre-nosotros" element={<SeoAbout lang="es" />} />

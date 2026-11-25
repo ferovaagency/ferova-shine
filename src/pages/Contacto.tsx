@@ -3,7 +3,7 @@ import Header from '@/components/layout/Header';
 import Footer from '@/components/layout/Footer';
 import { Mail, MessageCircle, MapPin, Send, CheckCircle2 } from 'lucide-react';
 import SEO from '@/components/SEO';
-import { supabase } from '@/integrations/supabase/client';
+import { getSupabase } from '@/integrations/supabase/lazy';
 import { trackEvent } from '@/lib/analytics';
 import { logLead } from '@/lib/adminInbox';
 
@@ -84,6 +84,7 @@ const Contacto = ({ lang = 'es' }: Props) => {
 
     // Captura del lead en Brevo con atributos seguros (LANG existe en la cuenta).
     try {
+      const supabase = await getSupabase();
       await supabase.functions.invoke('brevo-sync', {
         body: { email: formData.email.trim(), name: formData.name.trim(), source: 'contact_form', attributes: { LANG: lang } },
       });

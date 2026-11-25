@@ -30,6 +30,7 @@ import { SEO_SPECIALTIES } from "../src/content/seoSpecialties";
 import { POSITIONING } from "../src/content/positioning";
 import { PERSONAL_HOME } from "../src/content/personalHome";
 import { WL_SEO } from "../src/content/whiteLabelVsInHouse";
+import { BEST_PROVIDERS } from "../src/content/bestProviders";
 import { FOUNDER } from "../src/data/founder";
 
 type Section = "servicios" | "comparativas" | "sobre" | "geo" | "contenido" | "legal";
@@ -89,6 +90,11 @@ const ENTRIES: Record<string, Entry> = {
     section: "comparativas",
     title: { en: "Map Ranking alternative for ecommerce white label SEO" },
     desc: { en: POSITIONING["map-ranking-alternative"].metaDescription },
+  },
+  "best-white-label-seo-providers": {
+    section: "comparativas",
+    title: { en: "Best white label SEO providers for ecommerce" },
+    desc: { en: BEST_PROVIDERS.metaDescription },
   },
   "white-label-vs-in-house": {
     section: "comparativas",
