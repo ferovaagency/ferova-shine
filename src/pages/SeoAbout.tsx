@@ -11,8 +11,8 @@ const LINKEDIN = FOUNDER.linkedin;
 const COPY = {
   es: {
     path: "/sobre-nosotros",
-    title: "Sobre María Fer Calderón | SEO senior freelance para agencias",
-    desc: "El criterio detrás de SEO para Ecommerce by Ferova: SEO técnico senior, decisiones trazables y acompañamiento directo para agencias y ecommerce.",
+    title: "María Fernanda Calderón, Fractional SEO | Ferova",
+    desc: "María Fernanda Calderón, Fractional SEO en Ferova: SEO técnico senior y white label para agencias y ecommerce, con decisiones trazables y trato directo.",
     home: "Inicio", crumb: "Sobre mí",
     eyebrow: "Sobre mí",
     h1: "Criterio senior para decisiones SEO que no admiten improvisación.",
@@ -47,7 +47,7 @@ const COPY = {
     languages: "Español nativo · Inglés B1",
     resultsTitle: "Algunos resultados",
     results: [
-      "Un ecommerce de mascotas pasó de ~$3M a más de $10M mensuales tras rediseño + SEO.",
+      "Un ecommerce de mascotas pasó de ~COP 3 M a más de COP 10 M en ventas mensuales tras rediseño + SEO.",
       "Sitios que llegaron a 10–15 llamadas o mensajes diarios desde Google.",
       "Catálogos de más de 14.000 productos.",
     ],
@@ -70,8 +70,8 @@ const COPY = {
   },
   en: {
     path: "/en/about-me",
-    title: "About María Fer Calderón | Senior freelance SEO for agencies",
-    desc: "The judgement behind SEO para Ecommerce by Ferova: senior technical SEO, traceable decisions and direct collaboration with agencies and ecommerce teams.",
+    title: "María Fernanda Calderón, Fractional SEO | Ferova",
+    desc: "María Fernanda Calderón, Fractional SEO at Ferova: senior technical and white label SEO for agencies and ecommerce, with traceable decisions and direct collaboration.",
     home: "Home", crumb: "About me",
     eyebrow: "About me",
     h1: "Senior judgement for SEO decisions that cannot be improvised.",
@@ -106,7 +106,7 @@ const COPY = {
     languages: "Spanish (native) · English B1",
     resultsTitle: "Some results",
     results: [
-      "A pet ecommerce store grew from ~$3M to over $10M per month after a redesign + SEO.",
+      "A pet ecommerce store grew from ~COP 3M to over COP 10M in monthly sales after a redesign + SEO.",
       "Sites that reached 10–15 calls or messages a day from Google.",
       "Catalogues of more than 14,000 products.",
     ],
