@@ -35,8 +35,9 @@ export default function PositioningPage({ kind }: { kind: PositioningKind }) {
   const personLd: Record<string, unknown> = {
     "@context": "https://schema.org",
     "@type": "Person",
-    name: "María Fernanda Cardona",
-    jobTitle: "Senior SEO Consultant",
+    name: "María Fernanda Calderón",
+    jobTitle: "Fractional SEO",
+    worksFor: { "@type": "Organization", name: "Ferova" },
     address: {
       "@type": "PostalAddress",
       addressLocality: "Bogotá",
@@ -53,7 +54,7 @@ export default function PositioningPage({ kind }: { kind: PositioningKind }) {
     description: c.metaDescription,
     inLanguage: c.lang,
     mainEntityOfPage: `${SITE_ORIGIN}${c.path}`,
-    author: { "@type": "Person", name: "María Fernanda Cardona" },
+    author: { "@type": "Person", name: "María Fernanda Calderón" },
   };
 
   const showRates = c.marketRates.rows.length > 0;

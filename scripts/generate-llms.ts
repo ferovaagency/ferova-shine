@@ -37,7 +37,7 @@ type Section = "servicios" | "comparativas" | "sobre" | "geo" | "contenido" | "l
 const SECTION_TITLES: Record<Section, string> = {
   servicios: "Servicios",
   comparativas: "Comparativas (inglés)",
-  sobre: "Sobre María Fernanda Calderón",
+  sobre: "Sobre María Fernanda y Ferova",
   geo: "Búsqueda con IA (GEO)",
   contenido: "Contenido, casos y contacto",
   legal: "Optional",
@@ -97,10 +97,10 @@ const ENTRIES: Record<string, Entry> = {
   },
   "sobre-nosotros-seo": {
     section: "sobre",
-    title: { es: "Sobre María Fer Calderón", en: "About María Fer Calderón (EN)" },
+    title: { es: "María Fernanda Calderón, Fractional SEO", en: "María Fernanda Calderón, Fractional SEO (EN)" },
     desc: {
-      es: `Perfil de María Fernanda Calderón, Fractional Senior Technical SEO con ${FOUNDER.yearsExperience} años en SEO y marketing digital: especialidades, principios de trabajo, formación y certificaciones.`,
-      en: `Profile of María Fernanda Calderón, Fractional Senior Technical SEO with ${FOUNDER.yearsExperience} years in SEO and digital marketing: specialties, working principles, education and certifications.`,
+      es: `Perfil de María Fernanda Calderón, Fractional SEO en Ferova, con ${FOUNDER.yearsExperience} años en SEO y marketing digital: especialidades, principios de trabajo, formación y certificaciones.`,
+      en: `Profile of María Fernanda Calderón, Fractional SEO at Ferova, with ${FOUNDER.yearsExperience} years in SEO and digital marketing: specialties, working principles, education and certifications.`,
     },
   },
   "que-es-geo": {
@@ -217,6 +217,12 @@ const EXTERNAL_LINKS: { section: Section; title: string; url: string; desc: stri
     url: FOUNDER.linkedin,
     desc: "Perfil profesional, credenciales y recomendaciones.",
   },
+  {
+    section: "sobre",
+    title: "Ferova",
+    url: "https://ferova.com.co",
+    desc: "Software, SaaS y automatizaciones a la medida con IA y low-code.",
+  },
 ];
 
 /** "1250" → "1.250" (separador de miles en español), sin depender de ICU. */
@@ -230,11 +236,11 @@ function header(): string {
   const priceLines = plans.map((p) => `- ${p.name}: ${formatUsd(p.price)} ${p.unit}. ${p.description}`);
 
   return [
-    `# SEO para Ecommerce by Ferova · ${FOUNDER.name}`,
+    `# Ferova · ${FOUNDER.name}, Fractional SEO`,
     "",
-    `> ${FOUNDER.name} (${FOUNDER.alternateName}) es Fractional Senior Technical SEO. Trabaja en white label para agencias de marketing, enfocada en ecommerce y SEO técnico: auditorías técnicas, arquitectura de catálogo y migraciones de plataforma, entregadas bajo la marca de la agencia.`,
+    `> En Ferova, ${FOUNDER.name} (${FOUNDER.alternateName}) trabaja como Fractional SEO: SEO técnico senior y SEO marca blanca (white label) para agencias de marketing, enfocado en ecommerce. Auditorías técnicas, arquitectura de catálogo, navegación facetada y migraciones de plataforma, entregadas bajo la marca de la agencia.`,
     "",
-    `Trabajo directo con ${FOUNDER.alternateName}, especialista independiente con ${FOUNDER.yearsExperience} años en SEO y marketing digital. Remoto, con agencias y clientes en varios países. No hace SEO local ni campañas centradas en Google Maps. El sitio está en español (raíz) y en inglés (/en).`,
+    `Trato directo con ${FOUNDER.alternateName}, que suma ${FOUNDER.yearsExperience} años en SEO y marketing digital. Trabajo remoto desde Colombia, con agencias y clientes en varios países. No hace SEO local ni campañas centradas en Google Maps. El sitio está en español (raíz) y en inglés (/en).`,
     "",
     "## Precios publicados",
     "",

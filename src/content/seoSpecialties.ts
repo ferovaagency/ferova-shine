@@ -46,7 +46,7 @@ const ES: Record<SeoSpecialtyKind, SeoSpecialtyContent> = {
     eyebrow: "SEO MARCA BLANCA · ECOMMERCE Y SEO TÉCNICO",
     title: "SEO marca blanca para agencias que venden ecommerce y SEO técnico.",
     description:
-      "Servicio de SEO marca blanca para agencias: auditorías, arquitectura de catálogos y migraciones entregadas bajo tu marca, con tu logo en cada reporte. Trabajo técnico senior, precios publicados y garantía por escrito.",
+      "Servicio de SEO marca blanca para agencias: auditorías, arquitectura de catálogos y migraciones entregadas bajo tu marca, con tu logo en cada reporte. Trabajo técnico senior de María Fernanda Calderón, Fractional SEO en Ferova, con precios publicados y garantía por escrito.",
     problem:
       "La mayoría de los programas de SEO marca blanca están pensados para negocios locales: mapas, citaciones y reseñas. El ecommerce se rompe en otros lugares: navegación facetada, miles de URLs de producto, variantes duplicadas y migraciones de plataforma. Recomendar ahí sin suficiente profundidad es como una agencia pierde un cliente.",
     outcomes: [
@@ -71,7 +71,7 @@ const ES: Record<SeoSpecialtyKind, SeoSpecialtyContent> = {
     pricing: {
       kicker: "PRECIOS",
       title: "Precios de SEO marca blanca publicados. Sin llamada previa para conocer la cifra.",
-      intro: "Tres formas de trabajar. Los precios son lo que paga tu agencia; tú defines el precio de reventa a tu cliente.",
+      intro: "Tres formas de trabajar con Ferova. Sin contratos largos ni cuota de entrada. Los precios son lo que paga tu agencia; tú defines el precio de reventa a tu cliente.",
       serviceName: "SEO marca blanca para agencias",
       plans: [
         { name: "Auditoría técnica", price: 750, unit: "por sitio", description: "Auditoría técnica de un sitio, entregada bajo tu marca con un plan de acción priorizado." },
@@ -134,6 +134,7 @@ const ES: Record<SeoSpecialtyKind, SeoSpecialtyContent> = {
       { question: "¿Firmas NDA?", answer: "Sí, antes de recibir cualquier dato o acceso del cliente. Puedo firmar el NDA de tu agencia o proponer uno." },
       { question: "¿Mi equipo puede revisar los entregables antes que el cliente?", answer: "Sí. Cada reporte llega primero a tu equipo. Lo revisas, pides cambios y decides cuándo se presenta. Nada llega a tu cliente sin tu aprobación." },
       { question: "¿Cuánto cuesta?", answer: "La auditoría técnica de un sitio cuesta USD 750. El bloque de 20 horas, USD 1.250 al mes. El trabajo continuo por sitio para agencias nuevas, USD 500 al mes." },
+      { question: "¿Hay contrato largo o cuota de entrada?", answer: "No. En Ferova no pedimos contratos largos ni cobramos cuota de entrada. Pagas la auditoría, el bloque mensual o el sitio que contratas." },
       { question: "¿Cómo funciona la garantía?", answer: "Si el entregable no se puede revender a tu cliente tal cual, bajo tu marca, no se cobra. La garantía queda en el alcance escrito que firmamos antes de empezar." },
       { question: "¿Trabajas con Shopify y WooCommerce?", answer: "Sí, con ambas y con WordPress. Navegación facetada, variantes de producto, estructura de colecciones y categorías, y migraciones entre plataformas son el centro del trabajo." },
       { question: "¿Haces migraciones de catálogos grandes?", answer: "Sí. He trabajado catálogos de más de 14.000 productos. Para tiendas con cientos de miles de URLs, el brief dimensiona el trabajo: inventario por plantilla, equivalencias por reglas y redirects probados en staging." },
@@ -225,7 +226,7 @@ const EN: Record<SeoSpecialtyKind, SeoSpecialtyContent> = {
     eyebrow: "WHITE LABEL SEO SERVICES · ECOMMERCE & TECHNICAL SEO",
     title: "White label SEO services for agencies that sell ecommerce and technical SEO.",
     description:
-      "White label SEO services for agencies: audits, catalogue architecture and platform migrations delivered under your brand, with your logo on every report. Senior technical work, published prices and a written guarantee.",
+      "White label SEO services for agencies: audits, catalogue architecture and platform migrations delivered under your brand, with your logo on every report. Senior technical work by María Fernanda Calderón, Fractional SEO at Ferova, with published prices and a written guarantee.",
     problem:
       "Most white label SEO programs are built for local businesses: maps, citations and reviews. Ecommerce breaks in other places — faceted navigation, thousands of product URLs, duplicate variants, platform migrations. Recommending a fix there without enough depth is how an agency loses a client. That work needs a senior technical profile most agencies don't have on payroll.",
     outcomes: [
@@ -250,7 +251,7 @@ const EN: Record<SeoSpecialtyKind, SeoSpecialtyContent> = {
     pricing: {
       kicker: "PRICING",
       title: "Published white label SEO pricing. No discovery call needed to know the number.",
-      intro: "Three ways to work together. All prices are what your agency pays; you set the resale price to your client.",
+      intro: "Three ways to work with Ferova. No long-term contracts and no setup fee. All prices are what your agency pays; you set the resale price to your client.",
       serviceName: "White label SEO services",
       plans: [
         { name: "Technical audit", price: 750, unit: "per site", description: "One-off technical audit of a single site, delivered under your brand with a prioritised action plan." },
@@ -337,6 +338,7 @@ const EN: Record<SeoSpecialtyKind, SeoSpecialtyContent> = {
       { question: "Can my team review deliverables before the client sees them?", answer: "Yes. Every report goes to your team first. You review it, request changes and decide when it is presented. Nothing reaches your client without your approval." },
       { question: "Can you join client calls as part of our team?", answer: "Yes, if you want me visible. I can join calls under your agency's name, or stay fully behind the scenes and brief your account manager instead." },
       { question: "How much do your white label SEO services cost?", answer: "A technical audit of one site is USD 750. A 20-hour monthly block is USD 1,250. Ongoing work on one site for new agency partners is USD 500 per month." },
+      { question: "Is there a long-term contract or a setup fee?", answer: "No. Ferova doesn't require long-term contracts or charge a setup fee. You pay for the audit, the monthly block or the site you contract." },
       { question: "How does the guarantee work?", answer: "If a deliverable can't be resold to your client as-is, under your brand, you don't pay for it. The guarantee is part of the written scope we agree before starting." },
       { question: "Do you handle large catalogue migrations?", answer: "Yes. I've worked with catalogues of more than 14,000 products. For stores with hundreds of thousands of URLs, the brief sizes the work: inventory by template, rule-based URL mapping and redirects tested on staging before launch." },
       { question: "Do you work with Shopify and WooCommerce?", answer: "Yes, both, as well as WordPress. Faceted navigation, product variants, collection and category structure, and migrations between platforms are the core of the work." },
@@ -430,7 +432,7 @@ export const SEO_SPECIALTY_UI: Record<Lang, {
   nextKicker: string; nextTitle: string;
 }> = {
   es: {
-    siteName: "SEO Para Ecommerce", home: "Inicio",
+    siteName: "Ferova", home: "Inicio",
     ctaPrimary: "Solicitar cotización", ctaSecondary: "Ver casos reales",
     problemKicker: "EL PROBLEMA", problemTitle: "Primero entendemos la decisión que está en riesgo.",
     deliverablesKicker: "QUÉ RECIBES", deliverablesTitle: "Entregables pensados para tomar decisiones y ejecutar.",
@@ -441,7 +443,7 @@ export const SEO_SPECIALTY_UI: Record<Lang, {
     nextKicker: "SIGUIENTE PASO", nextTitle: "Cuéntanos qué habilidad y capacidad necesita tu agencia.",
   },
   en: {
-    siteName: "SEO Para Ecommerce", home: "Home",
+    siteName: "Ferova", home: "Home",
     ctaPrimary: "Request a quote", ctaSecondary: "See real cases",
     problemKicker: "THE PROBLEM", problemTitle: "First we name the decision that is actually at risk.",
     deliverablesKicker: "WHAT YOU GET", deliverablesTitle: "Deliverables built to decide with, then execute.",
@@ -452,7 +454,7 @@ export const SEO_SPECIALTY_UI: Record<Lang, {
     nextKicker: "NEXT STEP", nextTitle: "Tell me what skill and capacity your agency needs.",
   },
   pt: {
-    siteName: "SEO Para Ecommerce", home: "Início",
+    siteName: "Ferova", home: "Início",
     ctaPrimary: "Solicitar orçamento", ctaSecondary: "Ver casos reais",
     problemKicker: "O PROBLEMA", problemTitle: "Primeiro entendemos a decisão que está em risco.",
     deliverablesKicker: "O QUE VOCÊ RECEBE", deliverablesTitle: "Entregáveis para decidir e executar.",
