@@ -123,6 +123,7 @@ const Footer = ({ currentLang, lang }: FooterProps) => {
                 <span>
                   North Point, Torre 2, Of. 1002 · Cra. 7 #158-78, Bogotá
                   <span className="block text-xs">{locale === 'en' ? 'Visits by appointment' : locale === 'pt' ? 'Visitas com agendamento' : 'Visitas con cita previa'} · Colombia · Brasil · Estados Unidos</span>
+                  <a href="https://share.google/SuMRS9Yzv1Od4d3iK" target="_blank" rel="noopener noreferrer" className="block text-xs underline hover:text-gold">{locale === 'en' ? 'View on Google Maps' : locale === 'pt' ? 'Ver no Google Maps' : 'Ver en Google Maps'} ↗</a>
                 </span>
               </div>
             </div>
