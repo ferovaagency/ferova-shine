@@ -76,6 +76,24 @@ export async function prerender(data: { url: string }) {
     if (Object.keys(props).length) elements.add({ type, props });
   }
 
+  // JSON-LD por página (Person, FAQPage, Service, BreadcrumbList…). Antes solo
+  // se copiaban meta y link, así que todos los datos estructurados que declara
+  // cada página quedaban fuera del HTML estático: Google y los bots de IA sin
+  // JavaScript solo veían los bloques genéricos de index.html. El contenido va
+  // como `children` y el plugin lo escribe sin escapar dentro de <script>.
+  const rawScripts = helmet?.script?.toString() ?? "";
+  const scriptRegex = /<script\s*([^>]*)>([\s\S]*?)<\/script>/g;
+  let sm: RegExpExecArray | null;
+  while ((sm = scriptRegex.exec(rawScripts)) !== null) {
+    const [, attrStr, body] = sm;
+    const props: Record<string, string> = {};
+    const attrRegex = /(\w[\w-]*)="([^"]*)"/g;
+    let a: RegExpExecArray | null;
+    while ((a = attrRegex.exec(attrStr)) !== null) props[htmlAttr(a[1])] = decodeEntities(a[2]);
+    if (props.type !== "application/ld+json" || !body.trim()) continue;
+    elements.add({ type: "script", props: { ...props, children: body.replace(/<\/(script)/gi, "<\\/$1") } });
+  }
+
   // Enlaces internos descubiertos en el HTML. Es un extra: si el parser falla,
   // el build puede seguir con el registro de rutas.
   let links: Set<string> | undefined;
