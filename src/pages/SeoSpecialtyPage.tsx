@@ -121,6 +121,28 @@ export default function SeoSpecialtyPage({ kind, lang = "es" }: { kind: SeoSpeci
           </div>
         </section>
 
+        {content.longform && content.longform.length > 0 && (
+          <section className="border-t border-border py-20 md:py-24">
+            <div className="container mx-auto max-w-3xl space-y-14 px-4 md:px-6">
+              {content.longform.map((block) => (
+                <article key={block.heading}>
+                  <h2 className="text-3xl md:text-4xl">{block.heading}</h2>
+                  <div className="mt-5 space-y-4 text-lg leading-relaxed text-muted-foreground">
+                    {block.paragraphs.map((paragraph) => <p key={paragraph}>{paragraph}</p>)}
+                  </div>
+                  {block.bullets && (
+                    <ul className="mt-5 space-y-3">
+                      {block.bullets.map((bullet) => (
+                        <li key={bullet} className="flex gap-3 leading-relaxed"><CheckCircle2 className="mt-1 h-5 w-5 shrink-0 text-[#8c6905]" />{bullet}</li>
+                      ))}
+                    </ul>
+                  )}
+                </article>
+              ))}
+            </div>
+          </section>
+        )}
+
         {content.proof && (
           <section className="bg-[#f4eadb] py-20 text-[#3c3c3b] md:py-24">
             <div className="container mx-auto max-w-6xl px-4 md:px-6">

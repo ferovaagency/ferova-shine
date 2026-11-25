@@ -142,6 +142,11 @@ export const ROUTES: RouteDef[] = [
   // Landing de apoyo. Indexable: el termino comparativo no tiene demanda, pero
   // la pagina sostiene a /en/white-label-seo-for-agencies y apunta a
   // "white label seo pricing" (90/mes, KD 19).
+  // Comparación de marca: Map Ranking hace white label de SEO local; esta página
+  // capta a agencias con clientes ecommerce. Datos de Map Ranking con fuente y
+  // fecha en src/content/positioning.ts.
+  { id: "map-ranking-alternative", type: "service", indexable: true, prerender: true, priority: 0.7,
+    paths: { en: "/en/map-ranking-alternative" } },
   { id: "white-label-vs-in-house", type: "service", indexable: true, prerender: true, priority: 0.7,
     paths: { en: "/en/white-label-seo-vs-in-house" } },
   // EN: "seo migration services" 170/mes · KD 21 · CPC $32.92

@@ -32,6 +32,8 @@ export type SeoSpecialtyContent = {
     note: string;
     cta: { label: string; href: string };
   };
+  /** Secciones de contenido largo: profundidad para posicionar y para la IA. */
+  longform?: { heading: string; paragraphs: string[]; bullets?: string[] }[];
   faqs: { question: string; answer: string }[];
   /** Enlaces internos relacionados al cierre. Vacio = no se renderiza. */
   relatedLinks?: { label: string; to: string }[];
@@ -63,7 +65,7 @@ const ES: Record<SeoSpecialtyKind, SeoSpecialtyContent> = {
       { title: "Brief", time: "día 0", description: "Me cuentas el cliente, el objetivo y la fecha. Acordamos por escrito el rol, la visibilidad y los entregables." },
       { title: "NDA y accesos", time: "día 1", description: "Firmo tu NDA antes de entrar a cualquier cuenta. Compartes Search Console, analítica y la plataforma." },
       { title: "Auditoría técnica", time: "en 5 días", description: "Rastreo, contraste de datos y revisión manual de las plantillas que generan ventas." },
-      { title: "Reporte con tu logo", time: "misma semana", description: "Hallazgos con evidencia, prioridad y criterio de aceptación, con la marca de tu agencia y listos para presentar." },
+      { title: "Reporte con tu logo", time: "misma semana", description: "Hallazgos con evidencia, prioridad y criterio de aceptación, con la marca de tu agencia. Tu equipo lo revisa y aprueba antes de que llegue al cliente." },
       { title: "Entrega y soporte", time: "continuo", description: "Lo explico a tu equipo y acompaño la implementación como bloque mensual o por sitio." },
     ],
     pricing: {
@@ -101,10 +103,36 @@ const ES: Record<SeoSpecialtyKind, SeoSpecialtyContent> = {
       note: "Fuentes: registros de ventas e informes de seguimiento compartidos por los clientes. Clientes anonimizados; los casos identificables solo se publican con autorización escrita.",
       cta: { label: "Ver el portafolio completo", href: "https://ferova.com.co/portafolio?lang=es" },
     },
+    longform: [
+      {
+        heading: "Por qué el SEO marca blanca para ecommerce es otro trabajo",
+        paragraphs: [
+          "La mayoría de los programas de SEO marca blanca están diseñados para negocios locales: un perfil de Google Business, citaciones, reseñas y unas cuantas páginas de servicio. Ese modelo funciona para un consultorio o un taller. No sirve para una tienda con 5.000 productos, 40 filtros y tres caminos para llegar al mismo artículo.",
+          "En ecommerce, los ingresos orgánicos los deciden las plantillas, no las páginas sueltas. Una regla de la navegación facetada puede crear decenas de miles de URLs rastreables. Las variantes de producto pueden repartir señales entre duplicados. Los productos agotados necesitan una política, no redirects improvisados. Una migración de plataforma puede borrar años de posiciones en un fin de semana.",
+          "Para ese trabajo está pensado este servicio. Tu agencia conserva el cliente y la relación; yo aporto la profundidad técnica para diagnosticar, priorizar por impacto en ventas y explicarlo de forma que tu equipo lo pueda defender.",
+        ],
+      },
+      {
+        heading: "Cómo funciona la entrega en marca blanca",
+        paragraphs: [
+          "Tú decides cuánto aparezco. En marca blanca total nunca contacto a tu cliente: las preguntas pasan por tu equipo y cada documento lleva el logo y la voz de tu agencia. Si prefieres, puedo entrar a las llamadas como parte de tu equipo.",
+          "Nada llega a tu cliente sin tu aprobación. Cada reporte se entrega primero a tu equipo; lo revisas, pides cambios y lo presentas cuando quieras.",
+          "Los accesos se manejan bajo NDA y se limitan a lo que el proyecto necesita: Search Console, analítica, el administrador de la plataforma y, si hace falta, un entorno de staging.",
+        ],
+      },
+      {
+        heading: "SEO técnico limpio, sin atajos",
+        paragraphs: [
+          "Algunos programas de marca blanca venden tácticas que simulan comportamiento de usuarios o inflan señales de forma artificial. Pueden dar un salto corto y dejar un riesgo largo que tiene que explicar tu agencia, no el proveedor.",
+          "Este servicio no usa clics simulados, interacción falsa ni esquemas de enlaces. Es SEO técnico y de contenido dentro de las directrices de Google.",
+        ],
+      },
+    ],
     faqs: [
       { question: "¿Qué es el SEO marca blanca?", answer: "Trabajo SEO que una agencia revende con su propia marca. Yo hago el trabajo técnico y estratégico; tu agencia lo presenta como propio, con tu logo en cada reporte." },
       { question: "¿Puedes trabajar bajo marca blanca total?", answer: "Sí. El modelo puede ser marca blanca total, soporte interno o participación visible ante el cliente, según lo que acordemos por escrito." },
       { question: "¿Firmas NDA?", answer: "Sí, antes de recibir cualquier dato o acceso del cliente. Puedo firmar el NDA de tu agencia o proponer uno." },
+      { question: "¿Mi equipo puede revisar los entregables antes que el cliente?", answer: "Sí. Cada reporte llega primero a tu equipo. Lo revisas, pides cambios y decides cuándo se presenta. Nada llega a tu cliente sin tu aprobación." },
       { question: "¿Cuánto cuesta?", answer: "La auditoría técnica de un sitio cuesta USD 750. El bloque de 20 horas, USD 1.250 al mes. El trabajo continuo por sitio para agencias nuevas, USD 500 al mes." },
       { question: "¿Cómo funciona la garantía?", answer: "Si el entregable no se puede revender a tu cliente tal cual, bajo tu marca, no se cobra. La garantía queda en el alcance escrito que firmamos antes de empezar." },
       { question: "¿Trabajas con Shopify y WooCommerce?", answer: "Sí, con ambas y con WordPress. Navegación facetada, variantes de producto, estructura de colecciones y categorías, y migraciones entre plataformas son el centro del trabajo." },
@@ -216,7 +244,7 @@ const EN: Record<SeoSpecialtyKind, SeoSpecialtyContent> = {
       { title: "Brief", time: "day 0", description: "You send the client, the goal and the deadline. We agree role, visibility and deliverables in writing." },
       { title: "NDA and access", time: "day 1", description: "I sign your NDA before touching any account. You share Search Console, analytics and platform access." },
       { title: "Technical audit", time: "within 5 days", description: "Crawl, data cross-check and manual review of the templates that carry revenue." },
-      { title: "Report with your logo", time: "same week", description: "Findings with evidence, priority and acceptance criteria, in your agency's branding, ready to present." },
+      { title: "Report with your logo", time: "same week", description: "Findings with evidence, priority and acceptance criteria, in your agency's branding. Your team reviews and approves it before it reaches the client." },
       { title: "Delivery and support", time: "ongoing", description: "I walk your team through it and support implementation as a monthly block or per site." },
     ],
     pricing: {
@@ -254,11 +282,60 @@ const EN: Record<SeoSpecialtyKind, SeoSpecialtyContent> = {
       note: "Sources: sales records and tracking reports shared by the clients. Clients anonymised; identifiable cases are only published with written authorisation.",
       cta: { label: "See the full portfolio", href: "https://ferova.com.co/portafolio?lang=en" },
     },
+    longform: [
+      {
+        heading: "Why white label SEO for ecommerce is a different job",
+        paragraphs: [
+          "Most white label SEO programs are designed around local businesses: a Google Business Profile, citations, reviews and a handful of service pages. That model works for a dentist or a plumber. It doesn't transfer to a store with 5,000 products, 40 filters and three ways to reach the same item.",
+          "In ecommerce, organic revenue is decided by templates, not by individual pages. One rule in the faceted navigation can create tens of thousands of crawlable URLs. Product variants can split ranking signals across duplicates. Out-of-stock and discontinued products need a policy, not ad hoc redirects. A platform migration can erase years of rankings in a weekend if the URL map is wrong.",
+          "That is the work this white label SEO service is built for. Your agency keeps the client and the relationship; I bring the technical depth to diagnose those problems, prioritise them by revenue impact and explain them in a way your team can defend.",
+        ],
+      },
+      {
+        heading: "What each deliverable includes",
+        paragraphs: ["Every deliverable is written to be resold as-is under your brand. A technical audit covers:"],
+        bullets: [
+          "Crawlability and indexation: robots.txt, XML sitemaps, canonicals, status codes, redirect chains and index coverage in Search Console.",
+          "Rendering: what Google sees with and without JavaScript, and which content depends on client-side rendering.",
+          "Catalogue architecture: category depth, faceted navigation rules, pagination, variant handling and internal linking.",
+          "Templates: product, category and content templates reviewed for intent, metadata, structured data and thin or duplicate content.",
+          "Performance: Core Web Vitals on the templates that carry revenue, separating weight problems from execution problems.",
+          "Action plan: each finding with evidence, priority, a suggested owner and an acceptance criterion, so your team knows when it is done.",
+        ],
+      },
+      {
+        heading: "How white label delivery works day to day",
+        paragraphs: [
+          "You decide how visible I am. In a fully white label setup I never contact your client: questions go through your account manager and every document carries your agency's logo and voice. If you prefer, I can join calls as part of your team.",
+          "Nothing reaches your client without your approval. Each report is delivered to your team first; you review it, ask for changes and present it when you are ready.",
+          "Access is handled under NDA and limited to what the project needs: Search Console, analytics, the platform admin and, when necessary, a staging environment.",
+        ],
+      },
+      {
+        heading: "Who this is for, and who it isn't",
+        paragraphs: ["This service is a good fit when:"],
+        bullets: [
+          "Your agency sells SEO to ecommerce or content-heavy sites and needs senior technical depth for audits, architecture or migrations.",
+          "You want published prices you can build a margin on, instead of a quote for every project.",
+          "You need the work in English or in Spanish, for clients in the US, Latin America or Spain.",
+          "It is not the right fit if your clients mainly need Google Maps rankings for local storefronts, or if you are looking for volume link building.",
+        ],
+      },
+      {
+        heading: "Clean technical SEO, no shortcuts",
+        paragraphs: [
+          "Some white label programs sell tactics that simulate user behaviour or inflate signals artificially. They can produce a short-term bump and a long-term risk that your agency, not the provider, has to explain to the client.",
+          "This service doesn't use simulated clicks, fake engagement or link schemes. The work is technical and content SEO within Google's guidelines: slower to promise, easier to defend.",
+        ],
+      },
+    ],
     faqs: [
       { question: "What are white label SEO services?", answer: "SEO work an agency resells under its own brand. I do the technical and strategic work; your agency presents it to the client as its own, with your logo on every report." },
       { question: "Can you work fully white label?", answer: "Yes. The arrangement can be fully white label, internal support only, or a named specialist your client meets directly. It is agreed in writing before the project starts." },
       { question: "Do you sign an NDA?", answer: "Yes, before receiving any client data or account access. I can sign your agency's NDA or provide one." },
       { question: "What does my client see?", answer: "Only your brand. Reports, documents and presentations carry your agency's logo and voice. I only appear in front of the client if you want me to." },
+      { question: "Can my team review deliverables before the client sees them?", answer: "Yes. Every report goes to your team first. You review it, request changes and decide when it is presented. Nothing reaches your client without your approval." },
+      { question: "Can you join client calls as part of our team?", answer: "Yes, if you want me visible. I can join calls under your agency's name, or stay fully behind the scenes and brief your account manager instead." },
       { question: "How much do your white label SEO services cost?", answer: "A technical audit of one site is USD 750. A 20-hour monthly block is USD 1,250. Ongoing work on one site for new agency partners is USD 500 per month." },
       { question: "How does the guarantee work?", answer: "If a deliverable can't be resold to your client as-is, under your brand, you don't pay for it. The guarantee is part of the written scope we agree before starting." },
       { question: "Do you handle large catalogue migrations?", answer: "Yes. I've worked with catalogues of more than 14,000 products. For stores with hundreds of thousands of URLs, the brief sizes the work: inventory by template, rule-based URL mapping and redirects tested on staging before launch." },
@@ -274,6 +351,7 @@ const EN: Record<SeoSpecialtyKind, SeoSpecialtyContent> = {
       { label: "White label vs in-house: cost, control and risk", to: "/en/white-label-seo-vs-in-house" },
       { label: "Technical SEO audit services", to: "/en/technical-seo-audit-services" },
       { label: "SEO migration services", to: "/en/seo-migration-services" },
+      { label: "Map Ranking alternative for ecommerce", to: "/en/map-ranking-alternative" },
       { label: "About María Fernanda Calderón", to: "/en/about-me" },
     ],
   },

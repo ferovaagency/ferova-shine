@@ -22,14 +22,15 @@
  *       Una cifra sin fuente destruye justo el bloque que la hace citable.
  *    4. `proof` sólo admite hechos verificables. Sin cifra real, se deja el
  *       array vacío y la sección no se renderiza. No se rellena.
- *    5. NUNCA se publica un precio propio. `marketRates` son rangos de
- *       mercado de TERCEROS.
+ *    5. Precios propios solo los publicados en /en/white-label-seo-for-agencies
+ *       (y su fuente apunta ahí). Precios de terceros siempre con su URL y
+ *       fecha de consulta.
  * ============================================================================
  */
 
 import type { Lang } from "@/config/routes";
 
-export type PositioningKind = "outsource-seo-services";
+export type PositioningKind = "outsource-seo-services" | "map-ranking-alternative";
 
 export interface RateRow {
   /** Modelo de contratación comparado. */
@@ -258,6 +259,145 @@ export const POSITIONING: Record<PositioningKind, PositioningContent> = {
     },
 
     authorSameAs: ["https://www.linkedin.com/in/maria-fer-calderon/"],
+  },
+
+  "map-ranking-alternative": {
+    path: "/en/map-ranking-alternative",
+    lang: "en",
+    targetKeyword: "map ranking alternative",
+    keywordEvidence:
+      "Página de comparación de marca. Map Ranking vende white label de SEO local; su página de white label posiciona #3 para \"white label local seo services\" (110/mes) — Ubersuggest, nov 2026. Datos de Map Ranking tomados de mapranking.com/white-label-local-seo/ el 25 nov 2026.",
+
+    metaTitle: "Map Ranking Alternative for Ecommerce White Label SEO",
+    metaDescription:
+      "Map Ranking is built for local SEO and Google Maps. If your agency's clients are online stores, compare scope, prices and fit with an ecommerce and technical SEO white label partner.",
+
+    eyebrow: "Comparison · White label SEO · Ecommerce",
+    h1: "A Map Ranking alternative for agencies whose clients sell online",
+    lede:
+      "Map Ranking does local SEO for businesses that live on Google Maps. This page is for agencies whose clients are online stores, where the problems are catalogues, facets and migrations.",
+
+    answerHeading: "What is the difference between Map Ranking and an ecommerce white label SEO partner?",
+    answer:
+      "Map Ranking sells white label local SEO: Google Maps and local search visibility for brick-and-mortar businesses, from USD 299 a month according to its own page. An ecommerce white label partner works on online stores: catalogue architecture, faceted navigation, product variants and platform migrations. The right choice depends on where your client's revenue comes from: the map or the catalogue.",
+
+    audiences: [
+      {
+        title: "Your agency sells SEO to online stores",
+        body:
+          "Your clients run Shopify, WooCommerce or custom stores, and their organic revenue depends on category and product templates, not on a map listing.",
+        linkLabel: "White label SEO services for ecommerce",
+        to: "/en/white-label-seo-for-agencies",
+      },
+      {
+        title: "You need one technical audit, not a retainer",
+        body:
+          "A client's traffic dropped, a migration is coming or a crawl report makes no sense. You need a senior diagnosis under your brand, priced up front.",
+        linkLabel: "Technical SEO audit services",
+        to: "/en/technical-seo-audit-services",
+      },
+    ],
+
+    marketRates: {
+      heading: "Published prices, side by side",
+      rows: [
+        { model: "Map Ranking · Foundation", range: "USD 299 / month", billedAs: "Monthly, white label local SEO", source: "mapranking.com/white-label-local-seo", date: "consulted Nov 2026" },
+        { model: "Map Ranking · Maps & AI Booster", range: "USD 399 / month", billedAs: "Monthly, white label local SEO", source: "mapranking.com/white-label-local-seo", date: "consulted Nov 2026" },
+        { model: "Ferova · Technical audit", range: "USD 750", billedAs: "One-off, per site", source: "seoparaecommerce.co/en/white-label-seo-for-agencies", date: "Nov 2026" },
+        { model: "Ferova · 20-hour block", range: "USD 1,250 / month", billedAs: "Monthly, senior hours across clients", source: "seoparaecommerce.co/en/white-label-seo-for-agencies", date: "Nov 2026" },
+        { model: "Ferova · Per site, new agency partners", range: "USD 500 / month", billedAs: "Monthly, one client site", source: "seoparaecommerce.co/en/white-label-seo-for-agencies", date: "Nov 2026" },
+      ],
+    },
+
+    comparison: {
+      heading: "Map Ranking vs an ecommerce white label partner",
+      table: {
+        options: ["Map Ranking", "Ferova (this site)"],
+        rows: [
+          { criterion: "Built for", values: ["Local businesses that depend on Google Maps", "Online stores and content-heavy sites"] },
+          { criterion: "Core work", values: ["Local search and map visibility", "Technical SEO, catalogue architecture, facets, migrations"] },
+          { criterion: "Entry price", values: ["From USD 299 / month", "USD 750 audit or USD 500 / month per site"] },
+          { criterion: "Branded reports", values: ["Yes, per its white label page", "Yes, your logo on every report"] },
+          { criterion: "Delivery in Spanish", values: ["Not advertised", "Yes, English and Spanish"] },
+          { criterion: "Platform migrations", values: ["Not its focus", "Yes: inventory, URL mapping, staging QA"] },
+        ],
+        whenNot: {
+          criterion: "When NOT to pick it",
+          values: [
+            "Your client is an online store whose problems are catalogue architecture, faceted navigation or a migration.",
+            "Your client is a local storefront whose main goal is ranking on Google Maps. A local SEO specialist will serve them better.",
+          ],
+        },
+      },
+    },
+
+    midCta: {
+      text: "Have an ecommerce client that needs more than local SEO?",
+      label: "Tell me about the project",
+      to: "/en/contact",
+    },
+
+    process: {
+      heading: "How an agency starts working with me",
+      steps: [
+        { title: "Brief and NDA", description: "You send the client, the goal and the deadline. I sign your NDA before receiving any access." },
+        { title: "Technical audit in 5 days", description: "Crawl, data cross-check and manual review of the templates that carry revenue, delivered under your brand." },
+        { title: "You approve, then present", description: "Your team reviews the report first. Nothing reaches your client without your approval." },
+      ],
+    },
+
+    proof: {
+      heading: "Ecommerce and recovery results, with sources",
+      stats: [
+        { value: "COP 1.0M → 13.3M", description: "Monthly online sales of an anonymised store, January to May 2025, after a redesign and technical SEO. Paid campaigns also ran, so growth isn't attributed to SEO alone." },
+        { value: "153 → 1,180", description: "Organic clicks of an anonymised professional services firm, November 2024 to May 2025, after a malware cleanup, hosting migration and technical SEO." },
+      ],
+    },
+
+    faqs: [
+      {
+        question: "Is Map Ranking a good white label SEO provider?",
+        answer:
+          "For local businesses that depend on Google Maps, Map Ranking is built for exactly that: its white label page focuses on local search and map visibility. For online stores, the work is different. Catalogue architecture, faceted navigation and migrations need an ecommerce and technical SEO specialist.",
+      },
+      {
+        question: "How much does Map Ranking cost compared with an ecommerce partner?",
+        answer:
+          "Map Ranking's white label page lists plans from USD 299 a month, with a USD 399 tier, as consulted in November 2026. Ferova publishes a USD 750 technical audit, a USD 1,250 monthly block of 20 senior hours and USD 500 a month per site for new agency partners.",
+      },
+      {
+        question: "Can I use both a local SEO provider and an ecommerce partner?",
+        answer:
+          "Yes. Some agencies use a local SEO provider for clients with physical locations and an ecommerce specialist for online stores. The two kinds of work rarely overlap, so splitting them by client type keeps each provider working on what it does best.",
+      },
+      {
+        question: "Do you work fully white label like Map Ranking?",
+        answer:
+          "Yes. Every report carries your agency's logo, I sign your NDA before receiving access, and I never contact your client unless you want me visible. Your team reviews each deliverable before the client sees it.",
+      },
+      {
+        question: "Do you offer white label SEO in Spanish?",
+        answer:
+          "Yes. Delivery is available in English and Spanish, for agencies with clients in the United States, Latin America or Spain. Reports, documentation and calls can be in either language, agreed per client in the brief.",
+      },
+    ],
+
+    finalCta: {
+      heading: "If your client sells online, let's look at the catalogue together.",
+      label: "Start the conversation",
+      to: "/en/contact",
+    },
+
+    related: {
+      heading: "Related",
+      items: [
+        { label: "White label SEO services for ecommerce", to: "/en/white-label-seo-for-agencies" },
+        { label: "Technical SEO audit services", to: "/en/technical-seo-audit-services" },
+        { label: "SEO migration services", to: "/en/seo-migration-services" },
+      ],
+    },
+
+    authorSameAs: ["https://www.linkedin.com/in/maria-fer-calderon/", "https://ferova.com.co/sobre-ferova/maria-fernanda-calderon"],
   },
 
 

@@ -104,6 +104,7 @@ const AppRoutes = ({ hostLang }: { hostLang: "es" | "en" | "pt" }) => (
     <Route path="/en/seo-migration-services" element={<SeoSpecialtyPage kind="migrations" lang="en" />} />
     {/* Páginas de posicionamiento — ver src/content/positioning.ts */}
     <Route path="/en/outsource-seo-services" element={<PositioningPage kind="outsource-seo-services" />} />
+    <Route path="/en/map-ranking-alternative" element={<PositioningPage kind="map-ranking-alternative" />} />
     <Route path="/en/white-label-seo-vs-in-house" element={<WhiteLabelVsInHouse />} />
     <Route path="/services/ecommerce-seo" element={<SeoEcommerce lang={hostLang} />} />
     <Route path="/services/web-design" element={<DiseneoWeb lang={hostLang} />} />
