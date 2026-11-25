@@ -147,6 +147,9 @@ export const ROUTES: RouteDef[] = [
   // fecha en src/content/positioning.ts.
   { id: "map-ranking-alternative", type: "service", indexable: true, prerender: true, priority: 0.7,
     paths: { en: "/en/map-ranking-alternative" } },
+  // Lista comparativa con fuente por proveedor. Contenido en src/content/bestProviders.ts.
+  { id: "best-white-label-seo-providers", type: "content", indexable: true, prerender: true, priority: 0.7,
+    paths: { en: "/en/best-white-label-seo-providers-for-ecommerce" } },
   { id: "white-label-vs-in-house", type: "service", indexable: true, prerender: true, priority: 0.7,
     paths: { en: "/en/white-label-seo-vs-in-house" } },
   // EN: "seo migration services" 170/mes · KD 21 · CPC $32.92

@@ -394,6 +394,7 @@ export const POSITIONING: Record<PositioningKind, PositioningContent> = {
         { label: "White label SEO services for ecommerce", to: "/en/white-label-seo-for-agencies" },
         { label: "Technical SEO audit services", to: "/en/technical-seo-audit-services" },
         { label: "SEO migration services", to: "/en/seo-migration-services" },
+        { label: "Best white label SEO providers for ecommerce", to: "/en/best-white-label-seo-providers-for-ecommerce" },
       ],
     },
 

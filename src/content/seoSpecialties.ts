@@ -354,6 +354,7 @@ const EN: Record<SeoSpecialtyKind, SeoSpecialtyContent> = {
       { label: "Technical SEO audit services", to: "/en/technical-seo-audit-services" },
       { label: "SEO migration services", to: "/en/seo-migration-services" },
       { label: "Map Ranking alternative for ecommerce", to: "/en/map-ranking-alternative" },
+      { label: "Best white label SEO providers for ecommerce", to: "/en/best-white-label-seo-providers-for-ecommerce" },
       { label: "About María Fernanda Calderón", to: "/en/about-me" },
     ],
   },

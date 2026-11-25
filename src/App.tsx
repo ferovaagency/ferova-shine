@@ -53,6 +53,7 @@ import EstudioVisibilidadIA from "./pages/EstudioVisibilidadIA";
 import CalculadoraVisibilidadIA from "./pages/CalculadoraVisibilidadIA";
 import SeoSpecialtyPage from "./pages/SeoSpecialtyPage";
 import PositioningPage from "./pages/PositioningPage";
+import BestProvidersPage from "./pages/BestProvidersPage";
 import WhiteLabelVsInHouse from "./pages/WhiteLabelVsInHouse";
 import SeoAbout from "./pages/SeoAbout";
 import SeoEcommerceEs from "./pages/SeoEcommerceEs";
@@ -107,6 +108,7 @@ const AppRoutes = ({ hostLang }: { hostLang: "es" | "en" | "pt" }) => (
     {/* Páginas de posicionamiento — ver src/content/positioning.ts */}
     <Route path="/en/outsource-seo-services" element={<PositioningPage kind="outsource-seo-services" />} />
     <Route path="/en/map-ranking-alternative" element={<PositioningPage kind="map-ranking-alternative" />} />
+    <Route path="/en/best-white-label-seo-providers-for-ecommerce" element={<BestProvidersPage />} />
     <Route path="/en/white-label-seo-vs-in-house" element={<WhiteLabelVsInHouse />} />
     <Route path="/services/ecommerce-seo" element={<SeoEcommerce lang={hostLang} />} />
     <Route path="/services/web-design" element={<DiseneoWeb lang={hostLang} />} />
