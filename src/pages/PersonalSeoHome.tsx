@@ -5,7 +5,7 @@ import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
 import SEO from "@/components/SEO";
 import { trackEvent } from "@/lib/analytics";
-import mafeHero from "@/assets/mafe-ferova-hero.png";
+import mafeHero from "@/assets/mafe-ferova-hero.webp";
 import { PERSONAL_HOME, type ModeKey } from "@/content/personalHome";
 import { SITE_ORIGIN, type Lang } from "@/config/routes";
 
@@ -75,7 +75,7 @@ export default function PersonalSeoHome({ lang = "es" }: { lang?: Lang }) {
               <p className="personal-assurance"><ShieldCheck aria-hidden="true" /> {c.heroAssurance}</p>
             </div>
             <figure className="personal-portrait">
-              <img src={mafeHero} alt={c.portraitAlt} />
+              <img src={mafeHero} alt={c.portraitAlt} width={1536} height={1024} fetchPriority="high" />
               <figcaption>{c.portraitCaption}</figcaption>
             </figure>
           </div>
