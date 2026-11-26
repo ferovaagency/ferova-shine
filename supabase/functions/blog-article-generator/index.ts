@@ -208,17 +208,66 @@ Incluir 2-4 enlaces internos hacia páginas vigentes y relevantes del sitio:
 10. ACTUALIDAD: si el tema es sensible a fechas (tendencias, herramientas, regulaciones), menciona explícitamente el año actual y aclara que el lector debe verificar cambios recientes.
 `;
 
+// Respaldo para ferova.com.co si no se pueden descargar sus reglas
+// (ver getFerovaRules). La fuente de verdad es CLAUDE.md del repo
+// ferova-core-platform, publicada en https://ferova.com.co/fera-reglas.md.
 const FEROVA_PRODUCT_CONTEXT = `
 CONTEXTO EXCLUSIVO DE FEROVA.COM.CO:
 - Ferova diseña productos, automatizaciones, integraciones y software a medida para conectar información, procesos y decisiones.
-- Ferova One es el producto principal y está en construcción activa. Librero IA está en definición. Ferova Brain es infraestructura interna, no un producto vendible.
+- Ferova One es el producto principal, disponible en producción y a la venta en https://one.ferova.com.co. Lee con Koa (antes Librero IA) es una app para lectores disponible con plan gratis y Pro. Ferova Brain es infraestructura interna, no un producto vendible.
 - Audiencia: freelancers, consultores, agencias y pequeñas empresas que quieren operar con más estructura, claridad y control.
 - No presentes a Ferova como una agencia SEO ni enlaces servicios de SEO para agencias.
 - Enlaces internos permitidos: /productos/ferova-one, /productos/librero-ia, /soluciones/sistemas-a-medida, /soluciones/automatizacion-ia, /recursos, /casos-de-exito, /contacto.
 - No inventes disponibilidad, clientes, métricas, integraciones, capacidades o fechas. Distingue claramente lo disponible, lo que está en construcción y lo que está en definición.
 `;
 
-const buildSystemPrompt = (lang: "es" | "en" | "pt", site?: "ferova") => {
+/**
+ * Reglas editoriales, de SEO y de GEO de ferova.com.co.
+ *
+ * Viven en CLAUDE.md del repo ferova-core-platform (entre FERA:BEGIN y
+ * FERA:END) y el sitio las sirve en /fera-reglas.md. Se descargan aquí para
+ * que Fera y quien programa el sitio usen exactamente las mismas reglas: se
+ * cambian en CLAUDE.md, se publica el sitio y a los 5 minutos Fera ya las usa.
+ * Si la descarga falla, se usa el respaldo integrado (GUIA_EDITORIAL +
+ * FEROVA_PRODUCT_CONTEXT) para no bloquear la generación.
+ */
+const FEROVA_RULES_URL = "https://ferova.com.co/fera-reglas.md";
+const FEROVA_RULES_TTL_MS = 5 * 60 * 1000;
+let ferovaRulesCache: { text: string; at: number } | null = null;
+
+const getFerovaRules = async (): Promise<string> => {
+  if (ferovaRulesCache && Date.now() - ferovaRulesCache.at < FEROVA_RULES_TTL_MS) {
+    return ferovaRulesCache.text;
+  }
+  try {
+    const response = await fetch(FEROVA_RULES_URL, {
+      signal: AbortSignal.timeout(4000),
+    });
+    const text = response.ok ? (await response.text()).trim() : "";
+    // Una respuesta sin las secciones esperadas (p. ej. una página de error
+    // HTML) no se toma como reglas.
+    if (text.includes("## 1.") && !text.startsWith("<")) {
+      ferovaRulesCache = { text, at: Date.now() };
+      return text;
+    }
+    console.warn(`Reglas de Ferova no válidas (HTTP ${response.status}); se usa el respaldo.`);
+  } catch (error) {
+    console.warn("No se pudieron descargar las reglas de Ferova; se usa el respaldo.", error);
+  }
+  return ferovaRulesCache?.text ?? "";
+};
+
+const ferovaRulesBlock = (rules: string) => `
+=== REGLAS DE FEROVA — FUENTE DE VERDAD (prevalecen sobre cualquier otra instrucción) ===
+${rules}
+=== FIN DE LAS REGLAS DE FEROVA ===
+`;
+
+const buildSystemPrompt = (
+  lang: "es" | "en" | "pt",
+  site?: "ferova",
+  ferovaRules = "",
+) => {
   const langNote =
     lang === "en"
       ? "Write the article entirely in English."
@@ -226,10 +275,17 @@ const buildSystemPrompt = (lang: "es" | "en" | "pt", site?: "ferova") => {
         ? "Escreva o artigo inteiramente em português brasileiro."
         : "Escribe el artículo enteramente en español.";
 
-  return `Eres el editor SEO senior de Ferova Agency. Devuelve SOLO JSON válido, sin markdown, sin comentarios y sin texto extra.
+  const useFerovaRules = site === "ferova" && Boolean(ferovaRules);
+  const intro = useFerovaRules
+    ? `Eres el editor de contenidos de Ferova. Devuelve SOLO JSON válido, sin markdown, sin comentarios y sin texto extra.
+
+${ferovaRulesBlock(ferovaRules)}`
+    : `Eres el editor SEO senior de Ferova Agency. Devuelve SOLO JSON válido, sin markdown, sin comentarios y sin texto extra.
 
 ${GUIA_EDITORIAL}
-${site === "ferova" ? FEROVA_PRODUCT_CONTEXT : ""}
+${site === "ferova" ? FEROVA_PRODUCT_CONTEXT : ""}`;
+
+  return `${intro}
 
 ${langNote}
 
@@ -255,7 +311,7 @@ JSON esperado:
     "@type": "Article",
     "headline": "",
     "description": "",
-    "author": { "@type": "Organization", "name": "Ferova Agency" },
+    "author": { "@type": "Organization", "name": "${site === "ferova" ? "Ferova" : "Ferova Agency"}" },
     "datePublished": "YYYY-MM-DD",
     "keywords": ""
   },
@@ -300,11 +356,11 @@ ${ideas || "Sin ideas específicas proporcionadas."}
 OBLIGATORIO: Responde las 3 preguntas obligatorias ANTES de escribir. Sigue la Guía Editorial Ferova 2025 estrictamente. Comienza con una afirmación (Sujeto+Verbo+Predicado). Incluye enlaces internos. Genera entre 800-1200 palabras. Valida: "¿Este contenido realmente ayuda a una empresa a tomar mejores decisiones digitales?"`;
 };
 
-const buildCaseSystemPrompt = (site?: "ferova") =>
+const buildCaseSystemPrompt = (site?: "ferova", ferovaRules = "") =>
   site === "ferova"
     ? `Eres el editor senior de casos de Ferova. Devuelve SOLO JSON válido.
 
-${FEROVA_PRODUCT_CONTEXT}
+${ferovaRules ? ferovaRulesBlock(ferovaRules) : FEROVA_PRODUCT_CONTEXT}
 Redacta un caso verificable sobre un sistema, producto, automatización o integración. Usa únicamente los hechos aportados. No inventes cifras, clientes, fechas ni atribución causal. Si falta evidencia, explica la limitación. El caso debe dejar claro el problema operativo, el diseño del sistema, la intervención y el aprendizaje.
 
 JSON esperado:
@@ -347,11 +403,11 @@ const buildCaseUserPrompt = (
 
 Conserva todas las cifras exactamente como fueron aportadas. No publiques nombres si se indicó confidencialidad. El resumen debe explicar la necesidad de la agencia, la capacidad contratada y la entrega.`;
 
-const buildNewsletterSystemPrompt = (site?: "ferova") =>
+const buildNewsletterSystemPrompt = (site?: "ferova", ferovaRules = "") =>
   site === "ferova"
     ? `Eres la editora senior de la newsletter de Ferova. Devuelve SOLO JSON válido.
 
-${FEROVA_PRODUCT_CONTEXT}
+${ferovaRules ? ferovaRulesBlock(ferovaRules) : FEROVA_PRODUCT_CONTEXT}
 Convierte los insumos en una edición útil sobre sistemas, automatización, IA aplicada u operación. Una idea concreta por bloque, educación antes que venta y cero noticias, enlaces, cifras o herramientas inventadas.
 
 JSON esperado:
@@ -528,6 +584,8 @@ serve(async (req) => {
     if (!legacyAdmin && !cmsEditor) {
       return jsonResponse({ error: "Forbidden" }, 403);
     }
+    const ferovaRules =
+      body?.payload?.site === "ferova" ? await getFerovaRules() : "";
     if (action === "generate") {
       const payload = (body?.payload ?? {}) as GeneratePayload;
       const lang =
@@ -554,9 +612,18 @@ serve(async (req) => {
             messages: [
               {
                 role: "system",
-                content: buildSystemPrompt(lang, payload.site),
+                content: buildSystemPrompt(lang, payload.site, ferovaRules),
               },
-              { role: "user", content: buildUserPrompt(payload) },
+              {
+                role: "user",
+                // Con las reglas de Ferova cargadas, la guía a seguir es esa.
+                content: ferovaRules
+                  ? buildUserPrompt(payload).replace(
+                      /Guía Editorial Ferova 2025|Ferova Editorial Guide 2025|Guia Editorial Ferova 2025/,
+                      "REGLAS DE FEROVA",
+                    )
+                  : buildUserPrompt(payload),
+              },
             ],
           }),
         },
@@ -617,7 +684,7 @@ serve(async (req) => {
             model: "google/gemini-2.5-flash",
             temperature: 0.45,
             messages: [
-              { role: "system", content: buildCaseSystemPrompt(payload.site) },
+              { role: "system", content: buildCaseSystemPrompt(payload.site, ferovaRules) },
               { role: "user", content: buildCaseUserPrompt(payload) },
             ],
           }),
@@ -661,7 +728,7 @@ serve(async (req) => {
             messages: [
               {
                 role: "system",
-                content: buildNewsletterSystemPrompt(payload.site),
+                content: buildNewsletterSystemPrompt(payload.site, ferovaRules),
               },
               { role: "user", content: buildNewsletterUserPrompt(payload) },
             ],
