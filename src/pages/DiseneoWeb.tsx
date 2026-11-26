@@ -7,9 +7,10 @@ import { useToast } from '@/hooks/use-toast';
 import { useAnalytics } from '@/hooks/useAnalytics';
 import { formatPrice, type Lang } from '@/lib/pricing';
 import {
-  Zap, Shield, BarChart3, Smartphone, Check, ArrowRight,
-  MessageCircle, ShoppingCart, Star,
+  Zap, Shield, BarChart3, Smartphone, ArrowRight,
+  MessageCircle, ShoppingCart,
 } from 'lucide-react';
+import { CheckList, CtaBand, FeraButton, IconTile, PageHero, Panel, ProcessSteps, Section, SectionHeading } from '@/components/fx/primitives';
 
 interface Props { lang?: Lang; }
 
@@ -147,117 +148,90 @@ const DiseneoWeb = ({ lang = 'es' }: Props) => {
     });
   };
 
-   return (
-    <>
+  const path = lang === 'en' ? '/en/services/web-design' : lang === 'pt' ? '/pt/design-web' : '/servicios/diseno-web';
+  const home = lang === 'en' ? { name: 'Home', path: '/en' } : lang === 'pt' ? { name: 'Início', path: '/pt' } : { name: 'Inicio', path: '/' };
+  const crumbs = [{ name: t.planName, path }];
+  const serviceLd = {
+    '@context': 'https://schema.org',
+    '@type': 'Service',
+    '@id': 'https://seoparaecommerce.co/servicios/diseno-web#service',
+    name: t.planName,
+    provider: { '@type': 'Organization', '@id': 'https://seoparaecommerce.co/#organization', name: 'Ferova Agency' },
+    description: t.planTagline,
+    areaServed: ['Colombia', 'Latinoamérica', 'Estados Unidos', 'Brasil'],
+    offers: { '@type': 'Offer', price: String(DEV_WEB_USD), priceCurrency: 'USD' },
+  };
+
+  return (
+    <div className="fx-site min-h-screen">
       <SEO
         title={`${t.title} — Ferova Agency`}
         description={t.sub}
-        path={lang === 'en' ? '/en/services/web-design' : lang === 'pt' ? '/pt/design-web' : '/servicios/diseno-web'}
+        path={path}
         lang={lang}
+        jsonLd={serviceLd}
+        breadcrumbs={[home, ...crumbs]}
       />
-      <Header currentLang={lang} />
-      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify({
-        '@context': 'https://schema.org',
-        '@type': 'Service',
-        '@id': 'https://seoparaecommerce.co/servicios/diseno-web#service',
-        name: t.planName,
-        provider: { '@type': 'Organization', '@id': 'https://seoparaecommerce.co/#organization', name: 'Ferova Agency' },
-        description: t.planTagline,
-        areaServed: ['Colombia', 'Latinoamérica', 'Estados Unidos', 'Brasil'],
-        offers: { '@type': 'Offer', price: String(DEV_WEB_USD), priceCurrency: 'USD' },
-      }) }} />
-      <main className="personal-interior-page pt-20">
-        {/* Hero */}
-        <section className="py-20 md:py-28 text-center relative grid-pattern">
-          <div className="absolute inset-0" style={{ background: 'radial-gradient(ellipse at 50% 30%, hsla(45, 86%, 40%, 0.06), transparent 60%)' }} />
-          <div className="container mx-auto px-4 md:px-6 relative z-10">
-            <h1 className="text-4xl md:text-5xl lg:text-6xl font-display font-bold mb-6">{t.title}</h1>
-            <p className="text-muted-foreground text-lg max-w-2xl mx-auto mb-10">{t.sub}</p>
-            <a href={waUrl} target="_blank" rel="noopener noreferrer" className="btn-gold inline-flex items-center gap-2">
-              <MessageCircle className="w-5 h-5" />{t.cta}
-            </a>
-          </div>
-        </section>
+      <Header lang={lang} />
+      <main id="contenido-principal" className="pt-20">
+        <PageHero eyebrow={t.planName} title={t.title} intro={t.sub} breadcrumbs={crumbs} lang={lang}>
+          <a href={waUrl} target="_blank" rel="noopener noreferrer" className="fx-btn">
+            <MessageCircle aria-hidden="true" />{t.cta}
+          </a>
+        </PageHero>
 
         {/* Features */}
-        <section className="py-20 md:py-28 dark-section" style={{ background: 'hsl(243, 28%, 14%)' }}>
-          <div className="container mx-auto px-4 md:px-6">
-            <h2 className="text-3xl md:text-4xl font-display font-bold text-center mb-16 text-gold">{t.whatIncludes}</h2>
-            <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
-              {t.features.map((f, i) => (
-                <div key={i} className="glass-card p-8 hover:border-gold/30 transition-all duration-300">
-                  <div className="w-12 h-12 rounded-xl flex items-center justify-center mb-4" style={{ background: 'hsla(45, 86%, 40%, 0.1)' }}>
-                    <f.icon className="w-6 h-6 text-gold" />
-                  </div>
-                  <h3 className="text-xl font-display font-bold mb-3 text-foreground">{f.title}</h3>
-                  <p className="text-sm leading-relaxed text-muted-foreground">{f.desc}</p>
-                </div>
-              ))}
-            </div>
+        <Section>
+          <SectionHeading title={t.whatIncludes} />
+          <div className="mt-12 grid gap-5 md:grid-cols-2 lg:grid-cols-4">
+            {t.features.map((f) => (
+              <Panel key={f.title}>
+                <IconTile icon={f.icon} />
+                <h3>{f.title}</h3>
+                <p className="fx-muted mt-3 text-sm leading-relaxed">{f.desc}</p>
+              </Panel>
+            ))}
           </div>
-        </section>
+        </Section>
 
         {/* Pricing — single plan */}
-        <section className="py-20 md:py-28">
-          <div className="container mx-auto px-4 md:px-6">
-            <h2 className="text-3xl md:text-4xl font-display font-bold text-center mb-12">{t.pricingTitle}</h2>
-            <div className="max-w-lg mx-auto glass-card p-10 border-gold/50 gold-glow flex flex-col">
-              <div className="w-14 h-14 rounded-2xl flex items-center justify-center mb-5" style={{ background: 'hsla(45, 86%, 40%, 0.1)' }}>
-                <ShoppingCart className="w-7 h-7 text-gold" />
-              </div>
-              <h3 className="text-xl font-display font-bold mb-3 text-foreground">{t.planName}</h3>
-              <p className="text-muted-foreground text-sm leading-relaxed mb-6">{t.planTagline}</p>
-              <div className="mb-6">
-                <span className="text-4xl font-display font-bold">{formatPrice(DEV_WEB_USD, lang)}</span>
-              </div>
-              <ul className="space-y-3 mb-8 flex-1">
-                {t.includes.map((item, i) => (
-                  <li key={i} className="flex items-start gap-3 text-sm text-foreground">
-                    <Check className="w-4 h-4 text-gold flex-shrink-0 mt-0.5" />{item}
-                  </li>
-                ))}
-              </ul>
-              <button onClick={handleCta} className="btn-gold w-full flex items-center justify-center gap-2">
-                <ArrowRight className="w-4 h-4" />{t.ctaPrimary}
-              </button>
-            </div>
+        <Section tone="surface">
+          <div className="text-center">
+            <h2 className="text-3xl leading-tight sm:text-4xl lg:text-5xl">{t.pricingTitle}</h2>
           </div>
-        </section>
+          <div className="fx-light mx-auto mt-12 flex max-w-lg flex-col rounded-[1.25rem] border-t-[3px] border-[#541014] bg-white p-8 shadow-[0_24px_60px_rgb(47_45_86/13%)] sm:p-10">
+            <span className="icon-tile !mb-6 !bg-[#f6f5fb]"><ShoppingCart aria-hidden="true" strokeWidth={1.5} /></span>
+            <h3 className="text-2xl">{t.planName}</h3>
+            <p className="fx-muted mt-3 text-sm leading-relaxed">{t.planTagline}</p>
+            <p className="mt-6 text-4xl font-semibold tabular-nums" style={{ fontFamily: 'Poppins, system-ui, sans-serif' }}>{formatPrice(DEV_WEB_USD, lang)}</p>
+            <CheckList className="mt-6 flex-1" items={t.includes} />
+            <button type="button" onClick={handleCta} className="fx-btn mt-8 w-full">
+              {t.ctaPrimary}<ArrowRight aria-hidden="true" />
+            </button>
+          </div>
+        </Section>
 
         {/* Process */}
-        <section className="py-20 md:py-28 dark-section" style={{ background: 'hsl(243, 28%, 14%)' }}>
-          <div className="container mx-auto px-4 md:px-6">
-            <h2 className="text-3xl md:text-4xl font-display font-bold text-center mb-16 text-gold">{t.process}</h2>
-            <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8 max-w-5xl mx-auto">
-              {t.steps.map((s, i) => (
-                <div key={i} className="text-center">
-                  <div className="w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-6 bg-gold">
-                    <span className="text-xl font-display font-bold text-primary-foreground">{s.n}</span>
-                  </div>
-                  <h3 className="text-xl font-display font-bold mb-4">{s.title}</h3>
-                  <p className="text-muted-foreground leading-relaxed">{s.desc}</p>
-                </div>
-              ))}
-            </div>
+        <Section>
+          <div className="grid gap-12 lg:grid-cols-[0.9fr_1.1fr] lg:gap-20">
+            <SectionHeading title={t.process} />
+            <ProcessSteps steps={t.steps.map((s) => ({ title: s.title, body: s.desc }))} />
           </div>
-        </section>
+          <AdBanner slot="service-diseno-web" className="mx-auto mt-16 max-w-4xl" />
+        </Section>
 
         {/* Final CTA */}
-        <section className="py-20 md:py-28 text-center">
-          <div className="container mx-auto px-4 md:px-6">
-            <Star className="w-12 h-12 text-gold mx-auto mb-6" />
-            <h2 className="text-3xl md:text-4xl font-display font-bold mb-6">{t.finalCta}</h2>
-            <p className="text-muted-foreground text-lg max-w-xl mx-auto mb-8">{t.finalSub}</p>
-            <a href={waUrl} target="_blank" rel="noopener noreferrer" className="btn-gold inline-flex items-center gap-2">
-              <MessageCircle className="w-5 h-5" />{t.cta}
-            </a>
-          </div>
-        </section>
-
-        <AdBanner slot="service-diseno-web" className="max-w-4xl mx-auto mb-20" />
+        <CtaBand title={t.finalCta} body={t.finalSub}>
+          <a href={waUrl} target="_blank" rel="noopener noreferrer" className="fx-btn">
+            <MessageCircle aria-hidden="true" />{t.cta}
+          </a>
+          <FeraButton variant="outline" source="service_web_design" prompt={t.planName}>
+            {lang === 'en' ? 'Talk to Fera' : lang === 'pt' ? 'Falar com a Fera' : 'Hablar con Fera'}
+          </FeraButton>
+        </CtaBand>
       </main>
-      <Footer currentLang={lang} />
-    </>
+      <Footer lang={lang} />
+    </div>
   );
 };
 

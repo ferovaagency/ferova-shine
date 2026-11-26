@@ -143,7 +143,7 @@ export default function Header({ currentLang, lang }: HeaderProps) {
     <header className="fx-light site-header fixed inset-x-0 top-0 z-50">
       <a href="#contenido-principal" className="agency-skip-link">{cfg.skip}</a>
       <div className="mx-auto flex h-20 w-full max-w-7xl items-center justify-between gap-4 px-5 sm:px-8">
-        <Link to={homeHref} className="flex shrink-0 flex-col leading-none" aria-label="María Fer · SEO técnico · Ferova" onClick={() => setOpen(false)}>
+        <Link to={homeHref} className="flex shrink-0 flex-col leading-none" onClick={() => setOpen(false)}>
           <span className="text-lg font-bold tracking-[0.1em]" style={{ fontFamily: "Poppins, system-ui, sans-serif" }}>MARÍA FER</span>
           <span className="mt-1.5 text-[0.62rem] font-medium uppercase tracking-[0.2em]" style={{ color: "#2f2d56", fontFamily: "'IBM Plex Mono', monospace" }}>
             SEO técnico · Ferova

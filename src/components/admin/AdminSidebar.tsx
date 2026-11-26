@@ -4,30 +4,31 @@ import { Home, Inbox, Trophy, FileText, ExternalLink, LogOut, Newspaper } from "
 import { supabase } from "@/integrations/supabase/client";
 import { BLOG_SITE_ORIGINS } from "@/lib/blog-i18n";
 
-type NavItem = { label: string; to: string; icon: typeof Inbox; match: string; countKey?: "leads" | "casos" | "blog" };
+type CountKey = "leads" | "casos" | "blog";
+type Counts = Partial<Record<CountKey, number>>;
+type NavItem = { label: string; to: string; icon: typeof Inbox; match: string; countKey?: CountKey; countLabel?: string };
 
 const NAV: NavItem[] = [
-  { label: "Inicio", to: "/admin", icon: Home, match: "/admin" },
-  { label: "Solicitudes", to: "/admin/leads", icon: Inbox, match: "/admin/leads", countKey: "leads" },
+  { label: "Resumen", to: "/admin", icon: Home, match: "/admin" },
+  { label: "Solicitudes", to: "/admin/leads", icon: Inbox, match: "/admin/leads", countKey: "leads", countLabel: "pendientes" },
   { label: "Casos de éxito", to: "/admin/casos", icon: Trophy, match: "/admin/casos", countKey: "casos" },
-  { label: "Blog", to: "/admin/blog", icon: FileText, match: "/admin/blog", countKey: "blog" },
+  { label: "Blog", to: "/admin/blog", icon: FileText, match: "/admin/blog", countKey: "blog", countLabel: "borradores" },
   { label: "Newsletter", to: "/admin/newsletter", icon: Newspaper, match: "/admin/newsletter" },
 ];
 
 /**
- * Sidebar del panel admin (Ferova Admin). Menú mínimo: Leads, Casos, Blog.
- * Los contadores representan SOLO lo pendiente (leads sin atender, blogs en
- * borrador); si una fuente no existe todavía, no se muestra número.
+ * Contadores de lo pendiente (leads sin atender, blogs en borrador); si una
+ * fuente no existe todavía, no se muestra número. Compartido por la barra
+ * lateral y las pestañas móviles.
  */
-export default function AdminSidebar() {
+export function useAdminNav() {
   const location = useLocation();
-  const navigate = useNavigate();
-  const [counts, setCounts] = useState<{ leads?: number; casos?: number; blog?: number }>({});
+  const [counts, setCounts] = useState<Counts>({});
 
   useEffect(() => {
     let alive = true;
     (async () => {
-      const next: { leads?: number; casos?: number; blog?: number } = {};
+      const next: Counts = {};
       // Leads pendientes (tabla admin_inbox — puede no existir aún).
       try {
         const { count, error } = await (supabase as any)
@@ -51,48 +52,87 @@ export default function AdminSidebar() {
   }, [location.pathname]);
 
   const isActive = (match: string) => match === "/admin" ? location.pathname === match : location.pathname === match || location.pathname.startsWith(`${match}/`);
+  return { counts, isActive };
+}
 
-  const signOut = async () => {
+function useSignOut() {
+  const navigate = useNavigate();
+  return async () => {
     await supabase.auth.signOut();
     navigate("/");
   };
+}
+
+function Count({ item, counts }: { item: NavItem; counts: Counts }) {
+  const count = item.countKey ? counts[item.countKey] : undefined;
+  if (typeof count !== "number" || count <= 0) return null;
+  return <span className="admin-count" aria-label={`${count} ${item.countLabel ?? ""}`.trim()}>{count}</span>;
+}
+
+/** Barra lateral flotante (desde 1024px). */
+export type AdminNavState = ReturnType<typeof useAdminNav>;
+
+export default function AdminSidebar({ nav }: { nav: AdminNavState }) {
+  const { counts, isActive } = nav;
+  const signOut = useSignOut();
+  const [email, setEmail] = useState("");
+
+  useEffect(() => {
+    void supabase.auth.getSession().then(({ data }) => setEmail(data.session?.user.email ?? ""));
+  }, []);
 
   return (
-    <aside className="md:w-60 md:shrink-0 border-b md:border-b-0 md:border-r border-border/60 bg-card md:min-h-screen flex md:flex-col">
-      <div className="hidden md:block px-5 py-6 border-b border-border/60">
-        <span className="font-display font-bold text-lg">Ferova Admin</span>
+    <aside className="admin-side" aria-label="Menú del panel">
+      <div className="admin-brand">
+        <strong>Ferova Admin</strong>
+        <span>seoparaecommerce.co</span>
       </div>
 
-      <nav className="flex md:flex-col gap-1 p-3 md:p-4 flex-1 overflow-x-auto">
-        {NAV.map((item) => {
-          const active = isActive(item.match);
-          const count = item.countKey ? counts[item.countKey] : undefined;
-          return (
-            <Link
-              key={item.to}
-              to={item.to}
-              className={`flex items-center gap-3 rounded-xl px-4 py-2.5 text-sm transition-colors whitespace-nowrap ${
-                active ? "bg-accent text-accent-foreground font-medium" : "text-muted-foreground hover:bg-accent hover:text-accent-foreground"
-              }`}
-            >
-              <item.icon className="w-4 h-4 shrink-0" />
-              <span className="flex-1">{item.label}</span>
-              {typeof count === "number" && count > 0 && (
-                <span className="text-xs font-semibold rounded-full bg-gold/15 text-gold px-2 py-0.5">{count}</span>
-              )}
-            </Link>
-          );
-        })}
+      <nav aria-label="Administración">
+        <p className="admin-side__group">Sitio</p>
+        {NAV.map((item) => (
+          <Link key={item.to} to={item.to} className="admin-nav" aria-current={isActive(item.match) ? "page" : undefined}>
+            <item.icon aria-hidden="true" />
+            <span className="min-w-0 flex-1 truncate">{item.label}</span>
+            <Count item={item} counts={counts} />
+          </Link>
+        ))}
+        <p className="admin-side__group">Atajos</p>
+        <Link to="/" target="_blank" className="admin-nav">
+          <ExternalLink aria-hidden="true" />
+          <span className="flex-1">Ver sitio</span>
+        </Link>
       </nav>
 
-      <div className="hidden md:flex flex-col gap-1 p-4 border-t border-border/60">
-        <Link to="/" className="flex items-center gap-3 rounded-xl px-4 py-2.5 text-sm text-muted-foreground hover:bg-accent hover:text-accent-foreground">
-          <ExternalLink className="w-4 h-4" /> Ver sitio
-        </Link>
-        <button onClick={signOut} className="flex items-center gap-3 rounded-xl px-4 py-2.5 text-sm text-muted-foreground hover:bg-accent hover:text-accent-foreground text-left">
-          <LogOut className="w-4 h-4" /> Cerrar sesión
+      <div className="admin-user">
+        <span className="admin-avatar" aria-hidden="true">{email.slice(0, 1) || "F"}</span>
+        <div className="min-w-0 flex-1">
+          <p className="truncate text-sm font-semibold" title={email}>{email || "Sesión activa"}</p>
+          <p className="text-xs text-muted-foreground">Edición</p>
+        </div>
+        <button type="button" onClick={() => void signOut()} className="admin-icon-btn admin-icon-btn--plain" aria-label="Cerrar sesión" title="Cerrar sesión">
+          <LogOut />
         </button>
       </div>
     </aside>
+  );
+}
+
+/** Pestañas horizontales desplazables (menos de 1024px): ningún destino queda oculto. */
+export function AdminMobileTabs({ nav }: { nav: AdminNavState }) {
+  const { counts, isActive } = nav;
+  const signOut = useSignOut();
+  return (
+    <nav className="admin-tabs" aria-label="Administración">
+      {NAV.map((item) => (
+        <Link key={item.to} to={item.to} className="admin-tab" aria-current={isActive(item.match) ? "page" : undefined}>
+          <item.icon aria-hidden="true" />
+          {item.label}
+          <Count item={item} counts={counts} />
+        </Link>
+      ))}
+      <Link to="/" target="_blank" className="admin-tab"><ExternalLink aria-hidden="true" /> Ver sitio</Link>
+      <button type="button" onClick={() => void signOut()} className="admin-tab"><LogOut aria-hidden="true" /> Salir</button>
+    </nav>
   );
 }

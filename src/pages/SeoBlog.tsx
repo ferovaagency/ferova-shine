@@ -107,7 +107,7 @@ export default function SeoBlog() {
           intro="Contenido mantenido por intención. Cada nueva pieza debe aportar experiencia, datos, código, capturas, análisis o una metodología reutilizable."
           breadcrumbs={BREADCRUMBS.slice(1)}
         >
-          <label className="flex min-h-12 w-full max-w-md items-center gap-3 rounded-full border border-white/25 bg-white/10 px-5">
+          <label className="flex min-h-12 w-full max-w-md items-center gap-3 rounded-full border border-white/25 bg-white/10 px-5 sm:min-w-[28rem]">
             <Search aria-hidden="true" className="h-5 w-5 shrink-0 text-[#d3d0e4]" />
             <span className="sr-only">Buscar artículos</span>
             <input type="search" value={search} onChange={(e) => setSearch(e.target.value)} placeholder="Buscar por tema o problema" className="min-h-12 w-full bg-transparent text-white outline-none placeholder:text-[#d3d0e4]" />

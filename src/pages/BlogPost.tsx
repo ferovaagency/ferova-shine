@@ -3,7 +3,7 @@ import { useState, useEffect } from 'react';
 import Header from '@/components/layout/Header';
 import Footer from '@/components/layout/Footer';
 import AdBanner from '@/components/ui/ad-banner';
-import { ArrowLeft, Clock, User, Loader2 } from 'lucide-react';
+import { ArrowLeft, ArrowUpRight, Clock, User, Loader2 } from 'lucide-react';
 import { getSupabase } from '@/integrations/supabase/lazy';
 import { useAnalytics } from '@/hooks/useAnalytics';
 import SEO from '@/components/SEO';
@@ -440,18 +440,10 @@ const BlogPost = ({ lang = 'es' }: Props) => {
           </div>
         </section>
 
-        <section className="personal-contact">
-          <div className="personal-shell personal-contact-inner">
-            <div>
-              <h2>{t.closeTitle}</h2>
-              <p>{t.closeBody}</p>
-            </div>
-            <div className="flex flex-wrap gap-3">
-              <button type="button" onClick={openFera} className="personal-button"><MessageCircle aria-hidden="true" /> {t.cta}</button>
-              <Link to={contactPath} className="personal-link text-white">{en ? 'Contact' : 'Contacto'}</Link>
-            </div>
-          </div>
-        </section>
+        <CtaBand title={t.closeTitle} body={t.closeBody}>
+          <button type="button" onClick={() => openFera('final')} className="fx-btn">{t.cta} <ArrowUpRight aria-hidden="true" /></button>
+          <FxLink to={contactPath} variant="outline">{en ? 'Contact' : 'Contacto'}</FxLink>
+        </CtaBand>
       </main>
       <Footer currentLang={lang} />
     </div>

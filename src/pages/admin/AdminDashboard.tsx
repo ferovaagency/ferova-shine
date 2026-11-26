@@ -29,33 +29,44 @@ export default function AdminDashboard() {
   }, []);
 
   return (
-    <AdminLayout title="Inicio" description="Publica contenido y atiende solicitudes sin salir de este panel.">
+    <AdminLayout title="Resumen" description="Publica contenido y atiende solicitudes sin salir de este panel.">
+      <h2 className="sr-only">Pendientes</h2>
       <div className="grid gap-3 sm:grid-cols-3">
         <Summary to="/admin/leads" icon={Inbox} label="Solicitudes de Fera" value={counts.pending} suffix="pendientes" />
         <Summary to="/admin/blog" icon={FileText} label="Artículos" value={counts.drafts} suffix="borradores" />
         <Summary to="/admin/casos" icon={Trophy} label="Casos de éxito" value={counts.cases} suffix="en el CMS" />
       </div>
 
-      <section className="mt-8 border-t border-border pt-7">
-        <h2 className="text-lg font-semibold">Crear contenido</h2>
-        <p className="mt-1 text-sm text-muted-foreground">Elige qué quieres publicar; cada editor te guía solo por los campos necesarios.</p>
+      <section className="admin-card mt-5">
+        <h2>Crear contenido</h2>
+        <p className="admin-sub mt-1">Elige qué quieres publicar; cada editor te guía solo por los campos necesarios.</p>
         <div className="mt-4 grid gap-3 sm:grid-cols-2">
-          <Link to="/admin/blog/nuevo" className="group flex items-center gap-4 rounded-xl border border-border bg-card p-4 hover:border-primary/40">
-            <span className="grid h-10 w-10 place-items-center rounded-lg bg-primary text-primary-foreground"><FilePlus2 className="h-5 w-5" /></span>
-            <span className="min-w-0 flex-1"><strong className="block text-sm">Nuevo artículo</strong><small className="text-muted-foreground">Redactar, revisar SEO y publicar.</small></span>
-            <ArrowRight className="h-4 w-4 text-muted-foreground transition-transform group-hover:translate-x-1" />
-          </Link>
-          <Link to="/admin/casos/nuevo" className="group flex items-center gap-4 rounded-xl border border-border bg-card p-4 hover:border-primary/40">
-            <span className="grid h-10 w-10 place-items-center rounded-lg bg-primary text-primary-foreground"><Plus className="h-5 w-5" /></span>
-            <span className="min-w-0 flex-1"><strong className="block text-sm">Nuevo caso de éxito</strong><small className="text-muted-foreground">Registrar contexto, resultados y evidencia.</small></span>
-            <ArrowRight className="h-4 w-4 text-muted-foreground transition-transform group-hover:translate-x-1" />
-          </Link>
+          <CreateLink to="/admin/blog/nuevo" icon={FilePlus2} title="Nuevo artículo" text="Redactar, revisar reglas editoriales y publicar." />
+          <CreateLink to="/admin/casos/nuevo" icon={Plus} title="Nuevo caso de éxito" text="Registrar contexto, resultados y evidencia." />
         </div>
       </section>
     </AdminLayout>
   );
 }
 
+function CreateLink({ to, icon: Icon, title, text }: { to: string; icon: typeof Inbox; title: string; text: string }) {
+  return (
+    <Link to={to} className="flex items-center gap-4 rounded-2xl border border-border p-4 transition-colors hover:border-[#2f2d56] hover:bg-[#f4f3fa]">
+      <span className="admin-icon-tile"><Icon aria-hidden="true" /></span>
+      <span className="min-w-0 flex-1"><strong className="block text-sm">{title}</strong><small className="text-muted-foreground">{text}</small></span>
+      <ArrowRight className="h-4 w-4 text-muted-foreground" aria-hidden="true" />
+    </Link>
+  );
+}
+
 function Summary({ to, icon: Icon, label, value, suffix }: { to: string; icon: typeof Inbox; label: string; value: number | null; suffix: string }) {
-  return <Link to={to} className="rounded-xl border border-border bg-card p-4 transition-colors hover:border-primary/40"><div className="flex items-center gap-2 text-sm text-muted-foreground"><Icon className="h-4 w-4" />{label}</div><div className="mt-4 flex items-end gap-2"><strong className="text-3xl font-semibold tabular-nums">{value ?? "—"}</strong><span className="pb-1 text-xs text-muted-foreground">{value === null ? "sin conexión" : suffix}</span></div></Link>;
+  return (
+    <Link to={to} className="admin-card admin-stat">
+      <span className="admin-stat__label"><span className="admin-icon-tile"><Icon aria-hidden="true" /></span>{label}</span>
+      <span className="flex items-end gap-2">
+        <strong className="admin-stat__value">{value ?? "—"}</strong>
+        <span className="pb-0.5 text-xs text-muted-foreground">{value === null ? "sin conexión" : suffix}</span>
+      </span>
+    </Link>
+  );
 }

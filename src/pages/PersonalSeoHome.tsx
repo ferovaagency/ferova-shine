@@ -1,7 +1,8 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import { ArrowUpRight, ClipboardList, FileCheck2, ShieldCheck, Wrench } from "lucide-react";
-import PortfolioHighlights from "@/components/PortfolioHighlights";
+import { CaseGrid } from "@/components/fx/CaseGrid";
+import { portfolioUrl } from "@/data/portfolio";
 import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
 import SEO from "@/components/SEO";
@@ -169,7 +170,21 @@ export default function PersonalSeoHome({ lang = "es" }: { lang?: Lang }) {
         </nav>
 
         <Section id="trabajo">
-          <PortfolioHighlights lang={lang} />
+          <SectionHeading
+            eyebrow={en ? "Evidence" : "Evidencia"}
+            title={en ? "From search to sale, with the source behind every figure." : "De la búsqueda a la venta, con la fuente de cada cifra."}
+            intro={
+              en
+                ? "These are the cases in the Ferova portfolio. Each one explains what was done, how it was measured and where the figure comes from."
+                : "Estos son los casos del portafolio de Ferova. Cada uno explica qué se hizo, cómo se midió y de dónde sale la cifra."
+            }
+          />
+          <div className="mt-12">
+            <CaseGrid lang={lang} />
+          </div>
+          <div className="mt-10 text-center">
+            <FxLink to={portfolioUrl(en ? "en" : "es")}>{en ? "See the full portfolio" : "Ver el portafolio completo"}</FxLink>
+          </div>
         </Section>
 
         <Section tone="surface" id="sobre-mi" className="relative overflow-hidden">

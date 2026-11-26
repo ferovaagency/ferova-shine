@@ -1,16 +1,18 @@
 import { FormEvent, useEffect, useMemo, useRef, useState } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
-import { ArrowLeft, ImagePlus, Loader2, Save, Sparkles } from "lucide-react";
+import { AlertTriangle, ArrowLeft, CheckCircle2, ImagePlus, Loader2, Save, Sparkles, XCircle } from "lucide-react";
 import { toast } from "sonner";
 import AdminLayout from "@/components/admin/AdminLayout";
 import RichTextEditor from "@/components/admin/RichTextEditor";
+import { Chip } from "@/components/admin/Chip";
+import { checkEditorialRules, htmlToText, summarizeRules, words, type EditorialRule } from "@/lib/editorial-rules";
 import { supabase } from "@/integrations/supabase/client";
 import { SEO_EDITORIAL } from "@/content/seoEditorial";
 
 type BlogLanguage = "es" | "en";
 type FormState = { title: string; slug: string; excerpt: string; content: string; meta_title: string; meta_description: string; category: string; keyword: string; cover_image: string; author: string; language: BlogLanguage; active: boolean; published_at: string };
 const emptyForm: FormState = { title: "", slug: "", excerpt: "", content: "", meta_title: "", meta_description: "", category: "", keyword: "", cover_image: "", author: "Ferova Agency", language: "es", active: false, published_at: new Date().toISOString().slice(0, 16) };
-const fieldClass = "mt-1.5 w-full rounded-xl border border-border bg-background px-3 py-2.5 text-sm text-foreground outline-none focus:border-gold/60";
+const fieldClass = "admin-field";
 const slugify = (value: string) => value.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "");
 
 export default function AdminBlogEditor() {
@@ -25,6 +27,10 @@ export default function AdminBlogEditor() {
   const [generating, setGenerating] = useState(false);
   const [uploading, setUploading] = useState(false);
   const destination = useMemo(() => `${form.language === "en" ? "/en/blog/" : "/blog/"}${form.slug || "slug-del-articulo"}`, [form.language, form.slug]);
+  // Reglas editoriales (CLAUDE.md §3–§4): orientativas, se recalculan en vivo y nunca bloquean el guardado.
+  const rules = useMemo(() => checkEditorialRules(form, form.language), [form]);
+  const summary = useMemo(() => summarizeRules(rules), [rules]);
+  const wordCount = useMemo(() => words(htmlToText(form.content)).length, [form.content]);
 
   useEffect(() => {
     if (!id) return;
@@ -89,23 +95,58 @@ export default function AdminBlogEditor() {
     setSaving(false);
   };
 
-  if (loading) return <AdminLayout title="Artículo"><div className="flex justify-center py-16"><Loader2 className="h-6 w-6 animate-spin" /></div></AdminLayout>;
-  return <AdminLayout title={id ? "Editar artículo" : "Nuevo artículo"}>
-    <div className="mb-6"><Link to="/admin/blog" className="inline-flex items-center gap-2 text-sm text-muted-foreground"><ArrowLeft className="h-4 w-4" /> Volver a artículos</Link>{isLegacy && <p className="mt-4 rounded-xl border border-amber-500/25 bg-amber-500/10 p-4 text-sm">Este artículo conserva su URL actual. Añade tus datos, genera el borrador con IA y guárdalo para convertirlo en contenido administrable.</p>}</div>
-    <form onSubmit={save} className="grid gap-6 xl:grid-cols-[minmax(0,1fr)_340px]">
-      <div className="space-y-6"><section className="glass-card p-5 sm:p-6"><h2 className="font-display text-lg font-semibold">Contenido editable</h2><div className="mt-5 grid gap-4 sm:grid-cols-2">
-        <Field label="Versión del sitio *"><select className={fieldClass} value={form.language} onChange={(e) => update("language", e.target.value as BlogLanguage)}><option value="es">Español — /blog</option><option value="en">Inglés — /en/blog</option></select></Field>
-        <Field label="Autor"><input className={fieldClass} value={form.author} onChange={(e) => update("author", e.target.value)} /></Field>
-        <Field label="Título *"><input ref={inputRef} className={fieldClass} value={form.title} onChange={(e) => { update("title", e.target.value); if (!id && !form.slug) update("slug", slugify(e.target.value)); }} /></Field>
-        <Field label="Slug *"><input className={fieldClass} value={form.slug} onChange={(e) => update("slug", slugify(e.target.value))} /></Field>
-        <Field label="Categoría"><input className={fieldClass} value={form.category} onChange={(e) => update("category", e.target.value)} /></Field><Field label="Keyword"><input className={fieldClass} value={form.keyword} onChange={(e) => update("keyword", e.target.value)} /></Field>
-      </div><Field label="Extracto"><textarea rows={3} className={fieldClass} value={form.excerpt} onChange={(e) => update("excerpt", e.target.value)} /></Field><div className="mt-5"><div className="text-sm font-medium">Contenido *</div><p className="mt-1 text-xs text-muted-foreground">Escribe y da formato visualmente; no necesitas usar HTML.</p><RichTextEditor value={form.content} onChange={(value) => update("content", value)} /></div></section>
-      <details className="glass-card p-5 sm:p-6"><summary className="cursor-pointer font-display text-lg font-semibold">SEO y vista en Google</summary><p className="mt-2 text-xs text-muted-foreground">Opcional. Si lo dejas vacío, se usarán el título y el extracto.</p><Field label={`Meta title · ${form.meta_title.length}/60`}><input maxLength={70} className={fieldClass} value={form.meta_title} onChange={(e) => update("meta_title", e.target.value)} /></Field><Field label={`Meta description · ${form.meta_description.length}/155`}><textarea maxLength={170} rows={3} className={fieldClass} value={form.meta_description} onChange={(e) => update("meta_description", e.target.value)} /></Field></details></div>
-      <aside className="space-y-5"><section className="glass-card p-5"><h2 className="font-semibold">Publicación</h2><p className="mt-2 break-all text-xs text-muted-foreground">Destino: {destination}</p><Field label="Fecha"><input type="datetime-local" className={fieldClass} value={form.published_at} onChange={(e) => update("published_at", e.target.value)} /></Field><label className="mt-4 flex items-center gap-3 text-sm"><input type="checkbox" checked={form.active} onChange={(e) => update("active", e.target.checked)} /> Publicar en esta versión</label><button type="submit" disabled={saving} className="mt-5 inline-flex w-full items-center justify-center gap-2 rounded-xl bg-primary px-4 py-2.5 text-sm font-medium text-primary-foreground disabled:opacity-50">{saving ? <Loader2 className="h-4 w-4 animate-spin" /> : <Save className="h-4 w-4" />} Guardar cambios</button></section>
-      <section className="glass-card p-5"><h2 className="flex items-center gap-2 font-semibold"><Sparkles className="h-4 w-4" /> Asistente de redacción</h2><p className="mt-2 text-xs text-muted-foreground">Genera contenido directamente en el idioma elegido; no traduce otro artículo.</p><textarea rows={5} className={fieldClass} value={ideas} onChange={(e) => setIdeas(e.target.value)} placeholder="Ideas, enfoque y datos que debe incluir" /><button type="button" onClick={generate} disabled={generating} className="mt-3 inline-flex w-full items-center justify-center gap-2 rounded-xl border border-border px-4 py-2.5 text-sm">{generating ? <Loader2 className="h-4 w-4 animate-spin" /> : <Sparkles className="h-4 w-4" />} Generar borrador</button></section>
-      <section className="glass-card p-5"><h2 className="font-semibold">Imagen de portada</h2>{form.cover_image && <img src={form.cover_image} alt="Portada" className="mt-3 aspect-video w-full rounded-xl object-cover" />}<button type="button" onClick={() => inputRef.current?.focus()} className="sr-only">Enfocar título</button><label className="mt-3 inline-flex w-full cursor-pointer items-center justify-center gap-2 rounded-xl border border-border px-4 py-2.5 text-sm"><ImagePlus className="h-4 w-4" /> {uploading ? "Subiendo..." : "Subir imagen"}<input type="file" accept="image/*" className="hidden" disabled={uploading} onChange={(e) => e.target.files?.[0] && void uploadCover(e.target.files[0])} /></label></section></aside>
+  if (loading) return <AdminLayout title="Artículo"><div className="flex justify-center py-16"><Loader2 className="h-6 w-6 animate-spin" aria-label="Cargando" /></div></AdminLayout>;
+  const len = (value: string) => [...value.trim()].length;
+  return <AdminLayout title={id ? "Editar artículo" : "Nuevo artículo"} description={destination}>
+    <div className="mb-4"><Link to="/admin/blog" className="inline-flex items-center gap-2 text-sm font-medium text-muted-foreground hover:text-[#2f2d56]"><ArrowLeft className="h-4 w-4" aria-hidden="true" /> Volver a artículos</Link>{isLegacy && <p className="admin-alert admin-alert--info mt-3">Este artículo conserva su URL actual. Añade tus datos, genera el borrador con IA y guárdalo para convertirlo en contenido administrable.</p>}</div>
+    <form onSubmit={save} className="grid items-start gap-5 xl:grid-cols-[minmax(0,1fr)_360px]">
+      <div className="min-w-0 space-y-5">
+        <section className="admin-card"><h2 className="admin-card__title">Datos del artículo</h2><div className="mt-4 grid gap-4 sm:grid-cols-2">
+          <Field label="Versión del sitio *"><select className={fieldClass} value={form.language} onChange={(e) => update("language", e.target.value as BlogLanguage)}><option value="es">Español — /blog</option><option value="en">Inglés — /en/blog</option></select></Field>
+          <Field label="Autor"><input className={fieldClass} value={form.author} onChange={(e) => update("author", e.target.value)} /></Field>
+          <Field label="Título *" count={`${len(form.title)}/65`} over={len(form.title) > 65}><input ref={inputRef} className={fieldClass} value={form.title} onChange={(e) => { update("title", e.target.value); if (!id && !form.slug) update("slug", slugify(e.target.value)); }} /></Field>
+          <Field label="Slug *"><input className={`${fieldClass} admin-mono`} value={form.slug} onChange={(e) => update("slug", slugify(e.target.value))} /></Field>
+          <Field label="Categoría"><input className={fieldClass} value={form.category} onChange={(e) => update("category", e.target.value)} /></Field>
+          <Field label="Keyword"><input className={fieldClass} value={form.keyword} onChange={(e) => update("keyword", e.target.value)} placeholder="Keyword principal" /></Field>
+        </div><div className="mt-4"><Field label="Extracto"><textarea rows={3} className={fieldClass} value={form.excerpt} onChange={(e) => update("excerpt", e.target.value)} /></Field></div></section>
+
+        <section className="admin-card"><h2 className="admin-card__title flex items-center gap-2"><Sparkles className="h-4 w-4 text-[#c0930e]" aria-hidden="true" /> Asistente de redacción</h2><p className="admin-sub mt-1">Genera contenido directamente en el idioma elegido; no traduce otro artículo. Necesita título, keyword e ideas.</p><textarea rows={4} aria-label="Ideas principales para el generador" className={fieldClass} value={ideas} onChange={(e) => setIdeas(e.target.value)} placeholder="Ideas, enfoque y datos que debe incluir" /><button type="button" onClick={generate} disabled={generating} className="admin-btn admin-btn--ghost mt-3">{generating ? <Loader2 className="animate-spin" aria-hidden="true" /> : <Sparkles aria-hidden="true" />} Generar borrador</button></section>
+
+        <section className="admin-card"><div className="flex flex-wrap items-baseline justify-between gap-2"><h2 className="admin-card__title">Contenido *</h2><span className="admin-mono text-xs text-muted-foreground">{wordCount} palabras</span></div><p className="admin-sub mt-1">Escribe y da formato visualmente; no necesitas usar HTML. Usa H2 para secciones y H3 dentro de ellas.</p><RichTextEditor value={form.content} onChange={(value) => update("content", value)} /></section>
+
+        <section className="admin-card"><h2 className="admin-card__title">SEO y vista en Google</h2><p className="admin-sub mt-1">Opcional. Si lo dejas vacío, se usarán el título y el extracto.</p><div className="mt-4 space-y-4">
+          <Field label="Meta title" count={`${len(form.meta_title)}/60`} over={len(form.meta_title) > 60}><input maxLength={70} className={fieldClass} value={form.meta_title} onChange={(e) => update("meta_title", e.target.value)} /></Field>
+          <Field label="Meta description" count={`${len(form.meta_description)} · 150–160`} over={len(form.meta_description) > 160}><textarea maxLength={170} rows={3} className={fieldClass} value={form.meta_description} onChange={(e) => update("meta_description", e.target.value)} /></Field>
+          <div className="admin-serp" aria-label="Vista previa en Google"><div className="admin-serp__url">seoparaecommerce.co{destination}</div><div className="admin-serp__title">{form.meta_title || form.title || "Título del artículo"}</div><div className="admin-serp__desc">{form.meta_description || form.excerpt || "La meta description aparecerá aquí."}</div></div>
+        </div></section>
+
+        <section className="admin-card"><h2 className="admin-card__title">Imagen de portada</h2>{form.cover_image ? <img src={form.cover_image} alt="Portada" className="mt-3 aspect-video w-full rounded-xl object-cover" /> : <p className="admin-sub mt-1">Formato horizontal 16:9, máximo 5 MB.</p>}<button type="button" onClick={() => inputRef.current?.focus()} className="sr-only">Enfocar título</button><label className="admin-btn admin-btn--ghost mt-3 cursor-pointer focus-within:outline focus-within:outline-2 focus-within:outline-[#541014]"><ImagePlus aria-hidden="true" /> {uploading ? "Subiendo..." : form.cover_image ? "Cambiar imagen" : "Subir imagen"}<input type="file" accept="image/*" className="sr-only" disabled={uploading} onChange={(e) => e.target.files?.[0] && void uploadCover(e.target.files[0])} /></label></section>
+      </div>
+
+      <aside className="admin-sticky min-w-0 space-y-5">
+        <section className="admin-card"><h2 className="admin-card__title">Publicación</h2><p className="admin-mono mt-2 break-all text-xs text-muted-foreground">Destino: {destination}</p><div className="mt-4"><Field label="Fecha"><input type="datetime-local" className={fieldClass} value={form.published_at} onChange={(e) => update("published_at", e.target.value)} /></Field></div><label className="mt-4 flex items-center gap-3 text-sm font-medium"><input type="checkbox" className="h-4 w-4 accent-[#541014]" checked={form.active} onChange={(e) => update("active", e.target.checked)} /> Publicar en esta versión</label>
+          <a href="#reglas-editoriales" className="mt-4 flex flex-wrap items-center gap-1.5 rounded-xl bg-[#f7f8fc] px-3 py-2 text-xs" aria-label={`Reglas editoriales: ${summary.pass} cumplidas, ${summary.warn} avisos, ${summary.fail} por corregir`}><span className="font-semibold text-foreground">Reglas:</span><Chip tone="ok">{summary.pass} OK</Chip><Chip tone="wait">{summary.warn} avisos</Chip><Chip tone="bad">{summary.fail} corregir</Chip></a>
+          <button type="submit" disabled={saving} className="admin-btn admin-btn--block mt-3">{saving ? <Loader2 className="animate-spin" aria-hidden="true" /> : <Save aria-hidden="true" />} Guardar cambios</button>
+          <p className="mt-2 text-xs text-muted-foreground">Las reglas son orientativas: no bloquean el guardado.</p>
+        </section>
+        <EditorialRulesPanel rules={rules} language={form.language} />
+      </aside>
     </form>
   </AdminLayout>;
 }
 
-function Field({ label, children }: { label: string; children: React.ReactNode }) { return <label className="mt-4 block text-sm font-medium text-foreground">{label}{children}</label>; }
+const RULE_ICON = { pass: CheckCircle2, warn: AlertTriangle, fail: XCircle } as const;
+const RULE_STATE = { pass: "OK", warn: "Aviso", fail: "Corregir" } as const;
+
+function EditorialRulesPanel({ rules, language }: { rules: EditorialRule[]; language: BlogLanguage }) {
+  return <section id="reglas-editoriales" className="admin-card scroll-mt-28" aria-labelledby="reglas-title">
+    <div className="flex items-baseline justify-between gap-2"><h2 id="reglas-title" className="admin-card__title">Reglas editoriales</h2><span className="admin-mono text-xs uppercase text-muted-foreground">{language}</span></div>
+    <p className="admin-sub mt-1 text-xs">Se revisan en vivo mientras escribes.</p>
+    <ul className="admin-rules mt-3" aria-live="polite">
+      {rules.map((rule) => { const Icon = RULE_ICON[rule.status]; return <li key={rule.id} className={`admin-rule admin-rule--${rule.status}`}><Icon aria-hidden="true" /><div className="min-w-0"><div className="flex items-start justify-between gap-2"><span className="admin-rule__label">{rule.label}</span><span className="admin-rule__state shrink-0">{RULE_STATE[rule.status]}</span></div><p className="admin-rule__detail">{rule.detail}</p></div></li>; })}
+    </ul>
+    <p className="mt-3 border-t border-border pt-3 text-xs text-muted-foreground">Reglas completas en <code className="admin-mono text-[#2f2d56]">CLAUDE.md</code> §3–§4.</p>
+  </section>;
+}
+
+function Field({ label, count, over, children }: { label: string; count?: string; over?: boolean; children: React.ReactNode }) { return <label className="admin-label">{label}{count && <small className={`admin-mono ml-2 ${over ? "!text-[#8b1d22]" : ""}`}>· {count}</small>}{children}</label>; }

@@ -45,11 +45,12 @@ const COPY = {
     industries: ["Tecnología especializada", "Real estate", "Servicios"],
     languagesLabel: "Idiomas",
     languages: "Español nativo · Inglés B1",
-    resultsTitle: "Algunos resultados",
+    resultsTitle: "Resultados del portafolio",
+    // Solo cifras publicadas en el portafolio de Ferova (src/data/portfolio.ts).
     results: [
-      "Un ecommerce de mascotas pasó de ~COP 3 M a más de COP 10 M en ventas mensuales tras rediseño + SEO.",
-      "Sitios que llegaron a 10–15 llamadas o mensajes diarios desde Google.",
-      "Catálogos de más de 14.000 productos.",
+      "Netpower IT: de 0 a COP 13 M en ventas mensuales en tres meses.",
+      "Tres preescolares de Florida: visibilidad en respuestas de IA del 5 % al 50 % en tres meses (uno de los tres, en las consultas analizadas).",
+      "Caro Color: cerca de 100 reseñas positivas en menos de un mes.",
     ],
     portfolioCta: "Ver los casos en el portafolio",
     credentialsKicker: "Formación",
@@ -104,11 +105,12 @@ const COPY = {
     industries: ["Specialised technology", "Real estate", "Services"],
     languagesLabel: "Languages",
     languages: "Spanish (native) · English B1",
-    resultsTitle: "Some results",
+    resultsTitle: "Portfolio results",
+    // Only figures published in the Ferova portfolio (src/data/portfolio.ts).
     results: [
-      "A pet ecommerce store grew from ~COP 3M to over COP 10M in monthly sales after a redesign + SEO.",
-      "Sites that reached 10–15 calls or messages a day from Google.",
-      "Catalogues of more than 14,000 products.",
+      "Netpower IT: from 0 to COP 13M in monthly sales within three months.",
+      "Three Florida preschools: visibility in AI answers from 5% to 50% in three months (one of the three, for the queries tracked).",
+      "Caro Color: around 100 positive reviews in under a month.",
     ],
     portfolioCta: "See the case studies in the portfolio",
     credentialsKicker: "Education",

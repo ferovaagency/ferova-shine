@@ -1,6 +1,5 @@
 import { useEffect, useState, useCallback } from 'react';
 import { Link } from 'react-router-dom';
-import { motion, AnimatePresence } from 'framer-motion';
 import { Cookie, X, Settings, Check } from 'lucide-react';
 import { trackEvent } from '@/lib/analytics';
 
@@ -189,19 +188,14 @@ const CookieBanner = ({ lang = 'es' }: Props) => {
   const saveCustom = () => { persist({ analytics, marketing, functional }); trackEvent('cookies_customized', { analytics, marketing, functional }); };
 
   return (
-    <AnimatePresence>
-      {visible && (
-        <motion.div
-          initial={{ y: 100, opacity: 0 }}
-          animate={{ y: 0, opacity: 1 }}
-          exit={{ y: 100, opacity: 0 }}
-          transition={{ type: 'spring', damping: 22 }}
-          className="cookie-consent-panel fixed bottom-4 left-4 right-4 md:left-6 md:right-auto md:max-w-md z-[90]"
+    visible ? (
+        <div
+          className="fx-light animate-in fade-in slide-in-from-bottom-4 duration-300 motion-reduce:animate-none cookie-consent-panel fixed bottom-4 left-4 right-4 md:left-6 md:right-auto md:max-w-md z-[90]"
         >
           <div className="bg-card border border-border rounded-2xl shadow-2xl p-4">
             <div className="flex items-start gap-3">
-              <div className="cookie-banner-icon w-10 h-10 rounded-xl bg-gold/15 flex items-center justify-center shrink-0">
-                <Cookie className="w-5 h-5 text-gold" />
+              <div className="cookie-banner-icon w-10 h-10 rounded-xl bg-[#e4e1f3] flex items-center justify-center shrink-0">
+                <Cookie className="w-5 h-5 text-[#2f2d56]" />
               </div>
               <div className="flex-1 min-w-0">
                 <div className="flex items-start justify-between gap-2">
@@ -210,7 +204,7 @@ const CookieBanner = ({ lang = 'es' }: Props) => {
                 </div>
                 <p className="text-xs text-muted-foreground mt-1 leading-relaxed">
                   {t.body}{' '}
-                  <Link to={policyHref} className="underline text-gold">{t.policy}</Link>.
+                  <Link to={policyHref} className="underline text-[#541014]">{t.policy}</Link>.
                 </p>
 
                 {settingsOpen && (
@@ -226,7 +220,7 @@ const CookieBanner = ({ lang = 'es' }: Props) => {
                         <label key={k} className={`flex items-start gap-3 p-2 rounded-lg ${dis ? 'opacity-60' : 'cursor-pointer hover:bg-accent'}`}>
                           <input
                             type="checkbox" checked={val} disabled={dis} onChange={set}
-                            className="mt-0.5 accent-gold"
+                            className="mt-0.5 accent-[#541014]"
                           />
                           <div className="flex-1">
                             <p className="text-xs font-semibold text-foreground">{cat.name}</p>
@@ -240,13 +234,13 @@ const CookieBanner = ({ lang = 'es' }: Props) => {
 
                 <div className="flex flex-wrap gap-2 mt-4">
                   {settingsOpen ? (
-                    <button onClick={saveCustom} className="btn-gold text-xs !py-2 !px-4 flex items-center gap-1.5">
+                    <button onClick={saveCustom} className="fx-btn fx-btn--sm">
                       <Check className="w-3.5 h-3.5" />{t.save}
                     </button>
                   ) : (
                     <>
-                      <button onClick={acceptAll} className="text-xs px-4 py-2 rounded-full border border-gold bg-gold text-[#3c3c3b] font-semibold hover:bg-gold/90">{t.accept}</button>
-                      <button onClick={essentialOnly} className="text-xs px-4 py-2 rounded-full border border-gold text-foreground font-semibold hover:bg-gold/10">
+                      <button onClick={acceptAll} className="text-xs px-4 py-2 rounded-full border border-[#541014] bg-[#541014] text-white font-semibold hover:bg-[#6d1a1f]">{t.accept}</button>
+                      <button onClick={essentialOnly} className="text-xs px-4 py-2 rounded-full border border-[#dfdcea] text-foreground font-semibold hover:border-[#1f1e2b]">
                         {t.essential}
                       </button>
                       <button onClick={() => setSettingsOpen(true)} className="text-xs px-4 py-2 rounded-full text-muted-foreground hover:text-foreground flex items-center gap-1.5">
@@ -258,9 +252,8 @@ const CookieBanner = ({ lang = 'es' }: Props) => {
               </div>
             </div>
           </div>
-        </motion.div>
-      )}
-    </AnimatePresence>
+        </div>
+      ) : null
   );
 };
 

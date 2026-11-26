@@ -6,6 +6,7 @@ import SEO from "@/components/SEO";
 import { SITE_ORIGIN } from "@/config/routes";
 import { POSITIONING, type PositioningKind } from "@/content/positioning";
 import type { ReactNode } from "react";
+import { CaseGrid } from "@/components/fx/CaseGrid";
 import { FaqList, FeraButton, PageHero, Panel, ProcessSteps, Section, SectionHeading } from "@/components/fx/primitives";
 
 /** Banda vino de cierre (misma pieza visual que CtaBand) con etiqueta sobre el titular. */
@@ -244,14 +245,10 @@ export default function PositioningPage({ kind }: { kind: PositioningKind }) {
         {/* 09 · prueba — se omite si no hay cifras verificables */}
         {showProof && (
           <Section tone={nextTone()}>
+            {/* The cases are the Ferova portfolio cases (src/data/portfolio.ts). */}
             <SectionHeading eyebrow="Evidence" title={c.proof.heading} />
-            <div className="mt-10 grid gap-5 md:grid-cols-3">
-              {c.proof.stats.map((s) => (
-                <article key={s.value} className="case-card">
-                  <strong className="!mt-0">{s.value}</strong>
-                  <p className="fx-muted mt-3 leading-relaxed">{s.description}</p>
-                </article>
-              ))}
+            <div className="mt-10">
+              <CaseGrid lang="en" />
             </div>
           </Section>
         )}

@@ -3,6 +3,7 @@ import { supabase } from "@/integrations/supabase/client";
 import AdminLogin from "./AdminLogin";
 import { Loader2 } from "lucide-react";
 import { caseCms } from "@/integrations/supabase/cms-types";
+import "@/styles/admin.css";
 
 interface Props {
   children: React.ReactNode;
@@ -38,9 +39,9 @@ export default function AdminGuard({ children }: Props) {
 
   if (status === "loading") {
     return (
-      <div className="min-h-screen flex items-center justify-center">
-        <Loader2 className="h-6 w-6 animate-spin text-muted-foreground" />
-      </div>
+      <main className="admin-world grid place-items-center text-muted-foreground" aria-busy="true">
+        <span className="inline-flex items-center gap-2 text-sm"><Loader2 className="h-5 w-5 animate-spin" aria-hidden="true" /> Verificando acceso…</span>
+      </main>
     );
   }
 
@@ -50,21 +51,24 @@ export default function AdminGuard({ children }: Props) {
 
   if (status === "forbidden") {
     return (
-      <div className="min-h-screen flex flex-col items-center justify-center gap-4 p-6 text-center">
-        <h1 className="text-2xl font-semibold">Acceso restringido</h1>
-        <p className="text-muted-foreground max-w-md">
-          Tu cuenta no tiene permisos de administración editorial. Contacta al propietario del sitio si crees que es un error.
-        </p>
-        <button
-          className="text-sm underline text-muted-foreground"
-          onClick={async () => {
-            await supabase.auth.signOut();
-            check();
-          }}
-        >
-          Cerrar sesión
-        </button>
-      </div>
+      <main className="admin-world grid place-items-center px-4 py-10">
+        <div className="admin-card w-full max-w-md text-center !p-8">
+          <h1 className="text-2xl">Acceso restringido</h1>
+          <p className="admin-sub mt-3 leading-relaxed">
+            Tu cuenta no tiene permisos de administración editorial. Contacta al propietario del sitio si crees que es un error.
+          </p>
+          <button
+            type="button"
+            className="admin-btn admin-btn--ghost mt-6"
+            onClick={async () => {
+              await supabase.auth.signOut();
+              check();
+            }}
+          >
+            Cerrar sesión y usar otra cuenta
+          </button>
+        </div>
+      </main>
     );
   }
 

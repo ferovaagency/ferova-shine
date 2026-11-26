@@ -1,15 +1,18 @@
-import PortfolioHighlights from "@/components/PortfolioHighlights";
-import { useState } from 'react';
-import { Link } from 'react-router-dom';
 import Header from '@/components/layout/Header';
 import Footer from '@/components/layout/Footer';
-import { AnimatedSection, StaggerContainer, StaggerItem, ScaleOnHover, PageTransition } from '@/components/ui/motion';
-import { motion } from 'framer-motion';
-import { Target, BarChart3, ShoppingCart, ArrowRight, MessageCircle, Rocket } from 'lucide-react';
+import { Target, BarChart3, ShoppingCart, Rocket } from 'lucide-react';
 import SEO from '@/components/SEO';
+import { CaseGrid } from '@/components/fx/CaseGrid';
+import { PORTFOLIO_CASES, portfolioUrl } from '@/data/portfolio';
+import { CtaBand, FeraButton, FxLink, PageHero, Section, SectionHeading } from '@/components/fx/primitives';
 
 interface Props { lang?: 'es' | 'en' | 'pt'; }
 
+/**
+ * Casos heredados. Ya NO se listan en la página pública (los casos son los del
+ * portafolio, src/data/portfolio.ts); se conservan porque el admin
+ * (AdminCases, AdminCaseEditor) y las URL antiguas de detalle los usan.
+ */
 export const casesData = {
   es: [
     {
@@ -91,113 +94,94 @@ export const casesData = {
   ],
 };
 
+const COPY = {
+  en: {
+    t: 'Case Studies — SEO and Web Development | Ferova',
+    d: 'Case studies from the Ferova portfolio: Netpower IT, All For All, three Florida preschools and Caro Color. What was done, how it was measured and where each number comes from.',
+    p: '/en/case-studies',
+    home: 'Home', homePath: '/en', crumb: 'Case studies',
+    eyebrow: 'Ferova portfolio',
+    h1: 'Case studies',
+    intro: 'These are the cases from the Ferova portfolio. Each one explains what was done, how it was measured and where the number comes from.',
+    kicker: 'Projects',
+    title: 'What was done and what changed in each project.',
+    full: 'See the full portfolio',
+    closeTitle: 'Tell me what your agency needs to deliver.',
+    closeBody: 'Share the skill, volume, date and collaboration model, and Fera prepares scope, price and availability.',
+    cta: 'Talk to Fera', contact: 'Contact', contactPath: '/en/contact',
+  },
+  pt: {
+    t: 'Casos de Sucesso — SEO e Desenvolvimento Web | Ferova',
+    d: 'Casos do portfólio da Ferova: Netpower IT, All For All, três pré-escolas da Flórida e Caro Color. O que foi feito, como foi medido e de onde vem cada número.',
+    p: '/pt/casos-de-sucesso',
+    home: 'Início', homePath: '/pt', crumb: 'Casos de sucesso',
+    eyebrow: 'Portfólio da Ferova',
+    h1: 'Casos de sucesso',
+    intro: 'Estes são os casos do portfólio da Ferova. Cada um explica o que foi feito, como foi medido e de onde vem o número.',
+    kicker: 'Projetos',
+    title: 'O que foi feito e o que mudou em cada projeto.',
+    full: 'Ver o portfólio completo',
+    closeTitle: 'Conte o que sua agência precisa entregar.',
+    closeBody: 'Indique habilidade, volume, data e modelo de colaboração para preparar escopo, preço e disponibilidade.',
+    cta: 'Falar com a Fera', contact: 'Contato', contactPath: '/pt/contato',
+  },
+  es: {
+    t: 'Casos de éxito de SEO y desarrollo web | Ferova',
+    d: 'Casos del portafolio de Ferova: Netpower IT, All For All, tres preescolares de Florida y Caro Color. Qué se hizo, cómo se midió y de dónde sale cada cifra.',
+    p: '/casos-de-exito',
+    home: 'Inicio', homePath: '/', crumb: 'Casos de éxito',
+    eyebrow: 'Portafolio de Ferova',
+    h1: 'Casos de éxito',
+    intro: 'Estos son los casos del portafolio de Ferova. Cada uno explica qué se hizo, cómo se midió y de dónde sale la cifra.',
+    kicker: 'Proyectos',
+    title: 'Qué se hizo y qué cambió en cada proyecto.',
+    full: 'Ver el portafolio completo',
+    closeTitle: 'Cotiza las horas o tareas que necesita tu agencia.',
+    closeBody: 'Indica habilidad, volumen, fecha y modalidad de colaboración para preparar alcance, precio y disponibilidad.',
+    cta: 'Hablar con Fera', contact: 'Contacto', contactPath: '/contacto',
+  },
+};
+
 const CasosDeExito = ({ lang = 'es' }: Props) => {
-  const [filter, setFilter] = useState('all');
-  const cases = casesData[lang] || casesData.es;
-  const filters = lang === 'es'
-    ? [{ id: 'all', label: 'Todos' }, { id: 'seo', label: 'SEO' }, { id: 'pauta', label: 'Pauta Digital' }, { id: 'webapp', label: 'Web Apps' }]
-    : lang === 'pt'
-    ? [{ id: 'all', label: 'Todos' }, { id: 'seo', label: 'SEO' }, { id: 'pauta', label: 'Tráfego Pago' }, { id: 'webapp', label: 'Web Apps' }]
-    : [{ id: 'all', label: 'All' }, { id: 'seo', label: 'SEO' }, { id: 'pauta', label: 'Digital Ads' }, { id: 'webapp', label: 'Web Apps' }];
-
-
-  const filtered = filter === 'all' ? cases : cases.filter(c => c.category === filter);
-  const basePath = lang === 'es' ? '/casos-de-exito' : lang === 'pt' ? '/pt/casos-de-sucesso' : '/en/case-studies';
-
-  const seo = lang === 'en'
-    ? { t: 'Case Studies — Real E-commerce Results | Ferova', d: 'Real case studies: e-commerce stores that multiplied sales with SEO, web apps and digital ads from Ferova Agency.', p: '/en/case-studies' }
-    : lang === 'pt'
-    ? { t: 'Casos de Sucesso — Resultados Reais | Ferova', d: 'Casos reais: lojas virtuais que multiplicaram vendas com SEO, web apps e tráfego pago da Ferova Agency.', p: '/pt/casos-de-sucesso' }
-    : { t: 'Casos de Éxito — Resultados Reales | Ferova', d: 'Casos reales: tiendas online que multiplicaron ventas con SEO, web apps y pauta digital de Ferova Agency.', p: '/casos-de-exito' };
+  const c = COPY[lang] ?? COPY.es;
+  const l = lang === 'en' ? 'en' : 'es';
+  const crumbs = [{ name: c.home, path: c.homePath }, { name: c.crumb, path: c.p }];
+  const itemList = {
+    '@context': 'https://schema.org',
+    '@type': 'ItemList',
+    name: c.h1,
+    itemListElement: PORTFOLIO_CASES.map((item, index) => ({
+      '@type': 'ListItem',
+      position: index + 1,
+      name: item.name[l],
+      url: portfolioUrl(l, item.id),
+    })),
+  };
 
   return (
-    <PageTransition>
-      <SEO title={seo.t} description={seo.d} path={seo.p} lang={lang} />
+    <div className="fx-site min-h-screen">
+      <SEO title={c.t} description={c.d} path={c.p} lang={lang} breadcrumbs={crumbs} jsonLd={itemList} />
       <Header currentLang={lang} />
-      <main className="pt-20">
-        <section className="py-20 md:py-28 text-center relative grid-pattern">
-          <div className="absolute inset-0" style={{ background: 'radial-gradient(ellipse at 50% 30%, hsla(45, 86%, 40%, 0.06), transparent 60%)' }} />
-          <div className="container mx-auto px-4 md:px-6 relative z-10">
-            <AnimatedSection>
-              <h1 className="text-4xl md:text-5xl lg:text-6xl font-display font-bold mb-6">
-                {lang === 'es' ? 'Casos de Éxito Reales' : lang === 'pt' ? 'Casos de Sucesso Reais' : 'Real Case Studies'}
-              </h1>
-            </AnimatedSection>
-            <AnimatedSection delay={0.1}>
-              <p className="text-muted-foreground text-lg max-w-xl mx-auto">
-                {lang === 'es' ? 'Resultados comprobables de nuestros clientes en Colombia.' : lang === 'pt' ? 'Resultados comprováveis dos nossos clientes na Colômbia.' : 'Proven results from our clients in Colombia.'}
-              </p>
-            </AnimatedSection>
-          </div>
-        </section>
-        <div className="personal-shell py-12"><PortfolioHighlights lang={lang} /></div>
+      <main id="contenido-principal" className="pt-20">
+        <PageHero eyebrow={c.eyebrow} title={c.h1} intro={c.intro} breadcrumbs={crumbs.slice(1)} lang={lang} />
 
-        <section className="py-20 md:py-28">
-          <div className="container mx-auto px-4 md:px-6">
-            <AnimatedSection>
-              <div className="flex flex-wrap gap-3 justify-center mb-16">
-                {filters.map(f => (
-                  <motion.button key={f.id} whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }} onClick={() => setFilter(f.id)}
-                    className={`px-5 py-2 rounded-full text-sm font-medium transition-all ${filter === f.id ? 'bg-gold text-primary-foreground' : 'border border-border text-muted-foreground hover:text-foreground hover:border-gold/50'}`}>
-                    {f.label}
-                  </motion.button>
-                ))}
-              </div>
-            </AnimatedSection>
-
-            <StaggerContainer className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-6xl mx-auto">
-              {filtered.map((c, i) => {
-                const IconComp = c.icon;
-                return (
-                  <StaggerItem key={i}>
-                    <ScaleOnHover>
-                      <Link to={`${basePath}/${c.id}`} className="glass-card p-6 hover:border-gold/30 transition-all duration-300 group block h-full">
-                        <div className="aspect-video rounded-xl mb-6 flex items-center justify-center bg-gold/5">
-                          <IconComp className="w-12 h-12 text-gold/50" />
-                        </div>
-                        <div className="flex items-center justify-between mb-4">
-                          <span className="text-sm text-gold font-medium">{c.country}</span>
-                          <span className="text-xs text-muted-foreground px-2 py-1 rounded-full border border-border/50">
-                            {filters.find(f => f.id === c.category)?.label}
-                          </span>
-                        </div>
-                        <h3 className="text-xl font-display font-bold mb-3 group-hover:text-gold transition-colors">{c.title}</h3>
-                        <p className="text-muted-foreground text-sm mb-6 line-clamp-3">{c.challenge}</p>
-                        <div className="grid grid-cols-2 gap-3 mb-6">
-                          {c.results.slice(0, 2).map((r, j) => (
-                            <div key={j} className="text-center">
-                              <div className="text-gold font-display font-bold text-lg">{r.value}</div>
-                              <div className="text-muted-foreground text-xs">{r.metric}</div>
-                            </div>
-                          ))}
-                        </div>
-                        <span className="inline-flex items-center gap-1 text-gold text-sm font-medium group-hover:gap-2 transition-all">
-                          {lang === 'es' ? 'Ver caso completo' : lang === 'pt' ? 'Ver caso completo' : 'View full case'} <ArrowRight className="w-4 h-4" />
-                        </span>
-                      </Link>
-                    </ScaleOnHover>
-                  </StaggerItem>
-                );
-              })}
-            </StaggerContainer>
+        <Section>
+          <SectionHeading eyebrow={c.kicker} title={c.title} />
+          <div className="mt-12">
+            <CaseGrid lang={lang} />
           </div>
-        </section>
-
-        <section className="py-20 md:py-28 bg-surface">
-          <div className="container mx-auto px-4 md:px-6 text-center">
-            <AnimatedSection>
-              <h2 className="text-3xl md:text-4xl font-display font-bold mb-6">
-                {lang === 'es' ? '¿Tu e-commerce podría ser el próximo?' : lang === 'pt' ? 'Seu e-commerce pode ser o próximo?' : 'Could your e-commerce be next?'}
-              </h2>
-              <motion.a whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.97 }} href="https://wa.me/17866894686" target="_blank" rel="noopener noreferrer" className="btn-gold inline-flex items-center gap-2">
-                <MessageCircle className="w-5 h-5" /> {lang === 'es' ? 'Solicitar cotización' : lang === 'pt' ? 'Solicitar orçamento' : 'Request a quote'}
-              </motion.a>
-            </AnimatedSection>
+          <div className="mt-12 flex justify-center">
+            <FxLink to={portfolioUrl(l)} variant="outline">{c.full}</FxLink>
           </div>
-        </section>
+        </Section>
+
+        <CtaBand title={c.closeTitle} body={c.closeBody}>
+          <FeraButton source={`case_studies_${lang}_final`}>{c.cta}</FeraButton>
+          <FxLink to={c.contactPath} variant="outline">{c.contact}</FxLink>
+        </CtaBand>
       </main>
       <Footer currentLang={lang} />
-    </PageTransition>
+    </div>
   );
 };
 

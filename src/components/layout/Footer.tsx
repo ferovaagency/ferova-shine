@@ -164,7 +164,7 @@ const Footer = ({ currentLang, lang }: FooterProps) => {
             { title: d.legal, links: d.legalLinks },
           ].map((section) => (
             <div key={section.title}>
-              <h4 className="mb-4 text-sm font-display font-semibold text-[#1f1e2b]">{section.title}</h4>
+              <h2 className="mb-4 text-sm font-display font-semibold text-[#1f1e2b]">{section.title}</h2>
               <ul className="space-y-2">
                 {section.links.map((link) => (
                   <li key={link.name}>

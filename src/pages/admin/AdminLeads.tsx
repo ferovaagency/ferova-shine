@@ -2,6 +2,7 @@ import { useEffect, useState, useCallback } from "react";
 import { Loader2, Check, Inbox as InboxIcon, RefreshCw, Eye, X, Copy, MessageCircle, Mail } from "lucide-react";
 import AdminLayout from "@/components/admin/AdminLayout";
 import SourceBadge from "@/components/admin/SourceBadge";
+import { Chip, toneFor } from "@/components/admin/Chip";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
 
@@ -90,77 +91,74 @@ const AdminLeads = () => {
   };
 
   return (
-    <AdminLayout title="Leads">
+    <AdminLayout
+      title="Solicitudes"
+      description="Contacto, diagnósticos, Fera y newsletter en una sola bandeja."
+      actions={<button type="button" onClick={load} className="admin-icon-btn" aria-label="Actualizar" title="Actualizar"><RefreshCw aria-hidden="true" /></button>}
+    >
       {/* Filtros */}
-      <div className="flex flex-wrap gap-2 mb-6">
+      <div className="admin-filters mb-4" role="group" aria-label="Filtrar solicitudes">
         {FILTERS.map((f) => (
-          <button
-            key={f.id}
-            onClick={() => setFilter(f.id)}
-            className={`px-4 py-1.5 rounded-full text-sm transition-colors ${
-              filter === f.id ? "bg-gold text-primary-foreground font-medium" : "border border-border text-muted-foreground hover:text-foreground hover:border-gold/50"
-            }`}
-          >
+          <button key={f.id} type="button" onClick={() => setFilter(f.id)} aria-pressed={filter === f.id} className="admin-filter">
             {f.label}
           </button>
         ))}
-        <button onClick={load} className="ml-auto inline-flex items-center gap-1.5 text-sm text-muted-foreground hover:text-foreground">
-          <RefreshCw className="w-4 h-4" /> Actualizar
-        </button>
       </div>
 
       {loading ? (
-        <div className="flex items-center justify-center py-20"><Loader2 className="w-6 h-6 animate-spin text-muted-foreground" /></div>
+        <div className="flex items-center justify-center py-20"><Loader2 className="w-6 h-6 animate-spin text-muted-foreground" aria-label="Cargando" /></div>
       ) : tableMissing ? (
-        <div className="glass-card p-8 text-center max-w-xl mx-auto">
-          <InboxIcon className="w-10 h-10 text-muted-foreground mx-auto mb-4" />
-          <h2 className="font-display font-bold text-lg mb-2">Bandeja unificada aún no conectada</h2>
-          <p className="text-muted-foreground text-sm">
-            La tabla <code className="text-gold">admin_inbox</code> todavía no existe en el backend. Una vez creada
+        <div className="admin-empty mx-auto max-w-xl">
+          <InboxIcon className="mx-auto mb-4 h-9 w-9" aria-hidden="true" />
+          <h2 className="mb-2">Bandeja unificada aún no conectada</h2>
+          <p>
+            La tabla <code className="admin-mono text-[#541014]">admin_inbox</code> todavía no existe en el backend. Una vez creada
             (finanzas/CRM viven en Ferova One; aquí solo se registran y organizan los leads), esta bandeja unificará
             contacto, diagnósticos, Asesor IA, newsletter y herramientas.
           </p>
         </div>
       ) : leads.length === 0 ? (
-        <div className="glass-card p-10 text-center text-muted-foreground">
-          <InboxIcon className="w-10 h-10 mx-auto mb-4 opacity-60" />
+        <div className="admin-empty">
+          <InboxIcon className="mx-auto mb-4 h-9 w-9 opacity-60" aria-hidden="true" />
           {filter === "completed" ? "No hay registros completados." : "Todo al día. No hay leads pendientes."}
         </div>
       ) : (
-        <div className="glass-card overflow-x-auto">
-          <table className="w-full text-sm">
+        <div className="admin-table-wrap">
+          <table className="admin-table min-w-[820px]">
             <thead>
-              <tr className="border-b border-border/60 text-left text-xs uppercase text-muted-foreground">
-                <th className="px-4 py-3 font-medium">Fecha</th>
-                <th className="px-4 py-3 font-medium">Nombre</th>
-                <th className="px-4 py-3 font-medium">Contacto</th>
-                <th className="px-4 py-3 font-medium">Fuente</th>
-                <th className="px-4 py-3 font-medium">Resumen</th>
-                <th className="px-4 py-3 font-medium text-right">Acción</th>
+              <tr>
+                <th scope="col">Fecha</th>
+                <th scope="col">Nombre</th>
+                <th scope="col">Contacto</th>
+                <th scope="col">Fuente</th>
+                <th scope="col">Estado</th>
+                <th scope="col">Resumen</th>
+                <th scope="col" className="text-right">Acción</th>
               </tr>
             </thead>
             <tbody>
               {leads.map((l) => (
-                <tr key={l.id} className="border-b border-border/40 hover:bg-accent/40">
-                  <td className="px-4 py-3 whitespace-nowrap text-muted-foreground">{fmt(l.created_at)}</td>
-                  <td className="px-4 py-3">
-                    <div className="font-medium text-foreground">{l.name || "—"}</div>
+                <tr key={l.id}>
+                  <td className="admin-mono whitespace-nowrap text-xs text-muted-foreground">{fmt(l.created_at)}</td>
+                  <td>
+                    <div className="font-semibold">{l.name || "—"}</div>
                     {l.company && <div className="text-xs text-muted-foreground">{l.company}</div>}
                   </td>
-                  <td className="px-4 py-3 text-muted-foreground">
-                    {l.email && <div>{l.email}</div>}
-                    {l.phone && <div className="text-xs">{l.phone}</div>}
+                  <td className="text-muted-foreground">
+                    {l.email && <div className="break-all">{l.email}</div>}
+                    {l.phone && <div className="admin-mono text-xs">{l.phone}</div>}
                   </td>
-                  <td className="px-4 py-3"><SourceBadge source={l.source} /></td>
-                  <td className="px-4 py-3 text-muted-foreground max-w-xs"><span className="line-clamp-2">{l.summary || "—"}</span></td>
-                  <td className="px-4 py-3">
+                  <td><SourceBadge source={l.source} /></td>
+                  <td><Chip tone={toneFor(l.status)}>{l.status === "completed" ? "Completado" : "Pendiente"}</Chip></td>
+                  <td className="max-w-xs text-muted-foreground"><span className="line-clamp-2">{l.summary || "—"}</span></td>
+                  <td>
                     <div className="flex items-center justify-end gap-2">
-                      <button onClick={() => setSelected(l)} className="inline-flex items-center gap-1.5 text-xs font-medium rounded-full border border-border px-3 py-1.5 hover:border-gold/50 hover:text-gold transition-colors">
-                        <Eye className="w-3.5 h-3.5" /> Ver
+                      <button type="button" onClick={() => setSelected(l)} className="admin-btn admin-btn--ghost admin-btn--sm">
+                        <Eye aria-hidden="true" /> Ver
                       </button>
                       {l.status === "pending" && (
-                        <button onClick={() => markDone(l.id)} className="inline-flex items-center gap-1.5 text-xs font-medium rounded-full border border-border px-3 py-1.5 hover:border-gold/50 hover:text-gold transition-colors">
-                          <Check className="w-3.5 h-3.5" /> Listo
+                        <button type="button" onClick={() => markDone(l.id)} className="admin-btn admin-btn--ghost admin-btn--sm">
+                          <Check aria-hidden="true" /> Listo
                         </button>
                       )}
                     </div>
@@ -174,65 +172,66 @@ const AdminLeads = () => {
 
       {/* Panel de detalle del lead */}
       {selected && (
-        <div className="fixed inset-0 z-50 flex justify-end">
-          <div className="absolute inset-0 bg-black/50" onClick={() => setSelected(null)} />
-          <div className="relative w-full max-w-md bg-card border-l border-border/60 h-full overflow-y-auto">
-            <div className="flex items-center justify-between px-5 py-4 border-b border-border/60 sticky top-0 bg-card">
+        <div className="fixed inset-0 z-50 flex justify-end" role="dialog" aria-modal="true" aria-labelledby="lead-detail-title">
+          <div className="absolute inset-0 bg-[rgb(27_32_51_/_45%)]" onClick={() => setSelected(null)} />
+          <div className="relative h-full w-full max-w-md overflow-y-auto bg-white shadow-[0_18px_48px_rgb(27_32_51_/_22%)] sm:m-3 sm:h-[calc(100%-1.5rem)] sm:rounded-2xl">
+            <div className="sticky top-0 flex items-center justify-between border-b border-border bg-white px-5 py-4">
               <div className="flex items-center gap-2">
                 <SourceBadge source={selected.source} />
-                <span className="text-xs text-muted-foreground">{fmt(selected.created_at)}</span>
+                <span className="admin-mono text-xs text-muted-foreground">{fmt(selected.created_at)}</span>
               </div>
-              <button onClick={() => setSelected(null)} aria-label="Cerrar"><X className="w-5 h-5 text-muted-foreground hover:text-foreground" /></button>
+              <button type="button" onClick={() => setSelected(null)} aria-label="Cerrar" className="admin-icon-btn admin-icon-btn--plain"><X aria-hidden="true" /></button>
             </div>
 
-            <div className="p-5 space-y-5">
+            <div className="space-y-5 p-5">
               <div>
-                <h2 className="text-lg font-display font-bold text-foreground">{selected.name || "Sin nombre"}</h2>
+                <h2 id="lead-detail-title" className="text-lg">{selected.name || "Sin nombre"}</h2>
                 {selected.company && <p className="text-sm text-muted-foreground">{selected.company}</p>}
                 <div className="mt-2 space-y-1 text-sm text-muted-foreground">
-                  {selected.email && <div>{selected.email}</div>}
-                  {selected.phone && <div>{selected.phone}</div>}
+                  {selected.email && <div className="break-all">{selected.email}</div>}
+                  {selected.phone && <div className="admin-mono">{selected.phone}</div>}
                 </div>
+                <div className="mt-3"><Chip tone={toneFor(selected.status)}>{selected.status === "completed" ? "Completado" : "Pendiente"}</Chip></div>
               </div>
 
               {selected.summary && (
                 <div>
-                  <p className="text-xs uppercase tracking-wide text-muted-foreground mb-1">Resumen</p>
-                  <p className="text-sm text-foreground">{selected.summary}</p>
+                  <p className="mb-1 text-xs font-bold uppercase tracking-wide text-muted-foreground">Resumen</p>
+                  <p className="text-sm">{selected.summary}</p>
                 </div>
               )}
 
               {selected.payload && Object.keys(selected.payload).length > 0 && (
                 <div>
-                  <p className="text-xs uppercase tracking-wide text-muted-foreground mb-2">Detalle</p>
-                  <div className="space-y-2">
+                  <p className="mb-2 text-xs font-bold uppercase tracking-wide text-muted-foreground">Detalle</p>
+                  <dl className="space-y-2 rounded-xl bg-[#f7f8fc] p-3">
                     {Object.entries(selected.payload).map(([k, v]) => (
                       <div key={k} className="text-sm">
-                        <span className="text-muted-foreground">{k}: </span>
-                        <span className="text-foreground break-words">{typeof v === "object" ? JSON.stringify(v) : String(v)}</span>
+                        <dt className="admin-mono inline text-xs text-muted-foreground">{k}: </dt>
+                        <dd className="inline break-words">{typeof v === "object" ? JSON.stringify(v) : String(v)}</dd>
                       </div>
                     ))}
-                  </div>
+                  </dl>
                 </div>
               )}
 
-              <div className="grid grid-cols-2 gap-2 pt-2 border-t border-border/40">
-                <button onClick={() => copyLead(selected)} className="inline-flex items-center justify-center gap-1.5 text-sm rounded-xl border border-border px-3 py-2 hover:border-gold/50 hover:text-gold transition-colors">
-                  <Copy className="w-4 h-4" /> Copiar
+              <div className="grid grid-cols-2 gap-2 border-t border-border pt-4">
+                <button type="button" onClick={() => copyLead(selected)} className="admin-btn admin-btn--ghost">
+                  <Copy aria-hidden="true" /> Copiar
                 </button>
                 {phoneDigits(selected.phone) && (
-                  <a href={`https://wa.me/${phoneDigits(selected.phone)}`} target="_blank" rel="noopener noreferrer" className="inline-flex items-center justify-center gap-1.5 text-sm rounded-xl border border-border px-3 py-2 hover:border-gold/50 hover:text-gold transition-colors">
-                    <MessageCircle className="w-4 h-4" /> WhatsApp
+                  <a href={`https://wa.me/${phoneDigits(selected.phone)}`} target="_blank" rel="noopener noreferrer" className="admin-btn admin-btn--ghost">
+                    <MessageCircle aria-hidden="true" /> WhatsApp
                   </a>
                 )}
                 {selected.email && (
-                  <a href={`mailto:${selected.email}`} className="inline-flex items-center justify-center gap-1.5 text-sm rounded-xl border border-border px-3 py-2 hover:border-gold/50 hover:text-gold transition-colors">
-                    <Mail className="w-4 h-4" /> Email
+                  <a href={`mailto:${selected.email}`} className="admin-btn admin-btn--ghost">
+                    <Mail aria-hidden="true" /> Email
                   </a>
                 )}
                 {selected.status === "pending" && (
-                  <button onClick={() => markDone(selected.id)} className="inline-flex items-center justify-center gap-1.5 text-sm rounded-xl bg-gold text-primary-foreground px-3 py-2 font-medium">
-                    <Check className="w-4 h-4" /> Listo
+                  <button type="button" onClick={() => markDone(selected.id)} className="admin-btn">
+                    <Check aria-hidden="true" /> Listo
                   </button>
                 )}
               </div>

@@ -73,6 +73,7 @@ Español: `/seo-para-agencias`, `/auditoria-seo-tecnica`, `/migraciones-seo`,
 Inglés: `/en/white-label-seo-for-agencies`, `/en/technical-seo-audit-services`,
 `/en/seo-migration-services`, `/en/services/ecommerce-seo`, `/en/case-studies`,
 `/en/resources`, `/en/blog`, `/en/about-me`, `/en/contact`.
+También valen enlaces a otros artículos publicados del propio blog (`/blog/<slug>`, `/en/blog/<slug>`).
 
 **El artículo es una landing:** además de informar, lleva al lector a un siguiente paso. Cada artículo conecta el problema con la especialidad que corresponde (auditoría, migración, SEO para ecommerce, capacidad para agencias) mediante enlaces internos naturales y un cierre con invitación clara. El sitio añade solo el índice, una llamada a Fera a mitad del texto y la banda final de contacto; el texto no repite esos bloques.
 

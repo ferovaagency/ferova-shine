@@ -39,7 +39,6 @@ import CasoDetalle from "./pages/CasoDetalle";
 import Contacto from "./pages/Contacto";
 import Blog from "./pages/Blog";
 import BlogPost from "./pages/BlogPost";
-import SobreNosotros from "./pages/SobreNosotros";
 import VCard from "./pages/VCard";
 import Privacidad from "./pages/Privacidad";
 import Cookies from "./pages/Cookies";
@@ -139,7 +138,8 @@ const AppRoutes = ({ hostLang }: { hostLang: "es" | "en" | "pt" }) => (
     <Route path="/resources" element={<SeoResources lang="en" />} />
     <Route path="/sobre-nosotros" element={<SeoAbout lang="es" />} />
     <Route path="/en/about-me" element={<SeoAbout lang="en" />} />
-    <Route path="/about" element={<SobreNosotros lang={hostLang} />} />
+    {/* /about era una página antigua de Ferova Agency duplicada de /sobre-nosotros. */}
+    <Route path="/about" element={<Navigate replace to="/sobre-nosotros" />} />
     <Route path="/terminos" element={<Terminos lang={hostLang} />} />
     <Route path="/terms" element={<Terminos lang={hostLang} />} />
     <Route path="/servicios/whatsapp-business" element={<Navigate replace to="/" />} />
@@ -241,6 +241,8 @@ const GlobalWidgets = ({ hostLang }: { hostLang: "es" | "en" | "pt" }) => {
       : pathname === "/pt" || pathname.startsWith("/pt/")
         ? "pt"
         : hostLang;
+  // El admin es una herramienta interna: sin Fera, popups ni aviso de cookies.
+  if (pathname === "/admin" || pathname.startsWith("/admin/") || pathname.startsWith("/newsletter/admin")) return null;
   return (
     <ClientOnly>
       <ExitIntentPopup lang={lang} />

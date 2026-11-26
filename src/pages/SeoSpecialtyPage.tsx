@@ -6,6 +6,8 @@ import Footer from "@/components/layout/Footer";
 import SEO from "@/components/SEO";
 import { SEO_SPECIALTIES, SEO_SPECIALTY_UI, type SeoSpecialtyKind } from "@/content/seoSpecialties";
 import type { Lang } from "@/config/routes";
+import { CaseGrid } from "@/components/fx/CaseGrid";
+import { portfolioUrl } from "@/data/portfolio";
 import {
   CheckList,
   FaqList,
@@ -165,21 +167,12 @@ export default function SeoSpecialtyPage({ kind, lang = "es" }: { kind: SeoSpeci
 
         {content.proof && (
           <Section tone={nextTone()}>
+            {/* Los casos son los del portafolio de Ferova (src/data/portfolio.ts). */}
             <SectionHeading eyebrow={content.proof.kicker} title={content.proof.title} />
-            <div className="mt-12 grid gap-5 md:grid-cols-2">
-              {content.proof.items.map((item) => (
-                <article key={item.label} className="case-card">
-                  <small>{item.label}</small>
-                  <strong>
-                    {item.before} → {item.after}
-                  </strong>
-                  <p className="mt-1 text-sm font-semibold">{item.metric}</p>
-                  <p className="fx-muted mt-4 leading-relaxed">{item.context}</p>
-                </article>
-              ))}
+            <div className="mt-12">
+              <CaseGrid lang={lang} />
             </div>
-            <p className="fx-muted mt-6 max-w-4xl text-sm leading-relaxed">{content.proof.note}</p>
-            <a href={content.proof.cta.href} className="fx-text-link mt-6">
+            <a href={portfolioUrl(lang === "en" ? "en" : "es")} className="fx-text-link mt-8" target="_blank" rel="noopener">
               {content.proof.cta.label} <ArrowUpRight aria-hidden="true" />
             </a>
           </Section>

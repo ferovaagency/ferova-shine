@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import { ExternalLink, FileText, Loader2, Pencil, Plus, RefreshCw, Search, Trash2 } from "lucide-react";
 import { toast } from "sonner";
 import AdminLayout from "@/components/admin/AdminLayout";
+import { Chip } from "@/components/admin/Chip";
 import { supabase } from "@/integrations/supabase/client";
 import { SEO_EDITORIAL } from "@/content/seoEditorial";
 import { BLOG_SITE_ORIGINS } from "@/lib/blog-i18n";
@@ -61,24 +62,40 @@ export default function AdminBlogList() {
   };
 
   return (
-    <AdminLayout title="Artículos" description="Escribe cada versión en su idioma, revisa su SEO y controla cuándo se publica.">
-      <div className="mb-5 flex flex-col gap-3 lg:flex-row lg:items-center">
-        <label className="relative min-w-0 flex-1"><Search className="pointer-events-none absolute left-3 top-2.5 h-4 w-4 text-muted-foreground" /><span className="sr-only">Buscar artículos</span><input value={search} onChange={(event) => setSearch(event.target.value)} placeholder="Buscar por título o URL" className="w-full rounded-lg border border-border bg-background py-2 pl-9 pr-3 text-sm outline-none focus:border-primary/50" /></label>
-        <div className="flex gap-2 overflow-x-auto">
-          <select aria-label="Filtrar por idioma" value={language} onChange={(event) => setLanguage(event.target.value as "all" | BlogLanguage)} className="rounded-lg border border-border bg-background px-3 py-2 text-sm"><option value="all">Todos los idiomas</option><option value="es">Español</option><option value="en">Inglés</option></select>
-          <select aria-label="Filtrar por estado" value={status} onChange={(event) => setStatus(event.target.value as StatusFilter)} className="rounded-lg border border-border bg-background px-3 py-2 text-sm"><option value="all">Todos los estados</option><option value="published">Publicados</option><option value="draft">Borradores</option></select>
-          <button onClick={() => void load()} aria-label="Actualizar" className="rounded-lg border border-border p-2 text-muted-foreground hover:text-foreground"><RefreshCw className="h-4 w-4" /></button>
+    <AdminLayout
+      title="Artículos"
+      description="Escribe cada versión en su idioma, revisa sus reglas editoriales y controla cuándo se publica."
+      actions={<Link to="/admin/blog/nuevo" className="admin-btn"><Plus aria-hidden="true" /> <span className="hidden sm:inline">Nuevo artículo</span><span className="sm:hidden">Nuevo</span></Link>}
+    >
+      <div className="admin-toolbar">
+        <label className="admin-search min-w-[12rem]"><Search aria-hidden="true" /><span className="sr-only">Buscar artículos</span><input type="search" value={search} onChange={(event) => setSearch(event.target.value)} placeholder="Buscar por título o URL" /></label>
+        <div className="flex max-w-full gap-2 overflow-x-auto">
+          <select aria-label="Filtrar por idioma" value={language} onChange={(event) => setLanguage(event.target.value as "all" | BlogLanguage)} className="admin-select"><option value="all">Todos los idiomas</option><option value="es">Español</option><option value="en">Inglés</option></select>
+          <select aria-label="Filtrar por estado" value={status} onChange={(event) => setStatus(event.target.value as StatusFilter)} className="admin-select"><option value="all">Todos los estados</option><option value="published">Publicados</option><option value="draft">Borradores</option></select>
+          <button type="button" onClick={() => void load()} aria-label="Actualizar" title="Actualizar" className="admin-icon-btn"><RefreshCw aria-hidden="true" /></button>
         </div>
-        <Link to="/admin/blog/nuevo" className="inline-flex items-center justify-center gap-2 rounded-lg bg-primary px-4 py-2 text-sm font-medium text-primary-foreground"><Plus className="h-4 w-4" /> Nuevo artículo</Link>
       </div>
 
-      {error && <div role="alert" className="mb-5 flex items-center justify-between gap-4 rounded-xl border border-destructive/30 bg-destructive/5 p-4 text-sm"><span>{error}</span><button onClick={() => void load()} className="font-medium text-primary">Reintentar</button></div>}
-      {loading ? <div className="flex justify-center py-16"><Loader2 className="h-6 w-6 animate-spin" /></div> : visible.length === 0 ? (
-        <div className="rounded-xl border border-border bg-card px-6 py-14 text-center"><FileText className="mx-auto mb-4 h-8 w-8 text-primary/70" /><h2 className="text-xl font-semibold">{posts.length ? "No hay coincidencias" : "Aún no hay artículos"}</h2><p className="mt-2 text-sm text-muted-foreground">{posts.length ? "Prueba con otro título o cambia los filtros." : "Crea el primero y guárdalo como borrador hasta que esté listo."}</p></div>
+      {error && <div role="alert" className="admin-alert admin-alert--bad mb-4 items-center justify-between"><span>{error}</span><button type="button" onClick={() => void load()} className="font-semibold underline underline-offset-2">Reintentar</button></div>}
+      {loading ? <div className="flex justify-center py-16"><Loader2 className="h-6 w-6 animate-spin" aria-label="Cargando" /></div> : visible.length === 0 ? (
+        <div className="admin-empty"><FileText className="mx-auto mb-4 h-8 w-8 text-[#2f2d56]" aria-hidden="true" /><h2>{posts.length ? "No hay coincidencias" : "Aún no hay artículos"}</h2><p className="mt-2">{posts.length ? "Prueba con otro título o cambia los filtros." : "Crea el primero y guárdalo como borrador hasta que esté listo."}</p></div>
       ) : (
-        <div className="overflow-x-auto rounded-xl border border-border bg-card"><table className="w-full min-w-[760px] text-sm"><thead><tr className="border-b border-border text-left text-xs text-muted-foreground"><th className="px-4 py-3 font-medium">Artículo</th><th className="px-4 py-3 font-medium">Idioma</th><th className="px-4 py-3 font-medium">Estado</th><th className="px-4 py-3 font-medium">Actualización</th><th className="px-4 py-3 text-right font-medium">Acciones</th></tr></thead><tbody>
-          {visible.map((post) => <tr key={post.id} className="border-b border-border/70 last:border-0 hover:bg-muted/40"><td className="px-4 py-3"><div className="max-w-lg truncate font-medium">{post.title}</div><div className="mt-1 text-xs text-muted-foreground">{publicUrl(post)}</div></td><td className="px-4 py-3 text-muted-foreground">{post.language === "en" ? "Inglés" : "Español"}</td><td className="px-4 py-3">{post.legacy ? <span className="rounded-full bg-amber-500/15 px-2.5 py-1 text-xs font-medium text-amber-700">Por completar</span> : <button disabled={workingId === post.id} onClick={() => void togglePublished(post)} className={`rounded-full px-2.5 py-1 text-xs font-medium disabled:opacity-50 ${post.active ? "bg-emerald-500/15 text-emerald-600" : "bg-muted text-muted-foreground"}`}>{post.active ? "Publicado" : "Borrador"}</button>}</td><td className="px-4 py-3 text-muted-foreground">{post.legacy ? "Contenido heredado" : new Intl.DateTimeFormat("es-CO", { dateStyle: "medium" }).format(new Date(post.updated_at))}</td><td className="px-4 py-3"><div className="flex justify-end gap-1"><Link title={post.legacy ? "Completar y convertir" : "Editar"} aria-label={`Editar ${post.title}`} to={`/admin/blog/${post.id}/editar`} className="inline-flex items-center gap-2 rounded-lg border border-border px-3 py-2 hover:text-primary"><Pencil className="h-4 w-4" />{post.legacy && <span className="text-xs">Completar</span>}</Link>{post.active && <Link title="Ver publicado" aria-label={`Ver ${post.title}`} to={publicUrl(post)} target="_blank" className="rounded-lg border border-border p-2 hover:text-primary"><ExternalLink className="h-4 w-4" /></Link>}{!post.legacy && <button title="Eliminar" aria-label={`Eliminar ${post.title}`} disabled={workingId === post.id} onClick={() => void remove(post)} className="rounded-lg border border-border p-2 hover:border-destructive/40 hover:text-destructive disabled:opacity-50">{workingId === post.id ? <Loader2 className="h-4 w-4 animate-spin" /> : <Trash2 className="h-4 w-4" />}</button>}</div></td></tr>)}
-        </tbody></table></div>
+        <>
+          <p className="admin-mono mb-2 text-xs text-muted-foreground" aria-live="polite">{visible.length} de {posts.length} artículos</p>
+          <div className="admin-table-wrap"><table className="admin-table min-w-[760px]"><thead><tr><th scope="col">Artículo</th><th scope="col">Idioma</th><th scope="col">Estado</th><th scope="col">Actualización</th><th scope="col" className="text-right">Acciones</th></tr></thead><tbody>
+            {visible.map((post) => <tr key={post.id}>
+              <td><Link to={`/admin/blog/${post.id}/editar`} className="block max-w-lg truncate font-semibold hover:text-[#2f2d56] hover:underline">{post.title}</Link><div className="admin-mono mt-1 truncate text-xs text-muted-foreground">{publicUrl(post)}</div></td>
+              <td><span className="admin-mono text-xs uppercase text-muted-foreground">{post.language}</span> <span className="text-muted-foreground">{post.language === "en" ? "Inglés" : "Español"}</span></td>
+              <td>{post.legacy ? <Chip tone="wait">Por completar</Chip> : <button type="button" disabled={workingId === post.id} onClick={() => void togglePublished(post)} title={post.active ? "Pasar a borrador" : "Publicar"} aria-label={`${post.active ? "Publicado" : "Borrador"}: ${post.active ? "pasar a borrador" : "publicar"} ${post.title}`} className={`chip ${post.active ? "chip--ok" : "chip--idle"}`}>{post.active ? "Publicado" : "Borrador"}</button>}</td>
+              <td className="admin-mono whitespace-nowrap text-xs text-muted-foreground">{post.legacy ? "Contenido heredado" : new Intl.DateTimeFormat("es-CO", { dateStyle: "medium" }).format(new Date(post.updated_at))}</td>
+              <td><div className="flex justify-end gap-1.5">
+                <Link title={post.legacy ? "Completar y convertir" : "Editar"} aria-label={`Editar ${post.title}`} to={`/admin/blog/${post.id}/editar`} className={post.legacy ? "admin-btn admin-btn--ghost admin-btn--sm" : "admin-icon-btn"}><Pencil aria-hidden="true" />{post.legacy && <span>Completar</span>}</Link>
+                {post.active && <Link title="Ver publicado" aria-label={`Ver ${post.title}`} to={publicUrl(post)} target="_blank" className="admin-icon-btn"><ExternalLink aria-hidden="true" /></Link>}
+                {!post.legacy && <button type="button" title="Eliminar" aria-label={`Eliminar ${post.title}`} disabled={workingId === post.id} onClick={() => void remove(post)} className="admin-icon-btn admin-icon-btn--danger">{workingId === post.id ? <Loader2 className="animate-spin" aria-hidden="true" /> : <Trash2 aria-hidden="true" />}</button>}
+              </div></td>
+            </tr>)}
+          </tbody></table></div>
+        </>
       )}
     </AdminLayout>
   );

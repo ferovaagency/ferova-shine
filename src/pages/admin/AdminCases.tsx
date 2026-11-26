@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import { AlertCircle, ExternalLink, Loader2, Pencil, Plus, RefreshCw, Search, Trash2, Trophy } from "lucide-react";
 import { toast } from "sonner";
 import AdminLayout from "@/components/admin/AdminLayout";
+import { Chip, toneFor } from "@/components/admin/Chip";
 import { caseCms, type CmsCaseStudy, type ContentStatus } from "@/integrations/supabase/cms-types";
 import { casesData } from "@/pages/CasosDeExito";
 
@@ -20,15 +21,6 @@ const STATUS_LABEL: Record<ContentStatus, string> = {
   scheduled: "Programado",
   published: "Publicado",
   archived: "Archivado",
-};
-
-const STATUS_STYLE: Record<ContentStatus, string> = {
-  draft: "bg-muted text-muted-foreground",
-  in_review: "bg-amber-500/15 text-amber-500",
-  approved: "bg-blue-500/15 text-blue-400",
-  scheduled: "bg-violet-500/15 text-violet-400",
-  published: "bg-emerald-500/15 text-emerald-400",
-  archived: "bg-slate-500/15 text-slate-400",
 };
 
 export default function AdminCases() {
@@ -69,24 +61,22 @@ export default function AdminCases() {
   };
 
   return (
-    <AdminLayout title="Casos de éxito" description="Administra casos verificables, su estado editorial y la evidencia que respalda cada resultado.">
-      <div className="mb-5 flex flex-col gap-3 sm:flex-row sm:items-center">
-        <label className="relative min-w-0 flex-1"><Search className="pointer-events-none absolute left-3 top-2.5 h-4 w-4 text-muted-foreground" /><span className="sr-only">Buscar casos</span><input value={search} onChange={(event) => setSearch(event.target.value)} placeholder="Buscar cliente, sector, país o URL" className="w-full rounded-lg border border-border bg-background py-2 pl-9 pr-3 text-sm outline-none focus:border-primary/50" /></label>
-        <button onClick={() => void load()} aria-label="Actualizar" className="rounded-lg border border-border p-2 text-muted-foreground hover:text-foreground"><RefreshCw className="h-4 w-4" /></button>
-        <Link
-          to="/admin/casos/nuevo"
-          className="inline-flex items-center justify-center gap-2 rounded-xl bg-primary px-4 py-2.5 text-sm font-medium text-primary-foreground transition-opacity hover:opacity-90"
-        >
-          <Plus className="h-4 w-4" /> Nuevo caso
-        </Link>
+    <AdminLayout
+      title="Casos de éxito"
+      description="Administra casos verificables, su estado editorial y la evidencia que respalda cada resultado."
+      actions={<Link to="/admin/casos/nuevo" className="admin-btn"><Plus aria-hidden="true" /> <span className="hidden sm:inline">Nuevo caso</span><span className="sm:hidden">Nuevo</span></Link>}
+    >
+      <div className="admin-toolbar">
+        <label className="admin-search"><Search aria-hidden="true" /><span className="sr-only">Buscar casos</span><input type="search" value={search} onChange={(event) => setSearch(event.target.value)} placeholder="Buscar cliente, sector, país o URL" /></label>
+        <button type="button" onClick={() => void load()} aria-label="Actualizar" title="Actualizar" className="admin-icon-btn"><RefreshCw aria-hidden="true" /></button>
       </div>
 
       {migrationPending && (
-        <div className="glass-card mb-6 flex items-start gap-3 border border-amber-500/30 p-4 text-sm">
-          <AlertCircle className="mt-0.5 h-4 w-4 shrink-0 text-amber-500" />
+        <div className="admin-alert mb-4" role="status">
+          <AlertCircle className="mt-0.5 h-4 w-4 shrink-0" aria-hidden="true" />
           <div>
-            <p className="font-medium text-foreground">El CMS de casos está pendiente de activación.</p>
-            <p className="mt-1 text-muted-foreground">
+            <p className="font-semibold">El CMS de casos está pendiente de activación.</p>
+            <p className="mt-1">
               La migración ya está preparada. Mientras se aplica, puedes consultar los casos estáticos actuales debajo.
             </p>
           </div>
@@ -94,50 +84,50 @@ export default function AdminCases() {
       )}
 
       {loading ? (
-        <div className="flex justify-center py-16"><Loader2 className="h-6 w-6 animate-spin text-muted-foreground" /></div>
+        <div className="flex justify-center py-16"><Loader2 className="h-6 w-6 animate-spin text-muted-foreground" aria-label="Cargando" /></div>
       ) : visible.length === 0 ? (
-        <div className="glass-card px-6 py-14 text-center">
-          <Trophy className="mx-auto mb-4 h-8 w-8 text-gold/70" />
-          <h2 className="font-display text-xl font-semibold">Aún no hay casos en el CMS</h2>
-          <p className="mx-auto mt-2 max-w-md text-sm text-muted-foreground">
+        <div className="admin-empty">
+          <Trophy className="mx-auto mb-4 h-8 w-8 text-[#2f2d56]" aria-hidden="true" />
+          <h2>Aún no hay casos en el CMS</h2>
+          <p className="mx-auto mt-2 max-w-md">
             Crea el primer borrador y complétalo con consentimiento, evidencia y métricas antes de publicarlo.
           </p>
         </div>
       ) : (
-        <div className="glass-card overflow-x-auto">
-          <table className="w-full text-sm">
+        <div className="admin-table-wrap">
+          <table className="admin-table min-w-[760px]">
             <thead>
-              <tr className="border-b border-border/60 text-left text-xs uppercase text-muted-foreground">
-                <th className="px-4 py-3 font-medium">Caso</th>
-                <th className="px-4 py-3 font-medium">Sector</th>
-                <th className="px-4 py-3 font-medium">Estado</th>
-                <th className="px-4 py-3 font-medium">Actualización</th>
-                <th className="px-4 py-3 font-medium text-right">Acciones</th>
+              <tr>
+                <th scope="col">Caso</th>
+                <th scope="col">Sector</th>
+                <th scope="col">Estado</th>
+                <th scope="col">Actualización</th>
+                <th scope="col" className="text-right">Acciones</th>
               </tr>
             </thead>
             <tbody>
               {visible.map((item) => (
-                <tr key={item.id} className="border-b border-border/40 hover:bg-accent/40">
-                  <td className="px-4 py-3">
-                    <div className="font-medium text-foreground">{item.client_public_name || "Cliente confidencial"}</div>
-                    <div className="mt-0.5 max-w-md truncate text-xs text-muted-foreground">/{item.slug} · {item.summary}</div>
+                <tr key={item.id}>
+                  <td>
+                    <Link to={`/admin/casos/${item.id}/editar`} className="font-semibold hover:text-[#2f2d56] hover:underline">{item.client_public_name || "Cliente confidencial"}</Link>
+                    <div className="mt-0.5 max-w-md truncate text-xs text-muted-foreground"><span className="admin-mono">/{item.slug}</span> · {item.summary}</div>
                   </td>
-                  <td className="px-4 py-3 text-muted-foreground">{item.sector}{item.country ? ` · ${item.country}` : ""}</td>
-                  <td className="px-4 py-3">
-                    {item.legacy ? <span className="rounded-full bg-amber-500/15 px-2.5 py-1 text-xs font-medium text-amber-700">Por completar</span> : <span className={`rounded-full px-2.5 py-1 text-xs font-medium ${STATUS_STYLE[item.status]}`}>{STATUS_LABEL[item.status]}</span>}
+                  <td className="text-muted-foreground">{item.sector}{item.country ? ` · ${item.country}` : ""}</td>
+                  <td>
+                    {item.legacy ? <Chip tone="wait">Por completar</Chip> : <Chip tone={toneFor(item.status)}>{STATUS_LABEL[item.status]}</Chip>}
                   </td>
-                  <td className="px-4 py-3 text-muted-foreground">{item.legacy ? "Contenido heredado" : new Intl.DateTimeFormat("es-CO", { dateStyle: "medium" }).format(new Date(item.updated_at))}</td>
-                  <td className="px-4 py-3 text-right">
-                    <div className="flex justify-end gap-2">
-                      <Link to={`/admin/casos/${item.id}/editar`} className="inline-flex items-center gap-1.5 rounded-full border border-border px-3 py-1.5 text-xs font-medium hover:border-gold/50 hover:text-gold">
-                        <Pencil className="h-3.5 w-3.5" /> {item.legacy ? "Completar" : "Editar"}
+                  <td className="admin-mono whitespace-nowrap text-xs text-muted-foreground">{item.legacy ? "Contenido heredado" : new Intl.DateTimeFormat("es-CO", { dateStyle: "medium" }).format(new Date(item.updated_at))}</td>
+                  <td>
+                    <div className="flex justify-end gap-1.5">
+                      <Link to={`/admin/casos/${item.id}/editar`} className="admin-btn admin-btn--ghost admin-btn--sm">
+                        <Pencil aria-hidden="true" /> {item.legacy ? "Completar" : "Editar"}
                       </Link>
                       {item.status === "published" && (
-                        <Link to={`/casos-de-exito/${item.slug}`} target="_blank" className="inline-flex items-center gap-1.5 rounded-full border border-border px-3 py-1.5 text-xs font-medium hover:border-gold/50 hover:text-gold">
-                          <ExternalLink className="h-3.5 w-3.5" /> Ver
+                        <Link to={`/casos-de-exito/${item.slug}`} target="_blank" className="admin-btn admin-btn--ghost admin-btn--sm">
+                          <ExternalLink aria-hidden="true" /> Ver
                         </Link>
                       )}
-                      {!item.legacy && <button title="Eliminar" aria-label={`Eliminar ${item.client_public_name || item.slug}`} disabled={workingId === item.id} onClick={() => void remove(item)} className="inline-flex items-center rounded-lg border border-border p-2 hover:border-destructive/40 hover:text-destructive disabled:opacity-50">{workingId === item.id ? <Loader2 className="h-3.5 w-3.5 animate-spin" /> : <Trash2 className="h-3.5 w-3.5" />}</button>}
+                      {!item.legacy && <button type="button" title="Eliminar" aria-label={`Eliminar ${item.client_public_name || item.slug}`} disabled={workingId === item.id} onClick={() => void remove(item)} className="admin-icon-btn admin-icon-btn--danger">{workingId === item.id ? <Loader2 className="animate-spin" aria-hidden="true" /> : <Trash2 aria-hidden="true" />}</button>}
                     </div>
                   </td>
                 </tr>
@@ -152,8 +142,8 @@ export default function AdminCases() {
 
 function StaticCasesFallback() {
   return (
-    <div className="glass-card overflow-x-auto">
-      <table className="w-full text-sm">
+    <div className="admin-table-wrap">
+      <table className="admin-table">
         <thead><tr className="border-b border-border/60 text-left text-xs uppercase text-muted-foreground"><th className="px-4 py-3 font-medium">Caso actual</th><th className="px-4 py-3 font-medium">País</th><th className="px-4 py-3 font-medium text-right">Ver</th></tr></thead>
         <tbody>
           {casesData.es.map((item) => (
