@@ -1,6 +1,5 @@
 import { Link } from 'react-router-dom';
 import { Mail, MapPin, Instagram, Linkedin, Facebook, Youtube, MessageCircle, MessagesSquare } from 'lucide-react';
-import logoLight from '@/assets/ferova-logo.png.png';
 import { useAnalytics } from '@/hooks/useAnalytics';
 import { trackEvent } from '@/lib/analytics';
 import LanguageSwitcher from '@/components/layout/LanguageSwitcher';
@@ -93,29 +92,25 @@ const Footer = ({ currentLang, lang }: FooterProps) => {
   const d = t[locale] ?? t.es;
 
   return (
-    <footer className={`border-t border-border/50 bg-card ${locale === 'es' ? 'agency-footer' : ''}`}>
+    <footer className="fx-light site-footer border-t border-[#dfdcea]">
       <div className="container mx-auto px-4 py-12 md:px-6 md:py-16">
         <div className="grid grid-cols-2 gap-8 md:grid-cols-4 lg:grid-cols-5">
           <div className="col-span-2 md:col-span-4 lg:col-span-2">
             <Link to={locale === 'pt' ? '/pt' : locale === 'en' ? '/en' : '/'}>
-              {locale === 'es' ? (
-                <span className="personal-footer-wordmark leading-none">
-                  <span className="block font-display text-xl font-bold tracking-[0.08em] text-foreground">MARÍA FER</span>
-                  <span className="mt-2 block text-[10px] font-semibold uppercase tracking-[0.24em] text-gold">SEO técnico · Ferova</span>
+              <span className="personal-footer-wordmark leading-none">
+                  <span className="block font-display text-xl font-bold tracking-[0.08em] text-[#1f1e2b]">MARÍA FER</span>
+                  <span className="mt-2 block text-[10px] font-medium uppercase tracking-[0.22em] text-[#2f2d56] font-mono">SEO técnico · Ferova</span>
                 </span>
-              ) : (
-                <img src={logoLight} alt="Ferova Agency" className="h-16 w-auto" />
-              )}
             </Link>
-            <p className="mt-3 max-w-xs text-sm text-muted-foreground">{d.tagline}</p>
-            <div className="mt-4 space-y-2 text-sm text-muted-foreground">
-              <a href="mailto:gerencia@seoparaecommerce.co" className="flex items-center gap-2 transition-colors hover:text-gold">
+            <p className="mt-3 max-w-xs text-sm text-[#585665]">{d.tagline}</p>
+            <div className="mt-4 space-y-2 text-sm text-[#585665]">
+              <a href="mailto:gerencia@seoparaecommerce.co" className="flex items-center gap-2 transition-colors hover:text-[#541014]">
                 <Mail className="h-4 w-4" /> gerencia@seoparaecommerce.co
               </a>
-              <a href="https://wa.me/17866894686" target="_blank" rel="noopener noreferrer" onClick={() => trackEvent('whatsapp_button_clicked', { source: 'footer', label: 'phone_link' })} className="flex items-center gap-2 transition-colors hover:text-gold">
+              <a href="https://wa.me/17866894686" target="_blank" rel="noopener noreferrer" onClick={() => trackEvent('whatsapp_button_clicked', { source: 'footer', label: 'phone_link' })} className="flex items-center gap-2 transition-colors hover:text-[#541014]">
                 <MessageCircle className="h-4 w-4" /> +1 (786) 578-7671
               </a>
-              <a href="https://ferovaagency.slack.com/team/U0BFL50JL4X" target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 transition-colors hover:text-gold">
+              <a href="https://ferovaagency.slack.com/team/U0BFL50JL4X" target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 transition-colors hover:text-[#541014]">
                 <MessagesSquare className="h-4 w-4" /> Slack de Ferova
               </a>
               <div className="flex items-center gap-2">
@@ -123,7 +118,7 @@ const Footer = ({ currentLang, lang }: FooterProps) => {
                 <span>
                   North Point, Torre 2, Of. 1002 · Cra. 7 #158-78, Bogotá
                   <span className="block text-xs">{locale === 'en' ? 'Visits by appointment' : locale === 'pt' ? 'Visitas com agendamento' : 'Visitas con cita previa'} · Colombia · Brasil · Estados Unidos</span>
-                  <a href="https://share.google/SuMRS9Yzv1Od4d3iK" target="_blank" rel="noopener noreferrer" className="block text-xs underline hover:text-gold">{locale === 'en' ? 'View on Google Maps' : locale === 'pt' ? 'Ver no Google Maps' : 'Ver en Google Maps'} ↗</a>
+                  <a href="https://share.google/SuMRS9Yzv1Od4d3iK" target="_blank" rel="noopener noreferrer" className="block text-xs underline hover:text-[#541014]">{locale === 'en' ? 'View on Google Maps' : locale === 'pt' ? 'Ver no Google Maps' : 'Ver en Google Maps'} ↗</a>
                 </span>
               </div>
             </div>
@@ -136,11 +131,11 @@ const Footer = ({ currentLang, lang }: FooterProps) => {
                 { Icon: Facebook, name: 'facebook', url: 'https://www.facebook.com/mafecalderon.SEO' },
                 { Icon: Youtube, name: 'youtube', url: 'https://www.youtube.com/@FerovaAgency' },
               ]).map(({ Icon, name, url }) => (
-                <a key={name} href={url} target="_blank" rel="noopener noreferrer" onClick={() => trackSocialClick(name, url)} className="rounded-lg border border-border/50 p-2 text-muted-foreground transition-all hover:border-gold/50 hover:text-gold" aria-label={name}>
+                <a key={name} href={url} target="_blank" rel="noopener noreferrer" onClick={() => trackSocialClick(name, url)} className="rounded-lg border border-border/50 p-2 text-[#585665] transition-all hover:border-[#541014]/50 hover:text-[#541014]" aria-label={name}>
                   <Icon className="h-4 w-4" />
                 </a>
               ))}
-              <a href="https://www.tiktok.com/@mafe.ferova?lang=es" target="_blank" rel="noopener noreferrer" onClick={() => trackSocialClick('tiktok', 'https://www.tiktok.com/@mafe.ferova')} className="rounded-lg border border-border/50 p-2 text-muted-foreground transition-all hover:border-gold/50 hover:text-gold" aria-label="tiktok">
+              <a href="https://www.tiktok.com/@mafe.ferova?lang=es" target="_blank" rel="noopener noreferrer" onClick={() => trackSocialClick('tiktok', 'https://www.tiktok.com/@mafe.ferova')} className="rounded-lg border border-border/50 p-2 text-[#585665] transition-all hover:border-[#541014]/50 hover:text-[#541014]" aria-label="tiktok">
                 <svg viewBox="0 0 24 24" className="h-4 w-4" fill="currentColor" aria-hidden="true"><path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-5.2 1.74 2.89 2.89 0 0 1 2.31-4.64 2.93 2.93 0 0 1 .88.13V9.4a6.84 6.84 0 0 0-1-.05A6.33 6.33 0 0 0 5.8 20.1a6.34 6.34 0 0 0 10.86-4.43V8.94a8.16 8.16 0 0 0 4.77 1.52v-3.4a4.85 4.85 0 0 1-1.84-.37z"/></svg>
               </a>
             </div>
@@ -169,11 +164,11 @@ const Footer = ({ currentLang, lang }: FooterProps) => {
             { title: d.legal, links: d.legalLinks },
           ].map((section) => (
             <div key={section.title}>
-              <h4 className="mb-4 text-sm font-display font-semibold text-foreground">{section.title}</h4>
+              <h4 className="mb-4 text-sm font-display font-semibold text-[#1f1e2b]">{section.title}</h4>
               <ul className="space-y-2">
                 {section.links.map((link) => (
                   <li key={link.name}>
-                    <Link to={link.href} className="text-sm text-muted-foreground transition-colors hover:text-gold">
+                    <Link to={link.href} className="text-sm text-[#585665] transition-colors hover:text-[#541014]">
                       {link.name}
                     </Link>
                   </li>
@@ -184,9 +179,9 @@ const Footer = ({ currentLang, lang }: FooterProps) => {
         </div>
 
         <div className="mt-12 border-t border-border/30 pt-8 flex flex-col sm:flex-row items-center justify-between gap-3">
-          <p className="text-xs text-muted-foreground">© {new Date().getFullYear()} Ferova Agency. {d.rights}</p>
+          <p className="text-xs text-[#585665]">© {new Date().getFullYear()} Ferova Agency. {d.rights}</p>
           <LanguageSwitcher lang={locale} variant="footer" />
-          <button onClick={() => window.dispatchEvent(new CustomEvent('open-cookie-settings'))} className="text-xs text-muted-foreground hover:text-gold underline">
+          <button onClick={() => window.dispatchEvent(new CustomEvent('open-cookie-settings'))} className="text-xs text-[#585665] hover:text-[#541014] underline">
             {locale === 'pt' ? 'Configurar cookies' : locale === 'en' ? 'Cookie settings' : 'Configurar cookies'}
           </button>
         </div>

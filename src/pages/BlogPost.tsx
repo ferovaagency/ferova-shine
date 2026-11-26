@@ -3,7 +3,7 @@ import { useState, useEffect } from 'react';
 import Header from '@/components/layout/Header';
 import Footer from '@/components/layout/Footer';
 import AdBanner from '@/components/ui/ad-banner';
-import { ArrowLeft, Clock, User, MessageCircle, Loader2 } from 'lucide-react';
+import { ArrowLeft, Clock, User, Loader2 } from 'lucide-react';
 import { getSupabase } from '@/integrations/supabase/lazy';
 import { useAnalytics } from '@/hooks/useAnalytics';
 import SEO from '@/components/SEO';
@@ -11,6 +11,7 @@ import { getPrerenderPost } from '@/lib/prerender-store';
 import { BLOG_I18N_COLUMNS, BLOG_SITE_ORIGINS, pickVariant, type BlogRowI18n } from '@/lib/blog-i18n';
 import { extractFaq, inlineImages, splitForCta, withToc, wordCount } from '@/lib/article-landing';
 import { SITE_ORIGIN } from '@/config/routes';
+import { CtaBand, FxLink, openFera as openFeraChat } from '@/components/fx/primitives';
 
 interface Props { lang?: 'es' | 'en' | 'pt'; }
 
@@ -203,30 +204,37 @@ const BlogPost = ({ lang = 'es' }: Props) => {
 
   if (loading) {
     return (
-      <>
+      <div className="fx-site min-h-screen">
         <Header currentLang={lang} />
-        <main className="pt-20 min-h-screen flex items-center justify-center">
-          <Loader2 className="h-8 w-8 animate-spin text-primary" />
+        <main id="contenido-principal" className="pt-20">
+          <section className="page-hero on-dark grid-field">
+            <div className="mx-auto flex min-h-[50vh] w-full max-w-7xl items-center justify-center px-5 py-16 sm:px-8">
+              <Loader2 aria-hidden="true" className="h-8 w-8 animate-spin text-white" />
+              <span className="sr-only">{lang === 'pt' ? 'Carregando' : lang === 'en' ? 'Loading' : 'Cargando'}</span>
+            </div>
+          </section>
         </main>
         <Footer currentLang={lang} />
-      </>
+      </div>
     );
   }
 
   if (notFound && !staticPost) {
     return (
-      <>
+      <div className="fx-site min-h-screen">
         <Header currentLang={lang} />
-        <main className="pt-20 min-h-screen flex items-center justify-center">
-          <div className="text-center">
-            <h1 className="text-3xl font-display font-bold mb-4">
-              {lang === 'pt' ? 'Artigo não encontrado' : lang === 'en' ? 'Article not found' : 'Artículo no encontrado'}
-            </h1>
-            <Link to={blogBase} className="text-primary hover:underline">{backLabel}</Link>
-          </div>
+        <main id="contenido-principal" className="pt-20">
+          <section className="page-hero on-dark grid-field">
+            <div className="mx-auto flex min-h-[50vh] w-full max-w-5xl flex-col items-center justify-center px-5 py-16 text-center sm:px-8">
+              <h1 className="text-4xl leading-[1.15] sm:text-5xl">
+                {lang === 'pt' ? 'Artigo não encontrado' : lang === 'en' ? 'Article not found' : 'Artículo no encontrado'}
+              </h1>
+              <Link to={blogBase} className="fx-btn mt-8"><ArrowLeft aria-hidden="true" /> {backLabel}</Link>
+            </div>
+          </section>
         </main>
         <Footer currentLang={lang} />
-      </>
+      </div>
     );
   }
 
@@ -239,48 +247,54 @@ const BlogPost = ({ lang = 'es' }: Props) => {
       datePublished: staticPost.date,
     };
     return (
-      <>
-        <SEO title={staticPost.seoTitle || `${staticPost.title} — Ferova Agency`} description={staticPost.content[0]?.slice(0, 155) || staticPost.title} path={postPath} lang={lang} type="article" jsonLd={articleLd} />
+      <div className="fx-site min-h-screen">
+        <SEO title={staticPost.seoTitle || `${staticPost.title} — Ferova Agency`} description={staticPost.content[0]?.slice(0, 155) || staticPost.title} path={postPath} lang={lang} type="article" jsonLd={articleLd} breadcrumbs={[{ name: 'Blog', path: blogBase }, { name: staticPost.title, path: postPath }]} />
         <Header currentLang={lang} />
-        <main className="pt-20">
-          <article className="py-8 md:py-12">
-            <div className="container mx-auto px-4 md:px-6">
-              <div className="mx-auto" style={{ maxWidth: '720px' }}>
-                <Link to={blogBase} className="inline-flex items-center gap-2 text-muted-foreground hover:text-primary transition-colors mb-6 text-sm">
-                  <ArrowLeft className="w-4 h-4" /> {backLabel}
-                </Link>
-                <div className="flex items-center gap-3 mb-4">
-                  <span className="text-xs px-3 py-1 rounded-full font-medium bg-primary/10 text-primary">{staticPost.category}</span>
-                  <span className="text-muted-foreground text-xs flex items-center gap-1"><Clock className="w-3 h-3" /> {staticPost.readTime}</span>
-                </div>
-                <h1 className="text-2xl md:text-3xl lg:text-4xl font-display font-bold mb-4 leading-tight">{staticPost.title}</h1>
-                <div className="flex items-center gap-4 text-muted-foreground text-sm mb-8 pb-6 border-b border-border/30">
-                  <span className="flex items-center gap-1"><User className="w-4 h-4" /> {staticPost.author}</span>
-                  <span>{staticPost.date}</span>
-                </div>
-                <AdBanner slot="blog-post-top" className="mb-8" />
-                <div className="blog-content space-y-4" style={{ lineHeight: '1.6' }}>
-                  {staticPost.content.map((paragraph, i) => {
-                    if (paragraph.startsWith('## ')) {
-                      const [heading, ...rest] = paragraph.split('\n\n');
-                      return (
-                        <div key={i}>
-                          <h2 className="text-xl font-display font-bold mt-8 mb-3 text-foreground">{heading.replace('## ', '')}</h2>
-                          {rest.map((p, j) => <p key={j} className="text-muted-foreground mb-3">{p}</p>)}
-                        </div>
-                      );
-                    }
-                    return <p key={i} className="text-muted-foreground">{paragraph}</p>;
-                  })}
-                </div>
-                <AdBanner slot="blog-post-bottom" className="mt-10" />
-                <CtaBlock lang={lang} contactPath={contactPath} />
-              </div>
+        <main id="contenido-principal" className="pt-20">
+          <section className="page-hero on-dark grid-field">
+            <div className="mx-auto w-full max-w-7xl px-5 py-14 sm:px-8 sm:py-20">
+              <Link to={blogBase} className="fx-muted mb-6 flex w-fit items-center gap-2 text-sm hover:text-white">
+                <ArrowLeft aria-hidden="true" className="h-4 w-4" /> {backLabel}
+              </Link>
+              <p className="eyebrow-pill mb-5">{staticPost.category}</p>
+              <h1 className="max-w-4xl text-4xl leading-[1.15] sm:text-5xl">{staticPost.title}</h1>
+              <p className="fx-muted mt-6 flex flex-wrap items-center gap-x-4 gap-y-1 text-sm">
+                <span className="inline-flex items-center gap-1"><User aria-hidden="true" className="h-4 w-4" /> {staticPost.author}</span>
+                <span>{staticPost.date}</span>
+                <span className="inline-flex items-center gap-1"><Clock aria-hidden="true" className="h-4 w-4" /> {staticPost.readTime}</span>
+              </p>
             </div>
+          </section>
+          <article className="mx-auto w-full max-w-7xl px-5 py-16 sm:px-8 sm:py-20">
+            <AdBanner slot="blog-post-top" className="mb-8" />
+            <div className="fx-prose">
+              {staticPost.content.map((paragraph, i) => {
+                if (paragraph.startsWith('## ')) {
+                  const [heading, ...rest] = paragraph.split('\n\n');
+                  return (
+                    <div key={i}>
+                      <h2>{heading.replace('## ', '')}</h2>
+                      {rest.map((p, j) => <p key={j} className="fx-muted">{p}</p>)}
+                    </div>
+                  );
+                }
+                return <p key={i} className="fx-muted">{paragraph}</p>;
+              })}
+            </div>
+            <AdBanner slot="blog-post-bottom" className="mt-10" />
           </article>
+          <CtaBand
+            title={lang === 'pt' ? 'Quer resultados assim para seu e-commerce?' : lang === 'en' ? 'Want results like these for your e-commerce?' : '¿Quieres resultados así para tu e-commerce?'}
+            body={lang === 'pt' ? 'Fale conosco e ajudamos a escalar sua loja virtual.' : lang === 'en' ? 'Contact us and we\'ll help you scale your online store.' : 'Escríbenos y te ayudamos a escalar tu tienda online.'}
+          >
+            <FxLink to="https://wa.me/17866894686">WhatsApp</FxLink>
+            <FxLink to={contactPath} variant="outline">
+              {lang === 'pt' ? 'Cotizar com Fera' : lang === 'en' ? 'Quote with Fera' : 'Cotizar con Fera'}
+            </FxLink>
+          </CtaBand>
         </main>
         <Footer currentLang={lang} />
-      </>
+      </div>
     );
   }
 
@@ -349,14 +363,14 @@ const BlogPost = ({ lang = 'es' }: Props) => {
         })),
       }
     : null;
-  const openFera = () =>
-    window.dispatchEvent(new CustomEvent('open-fera-quote', { detail: { prompt: en ? `I read "${post.title}" and want to talk about my case.` : `Leí "${post.title}" y quiero hablar de mi caso.` } }));
+  const openFera = (source: string) =>
+    openFeraChat(en ? `I read "${post.title}" and want to talk about my case.` : `Leí "${post.title}" y quiero hablar de mi caso.`, `blog_post_${source}`);
   const t = en
     ? { toc: 'In this article', sideTitle: 'Facing something similar?', sideBody: 'Tell Fera about the project and get scope and availability.', midTitle: 'Want this done for your agency’s client?', midBody: 'Describe the deliverable in two lines and Fera prepares the scope: task, hours or monthly capacity.', cta: 'Talk to Fera', closeTitle: 'Tell me what you need to solve.', closeBody: 'We start from the work. The collaboration model follows the real scope.' }
     : { toc: 'En este artículo', sideTitle: '¿Te pasa algo parecido?', sideBody: 'Cuéntale a Fera el proyecto y recibe alcance y disponibilidad.', midTitle: '¿Quieres que lo resolvamos para un cliente de tu agencia?', midBody: 'Describe la entrega en dos líneas y Fera prepara el alcance: por tarea, por horas o capacidad mensual.', cta: 'Hablar con Fera', closeTitle: 'Cuéntame qué necesitas resolver.', closeBody: 'Empezamos por el trabajo. La modalidad la definimos a partir del alcance real.' };
 
   return (
-    <div className="seo-brand min-h-screen bg-white">
+    <div className="fx-site min-h-screen">
       <SEO
         title={seoTitle}
         description={seoDesc}
@@ -369,36 +383,36 @@ const BlogPost = ({ lang = 'es' }: Props) => {
         breadcrumbs={[{ name: 'Blog', path: blogBase }, { name: post.title, path: postPath }]}
       />
       <Header currentLang={lang} />
-      <main className="pt-20">
-        <section className="py-14 md:py-20">
-          <div className="container relative z-[1] mx-auto max-w-6xl px-4 md:px-6">
-            <Link to={blogBase} className="mb-6 flex w-fit items-center gap-2 text-sm text-white/80 hover:text-white">
-              <ArrowLeft className="h-4 w-4" /> {backLabel}
+      <main id="contenido-principal" className="pt-20">
+        <section className="page-hero on-dark grid-field">
+          <div className="mx-auto w-full max-w-7xl px-5 py-14 sm:px-8 sm:py-20">
+            <Link to={blogBase} className="fx-muted mb-6 flex w-fit items-center gap-2 text-sm hover:text-white">
+              <ArrowLeft aria-hidden="true" className="h-4 w-4" /> {backLabel}
             </Link>
-            {post.category ? <p className="seo-kicker mb-5">{post.category}</p> : null}
-            <h1 className="max-w-4xl text-4xl leading-[1.12] md:text-5xl">{post.title}</h1>
-            {post.excerpt ? <p className="mt-6 max-w-3xl text-lg leading-relaxed">{post.excerpt}</p> : null}
-            <p className="mt-6 flex flex-wrap items-center gap-x-4 gap-y-1 text-sm">
-              <span className="inline-flex items-center gap-1"><User className="h-4 w-4" /> {author}</span>
+            {post.category ? <p className="eyebrow-pill mb-5">{post.category}</p> : null}
+            <h1 className="max-w-4xl text-4xl leading-[1.15] sm:text-5xl">{post.title}</h1>
+            {post.excerpt ? <p className="fx-muted mt-6 max-w-3xl text-lg leading-relaxed">{post.excerpt}</p> : null}
+            <p className="fx-muted mt-6 flex flex-wrap items-center gap-x-4 gap-y-1 text-sm">
+              <span className="inline-flex items-center gap-1"><User aria-hidden="true" className="h-4 w-4" /> {author}</span>
               <span>{dateStr}</span>
-              <span className="inline-flex items-center gap-1"><Clock className="h-4 w-4" /> {readTime}</span>
+              <span className="inline-flex items-center gap-1"><Clock aria-hidden="true" className="h-4 w-4" /> {readTime}</span>
             </p>
           </div>
         </section>
 
-        <section className="py-12 md:py-16">
-          <div className="container mx-auto grid max-w-6xl gap-12 px-4 md:px-6 lg:grid-cols-[minmax(0,1fr)_18rem] lg:gap-16">
+        <section>
+          <div className="mx-auto grid w-full max-w-7xl gap-12 px-5 py-16 sm:px-8 sm:py-20 lg:grid-cols-[minmax(0,1fr)_20rem] lg:gap-16">
             <div className="min-w-0">
               {post.cover_image ? (
-                <img src={post.cover_image} alt={post.title} width={1600} height={900} className="mb-10 aspect-[16/9] w-full rounded-[1.25rem] object-cover" />
+                <img src={post.cover_image} alt={post.title} width={1600} height={900} fetchPriority="high" className="mb-10 aspect-[16/9] w-full rounded-[1.25rem] object-cover" />
               ) : null}
               {parts ? (
                 <article>
                   <div className="prose-blog article-body" dangerouslySetInnerHTML={{ __html: parts[0] }} />
                   <aside className="article-cta" aria-label={t.midTitle}>
-                    <p className="font-display text-xl font-semibold">{t.midTitle}</p>
-                    <p className="mt-2 leading-relaxed text-muted-foreground">{t.midBody}</p>
-                    <button type="button" onClick={openFera} className="personal-button mt-5">{t.cta} →</button>
+                    <p className="text-xl font-semibold" style={{ fontFamily: 'Poppins, system-ui, sans-serif' }}>{t.midTitle}</p>
+                    <p className="fx-muted mt-2 leading-relaxed">{t.midBody}</p>
+                    <button type="button" onClick={() => openFera('mid')} className="fx-btn mt-5">{t.cta} <ArrowUpRight aria-hidden="true" /></button>
                   </aside>
                   <div className="prose-blog article-body" dangerouslySetInnerHTML={{ __html: parts[1] }} />
                 </article>
@@ -408,19 +422,19 @@ const BlogPost = ({ lang = 'es' }: Props) => {
             </div>
             <aside className="space-y-6 lg:sticky lg:top-28 lg:self-start">
               {toc.length > 1 ? (
-                <nav aria-label={t.toc} className="hidden rounded-[1.25rem] bg-[var(--fx-surface)] p-7 lg:block">
-                  <p className="font-display text-lg font-semibold">{t.toc}</p>
+                <nav aria-label={t.toc} className="panel-card hidden lg:block">
+                  <p className="text-lg font-semibold" style={{ fontFamily: 'Poppins, system-ui, sans-serif' }}>{t.toc}</p>
                   <ol className="mt-4 space-y-3 text-sm leading-snug">
                     {toc.map((item) => (
-                      <li key={item.id}><a href={`#${item.id}`} className="text-muted-foreground hover:text-[var(--fx-wine)]">{item.label}</a></li>
+                      <li key={item.id}><a href={`#${item.id}`} className="fx-muted hover:text-[#541014] hover:underline">{item.label}</a></li>
                     ))}
                   </ol>
                 </nav>
               ) : null}
-              <div className="rounded-[1.25rem] bg-[var(--fx-surface)] p-7">
-                <p className="font-display text-lg font-semibold">{t.sideTitle}</p>
-                <p className="mt-2 text-sm leading-relaxed text-muted-foreground">{t.sideBody}</p>
-                <button type="button" onClick={openFera} className="personal-button mt-5 w-full">{t.cta}</button>
+              <div className="panel-card">
+                <p className="text-lg font-semibold" style={{ fontFamily: 'Poppins, system-ui, sans-serif' }}>{t.sideTitle}</p>
+                <p className="fx-muted mt-2 text-sm leading-relaxed">{t.sideBody}</p>
+                <button type="button" onClick={() => openFera('sidebar')} className="fx-btn fx-btn--sm mt-5 w-full">{t.cta} <ArrowUpRight aria-hidden="true" /></button>
               </div>
             </aside>
           </div>
@@ -443,24 +457,5 @@ const BlogPost = ({ lang = 'es' }: Props) => {
     </div>
   );
 };
-
-const CtaBlock = ({ lang, contactPath }: { lang: string; contactPath: string }) => (
-  <div className="glass-card p-8 mt-12 text-center gold-glow">
-    <h3 className="text-xl font-display font-bold mb-4">
-      {lang === 'pt' ? 'Quer resultados assim para seu e-commerce?' : lang === 'en' ? 'Want results like these for your e-commerce?' : '¿Quieres resultados así para tu e-commerce?'}
-    </h3>
-    <p className="text-muted-foreground mb-6">
-      {lang === 'pt' ? 'Fale conosco e ajudamos a escalar sua loja virtual.' : lang === 'en' ? 'Contact us and we\'ll help you scale your online store.' : 'Escríbenos y te ayudamos a escalar tu tienda online.'}
-    </p>
-    <div className="flex flex-col sm:flex-row gap-4 justify-center">
-      <a href="https://wa.me/17866894686" target="_blank" rel="noopener noreferrer" className="btn-gold flex items-center justify-center gap-2">
-        <MessageCircle className="w-5 h-5" /> WhatsApp
-      </a>
-      <Link to={contactPath} className="btn-outline-gold text-center">
-        {lang === 'pt' ? 'Cotizar com Fera' : lang === 'en' ? 'Quote with Fera' : 'Cotizar con Fera'}
-      </Link>
-    </div>
-  </div>
-);
 
 export default BlogPost;

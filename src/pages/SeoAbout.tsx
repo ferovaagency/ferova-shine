@@ -1,10 +1,10 @@
-import { Link } from "react-router-dom";
-import { ArrowRight, ArrowUpRight, CheckCircle2, Linkedin } from "lucide-react";
+import { ArrowUpRight, Linkedin } from "lucide-react";
 import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
 import SEO from "@/components/SEO";
 import type { Lang } from "@/config/routes";
 import { CREDENTIALS, DIRECTORIES, FOUNDER, monthLabel } from "@/data/founder";
+import { CheckList, CtaBand, Eyebrow, FeraButton, FxLink, PageHero, Panel, Section, SectionHeading } from "@/components/fx/primitives";
 
 const LINKEDIN = FOUNDER.linkedin;
 
@@ -159,8 +159,9 @@ export default function SeoAbout({ lang = "es" }: { lang?: Lang }) {
       recognizedBy: { "@type": "Organization", name: credential.issuer },
     })),
   };
+  const crumbs = [{ name: t.crumb, path: t.path }];
   return (
-    <div className="min-h-screen bg-white text-slate-950">
+    <div className="fx-site min-h-screen">
       <SEO
         title={t.title}
         description={t.desc}
@@ -172,149 +173,131 @@ export default function SeoAbout({ lang = "es" }: { lang?: Lang }) {
       />
       <Header lang={lang} />
 
-      <main className="pt-20">
-        <section className="bg-[#541014] py-20 text-white md:py-28">
-          <div className="container mx-auto grid max-w-6xl gap-12 px-4 md:px-6 lg:grid-cols-[1.15fr_.85fr] lg:items-end">
-            <div>
-              <p className="text-xs font-semibold uppercase tracking-[0.22em] text-[#e0bd52]">{t.eyebrow}</p>
-              <h1 className="mt-5 font-display text-4xl font-bold leading-tight tracking-tight md:text-6xl">{t.h1}</h1>
-            </div>
-            <p className="text-lg leading-8 text-slate-300">{t.lede}</p>
-          </div>
-        </section>
+      <main id="contenido-principal" className="pt-20">
+        <PageHero eyebrow={t.eyebrow} title={t.h1} intro={t.lede} breadcrumbs={crumbs} lang={lk}>
+          <FxLink to={t.contact}>{t.ctaLabel}</FxLink>
+          <FxLink to={LINKEDIN} variant="outline">{t.linkedin}</FxLink>
+        </PageHero>
 
-        <section className="py-20 md:py-28">
-          <div className="container mx-auto grid max-w-6xl gap-12 px-4 md:px-6 lg:grid-cols-[.8fr_1.2fr] lg:gap-20">
+        <Section>
+          <div className="grid gap-12 lg:grid-cols-[0.85fr_1.15fr] lg:items-center lg:gap-20">
+            <div className="offset-visual">
+              <figure className="portrait-card m-0">
+                <img
+                  src="/brand/maria-fernanda-calderon.webp"
+                  alt={lang === "en" ? "María Fernanda Calderón, Fractional SEO at Ferova, working on her laptop with her two cats and two dogs" : "María Fernanda Calderón, Fractional SEO en Ferova, trabajando en su portátil con sus dos gatos y sus dos perros"}
+                  width={800}
+                  height={800}
+                  loading="lazy"
+                  style={{ aspectRatio: "1 / 1" }}
+                />
+                <figcaption>{t.role}</figcaption>
+              </figure>
+            </div>
             <div>
-              <img
-                src="/brand/maria-fernanda-calderon.webp"
-                alt={lang === "en" ? "María Fernanda Calderón, Fractional SEO at Ferova, working on her laptop with her two cats and two dogs" : "María Fernanda Calderón, Fractional SEO en Ferova, trabajando en su portátil con sus dos gatos y sus dos perros"}
-                width={800}
-                height={800}
-                loading="lazy"
-                className="mb-8 aspect-square w-full max-w-sm rounded-2xl object-cover"
-              />
-              <p className="seo-kicker">{t.roleKicker}</p>
-              <h2 className="mt-4 font-display text-3xl font-bold md:text-5xl">{FOUNDER.name}</h2>
-              <p className="mt-3 font-semibold text-[#6a4c30]">{t.role}</p>
-              <a href={LINKEDIN} target="_blank" rel="noopener noreferrer" className="mt-7 inline-flex items-center gap-2 font-semibold text-slate-700 hover:text-[#6a4c30]">
-                <Linkedin className="h-5 w-5" /> {t.linkedin}
+              <Eyebrow className="mb-5">{t.roleKicker}</Eyebrow>
+              <h2 className="text-3xl leading-tight sm:text-4xl lg:text-5xl lg:leading-[1.15]">{FOUNDER.name}</h2>
+              <p className="mt-3 font-semibold text-[#541014]">{t.role}</p>
+              <div className="fx-muted mt-6 space-y-4 leading-relaxed sm:text-lg">
+                {t.body.map((p) => <p key={p}>{p}</p>)}
+              </div>
+              <a href={LINKEDIN} target="_blank" rel="noopener noreferrer" className="fx-text-link mt-7">
+                <Linkedin aria-hidden="true" /> {t.linkedin}
               </a>
             </div>
-            <div className="space-y-6 text-lg leading-8 text-slate-600">
-              {t.body.map((p) => <p key={p}>{p}</p>)}
-            </div>
           </div>
-        </section>
+        </Section>
 
-        <section className="bg-slate-50 py-20 md:py-24">
-          <div className="container mx-auto max-w-6xl px-4 md:px-6">
-            <p className="seo-kicker">{t.principlesKicker}</p>
-            <h2 className="mt-4 max-w-3xl font-display text-3xl font-bold md:text-5xl">{t.principlesTitle}</h2>
-            <div className="mt-10 grid gap-4 md:grid-cols-2">
-              {principles.map((principle) => (
-                <div key={principle} className="flex gap-4 rounded-2xl border border-slate-200 bg-white p-6">
-                  <CheckCircle2 className="mt-0.5 h-5 w-5 shrink-0 text-[#8c6905]" />
-                  <p className="leading-7 text-slate-700">{principle}</p>
+        <Section tone="surface">
+          <SectionHeading eyebrow={t.principlesKicker} title={t.principlesTitle} />
+          <ul className="mt-12 grid gap-5 md:grid-cols-2">
+            {principles.map((principle) => (
+              <li key={principle} className="panel-card">
+                <p className="check-item">{principle}</p>
+              </li>
+            ))}
+          </ul>
+        </Section>
+
+        <Section>
+          <div className="grid gap-12 lg:grid-cols-[1.1fr_0.9fr] lg:gap-20">
+            <div>
+              <SectionHeading eyebrow={t.profileKicker} title={t.resultsTitle} />
+              <CheckList className="mt-8" items={[...t.results]} />
+              <a href={FOUNDER.portfolio} className="fx-text-link mt-8">
+                {t.portfolioCta} <ArrowUpRight aria-hidden="true" />
+              </a>
+            </div>
+            <Panel className="h-fit">
+              <p className="text-xl font-semibold" style={{ fontFamily: "Poppins, system-ui, sans-serif" }}>{t.experience}</p>
+              <dl className="mt-5 space-y-5">
+                <div>
+                  <dt className="font-semibold">{t.specialtiesLabel}</dt>
+                  <dd className="fx-muted mt-1 leading-7">{t.specialties.join(" · ")}</dd>
                 </div>
-              ))}
-            </div>
+                <div>
+                  <dt className="font-semibold">{t.industriesLabel}</dt>
+                  <dd className="fx-muted mt-1 leading-7">{t.industries.join(" · ")}</dd>
+                </div>
+                <div>
+                  <dt className="font-semibold">{t.languagesLabel}</dt>
+                  <dd className="fx-muted mt-1 leading-7">{t.languages}</dd>
+                </div>
+              </dl>
+            </Panel>
           </div>
-        </section>
+        </Section>
 
-        <section className="py-20 md:py-24">
-          <div className="container mx-auto grid max-w-6xl gap-12 px-4 md:px-6 lg:grid-cols-[1.1fr_.9fr]">
-            <div>
-              <p className="seo-kicker">{t.profileKicker}</p>
-              <h2 className="mt-4 font-display text-3xl font-bold md:text-5xl">{t.resultsTitle}</h2>
-              <ul className="mt-8 space-y-4">
-                {t.results.map((result) => (
-                  <li key={result} className="flex gap-4 text-lg leading-8 text-slate-700">
-                    <CheckCircle2 className="mt-1.5 h-5 w-5 shrink-0 text-[#8c6905]" />
-                    {result}
-                  </li>
-                ))}
-              </ul>
-              <a href={FOUNDER.portfolio} className="mt-8 inline-flex items-center gap-2 font-semibold text-[#541014] hover:text-[#6a4c30]">
-                {t.portfolioCta} <ArrowUpRight className="h-4 w-4" />
-              </a>
-            </div>
-            <dl className="h-fit space-y-5 rounded-2xl border border-slate-200 bg-white p-7 text-slate-700">
-              <p className="font-display text-xl font-bold text-slate-950">{t.experience}</p>
-              <div>
-                <dt className="font-semibold text-slate-950">{t.specialtiesLabel}</dt>
-                <dd className="mt-1 leading-7">{t.specialties.join(" · ")}</dd>
-              </div>
-              <div>
-                <dt className="font-semibold text-slate-950">{t.industriesLabel}</dt>
-                <dd className="mt-1 leading-7">{t.industries.join(" · ")}</dd>
-              </div>
-              <div>
-                <dt className="font-semibold text-slate-950">{t.languagesLabel}</dt>
-                <dd className="mt-1 leading-7">{t.languages}</dd>
-              </div>
-            </dl>
-          </div>
-        </section>
+        <Section tone="surface" id="credenciales">
+          <SectionHeading eyebrow={t.credentialsKicker} title={t.credentialsTitle} intro={t.credentialsIntro} />
+          <ul className="mt-12 grid gap-5 md:grid-cols-2 lg:grid-cols-3">
+            {CREDENTIALS.map((credential) => (
+              <li key={credential.name.es} className="case-card">
+                <small>{credential.issuer.toUpperCase()}</small>
+                <h3 className="mt-3 text-xl leading-snug">{credential.name[lk]}</h3>
+                {credential.detail ? <p className="fx-muted mt-1 text-sm">{credential.detail[lk]}</p> : null}
+                <p className="fx-muted mt-auto pt-4 text-sm">
+                  {t.issued}: {monthLabel(credential.issued, lk)}
+                  {credential.expires ? ` · ${t.validUntil} ${monthLabel(credential.expires, lk)}` : ""}
+                </p>
+              </li>
+            ))}
+          </ul>
+        </Section>
 
-        <section id="credenciales" className="bg-slate-50 py-20 md:py-24">
-          <div className="container mx-auto max-w-6xl px-4 md:px-6">
-            <p className="seo-kicker">{t.credentialsKicker}</p>
-            <h2 className="mt-4 max-w-3xl font-display text-3xl font-bold md:text-5xl">{t.credentialsTitle}</h2>
-            <p className="mt-4 text-slate-600">{t.credentialsIntro}</p>
-            <ul className="mt-10 grid gap-4 md:grid-cols-2 lg:grid-cols-3">
-              {CREDENTIALS.map((credential) => (
-                <li key={credential.name.es} className="rounded-2xl border border-slate-200 bg-white p-6">
-                  <p className="text-xs font-semibold uppercase tracking-[0.16em] text-slate-500">{credential.issuer}</p>
-                  <h3 className="mt-2 font-display text-xl font-bold leading-snug">{credential.name[lk]}</h3>
-                  {credential.detail ? <p className="mt-1 text-sm text-slate-600">{credential.detail[lk]}</p> : null}
-                  <p className="mt-3 text-sm text-slate-700">
-                    {t.issued}: {monthLabel(credential.issued, lk)}
-                    {credential.expires ? ` · ${t.validUntil} ${monthLabel(credential.expires, lk)}` : ""}
-                  </p>
-                </li>
-              ))}
-            </ul>
-          </div>
-        </section>
-
-        <section id="directorios" className="py-20 md:py-24">
-          <div className="container mx-auto max-w-6xl px-4 md:px-6">
-            <p className="seo-kicker">{t.directoriesKicker}</p>
-            <h2 className="mt-4 max-w-3xl font-display text-3xl font-bold md:text-5xl">{t.directoriesTitle}</h2>
-            <ul className="mt-10 grid gap-4 md:grid-cols-2">
-              {DIRECTORIES.map((directory) => (
-                <li key={directory.name}>
-                  <a href={directory.url} target="_blank" rel="noopener noreferrer" className="flex h-full items-center gap-5 rounded-2xl border border-slate-200 bg-white p-6 transition-colors hover:border-[#8c6905]">
-                    {directory.badge ? (
-                      <img src={directory.badge.src} alt={directory.badge.alt} width={directory.badge.width} height={directory.badge.height} loading="lazy" className="h-12 w-auto shrink-0" />
-                    ) : null}
-                    <span>
-                      <span className="block font-semibold text-slate-950">{directory.name}</span>
-                      <span className="block text-sm text-slate-600">{directory.status[lk]}</span>
-                      <span className="mt-1 inline-flex items-center gap-1 text-sm font-semibold text-[#541014]">{t.directoryCta} <ArrowUpRight className="h-3.5 w-3.5" /></span>
+        <Section id="directorios">
+          <SectionHeading eyebrow={t.directoriesKicker} title={t.directoriesTitle} />
+          <ul className="mt-12 grid gap-4 md:grid-cols-2">
+            {DIRECTORIES.map((directory) => (
+              <li key={directory.name}>
+                <a href={directory.url} target="_blank" rel="noopener noreferrer" className="link-tile flex items-center gap-5">
+                  {directory.badge ? (
+                    <img src={directory.badge.src} alt={directory.badge.alt} width={directory.badge.width} height={directory.badge.height} loading="lazy" className="h-12 w-auto shrink-0 rounded-md bg-white" />
+                  ) : null}
+                  <span>
+                    <span className="block font-semibold">{directory.name}</span>
+                    <span className="fx-muted block text-sm">{directory.status[lk]}</span>
+                    <span className="mt-1 inline-flex items-center gap-1 text-sm font-semibold">
+                      {t.directoryCta} <ArrowUpRight aria-hidden="true" className="h-3.5 w-3.5" />
                     </span>
-                  </a>
-                </li>
-              ))}
-            </ul>
-            <div className="mt-12 rounded-2xl border border-slate-200 bg-slate-50 p-7">
-              <h3 className="font-display text-2xl font-bold">{t.ferovaTitle}</h3>
-              <p className="mt-2 max-w-2xl leading-7 text-slate-600">{t.ferovaBody}</p>
-              <a href={FOUNDER.ferovaProfile} className="mt-5 inline-flex items-center gap-2 font-semibold text-[#541014] hover:text-[#6a4c30]">
-                {t.ferovaCta} <ArrowUpRight className="h-4 w-4" />
-              </a>
-            </div>
-          </div>
-        </section>
+                  </span>
+                </a>
+              </li>
+            ))}
+          </ul>
+          <Panel className="mt-12">
+            <h3 className="text-2xl">{t.ferovaTitle}</h3>
+            <p className="fx-muted mt-2 max-w-2xl leading-7">{t.ferovaBody}</p>
+            <a href={FOUNDER.ferovaProfile} className="fx-text-link mt-5">
+              {t.ferovaCta} <ArrowUpRight aria-hidden="true" />
+            </a>
+          </Panel>
+        </Section>
 
-        <section className="py-20 text-center md:py-28">
-          <div className="container mx-auto px-4 md:px-6">
-            <h2 className="mx-auto max-w-3xl font-display text-3xl font-bold md:text-5xl">{t.ctaTitle}</h2>
-            <p className="mx-auto mt-5 max-w-2xl leading-7 text-slate-600">{t.ctaLede}</p>
-            <Link to={t.contact} className="seo-primary-button mt-9">{t.ctaLabel} <ArrowRight className="h-4 w-4" /></Link>
-          </div>
-        </section>
+        <CtaBand title={t.ctaTitle} body={t.ctaLede}>
+          <FxLink to={t.contact}>{t.ctaLabel}</FxLink>
+          <FeraButton variant="outline" source="about_final">{lang === "en" ? "Talk to Fera" : "Hablar con Fera"}</FeraButton>
+        </CtaBand>
       </main>
       <Footer lang={lang} />
     </div>

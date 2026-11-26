@@ -1,12 +1,14 @@
 import { Link } from "react-router-dom";
-import { ArrowRight, ArrowUpRight, CheckCircle2 } from "lucide-react";
+import { ArrowUpRight } from "lucide-react";
 import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
 import SEO from "@/components/SEO";
 import { BEST_PROVIDERS as c } from "@/content/bestProviders";
+import { CheckList, CtaBand, FaqList, FeraButton, FxLink, PageHero, Section, SectionHeading, StatusBadge } from "@/components/fx/primitives";
 
 const ORIGIN = "https://seoparaecommerce.co";
 
+/** Comparativa de proveedores white label (EN) con el sistema de diseño de Ferova. */
 export default function BestProvidersPage() {
   const listLd = {
     "@context": "https://schema.org",
@@ -35,110 +37,139 @@ export default function BestProvidersPage() {
     mainEntity: c.faqs.map((f) => ({ "@type": "Question", name: f.question, acceptedAnswer: { "@type": "Answer", text: f.answer } })),
   };
 
+
+  const crumbs = [{ name: "Best white label SEO providers", path: c.path }];
+
   return (
-    <div className="seo-brand min-h-screen bg-background text-foreground">
+    <div className="fx-site min-h-screen">
       <SEO
         title={c.metaTitle}
         description={c.metaDescription}
         path={c.path}
         lang="en"
         jsonLd={[articleLd, listLd, faqLd]}
-        breadcrumbs={[{ name: "Home", path: "/en" }, { name: "Best white label SEO providers", path: c.path }]}
+        breadcrumbs={[{ name: "Home", path: "/en" }, ...crumbs]}
       />
       <Header lang="en" />
-      <main className="pt-20">
-        <section className="bg-[#541014] py-20 text-white md:py-24">
-          <div className="container mx-auto max-w-5xl px-4 md:px-6">
-            <p className="text-xs font-semibold tracking-[0.22em] text-[#e0bd52]">{c.eyebrow}</p>
-            <h1 className="mt-5 text-4xl font-bold leading-[1.08] md:text-6xl">{c.h1}</h1>
-            <p className="mt-6 max-w-3xl text-lg leading-relaxed text-slate-300">{c.lede}</p>
+      <main id="contenido-principal" className="pt-20">
+        <PageHero eyebrow={c.eyebrow} title={c.h1} intro={c.lede} breadcrumbs={crumbs} lang="en">
+          <FxLink to="/en/white-label-seo-for-agencies">See Ferova's white label service</FxLink>
+        </PageHero>
+
+        <div className="fx-bg-surface">
+          <p className="fx-muted mx-auto w-full max-w-5xl px-5 py-6 text-sm leading-relaxed sm:px-8">{c.disclosure}</p>
+        </div>
+
+        <Section narrow>
+          <SectionHeading title={c.criteriaTitle} />
+          <CheckList items={c.criteria} className="mt-8" />
+        </Section>
+
+        <Section tone="surface">
+          <SectionHeading title="At a glance" />
+          <div className="mt-8 overflow-x-auto rounded-[1.25rem] bg-white">
+            <table className="fx-table min-w-[720px]">
+              <thead>
+                <tr>
+                  <th scope="col">Provider</th>
+                  <th scope="col">Best for</th>
+                  <th scope="col">Published pricing</th>
+                </tr>
+              </thead>
+              <tbody>
+                {c.providers.map((p) => (
+                  <tr key={p.name}>
+                    <td className="font-semibold">
+                      {p.name}
+                      {p.ours ? " (ours)" : ""}
+                    </td>
+                    <td>{p.bestFor}</td>
+                    <td>{p.pricing}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
           </div>
-        </section>
+        </Section>
 
-        <section className="border-b border-border bg-card py-8">
-          <p className="container mx-auto max-w-5xl px-4 text-sm leading-relaxed text-muted-foreground md:px-6">{c.disclosure}</p>
-        </section>
-
-        <section className="py-16 md:py-20">
-          <div className="container mx-auto max-w-5xl px-4 md:px-6">
-            <h2 className="text-3xl md:text-4xl">{c.criteriaTitle}</h2>
-            <ul className="mt-6 space-y-3">
-              {c.criteria.map((item) => (
-                <li key={item} className="flex gap-3 leading-relaxed"><CheckCircle2 className="mt-1 h-5 w-5 shrink-0 text-[#8c6905]" />{item}</li>
-              ))}
-            </ul>
-          </div>
-        </section>
-
-        <section className="bg-[#f4eadb] py-16 text-[#3c3c3b] md:py-20">
-          <div className="container mx-auto max-w-5xl px-4 md:px-6">
-            <h2 className="text-3xl md:text-4xl">At a glance</h2>
-            <div className="mt-8 overflow-x-auto rounded-2xl border border-border bg-white">
-              <table className="w-full min-w-[720px] text-left text-sm">
-                <thead className="bg-[#f4eadb] text-xs uppercase tracking-wide text-[#6a4c30]">
-                  <tr><th className="p-4">Provider</th><th className="p-4">Best for</th><th className="p-4">Published pricing</th></tr>
-                </thead>
-                <tbody>
-                  {c.providers.map((p) => (
-                    <tr key={p.name} className="border-t border-border align-top">
-                      <td className="p-4 font-semibold">{p.name}{p.ours ? " (ours)" : ""}</td>
-                      <td className="p-4">{p.bestFor}</td>
-                      <td className="p-4">{p.pricing}</td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
-            </div>
-          </div>
-        </section>
-
-        <section className="py-16 md:py-20">
-          <div className="container mx-auto max-w-5xl space-y-10 px-4 md:px-6">
+        <Section>
+          <div className="grid gap-6">
             {c.providers.map((p, i) => (
-              <article key={p.name} className="rounded-2xl border border-border bg-card p-7">
-                <p className="font-mono text-sm text-[#6a4c30]">{String(i + 1).padStart(2, "0")}{p.ours ? " · Our service" : ""}</p>
-                <h2 className="mt-2 text-2xl md:text-3xl">{p.name}</h2>
+              <article key={p.name} className="panel-card">
+                <p className="flex flex-wrap items-center gap-3 text-sm" style={{ fontFamily: '"IBM Plex Mono", ui-monospace, monospace' }}>
+                  {String(i + 1).padStart(2, "0")}
+                  {p.ours ? <StatusBadge>Our service</StatusBadge> : null}
+                </p>
+                <h2 className="mt-3 text-2xl md:text-3xl">{p.name}</h2>
                 <dl className="mt-5 grid gap-4 text-sm md:grid-cols-3">
-                  <div><dt className="font-semibold">Focus</dt><dd className="mt-1 text-muted-foreground">{p.focus}</dd></div>
-                  <div><dt className="font-semibold">Best for</dt><dd className="mt-1 text-muted-foreground">{p.bestFor}</dd></div>
-                  <div><dt className="font-semibold">Published pricing</dt><dd className="mt-1 text-muted-foreground">{p.pricing}</dd></div>
+                  <div>
+                    <dt className="font-semibold">Focus</dt>
+                    <dd className="fx-muted mt-1">{p.focus}</dd>
+                  </div>
+                  <div>
+                    <dt className="font-semibold">Best for</dt>
+                    <dd className="fx-muted mt-1">{p.bestFor}</dd>
+                  </div>
+                  <div>
+                    <dt className="font-semibold">Published pricing</dt>
+                    <dd className="fx-muted mt-1">{p.pricing}</dd>
+                  </div>
                 </dl>
-                <ul className="mt-5 space-y-2">
-                  {p.notes.map((n) => <li key={n} className="flex gap-3 leading-relaxed"><CheckCircle2 className="mt-1 h-4 w-4 shrink-0 text-[#8c6905]" />{n}</li>)}
-                </ul>
-                <div className="mt-5 flex flex-wrap items-center gap-4 text-sm">
+                <CheckList items={p.notes} className="mt-5" />
+                <div className="mt-6 flex flex-wrap items-center gap-4 text-sm">
                   {p.ours ? (
-                    <Link to="/en/white-label-seo-for-agencies" className="inline-flex items-center gap-2 font-semibold text-[#541014]">See Ferova's white label service <ArrowRight className="h-4 w-4" /></Link>
+                    <Link to="/en/white-label-seo-for-agencies" className="fx-text-link">
+                      See Ferova's white label service <ArrowUpRight aria-hidden="true" />
+                    </Link>
                   ) : (
-                    <a href={p.url} target="_blank" rel="noopener nofollow" className="inline-flex items-center gap-2 font-semibold text-[#541014]">Visit {p.name} <ArrowUpRight className="h-4 w-4" /></a>
+                    <a href={p.url} target="_blank" rel="noopener nofollow" className="fx-text-link">
+                      Visit {p.name} <ArrowUpRight aria-hidden="true" />
+                    </a>
                   )}
-                  <span className="text-xs text-muted-foreground">Source: {p.source} — consulted {p.consulted}</span>
+                  <span className="fx-muted text-xs">
+                    Source: {p.source} — consulted {p.consulted}
+                  </span>
                 </div>
               </article>
             ))}
           </div>
-        </section>
+        </Section>
 
-        <section className="border-t border-border bg-card py-16 md:py-20">
-          <div className="container mx-auto max-w-5xl px-4 md:px-6">
-            <h2 className="text-3xl md:text-4xl">{c.howToChooseTitle}</h2>
-            <ol className="mt-6 list-decimal space-y-3 pl-6 leading-relaxed">
-              {c.howToChoose.map((s) => <li key={s}>{s}</li>)}
+        <Section tone="surface">
+          <div className="grid gap-10 lg:grid-cols-[0.85fr_1.15fr] lg:gap-16">
+            <SectionHeading title={c.howToChooseTitle} />
+            <ol className="process">
+              {c.howToChoose.map((s, i) => (
+                <li key={s} className="flex items-start gap-5 rounded-[1.25rem] bg-white p-5 leading-relaxed">
+                  <span className="process__number" aria-hidden="true">{String(i + 1).padStart(2, "0")}</span>
+                  <span className="pt-2.5">{s}</span>
+                </li>
+              ))}
             </ol>
           </div>
-        </section>
+        </Section>
 
-        <section className="py-16">
-          <div className="container mx-auto max-w-4xl px-4 md:px-6">
-            <p className="seo-kicker">FREQUENT QUESTIONS</p>
-            <div className="mt-6 divide-y divide-border">
-              {c.faqs.map((f) => <article key={f.question} className="py-6"><h2 className="text-xl">{f.question}</h2><p className="mt-3 leading-relaxed text-muted-foreground">{f.answer}</p></article>)}
-            </div>
-            <ul className="mt-10 flex flex-wrap gap-x-6 gap-y-3">
-              {c.related.map((r) => <li key={r.to}><Link to={r.to} className="border-b border-[#c0930e] pb-0.5 font-semibold text-[#541014]">{r.label}</Link></li>)}
-            </ul>
+        <Section>
+          <div className="grid gap-12 lg:grid-cols-[0.9fr_1.1fr] lg:gap-20">
+            <SectionHeading title="Frequent questions" />
+            <FaqList items={c.faqs.map((f) => [f.question, f.answer] as [string, string])} />
           </div>
-        </section>
+          <ul className="mt-14 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+            {c.related.map((r) => (
+              <li key={r.to}>
+                <Link to={r.to} className="link-tile flex items-center justify-between gap-4 font-semibold">
+                  {r.label}
+                  <ArrowUpRight aria-hidden="true" className="h-5 w-5 shrink-0" />
+                </Link>
+              </li>
+            ))}
+          </ul>
+        </Section>
+
+        <CtaBand title="Need a technical SEO partner for your ecommerce clients?">
+          <FeraButton source="best_providers_final">Talk to Fera</FeraButton>
+          <FxLink to="/en/contact" variant="outline">Contact</FxLink>
+        </CtaBand>
       </main>
       <Footer lang="en" />
     </div>

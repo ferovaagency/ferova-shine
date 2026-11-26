@@ -122,11 +122,13 @@ Inglés: `/en/white-label-seo-for-agencies`, `/en/technical-seo-audit-services`,
 
 ## 7. Diseño
 
-El sitio usa el **sistema de diseño de Ferova** (el mismo de ferova.com.co),
-conservando la marca personal: wordmark "MARÍA FER · SEO TÉCNICO · FEROVA", la
-foto de María Fer en la portada y sus textos. La implementación vive en el
-bloque final de `src/index.css` ("SISTEMA DE DISEÑO FEROVA"), que manda sobre
-los estilos anteriores; los cambios visuales se hacen ahí.
+El sitio usa el **sistema de diseño de Ferova**: los mismos componentes y la
+misma composición de páginas que ferova.com.co, conservando la marca personal
+(wordmark "MARÍA FER · SEO TÉCNICO · FEROVA", la foto de María Fer y sus textos).
+
+- **Componentes:** `src/components/fx/primitives.tsx` (Section, SectionHeading, Eyebrow, Panel, IconTile, CheckList, FxLink, FeraButton, PageHero, CtaBand, FaqList, ProcessSteps, Breadcrumbs, faqSchema). Estilos en `src/styles/ferova-system.css`, portados de ferova.com.co con los mismos nombres de clase (`page-hero`, `home-hero`, `grid-field`, `panel-card`, `icon-tile`, `check-item`, `link-tile`, `offset-visual`, `console`, `process`, `faq-list`, `case-card`, `post-card`, `cta-band`, `fx-btn`…). Sus variables llevan prefijo `--fx-` porque `--primary`, `--surface`, etc. son tokens HSL de Tailwind en este repo.
+- **Composición de toda página pública:** `<div className="fx-site">` → `<Header>` → `<main className="pt-20">` → `PageHero` (o el héroe con consola en la portada) → `Section` alternando blanco y `tone="surface"` → `CtaBand` → `<Footer>`. Una página nueva se arma con estas piezas; no se crean estilos sueltos.
+- El bloque final de `src/index.css` ("SISTEMA DE DISEÑO FEROVA") solo cubre restos de estilos heredados.
 
 - **Paleta fija del manual:** carbón `#3C3C3B`, vino `#541014`, índigo `#2F2D56`, tierra `#6A4C30`, oro `#C0930E`, más blanco, lavanda (`#F6F5FB`) y marfil. Nada de azules SaaS, neón, glassmorphism dominante ni paletas generadas.
 - **Roles:** vino = acción principal (píldora); índigo = héroes con retícula fina y etiquetas; oro = solo señal o estado (iconos de verificación, resaltado del titular sobre índigo), nunca fondo extenso ni botón.
