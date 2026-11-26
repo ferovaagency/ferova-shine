@@ -8,7 +8,9 @@ import { getSupabase } from '@/integrations/supabase/lazy';
 import { useAnalytics } from '@/hooks/useAnalytics';
 import SEO from '@/components/SEO';
 import { getPrerenderPost } from '@/lib/prerender-store';
-import { BLOG_I18N_COLUMNS, pickVariant, type BlogRowI18n } from '@/lib/blog-i18n';
+import { BLOG_I18N_COLUMNS, BLOG_SITE_ORIGINS, pickVariant, type BlogRowI18n } from '@/lib/blog-i18n';
+import { extractFaq, inlineImages, splitForCta, withToc, wordCount } from '@/lib/article-landing';
+import { SITE_ORIGIN } from '@/config/routes';
 
 interface Props { lang?: 'es' | 'en' | 'pt'; }
 
@@ -20,6 +22,11 @@ interface PostData {
   created_at: string;
   meta_title: string | null;
   meta_description: string | null;
+  excerpt?: string | null;
+  cover_image?: string | null;
+  keyword?: string | null;
+  published_at?: string | null;
+  updated_at?: string | null;
   /** Rutas hermanas del mismo artículo (mismo slug, otra traducción). */
   alternates?: Partial<Record<'es' | 'en', string>>;
 }
@@ -136,13 +143,14 @@ const BlogPost = ({ lang = 'es' }: Props) => {
         const supabase = await getSupabase();
         const { data, error } = await supabase
           .from('blog_posts')
-          .select(`slug, language, author, category, created_at, ${BLOG_I18N_COLUMNS}`)
+          .select(`slug, language, author, category, created_at, cover_image, keyword, published_at, updated_at, ${BLOG_I18N_COLUMNS}`)
           .eq('slug', slug)
           .eq('active', true)
+          .in('site_origin', [...BLOG_SITE_ORIGINS])
           .lte('published_at', new Date().toISOString())
           .limit(1);
 
-        const row = data?.[0] as (BlogRowI18n & { author: string; category: string; created_at: string }) | undefined;
+        const row = data?.[0] as (BlogRowI18n & { author: string; category: string; created_at: string; cover_image: string | null; keyword: string | null; published_at: string | null; updated_at: string | null }) | undefined;
         const variant = row ? pickVariant(row, lang === 'en' ? 'en' : 'es') : null;
 
         if (error || !variant) {
@@ -157,6 +165,11 @@ const BlogPost = ({ lang = 'es' }: Props) => {
             created_at: row!.created_at,
             meta_title: variant.meta_title,
             meta_description: variant.meta_description,
+            excerpt: variant.excerpt,
+            cover_image: row!.cover_image,
+            keyword: row!.keyword,
+            published_at: row!.published_at,
+            updated_at: row!.updated_at,
             alternates: hasEn
               ? { es: `/blog/${slug}`, en: `/en/blog/${slug}` }
               : { es: `/blog/${slug}` },
@@ -292,55 +305,142 @@ const BlogPost = ({ lang = 'es' }: Props) => {
   };
   const seoTitle = post.meta_title || buildSeoTitle(post.title);
   const seoDesc = post.meta_description || post.content.replace(/<[^>]*>/g, ' ').slice(0, 155);
+  // El artículo es una landing (CLAUDE.md §3): héroe, portada, índice, llamada a
+  // Fera a mitad del texto, cierre vino y schemas completos.
+  const en = lang === 'en';
+  const url = `${SITE_ORIGIN}${postPath}`;
+  const blogUrl = `${SITE_ORIGIN}${blogBase}`;
+  const { html: tocHtml, toc } = withToc(post.content);
+  const parts = splitForCta(tocHtml);
+  const faq = extractFaq(post.content);
+  const author = post.author || 'María Fer Calderón';
+  const published = post.published_at || post.created_at;
   const articleLd = {
-    '@context': 'https://schema.org', '@type': 'Article',
+    '@context': 'https://schema.org',
+    '@type': 'BlogPosting',
+    '@id': `${url}#article`,
     headline: post.title,
-    author: { '@type': 'Person', name: post.author || 'Maria Calderon' },
-    datePublished: post.created_at,
-    articleSection: post.category || undefined,
+    description: seoDesc,
+    inLanguage: lang,
+    url,
+    mainEntityOfPage: { '@type': 'WebPage', '@id': url },
+    image: [
+      ...(post.cover_image ? [{ '@type': 'ImageObject', url: post.cover_image, caption: post.title }] : []),
+      ...inlineImages(post.content).map((src) => ({ '@type': 'ImageObject', url: src })),
+    ],
+    author: { '@type': 'Person', name: author, url: `${SITE_ORIGIN}${en ? '/en/about-me' : '/sobre-nosotros'}` },
+    publisher: { '@type': 'Organization', name: 'Ferova', url: SITE_ORIGIN },
+    isPartOf: { '@type': 'Blog', '@id': `${blogUrl}#blog`, url: blogUrl },
+    wordCount: wordCount(post.content),
+    datePublished: published,
+    dateModified: post.updated_at || published,
+    ...(post.keyword ? { keywords: post.keyword } : {}),
+    ...(post.category ? { articleSection: post.category } : {}),
   };
+  const faqLd = faq.length
+    ? {
+        '@context': 'https://schema.org',
+        '@type': 'FAQPage',
+        '@id': `${url}#faq`,
+        mainEntity: faq.map((item) => ({
+          '@type': 'Question',
+          name: item.question,
+          acceptedAnswer: { '@type': 'Answer', text: item.answer },
+        })),
+      }
+    : null;
+  const openFera = () =>
+    window.dispatchEvent(new CustomEvent('open-fera-quote', { detail: { prompt: en ? `I read "${post.title}" and want to talk about my case.` : `Leí "${post.title}" y quiero hablar de mi caso.` } }));
+  const t = en
+    ? { toc: 'In this article', sideTitle: 'Facing something similar?', sideBody: 'Tell Fera about the project and get scope and availability.', midTitle: 'Want this done for your agency’s client?', midBody: 'Describe the deliverable in two lines and Fera prepares the scope: task, hours or monthly capacity.', cta: 'Talk to Fera', closeTitle: 'Tell me what you need to solve.', closeBody: 'We start from the work. The collaboration model follows the real scope.' }
+    : { toc: 'En este artículo', sideTitle: '¿Te pasa algo parecido?', sideBody: 'Cuéntale a Fera el proyecto y recibe alcance y disponibilidad.', midTitle: '¿Quieres que lo resolvamos para un cliente de tu agencia?', midBody: 'Describe la entrega en dos líneas y Fera prepara el alcance: por tarea, por horas o capacidad mensual.', cta: 'Hablar con Fera', closeTitle: 'Cuéntame qué necesitas resolver.', closeBody: 'Empezamos por el trabajo. La modalidad la definimos a partir del alcance real.' };
 
   return (
-    <>
+    <div className="seo-brand min-h-screen bg-white">
       <SEO
         title={seoTitle}
         description={seoDesc}
         path={postPath}
         lang={lang}
         type="article"
-        jsonLd={articleLd}
+        image={post.cover_image || undefined}
+        jsonLd={faqLd ? [articleLd, faqLd] : [articleLd]}
         alternates={post.alternates}
+        breadcrumbs={[{ name: 'Blog', path: blogBase }, { name: post.title, path: postPath }]}
       />
       <Header currentLang={lang} />
       <main className="pt-20">
-        <article className="py-8 md:py-12">
-          <div className="container mx-auto px-4 md:px-6">
-            <div className="mx-auto" style={{ maxWidth: '720px' }}>
-              <Link to={blogBase} className="inline-flex items-center gap-2 text-muted-foreground hover:text-primary transition-colors mb-6 text-sm">
-                <ArrowLeft className="w-4 h-4" /> {backLabel}
-              </Link>
-              <div className="flex items-center gap-3 mb-4">
-                <span className="text-xs px-3 py-1 rounded-full font-medium bg-primary/10 text-primary">{post.category || 'General'}</span>
-                <span className="text-muted-foreground text-xs flex items-center gap-1"><Clock className="w-3 h-3" /> {readTime}</span>
+        <section className="py-14 md:py-20">
+          <div className="container relative z-[1] mx-auto max-w-6xl px-4 md:px-6">
+            <Link to={blogBase} className="mb-6 flex w-fit items-center gap-2 text-sm text-white/80 hover:text-white">
+              <ArrowLeft className="h-4 w-4" /> {backLabel}
+            </Link>
+            {post.category ? <p className="seo-kicker mb-5">{post.category}</p> : null}
+            <h1 className="max-w-4xl text-4xl leading-[1.12] md:text-5xl">{post.title}</h1>
+            {post.excerpt ? <p className="mt-6 max-w-3xl text-lg leading-relaxed">{post.excerpt}</p> : null}
+            <p className="mt-6 flex flex-wrap items-center gap-x-4 gap-y-1 text-sm">
+              <span className="inline-flex items-center gap-1"><User className="h-4 w-4" /> {author}</span>
+              <span>{dateStr}</span>
+              <span className="inline-flex items-center gap-1"><Clock className="h-4 w-4" /> {readTime}</span>
+            </p>
+          </div>
+        </section>
+
+        <section className="py-12 md:py-16">
+          <div className="container mx-auto grid max-w-6xl gap-12 px-4 md:px-6 lg:grid-cols-[minmax(0,1fr)_18rem] lg:gap-16">
+            <div className="min-w-0">
+              {post.cover_image ? (
+                <img src={post.cover_image} alt={post.title} width={1600} height={900} className="mb-10 aspect-[16/9] w-full rounded-[1.25rem] object-cover" />
+              ) : null}
+              {parts ? (
+                <article>
+                  <div className="prose-blog article-body" dangerouslySetInnerHTML={{ __html: parts[0] }} />
+                  <aside className="article-cta" aria-label={t.midTitle}>
+                    <p className="font-display text-xl font-semibold">{t.midTitle}</p>
+                    <p className="mt-2 leading-relaxed text-muted-foreground">{t.midBody}</p>
+                    <button type="button" onClick={openFera} className="personal-button mt-5">{t.cta} →</button>
+                  </aside>
+                  <div className="prose-blog article-body" dangerouslySetInnerHTML={{ __html: parts[1] }} />
+                </article>
+              ) : (
+                <article className="prose-blog article-body" dangerouslySetInnerHTML={{ __html: tocHtml }} />
+              )}
+            </div>
+            <aside className="space-y-6 lg:sticky lg:top-28 lg:self-start">
+              {toc.length > 1 ? (
+                <nav aria-label={t.toc} className="hidden rounded-[1.25rem] bg-[var(--fx-surface)] p-7 lg:block">
+                  <p className="font-display text-lg font-semibold">{t.toc}</p>
+                  <ol className="mt-4 space-y-3 text-sm leading-snug">
+                    {toc.map((item) => (
+                      <li key={item.id}><a href={`#${item.id}`} className="text-muted-foreground hover:text-[var(--fx-wine)]">{item.label}</a></li>
+                    ))}
+                  </ol>
+                </nav>
+              ) : null}
+              <div className="rounded-[1.25rem] bg-[var(--fx-surface)] p-7">
+                <p className="font-display text-lg font-semibold">{t.sideTitle}</p>
+                <p className="mt-2 text-sm leading-relaxed text-muted-foreground">{t.sideBody}</p>
+                <button type="button" onClick={openFera} className="personal-button mt-5 w-full">{t.cta}</button>
               </div>
-              <h1 className="text-2xl md:text-3xl lg:text-4xl font-display font-bold mb-4 leading-tight">{post.title}</h1>
-              <div className="flex items-center gap-4 text-muted-foreground text-sm mb-8 pb-6 border-b border-border/30">
-                <span className="flex items-center gap-1"><User className="w-4 h-4" /> {post.author || 'Maria Calderon'}</span>
-                <span>{dateStr}</span>
-              </div>
-              <AdBanner slot="blog-post-top" className="mb-8" />
-              <article
-                className="prose-blog dark:prose-invert"
-                dangerouslySetInnerHTML={{ __html: post.content }}
-              />
-              <AdBanner slot="blog-post-bottom" className="mt-10" />
-              <CtaBlock lang={lang} contactPath={contactPath} />
+            </aside>
+          </div>
+        </section>
+
+        <section className="personal-contact">
+          <div className="personal-shell personal-contact-inner">
+            <div>
+              <h2>{t.closeTitle}</h2>
+              <p>{t.closeBody}</p>
+            </div>
+            <div className="flex flex-wrap gap-3">
+              <button type="button" onClick={openFera} className="personal-button"><MessageCircle aria-hidden="true" /> {t.cta}</button>
+              <Link to={contactPath} className="personal-link text-white">{en ? 'Contact' : 'Contacto'}</Link>
             </div>
           </div>
-        </article>
+        </section>
       </main>
       <Footer currentLang={lang} />
-    </>
+    </div>
   );
 };
 

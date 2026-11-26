@@ -4,6 +4,7 @@ import { ArrowRight, FilePlus2, FileText, Inbox, Plus, Trophy } from "lucide-rea
 import AdminLayout from "@/components/admin/AdminLayout";
 import { supabase } from "@/integrations/supabase/client";
 import { caseCms } from "@/integrations/supabase/cms-types";
+import { BLOG_SITE_ORIGINS } from "@/lib/blog-i18n";
 
 type Counts = { pending: number | null; drafts: number | null; cases: number | null };
 
@@ -14,7 +15,7 @@ export default function AdminDashboard() {
     let active = true;
     void Promise.all([
       (supabase as any).from("admin_inbox").select("*", { count: "exact", head: true }).eq("status", "pending"),
-      supabase.from("blog_posts").select("*", { count: "exact", head: true }).eq("active", false),
+      supabase.from("blog_posts").select("*", { count: "exact", head: true }).eq("active", false).in("site_origin", [...BLOG_SITE_ORIGINS]),
       caseCms.from("case_studies").select("*", { count: "exact", head: true }).neq("status", "archived"),
     ]).then(([leads, posts, cases]) => {
       if (!active) return;

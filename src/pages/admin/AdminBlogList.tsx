@@ -5,6 +5,7 @@ import { toast } from "sonner";
 import AdminLayout from "@/components/admin/AdminLayout";
 import { supabase } from "@/integrations/supabase/client";
 import { SEO_EDITORIAL } from "@/content/seoEditorial";
+import { BLOG_SITE_ORIGINS } from "@/lib/blog-i18n";
 
 type BlogLanguage = "es" | "en";
 type BlogSummary = { id: string; slug: string; title: string; language: BlogLanguage; active: boolean; published_at: string; updated_at: string; legacy?: boolean };
@@ -22,7 +23,8 @@ export default function AdminBlogList() {
 
   const load = useCallback(async () => {
     setLoading(true); setError("");
-    const query = supabase.from("blog_posts").select("id,slug,title,language,active,published_at,updated_at").order("updated_at", { ascending: false });
+    // Solo los artículos de este sitio: blog_posts es compartida con ferova.com.co.
+    const query = supabase.from("blog_posts").select("id,slug,title,language,active,published_at,updated_at").in("site_origin", [...BLOG_SITE_ORIGINS]).order("updated_at", { ascending: false });
     const { data, error: queryError } = await query;
     if (queryError) setError("No se pudieron cargar los artículos. Revisa tu conexión o los permisos del usuario.");
     const databasePosts = (data ?? []) as BlogSummary[];

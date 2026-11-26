@@ -24,6 +24,10 @@ export interface PrerenderPost {
   created_at: string;
   meta_title: string | null;
   meta_description: string | null;
+  cover_image?: string | null;
+  keyword?: string | null;
+  published_at?: string | null;
+  updated_at?: string | null;
   /** Rutas hermanas del mismo artículo, para los hreflang. */
   alternates?: Partial<Record<"es" | "en", string>>;
 }

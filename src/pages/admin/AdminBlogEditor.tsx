@@ -53,9 +53,18 @@ export default function AdminBlogEditor() {
     const { data, error } = await supabase.functions.invoke("blog-article-generator", { body: { action: "generate", payload: { title: form.title, keyword: form.keyword, category: form.category, ideas, lang: form.language, excludeId: !isLegacy ? id : undefined } } });
     if (error || !data?.article) toast.error(error?.message || "El generador no devolvió un artículo.");
     else {
-      const article = data.article as Partial<FormState>;
+      // Solo los campos del formulario: el generador devuelve además campos de
+      // apoyo (aporta_original, schema_article…) que no son columnas y harían
+      // fallar el guardado.
+      const raw = data.article as Record<string, unknown>;
+      const article = Object.fromEntries(
+        (Object.keys(emptyForm) as (keyof FormState)[]).filter((k) => typeof raw[k] === "string").map((k) => [k, raw[k]]),
+      ) as Partial<FormState>;
       setForm((current) => ({ ...current, ...article, slug: id ? current.slug : article.slug || current.slug, language: current.language, active: current.active, published_at: current.published_at, cover_image: article.cover_image || current.cover_image, author: article.author || current.author }));
-      toast.success("Borrador generado. Puedes editar todos sus campos antes de guardar.");
+      const images = data.images as { generated?: number; requested?: number } | undefined;
+      toast.success(images?.requested
+        ? `Borrador generado con ${images.generated ?? 0} de ${images.requested} imágenes. Revísalo antes de guardar.`
+        : "Borrador generado. Puedes editar todos sus campos antes de guardar.");
     }
     setGenerating(false);
   };

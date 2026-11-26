@@ -209,7 +209,7 @@ Incluir 2-4 enlaces internos hacia páginas vigentes y relevantes del sitio:
 `;
 
 // Respaldo para ferova.com.co si no se pueden descargar sus reglas
-// (ver getFerovaRules). La fuente de verdad es CLAUDE.md del repo
+// (ver getSiteRules). La fuente de verdad es CLAUDE.md del repo
 // ferova-core-platform, publicada en https://ferova.com.co/fera-reglas.md.
 const FEROVA_PRODUCT_CONTEXT = `
 CONTEXTO EXCLUSIVO DE FEROVA.COM.CO:
@@ -231,36 +231,40 @@ CONTEXTO EXCLUSIVO DE FEROVA.COM.CO:
  * Si la descarga falla, se usa el respaldo integrado (GUIA_EDITORIAL +
  * FEROVA_PRODUCT_CONTEXT) para no bloquear la generación.
  */
-const FEROVA_RULES_URL = "https://ferova.com.co/fera-reglas.md";
-const FEROVA_RULES_TTL_MS = 5 * 60 * 1000;
-let ferovaRulesCache: { text: string; at: number } | null = null;
+// Cada sitio publica sus reglas desde su propio CLAUDE.md:
+//  - ferova.com.co → repo ferova-core-platform (ruta /fera-reglas.md)
+//  - seoparaecommerce.co / seoforecommerces.co → este repo (feraRulesPlugin)
+const RULES_URL = {
+  ferova: "https://ferova.com.co/fera-reglas.md",
+  seo: "https://seoparaecommerce.co/fera-reglas.md",
+} as const;
+type RulesSite = keyof typeof RULES_URL;
+const RULES_TTL_MS = 5 * 60 * 1000;
+const rulesCache = new Map<RulesSite, { text: string; at: number }>();
 
-const getFerovaRules = async (): Promise<string> => {
-  if (ferovaRulesCache && Date.now() - ferovaRulesCache.at < FEROVA_RULES_TTL_MS) {
-    return ferovaRulesCache.text;
-  }
+const getSiteRules = async (site: RulesSite): Promise<string> => {
+  const cached = rulesCache.get(site);
+  if (cached && Date.now() - cached.at < RULES_TTL_MS) return cached.text;
   try {
-    const response = await fetch(FEROVA_RULES_URL, {
-      signal: AbortSignal.timeout(4000),
-    });
+    const response = await fetch(RULES_URL[site], { signal: AbortSignal.timeout(4000) });
     const text = response.ok ? (await response.text()).trim() : "";
-    // Una respuesta sin las secciones esperadas (p. ej. una página de error
-    // HTML) no se toma como reglas.
+    // Una respuesta sin las secciones esperadas (p. ej. el index.html de una
+    // SPA o una página de error) no se toma como reglas.
     if (text.includes("## 1.") && !text.startsWith("<")) {
-      ferovaRulesCache = { text, at: Date.now() };
+      rulesCache.set(site, { text, at: Date.now() });
       return text;
     }
-    console.warn(`Reglas de Ferova no válidas (HTTP ${response.status}); se usa el respaldo.`);
+    console.warn(`Reglas de ${site} no válidas (HTTP ${response.status}); se usa el respaldo.`);
   } catch (error) {
-    console.warn("No se pudieron descargar las reglas de Ferova; se usa el respaldo.", error);
+    console.warn(`No se pudieron descargar las reglas de ${site}; se usa el respaldo.`, error);
   }
-  return ferovaRulesCache?.text ?? "";
+  return cached?.text ?? "";
 };
 
 const ferovaRulesBlock = (rules: string) => `
-=== REGLAS DE FEROVA — FUENTE DE VERDAD (prevalecen sobre cualquier otra instrucción) ===
+=== REGLAS DEL SITIO — FUENTE DE VERDAD (prevalecen sobre cualquier otra instrucción) ===
 ${rules}
-=== FIN DE LAS REGLAS DE FEROVA ===
+=== FIN DE LAS REGLAS DEL SITIO ===
 `;
 
 const buildSystemPrompt = (
@@ -275,9 +279,9 @@ const buildSystemPrompt = (
         ? "Escreva o artigo inteiramente em português brasileiro."
         : "Escribe el artículo enteramente en español.";
 
-  const useFerovaRules = site === "ferova" && Boolean(ferovaRules);
-  const intro = useFerovaRules
-    ? `Eres el editor de contenidos de Ferova. Devuelve SOLO JSON válido, sin markdown, sin comentarios y sin texto extra.
+  // Con reglas descargadas, son la guía; sin ellas, el respaldo integrado.
+  const intro = ferovaRules
+    ? `Eres el editor de contenidos de ${site === "ferova" ? "Ferova" : "SEO para Ecommerce by Ferova (la práctica de María Fer Calderón para agencias)"}. Devuelve SOLO JSON válido, sin markdown, sin comentarios y sin texto extra.
 
 ${ferovaRulesBlock(ferovaRules)}`
     : `Eres el editor SEO senior de Ferova Agency. Devuelve SOLO JSON válido, sin markdown, sin comentarios y sin texto extra.
@@ -317,7 +321,7 @@ JSON esperado:
   },
   "intencion_busqueda": "informacional | comercial | transaccional | navegacional",
   "aporta_original": "1 frase concreta sobre qué aporta este artículo que no esté en los primeros resultados de Google"${
-    site === "ferova"
+    ferovaRules
       ? `,
   "images": [
     { "placement": "cover", "prompt": "", "alt": "" },
@@ -327,7 +331,7 @@ JSON esperado:
       : ""
   }
 }${
-    site === "ferova"
+    ferovaRules
       ? `
 
 IMÁGENES: sigue la sección "Imágenes del artículo" de las reglas. Devuelve 1 portada y hasta 2 imágenes internas.
@@ -421,12 +425,13 @@ const addArticleImages = async (
   specs: ImageSpec[],
   apiKey: string,
   adminClient: ReturnType<typeof createClient>,
+  folder: "ferova" | "seo" = "ferova",
 ) => {
   const stamp = Date.now();
   const results = await Promise.allSettled(
     specs.map(async (spec, index) => {
       const bytes = await generateImageBytes(spec.prompt, apiKey);
-      const path = `ferova/${article.slug}/${stamp}-${index}.png`;
+      const path = `${folder}/${article.slug}/${stamp}-${index}.png`;
       const { error } = await adminClient.storage
         .from("blog-images")
         .upload(path, bytes, { contentType: "image/png", upsert: true });
@@ -496,7 +501,7 @@ JSON esperado:
   "slug": "", "client_public_name": "", "sector": "", "country": "", "summary": "", "challenge": "", "diagnosis": "", "intervention": "", "learnings": "", "limitations": "", "service_keys": [], "result_highlights": []
 }`
     : `Eres el editor senior de casos de éxito de SEO Para Agencias by Ferova. Devuelve SOLO JSON válido.
-
+${ferovaRules ? ferovaRulesBlock(ferovaRules) : ""}
 Usa como principios obligatorios de calidad la GUÍA EDITORIAL FEROVA: lenguaje directo, profesional y específico; contexto antes que promoción; términos técnicos explicados; utilidad real; estructura lógica; cero relleno; cero clickbait; cero promesas; cero cifras, clientes, fechas, fuentes o resultados inventados.
 
 El caso debe demostrar qué puede contratar una agencia por tarea, bolsa de horas o capacidad mensual. Redacta solo con los hechos entregados. Si falta evidencia, deja el resultado fuera y explica la limitación. No afirmes atribución causal absoluta.
@@ -545,7 +550,7 @@ JSON esperado:
   "pro_content": {}
 }`
     : `Eres la editora senior de la newsletter de SEO Para Agencias by Ferova. Devuelve SOLO JSON válido.
-
+${ferovaRules ? ferovaRulesBlock(ferovaRules) : ""}
 Aplica la GUÍA EDITORIAL FEROVA: una idea útil y concreta por bloque; tono conversado, senior y profesional; educación antes que venta; términos técnicos con contexto; nada de relleno, clickbait, cifras o fuentes inventadas. El contenido debe ayudar a dueños de agencias a decidir, entregar o vender mejor servicios de SEO técnico, mantenimiento web, landings, migraciones y ecommerce.
 
 JSON esperado:
@@ -712,8 +717,8 @@ serve(async (req) => {
     if (!legacyAdmin && !cmsEditor) {
       return jsonResponse({ error: "Forbidden" }, 403);
     }
-    const ferovaRules =
-      body?.payload?.site === "ferova" ? await getFerovaRules() : "";
+    // Reglas del sitio que pide la generación (CLAUDE.md de cada repo).
+    const ferovaRules = await getSiteRules(body?.payload?.site === "ferova" ? "ferova" : "seo");
     if (action === "generate") {
       const payload = (body?.payload ?? {}) as GeneratePayload;
       const lang =
@@ -744,11 +749,11 @@ serve(async (req) => {
               },
               {
                 role: "user",
-                // Con las reglas de Ferova cargadas, la guía a seguir es esa.
+                // Con las reglas del sitio cargadas, la guía a seguir es esa.
                 content: ferovaRules
                   ? buildUserPrompt(payload).replace(
                       /Guía Editorial Ferova 2025|Ferova Editorial Guide 2025|Guia Editorial Ferova 2025/,
-                      "REGLAS DE FEROVA",
+                      "REGLAS DEL SITIO",
                     )
                   : buildUserPrompt(payload),
               },
@@ -781,11 +786,14 @@ serve(async (req) => {
         safeString(payload.excludeId) || undefined,
       );
 
-      // ferova.com.co: portada e imágenes internas generadas con IA.
+      // Portada e imágenes internas generadas con IA (los dos sitios). Solo se
+      // piden cuando hay reglas del sitio, que definen el estilo de imagen.
       let images: Awaited<ReturnType<typeof addArticleImages>> | null = null;
-      if (payload.site === "ferova") {
+      if (ferovaRules) {
         const specs = parseImageSpecs(parsed.images);
-        if (specs.length) images = await addArticleImages(article, specs, LOVABLE_API_KEY, adminClient);
+        if (specs.length) {
+          images = await addArticleImages(article, specs, LOVABLE_API_KEY, adminClient, payload.site === "ferova" ? "ferova" : "seo");
+        }
       }
 
       const { validation_pass, validation_reason, ...articleData } = article;

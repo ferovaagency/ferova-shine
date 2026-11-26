@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { Home, Inbox, Trophy, FileText, ExternalLink, LogOut, Newspaper } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
+import { BLOG_SITE_ORIGINS } from "@/lib/blog-i18n";
 
 type NavItem = { label: string; to: string; icon: typeof Inbox; match: string; countKey?: "leads" | "casos" | "blog" };
 
@@ -40,7 +41,8 @@ export default function AdminSidebar() {
         const { count, error } = await supabase
           .from("blog_posts")
           .select("*", { count: "exact", head: true })
-          .eq("active", false);
+          .eq("active", false)
+          .in("site_origin", [...BLOG_SITE_ORIGINS]);
         if (!error && typeof count === "number") next.blog = count;
       } catch { /* noop */ }
       if (alive) setCounts(next);

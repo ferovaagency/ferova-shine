@@ -54,9 +54,20 @@ export default function PersonalSeoHome({ lang = "es" }: { lang?: Lang }) {
     },
   };
 
+  // Las preguntas frecuentes visibles también van como FAQPage (CLAUDE.md §6).
+  const faqLd = {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    mainEntity: c.faqs.map(([q, a]) => ({
+      "@type": "Question",
+      name: q,
+      acceptedAnswer: { "@type": "Answer", text: a },
+    })),
+  };
+
   return (
     <div className="personal-home min-h-screen">
-      <SEO title={c.seoTitle} description={c.seoDesc} path={c.path} lang={lang} image={mafeHero} jsonLd={[person, service]} />
+      <SEO title={c.seoTitle} description={c.seoDesc} path={c.path} lang={lang} image={mafeHero} jsonLd={[person, service, faqLd]} />
       <Header lang={lang} />
 
       <main id="contenido-principal">

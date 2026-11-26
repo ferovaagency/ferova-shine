@@ -9,6 +9,7 @@ import { Clock, ArrowRight, User, Search } from 'lucide-react';
 import { Input } from '@/components/ui/input';
 import { getSupabase } from '@/integrations/supabase/lazy';
 import SEO from '@/components/SEO';
+import { BLOG_SITE_ORIGINS } from '@/lib/blog-i18n';
 
 interface Props { lang?: 'es' | 'en' | 'pt'; }
 
@@ -54,6 +55,7 @@ const Blog = ({ lang = 'es' }: Props) => {
           .select('slug, title, excerpt, author, category, content, created_at, published_at')
           .eq('language', lang === 'en' ? 'en' : 'es')
           .eq('active', true)
+          .in('site_origin', [...BLOG_SITE_ORIGINS])
           .lte('published_at', new Date().toISOString())
           .order('published_at', { ascending: false })
           .limit(50);

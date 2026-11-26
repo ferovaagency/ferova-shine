@@ -37,6 +37,10 @@ export async function fetchDynamicSlugs(): Promise<string[]> {
       created_at: variant.created_at,
       meta_title: variant.meta_title,
       meta_description: variant.meta_description,
+      cover_image: variant.cover_image,
+      keyword: variant.keyword,
+      published_at: variant.published_at,
+      updated_at: variant.updated_at,
       alternates: variant.alternates,
     });
   }
