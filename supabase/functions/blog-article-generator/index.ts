@@ -316,8 +316,136 @@ JSON esperado:
     "keywords": ""
   },
   "intencion_busqueda": "informacional | comercial | transaccional | navegacional",
-  "aporta_original": "1 frase concreta sobre qué aporta este artículo que no esté en los primeros resultados de Google"
-}`;
+  "aporta_original": "1 frase concreta sobre qué aporta este artículo que no esté en los primeros resultados de Google"${
+    site === "ferova"
+      ? `,
+  "images": [
+    { "placement": "cover", "prompt": "", "alt": "" },
+    { "placement": "after_h2", "h2_index": 1, "prompt": "", "alt": "" },
+    { "placement": "after_h2", "h2_index": 3, "prompt": "", "alt": "" }
+  ]`
+      : ""
+  }
+}${
+    site === "ferova"
+      ? `
+
+IMÁGENES: sigue la sección "Imágenes del artículo" de las reglas. Devuelve 1 portada y hasta 2 imágenes internas.
+- "prompt": descripción visual detallada en inglés para un generador de imágenes (escena, composición, estilo, colores de la paleta). Debe decir explícitamente que no lleva texto, letras, números ni logos.
+- "alt": texto alternativo en el idioma del artículo.
+- "h2_index": posición (empezando en 1) del H2 tras cuyo primer párrafo va la imagen. No uses la sección de preguntas frecuentes.`
+      : ""
+  }`;
+};
+
+/**
+ * Imágenes de los artículos de ferova.com.co.
+ *
+ * El modelo de texto propone portada e imágenes internas (prompt + alt); aquí
+ * se generan con el modelo de imagen del gateway, se suben al bucket público
+ * `blog-images` y se insertan en el HTML. Un fallo de imagen nunca tumba el
+ * artículo: esa imagen simplemente se omite.
+ */
+type ImageSpec = { placement: "cover" | "after_h2"; h2Index: number; prompt: string; alt: string };
+
+const IMAGE_GUARD =
+  "Wide 16:9 horizontal composition. Absolutely no text, letters, numbers, logos, watermarks or UI screenshots. Clean editorial style, brand palette: deep wine #541014, indigo #2F2D56, small gold #C0930E accents, white or ivory background.";
+
+const parseImageSpecs = (raw: unknown): ImageSpec[] => {
+  if (!Array.isArray(raw)) return [];
+  const specs: ImageSpec[] = [];
+  for (const item of raw) {
+    if (!item || typeof item !== "object") continue;
+    const entry = item as Record<string, unknown>;
+    const prompt = safeString(entry.prompt);
+    const alt = safeString(entry.alt);
+    if (!prompt || !alt) continue;
+    const cover = entry.placement === "cover";
+    const h2Index = Number(entry.h2_index);
+    if (!cover && !(Number.isInteger(h2Index) && h2Index > 0)) continue;
+    specs.push({ placement: cover ? "cover" : "after_h2", h2Index: cover ? 0 : h2Index, prompt, alt });
+  }
+  const cover = specs.find((s) => s.placement === "cover");
+  const inline = specs.filter((s) => s.placement === "after_h2").slice(0, 2);
+  return cover ? [cover, ...inline] : inline;
+};
+
+const generateImageBytes = async (prompt: string, apiKey: string): Promise<Uint8Array> => {
+  const response = await fetch("https://ai.gateway.lovable.dev/v1/chat/completions", {
+    method: "POST",
+    headers: { Authorization: `Bearer ${apiKey}`, "Content-Type": "application/json" },
+    body: JSON.stringify({
+      model: "google/gemini-2.5-flash-image",
+      messages: [{ role: "user", content: `${prompt}\n\n${IMAGE_GUARD}` }],
+      modalities: ["image", "text"],
+    }),
+    signal: AbortSignal.timeout(60000),
+  });
+  if (!response.ok) throw new Error(`Image gateway ${response.status}: ${await response.text()}`);
+  const data = await response.json();
+  const url: string | undefined = data?.choices?.[0]?.message?.images?.[0]?.image_url?.url;
+  const base64 = url?.split(",")[1];
+  if (!base64) throw new Error("El modelo no devolvió imagen.");
+  const bin = atob(base64);
+  const bytes = new Uint8Array(bin.length);
+  for (let i = 0; i < bin.length; i++) bytes[i] = bin.charCodeAt(i);
+  return bytes;
+};
+
+const escapeAttr = (value: string) =>
+  value.replace(/&/g, "&amp;").replace(/"/g, "&quot;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+
+/** Inserta cada figura tras el primer párrafo del H2 indicado (o al cierre del H2). */
+const insertFigures = (html: string, figures: { h2Index: number; url: string; alt: string }[]) => {
+  let result = html;
+  for (const figure of [...figures].sort((a, b) => b.h2Index - a.h2Index)) {
+    const h2Re = /<\/h2>/gi;
+    let match: RegExpExecArray | null = null;
+    for (let n = 0; n < figure.h2Index; n++) {
+      match = h2Re.exec(result);
+      if (!match) break;
+    }
+    if (!match) continue;
+    const afterH2 = match.index + match[0].length;
+    const nextH2 = result.indexOf("<h2", afterH2);
+    const pEnd = result.indexOf("</p>", afterH2);
+    const at = pEnd >= 0 && (nextH2 < 0 || pEnd < nextH2) ? pEnd + 4 : afterH2;
+    const tag = `<figure class="article-figure"><img src="${escapeAttr(figure.url)}" alt="${escapeAttr(figure.alt)}" loading="lazy" decoding="async"></figure>`;
+    result = result.slice(0, at) + tag + result.slice(at);
+  }
+  return result;
+};
+
+const addArticleImages = async (
+  article: { slug: string; content: string; cover_image: string | null },
+  specs: ImageSpec[],
+  apiKey: string,
+  adminClient: ReturnType<typeof createClient>,
+) => {
+  const stamp = Date.now();
+  const results = await Promise.allSettled(
+    specs.map(async (spec, index) => {
+      const bytes = await generateImageBytes(spec.prompt, apiKey);
+      const path = `ferova/${article.slug}/${stamp}-${index}.png`;
+      const { error } = await adminClient.storage
+        .from("blog-images")
+        .upload(path, bytes, { contentType: "image/png", upsert: true });
+      if (error) throw new Error(error.message);
+      const url = adminClient.storage.from("blog-images").getPublicUrl(path).data.publicUrl;
+      return { ...spec, url };
+    }),
+  );
+  const done = results.flatMap((r) => (r.status === "fulfilled" ? [r.value] : []));
+  results.forEach((r) => {
+    if (r.status === "rejected") console.warn("Imagen omitida:", r.reason);
+  });
+  const cover = done.find((d) => d.placement === "cover");
+  if (cover) article.cover_image = cover.url;
+  article.content = insertFigures(
+    article.content,
+    done.filter((d) => d.placement === "after_h2"),
+  );
+  return { generated: done.length, requested: specs.length, cover_alt: cover?.alt ?? "" };
 };
 
 const buildUserPrompt = (payload: GeneratePayload) => {
@@ -484,7 +612,7 @@ const normalizeArticle = (
     meta_description: metaDescription,
     category,
     keyword,
-    cover_image: null,
+    cover_image: null as string | null,
     author: "Maria Calderon",
     active: true,
     validation_pass: raw.validation_pass === true,
@@ -653,11 +781,19 @@ serve(async (req) => {
         safeString(payload.excludeId) || undefined,
       );
 
+      // ferova.com.co: portada e imágenes internas generadas con IA.
+      let images: Awaited<ReturnType<typeof addArticleImages>> | null = null;
+      if (payload.site === "ferova") {
+        const specs = parseImageSpecs(parsed.images);
+        if (specs.length) images = await addArticleImages(article, specs, LOVABLE_API_KEY, adminClient);
+      }
+
       const { validation_pass, validation_reason, ...articleData } = article;
 
       return jsonResponse({
         article: articleData,
         validation: { pass: validation_pass, reason: validation_reason },
+        ...(images ? { images } : {}),
       });
     }
 
