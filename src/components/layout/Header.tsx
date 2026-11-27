@@ -27,6 +27,7 @@ const NAV: Record<"es" | "en" | "pt", NavCfg> = {
         href: "/seo-para-agencias",
         items: [
           { label: "SEO para agencias (marca blanca)", href: "/seo-para-agencias" },
+          { label: "SEO por horas", href: "/seo-por-horas" },
           { label: "Auditoría SEO técnica", href: "/auditoria-seo-tecnica" },
           { label: "Migraciones SEO", href: "/migraciones-seo" },
           { label: "SEO para ecommerce", href: "/servicios/seo-ecommerce" },

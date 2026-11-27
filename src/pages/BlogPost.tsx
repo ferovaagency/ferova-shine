@@ -7,7 +7,7 @@ import { ArrowLeft, ArrowUpRight, Clock, User, Loader2 } from 'lucide-react';
 import { getSupabase } from '@/integrations/supabase/lazy';
 import { useAnalytics } from '@/hooks/useAnalytics';
 import SEO from '@/components/SEO';
-import { getPrerenderPost } from '@/lib/prerender-store';
+import { getPrerenderPost, isPrerendering } from '@/lib/prerender-store';
 import { BLOG_I18N_COLUMNS, BLOG_SITE_ORIGINS, pickVariant, type BlogRowI18n } from '@/lib/blog-i18n';
 import { extractFaq, inlineImages, splitForCta, withToc, wordCount } from '@/lib/article-landing';
 import { SITE_ORIGIN } from '@/config/routes';
@@ -117,8 +117,13 @@ const BlogPost = ({ lang = 'es' }: Props) => {
   // En el navegador esto es siempre null y el flujo es el de siempre.
   const seeded = getPrerenderPost(lang, slug);
   const [dbPost, setDbPost] = useState<PostData | null>(seeded);
-  const [loading, setLoading] = useState(!seeded);
-  const [notFound, setNotFound] = useState(false);
+  const staticPostForSlug = slug ? staticPosts[lang]?.[slug] : null;
+  // En el prerender, si el post no vino precargado es que no
+  // existe (o no tiene versión en este idioma). Se pinta "no encontrado" con
+  // noindex en vez del spinner, que salía como página sin H1 ni canonical.
+  const missingAtBuild = isPrerendering() && !seeded && !staticPostForSlug;
+  const [loading, setLoading] = useState(!seeded && !missingAtBuild);
+  const [notFound, setNotFound] = useState(missingAtBuild);
   const { trackBlogRead } = useAnalytics();
 
   const staticPost = slug ? staticPosts[lang]?.[slug] : null;
@@ -222,6 +227,13 @@ const BlogPost = ({ lang = 'es' }: Props) => {
   if (notFound && !staticPost) {
     return (
       <div className="fx-site min-h-screen">
+        <SEO
+          title={lang === 'pt' ? 'Artigo não encontrado | Ferova' : lang === 'en' ? 'Article not found | Ferova' : 'Artículo no encontrado | Ferova'}
+          description={lang === 'en' ? 'This article does not exist or has moved.' : 'Este artículo no existe o cambió de dirección.'}
+          path={`${blogBase}/${slug ?? ''}`}
+          lang={lang}
+          noindex
+        />
         <Header currentLang={lang} />
         <main id="contenido-principal" className="pt-20">
           <section className="page-hero on-dark grid-field">

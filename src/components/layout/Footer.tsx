@@ -22,6 +22,7 @@ const Footer = ({ currentLang, lang }: FooterProps) => {
       rights: 'Todos los derechos reservados.',
       servLinks: [
         { name: 'SEO para agencias (white label)', href: '/seo-para-agencias' },
+        { name: 'SEO por horas', href: '/seo-por-horas' },
         { name: 'Auditoría SEO técnica', href: '/auditoria-seo-tecnica' },
         { name: 'Migraciones SEO', href: '/migraciones-seo' },
         { name: 'SEO para ecommerce', href: '/servicios/seo-ecommerce' },

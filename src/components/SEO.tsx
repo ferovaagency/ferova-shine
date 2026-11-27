@@ -74,13 +74,19 @@ const SEO = ({
   // hreflang: explícitos > registro central. Solo se emiten si hay equivalencias
   // reales — nunca adivinando prefijos (evita canonicals cruzados o rotos).
   const altMap = alternates ?? alternatesFor(path);
-  const hreflangs = altMap
-    ? LANGS.filter((l) => altMap[l]).map((l) => ({
-        code: HREFLANG[l],
-        href: toAbsolute(altMap[l] as string, l),
-        isDefault: l === 'es',
-      }))
-    : [];
+  const altLangs = altMap ? LANGS.filter((l) => altMap[l]) : [];
+  // Con un solo idioma no hay alternativa que declarar: un hreflang que solo se
+  // apunta a sí mismo es inválido para Google, así que no se emite ninguno.
+  // x-default es el español; si la página no tiene español, el inglés.
+  const defaultLang: Lang | undefined = altLangs.includes('es') ? 'es' : altLangs.includes('en') ? 'en' : altLangs[0];
+  const hreflangs =
+    altMap && altLangs.length > 1
+      ? altLangs.map((l) => ({
+          code: HREFLANG[l],
+          href: toAbsolute(altMap[l] as string, l),
+          isDefault: l === defaultLang,
+        }))
+      : [];
 
   const jsonLdBlocks = Array.isArray(jsonLd) ? jsonLd : jsonLd ? [jsonLd] : [];
 

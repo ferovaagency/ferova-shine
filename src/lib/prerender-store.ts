@@ -49,3 +49,17 @@ export function getPrerenderPost(lang: string, slug: string | undefined): Preren
 export function prerenderPostCount(): number {
   return posts.size;
 }
+
+/**
+ * true solo durante el build. `window` existe en el prerender (lo crean los
+ * polyfills), así que no sirve para saber si estamos en el navegador.
+ */
+let prerendering = false;
+
+export function markPrerendering(): void {
+  prerendering = true;
+}
+
+export function isPrerendering(): boolean {
+  return prerendering;
+}

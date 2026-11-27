@@ -7,7 +7,9 @@ import { renderToString } from "react-dom/server";
 import { HelmetProvider } from "react-helmet-async";
 import App from "./App";
 import { fetchDynamicSlugs } from "./prerender-content";
-import { getPrerenderPost } from "./lib/prerender-store";
+import { getPrerenderPost, markPrerendering } from "./lib/prerender-store";
+
+markPrerendering();
 import { decodeEntities } from "./lib/blog-i18n";
 import "./index.css";
 

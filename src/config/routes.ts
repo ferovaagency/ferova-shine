@@ -131,6 +131,9 @@ export const ROUTES: RouteDef[] = [
   { id: "seo-para-agencias", type: "service", indexable: true, prerender: true, priority: 0.9,
     paths: { es: "/seo-para-agencias", en: "/en/white-label-seo-for-agencies" } },
   // EN: "technical seo audit services" 480/mes · KD 27 · CPC $28.32 (término hermano, $129)
+  // "seo por horas" / "expertos seo por horas": más de la mitad de los clics (GSC ago–nov 2026).
+  { id: "seo-por-horas", type: "service", indexable: true, prerender: true, priority: 0.9,
+    paths: { es: "/seo-por-horas" } },
   { id: "auditoria-seo-tecnica", type: "service", indexable: true, prerender: true, priority: 0.9,
     paths: { es: "/auditoria-seo-tecnica", en: "/en/technical-seo-audit-services" } },
 

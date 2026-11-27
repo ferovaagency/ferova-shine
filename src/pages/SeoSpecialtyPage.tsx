@@ -4,7 +4,7 @@ import { ArrowUpRight, CheckCircle2, FileSearch, GitBranch, Network, ShieldCheck
 import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
 import SEO from "@/components/SEO";
-import { SEO_SPECIALTIES, SEO_SPECIALTY_UI, type SeoSpecialtyKind } from "@/content/seoSpecialties";
+import { SEO_SPECIALTIES, SEO_SPECIALTY_UI, type SeoSpecialtyContent, type SeoSpecialtyKind } from "@/content/seoSpecialties";
 import type { Lang } from "@/config/routes";
 import { CaseGrid } from "@/components/fx/CaseGrid";
 import { portfolioUrl } from "@/data/portfolio";
@@ -44,8 +44,17 @@ function ClosingBand({ eyebrow, title, children }: { eyebrow: string; title: Rea
  * sistema de diseño de Ferova: héroe índigo, secciones alternas, precios en
  * tarjetas, preguntas en acordeón y banda vino de cierre.
  */
-export default function SeoSpecialtyPage({ kind, lang = "es" }: { kind: SeoSpecialtyKind; lang?: Lang }) {
-  const content = SEO_SPECIALTIES[lang][kind];
+export default function SeoSpecialtyPage({
+  kind,
+  content: contentOverride,
+  lang = "es",
+}: {
+  kind?: SeoSpecialtyKind;
+  /** Página de un solo idioma fuera de las especialidades (p. ej. /seo-por-horas). */
+  content?: SeoSpecialtyContent;
+  lang?: Lang;
+}) {
+  const content = contentOverride ?? SEO_SPECIALTIES[lang][kind ?? "agencies"];
   const ui = SEO_SPECIALTY_UI[lang];
   const en = lang === "en";
   const faqLd = faqSchema(content.faqs.map((faq) => [faq.question, faq.answer]));

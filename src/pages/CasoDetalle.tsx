@@ -121,7 +121,7 @@ const CasoDetalle = ({ lang = 'es' }: Props) => {
     );
   }
 
-  if (!cmsChecked) {
+  if (!cmsChecked && !caso) {
     return (
       <div className="fx-site min-h-screen">
         <Header currentLang={lang} />
@@ -203,6 +203,7 @@ const CasoDetalle = ({ lang = 'es' }: Props) => {
   if (!caso) {
     return (
       <div className="fx-site min-h-screen">
+        <SEO title={lang === 'es' ? 'Caso no encontrado | Ferova' : 'Case not found | Ferova'} description={lang === 'es' ? 'Este caso no existe o cambió de dirección.' : 'This case does not exist or has moved.'} path={`${backPath}/${id ?? ''}`} lang={lang} noindex />
         <Header currentLang={lang} />
         <main id="contenido-principal" className="pt-20">
           <section className="page-hero on-dark grid-field">
