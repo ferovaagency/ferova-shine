@@ -150,17 +150,17 @@ export default function Header({ currentLang, lang }: HeaderProps) {
           </span>
         </Link>
 
-        <nav aria-label={cfg.nav} className="hidden lg:block">
-          <ul className="flex items-center gap-7 xl:gap-9">
+        <nav aria-label={cfg.nav} className="hidden xl:block">
+          <ul className="flex items-center gap-7 2xl:gap-9">
             {cfg.groups.map((group) => (
-              <li key={group.label} className="nav-group relative">
+              <li key={group.label} className="nav-group relative flex items-center gap-1">
                 <NavLink
                   item={group}
                   className={`flex items-center gap-1 py-6 text-[0.98rem] font-medium transition-colors hover:text-[#541014] ${isActive(group) ? "text-[#541014]" : ""}`}
                 />
                 {group.items.length ? (
                   <>
-                    <ChevronDown aria-hidden="true" className="pointer-events-none absolute -right-4 top-1/2 h-4 w-4 -translate-y-1/2" />
+                    <ChevronDown aria-hidden="true" className="pointer-events-none h-4 w-4 shrink-0" />
                     <ul className="nav-panel">
                       {group.items.map((item) => (
                         <li key={item.href}>
@@ -177,7 +177,7 @@ export default function Header({ currentLang, lang }: HeaderProps) {
 
         <div className="flex items-center gap-3">
           <LanguageSwitcher lang={locale} className="hidden sm:flex" />
-          <button type="button" onClick={onCta} className="fx-btn fx-btn--sm hidden lg:inline-flex">
+          <button type="button" onClick={onCta} className="fx-btn fx-btn--sm hidden xl:inline-flex">
             {cfg.cta} <ArrowUpRight aria-hidden="true" />
           </button>
           <button
@@ -186,7 +186,7 @@ export default function Header({ currentLang, lang }: HeaderProps) {
             aria-controls="menu-movil"
             aria-label={open ? cfg.close : cfg.open}
             onClick={() => setOpen((v) => !v)}
-            className="grid h-10 w-10 place-items-center rounded-full border border-[#dfdcea] lg:hidden"
+            className="grid h-10 w-10 place-items-center rounded-full border border-[#dfdcea] xl:hidden"
           >
             {open ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
           </button>
@@ -194,7 +194,7 @@ export default function Header({ currentLang, lang }: HeaderProps) {
       </div>
 
       {open && (
-        <div id="menu-movil" className="max-h-[calc(100vh-5rem)] overflow-y-auto border-t border-[#dfdcea] bg-white lg:hidden">
+        <div id="menu-movil" className="max-h-[calc(100vh-5rem)] overflow-y-auto border-t border-[#dfdcea] bg-white xl:hidden">
           <nav aria-label={cfg.nav} className="mx-auto max-w-3xl px-5 py-5">
             <ul className="space-y-5">
               {cfg.groups.map((group) => (

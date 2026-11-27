@@ -266,6 +266,14 @@
 .console__node > span { display: grid; width: 2.8rem; height: 2.8rem; place-items: center; border-radius: 0.7rem; background: #e4e1f3; color: #2f2d56; }
 .console__node:last-child > span { background: #541014; color: #fffaf0; }
 .console__node svg { width: 1.3rem; height: 1.3rem; }
+.console__node { min-width: 0; overflow-wrap: break-word; hyphens: auto; }
+/* Tableta: el menú lateral de la consola pasa arriba para que las tres tarjetas
+   del flujo tengan ancho suficiente y sus títulos no se salgan. */
+@media (max-width: 1199px) {
+  .console__body { grid-template-columns: minmax(0, 1fr); }
+  .console__side { flex-direction: row; overflow-x: auto; border-right: 0; border-bottom: 1px solid #dfdcea; padding: 0.9rem; scrollbar-width: none; }
+  .console__side button { flex: none; }
+}
 
 /* Rutas bajo el héroe */
 .branch-link { display: flex; align-items: center; justify-content: space-between; gap: 1rem; padding-block: 1rem; }
@@ -340,7 +348,7 @@
   box-shadow: 0 0 0 7rem rgb(255 255 255 / 4%), 0 0 0 14rem rgb(255 255 255 / 3%);
   transform: translate(-50%, -50%);
 }
-.cta-card h2 { max-width: 24ch; font-size: clamp(1.75rem, 3.4vw, 2.75rem); line-height: 1.15; }
+.cta-card h2 { max-width: 24ch; font-size: clamp(1.75rem, 3.4vw, 2.75rem); line-height: 1.15; overflow-wrap: break-word; hyphens: auto; }
 .cta-card--indigo { background: #2f2d56; }
 
 /* Tabla legible */
