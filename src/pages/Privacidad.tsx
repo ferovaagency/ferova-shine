@@ -16,7 +16,6 @@ const purposesEs = [
 const providers = [
   ['Supabase', 'Backend, formularios y funciones de servidor', 'Región contratada y subencargados declarados por el proveedor'],
   ['Lovable AI Gateway / Google Gemini', 'Procesar las respuestas de Fera', 'Infraestructura internacional bajo condiciones contractuales del proveedor'],
-  ['Brevo', 'Correo transaccional o comercial autorizado', 'Unión Europea y subencargados declarados'],
   ['Google', 'Analítica y gestión de etiquetas, solo con consentimiento', 'Infraestructura internacional y mecanismos contractuales aplicables'],
   ['Sortlist Radar', 'Analítica opcional del sitio', 'Solo se carga tras consentimiento analítico'],
 ];
@@ -40,7 +39,7 @@ const Privacidad = ({ lang = 'es' }: Props) => {
     <SEO title={en ? 'Privacy and AI transparency | Ferova' : 'Privacidad y transparencia de IA | Ferova'} description={en ? 'How Ferova handles personal data, optional cookies and information sent through Fera.' : 'Cómo Ferova trata datos personales, cookies opcionales y la información enviada a Fera.'} path={path} lang={en ? 'en' : 'es'} noindex={lang === 'pt'} jsonLd={pageLd} breadcrumbs={[{ name: en ? 'Home' : 'Inicio', path: en ? '/en' : '/' }, ...crumbs]} />
     <Header lang={en ? 'en' : 'es'} />
     <main id="contenido-principal" className="pt-20">
-      <PageHero align="left" eyebrow={en ? 'Version 2.0 · August 8, 2026' : 'Versión 2.0 · 8 de agosto de 2026'} title={title} intro={en ? 'This page explains, in practical terms, what we collect, why we use it, which providers help us and how you can exercise your rights.' : 'Esta página explica, de forma práctica, qué recopilamos, para qué lo usamos, qué proveedores intervienen y cómo puedes ejercer tus derechos.'} breadcrumbs={crumbs} lang={en ? 'en' : 'es'} />
+      <PageHero align="left" eyebrow={en ? 'Version 2.1 · November 27, 2026' : 'Versión 2.1 · 27 de noviembre de 2026'} title={title} intro={en ? 'This page explains, in practical terms, what we collect, why we use it, which providers help us and how you can exercise your rights.' : 'Esta página explica, de forma práctica, qué recopilamos, para qué lo usamos, qué proveedores intervienen y cómo puedes ejercer tus derechos.'} breadcrumbs={crumbs} lang={en ? 'en' : 'es'} />
       <Section narrow>
         <article className="fx-prose">
           <h2 className="!mt-0">{en ? '1. Controller and contact' : '1. Responsable y contacto'}</h2>

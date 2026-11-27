@@ -142,17 +142,10 @@ async function fetchDynamic(supabaseUrl?: string, supabaseKey?: string): Promise
       });
     }
   }
-  for (const ed of editions) {
-    for (const l of SITEMAP_LANGS) {
-      entries.push({
-        loc: EDITION_PATHS[l](ed.slug),
-        alternates: altsFrom(EDITION_PATHS, ed.slug),
-        priority: 0.5,
-        changefreq: "monthly",
-      });
-    }
-  }
-
+  // Las ediciones no tienen página propia (vercel.json redirige
+  // /newsletter/edicion/:slug al home) y la vista no filtra por sitio: listarlas
+  // metía URLs que redirigen, incluso de ferova.com.co. El archivo vive en
+  // /newsletter, filtrado por site_origin.
   console.log(
     `[sitemap] contenido dinámico: ${posts.length} filas de blog, ${cases.length} casos, ${editions.length} ediciones.`,
   );

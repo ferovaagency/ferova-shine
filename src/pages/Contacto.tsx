@@ -3,7 +3,6 @@ import Header from '@/components/layout/Header';
 import Footer from '@/components/layout/Footer';
 import { Mail, MessageCircle, MapPin, Send, CheckCircle2 } from 'lucide-react';
 import SEO from '@/components/SEO';
-import { getSupabase } from '@/integrations/supabase/lazy';
 import { trackEvent } from '@/lib/analytics';
 import { logLead } from '@/lib/adminInbox';
 import { PageHero, Section } from '@/components/fx/primitives';
@@ -83,15 +82,6 @@ const Contacto = ({ lang = 'es' }: Props) => {
     const waUrl = `${WHATSAPP_URL}?text=${encodeURIComponent(waLines.join('\n'))}`;
     window.open(waUrl, '_blank', 'noopener');
 
-    // Captura del lead en Brevo con atributos seguros (LANG existe en la cuenta).
-    try {
-      const supabase = await getSupabase();
-      await supabase.functions.invoke('brevo-sync', {
-        body: { email: formData.email.trim(), name: formData.name.trim(), source: 'contact_form', attributes: { LANG: lang } },
-      });
-    } catch {
-      /* no bloquear al usuario si Brevo falla: el mensaje ya salió por WhatsApp */
-    }
     // Registro en la bandeja unificada del admin.
     await logLead({
       source: 'contact',

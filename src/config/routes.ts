@@ -121,6 +121,8 @@ export const ROUTES: RouteDef[] = [
     paths: { es: "/blog", en: "/en/blog", pt: "/pt/blog" } },
   { id: "recursos", type: "resource", indexable: true, prerender: true, priority: 0.7,
     paths: { es: "/recursos", en: "/en/resources", pt: "/pt/recursos" } },
+  { id: "newsletter", type: "newsletter", indexable: true, prerender: true,
+    paths: { es: "/newsletter", en: "/en/newsletter" } },
 
   // ── Servicios ─────────────────────────────────────────────────────────
   { id: "seo-ecommerce", type: "service", indexable: true, prerender: true, priority: 0.9,

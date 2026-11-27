@@ -37,16 +37,6 @@
       "permanent": true
     },
     {
-      "source": "/newsletter",
-      "destination": "/",
-      "permanent": true
-    },
-    {
-      "source": "/en/newsletter",
-      "destination": "/en",
-      "permanent": true
-    },
-    {
       "source": "/pt/newsletter",
       "destination": "/pt",
       "permanent": true

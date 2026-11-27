@@ -54,6 +54,7 @@ import PositioningPage from "./pages/PositioningPage";
 import BestProvidersPage from "./pages/BestProvidersPage";
 import WhiteLabelVsInHouse from "./pages/WhiteLabelVsInHouse";
 import SeoAbout from "./pages/SeoAbout";
+import SeoNewsletter from "./pages/SeoNewsletter";
 import SeoEcommerceEs from "./pages/SeoEcommerceEs";
 import SeoCases from "./pages/SeoCases";
 import SeoResources from "./pages/SeoResources";
@@ -136,6 +137,8 @@ const AppRoutes = ({ hostLang }: { hostLang: "es" | "en" | "pt" }) => (
     <Route path="/admin/newsletter" element={<Suspense fallback={null}><AdminGuard><NewsletterAdminPage /></AdminGuard></Suspense>} />
     <Route path="/recursos" element={<SeoResources lang="es" />} />
     <Route path="/resources" element={<SeoResources lang="en" />} />
+    <Route path="/newsletter" element={<SeoNewsletter lang="es" />} />
+    <Route path="/en/newsletter" element={<SeoNewsletter lang="en" />} />
     <Route path="/sobre-nosotros" element={<SeoAbout lang="es" />} />
     <Route path="/en/about-me" element={<SeoAbout lang="en" />} />
     {/* /about era una página antigua de Ferova Agency duplicada de /sobre-nosotros. */}

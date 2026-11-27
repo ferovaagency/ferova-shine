@@ -810,6 +810,8 @@ export type Database = {
           edition_number: number
           free_content: Json | null
           id: string
+          linkedin_post: string | null
+          linkedin_summary: string | null
           plan: string | null
           pro_content: Json | null
           published: boolean | null
@@ -826,6 +828,8 @@ export type Database = {
           edition_number: number
           free_content?: Json | null
           id?: string
+          linkedin_post?: string | null
+          linkedin_summary?: string | null
           plan?: string | null
           pro_content?: Json | null
           published?: boolean | null
@@ -842,6 +846,8 @@ export type Database = {
           edition_number?: number
           free_content?: Json | null
           id?: string
+          linkedin_post?: string | null
+          linkedin_summary?: string | null
           plan?: string | null
           pro_content?: Json | null
           published?: boolean | null
@@ -858,30 +864,45 @@ export type Database = {
       newsletter_subscribers: {
         Row: {
           active: boolean | null
+          consent: boolean
+          consent_at: string | null
+          consent_text: string | null
           created_at: string | null
           email: string
           id: string
           lang: string | null
           name: string
           plan: string | null
+          site_origin: string
+          source: string
         }
         Insert: {
           active?: boolean | null
+          consent?: boolean
+          consent_at?: string | null
+          consent_text?: string | null
           created_at?: string | null
           email: string
           id?: string
           lang?: string | null
           name: string
           plan?: string | null
+          site_origin?: string
+          source?: string
         }
         Update: {
           active?: boolean | null
+          consent?: boolean
+          consent_at?: string | null
+          consent_text?: string | null
           created_at?: string | null
           email?: string
           id?: string
           lang?: string | null
           name?: string
           plan?: string | null
+          site_origin?: string
+          source?: string
         }
         Relationships: []
       }
