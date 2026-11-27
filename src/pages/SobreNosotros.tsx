@@ -1,11 +1,10 @@
-import { Link } from 'react-router-dom';
 import Header from '@/components/layout/Header';
 import Footer from '@/components/layout/Footer';
-import { AnimatedSection, StaggerContainer, StaggerItem, ScaleOnHover, PageTransition } from '@/components/ui/motion';
-import { motion } from 'framer-motion';
-import { Target, TrendingUp, Heart, BookOpen, Users, Handshake, Eye, MessageCircle, Rocket, Linkedin, ExternalLink } from 'lucide-react';
+import { Target, TrendingUp, Heart, BookOpen, Users, Handshake, Eye, MessageCircle, Linkedin, ExternalLink } from 'lucide-react';
 import SEO from '@/components/SEO';
 import TeamSection from '@/components/sections/TeamSection';
+import mafeHero from '@/assets/mafe-ferova-hero.webp';
+import { CtaBand, Eyebrow, FeraButton, IconTile, PageHero, Panel, Section, SectionHeading } from '@/components/fx/primitives';
 
 interface Props { lang?: 'es' | 'en' | 'pt'; }
 
@@ -94,67 +93,112 @@ const SobreNosotros = ({ lang = 'es' }: Props) => {
     ? { t: 'Sobre a Ferova Agency — Agência boutique de SEO', d: 'Agência boutique de SEO para e-commerce fundada por María Fer Calderón. Modelo de sucesso compartilhado focado em crescer lojas virtuais.', p: '/pt/sobre-nos' }
     : { t: 'Sobre Ferova Agency — Agencia boutique de SEO', d: 'Agencia boutique de SEO para ecommerce fundada por María Fer Calderón. Modelo de éxito compartido enfocado en crecer tiendas online.', p: '/nosotros' };
 
+  const home = lang === 'en' ? { name: 'Home', path: '/en' } : lang === 'pt' ? { name: 'Início', path: '/pt' } : { name: 'Inicio', path: '/' };
+  const crumbs = [{ name: t.title, path: seo.p }];
+  const aboutLd = {
+    '@context': 'https://schema.org',
+    '@type': 'AboutPage',
+    name: seo.t,
+    description: seo.d,
+    url: `https://seoparaecommerce.co${seo.p}`,
+    inLanguage: lang,
+    about: {
+      '@type': 'Organization',
+      name: 'Ferova Agency',
+      founder: { '@type': 'Person', name: 'María Fer Calderón', sameAs: ['https://www.linkedin.com/in/maria-fer-calderon'] },
+    },
+  };
+
   return (
-    <PageTransition>
-      <SEO title={seo.t} description={seo.d} path={seo.p} lang={lang} />
-      <Header currentLang={lang} />
-      <main className="pt-20">
-        <section className="py-20 md:py-28 relative grid-pattern">
-          <div className="absolute inset-0" style={{ background: 'radial-gradient(ellipse at 50% 30%, hsla(45, 86%, 40%, 0.06), transparent 60%)' }} />
-          <div className="container mx-auto px-4 md:px-6 relative z-10 text-center">
-            <AnimatedSection><div className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-gold/20 bg-gold/5 text-gold text-sm font-medium mb-8"><Rocket className="w-4 h-4" />{t.badge}</div></AnimatedSection>
-            <AnimatedSection delay={0.1}><h1 className="text-4xl md:text-5xl lg:text-6xl font-display font-bold mb-6">{t.title}</h1></AnimatedSection>
-            <AnimatedSection delay={0.2}><p className="text-lg md:text-xl text-muted-foreground max-w-2xl mx-auto mb-6">{t.sub}</p><p className="text-foreground text-lg max-w-2xl mx-auto font-medium">{t.identity}</p></AnimatedSection>
+    <div className="fx-site min-h-screen">
+      <SEO title={seo.t} description={seo.d} path={seo.p} lang={lang} jsonLd={aboutLd} breadcrumbs={[home, ...crumbs]} />
+      <Header lang={lang} />
+      <main id="contenido-principal" className="pt-20">
+        <PageHero eyebrow={t.badge} title={t.title} intro={t.sub} breadcrumbs={crumbs} lang={lang} />
+
+        <Section>
+          <p className="mx-auto max-w-3xl text-center text-2xl leading-snug sm:text-3xl" style={{ fontFamily: 'Poppins, system-ui, sans-serif', fontWeight: 600 }}>
+            {t.identity}
+          </p>
+          <div className="mx-auto mt-14 grid max-w-5xl gap-6 md:grid-cols-2">
+            <Panel>
+              <IconTile icon={Target} />
+              <h2 className="text-2xl">{t.missionTitle}</h2>
+              <p className="fx-muted mt-3 text-lg leading-relaxed">{t.mission}</p>
+            </Panel>
+            <Panel>
+              <IconTile icon={Eye} />
+              <h2 className="text-2xl">{t.visionTitle}</h2>
+              <p className="fx-muted mt-3 text-lg leading-relaxed">{t.vision}</p>
+            </Panel>
           </div>
-        </section>
-        <section className="py-20 md:py-28 bg-surface">
-          <div className="container mx-auto px-4 md:px-6">
-            <StaggerContainer className="grid md:grid-cols-2 gap-8 max-w-4xl mx-auto">
-              <StaggerItem><div className="glass-card p-8 md:p-10 h-full border-l-4 border-l-gold"><h2 className="text-xl font-display font-bold mb-4 text-gold">{t.missionTitle}</h2><p className="text-foreground text-lg leading-relaxed">{t.mission}</p></div></StaggerItem>
-              <StaggerItem><div className="glass-card p-8 md:p-10 h-full border-l-4 border-l-wine"><h2 className="text-xl font-display font-bold mb-4 text-wine-light">{t.visionTitle}</h2><p className="text-foreground text-lg leading-relaxed">{t.vision}</p></div></StaggerItem>
-            </StaggerContainer>
+        </Section>
+
+        <Section tone="surface">
+          <SectionHeading title={t.valuesTitle} />
+          <div className="mt-12 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
+            {t.values.map((v) => (
+              <Panel key={v.title}>
+                <IconTile icon={v.icon} />
+                <h3>{v.title}</h3>
+                <p className="fx-muted mt-3 text-sm leading-relaxed">{v.desc}</p>
+              </Panel>
+            ))}
           </div>
-        </section>
-        <section className="py-20 md:py-28">
-          <div className="container mx-auto px-4 md:px-6">
-            <AnimatedSection className="text-center mb-16"><h2 className="text-3xl md:text-4xl lg:text-5xl font-display font-bold mb-4">{t.valuesTitle}</h2></AnimatedSection>
-            <StaggerContainer className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6 max-w-5xl mx-auto">
-              {t.values.map((v, i) => (<StaggerItem key={i}><ScaleOnHover><div className="glass-card p-8 text-center hover:border-gold/30 transition-all h-full"><div className="w-16 h-16 rounded-2xl flex items-center justify-center mx-auto mb-6 bg-gold/10"><v.icon className="w-8 h-8 text-gold" /></div><h3 className="text-xl font-display font-semibold mb-3 text-foreground">{v.title}</h3><p className="text-muted-foreground text-sm leading-relaxed">{v.desc}</p></div></ScaleOnHover></StaggerItem>))}
-            </StaggerContainer>
+        </Section>
+
+        <Section>
+          <SectionHeading title={t.diffTitle} intro={t.diffSub} />
+          <div className="mt-12 grid gap-5 sm:grid-cols-2">
+            {t.differentiators.map((d) => (
+              <Panel key={d.title}>
+                <IconTile icon={d.icon} />
+                <h3>{d.title}</h3>
+                <p className="fx-muted mt-3 leading-relaxed">{d.desc}</p>
+              </Panel>
+            ))}
           </div>
-        </section>
-        <section className="py-20 md:py-28 bg-surface">
-          <div className="container mx-auto px-4 md:px-6">
-            <AnimatedSection className="text-center mb-16"><h2 className="text-3xl md:text-4xl lg:text-5xl font-display font-bold mb-4">{t.diffTitle}</h2><p className="text-muted-foreground text-lg max-w-2xl mx-auto italic">{t.diffSub}</p></AnimatedSection>
-            <StaggerContainer className="grid sm:grid-cols-2 gap-8 max-w-4xl mx-auto">
-              {t.differentiators.map((d, i) => (<StaggerItem key={i}><ScaleOnHover><div className="glass-card p-8 hover:border-gold/30 transition-all h-full flex gap-5"><div className="w-14 h-14 rounded-2xl flex items-center justify-center flex-shrink-0 bg-navy/20"><d.icon className="w-7 h-7 text-gold" /></div><div><h3 className="text-lg font-display font-semibold mb-2 text-foreground">{d.title}</h3><p className="text-muted-foreground text-sm leading-relaxed">{d.desc}</p></div></div></ScaleOnHover></StaggerItem>))}
-            </StaggerContainer>
-          </div>
-        </section>
-        <section className="py-20 md:py-28">
-          <div className="container mx-auto px-4 md:px-6">
-            <AnimatedSection className="text-center mb-12"><h2 className="text-3xl md:text-4xl font-display font-bold mb-4">{t.linkedinTitle}</h2><p className="text-muted-foreground text-lg">{t.linkedinSub}</p></AnimatedSection>
-            <AnimatedSection delay={0.2}>
-              <div className="max-w-lg mx-auto glass-card p-8 border-[#0A66C2]/20 hover:border-[#0A66C2]/40 transition-all">
-                <div className="relative mb-6"><div className="h-24 rounded-xl bg-gradient-to-r from-[#0A66C2]/20 to-gold/10" /><div className="w-20 h-20 rounded-full bg-gold/10 border-4 border-background flex items-center justify-center absolute -bottom-10 left-6"><span className="text-gold font-display font-bold text-xl">MF</span></div></div>
-                <div className="pt-8 pl-2"><h3 className="text-xl font-display font-bold text-foreground">Maria Fer Calderón</h3><p className="text-gold text-sm font-medium mb-1">{t.linkedinRole}</p><p className="text-muted-foreground text-xs mb-4">Bogotá, Colombia · Ferova Agency</p><p className="text-muted-foreground text-sm leading-relaxed mb-6">{t.linkedinBio}</p>
-                  <motion.a whileHover={{ scale: 1.03 }} whileTap={{ scale: 0.97 }} href="https://www.linkedin.com/in/maria-fer-calderon" target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full text-sm font-semibold transition-all bg-[#0A66C2] text-white hover:bg-[#004182]"><Linkedin className="w-4 h-4" />{t.linkedinBtn}<ExternalLink className="w-3 h-3" /></motion.a>
-                </div>
+        </Section>
+
+        <Section tone="surface" className="relative overflow-hidden">
+          <div className="dot-field absolute inset-0" aria-hidden="true" />
+          <div className="relative grid gap-12 lg:grid-cols-2 lg:items-center lg:gap-20">
+            <div className="offset-visual">
+              <figure className="portrait-card m-0">
+                <img src={mafeHero} alt={`Maria Fer Calderón — ${t.linkedinRole}, Ferova Agency`} width={1536} height={1024} loading="lazy" />
+                <figcaption>Bogotá, Colombia · Ferova Agency</figcaption>
+              </figure>
+            </div>
+            <div>
+              <Eyebrow className="mb-5">{t.linkedinSub}</Eyebrow>
+              <h2 className="text-3xl leading-tight sm:text-4xl lg:text-5xl lg:leading-[1.15]">{t.linkedinTitle}</h2>
+              <p className="mt-6 text-xl font-semibold" style={{ fontFamily: 'Poppins, system-ui, sans-serif' }}>Maria Fer Calderón</p>
+              <p className="mt-1 font-semibold text-[#541014]">{t.linkedinRole}</p>
+              <p className="fx-muted mt-1 text-sm">Bogotá, Colombia · Ferova Agency</p>
+              <p className="fx-muted mt-5 leading-relaxed sm:text-lg">{t.linkedinBio}</p>
+              <div className="mt-8 flex flex-wrap gap-3">
+                <a href="https://www.linkedin.com/in/maria-fer-calderon" target="_blank" rel="noopener noreferrer" className="fx-btn">
+                  <Linkedin aria-hidden="true" />
+                  {t.linkedinBtn}
+                  <ExternalLink aria-hidden="true" />
+                </a>
               </div>
-            </AnimatedSection>
+            </div>
           </div>
-        </section>
+        </Section>
+
         <TeamSection lang={lang} />
-        <section className="py-20 md:py-28 relative overflow-hidden bg-surface">
-          <div className="absolute inset-0" style={{ background: 'radial-gradient(ellipse at 50% 50%, hsla(45, 86%, 40%, 0.06), transparent 70%)' }} />
-          <div className="container mx-auto px-4 md:px-6 relative z-10 text-center">
-            <AnimatedSection><h2 className="text-3xl md:text-4xl lg:text-5xl font-display font-bold mb-6">{t.ctaTitle}</h2><p className="text-muted-foreground text-lg max-w-xl mx-auto mb-10">{t.ctaSub}</p></AnimatedSection>
-            <AnimatedSection delay={0.2}><motion.a whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.97 }} href={whatsappUrl} target="_blank" rel="noopener noreferrer" className="btn-gold inline-flex items-center justify-center gap-2"><MessageCircle className="w-5 h-5" />{t.ctaBtn}</motion.a></AnimatedSection>
-          </div>
-        </section>
+
+        <CtaBand title={t.ctaTitle} body={t.ctaSub}>
+          <a href={whatsappUrl} target="_blank" rel="noopener noreferrer" className="fx-btn">
+            <MessageCircle aria-hidden="true" />
+            {t.ctaBtn}
+          </a>
+          <FeraButton variant="outline" source="about_agency_final">{lang === 'en' ? 'Talk to Fera' : lang === 'pt' ? 'Falar com a Fera' : 'Hablar con Fera'}</FeraButton>
+        </CtaBand>
       </main>
-      <Footer currentLang={lang} />
-    </PageTransition>
+      <Footer lang={lang} />
+    </div>
   );
 };
 

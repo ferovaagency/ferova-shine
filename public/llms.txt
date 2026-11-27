@@ -20,6 +20,7 @@ Garantía por escrito: si el entregable no se puede revender a tu cliente tal cu
 - [Ecommerce SEO (EN)](https://seoparaecommerce.co/en/services/ecommerce-seo): SEO for online stores aimed at Google rankings and at being cited by ChatGPT, Perplexity and AI Overviews, with GEO included.
 - [SEO marca blanca para agencias](https://seoparaecommerce.co/seo-para-agencias): Servicio de SEO marca blanca para agencias: auditorías, arquitectura de catálogos y migraciones entregadas bajo tu marca, con tu logo en cada reporte. Trabajo técnico senior de María Fernanda Calderón, Fractional SEO en Ferova, con precios publicados y garantía por escrito.
 - [White label SEO for agencies (EN)](https://seoparaecommerce.co/en/white-label-seo-for-agencies): White label SEO services for agencies: audits, catalogue architecture and platform migrations delivered under your brand, with your logo on every report. Senior technical work by María Fernanda Calderón, Fractional SEO at Ferova, with published prices and a written guarantee.
+- [SEO por horas para agencias](https://seoparaecommerce.co/seo-por-horas): SEO técnico por horas para agencias: 20 horas senior al mes por USD 1.250 para auditorías, migraciones y correcciones, en marca blanca y sin contrato largo.
 - [Auditoría SEO técnica](https://seoparaecommerce.co/auditoria-seo-tecnica): Una auditoría técnica profunda para convertir problemas de rastreo, indexación, arquitectura y rendimiento en un plan de decisiones priorizado.
 - [Technical SEO audit services (EN)](https://seoparaecommerce.co/en/technical-seo-audit-services): A deep technical audit that turns crawling, indexation, architecture and performance problems into a prioritised set of decisions.
 - [Migraciones SEO](https://seoparaecommerce.co/migraciones-seo): Planificación, inventario, mapeo de URLs, QA y monitoreo para reducir el riesgo SEO antes, durante y después de una migración.
@@ -38,6 +39,8 @@ Garantía por escrito: si el entregable no se puede revender a tu cliente tal cu
 - [Portafolio](https://ferova.com.co/portafolio): Proyectos seleccionados de María Fer Calderón, publicados en ferova.com.co.
 - [LinkedIn](https://www.linkedin.com/in/maria-fer-calderon/): Perfil profesional, credenciales y recomendaciones.
 - [Ferova](https://ferova.com.co): Software, SaaS y automatizaciones a la medida con IA y low-code.
+- [Ferova en TechBehemoths](https://techbehemoths.com/company/ferova): Perfil de empresa verificado.
+- [Ferova en Notion Marketplace](https://www.notion.com/es/@ferova): Plantillas de Notion publicadas por Ferova.
 
 ## Búsqueda con IA (GEO)
 
@@ -69,6 +72,8 @@ Garantía por escrito: si el entregable no se puede revender a tu cliente tal cu
 - [Blog (EN)](https://seoparaecommerce.co/en/blog): Articles on SEO, ecommerce and AI search in English.
 - [Recursos](https://seoparaecommerce.co/recursos): Guías y herramientas sobre SEO técnico, ecommerce, trabajo white label, migraciones y búsqueda con IA.
 - [Resources (EN)](https://seoparaecommerce.co/en/resources): Guides and tools on technical SEO, ecommerce, white-label work, migrations and AI search.
+- [Newsletter de SEO técnico para agencias](https://seoparaecommerce.co/newsletter): Newsletter de María Fernanda Calderón, Fractional SEO en Ferova: SEO técnico, ecommerce y migraciones explicados para dueños de agencia.
+- [Technical SEO newsletter for agencies (EN)](https://seoparaecommerce.co/en/newsletter): Newsletter by María Fernanda Calderón, Fractional SEO at Ferova: technical SEO, ecommerce and migrations explained for agency owners.
 
 ## Optional
 

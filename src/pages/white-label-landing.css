@@ -14,9 +14,9 @@
   --wl-gold:#c0930e; --wl-gold-s:#e0bd52; --wl-cream:#ffffff; --wl-sand:#f6f5f1;
   --wl-line:#e5dcc9; --wl-muted:#6f6a63;
   background:var(--wl-cream); color:var(--wl-ink);
-  font-family:'Inter',system-ui,-apple-system,sans-serif; font-size:17px; line-height:1.7;
+  font-family:'Manrope',system-ui,-apple-system,sans-serif; font-size:17px; line-height:1.7;
 }
-.wl h1,.wl h2,.wl h3{font-family:'Nexa','Outfit',system-ui,sans-serif;line-height:1.1;margin:0;text-wrap:balance}
+.wl h1,.wl h2,.wl h3{font-family:'Poppins',system-ui,sans-serif;line-height:1.1;margin:0;text-wrap:balance}
 .wl p{margin:0}
 .wl img{max-width:100%}
 .wl-wrap{max-width:1140px;margin:0 auto;padding:0 22px}
@@ -63,7 +63,7 @@
 .wl-strip{background:#2a1f20;color:#fff}
 .wl-strip .wl-wrap{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:rgba(255,255,255,.1)}
 .wl-stat{background:#2a1f20;padding:30px 24px}
-.wl-stat .n{font-family:'Nexa','Outfit',sans-serif;font-size:clamp(25px,3.2vw,40px);font-weight:800;
+.wl-stat .n{font-family:'Poppins',sans-serif;font-size:clamp(25px,3.2vw,40px);font-weight:800;
   line-height:1;color:var(--wl-gold-s);font-variant-numeric:tabular-nums}
 .wl-stat .l{margin-top:11px;font-size:13px;line-height:1.5;color:rgba(255,255,255,.62)}
 @media(max-width:860px){.wl-strip .wl-wrap{grid-template-columns:repeat(2,1fr)}}
@@ -87,7 +87,7 @@
 .wl-sub{display:grid;grid-template-columns:200px 1fr;gap:34px;margin-top:54px;
   padding-top:34px;border-top:1px solid var(--wl-line)}
 .wl-s--dark .wl-sub,.wl-s--ink .wl-sub{border-top-color:rgba(255,255,255,.16)}
-.wl-sub .wl-tag{font-family:'Nexa','Outfit',sans-serif;font-size:14px;font-weight:700;color:var(--wl-brown);
+.wl-sub .wl-tag{font-family:'Poppins',sans-serif;font-size:14px;font-weight:700;color:var(--wl-brown);
   text-transform:uppercase;letter-spacing:.06em;line-height:1.35}
 .wl-s--dark .wl-sub .wl-tag,.wl-s--ink .wl-sub .wl-tag{color:var(--wl-gold-s)}
 @media(max-width:860px){.wl-sub{grid-template-columns:1fr;gap:12px;margin-top:40px}}
@@ -100,7 +100,7 @@
   background:rgba(192,147,14,.16);transition:width .9s cubic-bezier(.22,1,.36,1)}
 .wl-rung.is-in::after{width:var(--wl-bar,0%)}
 .wl-rung > span{position:relative;z-index:2}
-.wl-rung .v{font-family:'Nexa','Outfit',sans-serif;font-weight:800;white-space:nowrap;font-variant-numeric:tabular-nums}
+.wl-rung .v{font-family:'Poppins',sans-serif;font-weight:800;white-space:nowrap;font-variant-numeric:tabular-nums}
 
 /* paneles enfrentados */
 .wl-face{display:grid;grid-template-columns:1fr 1fr;margin-top:40px;border-radius:22px;overflow:hidden;
@@ -128,7 +128,7 @@
 .wl-steps{margin-top:40px}
 .wl-step{display:grid;grid-template-columns:76px 1fr;gap:26px;padding:28px 0;border-bottom:1px solid var(--wl-line)}
 .wl-step:last-child{border-bottom:none}
-.wl-step .n{font-family:'Nexa','Outfit',sans-serif;font-size:34px;font-weight:800;
+.wl-step .n{font-family:'Poppins',sans-serif;font-size:34px;font-weight:800;
   color:rgba(192,147,14,.5);line-height:1}
 .wl-step h3{font-size:19px}
 .wl-step p{margin-top:9px}
@@ -138,7 +138,7 @@
 .wl-mid{margin-top:48px;border-radius:22px;padding:34px 36px;display:flex;gap:24px;
   align-items:center;justify-content:space-between;flex-wrap:wrap;
   background:linear-gradient(135deg,#201f1b,#78191f 60%,#201f1b);color:#fff}
-.wl-mid p{font-family:'Nexa','Outfit',sans-serif;font-size:clamp(19px,2.2vw,25px);font-weight:700;
+.wl-mid p{font-family:'Poppins',sans-serif;font-size:clamp(19px,2.2vw,25px);font-weight:700;
   max-width:34ch;color:#fff}
 
 /* canales */
@@ -146,7 +146,7 @@
 .wl-ch{display:block;background:#fff;border:1px solid var(--wl-line);border-radius:18px;padding:24px;
   text-decoration:none;color:var(--wl-ink);transition:transform .22s,border-color .22s,box-shadow .22s}
 .wl-ch:hover{transform:translateY(-4px);border-color:var(--wl-gold);box-shadow:0 16px 34px rgba(60,40,10,.1)}
-.wl-ch .n{font-family:'Nexa','Outfit',sans-serif;font-size:19px;font-weight:700}
+.wl-ch .n{font-family:'Poppins',sans-serif;font-size:19px;font-weight:700}
 .wl-ch .dd{margin-top:8px;font-size:14px;line-height:1.55;color:var(--wl-muted);overflow-wrap:anywhere}
 .wl-ch .go{margin-top:16px;display:inline-block;font-size:14px;font-weight:700;color:var(--wl-wine)}
 @media(max-width:900px){.wl-ch-grid{grid-template-columns:repeat(2,1fr)}}

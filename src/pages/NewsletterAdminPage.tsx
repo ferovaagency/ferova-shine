@@ -1,11 +1,12 @@
 import { useState, useEffect } from 'react';
 import AdminLayout from '@/components/admin/AdminLayout';
+import { Chip } from '@/components/admin/Chip';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Calendar } from '@/components/ui/calendar';
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
-import { CalendarIcon, Download, FileText, Loader2, Newspaper, Pencil, Sparkles, Trash2, Users } from 'lucide-react';
+import { CalendarIcon, Copy, Download, FileText, Loader2, Newspaper, Pencil, Sparkles, Trash2, Users } from 'lucide-react';
 import { supabase } from '@/integrations/supabase/client';
 import { toast } from 'sonner';
 import { format } from 'date-fns';
@@ -13,11 +14,21 @@ import { cn } from '@/lib/utils';
 
 interface Subscriber {
   id: string; name: string; email: string; plan: string | null; lang: string | null; created_at: string;
+  consent?: boolean | null; consent_at?: string | null; source?: string | null;
 }
+
+/** Este admin solo ve y crea lo de seoparaecommerce.co (la base es compartida). */
+const SITE_ORIGIN = 'seoparaecommerce.co';
+
+const copyText = async (text: string, label: string) => {
+  if (!text.trim()) { toast.error(`No hay ${label} para copiar.`); return; }
+  try { await navigator.clipboard.writeText(text); toast.success(`${label[0].toUpperCase()}${label.slice(1)} copiado.`); }
+  catch { toast.error('No se pudo copiar. Selecciona el texto y cópialo a mano.'); }
+};
 interface EditionContent { news?: string; tip?: string; tool?: { name?: string; desc?: string; url?: string } }
 interface EditionProContent { case_study?: string; analysis?: string; resource?: { name?: string; desc?: string; url?: string }; question?: string }
-interface Edition { id: string; edition_number: number; title: string; subject_line: string | null; topics: string[]; plan: 'free' | 'pro'; reading_time: number; free_content: EditionContent; pro_content: EditionProContent | null; published: boolean; published_at: string | null; created_at: string }
-interface GeneratedNewsletter { title?: string; subject_line?: string; topics?: string[]; reading_time?: number; free_content?: EditionContent; pro_content?: EditionProContent }
+interface Edition { id: string; edition_number: number; title: string; subject_line: string | null; topics: string[]; plan: 'free' | 'pro'; reading_time: number; free_content: EditionContent; pro_content: EditionProContent | null; published: boolean; published_at: string | null; created_at: string; linkedin_summary?: string | null; linkedin_post?: string | null }
+interface GeneratedNewsletter { title?: string; subject_line?: string; topics?: string[]; reading_time?: number; free_content?: EditionContent; pro_content?: EditionProContent; linkedin_summary?: string; linkedin_post?: string }
 
 const NewsletterAdminPage = () => {
   // Form state
@@ -46,6 +57,10 @@ const NewsletterAdminPage = () => {
   const [resourceUrl, setResourceUrl] = useState('');
   const [question, setQuestion] = useState('');
 
+  // Textos para copiar y pegar en LinkedIn (perfil personal de María Fernanda)
+  const [linkedinSummary, setLinkedinSummary] = useState('');
+  const [linkedinPost, setLinkedinPost] = useState('');
+
   const [saving, setSaving] = useState(false);
   const [tab, setTab] = useState('editions');
   const [editingId, setEditingId] = useState<string | null>(null);
@@ -64,6 +79,7 @@ const NewsletterAdminPage = () => {
   };
 
   const buildPayload = (published: boolean) => ({
+    site_origin: SITE_ORIGIN,
     edition_number: editionNumber,
     slug: buildSlug(),
     title,
@@ -73,6 +89,8 @@ const NewsletterAdminPage = () => {
     reading_time: readingTime,
     free_content: { news, tip, tool: { name: toolName, desc: toolDesc, url: toolUrl } },
     pro_content: plan === 'pro' ? { case_study: caseStudy, analysis, resource: { name: resourceName, desc: resourceDesc, url: resourceUrl }, question } : null,
+    linkedin_summary: linkedinSummary.trim() || null,
+    linkedin_post: linkedinPost.trim() || null,
     published,
     published_at: published ? pubDate.toISOString() : null,
   });
@@ -100,13 +118,14 @@ const NewsletterAdminPage = () => {
     setTitle(''); setSubjectLine(''); setTopic1(''); setTopic2(''); setTopic3('');
     setNews(''); setTip(''); setToolName(''); setToolDesc(''); setToolUrl('');
     setCaseStudy(''); setAnalysis(''); setResourceName(''); setResourceDesc(''); setResourceUrl(''); setQuestion('');
+    setLinkedinSummary(''); setLinkedinPost('');
     setGeneratorIdeas('');
     setEditionNumber(prev => prev + 1);
   };
 
   const loadEditions = async () => {
     setEditionsLoading(true);
-    const { data, error } = await supabase.from('newsletter_editions').select('*').order('edition_number', { ascending: false });
+    const { data, error } = await supabase.from('newsletter_editions').select('*').eq('site_origin', SITE_ORIGIN).order('edition_number', { ascending: false });
     if (error) toast.error(`No se pudieron cargar las ediciones: ${error.message}`);
     setEditions((data ?? []) as unknown as Edition[]);
     setEditionsLoading(false);
@@ -119,6 +138,7 @@ const NewsletterAdminPage = () => {
     setTopic1(edition.topics?.[0] ?? ''); setTopic2(edition.topics?.[1] ?? ''); setTopic3(edition.topics?.[2] ?? '');
     setNews(edition.free_content?.news ?? ''); setTip(edition.free_content?.tip ?? ''); setToolName(edition.free_content?.tool?.name ?? ''); setToolDesc(edition.free_content?.tool?.desc ?? ''); setToolUrl(edition.free_content?.tool?.url ?? '');
     setCaseStudy(edition.pro_content?.case_study ?? ''); setAnalysis(edition.pro_content?.analysis ?? ''); setResourceName(edition.pro_content?.resource?.name ?? ''); setResourceDesc(edition.pro_content?.resource?.desc ?? ''); setResourceUrl(edition.pro_content?.resource?.url ?? ''); setQuestion(edition.pro_content?.question ?? '');
+    setLinkedinSummary(edition.linkedin_summary ?? ''); setLinkedinPost(edition.linkedin_post ?? '');
     setPubDate(edition.published_at ? new Date(edition.published_at) : new Date()); setTab('new');
   };
 
@@ -137,6 +157,7 @@ const NewsletterAdminPage = () => {
       const generated = data.newsletter as GeneratedNewsletter;
       setTitle(generated.title || title); setSubjectLine(generated.subject_line || subjectLine); setReadingTime(generated.reading_time || readingTime);
       setTopic1(generated.topics?.[0] || topic1); setTopic2(generated.topics?.[1] || topic2); setTopic3(generated.topics?.[2] || topic3);
+      setLinkedinSummary(generated.linkedin_summary || linkedinSummary); setLinkedinPost(generated.linkedin_post || linkedinPost);
       setNews(generated.free_content?.news || news); setTip(generated.free_content?.tip || tip); setToolName(generated.free_content?.tool?.name || toolName); setToolDesc(generated.free_content?.tool?.desc || toolDesc); setToolUrl(generated.free_content?.tool?.url || toolUrl);
       if (plan === 'pro') { setCaseStudy(generated.pro_content?.case_study || caseStudy); setAnalysis(generated.pro_content?.analysis || analysis); setResourceName(generated.pro_content?.resource?.name || resourceName); setResourceDesc(generated.pro_content?.resource?.desc || resourceDesc); setResourceUrl(generated.pro_content?.resource?.url || resourceUrl); setQuestion(generated.pro_content?.question || question); }
       toast.success('Edición generada con la guía editorial. Revísala antes de publicar.');
@@ -146,15 +167,16 @@ const NewsletterAdminPage = () => {
 
   const loadSubscribers = async () => {
     setSubsLoading(true);
-    const { data } = await supabase.from('newsletter_subscribers').select('*').order('created_at', { ascending: false });
+    const { data } = await supabase.from('newsletter_subscribers').select('*').eq('site_origin', SITE_ORIGIN).order('created_at', { ascending: false });
     setSubscribers(data || []);
     setSubsLoading(false);
   };
 
   const exportCSV = () => {
-    const headers = ['Nombre', 'Email', 'Plan', 'Idioma', 'Fecha'];
-    const rows = subscribers.map(s => [s.name, s.email, s.plan || 'free', s.lang || 'es', s.created_at?.slice(0, 10) || '']);
-    const csv = [headers, ...rows].map(r => r.join(',')).join('\n');
+    const headers = ['Nombre', 'Email', 'Plan', 'Idioma', 'Fecha', 'Autorizó datos', 'Fecha autorización', 'Origen'];
+    const rows = subscribers.map(s => [s.name, s.email, s.plan || 'free', s.lang || 'es', s.created_at?.slice(0, 10) || '', s.consent ? 'sí' : 'no', s.consent_at?.slice(0, 10) || '', s.source || '']);
+    const cell = (v: string) => `"${String(v).replace(/"/g, '""')}"`;
+    const csv = [headers, ...rows].map(r => r.map(cell).join(',')).join('\n');
     const blob = new Blob([csv], { type: 'text/csv' });
     const url = URL.createObjectURL(blob);
     const a = document.createElement('a');
@@ -169,25 +191,25 @@ const NewsletterAdminPage = () => {
     <AdminLayout title="Newsletter" description="Crea una edición y administra la lista de suscriptores.">
       <div className="max-w-4xl">
           <Tabs value={tab} onValueChange={setTab} className="w-full">
-            <TabsList className="mb-6">
-              <TabsTrigger value="editions" className="flex items-center gap-2"><Newspaper className="h-4 w-4" />Ediciones</TabsTrigger>
-              <TabsTrigger value="new" className="flex items-center gap-2"><FileText className="h-4 w-4" />{editingId ? 'Editar' : 'Nueva edición'}</TabsTrigger>
-              <TabsTrigger value="subs" onClick={loadSubscribers} className="flex items-center gap-2"><Users className="h-4 w-4" />Suscriptores</TabsTrigger>
+            <TabsList className="mb-5 h-auto max-w-full justify-start gap-1 overflow-x-auto rounded-full bg-white p-1 shadow-[0_2px_8px_rgb(47_45_86_/_8%)]">
+              <TabsTrigger value="editions" className="flex items-center gap-2 rounded-full px-4 py-2 data-[state=active]:bg-[#2f2d56] data-[state=active]:text-white data-[state=active]:shadow-none"><Newspaper className="h-4 w-4" />Ediciones</TabsTrigger>
+              <TabsTrigger value="new" className="flex items-center gap-2 rounded-full px-4 py-2 data-[state=active]:bg-[#2f2d56] data-[state=active]:text-white data-[state=active]:shadow-none"><FileText className="h-4 w-4" />{editingId ? 'Editar' : 'Nueva edición'}</TabsTrigger>
+              <TabsTrigger value="subs" onClick={loadSubscribers} className="flex items-center gap-2 rounded-full px-4 py-2 data-[state=active]:bg-[#2f2d56] data-[state=active]:text-white data-[state=active]:shadow-none"><Users className="h-4 w-4" />Suscriptores</TabsTrigger>
             </TabsList>
 
             <TabsContent value="editions">
-              {editionsLoading ? <div className="flex justify-center py-16"><Loader2 className="h-6 w-6 animate-spin" /></div> : editions.length === 0 ? <div className="rounded-xl border border-border bg-card p-10 text-center text-sm text-muted-foreground">Aún no hay ediciones. Crea la primera y guárdala como borrador.</div> : <div className="overflow-x-auto rounded-xl border border-border bg-card"><table className="w-full min-w-[620px] text-sm"><thead><tr className="border-b border-border text-left text-xs text-muted-foreground"><th className="px-4 py-3">Edición</th><th className="px-4 py-3">Plan</th><th className="px-4 py-3">Estado</th><th className="px-4 py-3 text-right">Acciones</th></tr></thead><tbody>{editions.map((edition) => <tr key={edition.id} className="border-b border-border/70 last:border-0"><td className="px-4 py-3"><strong>#{edition.edition_number} · {edition.title}</strong><div className="mt-1 text-xs text-muted-foreground">{edition.published_at ? format(new Date(edition.published_at), 'dd MMM yyyy') : format(new Date(edition.created_at), 'dd MMM yyyy')}</div></td><td className="px-4 py-3 text-muted-foreground">{edition.plan === 'pro' ? 'Pro' : 'Gratis'}</td><td className="px-4 py-3"><span className={`rounded-full px-2.5 py-1 text-xs ${edition.published ? 'bg-emerald-500/15 text-emerald-600' : 'bg-muted text-muted-foreground'}`}>{edition.published ? 'Publicada' : 'Borrador'}</span></td><td className="px-4 py-3"><div className="flex justify-end gap-1"><button onClick={() => editEdition(edition)} aria-label={`Editar edición ${edition.edition_number}`} className="rounded-lg border border-border p-2 hover:text-primary"><Pencil className="h-4 w-4" /></button><button onClick={() => void deleteEdition(edition)} aria-label={`Eliminar edición ${edition.edition_number}`} className="rounded-lg border border-border p-2 hover:border-destructive/40 hover:text-destructive"><Trash2 className="h-4 w-4" /></button></div></td></tr>)}</tbody></table></div>}
+              {editionsLoading ? <div className="flex justify-center py-16"><Loader2 className="h-6 w-6 animate-spin" aria-label="Cargando" /></div> : editions.length === 0 ? <div className="admin-empty">Aún no hay ediciones. Crea la primera y guárdala como borrador.</div> : <div className="admin-table-wrap"><table className="admin-table min-w-[620px]"><thead><tr><th scope="col">Edición</th><th scope="col">Plan</th><th scope="col">Estado</th><th scope="col" className="text-right">Acciones</th></tr></thead><tbody>{editions.map((edition) => <tr key={edition.id}><td><strong><span className="admin-mono">#{edition.edition_number}</span> · {edition.title}</strong><div className="admin-mono mt-1 text-xs text-muted-foreground">{edition.published_at ? format(new Date(edition.published_at), 'dd MMM yyyy') : format(new Date(edition.created_at), 'dd MMM yyyy')}</div></td><td><Chip tone={edition.plan === 'pro' ? 'brand' : 'idle'}>{edition.plan === 'pro' ? 'Pro' : 'Gratis'}</Chip></td><td><Chip tone={edition.published ? 'ok' : 'idle'}>{edition.published ? 'Publicada' : 'Borrador'}</Chip></td><td><div className="flex justify-end gap-1.5"><button type="button" onClick={() => editEdition(edition)} aria-label={`Editar edición ${edition.edition_number}`} title="Editar" className="admin-icon-btn"><Pencil aria-hidden="true" /></button><button type="button" onClick={() => void deleteEdition(edition)} aria-label={`Eliminar edición ${edition.edition_number}`} title="Eliminar" className="admin-icon-btn admin-icon-btn--danger"><Trash2 aria-hidden="true" /></button></div></td></tr>)}</tbody></table></div>}
             </TabsContent>
 
             {/* TAB: New edition */}
             <TabsContent value="new">
-              <div className="glass-card p-6 space-y-6">
-                {editingId && <div className="flex items-center justify-between rounded-lg border border-primary/20 bg-primary/5 p-3 text-sm"><span>Estás editando una edición existente.</span><button type="button" onClick={() => { resetForm(); setTab('editions'); }} className="font-medium text-primary">Cancelar</button></div>}
-                <section className="rounded-xl border border-border bg-muted/30 p-4">
-                  <h2 className="flex items-center gap-2 font-semibold"><Sparkles className="h-4 w-4" /> Generador editorial</h2>
+              <div className="admin-card space-y-6">
+                {editingId && <div className="admin-alert admin-alert--info items-center justify-between"><span>Estás editando una edición existente.</span><button type="button" onClick={() => { resetForm(); setTab('editions'); }} className="font-semibold underline underline-offset-2">Cancelar</button></div>}
+                <section className="rounded-2xl bg-[#f7f8fc] p-4">
+                  <h2 className="admin-card__title flex items-center gap-2"><Sparkles className="h-4 w-4 text-[#c0930e]" aria-hidden="true" /> Generador editorial</h2>
                   <p className="mt-2 text-xs leading-5 text-muted-foreground">Pega la noticia, enlaces, datos, experiencia o ideas que sí quieres usar. La IA aplicará la guía de Ferova sin inventar fuentes ni cifras.</p>
                   <Textarea rows={6} className="mt-3" value={generatorIdeas} onChange={(event) => setGeneratorIdeas(event.target.value)} placeholder="Información base de esta edición, enlaces verificados, enfoque para agencias y CTA…" />
-                  <button type="button" onClick={() => void generateEdition()} disabled={generating} className="mt-3 inline-flex items-center justify-center gap-2 rounded-lg border border-border bg-background px-4 py-2.5 text-sm font-medium disabled:opacity-50">{generating ? <Loader2 className="h-4 w-4 animate-spin" /> : <Sparkles className="h-4 w-4" />} Generar edición completa</button>
+                  <button type="button" onClick={() => void generateEdition()} disabled={generating} className="admin-btn admin-btn--ghost mt-3">{generating ? <Loader2 className="h-4 w-4 animate-spin" /> : <Sparkles className="h-4 w-4" />} Generar edición completa</button>
                 </section>
                 <div className="grid sm:grid-cols-3 gap-4">
                   <div>
@@ -239,7 +261,7 @@ const NewsletterAdminPage = () => {
                 </div>
 
                 <hr className="border-border" />
-                <h3 className="font-bold text-sm" style={{ color: 'hsl(45 86% 52%)' }}>Contenido Gratis</h3>
+                <h3 className="admin-card__title flex items-center gap-2">Contenido <Chip tone="idle">Gratis</Chip></h3>
 
                 <div><label className="text-sm font-medium mb-1 block">Noticia de la semana</label><Textarea rows={6} value={news} onChange={e => setNews(e.target.value)} /></div>
                 <div><label className="text-sm font-medium mb-1 block">Tip accionable</label><Textarea rows={4} value={tip} onChange={e => setTip(e.target.value)} /></div>
@@ -252,7 +274,7 @@ const NewsletterAdminPage = () => {
                 {plan === 'pro' && (
                   <>
                     <hr className="border-border" />
-                    <h3 className="font-bold text-sm" style={{ color: 'hsl(45 86% 52%)' }}>Contenido Pro</h3>
+                    <h3 className="admin-card__title flex items-center gap-2">Contenido <Chip tone="brand">Pro</Chip></h3>
                     <div><label className="text-sm font-medium mb-1 block">Caso de estudio</label><Textarea rows={6} value={caseStudy} onChange={e => setCaseStudy(e.target.value)} /></div>
                     <div><label className="text-sm font-medium mb-1 block">Análisis Google</label><Textarea rows={6} value={analysis} onChange={e => setAnalysis(e.target.value)} /></div>
                     <div className="grid sm:grid-cols-3 gap-4">
@@ -264,19 +286,36 @@ const NewsletterAdminPage = () => {
                   </>
                 )}
 
-                <div className="flex gap-4 pt-4">
-                  <button onClick={() => handleSave(true)} disabled={saving} className="btn-gold flex-1">{saving ? '...' : 'Publicar edición'}</button>
-                  <button onClick={() => handleSave(false)} disabled={saving} className="btn-outline-gold flex-1">{saving ? '...' : 'Guardar borrador'}</button>
+                <hr className="border-border" />
+                <section className="space-y-4">
+                  <div>
+                    <h3 className="admin-card__title">Para LinkedIn (copiar y pegar)</h3>
+                    <p className="mt-1 text-xs leading-5 text-muted-foreground">Se publica a mano en tu perfil personal. El generador los llena; revísalos antes de copiar.</p>
+                  </div>
+                  <div>
+                    <div className="mb-1 flex items-center justify-between gap-3"><label htmlFor="li-summary" className="text-sm font-medium">Resumen de la edición</label><button type="button" onClick={() => void copyText(linkedinSummary, 'resumen')} className="admin-btn admin-btn--ghost admin-btn--sm"><Copy className="h-4 w-4" aria-hidden="true" />Copiar</button></div>
+                    <Textarea id="li-summary" rows={3} value={linkedinSummary} onChange={e => setLinkedinSummary(e.target.value)} />
+                  </div>
+                  <div>
+                    <div className="mb-1 flex items-center justify-between gap-3"><label htmlFor="li-post" className="text-sm font-medium">Post para tu perfil personal</label><button type="button" onClick={() => void copyText(linkedinPost, 'post')} className="admin-btn admin-btn--ghost admin-btn--sm"><Copy className="h-4 w-4" aria-hidden="true" />Copiar</button></div>
+                    <Textarea id="li-post" rows={10} value={linkedinPost} onChange={e => setLinkedinPost(e.target.value)} />
+                    <p className={cn('mt-1 text-xs', linkedinPost.length > 3000 ? 'text-destructive' : 'text-muted-foreground')}>{linkedinPost.length} / 3.000 caracteres (límite de LinkedIn)</p>
+                  </div>
+                </section>
+
+                <div className="flex flex-col gap-3 pt-4 sm:flex-row">
+                  <button onClick={() => handleSave(true)} disabled={saving} className="admin-btn flex-1">{saving ? <Loader2 className="animate-spin" aria-label="Guardando" /> : 'Publicar edición'}</button>
+                  <button onClick={() => handleSave(false)} disabled={saving} className="admin-btn admin-btn--ghost flex-1">{saving ? <Loader2 className="animate-spin" aria-label="Guardando" /> : 'Guardar borrador'}</button>
                 </div>
               </div>
             </TabsContent>
 
             {/* TAB: Subscribers */}
             <TabsContent value="subs">
-              <div className="glass-card p-6">
-                <div className="flex items-center justify-between mb-6">
-                  <p className="text-sm text-muted-foreground">{freeCount} suscriptores gratis · {proCount} pro</p>
-                  <button onClick={exportCSV} className="btn-outline-gold text-sm py-2 px-4 flex items-center gap-2">
+              <div className="admin-card">
+                <div className="mb-5 flex flex-wrap items-center justify-between gap-3">
+                  <p className="text-sm text-muted-foreground"><span className="admin-mono text-foreground">{freeCount}</span> suscriptores gratis · <span className="admin-mono text-foreground">{proCount}</span> pro</p>
+                  <button onClick={exportCSV} className="admin-btn admin-btn--ghost admin-btn--sm">
                     <Download className="h-4 w-4" />Exportar CSV
                   </button>
                 </div>
@@ -285,17 +324,18 @@ const NewsletterAdminPage = () => {
                 ) : subscribers.length === 0 ? (
                   <p className="text-center text-muted-foreground py-10">No hay suscriptores aún.</p>
                 ) : (
-                  <div className="overflow-x-auto">
-                    <table className="w-full text-sm">
-                      <thead><tr className="border-b border-border text-left"><th className="py-2 pr-4">Nombre</th><th className="py-2 pr-4">Email</th><th className="py-2 pr-4">Plan</th><th className="py-2 pr-4">Idioma</th><th className="py-2">Fecha</th></tr></thead>
+                  <div className="-mx-1 overflow-x-auto">
+                    <table className="admin-table min-w-[680px]">
+                      <thead><tr><th scope="col">Nombre</th><th scope="col">Email</th><th scope="col">Plan</th><th scope="col">Idioma</th><th scope="col">Fecha</th><th scope="col">Datos</th></tr></thead>
                       <tbody>
                         {subscribers.map(s => (
                           <tr key={s.id} className="border-b border-border/50">
                             <td className="py-2 pr-4">{s.name}</td>
                             <td className="py-2 pr-4 text-muted-foreground">{s.email}</td>
-                            <td className="py-2 pr-4"><span className={`text-xs font-bold px-2 py-0.5 rounded-full ${s.plan === 'pro' ? '' : 'bg-green-500/20 text-green-400'}`} style={s.plan === 'pro' ? { background: 'hsla(45,86%,40%,0.2)', color: 'hsl(45 86% 52%)' } : undefined}>{s.plan || 'free'}</span></td>
+                            <td><Chip tone={s.plan === 'pro' ? 'brand' : 'idle'}>{s.plan || 'free'}</Chip></td>
                             <td className="py-2 pr-4 text-muted-foreground">{s.lang || 'es'}</td>
-                            <td className="py-2 text-muted-foreground">{s.created_at?.slice(0, 10)}</td>
+                            <td className="py-2 pr-4 text-muted-foreground">{s.created_at?.slice(0, 10)}</td>
+                            <td><Chip tone={s.consent ? 'ok' : 'idle'}>{s.consent ? `Autorizó ${s.consent_at?.slice(0, 10) ?? ''}` : 'Sin registro'}</Chip></td>
                           </tr>
                         ))}
                       </tbody>

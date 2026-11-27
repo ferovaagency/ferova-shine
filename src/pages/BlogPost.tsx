@@ -3,12 +3,15 @@ import { useState, useEffect } from 'react';
 import Header from '@/components/layout/Header';
 import Footer from '@/components/layout/Footer';
 import AdBanner from '@/components/ui/ad-banner';
-import { ArrowLeft, Clock, User, MessageCircle, Loader2 } from 'lucide-react';
+import { ArrowLeft, ArrowUpRight, Clock, User, Loader2 } from 'lucide-react';
 import { getSupabase } from '@/integrations/supabase/lazy';
 import { useAnalytics } from '@/hooks/useAnalytics';
 import SEO from '@/components/SEO';
-import { getPrerenderPost } from '@/lib/prerender-store';
-import { BLOG_I18N_COLUMNS, pickVariant, type BlogRowI18n } from '@/lib/blog-i18n';
+import { getPrerenderPost, isPrerendering } from '@/lib/prerender-store';
+import { BLOG_I18N_COLUMNS, BLOG_SITE_ORIGINS, pickVariant, type BlogRowI18n } from '@/lib/blog-i18n';
+import { extractFaq, inlineImages, splitForCta, withToc, wordCount } from '@/lib/article-landing';
+import { SITE_ORIGIN } from '@/config/routes';
+import { CtaBand, FxLink, openFera as openFeraChat } from '@/components/fx/primitives';
 
 interface Props { lang?: 'es' | 'en' | 'pt'; }
 
@@ -20,6 +23,11 @@ interface PostData {
   created_at: string;
   meta_title: string | null;
   meta_description: string | null;
+  excerpt?: string | null;
+  cover_image?: string | null;
+  keyword?: string | null;
+  published_at?: string | null;
+  updated_at?: string | null;
   /** Rutas hermanas del mismo artículo (mismo slug, otra traducción). */
   alternates?: Partial<Record<'es' | 'en', string>>;
 }
@@ -109,8 +117,13 @@ const BlogPost = ({ lang = 'es' }: Props) => {
   // En el navegador esto es siempre null y el flujo es el de siempre.
   const seeded = getPrerenderPost(lang, slug);
   const [dbPost, setDbPost] = useState<PostData | null>(seeded);
-  const [loading, setLoading] = useState(!seeded);
-  const [notFound, setNotFound] = useState(false);
+  const staticPostForSlug = slug ? staticPosts[lang]?.[slug] : null;
+  // En el prerender, si el post no vino precargado es que no
+  // existe (o no tiene versión en este idioma). Se pinta "no encontrado" con
+  // noindex en vez del spinner, que salía como página sin H1 ni canonical.
+  const missingAtBuild = isPrerendering() && !seeded && !staticPostForSlug;
+  const [loading, setLoading] = useState(!seeded && !missingAtBuild);
+  const [notFound, setNotFound] = useState(missingAtBuild);
   const { trackBlogRead } = useAnalytics();
 
   const staticPost = slug ? staticPosts[lang]?.[slug] : null;
@@ -136,13 +149,14 @@ const BlogPost = ({ lang = 'es' }: Props) => {
         const supabase = await getSupabase();
         const { data, error } = await supabase
           .from('blog_posts')
-          .select(`slug, language, author, category, created_at, ${BLOG_I18N_COLUMNS}`)
+          .select(`slug, language, author, category, created_at, cover_image, keyword, published_at, updated_at, ${BLOG_I18N_COLUMNS}`)
           .eq('slug', slug)
           .eq('active', true)
+          .in('site_origin', [...BLOG_SITE_ORIGINS])
           .lte('published_at', new Date().toISOString())
           .limit(1);
 
-        const row = data?.[0] as (BlogRowI18n & { author: string; category: string; created_at: string }) | undefined;
+        const row = data?.[0] as (BlogRowI18n & { author: string; category: string; created_at: string; cover_image: string | null; keyword: string | null; published_at: string | null; updated_at: string | null }) | undefined;
         const variant = row ? pickVariant(row, lang === 'en' ? 'en' : 'es') : null;
 
         if (error || !variant) {
@@ -157,6 +171,11 @@ const BlogPost = ({ lang = 'es' }: Props) => {
             created_at: row!.created_at,
             meta_title: variant.meta_title,
             meta_description: variant.meta_description,
+            excerpt: variant.excerpt,
+            cover_image: row!.cover_image,
+            keyword: row!.keyword,
+            published_at: row!.published_at,
+            updated_at: row!.updated_at,
             alternates: hasEn
               ? { es: `/blog/${slug}`, en: `/en/blog/${slug}` }
               : { es: `/blog/${slug}` },
@@ -190,30 +209,44 @@ const BlogPost = ({ lang = 'es' }: Props) => {
 
   if (loading) {
     return (
-      <>
+      <div className="fx-site min-h-screen">
         <Header currentLang={lang} />
-        <main className="pt-20 min-h-screen flex items-center justify-center">
-          <Loader2 className="h-8 w-8 animate-spin text-primary" />
+        <main id="contenido-principal" className="pt-20">
+          <section className="page-hero on-dark grid-field">
+            <div className="mx-auto flex min-h-[50vh] w-full max-w-7xl items-center justify-center px-5 py-16 sm:px-8">
+              <Loader2 aria-hidden="true" className="h-8 w-8 animate-spin text-white" />
+              <span className="sr-only">{lang === 'pt' ? 'Carregando' : lang === 'en' ? 'Loading' : 'Cargando'}</span>
+            </div>
+          </section>
         </main>
         <Footer currentLang={lang} />
-      </>
+      </div>
     );
   }
 
   if (notFound && !staticPost) {
     return (
-      <>
+      <div className="fx-site min-h-screen">
+        <SEO
+          title={lang === 'pt' ? 'Artigo não encontrado | Ferova' : lang === 'en' ? 'Article not found | Ferova' : 'Artículo no encontrado | Ferova'}
+          description={lang === 'en' ? 'This article does not exist or has moved.' : 'Este artículo no existe o cambió de dirección.'}
+          path={`${blogBase}/${slug ?? ''}`}
+          lang={lang}
+          noindex
+        />
         <Header currentLang={lang} />
-        <main className="pt-20 min-h-screen flex items-center justify-center">
-          <div className="text-center">
-            <h1 className="text-3xl font-display font-bold mb-4">
-              {lang === 'pt' ? 'Artigo não encontrado' : lang === 'en' ? 'Article not found' : 'Artículo no encontrado'}
-            </h1>
-            <Link to={blogBase} className="text-primary hover:underline">{backLabel}</Link>
-          </div>
+        <main id="contenido-principal" className="pt-20">
+          <section className="page-hero on-dark grid-field">
+            <div className="mx-auto flex min-h-[50vh] w-full max-w-5xl flex-col items-center justify-center px-5 py-16 text-center sm:px-8">
+              <h1 className="text-4xl leading-[1.15] sm:text-5xl">
+                {lang === 'pt' ? 'Artigo não encontrado' : lang === 'en' ? 'Article not found' : 'Artículo no encontrado'}
+              </h1>
+              <Link to={blogBase} className="fx-btn mt-8"><ArrowLeft aria-hidden="true" /> {backLabel}</Link>
+            </div>
+          </section>
         </main>
         <Footer currentLang={lang} />
-      </>
+      </div>
     );
   }
 
@@ -226,48 +259,54 @@ const BlogPost = ({ lang = 'es' }: Props) => {
       datePublished: staticPost.date,
     };
     return (
-      <>
-        <SEO title={staticPost.seoTitle || `${staticPost.title} — Ferova Agency`} description={staticPost.content[0]?.slice(0, 155) || staticPost.title} path={postPath} lang={lang} type="article" jsonLd={articleLd} />
+      <div className="fx-site min-h-screen">
+        <SEO title={staticPost.seoTitle || `${staticPost.title} — Ferova Agency`} description={staticPost.content[0]?.slice(0, 155) || staticPost.title} path={postPath} lang={lang} type="article" jsonLd={articleLd} breadcrumbs={[{ name: 'Blog', path: blogBase }, { name: staticPost.title, path: postPath }]} />
         <Header currentLang={lang} />
-        <main className="pt-20">
-          <article className="py-8 md:py-12">
-            <div className="container mx-auto px-4 md:px-6">
-              <div className="mx-auto" style={{ maxWidth: '720px' }}>
-                <Link to={blogBase} className="inline-flex items-center gap-2 text-muted-foreground hover:text-primary transition-colors mb-6 text-sm">
-                  <ArrowLeft className="w-4 h-4" /> {backLabel}
-                </Link>
-                <div className="flex items-center gap-3 mb-4">
-                  <span className="text-xs px-3 py-1 rounded-full font-medium bg-primary/10 text-primary">{staticPost.category}</span>
-                  <span className="text-muted-foreground text-xs flex items-center gap-1"><Clock className="w-3 h-3" /> {staticPost.readTime}</span>
-                </div>
-                <h1 className="text-2xl md:text-3xl lg:text-4xl font-display font-bold mb-4 leading-tight">{staticPost.title}</h1>
-                <div className="flex items-center gap-4 text-muted-foreground text-sm mb-8 pb-6 border-b border-border/30">
-                  <span className="flex items-center gap-1"><User className="w-4 h-4" /> {staticPost.author}</span>
-                  <span>{staticPost.date}</span>
-                </div>
-                <AdBanner slot="blog-post-top" className="mb-8" />
-                <div className="blog-content space-y-4" style={{ lineHeight: '1.6' }}>
-                  {staticPost.content.map((paragraph, i) => {
-                    if (paragraph.startsWith('## ')) {
-                      const [heading, ...rest] = paragraph.split('\n\n');
-                      return (
-                        <div key={i}>
-                          <h2 className="text-xl font-display font-bold mt-8 mb-3 text-foreground">{heading.replace('## ', '')}</h2>
-                          {rest.map((p, j) => <p key={j} className="text-muted-foreground mb-3">{p}</p>)}
-                        </div>
-                      );
-                    }
-                    return <p key={i} className="text-muted-foreground">{paragraph}</p>;
-                  })}
-                </div>
-                <AdBanner slot="blog-post-bottom" className="mt-10" />
-                <CtaBlock lang={lang} contactPath={contactPath} />
-              </div>
+        <main id="contenido-principal" className="pt-20">
+          <section className="page-hero on-dark grid-field">
+            <div className="mx-auto w-full max-w-7xl px-5 py-14 sm:px-8 sm:py-20">
+              <Link to={blogBase} className="fx-muted mb-6 flex w-fit items-center gap-2 text-sm hover:text-white">
+                <ArrowLeft aria-hidden="true" className="h-4 w-4" /> {backLabel}
+              </Link>
+              <p className="eyebrow-pill mb-5">{staticPost.category}</p>
+              <h1 className="max-w-4xl text-4xl leading-[1.15] sm:text-5xl">{staticPost.title}</h1>
+              <p className="fx-muted mt-6 flex flex-wrap items-center gap-x-4 gap-y-1 text-sm">
+                <span className="inline-flex items-center gap-1"><User aria-hidden="true" className="h-4 w-4" /> {staticPost.author}</span>
+                <span>{staticPost.date}</span>
+                <span className="inline-flex items-center gap-1"><Clock aria-hidden="true" className="h-4 w-4" /> {staticPost.readTime}</span>
+              </p>
             </div>
+          </section>
+          <article className="mx-auto w-full max-w-7xl px-5 py-16 sm:px-8 sm:py-20">
+            <AdBanner slot="blog-post-top" className="mb-8" />
+            <div className="fx-prose">
+              {staticPost.content.map((paragraph, i) => {
+                if (paragraph.startsWith('## ')) {
+                  const [heading, ...rest] = paragraph.split('\n\n');
+                  return (
+                    <div key={i}>
+                      <h2>{heading.replace('## ', '')}</h2>
+                      {rest.map((p, j) => <p key={j} className="fx-muted">{p}</p>)}
+                    </div>
+                  );
+                }
+                return <p key={i} className="fx-muted">{paragraph}</p>;
+              })}
+            </div>
+            <AdBanner slot="blog-post-bottom" className="mt-10" />
           </article>
+          <CtaBand
+            title={lang === 'pt' ? 'Quer resultados assim para seu e-commerce?' : lang === 'en' ? 'Want results like these for your e-commerce?' : '¿Quieres resultados así para tu e-commerce?'}
+            body={lang === 'pt' ? 'Fale conosco e ajudamos a escalar sua loja virtual.' : lang === 'en' ? 'Contact us and we\'ll help you scale your online store.' : 'Escríbenos y te ayudamos a escalar tu tienda online.'}
+          >
+            <FxLink to="https://wa.me/17866894686">WhatsApp</FxLink>
+            <FxLink to={contactPath} variant="outline">
+              {lang === 'pt' ? 'Cotizar com Fera' : lang === 'en' ? 'Quote with Fera' : 'Cotizar con Fera'}
+            </FxLink>
+          </CtaBand>
         </main>
         <Footer currentLang={lang} />
-      </>
+      </div>
     );
   }
 
@@ -292,75 +331,135 @@ const BlogPost = ({ lang = 'es' }: Props) => {
   };
   const seoTitle = post.meta_title || buildSeoTitle(post.title);
   const seoDesc = post.meta_description || post.content.replace(/<[^>]*>/g, ' ').slice(0, 155);
+  // El artículo es una landing (CLAUDE.md §3): héroe, portada, índice, llamada a
+  // Fera a mitad del texto, cierre vino y schemas completos.
+  const en = lang === 'en';
+  const url = `${SITE_ORIGIN}${postPath}`;
+  const blogUrl = `${SITE_ORIGIN}${blogBase}`;
+  const { html: tocHtml, toc } = withToc(post.content);
+  const parts = splitForCta(tocHtml);
+  const faq = extractFaq(post.content);
+  const author = post.author || 'María Fer Calderón';
+  const published = post.published_at || post.created_at;
   const articleLd = {
-    '@context': 'https://schema.org', '@type': 'Article',
+    '@context': 'https://schema.org',
+    '@type': 'BlogPosting',
+    '@id': `${url}#article`,
     headline: post.title,
-    author: { '@type': 'Person', name: post.author || 'Maria Calderon' },
-    datePublished: post.created_at,
-    articleSection: post.category || undefined,
+    description: seoDesc,
+    inLanguage: lang,
+    url,
+    mainEntityOfPage: { '@type': 'WebPage', '@id': url },
+    image: [
+      ...(post.cover_image ? [{ '@type': 'ImageObject', url: post.cover_image, caption: post.title }] : []),
+      ...inlineImages(post.content).map((src) => ({ '@type': 'ImageObject', url: src })),
+    ],
+    author: { '@type': 'Person', name: author, url: `${SITE_ORIGIN}${en ? '/en/about-me' : '/sobre-nosotros'}` },
+    publisher: { '@type': 'Organization', name: 'Ferova', url: SITE_ORIGIN },
+    isPartOf: { '@type': 'Blog', '@id': `${blogUrl}#blog`, url: blogUrl },
+    wordCount: wordCount(post.content),
+    datePublished: published,
+    dateModified: post.updated_at || published,
+    ...(post.keyword ? { keywords: post.keyword } : {}),
+    ...(post.category ? { articleSection: post.category } : {}),
   };
+  const faqLd = faq.length
+    ? {
+        '@context': 'https://schema.org',
+        '@type': 'FAQPage',
+        '@id': `${url}#faq`,
+        mainEntity: faq.map((item) => ({
+          '@type': 'Question',
+          name: item.question,
+          acceptedAnswer: { '@type': 'Answer', text: item.answer },
+        })),
+      }
+    : null;
+  const openFera = (source: string) =>
+    openFeraChat(en ? `I read "${post.title}" and want to talk about my case.` : `Leí "${post.title}" y quiero hablar de mi caso.`, `blog_post_${source}`);
+  const t = en
+    ? { toc: 'In this article', sideTitle: 'Facing something similar?', sideBody: 'Tell Fera about the project and get scope and availability.', midTitle: 'Want this done for your agency’s client?', midBody: 'Describe the deliverable in two lines and Fera prepares the scope: task, hours or monthly capacity.', cta: 'Talk to Fera', closeTitle: 'Tell me what you need to solve.', closeBody: 'We start from the work. The collaboration model follows the real scope.' }
+    : { toc: 'En este artículo', sideTitle: '¿Te pasa algo parecido?', sideBody: 'Cuéntale a Fera el proyecto y recibe alcance y disponibilidad.', midTitle: '¿Quieres que lo resolvamos para un cliente de tu agencia?', midBody: 'Describe la entrega en dos líneas y Fera prepara el alcance: por tarea, por horas o capacidad mensual.', cta: 'Hablar con Fera', closeTitle: 'Cuéntame qué necesitas resolver.', closeBody: 'Empezamos por el trabajo. La modalidad la definimos a partir del alcance real.' };
 
   return (
-    <>
+    <div className="fx-site min-h-screen">
       <SEO
         title={seoTitle}
         description={seoDesc}
         path={postPath}
         lang={lang}
         type="article"
-        jsonLd={articleLd}
+        image={post.cover_image || undefined}
+        jsonLd={faqLd ? [articleLd, faqLd] : [articleLd]}
         alternates={post.alternates}
+        breadcrumbs={[{ name: 'Blog', path: blogBase }, { name: post.title, path: postPath }]}
       />
       <Header currentLang={lang} />
-      <main className="pt-20">
-        <article className="py-8 md:py-12">
-          <div className="container mx-auto px-4 md:px-6">
-            <div className="mx-auto" style={{ maxWidth: '720px' }}>
-              <Link to={blogBase} className="inline-flex items-center gap-2 text-muted-foreground hover:text-primary transition-colors mb-6 text-sm">
-                <ArrowLeft className="w-4 h-4" /> {backLabel}
-              </Link>
-              <div className="flex items-center gap-3 mb-4">
-                <span className="text-xs px-3 py-1 rounded-full font-medium bg-primary/10 text-primary">{post.category || 'General'}</span>
-                <span className="text-muted-foreground text-xs flex items-center gap-1"><Clock className="w-3 h-3" /> {readTime}</span>
-              </div>
-              <h1 className="text-2xl md:text-3xl lg:text-4xl font-display font-bold mb-4 leading-tight">{post.title}</h1>
-              <div className="flex items-center gap-4 text-muted-foreground text-sm mb-8 pb-6 border-b border-border/30">
-                <span className="flex items-center gap-1"><User className="w-4 h-4" /> {post.author || 'Maria Calderon'}</span>
-                <span>{dateStr}</span>
-              </div>
-              <AdBanner slot="blog-post-top" className="mb-8" />
-              <article
-                className="prose-blog dark:prose-invert"
-                dangerouslySetInnerHTML={{ __html: post.content }}
-              />
-              <AdBanner slot="blog-post-bottom" className="mt-10" />
-              <CtaBlock lang={lang} contactPath={contactPath} />
-            </div>
+      <main id="contenido-principal" className="pt-20">
+        <section className="page-hero on-dark grid-field">
+          <div className="mx-auto w-full max-w-7xl px-5 py-14 sm:px-8 sm:py-20">
+            <Link to={blogBase} className="fx-muted mb-6 flex w-fit items-center gap-2 text-sm hover:text-white">
+              <ArrowLeft aria-hidden="true" className="h-4 w-4" /> {backLabel}
+            </Link>
+            {post.category ? <p className="eyebrow-pill mb-5">{post.category}</p> : null}
+            <h1 className="max-w-4xl text-4xl leading-[1.15] sm:text-5xl">{post.title}</h1>
+            {post.excerpt ? <p className="fx-muted mt-6 max-w-3xl text-lg leading-relaxed">{post.excerpt}</p> : null}
+            <p className="fx-muted mt-6 flex flex-wrap items-center gap-x-4 gap-y-1 text-sm">
+              <span className="inline-flex items-center gap-1"><User aria-hidden="true" className="h-4 w-4" /> {author}</span>
+              <span>{dateStr}</span>
+              <span className="inline-flex items-center gap-1"><Clock aria-hidden="true" className="h-4 w-4" /> {readTime}</span>
+            </p>
           </div>
-        </article>
+        </section>
+
+        <section>
+          <div className="mx-auto grid w-full max-w-7xl gap-12 px-5 py-16 sm:px-8 sm:py-20 lg:grid-cols-[minmax(0,1fr)_20rem] lg:gap-16">
+            <div className="min-w-0">
+              {post.cover_image ? (
+                <img src={post.cover_image} alt={post.title} width={1600} height={900} fetchPriority="high" className="mb-10 aspect-[16/9] w-full rounded-[1.25rem] object-cover" />
+              ) : null}
+              {parts ? (
+                <article>
+                  <div className="prose-blog article-body" dangerouslySetInnerHTML={{ __html: parts[0] }} />
+                  <aside className="article-cta" aria-label={t.midTitle}>
+                    <p className="text-xl font-semibold" style={{ fontFamily: 'Poppins, system-ui, sans-serif' }}>{t.midTitle}</p>
+                    <p className="fx-muted mt-2 leading-relaxed">{t.midBody}</p>
+                    <button type="button" onClick={() => openFera('mid')} className="fx-btn mt-5">{t.cta} <ArrowUpRight aria-hidden="true" /></button>
+                  </aside>
+                  <div className="prose-blog article-body" dangerouslySetInnerHTML={{ __html: parts[1] }} />
+                </article>
+              ) : (
+                <article className="prose-blog article-body" dangerouslySetInnerHTML={{ __html: tocHtml }} />
+              )}
+            </div>
+            <aside className="space-y-6 lg:sticky lg:top-28 lg:self-start">
+              {toc.length > 1 ? (
+                <nav aria-label={t.toc} className="panel-card hidden lg:block">
+                  <p className="text-lg font-semibold" style={{ fontFamily: 'Poppins, system-ui, sans-serif' }}>{t.toc}</p>
+                  <ol className="mt-4 space-y-3 text-sm leading-snug">
+                    {toc.map((item) => (
+                      <li key={item.id}><a href={`#${item.id}`} className="fx-muted hover:text-[#541014] hover:underline">{item.label}</a></li>
+                    ))}
+                  </ol>
+                </nav>
+              ) : null}
+              <div className="panel-card">
+                <p className="text-lg font-semibold" style={{ fontFamily: 'Poppins, system-ui, sans-serif' }}>{t.sideTitle}</p>
+                <p className="fx-muted mt-2 text-sm leading-relaxed">{t.sideBody}</p>
+                <button type="button" onClick={() => openFera('sidebar')} className="fx-btn fx-btn--sm mt-5 w-full">{t.cta} <ArrowUpRight aria-hidden="true" /></button>
+              </div>
+            </aside>
+          </div>
+        </section>
+
+        <CtaBand title={t.closeTitle} body={t.closeBody}>
+          <button type="button" onClick={() => openFera('final')} className="fx-btn">{t.cta} <ArrowUpRight aria-hidden="true" /></button>
+          <FxLink to={contactPath} variant="outline">{en ? 'Contact' : 'Contacto'}</FxLink>
+        </CtaBand>
       </main>
       <Footer currentLang={lang} />
-    </>
+    </div>
   );
 };
-
-const CtaBlock = ({ lang, contactPath }: { lang: string; contactPath: string }) => (
-  <div className="glass-card p-8 mt-12 text-center gold-glow">
-    <h3 className="text-xl font-display font-bold mb-4">
-      {lang === 'pt' ? 'Quer resultados assim para seu e-commerce?' : lang === 'en' ? 'Want results like these for your e-commerce?' : '¿Quieres resultados así para tu e-commerce?'}
-    </h3>
-    <p className="text-muted-foreground mb-6">
-      {lang === 'pt' ? 'Fale conosco e ajudamos a escalar sua loja virtual.' : lang === 'en' ? 'Contact us and we\'ll help you scale your online store.' : 'Escríbenos y te ayudamos a escalar tu tienda online.'}
-    </p>
-    <div className="flex flex-col sm:flex-row gap-4 justify-center">
-      <a href="https://wa.me/17866894686" target="_blank" rel="noopener noreferrer" className="btn-gold flex items-center justify-center gap-2">
-        <MessageCircle className="w-5 h-5" /> WhatsApp
-      </a>
-      <Link to={contactPath} className="btn-outline-gold text-center">
-        {lang === 'pt' ? 'Cotizar com Fera' : lang === 'en' ? 'Quote with Fera' : 'Cotizar con Fera'}
-      </Link>
-    </div>
-  </div>
-);
 
 export default BlogPost;

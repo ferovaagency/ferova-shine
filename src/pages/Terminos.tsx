@@ -1,6 +1,7 @@
 import Header from '@/components/layout/Header';
 import Footer from '@/components/layout/Footer';
 import SEO from '@/components/SEO';
+import { PageHero, Panel, Section } from '@/components/fx/primitives';
 
 interface Props { lang?: 'es' | 'en' | 'pt'; }
 
@@ -43,23 +44,35 @@ const sectionsEn = [
 const Terminos = ({ lang = 'es' }: Props) => {
   const english = lang === 'en';
   const sections = english ? sectionsEn : sectionsEs;
-  return <>
-    <SEO title={english ? 'Agency SEO Service Terms | Ferova' : 'Términos de servicios SEO para agencias | Ferova'} description={english ? 'B2B terms for white-label SEO, web maintenance and landing-page services supplied to agencies.' : 'Términos B2B para SEO white label, mantenimiento web y landing pages prestados a agencias.'} path={english ? '/en/terms' : '/terminos'} lang={english ? 'en' : 'es'} noindex={lang === 'pt'} />
-    <Header currentLang={english ? 'en' : 'es'} />
-    <main className="seo-brand pt-20">
-      <section className="py-16 md:py-24"><div className="container mx-auto px-4 md:px-6"><article className="prose prose-sm mx-auto max-w-4xl dark:prose-invert prose-headings:font-display prose-headings:text-foreground prose-p:text-muted-foreground prose-li:text-muted-foreground prose-strong:text-foreground">
-        <p className="text-xs font-semibold uppercase tracking-[0.2em] text-gold">Ferova Agency · B2B</p>
-        <h1>{english ? 'Service terms for agency partners' : 'Términos de prestación de servicios para agencias'}</h1>
-        <p className="lead">{english ? 'Operational framework for white-label technical SEO, web maintenance and landing-page delivery.' : 'Marco operativo para SEO técnico white label, mantenimiento web y producción de landing pages.'}</p>
-        <div className="not-prose my-8 rounded-2xl border border-gold/30 bg-gold/10 p-5 text-sm text-foreground">{english ? 'The accepted proposal defines the specific engagement and prevails over these general terms.' : 'La propuesta aceptada define cada contratación y prevalece sobre estos términos generales.'}</div>
-        <p className="text-sm">{english ? 'Effective date: August 8, 2026.' : 'Vigencia: 8 de agosto de 2026.'}</p>
-        {sections.map(([title, body]) => <section key={title}><h2>{title}</h2><p>{body}</p></section>)}
-        <h2>{english ? 'Official information' : 'Información oficial'}</h2>
-        <p>{english ? 'For consumer and commerce information in Colombia, visit the ' : 'Para información de protección al consumidor y comercio en Colombia, consulta la '}<a href="https://www.sic.gov.co/" target="_blank" rel="noopener noreferrer" className="text-gold">{english ? 'Superintendence of Industry and Commerce (SIC)' : 'Superintendencia de Industria y Comercio (SIC)'}</a>.</p>
-      </article></div></section>
+  const path = english ? '/en/terms' : '/terminos';
+  const title = english ? 'Service terms for agency partners' : 'Términos de prestación de servicios para agencias';
+  const crumbs = [{ name: english ? 'Terms' : 'Términos', path }];
+  const pageLd = {
+    '@context': 'https://schema.org',
+    '@type': 'WebPage',
+    name: title,
+    url: `https://seoparaecommerce.co${path}`,
+    inLanguage: english ? 'en' : 'es',
+    datePublished: '2026-08-08',
+    publisher: { '@type': 'Organization', name: 'Ferova Agency' },
+  };
+  return <div className="fx-site min-h-screen">
+    <SEO title={english ? 'Agency SEO Service Terms | Ferova' : 'Términos de servicios SEO para agencias | Ferova'} description={english ? 'B2B terms for white-label SEO, web maintenance and landing-page services supplied to agencies.' : 'Términos B2B para SEO white label, mantenimiento web y landing pages prestados a agencias.'} path={path} lang={english ? 'en' : 'es'} noindex={lang === 'pt'} jsonLd={pageLd} breadcrumbs={[{ name: english ? 'Home' : 'Inicio', path: english ? '/en' : '/' }, ...crumbs]} />
+    <Header lang={english ? 'en' : 'es'} />
+    <main id="contenido-principal" className="pt-20">
+      <PageHero align="left" eyebrow="Ferova Agency · B2B" title={title} intro={english ? 'Operational framework for white-label technical SEO, web maintenance and landing-page delivery.' : 'Marco operativo para SEO técnico white label, mantenimiento web y producción de landing pages.'} breadcrumbs={crumbs} lang={english ? 'en' : 'es'} />
+      <Section narrow>
+        <article className="fx-prose">
+          <Panel className="!mt-0"><p className="!mt-0 font-semibold">{english ? 'The accepted proposal defines the specific engagement and prevails over these general terms.' : 'La propuesta aceptada define cada contratación y prevalece sobre estos términos generales.'}</p></Panel>
+          <p className="fx-muted text-sm">{english ? 'Effective date: August 8, 2026.' : 'Vigencia: 8 de agosto de 2026.'}</p>
+          {sections.map(([heading, body]) => <section key={heading}><h2>{heading}</h2><p>{body}</p></section>)}
+          <h2>{english ? 'Official information' : 'Información oficial'}</h2>
+          <p>{english ? 'For consumer and commerce information in Colombia, visit the ' : 'Para información de protección al consumidor y comercio en Colombia, consulta la '}<a href="https://www.sic.gov.co/" target="_blank" rel="noopener noreferrer">{english ? 'Superintendence of Industry and Commerce (SIC)' : 'Superintendencia de Industria y Comercio (SIC)'}</a>.</p>
+        </article>
+      </Section>
     </main>
-    <Footer currentLang={english ? 'en' : 'es'} />
-  </>;
+    <Footer lang={english ? 'en' : 'es'} />
+  </div>;
 };
 
 export default Terminos;

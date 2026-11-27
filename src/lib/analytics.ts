@@ -6,7 +6,7 @@ declare global {
 }
 
 export type AnalyticsEvent =
-  | 'page_view' | 'scroll_75' | 'time_on_page_60s'
+  | 'page_view' | 'scroll_75' | 'time_on_page_60s' | 'language_switched'
   | 'popup_shown' | 'popup_closed' | 'newsletter_signup'
   | 'ai_assistant_opened' | 'ai_assistant_form_submitted' | 'ai_assistant_message_sent'
   | 'ai_assistant_escalated_whatsapp' | 'ai_assistant_product_card_clicked'

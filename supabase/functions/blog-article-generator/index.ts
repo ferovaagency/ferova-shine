@@ -208,17 +208,70 @@ Incluir 2-4 enlaces internos hacia páginas vigentes y relevantes del sitio:
 10. ACTUALIDAD: si el tema es sensible a fechas (tendencias, herramientas, regulaciones), menciona explícitamente el año actual y aclara que el lector debe verificar cambios recientes.
 `;
 
+// Respaldo para ferova.com.co si no se pueden descargar sus reglas
+// (ver getSiteRules). La fuente de verdad es CLAUDE.md del repo
+// ferova-core-platform, publicada en https://ferova.com.co/fera-reglas.md.
 const FEROVA_PRODUCT_CONTEXT = `
 CONTEXTO EXCLUSIVO DE FEROVA.COM.CO:
 - Ferova diseña productos, automatizaciones, integraciones y software a medida para conectar información, procesos y decisiones.
-- Ferova One es el producto principal y está en construcción activa. Librero IA está en definición. Ferova Brain es infraestructura interna, no un producto vendible.
+- Ferova One es el producto principal, disponible en producción y a la venta en https://one.ferova.com.co. Lee con Koa (antes Librero IA) es una app para lectores disponible con plan gratis y Pro. Ferova Brain es infraestructura interna, no un producto vendible.
 - Audiencia: freelancers, consultores, agencias y pequeñas empresas que quieren operar con más estructura, claridad y control.
 - No presentes a Ferova como una agencia SEO ni enlaces servicios de SEO para agencias.
 - Enlaces internos permitidos: /productos/ferova-one, /productos/librero-ia, /soluciones/sistemas-a-medida, /soluciones/automatizacion-ia, /recursos, /casos-de-exito, /contacto.
 - No inventes disponibilidad, clientes, métricas, integraciones, capacidades o fechas. Distingue claramente lo disponible, lo que está en construcción y lo que está en definición.
 `;
 
-const buildSystemPrompt = (lang: "es" | "en" | "pt", site?: "ferova") => {
+/**
+ * Reglas editoriales, de SEO y de GEO de ferova.com.co.
+ *
+ * Viven en CLAUDE.md del repo ferova-core-platform (entre FERA:BEGIN y
+ * FERA:END) y el sitio las sirve en /fera-reglas.md. Se descargan aquí para
+ * que Fera y quien programa el sitio usen exactamente las mismas reglas: se
+ * cambian en CLAUDE.md, se publica el sitio y a los 5 minutos Fera ya las usa.
+ * Si la descarga falla, se usa el respaldo integrado (GUIA_EDITORIAL +
+ * FEROVA_PRODUCT_CONTEXT) para no bloquear la generación.
+ */
+// Cada sitio publica sus reglas desde su propio CLAUDE.md:
+//  - ferova.com.co → repo ferova-core-platform (ruta /fera-reglas.md)
+//  - seoparaecommerce.co / seoforecommerces.co → este repo (feraRulesPlugin)
+const RULES_URL = {
+  ferova: "https://ferova.com.co/fera-reglas.md",
+  seo: "https://seoparaecommerce.co/fera-reglas.md",
+} as const;
+type RulesSite = keyof typeof RULES_URL;
+const RULES_TTL_MS = 5 * 60 * 1000;
+const rulesCache = new Map<RulesSite, { text: string; at: number }>();
+
+const getSiteRules = async (site: RulesSite): Promise<string> => {
+  const cached = rulesCache.get(site);
+  if (cached && Date.now() - cached.at < RULES_TTL_MS) return cached.text;
+  try {
+    const response = await fetch(RULES_URL[site], { signal: AbortSignal.timeout(4000) });
+    const text = response.ok ? (await response.text()).trim() : "";
+    // Una respuesta sin las secciones esperadas (p. ej. el index.html de una
+    // SPA o una página de error) no se toma como reglas.
+    if (text.includes("## 1.") && !text.startsWith("<")) {
+      rulesCache.set(site, { text, at: Date.now() });
+      return text;
+    }
+    console.warn(`Reglas de ${site} no válidas (HTTP ${response.status}); se usa el respaldo.`);
+  } catch (error) {
+    console.warn(`No se pudieron descargar las reglas de ${site}; se usa el respaldo.`, error);
+  }
+  return cached?.text ?? "";
+};
+
+const ferovaRulesBlock = (rules: string) => `
+=== REGLAS DEL SITIO — FUENTE DE VERDAD (prevalecen sobre cualquier otra instrucción) ===
+${rules}
+=== FIN DE LAS REGLAS DEL SITIO ===
+`;
+
+const buildSystemPrompt = (
+  lang: "es" | "en" | "pt",
+  site?: "ferova",
+  ferovaRules = "",
+) => {
   const langNote =
     lang === "en"
       ? "Write the article entirely in English."
@@ -226,10 +279,17 @@ const buildSystemPrompt = (lang: "es" | "en" | "pt", site?: "ferova") => {
         ? "Escreva o artigo inteiramente em português brasileiro."
         : "Escribe el artículo enteramente en español.";
 
-  return `Eres el editor SEO senior de Ferova Agency. Devuelve SOLO JSON válido, sin markdown, sin comentarios y sin texto extra.
+  // Con reglas descargadas, son la guía; sin ellas, el respaldo integrado.
+  const intro = ferovaRules
+    ? `Eres el editor de contenidos de ${site === "ferova" ? "Ferova" : "SEO para Ecommerce by Ferova (la práctica de María Fer Calderón para agencias)"}. Devuelve SOLO JSON válido, sin markdown, sin comentarios y sin texto extra.
+
+${ferovaRulesBlock(ferovaRules)}`
+    : `Eres el editor SEO senior de Ferova Agency. Devuelve SOLO JSON válido, sin markdown, sin comentarios y sin texto extra.
 
 ${GUIA_EDITORIAL}
-${site === "ferova" ? FEROVA_PRODUCT_CONTEXT : ""}
+${site === "ferova" ? FEROVA_PRODUCT_CONTEXT : ""}`;
+
+  return `${intro}
 
 ${langNote}
 
@@ -255,13 +315,142 @@ JSON esperado:
     "@type": "Article",
     "headline": "",
     "description": "",
-    "author": { "@type": "Organization", "name": "Ferova Agency" },
+    "author": { "@type": "Organization", "name": "${site === "ferova" ? "Ferova" : "Ferova Agency"}" },
     "datePublished": "YYYY-MM-DD",
     "keywords": ""
   },
   "intencion_busqueda": "informacional | comercial | transaccional | navegacional",
-  "aporta_original": "1 frase concreta sobre qué aporta este artículo que no esté en los primeros resultados de Google"
-}`;
+  "aporta_original": "1 frase concreta sobre qué aporta este artículo que no esté en los primeros resultados de Google"${
+    ferovaRules
+      ? `,
+  "images": [
+    { "placement": "cover", "prompt": "", "alt": "" },
+    { "placement": "after_h2", "h2_index": 1, "prompt": "", "alt": "" },
+    { "placement": "after_h2", "h2_index": 3, "prompt": "", "alt": "" }
+  ]`
+      : ""
+  }
+}${
+    ferovaRules
+      ? `
+
+IMÁGENES: sigue la sección "Imágenes del artículo" de las reglas. Devuelve 1 portada y hasta 2 imágenes internas.
+- "prompt": descripción visual detallada en inglés para un generador de imágenes (escena, composición, estilo, colores de la paleta). Debe decir explícitamente que no lleva texto, letras, números ni logos.
+- "alt": texto alternativo en el idioma del artículo.
+- "h2_index": posición (empezando en 1) del H2 tras cuyo primer párrafo va la imagen. No uses la sección de preguntas frecuentes.`
+      : ""
+  }`;
+};
+
+/**
+ * Imágenes de los artículos de ferova.com.co.
+ *
+ * El modelo de texto propone portada e imágenes internas (prompt + alt); aquí
+ * se generan con el modelo de imagen del gateway, se suben al bucket público
+ * `blog-images` y se insertan en el HTML. Un fallo de imagen nunca tumba el
+ * artículo: esa imagen simplemente se omite.
+ */
+type ImageSpec = { placement: "cover" | "after_h2"; h2Index: number; prompt: string; alt: string };
+
+const IMAGE_GUARD =
+  "Wide 16:9 horizontal composition. Absolutely no text, letters, numbers, logos, watermarks or UI screenshots. Clean editorial style, brand palette: deep wine #541014, indigo #2F2D56, small gold #C0930E accents, white or ivory background.";
+
+const parseImageSpecs = (raw: unknown): ImageSpec[] => {
+  if (!Array.isArray(raw)) return [];
+  const specs: ImageSpec[] = [];
+  for (const item of raw) {
+    if (!item || typeof item !== "object") continue;
+    const entry = item as Record<string, unknown>;
+    const prompt = safeString(entry.prompt);
+    const alt = safeString(entry.alt);
+    if (!prompt || !alt) continue;
+    const cover = entry.placement === "cover";
+    const h2Index = Number(entry.h2_index);
+    if (!cover && !(Number.isInteger(h2Index) && h2Index > 0)) continue;
+    specs.push({ placement: cover ? "cover" : "after_h2", h2Index: cover ? 0 : h2Index, prompt, alt });
+  }
+  const cover = specs.find((s) => s.placement === "cover");
+  const inline = specs.filter((s) => s.placement === "after_h2").slice(0, 2);
+  return cover ? [cover, ...inline] : inline;
+};
+
+const generateImageBytes = async (prompt: string, apiKey: string): Promise<Uint8Array> => {
+  const response = await fetch("https://ai.gateway.lovable.dev/v1/chat/completions", {
+    method: "POST",
+    headers: { Authorization: `Bearer ${apiKey}`, "Content-Type": "application/json" },
+    body: JSON.stringify({
+      model: "google/gemini-2.5-flash-image",
+      messages: [{ role: "user", content: `${prompt}\n\n${IMAGE_GUARD}` }],
+      modalities: ["image", "text"],
+    }),
+    signal: AbortSignal.timeout(60000),
+  });
+  if (!response.ok) throw new Error(`Image gateway ${response.status}: ${await response.text()}`);
+  const data = await response.json();
+  const url: string | undefined = data?.choices?.[0]?.message?.images?.[0]?.image_url?.url;
+  const base64 = url?.split(",")[1];
+  if (!base64) throw new Error("El modelo no devolvió imagen.");
+  const bin = atob(base64);
+  const bytes = new Uint8Array(bin.length);
+  for (let i = 0; i < bin.length; i++) bytes[i] = bin.charCodeAt(i);
+  return bytes;
+};
+
+const escapeAttr = (value: string) =>
+  value.replace(/&/g, "&amp;").replace(/"/g, "&quot;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+
+/** Inserta cada figura tras el primer párrafo del H2 indicado (o al cierre del H2). */
+const insertFigures = (html: string, figures: { h2Index: number; url: string; alt: string }[]) => {
+  let result = html;
+  for (const figure of [...figures].sort((a, b) => b.h2Index - a.h2Index)) {
+    const h2Re = /<\/h2>/gi;
+    let match: RegExpExecArray | null = null;
+    for (let n = 0; n < figure.h2Index; n++) {
+      match = h2Re.exec(result);
+      if (!match) break;
+    }
+    if (!match) continue;
+    const afterH2 = match.index + match[0].length;
+    const nextH2 = result.indexOf("<h2", afterH2);
+    const pEnd = result.indexOf("</p>", afterH2);
+    const at = pEnd >= 0 && (nextH2 < 0 || pEnd < nextH2) ? pEnd + 4 : afterH2;
+    const tag = `<figure class="article-figure"><img src="${escapeAttr(figure.url)}" alt="${escapeAttr(figure.alt)}" loading="lazy" decoding="async"></figure>`;
+    result = result.slice(0, at) + tag + result.slice(at);
+  }
+  return result;
+};
+
+const addArticleImages = async (
+  article: { slug: string; content: string; cover_image: string | null },
+  specs: ImageSpec[],
+  apiKey: string,
+  adminClient: ReturnType<typeof createClient>,
+  folder: "ferova" | "seo" = "ferova",
+) => {
+  const stamp = Date.now();
+  const results = await Promise.allSettled(
+    specs.map(async (spec, index) => {
+      const bytes = await generateImageBytes(spec.prompt, apiKey);
+      const path = `${folder}/${article.slug}/${stamp}-${index}.png`;
+      const { error } = await adminClient.storage
+        .from("blog-images")
+        .upload(path, bytes, { contentType: "image/png", upsert: true });
+      if (error) throw new Error(error.message);
+      const url = adminClient.storage.from("blog-images").getPublicUrl(path).data.publicUrl;
+      return { ...spec, url };
+    }),
+  );
+  const done = results.flatMap((r) => (r.status === "fulfilled" ? [r.value] : []));
+  results.forEach((r) => {
+    if (r.status === "rejected") console.warn("Imagen omitida:", r.reason);
+  });
+  const cover = done.find((d) => d.placement === "cover");
+  if (cover) article.cover_image = cover.url;
+  article.content = insertFigures(
+    article.content,
+    done.filter((d) => d.placement === "after_h2"),
+  );
+  return { generated: done.length, requested: specs.length, cover_alt: cover?.alt ?? "" };
 };
 
 const buildUserPrompt = (payload: GeneratePayload) => {
@@ -300,11 +489,11 @@ ${ideas || "Sin ideas específicas proporcionadas."}
 OBLIGATORIO: Responde las 3 preguntas obligatorias ANTES de escribir. Sigue la Guía Editorial Ferova 2025 estrictamente. Comienza con una afirmación (Sujeto+Verbo+Predicado). Incluye enlaces internos. Genera entre 800-1200 palabras. Valida: "¿Este contenido realmente ayuda a una empresa a tomar mejores decisiones digitales?"`;
 };
 
-const buildCaseSystemPrompt = (site?: "ferova") =>
+const buildCaseSystemPrompt = (site?: "ferova", ferovaRules = "") =>
   site === "ferova"
     ? `Eres el editor senior de casos de Ferova. Devuelve SOLO JSON válido.
 
-${FEROVA_PRODUCT_CONTEXT}
+${ferovaRules ? ferovaRulesBlock(ferovaRules) : FEROVA_PRODUCT_CONTEXT}
 Redacta un caso verificable sobre un sistema, producto, automatización o integración. Usa únicamente los hechos aportados. No inventes cifras, clientes, fechas ni atribución causal. Si falta evidencia, explica la limitación. El caso debe dejar claro el problema operativo, el diseño del sistema, la intervención y el aprendizaje.
 
 JSON esperado:
@@ -312,7 +501,7 @@ JSON esperado:
   "slug": "", "client_public_name": "", "sector": "", "country": "", "summary": "", "challenge": "", "diagnosis": "", "intervention": "", "learnings": "", "limitations": "", "service_keys": [], "result_highlights": []
 }`
     : `Eres el editor senior de casos de éxito de SEO Para Agencias by Ferova. Devuelve SOLO JSON válido.
-
+${ferovaRules ? ferovaRulesBlock(ferovaRules) : ""}
 Usa como principios obligatorios de calidad la GUÍA EDITORIAL FEROVA: lenguaje directo, profesional y específico; contexto antes que promoción; términos técnicos explicados; utilidad real; estructura lógica; cero relleno; cero clickbait; cero promesas; cero cifras, clientes, fechas, fuentes o resultados inventados.
 
 El caso debe demostrar qué puede contratar una agencia por tarea, bolsa de horas o capacidad mensual. Redacta solo con los hechos entregados. Si falta evidencia, deja el resultado fuera y explica la limitación. No afirmes atribución causal absoluta.
@@ -347,22 +536,31 @@ const buildCaseUserPrompt = (
 
 Conserva todas las cifras exactamente como fueron aportadas. No publiques nombres si se indicó confidencialidad. El resumen debe explicar la necesidad de la agencia, la capacidad contratada y la entrega.`;
 
-const buildNewsletterSystemPrompt = (site?: "ferova") =>
+const buildNewsletterSystemPrompt = (site?: "ferova", ferovaRules = "") =>
   site === "ferova"
     ? `Eres la editora senior de la newsletter de Ferova. Devuelve SOLO JSON válido.
 
-${FEROVA_PRODUCT_CONTEXT}
+${ferovaRules ? ferovaRulesBlock(ferovaRules) : FEROVA_PRODUCT_CONTEXT}
 Convierte los insumos en una edición útil sobre sistemas, automatización, IA aplicada u operación. Una idea concreta por bloque, educación antes que venta y cero noticias, enlaces, cifras o herramientas inventadas.
+
+Además entrega dos textos para que la editora los copie y pegue en LinkedIn (no se publican solos):
+- "linkedin_summary": resumen de la edición en 2 o 3 frases, afirmativo y concreto.
+- "linkedin_post": post para la PÁGINA DE EMPRESA de Ferova en LinkedIn. Habla Ferova en plural ("en Ferova…"), nunca en primera persona singular. Las dos primeras líneas (máximo 200 caracteres) plantean la idea central sin clickbait; después 3 aprendizajes en líneas cortas; cierra invitando a leer la edición completa en https://ferova.com.co/newsletter. Máximo 1.300 caracteres, sin cifras ni enlaces inventados, máximo 3 hashtags al final y sin emojis decorativos.
 
 JSON esperado:
 {
   "title": "", "subject_line": "", "topics": [""], "reading_time": 5,
   "free_content": { "news": "", "tip": "", "tool": { "name": "", "desc": "", "url": "" } },
-  "pro_content": {}
+  "pro_content": {},
+  "linkedin_summary": "", "linkedin_post": ""
 }`
     : `Eres la editora senior de la newsletter de SEO Para Agencias by Ferova. Devuelve SOLO JSON válido.
-
+${ferovaRules ? ferovaRulesBlock(ferovaRules) : ""}
 Aplica la GUÍA EDITORIAL FEROVA: una idea útil y concreta por bloque; tono conversado, senior y profesional; educación antes que venta; términos técnicos con contexto; nada de relleno, clickbait, cifras o fuentes inventadas. El contenido debe ayudar a dueños de agencias a decidir, entregar o vender mejor servicios de SEO técnico, mantenimiento web, landings, migraciones y ecommerce.
+
+Además entrega dos textos para que María Fernanda los copie y pegue en LinkedIn (no se publican solos):
+- "linkedin_summary": resumen de la edición en 2 o 3 frases, afirmativo y concreto.
+- "linkedin_post": post para el PERFIL PERSONAL de María Fernanda Calderón, Fractional SEO en Ferova. Escribe en primera persona, como consultora senior que trabaja con agencias ("Cuando audito un catálogo…"). Las dos primeras líneas (máximo 200 caracteres) plantean la idea central sin clickbait; después 3 aprendizajes en líneas cortas; cierra invitando a leer la edición completa en https://seoparaecommerce.co/newsletter. Máximo 1.300 caracteres, sin cifras ni enlaces inventados, máximo 3 hashtags al final y sin emojis decorativos.
 
 JSON esperado:
 {
@@ -371,7 +569,9 @@ JSON esperado:
   "topics": ["", "", ""],
   "reading_time": 5,
   "free_content": { "news": "", "tip": "", "tool": { "name": "", "desc": "", "url": "" } },
-  "pro_content": { "case_study": "", "analysis": "", "resource": { "name": "", "desc": "", "url": "" }, "question": "" }
+  "pro_content": { "case_study": "", "analysis": "", "resource": { "name": "", "desc": "", "url": "" }, "question": "" },
+  "linkedin_summary": "",
+  "linkedin_post": ""
 }`;
 
 const buildNewsletterUserPrompt = (
@@ -428,7 +628,7 @@ const normalizeArticle = (
     meta_description: metaDescription,
     category,
     keyword,
-    cover_image: null,
+    cover_image: null as string | null,
     author: "Maria Calderon",
     active: true,
     validation_pass: raw.validation_pass === true,
@@ -528,6 +728,8 @@ serve(async (req) => {
     if (!legacyAdmin && !cmsEditor) {
       return jsonResponse({ error: "Forbidden" }, 403);
     }
+    // Reglas del sitio que pide la generación (CLAUDE.md de cada repo).
+    const ferovaRules = await getSiteRules(body?.payload?.site === "ferova" ? "ferova" : "seo");
     if (action === "generate") {
       const payload = (body?.payload ?? {}) as GeneratePayload;
       const lang =
@@ -554,9 +756,18 @@ serve(async (req) => {
             messages: [
               {
                 role: "system",
-                content: buildSystemPrompt(lang, payload.site),
+                content: buildSystemPrompt(lang, payload.site, ferovaRules),
               },
-              { role: "user", content: buildUserPrompt(payload) },
+              {
+                role: "user",
+                // Con las reglas del sitio cargadas, la guía a seguir es esa.
+                content: ferovaRules
+                  ? buildUserPrompt(payload).replace(
+                      /Guía Editorial Ferova 2025|Ferova Editorial Guide 2025|Guia Editorial Ferova 2025/,
+                      "REGLAS DEL SITIO",
+                    )
+                  : buildUserPrompt(payload),
+              },
             ],
           }),
         },
@@ -586,11 +797,22 @@ serve(async (req) => {
         safeString(payload.excludeId) || undefined,
       );
 
+      // Portada e imágenes internas generadas con IA (los dos sitios). Solo se
+      // piden cuando hay reglas del sitio, que definen el estilo de imagen.
+      let images: Awaited<ReturnType<typeof addArticleImages>> | null = null;
+      if (ferovaRules) {
+        const specs = parseImageSpecs(parsed.images);
+        if (specs.length) {
+          images = await addArticleImages(article, specs, LOVABLE_API_KEY, adminClient, payload.site === "ferova" ? "ferova" : "seo");
+        }
+      }
+
       const { validation_pass, validation_reason, ...articleData } = article;
 
       return jsonResponse({
         article: articleData,
         validation: { pass: validation_pass, reason: validation_reason },
+        ...(images ? { images } : {}),
       });
     }
 
@@ -617,7 +839,7 @@ serve(async (req) => {
             model: "google/gemini-2.5-flash",
             temperature: 0.45,
             messages: [
-              { role: "system", content: buildCaseSystemPrompt(payload.site) },
+              { role: "system", content: buildCaseSystemPrompt(payload.site, ferovaRules) },
               { role: "user", content: buildCaseUserPrompt(payload) },
             ],
           }),
@@ -661,7 +883,7 @@ serve(async (req) => {
             messages: [
               {
                 role: "system",
-                content: buildNewsletterSystemPrompt(payload.site),
+                content: buildNewsletterSystemPrompt(payload.site, ferovaRules),
               },
               { role: "user", content: buildNewsletterUserPrompt(payload) },
             ],

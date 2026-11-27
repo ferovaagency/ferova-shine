@@ -713,6 +713,93 @@ export type Database = {
           },
         ]
       }
+      kr_contactos: {
+        Row: {
+          cargo: string | null
+          consentimiento: boolean
+          created_at: string
+          email: string | null
+          empresa: string | null
+          enviado_at: string | null
+          error: string | null
+          estado: string
+          evento: string
+          fit: number | null
+          foto_tarjeta: string | null
+          id: string
+          idioma: string | null
+          intencion: string | null
+          investigacion: Json | null
+          investigado_at: string | null
+          nombre: string
+          nota: string | null
+          origen: string
+          propuesta_en: string | null
+          propuesta_ko: string | null
+          telefono: string | null
+          updated_at: string
+          veredicto: string | null
+          veredicto_empresa: string | null
+          web: string | null
+        }
+        Insert: {
+          cargo?: string | null
+          consentimiento?: boolean
+          created_at?: string
+          email?: string | null
+          empresa?: string | null
+          enviado_at?: string | null
+          error?: string | null
+          estado?: string
+          evento?: string
+          fit?: number | null
+          foto_tarjeta?: string | null
+          id?: string
+          idioma?: string | null
+          intencion?: string | null
+          investigacion?: Json | null
+          investigado_at?: string | null
+          nombre: string
+          nota?: string | null
+          origen?: string
+          propuesta_en?: string | null
+          propuesta_ko?: string | null
+          telefono?: string | null
+          updated_at?: string
+          veredicto?: string | null
+          veredicto_empresa?: string | null
+          web?: string | null
+        }
+        Update: {
+          cargo?: string | null
+          consentimiento?: boolean
+          created_at?: string
+          email?: string | null
+          empresa?: string | null
+          enviado_at?: string | null
+          error?: string | null
+          estado?: string
+          evento?: string
+          fit?: number | null
+          foto_tarjeta?: string | null
+          id?: string
+          idioma?: string | null
+          intencion?: string | null
+          investigacion?: Json | null
+          investigado_at?: string | null
+          nombre?: string
+          nota?: string | null
+          origen?: string
+          propuesta_en?: string | null
+          propuesta_ko?: string | null
+          telefono?: string | null
+          updated_at?: string
+          veredicto?: string | null
+          veredicto_empresa?: string | null
+          web?: string | null
+        }
+        Relationships: []
+      }
       metric_snapshots: {
         Row: {
           confidence_level: string
@@ -810,6 +897,8 @@ export type Database = {
           edition_number: number
           free_content: Json | null
           id: string
+          linkedin_post: string | null
+          linkedin_summary: string | null
           plan: string | null
           pro_content: Json | null
           published: boolean | null
@@ -826,6 +915,8 @@ export type Database = {
           edition_number: number
           free_content?: Json | null
           id?: string
+          linkedin_post?: string | null
+          linkedin_summary?: string | null
           plan?: string | null
           pro_content?: Json | null
           published?: boolean | null
@@ -842,6 +933,8 @@ export type Database = {
           edition_number?: number
           free_content?: Json | null
           id?: string
+          linkedin_post?: string | null
+          linkedin_summary?: string | null
           plan?: string | null
           pro_content?: Json | null
           published?: boolean | null
@@ -858,30 +951,45 @@ export type Database = {
       newsletter_subscribers: {
         Row: {
           active: boolean | null
+          consent: boolean
+          consent_at: string | null
+          consent_text: string | null
           created_at: string | null
           email: string
           id: string
           lang: string | null
           name: string
           plan: string | null
+          site_origin: string
+          source: string
         }
         Insert: {
           active?: boolean | null
+          consent?: boolean
+          consent_at?: string | null
+          consent_text?: string | null
           created_at?: string | null
           email: string
           id?: string
           lang?: string | null
           name: string
           plan?: string | null
+          site_origin?: string
+          source?: string
         }
         Update: {
           active?: boolean | null
+          consent?: boolean
+          consent_at?: string | null
+          consent_text?: string | null
           created_at?: string | null
           email?: string
           id?: string
           lang?: string | null
           name?: string
           plan?: string | null
+          site_origin?: string
+          source?: string
         }
         Relationships: []
       }

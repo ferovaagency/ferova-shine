@@ -1,14 +1,31 @@
 import { Link } from "react-router-dom";
-import { ArrowRight } from "lucide-react";
+import { ArrowUpRight } from "lucide-react";
 import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
 import SEO from "@/components/SEO";
 import { SITE_ORIGIN } from "@/config/routes";
 import { POSITIONING, type PositioningKind } from "@/content/positioning";
+import type { ReactNode } from "react";
+import { CaseGrid } from "@/components/fx/CaseGrid";
+import { FaqList, FeraButton, PageHero, Panel, ProcessSteps, Section, SectionHeading } from "@/components/fx/primitives";
+
+/** Banda vino de cierre (misma pieza visual que CtaBand) con etiqueta sobre el titular. */
+function ClosingBand({ eyebrow, title, children }: { eyebrow: string; title: ReactNode; children: ReactNode }) {
+  return (
+    <section className="cta-band on-dark">
+      <div className="mx-auto flex w-full max-w-5xl flex-col items-center px-5 py-20 text-center sm:px-8 sm:py-28">
+        <p className="eyebrow-pill mb-6">{eyebrow}</p>
+        <h2 className="max-w-[22ch] text-4xl leading-[1.15] sm:text-5xl">{title}</h2>
+        <div className="mt-10 flex flex-wrap justify-center gap-3">{children}</div>
+      </div>
+    </section>
+  );
+}
 
 /**
- * Plantilla de páginas de posicionamiento. El orden de los bloques es parte
- * del diseño, no una lista de ingredientes: ver src/content/positioning.ts.
+ * Plantilla de páginas de posicionamiento con el sistema de diseño de Ferova.
+ * El orden de los bloques es parte del diseño, no una lista de ingredientes:
+ * ver src/content/positioning.ts.
  *
  * Los bloques `marketRates` y `proof` se OMITEN cuando no hay datos con
  * fuente. Es deliberado: una tabla de tarifas sin fuente o una cifra
@@ -60,8 +77,14 @@ export default function PositioningPage({ kind }: { kind: PositioningKind }) {
   const showRates = c.marketRates.rows.length > 0;
   const showProof = c.proof.stats.length > 0;
 
+  const crumbs = [{ name: c.eyebrow, path: c.path }];
+
+  // Alterna blanco / lavanda según los bloques presentes.
+  let sectionIndex = 0;
+  const nextTone = (): "default" | "surface" => (sectionIndex++ % 2 === 0 ? "default" : "surface");
+
   return (
-    <div className="seo-brand min-h-screen bg-background text-foreground">
+    <div className="fx-site min-h-screen">
       <SEO
         title={c.metaTitle}
         description={c.metaDescription}
@@ -69,269 +92,226 @@ export default function PositioningPage({ kind }: { kind: PositioningKind }) {
         lang={c.lang}
         type="article"
         jsonLd={[articleLd, personLd, faqLd]}
-        breadcrumbs={[
-          { name: "Home", path: "/en" },
-          { name: c.eyebrow, path: c.path },
-        ]}
+        breadcrumbs={[{ name: "Home", path: "/en" }, ...crumbs]}
       />
       <Header lang={c.lang} />
 
-      <main className="pt-20">
+      <main id="contenido-principal" className="pt-20">
         {/* 01-02 · meta + H1 */}
-        <section className="relative overflow-hidden bg-[#541014] py-20 text-white md:py-28">
-          <div className="absolute inset-0 opacity-50 [background-image:radial-gradient(circle_at_20%_20%,rgba(192,147,14,.36),transparent_36%),radial-gradient(circle_at_80%_70%,rgba(106,76,48,.3),transparent_32%)]" />
-          <div className="container relative mx-auto max-w-6xl px-4 md:px-6">
-            <p className="mb-6 text-xs font-semibold tracking-[0.22em] text-[#e0bd52]">{c.eyebrow}</p>
-            <h1 className="max-w-5xl text-4xl font-bold leading-[1.05] md:text-6xl">{c.h1}</h1>
-            <p className="mt-7 max-w-3xl text-lg leading-relaxed text-slate-300 md:text-xl">{c.lede}</p>
-            <div className="mt-9 flex flex-col gap-3 sm:flex-row">
-              <Link to={c.finalCta.to} data-cta="hero" className="seo-primary-button inline-flex items-center justify-center gap-2">
-                {c.finalCta.label} <ArrowRight className="h-4 w-4" />
-              </Link>
-              <a href="#how-it-works" className="seo-secondary-button inline-flex items-center justify-center">
-                See how I work
-              </a>
-            </div>
-          </div>
-        </section>
+        <PageHero eyebrow={c.eyebrow} title={c.h1} intro={c.lede} breadcrumbs={crumbs} lang={c.lang}>
+          <Link to={c.finalCta.to} data-cta="hero" className="fx-btn">
+            {c.finalCta.label} <ArrowUpRight aria-hidden="true" />
+          </Link>
+          <a href="#how-it-works" className="fx-btn fx-btn--outline">
+            See how I work
+          </a>
+        </PageHero>
 
         {/* 03 · respuesta directa — el bloque que cita la IA */}
-        <section className="pt-16 md:pt-20">
-          <div className="container mx-auto max-w-6xl px-4 md:px-6">
-            <p className="seo-kicker">The short answer</p>
-            <h2 className="mt-3 max-w-3xl text-3xl md:text-4xl">{c.answerHeading}</h2>
-            <p className="mt-8 max-w-[70ch] rounded-r-2xl border-y border-r border-border border-l-4 border-l-[#c0930e] bg-card p-7 text-lg leading-relaxed md:text-xl">
-              {c.answer}
-            </p>
-          </div>
-        </section>
+        <Section tone={nextTone()}>
+          <SectionHeading eyebrow="The short answer" title={c.answerHeading} />
+          <p className="panel-card mt-8 max-w-[70ch] border-l-4 border-[#c0930e] text-lg leading-relaxed md:text-xl">{c.answer}</p>
+        </Section>
 
         {/* 04 · segmentación del lector */}
-        <section className="py-16 md:py-20">
-          <div className="container mx-auto max-w-6xl px-4 md:px-6">
-            <p className="seo-kicker">Two very different readers</p>
-            <h2 className="mt-3 text-3xl md:text-4xl">Which one are you?</h2>
-            <div className="mt-8 grid gap-5 md:grid-cols-2">
-              {c.audiences.map((a) => (
-                <article key={a.title} className="rounded-2xl border border-border bg-card p-7">
-                  <h3 className="text-xl">{a.title}</h3>
-                  <p className="mt-3 leading-relaxed text-muted-foreground">{a.body}</p>
-                  <Link to={a.to} className="mt-5 inline-block border-b-2 border-[#c0930e] pb-0.5 font-bold text-[#541014]">
-                    {a.linkLabel} →
-                  </Link>
-                </article>
-              ))}
-            </div>
+        <Section tone={nextTone()}>
+          <SectionHeading eyebrow="Two very different readers" title="Which one are you?" />
+          <div className="mt-10 grid gap-5 md:grid-cols-2">
+            {c.audiences.map((a) => (
+              <Panel key={a.title} className="flex flex-col">
+                <h3>{a.title}</h3>
+                <p className="fx-muted mt-3 flex-1 leading-relaxed">{a.body}</p>
+                <Link to={a.to} className="fx-text-link mt-5">
+                  {a.linkLabel} <ArrowUpRight aria-hidden="true" />
+                </Link>
+              </Panel>
+            ))}
           </div>
-        </section>
+        </Section>
 
         {/* 05 · datos verificables — se omite si no hay fuente por fila */}
         {showRates && (
-          <section className="bg-[#f4eadb] py-16 text-[#3c3c3b] md:py-20">
-            <div className="container mx-auto max-w-6xl px-4 md:px-6">
-              <p className="seo-kicker">What the market actually pays</p>
-              <h2 className="mt-3 text-3xl md:text-4xl">{c.marketRates.heading}</h2>
-              <div className="mt-8 overflow-x-auto rounded-2xl border border-border bg-white">
-                <table className="w-full min-w-[640px] text-left text-sm">
-                  <thead className="bg-[#f4eadb] text-xs uppercase tracking-wide text-[#6a4c30]">
-                    <tr>
-                      <th className="p-4">Model</th><th className="p-4">Typical range</th>
-                      <th className="p-4">Billed as</th><th className="p-4">Source</th>
+          <Section tone={nextTone()}>
+            <SectionHeading eyebrow="What the market actually pays" title={c.marketRates.heading} />
+            <div className="mt-8 overflow-x-auto rounded-[1.25rem] bg-white">
+              <table className="fx-table min-w-[640px]">
+                <thead>
+                  <tr>
+                    <th scope="col">Model</th>
+                    <th scope="col">Typical range</th>
+                    <th scope="col">Billed as</th>
+                    <th scope="col">Source</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {c.marketRates.rows.map((r) => (
+                    <tr key={r.model}>
+                      <td className="font-semibold">{r.model}</td>
+                      <td>{r.range}</td>
+                      <td>{r.billedAs}</td>
+                      <td className="fx-muted text-xs">
+                        {r.source} — {r.date}
+                      </td>
                     </tr>
-                  </thead>
-                  <tbody>
-                    {c.marketRates.rows.map((r) => (
-                      <tr key={r.model} className="border-t border-border align-top">
-                        <td className="p-4 font-semibold">{r.model}</td>
-                        <td className="p-4">{r.range}</td>
-                        <td className="p-4">{r.billedAs}</td>
-                        <td className="p-4 text-xs text-muted-foreground">{r.source} — {r.date}</td>
-                      </tr>
-                    ))}
-                  </tbody>
-                </table>
-              </div>
+                  ))}
+                </tbody>
+              </table>
             </div>
-          </section>
+          </Section>
         )}
 
         {/* 05b · desglose de costo — se omite si no hay datos */}
         {c.costBreakdown && (
-          <section className="bg-[#f4eadb] py-16 text-[#3c3c3b] md:py-20">
-            <div className="container mx-auto max-w-6xl px-4 md:px-6">
-              <p className="seo-kicker">{c.costBreakdown.heading}</p>
-              <h2 className="mt-3 max-w-3xl text-3xl md:text-4xl">{c.costBreakdown.intro}</h2>
-              <div className="mt-9 grid gap-5 md:grid-cols-2">
-                {([["inHouse", 0], ["outsourced", 1]] as const).map(([key, i]) => (
-                  <article key={key} className="rounded-2xl border border-border bg-white p-7">
-                    <h3 className="font-display text-xl font-bold text-[#541014]">{c.costBreakdown!.columns[i]}</h3>
-                    <dl className="mt-5 divide-y divide-border">
-                      {c.costBreakdown![key].map((line) => (
-                        <div key={line.label} className="py-3">
-                          <div className="flex flex-wrap items-baseline justify-between gap-2">
-                            <dt className="font-semibold">{line.label}</dt>
-                            <dd className="font-mono text-sm tabular-nums">{line.value}</dd>
-                          </div>
-                          {line.note && <p className="mt-1 text-sm text-muted-foreground">{line.note}</p>}
+          <Section tone={nextTone()}>
+            <SectionHeading eyebrow={c.costBreakdown.heading} title={c.costBreakdown.intro} />
+            <div className="mt-10 grid gap-5 md:grid-cols-2">
+              {([["inHouse", 0], ["outsourced", 1]] as const).map(([key, i]) => (
+                <Panel key={key}>
+                  <h3>{c.costBreakdown!.columns[i]}</h3>
+                  <dl className="mt-5 divide-y" style={{ borderColor: "var(--fx-border)" }}>
+                    {c.costBreakdown![key].map((line) => (
+                      <div key={line.label} className="py-3" style={{ borderColor: "var(--fx-border)" }}>
+                        <div className="flex flex-wrap items-baseline justify-between gap-2">
+                          <dt className="font-semibold">{line.label}</dt>
+                          <dd className="text-sm tabular-nums" style={{ fontFamily: '"IBM Plex Mono", ui-monospace, monospace' }}>
+                            {line.value}
+                          </dd>
                         </div>
-                      ))}
-                    </dl>
-                  </article>
-                ))}
-              </div>
-              <p className="mt-6 max-w-[70ch] text-sm text-muted-foreground">{c.costBreakdown.source}</p>
+                        {line.note && <p className="fx-muted mt-1 text-sm">{line.note}</p>}
+                      </div>
+                    ))}
+                  </dl>
+                </Panel>
+              ))}
             </div>
-          </section>
+            <p className="fx-muted mt-6 max-w-[70ch] text-sm">{c.costBreakdown.source}</p>
+          </Section>
         )}
 
         {/* 06 · comparativa honesta + 07 · CTA intermedio */}
-        <section className="py-16 md:py-20">
-          <div className="container mx-auto max-w-6xl px-4 md:px-6">
-            <p className="seo-kicker">Honest comparison</p>
-            <h2 className="mt-3 text-3xl md:text-4xl">{c.comparison.heading}</h2>
-            <div className="mt-8 overflow-x-auto rounded-2xl border border-border bg-card">
-              <table className="w-full min-w-[640px] text-left text-sm">
-                <thead className="bg-[#f4eadb] text-xs uppercase tracking-wide text-[#6a4c30]">
-                  <tr>
-                    <th className="p-4" />
-                    {c.comparison.table.options.map((o) => <th key={o} className="p-4">{o}</th>)}
-                  </tr>
-                </thead>
-                <tbody>
-                  {c.comparison.table.rows.map((row) => (
-                    <tr key={row.criterion} className="border-t border-border align-top">
-                      <td className="p-4 font-semibold">{row.criterion}</td>
-                      {row.values.map((v, i) => <td key={i} className="p-4 text-muted-foreground">{v}</td>)}
-                    </tr>
+        <Section tone={nextTone()}>
+          <SectionHeading eyebrow="Honest comparison" title={c.comparison.heading} />
+          <div className="mt-8 overflow-x-auto rounded-[1.25rem] bg-white">
+            <table className="fx-table min-w-[640px]">
+              <thead>
+                <tr>
+                  <th scope="col">
+                    <span className="sr-only">Criterion</span>
+                  </th>
+                  {c.comparison.table.options.map((o) => (
+                    <th key={o} scope="col">{o}</th>
                   ))}
-                  {/* La fila negativa es la que da credibilidad y la que los
-                      modelos reproducen como respuesta equilibrada. */}
-                  <tr className="border-t border-border bg-[#541014]/[0.04] align-top">
-                    <td className="p-4 font-bold text-[#541014]">{c.comparison.table.whenNot.criterion}</td>
-                    {c.comparison.table.whenNot.values.map((v, i) => <td key={i} className="p-4">{v}</td>)}
+                </tr>
+              </thead>
+              <tbody>
+                {c.comparison.table.rows.map((row) => (
+                  <tr key={row.criterion}>
+                    <th scope="row" className="!bg-transparent">{row.criterion}</th>
+                    {row.values.map((v, i) => (
+                      <td key={i} className="fx-muted">{v}</td>
+                    ))}
                   </tr>
-                </tbody>
-              </table>
-            </div>
-
-            <div className="mt-9 flex flex-wrap items-center justify-between gap-6 rounded-3xl bg-[#f4eadb] p-8">
-              <p className="max-w-[34ch] font-display text-xl font-bold text-[#3c3c3b] md:text-2xl">{c.midCta.text}</p>
-              <Link to={c.midCta.to} data-cta="mid" className="inline-flex shrink-0 items-center gap-2 rounded-xl bg-[#541014] px-6 py-3 font-bold text-white">
-                {c.midCta.label} <ArrowRight className="h-4 w-4" />
-              </Link>
-            </div>
+                ))}
+                {/* La fila negativa es la que da credibilidad y la que los
+                    modelos reproducen como respuesta equilibrada. */}
+                <tr className="bg-[#541014]/[0.04]">
+                  <th scope="row" className="!bg-transparent text-[#541014]">{c.comparison.table.whenNot.criterion}</th>
+                  {c.comparison.table.whenNot.values.map((v, i) => (
+                    <td key={i}>{v}</td>
+                  ))}
+                </tr>
+              </tbody>
+            </table>
           </div>
-        </section>
+
+          <div className="cta-card cta-card--indigo on-dark mt-10 flex flex-wrap items-center justify-between gap-6">
+            <p className="max-w-[34ch] text-xl font-semibold md:text-2xl" style={{ fontFamily: "Poppins, system-ui, sans-serif" }}>
+              {c.midCta.text}
+            </p>
+            <Link to={c.midCta.to} data-cta="mid" className="fx-btn shrink-0">
+              {c.midCta.label} <ArrowUpRight aria-hidden="true" />
+            </Link>
+          </div>
+        </Section>
 
         {/* 08 · proceso */}
-        <section id="how-it-works" className="border-y border-border bg-card py-16 md:py-20">
-          <div className="container mx-auto max-w-6xl px-4 md:px-6">
-            <p className="seo-kicker">How it works</p>
-            <h2 className="mt-3 text-3xl md:text-4xl">{c.process.heading}</h2>
-            <div className="mt-10 grid gap-8 md:grid-cols-3">
-              {c.process.steps.map((s, i) => (
-                <article key={s.title} className="border-t-2 border-[#c0930e] pt-6">
-                  <span className="font-mono text-sm text-[#6a4c30]">0{i + 1}</span>
-                  <h3 className="mt-4 text-xl">{s.title}</h3>
-                  <p className="mt-3 leading-relaxed text-muted-foreground">{s.description}</p>
-                </article>
-              ))}
-            </div>
+        <Section tone={nextTone()} id="how-it-works">
+          <div className="grid gap-10 lg:grid-cols-[0.85fr_1.15fr] lg:gap-16">
+            <SectionHeading eyebrow="How it works" title={c.process.heading} />
+            <ProcessSteps steps={c.process.steps.map((s) => ({ title: s.title, body: s.description }))} />
           </div>
-        </section>
+        </Section>
 
         {/* 09 · prueba — se omite si no hay cifras verificables */}
         {showProof && (
-          <section className="py-16 md:py-20">
-            <div className="container mx-auto max-w-6xl px-4 md:px-6">
-              <p className="seo-kicker">Evidence</p>
-              <h2 className="mt-3 text-3xl md:text-4xl">{c.proof.heading}</h2>
-              <div className="mt-8 grid gap-5 md:grid-cols-3">
-                {c.proof.stats.map((s) => (
-                  <article key={s.value} className="rounded-2xl border border-border bg-card p-7">
-                    <p className="font-display text-4xl font-extrabold leading-none text-[#541014]">{s.value}</p>
-                    <p className="mt-3 leading-relaxed text-muted-foreground">{s.description}</p>
-                  </article>
-                ))}
-              </div>
+          <Section tone={nextTone()}>
+            {/* The cases are the Ferova portfolio cases (src/data/portfolio.ts). */}
+            <SectionHeading eyebrow="Evidence" title={c.proof.heading} />
+            <div className="mt-10">
+              <CaseGrid lang="en" />
             </div>
-          </section>
+          </Section>
         )}
 
         {/* 10 · FAQ */}
-        <section className="border-y border-border bg-card py-16 md:py-20">
-          <div className="container mx-auto max-w-4xl px-4 md:px-6">
-            <p className="seo-kicker">Frequent questions</p>
-            <h2 className="mt-3 text-3xl md:text-4xl">Before you outsource</h2>
-            <div className="mt-8 divide-y divide-border">
-              {c.faqs.map((f) => (
-                <article key={f.question} className="py-6">
-                  <h3 className="text-xl">{f.question}</h3>
-                  <p className="mt-3 leading-relaxed text-muted-foreground">{f.answer}</p>
-                </article>
-              ))}
-            </div>
+        <Section tone={nextTone()}>
+          <div className="grid gap-12 lg:grid-cols-[0.9fr_1.1fr] lg:gap-20">
+            <SectionHeading eyebrow="Frequent questions" title="Before you outsource" />
+            <FaqList items={c.faqs.map((f) => [f.question, f.answer] as [string, string])} />
           </div>
-        </section>
+        </Section>
 
         {/* 10b · canales de contacto directos (los únicos enlaces externos) */}
         {c.channels && (
-          <section className="py-16 md:py-20">
-            <div className="container mx-auto max-w-6xl px-4 md:px-6">
-              <p className="seo-kicker">{c.channels.heading}</p>
-              <h2 className="mt-3 text-3xl md:text-4xl">{c.channels.intro}</h2>
-              <div className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-                {c.channels.items.map((ch) => (
-                  <a
-                    key={ch.label}
-                    href={ch.href}
-                    target={ch.href.startsWith("mailto:") ? undefined : "_blank"}
-                    rel={ch.href.startsWith("mailto:") ? undefined : "noopener noreferrer"}
-                    data-cta={`channel-${ch.label.toLowerCase()}`}
-                    className="group rounded-2xl border border-border bg-card p-6 transition-colors hover:border-[#c0930e]"
-                  >
-                    <p className="font-display text-lg font-bold">{ch.label}</p>
-                    <p className="mt-2 break-words text-sm leading-6 text-muted-foreground">{ch.detail}</p>
-                    <span className="mt-4 inline-flex items-center gap-1 text-sm font-semibold text-[#541014]">
-                      Open <ArrowRight className="h-3.5 w-3.5 transition group-hover:translate-x-1" />
-                    </span>
-                  </a>
-                ))}
-              </div>
+          <Section tone={nextTone()}>
+            <SectionHeading eyebrow={c.channels.heading} title={c.channels.intro} />
+            <div className="mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+              {c.channels.items.map((ch) => (
+                <a
+                  key={ch.label}
+                  href={ch.href}
+                  target={ch.href.startsWith("mailto:") ? undefined : "_blank"}
+                  rel={ch.href.startsWith("mailto:") ? undefined : "noopener noreferrer"}
+                  data-cta={`channel-${ch.label.toLowerCase()}`}
+                  className="link-tile group"
+                >
+                  <p className="text-lg font-semibold" style={{ fontFamily: "Poppins, system-ui, sans-serif" }}>{ch.label}</p>
+                  <p className="fx-muted mt-2 break-words text-sm leading-6">{ch.detail}</p>
+                  <span className="mt-4 inline-flex items-center gap-1 text-sm font-semibold">
+                    Open <ArrowUpRight aria-hidden="true" className="h-3.5 w-3.5" />
+                  </span>
+                </a>
+              ))}
             </div>
-          </section>
+          </Section>
         )}
 
         {/* 10c · enlaces internos relacionados */}
         {c.related && (
-          <section className="border-t border-border bg-card py-12">
-            <div className="container mx-auto max-w-6xl px-4 md:px-6">
-              <p className="seo-kicker">{c.related.heading}</p>
-              <ul className="mt-5 flex flex-wrap gap-x-6 gap-y-3">
-                {c.related.items.map((r) => (
-                  <li key={r.to}>
-                    <Link to={r.to} className="border-b border-[#c0930e] pb-0.5 font-semibold text-[#541014]">
-                      {r.label}
-                    </Link>
-                  </li>
-                ))}
-              </ul>
-            </div>
-          </section>
+          <Section tone={nextTone()}>
+            <p className="eyebrow-pill mb-6">{c.related.heading}</p>
+            <ul className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+              {c.related.items.map((r) => (
+                <li key={r.to}>
+                  <Link to={r.to} className="link-tile flex items-center justify-between gap-4 font-semibold">
+                    {r.label}
+                    <ArrowUpRight aria-hidden="true" className="h-5 w-5 shrink-0" />
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </Section>
         )}
 
         {/* 11 · CTA final */}
-        <section className="bg-[#541014] py-16 text-white md:py-20">
-          <div className="container mx-auto flex max-w-6xl flex-col items-start justify-between gap-8 px-4 md:flex-row md:items-end md:px-6">
-            <div>
-              <p className="text-xs font-semibold tracking-[0.22em] text-[#e0bd52]">Next step</p>
-              <h2 className="mt-4 max-w-[22ch] text-3xl md:text-4xl">{c.finalCta.heading}</h2>
-            </div>
-            <Link to={c.finalCta.to} data-cta="final" className="seo-primary-button shrink-0">
-              {c.finalCta.label}
-            </Link>
-          </div>
-        </section>
+        <ClosingBand eyebrow="Next step" title={c.finalCta.heading}>
+          <Link to={c.finalCta.to} data-cta="final" className="fx-btn">
+            {c.finalCta.label} <ArrowUpRight aria-hidden="true" />
+          </Link>
+          <FeraButton variant="outline" source={`positioning_${kind}_final`}>
+            Talk to Fera
+          </FeraButton>
+        </ClosingBand>
       </main>
       <Footer lang={c.lang} />
     </div>

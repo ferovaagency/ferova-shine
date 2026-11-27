@@ -1,13 +1,12 @@
 import Header from '@/components/layout/Header';
 import Footer from '@/components/layout/Footer';
 import SEO from '@/components/SEO';
-import { AnimatedSection, StaggerContainer, StaggerItem, ScaleOnHover, PageTransition } from '@/components/ui/motion';
-import { motion } from 'framer-motion';
 import { formatPrice, type Lang } from '@/lib/pricing';
 import {
-  Linkedin, CheckCircle, Star, Users, TrendingUp, Eye,
-  MessageCircle, Briefcase, Award,
+  Linkedin, Users, TrendingUp, Eye,
+  MessageCircle, Briefcase,
 } from 'lucide-react';
+import { CheckList, CtaBand, FeraButton, IconTile, PageHero, Panel, Section } from '@/components/fx/primitives';
 
 interface Props { lang?: Lang; }
 
@@ -72,124 +71,89 @@ const OptimizacionLinkedin = ({ lang = 'es' }: Props) => {
     lang === 'es' ? 'Hola Ferova, me interesa la optimización de LinkedIn.' : 'Hi Ferova, I\'m interested in LinkedIn optimization.'
   );
 
+  const path = lang === 'en' ? '/en/services/linkedin-optimization' : lang === 'pt' ? '/pt/linkedin' : '/servicios/optimizacion-linkedin';
+  const home = lang === 'en' ? { name: 'Home', path: '/en' } : lang === 'pt' ? { name: 'Início', path: '/pt' } : { name: 'Inicio', path: '/' };
+  const crumbs = [{ name: t.title, path }];
+  const serviceLd = {
+    '@context': 'https://schema.org',
+    '@type': 'Service',
+    name: t.title,
+    description: t.sub,
+    url: `https://seoparaecommerce.co${path}`,
+    provider: { '@type': 'Organization', '@id': 'https://seoparaecommerce.co/#organization', name: 'Ferova Agency' },
+    offers: { '@type': 'Offer', name: t.planName, price: String(LINKEDIN_USD), priceCurrency: 'USD' },
+  };
+
   return (
-    <PageTransition>
+    <div className="fx-site min-h-screen">
       <SEO
         title={`${t.title} — Ferova Agency`}
         description={t.sub}
-        path={lang === 'en' ? '/en/services/linkedin-optimization' : lang === 'pt' ? '/pt/linkedin' : '/servicios/optimizacion-linkedin'}
+        path={path}
         lang={lang}
+        jsonLd={serviceLd}
+        breadcrumbs={[home, ...crumbs]}
       />
-      <Header currentLang={lang} />
-      <main className="pt-20">
-        {/* Hero */}
-        <section className="py-20 md:py-28 text-center relative grid-pattern">
-          <div className="absolute inset-0" style={{ background: 'radial-gradient(ellipse at 50% 30%, hsla(45, 86%, 40%, 0.06), transparent 60%)' }} />
-          <div className="container mx-auto px-4 md:px-6 relative z-10">
-            <AnimatedSection>
-              <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-gold/20 bg-gold/5 text-gold text-sm font-medium mb-8">
-                <Award className="w-4 h-4" />
-                {t.badge}
-              </div>
-            </AnimatedSection>
-            <AnimatedSection delay={0.1}>
-              <div className="w-20 h-20 rounded-2xl flex items-center justify-center mx-auto mb-8 bg-[#0A66C2]/10">
-                <Linkedin className="w-10 h-10 text-[#0A66C2]" />
-              </div>
-              <h1 className="text-4xl md:text-5xl lg:text-6xl font-display font-bold mb-6">{t.title}</h1>
-            </AnimatedSection>
-            <AnimatedSection delay={0.2}>
-              <p className="text-muted-foreground text-lg max-w-2xl mx-auto">{t.sub}</p>
-            </AnimatedSection>
-          </div>
-        </section>
+      <Header lang={lang} />
+      <main id="contenido-principal" className="pt-20">
+        <PageHero eyebrow={t.badge} title={t.title} intro={t.sub} breadcrumbs={crumbs} lang={lang}>
+          <a href={whatsappUrl} target="_blank" rel="noopener noreferrer" className="fx-btn">
+            <Linkedin aria-hidden="true" />
+            {t.ctaBtn}
+          </a>
+        </PageHero>
 
         {/* Benefits */}
-        <section className="py-20 md:py-28">
-          <div className="container mx-auto px-4 md:px-6">
-            <StaggerContainer className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6 max-w-5xl mx-auto">
-              {t.benefits.map((b, i) => (
-                <StaggerItem key={i}>
-                  <ScaleOnHover>
-                    <div className="glass-card p-8 text-center hover:border-gold/30 transition-all h-full">
-                      <div className="w-16 h-16 rounded-2xl flex items-center justify-center mx-auto mb-6 bg-gold/10">
-                        <b.icon className="w-8 h-8 text-gold" />
-                      </div>
-                      <h3 className="text-lg font-display font-semibold mb-2 text-foreground">{b.title}</h3>
-                      <p className="text-muted-foreground text-sm leading-relaxed">{b.desc}</p>
-                    </div>
-                  </ScaleOnHover>
-                </StaggerItem>
-              ))}
-            </StaggerContainer>
+        <Section>
+          <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
+            {t.benefits.map((b) => (
+              <Panel key={b.title}>
+                <IconTile icon={b.icon} />
+                <h3>{b.title}</h3>
+                <p className="fx-muted mt-3 text-sm leading-relaxed">{b.desc}</p>
+              </Panel>
+            ))}
           </div>
-        </section>
+        </Section>
 
         {/* Plan */}
-        <section className="py-20 md:py-28 bg-surface">
-          <div className="container mx-auto px-4 md:px-6">
-            <AnimatedSection>
-              <div className="max-w-lg mx-auto glass-card p-10 text-center border-gold/30 gold-glow">
-                <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-semibold bg-gold/20 text-gold mb-6">
-                  <Star className="w-3 h-3 fill-gold" /> Plan Único
-                </div>
-                <h3 className="text-xl font-display font-bold mb-2">{t.planName}</h3>
-                <p className="text-muted-foreground text-sm mb-6">{t.planDesc}</p>
-                <div className="mb-8">
-                  <span className="text-4xl font-display font-bold text-foreground">
-                    {formatPrice(LINKEDIN_USD, lang)}
-                  </span>
-                  <span className="text-muted-foreground text-sm block mt-1">{t.planDescPeriod}</span>
-                </div>
-                <ul className="space-y-3 mb-8 text-left">
-                  {t.features.map((f, j) => (
-                    <li key={j} className="flex items-start gap-2 text-sm text-muted-foreground">
-                      <CheckCircle className="w-4 h-4 text-gold flex-shrink-0 mt-0.5" /> {f}
-                    </li>
-                  ))}
-                </ul>
-                <motion.a
-                  whileHover={{ scale: 1.05 }}
-                  whileTap={{ scale: 0.97 }}
-                  href={whatsappUrl}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="btn-gold w-full flex items-center justify-center gap-2"
-                >
-                  <MessageCircle className="w-5 h-5" />
-                  {t.ctaBtn}
-                </motion.a>
-              </div>
-            </AnimatedSection>
+        <Section tone="surface">
+          <div className="fx-light mx-auto flex max-w-lg flex-col rounded-[1.25rem] border-t-[3px] border-[#541014] bg-white p-8 shadow-[0_24px_60px_rgb(47_45_86/13%)] sm:p-10">
+            <span className="status-badge w-fit !text-xs">Plan Único</span>
+            <h2 className="mt-6 text-2xl">{t.planName}</h2>
+            <p className="fx-muted mt-2 text-sm">{t.planDesc}</p>
+            <p className="mt-6">
+              <span className="text-4xl font-semibold tabular-nums" style={{ fontFamily: 'Poppins, system-ui, sans-serif' }}>
+                {formatPrice(LINKEDIN_USD, lang)}
+              </span>
+              <span className="fx-muted mt-1 block text-sm">{t.planDescPeriod}</span>
+            </p>
+            <CheckList className="mt-6" items={t.features} />
+            <a
+              href={whatsappUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="fx-btn mt-8 w-full"
+            >
+              <MessageCircle aria-hidden="true" />
+              {t.ctaBtn}
+            </a>
           </div>
-        </section>
+        </Section>
 
         {/* CTA */}
-        <section className="py-20 md:py-28 relative overflow-hidden">
-          <div className="absolute inset-0" style={{ background: 'radial-gradient(ellipse at 50% 50%, hsla(45, 86%, 40%, 0.06), transparent 70%)' }} />
-          <div className="container mx-auto px-4 md:px-6 relative z-10 text-center">
-            <AnimatedSection>
-              <h2 className="text-3xl md:text-4xl font-display font-bold mb-6">{t.ctaTitle}</h2>
-              <p className="text-muted-foreground text-lg max-w-xl mx-auto mb-10">{t.ctaSub}</p>
-            </AnimatedSection>
-            <AnimatedSection delay={0.2}>
-              <motion.a
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.97 }}
-                href={whatsappUrl}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="btn-gold inline-flex items-center gap-2"
-              >
-                <MessageCircle className="w-5 h-5" />
-                {t.ctaBtn}
-              </motion.a>
-            </AnimatedSection>
-          </div>
-        </section>
+        <CtaBand title={t.ctaTitle} body={t.ctaSub}>
+          <a href={whatsappUrl} target="_blank" rel="noopener noreferrer" className="fx-btn">
+            <MessageCircle aria-hidden="true" />
+            {t.ctaBtn}
+          </a>
+          <FeraButton variant="outline" source="service_linkedin" prompt={t.title}>
+            {lang === 'es' ? 'Hablar con Fera' : 'Talk to Fera'}
+          </FeraButton>
+        </CtaBand>
       </main>
-      <Footer currentLang={lang} />
-    </PageTransition>
+      <Footer lang={lang} />
+    </div>
   );
 };
 

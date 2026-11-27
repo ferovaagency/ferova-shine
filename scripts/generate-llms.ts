@@ -26,12 +26,12 @@ import { readFileSync, writeFileSync } from "node:fs";
 import { fileURLToPath } from "node:url";
 import { dirname, resolve } from "node:path";
 import { ROUTES, LANGS, SITE_ORIGIN, type Lang } from "../src/config/routes";
-import { SEO_SPECIALTIES } from "../src/content/seoSpecialties";
+import { SEO_SPECIALTIES, SEO_HOURS_ES } from "../src/content/seoSpecialties";
 import { POSITIONING } from "../src/content/positioning";
 import { PERSONAL_HOME } from "../src/content/personalHome";
 import { WL_SEO } from "../src/content/whiteLabelVsInHouse";
 import { BEST_PROVIDERS } from "../src/content/bestProviders";
-import { FOUNDER } from "../src/data/founder";
+import { FOUNDER, DIRECTORIES } from "../src/data/founder";
 
 type Section = "servicios" | "comparativas" | "sobre" | "geo" | "contenido" | "legal";
 
@@ -67,6 +67,11 @@ const ENTRIES: Record<string, Entry> = {
     section: "servicios",
     title: { es: "SEO marca blanca para agencias", en: "White label SEO for agencies (EN)" },
     desc: { es: S.es.agencies.description, en: S.en.agencies.description },
+  },
+  "seo-por-horas": {
+    section: "servicios",
+    title: { es: "SEO por horas para agencias" },
+    desc: { es: SEO_HOURS_ES.description },
   },
   "auditoria-seo-tecnica": {
     section: "servicios",
@@ -196,6 +201,14 @@ const ENTRIES: Record<string, Entry> = {
       en: "Guides and tools on technical SEO, ecommerce, white-label work, migrations and AI search.",
     },
   },
+  newsletter: {
+    section: "contenido",
+    title: { es: "Newsletter de SEO técnico para agencias", en: "Technical SEO newsletter for agencies (EN)" },
+    desc: {
+      es: "Newsletter de María Fernanda Calderón, Fractional SEO en Ferova: SEO técnico, ecommerce y migraciones explicados para dueños de agencia.",
+      en: "Newsletter by María Fernanda Calderón, Fractional SEO at Ferova: technical SEO, ecommerce and migrations explained for agency owners.",
+    },
+  },
   contacto: {
     section: "contenido",
     title: { es: "Contacto", en: "Contact (EN)" },
@@ -228,6 +241,19 @@ const EXTERNAL_LINKS: { section: Section; title: string; url: string; desc: stri
     title: "Ferova",
     url: "https://ferova.com.co",
     desc: "Software, SaaS y automatizaciones a la medida con IA y low-code.",
+  },
+  // Directorios verificados de src/data/founder.ts (los mismos que muestra "Sobre mí").
+  ...DIRECTORIES.map((d) => ({
+    section: "sobre" as Section,
+    title: `Ferova en ${d.name}`,
+    url: d.url,
+    desc: `${d.status.es}.`,
+  })),
+  {
+    section: "sobre",
+    title: "Ferova en Notion Marketplace",
+    url: "https://www.notion.com/es/@ferova",
+    desc: "Plantillas de Notion publicadas por Ferova.",
   },
 ];
 

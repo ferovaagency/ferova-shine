@@ -1,21 +1,31 @@
-import { Link } from 'react-router-dom';
 import Header from '@/components/layout/Header';
 import Footer from '@/components/layout/Footer';
 import AdBanner from '@/components/ui/ad-banner';
-import { Search, TrendingUp, Users, BarChart3, Plus, MessageCircle, MapPin, Bot, Database, Network, Clock, Check } from 'lucide-react';
+import { Search, TrendingUp, Users, BarChart3, MessageCircle, MapPin, Bot, Database, Network, Clock } from 'lucide-react';
 import SEO from '@/components/SEO';
-import { AnswerBlock } from '@/components/ui/answer-block';
-import { useState, useEffect } from 'react';
+import { useEffect } from 'react';
 import { useToast } from '@/hooks/use-toast';
 import { useAnalytics } from '@/hooks/useAnalytics';
 import { formatPrice, type Lang } from '@/lib/pricing';
+import {
+  CheckList,
+  CtaBand,
+  FaqList,
+  FeraButton,
+  FxLink,
+  IconTile,
+  PageHero,
+  Panel,
+  ProcessSteps,
+  Section,
+  SectionHeading,
+} from '@/components/fx/primitives';
 
 interface Props { lang?: Lang; }
 
 const SEO_USD = 500;
 
 const SeoEcommerce = ({ lang = 'es' }: Props) => {
-  const [openFaq, setOpenFaq] = useState<number | null>(null);
   const { toast } = useToast();
   const { trackServiceCTA, trackWhatsApp, trackScrollDepth } = useAnalytics();
 
@@ -211,231 +221,190 @@ const SeoEcommerce = ({ lang = 'es' }: Props) => {
     : { t: 'SEO para Ecommerce + GEO + IAO — Ferova', d: 'SEO para tiendas online que posiciona en Google y es citado por ChatGPT, Perplexity y AI Overviews. GEO (Generative Engine Optimization) incluido.', p: '/servicios/seo-ecommerce' };
   const faqLd = { '@context': 'https://schema.org', '@type': 'FAQPage', mainEntity: t.faqs.map((f: any) => ({ '@type': 'Question', name: f.q, acceptedAnswer: { '@type': 'Answer', text: f.a } })) };
 
+  const serviceLd = {
+    "@context": "https://schema.org",
+    "@type": "Service",
+    "@id": "https://seoparaecommerce.co/servicios/seo-ecommerce#service",
+    "name": "SEO para E-commerce y AIO",
+    "provider": { "@type": "Organization", "@id": "https://seoparaecommerce.co/#organization", "name": "Ferova Agency" },
+    "description": "Optimizamos webapps para Google, ChatGPT, Perplexity y AI Overviews. Blogs con estructura semántica que las IAs generativas leen y citan.",
+    "areaServed": ["Colombia", "Latinoamérica", "Estados Unidos"],
+    "hasOfferCatalog": {
+      "@type": "OfferCatalog",
+      "name": "Plan SEO / AIO Mensual",
+      "itemListElement": [
+        { "@type": "Offer", "name": "SEO / AIO Mensual", "price": String(SEO_USD), "priceCurrency": "USD", "unitText": "MONTH", "description": "Posicionamiento orgánico SEO + AIO + GEO para WebApps y tiendas" }
+      ]
+    }
+  };
+
+  const crumbName = lang === 'es' ? 'SEO para ecommerce' : lang === 'pt' ? 'SEO para e-commerce' : 'E-commerce SEO';
+  const crumbs = [{ name: crumbName, path: seo.p }];
+  const home = lang === 'es' ? { name: 'Inicio', path: '/' } : lang === 'pt' ? { name: 'Início', path: '/pt' } : { name: 'Home', path: '/en' };
+
+  const planItems = lang === 'es' ? [
+    'Optimización técnica + Google Business Profile',
+    'Hasta 8 blogs mensuales optimizados para IAs y buscadores (GEO + AIO + SEO)',
+    'Optimización On Page y Off Page',
+    'Estrategia de keywords locales',
+    'Tageo de eventos y conexión con Analytics + Search Console',
+    'Informe semanal y mensual de resultados',
+  ] : lang === 'pt' ? [
+    'Otimização técnica + Google Business Profile',
+    'Até 8 blogs mensais otimizados para IAs e buscadores (GEO + AIO + SEO)',
+    'Otimização On Page e Off Page',
+    'Estratégia de keywords locais',
+    'Tagueamento de eventos e conexão com Analytics + Search Console',
+    'Relatório semanal e mensal de resultados',
+  ] : [
+    'Technical optimization + Google Business Profile',
+    'Up to 8 monthly blogs optimized for AI & search engines (GEO + AIO + SEO)',
+    'On Page and Off Page optimization',
+    'Local keyword strategy',
+    'Event tagging and Analytics + Search Console connection',
+    'Weekly and monthly results report',
+  ];
+
   return (
-    <>
-      <SEO title={seo.t} description={seo.d} path={seo.p} lang={lang} jsonLd={faqLd} />
-      <Header currentLang={lang} />
-      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify({
-        "@context": "https://schema.org",
-        "@type": "Service",
-        "@id": "https://seoparaecommerce.co/servicios/seo-ecommerce#service",
-        "name": "SEO para E-commerce y AIO",
-        "provider": { "@type": "Organization", "@id": "https://seoparaecommerce.co/#organization", "name": "Ferova Agency" },
-        "description": "Optimizamos webapps para Google, ChatGPT, Perplexity y AI Overviews. Blogs con estructura semántica que las IAs generativas leen y citan.",
-        "areaServed": ["Colombia", "Latinoamérica", "Estados Unidos"],
-        "hasOfferCatalog": {
-          "@type": "OfferCatalog",
-          "name": "Plan SEO / AIO Mensual",
-          "itemListElement": [
-            { "@type": "Offer", "name": "SEO / AIO Mensual", "price": String(SEO_USD), "priceCurrency": "USD", "unitText": "MONTH", "description": "Posicionamiento orgánico SEO + AIO + GEO para WebApps y tiendas" }
-          ]
-        }
-      }) }} />
-      <main className="pt-20">
+    <div className="fx-site min-h-screen">
+      <SEO title={seo.t} description={seo.d} path={seo.p} lang={lang} jsonLd={[serviceLd, faqLd]} breadcrumbs={[home, ...crumbs]} />
+      <Header lang={lang} />
+      <main id="contenido-principal" className="pt-20">
         {/* Hero */}
-        <section className="py-20 md:py-28 relative grid-pattern">
-          <div className="absolute inset-0" style={{ background: 'radial-gradient(ellipse at 50% 30%, hsla(45, 86%, 40%, 0.06), transparent 60%)' }} />
-          <div className="container mx-auto px-4 md:px-6 relative z-10">
-            <div className="grid lg:grid-cols-2 gap-12 items-center">
-              <div>
-                <h1 className="text-4xl md:text-5xl lg:text-6xl font-display font-bold mb-4">{t.title}</h1>
-                <p className="text-xs text-muted-foreground/70 mb-4 uppercase tracking-wide">
-                  {lang === 'es' ? 'Actualizado julio 2026' : lang === 'pt' ? 'Atualizado julho 2026' : 'Updated July 2026'}
-                </p>
-                <p className="text-lg text-muted-foreground leading-relaxed mb-8">{t.sub}</p>
-                <div className="flex flex-col sm:flex-row gap-4">
-                  <a href="https://wa.me/17866894686" target="_blank" rel="noopener noreferrer" className="btn-gold flex items-center justify-center gap-2">
-                    <MessageCircle className="w-5 h-5" /> {t.cta}
-                  </a>
-                  <Link to={lang === 'es' ? '/casos-de-exito' : lang === 'pt' ? '/pt/casos-de-sucesso' : '/en/case-studies'} className="btn-outline-gold text-center">{t.ctaSecondary}</Link>
-                </div>
-              </div>
-              <div className="glass-card p-8 text-center gold-glow">
-                <div className="w-20 h-20 rounded-full flex items-center justify-center mx-auto mb-4" style={{ background: 'linear-gradient(135deg, hsl(45 86% 40%), hsl(45 86% 52%))' }}>
-                  <Search className="w-10 h-10 text-primary-foreground" />
-                </div>
-              <h3 className="text-xl font-display font-bold mb-2">{lang === 'es' ? 'Diagnóstico gratuito' : lang === 'pt' ? 'Diagnóstico gratuito' : 'Free diagnosis'}</h3>
-                <p className="text-muted-foreground">{lang === 'es' ? 'Análisis inicial sin costo de tu sitio web' : lang === 'pt' ? 'Análise inicial sem custo do seu site' : 'Free initial analysis of your website'}</p>
-              </div>
-            </div>
-          </div>
-        </section>
+        <PageHero
+          align="left"
+          lang={lang}
+          breadcrumbs={crumbs}
+          eyebrow={lang === 'es' ? 'Actualizado julio 2026' : lang === 'pt' ? 'Atualizado julho 2026' : 'Updated July 2026'}
+          title={t.title}
+          intro={t.sub}
+        >
+          <FxLink to="https://wa.me/17866894686" arrow={false}>
+            <MessageCircle aria-hidden="true" /> {t.cta}
+          </FxLink>
+          <FxLink to={lang === 'es' ? '/casos-de-exito' : lang === 'pt' ? '/pt/casos-de-sucesso' : '/en/case-studies'} variant="outline">
+            {t.ctaSecondary}
+          </FxLink>
+          <p className="mt-4 flex basis-full items-start gap-3 text-sm">
+            <Search aria-hidden="true" className="mt-0.5 h-4 w-4 shrink-0 text-[#e4c45f]" />
+            <span>
+              <strong>{lang === 'es' ? 'Diagnóstico gratuito' : lang === 'pt' ? 'Diagnóstico gratuito' : 'Free diagnosis'}</strong>
+              <span className="fx-muted"> · {lang === 'es' ? 'Análisis inicial sin costo de tu sitio web' : lang === 'pt' ? 'Análise inicial sem custo do seu site' : 'Free initial analysis of your website'}</span>
+            </span>
+          </p>
+        </PageHero>
 
         {/* Features */}
-        <section className="py-20 md:py-28 dark-section" style={{ background: 'hsl(243, 28%, 14%)' }}>
-          <div className="container mx-auto px-4 md:px-6">
-            <h2 className="text-3xl md:text-4xl font-display font-bold text-center mb-16 text-gold">{t.whatIncludes}</h2>
-            <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
-              {t.features.map((f, i) => (
-                <div key={i} className="glass-card p-6 hover:border-gold/30 transition-all duration-300">
-                  <div className="w-12 h-12 rounded-xl flex items-center justify-center mb-4" style={{ background: 'hsla(45, 86%, 40%, 0.1)' }}>
-                    <f.icon className="w-6 h-6 text-gold" />
-                  </div>
-                  <h3 className="text-lg font-display font-bold mb-3 text-foreground">{f.title}</h3>
-                  <p className="text-sm leading-relaxed text-muted-foreground">{f.desc}</p>
-                </div>
-              ))}
-            </div>
+        <Section>
+          <SectionHeading title={t.whatIncludes} />
+          <div className="mt-12 grid gap-5 md:grid-cols-2 lg:grid-cols-4">
+            {t.features.map((f) => (
+              <Panel key={f.title}>
+                <IconTile icon={f.icon} />
+                <h3>{f.title}</h3>
+                <p className="fx-muted mt-3 text-sm leading-relaxed">{f.desc}</p>
+              </Panel>
+            ))}
           </div>
-        </section>
+        </Section>
 
-        {/* GEO Section */}
-        <section className="py-20 md:py-28 relative overflow-hidden">
-          <div className="absolute inset-0" style={{ background: 'radial-gradient(ellipse at 30% 50%, hsla(45, 86%, 40%, 0.04), transparent 60%)' }} />
-          <div className="container mx-auto px-4 md:px-6 relative z-10">
-            <div className="text-center mb-16">
-              <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-gold/20 bg-gold/5 text-gold text-sm font-medium mb-6">
-                <Bot className="w-4 h-4" />
-                GEO
-              </div>
-              <h2 className="text-3xl md:text-4xl font-display font-bold mb-4">{t.geoTitle}</h2>
-              <p className="text-xl font-display font-semibold text-gold mb-4 italic">"{t.geoTagline}"</p>
-              <div className="max-w-3xl mx-auto text-left text-muted-foreground">
-                <AnswerBlock>{t.geoDesc}</AnswerBlock>
-              </div>
+        {/* GEO */}
+        <Section tone="surface">
+          <div className="grid gap-10 lg:grid-cols-[1fr_1fr] lg:gap-20">
+            <div>
+              <p className="eyebrow-pill mb-5 items-center gap-2">
+                <Bot aria-hidden="true" className="h-4 w-4" /> GEO
+              </p>
+              <h2 className="text-3xl leading-tight sm:text-4xl lg:text-5xl lg:leading-[1.15]">{t.geoTitle}</h2>
+              <p className="mt-6 text-xl font-semibold italic" style={{ fontFamily: 'Poppins, system-ui, sans-serif' }}>"{t.geoTagline}"</p>
             </div>
-            <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6 max-w-5xl mx-auto">
-              {t.geoFeatures.map((gf, i) => (
-                <div key={i} className="glass-card p-6 text-center hover:border-gold/30 transition-all">
-                  <div className="w-14 h-14 rounded-2xl flex items-center justify-center mx-auto mb-4" style={{ background: 'hsla(45, 86%, 40%, 0.1)' }}>
-                    <gf.icon className="w-7 h-7 text-gold" />
-                  </div>
-                  <h3 className="text-lg font-display font-bold mb-2 text-foreground">{gf.title}</h3>
-                  <p className="text-muted-foreground text-sm leading-relaxed">{gf.desc}</p>
-                </div>
-              ))}
-            </div>
+            <p className="fx-muted self-end border-l-4 border-[#c0930e] pl-5 text-lg leading-relaxed">{t.geoDesc}</p>
           </div>
-        </section>
+          <div className="mt-12 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
+            {t.geoFeatures.map((gf) => (
+              <Panel key={gf.title}>
+                <IconTile icon={gf.icon} />
+                <h3>{gf.title}</h3>
+                <p className="fx-muted mt-3 text-sm leading-relaxed">{gf.desc}</p>
+              </Panel>
+            ))}
+          </div>
+        </Section>
 
         {/* Pricing – Plan SEO / AIO Mensual (único) */}
-        <section className="py-20 md:py-28 dark-section" style={{ background: 'hsl(243, 28%, 14%)' }}>
-          <div className="container mx-auto px-4 md:px-6">
-            <div className="text-center mb-10">
-              <h2 className="text-3xl md:text-4xl font-display font-bold mb-4 text-foreground">
-                {lang === 'es' ? 'Posicionamiento SEO / AIO Mensual' : lang === 'pt' ? 'Posicionamento SEO / AIO Mensal' : 'Monthly SEO / AIO Positioning'}
-              </h2>
-              <p className="text-muted-foreground max-w-xl mx-auto">
+        <Section id="pricing">
+          <div className="grid gap-12 lg:grid-cols-[0.9fr_1.1fr] lg:items-start lg:gap-20">
+            <div>
+              <SectionHeading
+                title={lang === 'es' ? 'Posicionamiento SEO / AIO Mensual' : lang === 'pt' ? 'Posicionamento SEO / AIO Mensal' : 'Monthly SEO / AIO Positioning'}
+              />
+              <p className="fx-muted mt-5 text-lg">
                 {lang === 'es' ? 'Plan único · mínimo 6 meses de contrato.' : lang === 'pt' ? 'Plano único · mínimo 6 meses de contrato.' : 'Single plan · 6-month minimum contract.'}
               </p>
             </div>
-            <div className="max-w-lg mx-auto glass-card p-10 border-gold/50 gold-glow">
-              <div className="w-14 h-14 rounded-2xl flex items-center justify-center mb-5 mx-auto" style={{ background: 'hsla(45, 86%, 40%, 0.1)' }}>
-                <MapPin className="w-7 h-7 text-gold" />
-              </div>
-              <p className="text-sm leading-relaxed mb-6 text-center text-muted-foreground">{t.planTagline}</p>
-              <div className="text-center mb-6">
-                <span className="text-4xl font-display font-bold text-foreground">{formatPrice(SEO_USD, lang, 'monthly')}</span>
-              </div>
-
-              <div className="mb-6 px-3 py-2 rounded-lg text-xs font-semibold flex items-center gap-2" style={{ background: 'hsla(356, 68%, 20%, 0.15)', color: 'hsl(356, 68%, 55%)' }}>
-                <Clock className="w-3.5 h-3.5" />
+            <Panel>
+              <IconTile icon={MapPin} />
+              <p className="fx-muted leading-relaxed">{t.planTagline}</p>
+              <p className="mt-6 text-4xl font-semibold" style={{ fontFamily: 'Poppins, system-ui, sans-serif', letterSpacing: '-0.04em' }}>
+                {formatPrice(SEO_USD, lang, 'monthly')}
+              </p>
+              <p className="status-badge mt-5">
+                <Clock aria-hidden="true" className="h-3.5 w-3.5" />
                 {t.urgency}
-              </div>
-
-              <ul className="space-y-3 mb-6">
-                {(lang === 'es' ? [
-                  'Optimización técnica + Google Business Profile',
-                  'Hasta 8 blogs mensuales optimizados para IAs y buscadores (GEO + AIO + SEO)',
-                  'Optimización On Page y Off Page',
-                  'Estrategia de keywords locales',
-                  'Tageo de eventos y conexión con Analytics + Search Console',
-                  'Informe semanal y mensual de resultados',
-                ] : lang === 'pt' ? [
-                  'Otimização técnica + Google Business Profile',
-                  'Até 8 blogs mensais otimizados para IAs e buscadores (GEO + AIO + SEO)',
-                  'Otimização On Page e Off Page',
-                  'Estratégia de keywords locais',
-                  'Tagueamento de eventos e conexão com Analytics + Search Console',
-                  'Relatório semanal e mensal de resultados',
-                ] : [
-                  'Technical optimization + Google Business Profile',
-                  'Up to 8 monthly blogs optimized for AI & search engines (GEO + AIO + SEO)',
-                  'On Page and Off Page optimization',
-                  'Local keyword strategy',
-                  'Event tagging and Analytics + Search Console connection',
-                  'Weekly and monthly results report',
-                ]).map((item, i) => (
-                  <li key={i} className="flex items-start gap-3 text-sm text-foreground">
-                    <Check className="w-4 h-4 text-gold flex-shrink-0 mt-0.5" /> {item}
-                  </li>
-                ))}
-              </ul>
-              <div className="mb-8 pt-4 border-t border-border">
-                <p className="text-xs font-semibold mb-2 text-muted-foreground">{t.noInclude}</p>
+              </p>
+              <CheckList items={planItems} className="mt-6" />
+              <div className="mt-6 border-t pt-4" style={{ borderColor: 'var(--fx-border)' }}>
+                <p className="fx-muted mb-2 text-xs font-semibold">{t.noInclude}</p>
                 <ul className="space-y-1.5">
-                  {t.planExcludes.map((ex, i) => (
-                    <li key={i} className="flex items-center gap-2 text-xs text-muted-foreground">
-                      <span className="opacity-50">✕</span> {ex}
+                  {t.planExcludes.map((ex) => (
+                    <li key={ex} className="fx-muted flex items-center gap-2 text-xs">
+                      <span aria-hidden="true" className="opacity-50">✕</span> {ex}
                     </li>
                   ))}
                 </ul>
               </div>
-              <button onClick={handleCta} className="btn-gold w-full flex items-center justify-center gap-2">
-                <MessageCircle className="w-4 h-4" /> {t.planCta}
+              <button type="button" onClick={handleCta} className="fx-btn mt-8 w-full">
+                <MessageCircle aria-hidden="true" /> {t.planCta}
               </button>
-            </div>
+            </Panel>
           </div>
-        </section>
-
+        </Section>
 
         {/* Process */}
-        <section className="py-20 md:py-28">
-          <div className="container mx-auto px-4 md:px-6">
-            <h2 className="text-3xl md:text-4xl font-display font-bold text-center mb-16">{t.process}</h2>
-            <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
-              {t.steps.map((s, i) => (
-                <div key={i} className="text-center">
-                  <div className="w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-6 bg-gold">
-                    <span className="text-xl font-display font-bold text-primary-foreground">{s.n}</span>
-                  </div>
-                  <h3 className="text-xl font-display font-bold mb-4">{s.title}</h3>
-                  <p className="text-muted-foreground leading-relaxed">{s.desc}</p>
-                </div>
-              ))}
-            </div>
+        <Section tone="surface">
+          <div className="grid gap-10 lg:grid-cols-[0.85fr_1.15fr] lg:gap-16">
+            <SectionHeading title={t.process} />
+            <ProcessSteps steps={t.steps.map((s) => ({ title: s.title, body: s.desc }))} />
           </div>
-        </section>
+        </Section>
 
         {/* FAQ */}
-        <section className="py-20 md:py-28 dark-section" style={{ background: 'hsl(243, 28%, 14%)' }}>
-          <div className="container mx-auto px-4 md:px-6">
-            <h2 className="text-3xl md:text-4xl font-display font-bold text-center mb-16 text-gold">{t.faqTitle}</h2>
-            <div className="max-w-3xl mx-auto space-y-4">
-              {t.faqs.map((faq, i) => (
-                <div key={i} className="glass-card overflow-hidden">
-                  <button onClick={() => setOpenFaq(openFaq === i ? null : i)} className="w-full p-6 text-left flex items-center justify-between hover:bg-gold/5 transition-colors">
-                    <h3 className="text-lg font-display font-semibold pr-4 text-foreground">{faq.q}</h3>
-                    <Plus className={`w-5 h-5 text-gold transition-transform duration-200 flex-shrink-0 ${openFaq === i ? 'rotate-45' : ''}`} />
-                  </button>
-                  {openFaq === i && (
-                    <div className="px-6 pb-6"><p className="leading-relaxed text-muted-foreground">{faq.a}</p></div>
-                  )}
-                </div>
-              ))}
-            </div>
+        <Section>
+          <div className="grid gap-12 lg:grid-cols-[0.9fr_1.1fr] lg:gap-20">
+            <SectionHeading title={t.faqTitle} />
+            <FaqList items={t.faqs.map((f) => [f.q, f.a] as [string, string])} />
           </div>
-        </section>
+        </Section>
+
+        <div className="mx-auto max-w-4xl px-5 pb-16 sm:px-8">
+          <AdBanner slot="service-seo-bottom" />
+        </div>
 
         {/* CTA */}
-        <section className="py-20 md:py-28">
-          <div className="container mx-auto px-4 md:px-6 text-center">
-            <h2 className="text-3xl md:text-4xl font-display font-bold mb-6">
-              {lang === 'es' ? '¿Listo para dominar Google?' : lang === 'pt' ? 'Pronto para dominar o Google?' : 'Ready to dominate Google?'}
-            </h2>
-            <p className="text-muted-foreground text-lg max-w-2xl mx-auto mb-8">
-              {lang === 'es' ? 'Solicita tu diagnóstico SEO gratuito.' : lang === 'pt' ? 'Solicite seu diagnóstico SEO gratuito.' : 'Request your free SEO diagnosis.'}
-            </p>
-            <a href="https://wa.me/17866894686" target="_blank" rel="noopener noreferrer" className="btn-gold inline-flex items-center gap-2">
-              <MessageCircle className="w-5 h-5" /> {t.cta}
-            </a>
-          </div>
-        </section>
-
-        <AdBanner slot="service-seo-bottom" className="max-w-4xl mx-auto mb-20" />
+        <CtaBand
+          title={lang === 'es' ? '¿Listo para dominar Google?' : lang === 'pt' ? 'Pronto para dominar o Google?' : 'Ready to dominate Google?'}
+          body={lang === 'es' ? 'Solicita tu diagnóstico SEO gratuito.' : lang === 'pt' ? 'Solicite seu diagnóstico SEO gratuito.' : 'Request your free SEO diagnosis.'}
+        >
+          <FxLink to="https://wa.me/17866894686" arrow={false}>
+            <MessageCircle aria-hidden="true" /> {t.cta}
+          </FxLink>
+          <FeraButton variant="outline" source="seo_ecommerce_final">
+            {lang === 'es' ? 'Hablar con Fera' : lang === 'pt' ? 'Falar com a Fera' : 'Talk to Fera'}
+          </FeraButton>
+        </CtaBand>
       </main>
-      <Footer currentLang={lang} />
-    </>
+      <Footer lang={lang} />
+    </div>
   );
 };
 

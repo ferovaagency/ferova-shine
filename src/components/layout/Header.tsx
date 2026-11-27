@@ -1,9 +1,9 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Link, useLocation } from "react-router-dom";
-import { ArrowUpRight, Menu, X } from "lucide-react";
-import logoLight from "@/assets/ferova-logo.png.png";
+import { ArrowUpRight, ChevronDown, Menu, X } from "lucide-react";
 import { trackEvent } from "@/lib/analytics";
 import LanguageSwitcher from "@/components/layout/LanguageSwitcher";
+import { openFera } from "@/components/fx/primitives";
 
 interface HeaderProps {
   currentLang?: "es" | "en" | "pt";
@@ -11,112 +11,216 @@ interface HeaderProps {
 }
 
 type NavItem = { label: string; href: string };
-type NavCfg = { primary: NavItem[]; cta: NavItem };
+type NavGroup = { label: string; href: string; items: NavItem[] };
+type NavCfg = { groups: NavGroup[]; cta: string; skip: string; open: string; close: string; nav: string };
 
 /**
- * Menú principal. Los tres idiomas tienen la MISMA estructura: no es una
- * traducción de menús distintos, es el mismo menú en cada idioma.
- *
- * Todos los destinos son páginas vivas. Antes 'Capabilities' llevaba a
- * /en/services y 'Pricing' a /en/pricing, retiradas ambas: el usuario acababa
- * en la home o en una página de contacto rotulada como precios.
+ * Cabecera con el sistema de diseño de Ferova (como ferova.com.co): blanca,
+ * grupos con panel desplegable y la acción principal en píldora vino, que
+ * abre Fera. Altura fija de 5rem: todas las páginas compensan con `pt-20`.
  */
 const NAV: Record<"es" | "en" | "pt", NavCfg> = {
   es: {
-    primary: [
-      { label: "Portafolio", href: "https://ferova.com.co/portafolio?lang=es" },
-      { label: "Cómo te ayudo", href: "/#ayuda" },
-      { label: "Para agencias", href: "/seo-para-agencias" },
-      { label: "Recursos", href: "/recursos" },
+    groups: [
+      {
+        label: "Especialidades",
+        href: "/seo-para-agencias",
+        items: [
+          { label: "SEO para agencias (marca blanca)", href: "/seo-para-agencias" },
+          { label: "SEO por horas", href: "/seo-por-horas" },
+          { label: "Auditoría SEO técnica", href: "/auditoria-seo-tecnica" },
+          { label: "Migraciones SEO", href: "/migraciones-seo" },
+          { label: "SEO para ecommerce", href: "/servicios/seo-ecommerce" },
+        ],
+      },
+      { label: "Cómo trabajo", href: "/#ayuda", items: [] },
+      {
+        label: "Casos",
+        href: "/casos-de-exito",
+        items: [
+          { label: "Casos y entregas", href: "/casos-de-exito" },
+          { label: "Portafolio", href: "https://ferova.com.co/portafolio?lang=es" },
+        ],
+      },
+      {
+        label: "Recursos",
+        href: "/recursos",
+        items: [
+          { label: "Blog de SEO técnico", href: "/blog" },
+          { label: "Recursos y herramientas", href: "/recursos" },
+        ],
+      },
+      { label: "Sobre mí", href: "/sobre-nosotros", items: [] },
     ],
-    cta: { label: "Hablemos", href: "/#contacto" },
+    cta: "Hablemos",
+    skip: "Saltar al contenido",
+    open: "Abrir menú",
+    close: "Cerrar menú",
+    nav: "Navegación principal",
   },
   en: {
-    primary: [
-      { label: "Portfolio", href: "https://ferova.com.co/portafolio?lang=en" },
-      { label: "How I help", href: "/en#ayuda" },
-      { label: "For agencies", href: "/en/white-label-seo-for-agencies" },
-      { label: "Resources", href: "/en/resources" },
+    groups: [
+      {
+        label: "Specialties",
+        href: "/en/white-label-seo-for-agencies",
+        items: [
+          { label: "White-label SEO for agencies", href: "/en/white-label-seo-for-agencies" },
+          { label: "Technical SEO audits", href: "/en/technical-seo-audit-services" },
+          { label: "SEO migrations", href: "/en/seo-migration-services" },
+          { label: "Ecommerce SEO", href: "/en/services/ecommerce-seo" },
+          { label: "Outsource SEO services", href: "/en/outsource-seo-services" },
+        ],
+      },
+      { label: "How I work", href: "/en#ayuda", items: [] },
+      {
+        label: "Cases",
+        href: "/en/case-studies",
+        items: [
+          { label: "Case studies", href: "/en/case-studies" },
+          { label: "Portfolio", href: "https://ferova.com.co/portafolio?lang=en" },
+        ],
+      },
+      {
+        label: "Resources",
+        href: "/en/resources",
+        items: [
+          { label: "Technical SEO blog", href: "/en/blog" },
+          { label: "Resources and tools", href: "/en/resources" },
+        ],
+      },
+      { label: "About me", href: "/en/about-me", items: [] },
     ],
-    cta: { label: "Let's talk", href: "/en#contacto" },
+    cta: "Let's talk",
+    skip: "Skip to content",
+    open: "Open menu",
+    close: "Close menu",
+    nav: "Main navigation",
   },
   pt: {
-    primary: [
-      { label: "SEO ecommerce", href: "/pt/seo-ecommerce" },
-      { label: "Portfólio", href: "https://ferova.com.co/portafolio?lang=pt" },
-      { label: "Recursos", href: "/pt/recursos" },
+    groups: [
+      { label: "SEO ecommerce", href: "/pt/seo-ecommerce", items: [] },
+      { label: "Casos", href: "/pt/casos-de-sucesso", items: [] },
+      { label: "Recursos", href: "/pt/recursos", items: [] },
     ],
-    cta: { label: "Falar agora", href: "/pt/contato" },
+    cta: "Falar agora",
+    skip: "Pular para o conteúdo",
+    open: "Abrir menu",
+    close: "Fechar menu",
+    nav: "Navegação principal",
   },
 };
+
+function NavLink({ item, className, onClick }: { item: NavItem; className: string; onClick?: () => void }) {
+  return item.href.startsWith("https://") ? (
+    <a href={item.href} className={className} onClick={onClick}>{item.label}</a>
+  ) : (
+    <Link to={item.href} className={className} onClick={onClick}>{item.label}</Link>
+  );
+}
 
 export default function Header({ currentLang, lang }: HeaderProps) {
   const locale = lang ?? currentLang ?? "es";
   const location = useLocation();
-  const [mobileOpen, setMobileOpen] = useState(false);
+  const [open, setOpen] = useState(false);
   const cfg = NAV[locale];
   const homeHref = locale === "en" ? "/en" : locale === "pt" ? "/pt" : "/";
-  const isActive = (href: string) => location.pathname === href || location.pathname.startsWith(`${href}/`);
-  const onCta = () => trackEvent("quote_requested", { section: "header", language: locale });
+  const isActive = (g: NavGroup) =>
+    [g.href, ...g.items.map((i) => i.href)].some((h) => !h.startsWith("http") && !h.includes("#") && location.pathname.startsWith(h));
+
+  useEffect(() => {
+    if (!open) return;
+    const onKey = (e: KeyboardEvent) => e.key === "Escape" && setOpen(false);
+    window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
+  }, [open]);
+
+  const onCta = () => {
+    trackEvent("quote_requested", { section: "header", language: locale });
+    setOpen(false);
+    openFera(undefined, "header");
+  };
 
   return (
-    <header className={`fixed inset-x-0 top-0 z-50 ${locale === "es" ? "personal-header" : "border-b border-border/60 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/80"}`}>
-      <a href="#contenido-principal" className="agency-skip-link">
-        {locale === "en" ? "Skip to content" : locale === "pt" ? "Pular para o conteúdo" : "Saltar al contenido"}
-      </a>
-      <div className="container mx-auto flex h-20 items-center justify-between px-4 md:px-6">
-        <Link to={homeHref} className="flex items-center gap-3" onClick={() => setMobileOpen(false)}>
-          {locale === "es" ? (
-            <span className="personal-header-wordmark" aria-label="María Fer · SEO técnico · Ferova">
-              <span>MARÍA FER</span>
-              <small>SEO técnico · Ferova</small>
-            </span>
-          ) : (
-            <img src={logoLight} alt="Ferova Agency" className="h-12 w-auto sm:h-14" />
-          )}
+    <header className="fx-light site-header fixed inset-x-0 top-0 z-50">
+      <a href="#contenido-principal" className="agency-skip-link">{cfg.skip}</a>
+      <div className="mx-auto flex h-20 w-full max-w-7xl items-center justify-between gap-4 px-5 sm:px-8">
+        <Link to={homeHref} className="flex shrink-0 flex-col leading-none" onClick={() => setOpen(false)}>
+          <span className="text-lg font-bold tracking-[0.1em]" style={{ fontFamily: "Poppins, system-ui, sans-serif" }}>MARÍA FER</span>
+          <span className="mt-1.5 text-[0.62rem] font-medium uppercase tracking-[0.2em]" style={{ color: "#2f2d56", fontFamily: "'IBM Plex Mono', monospace" }}>
+            SEO técnico · Ferova
+          </span>
         </Link>
 
-        <nav className="hidden items-center gap-6 lg:flex" aria-label="Navegación principal">
-          {cfg.primary.map((item) => (
-            item.href.startsWith("https://") ? (
-              <a key={item.href} href={item.href} className="text-sm text-muted-foreground transition-colors hover:text-foreground">
-                {item.label}
-              </a>
-            ) : (
-              <Link key={item.href} to={item.href} className={`text-sm transition-colors ${isActive(item.href) ? "text-foreground" : "text-muted-foreground hover:text-foreground"}`}>
-                {item.label}
-              </Link>
-            )
-          ))}
-          <LanguageSwitcher lang={locale} className="ml-1" />
-          <Link to={cfg.cta.href} onClick={onCta} className={`${locale === "es" ? "seo-primary-button" : "btn-gold"} ml-1 inline-flex items-center gap-1.5 !px-4 !py-2 text-sm`}>
-            {cfg.cta.label} <ArrowUpRight className="h-4 w-4" />
-          </Link>
+        <nav aria-label={cfg.nav} className="hidden xl:block">
+          <ul className="flex items-center gap-7 2xl:gap-9">
+            {cfg.groups.map((group) => (
+              <li key={group.label} className="nav-group relative flex items-center gap-1">
+                <NavLink
+                  item={group}
+                  className={`flex items-center gap-1 py-6 text-[0.98rem] font-medium transition-colors hover:text-[#541014] ${isActive(group) ? "text-[#541014]" : ""}`}
+                />
+                {group.items.length ? (
+                  <>
+                    <ChevronDown aria-hidden="true" className="pointer-events-none h-4 w-4 shrink-0" />
+                    <ul className="nav-panel">
+                      {group.items.map((item) => (
+                        <li key={item.href}>
+                          <NavLink item={item} className="block rounded-lg px-3 py-2.5 hover:bg-[#efedf7] hover:text-[#541014]" />
+                        </li>
+                      ))}
+                    </ul>
+                  </>
+                ) : null}
+              </li>
+            ))}
+          </ul>
         </nav>
 
-        <button type="button" className={`inline-flex h-10 w-10 items-center justify-center rounded-full border lg:hidden ${locale === "es" ? "personal-menu-button" : "border-border bg-card text-foreground"}`} onClick={() => setMobileOpen((value) => !value)} aria-label={locale === "en" ? "Open menu" : "Abrir menú"} aria-expanded={mobileOpen}>
-          {mobileOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
-        </button>
+        <div className="flex items-center gap-3">
+          <LanguageSwitcher lang={locale} className="hidden sm:flex" />
+          <button type="button" onClick={onCta} className="fx-btn fx-btn--sm hidden xl:inline-flex">
+            {cfg.cta} <ArrowUpRight aria-hidden="true" />
+          </button>
+          <button
+            type="button"
+            aria-expanded={open}
+            aria-controls="menu-movil"
+            aria-label={open ? cfg.close : cfg.open}
+            onClick={() => setOpen((v) => !v)}
+            className="grid h-10 w-10 place-items-center rounded-full border border-[#dfdcea] xl:hidden"
+          >
+            {open ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
+          </button>
+        </div>
       </div>
 
-      {mobileOpen && (
-        <div className={`max-h-[calc(100vh-5rem)] overflow-y-auto border-t lg:hidden ${locale === "es" ? "personal-mobile-menu" : "border-border/60 bg-background"}`}>
-          <nav className="container mx-auto flex flex-col gap-1 px-4 py-4 md:px-6">
-            {cfg.primary.map((item) => (
-              item.href.startsWith("https://") ? (
-                <a key={item.href} href={item.href} className="rounded-xl px-4 py-3 text-sm text-muted-foreground transition-colors hover:bg-accent hover:text-accent-foreground">
-                  {item.label}
-                </a>
-              ) : (
-                <Link key={item.href} to={item.href} onClick={() => setMobileOpen(false)} className={`rounded-xl px-4 py-3 text-sm transition-colors ${isActive(item.href) ? "bg-accent text-accent-foreground" : "text-muted-foreground hover:bg-accent hover:text-accent-foreground"}`}>
-                  {item.label}
-                </Link>
-              )
-            ))}
-            <Link to={cfg.cta.href} onClick={() => { onCta(); setMobileOpen(false); }} className={`${locale === "es" ? "seo-primary-button" : "btn-gold"} mt-2 inline-flex items-center justify-center gap-1.5`}>
-              {cfg.cta.label} <ArrowUpRight className="h-4 w-4" />
-            </Link>
-            <LanguageSwitcher lang={locale} className="mt-3 justify-center" onNavigate={() => setMobileOpen(false)} />
+      {open && (
+        <div id="menu-movil" className="max-h-[calc(100vh-5rem)] overflow-y-auto border-t border-[#dfdcea] bg-white xl:hidden">
+          <nav aria-label={cfg.nav} className="mx-auto max-w-3xl px-5 py-5">
+            <ul className="space-y-5">
+              {cfg.groups.map((group) => (
+                <li key={group.label}>
+                  {group.items.length ? (
+                    <>
+                      <p className="text-sm font-bold text-[#585665]">{group.label}</p>
+                      <ul className="mt-2 space-y-1">
+                        {group.items.map((item) => (
+                          <li key={item.href}>
+                            <NavLink item={item} onClick={() => setOpen(false)} className="block rounded-lg px-2 py-2 text-base hover:bg-[#efedf7]" />
+                          </li>
+                        ))}
+                      </ul>
+                    </>
+                  ) : (
+                    <NavLink item={group} onClick={() => setOpen(false)} className="block rounded-lg px-2 py-2 text-base font-medium hover:bg-[#efedf7]" />
+                  )}
+                </li>
+              ))}
+            </ul>
+            <LanguageSwitcher lang={locale} className="mt-6 sm:hidden" onNavigate={() => setOpen(false)} />
+            <button type="button" onClick={onCta} className="fx-btn mt-5 w-full">
+              {cfg.cta} <ArrowUpRight aria-hidden="true" />
+            </button>
           </nav>
         </div>
       )}

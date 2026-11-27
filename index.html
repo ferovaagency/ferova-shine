@@ -5,16 +5,18 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Especialista SEO por horas para agencias | Ferova</title>
-    <meta
-      name="description"
-      content="Contrata SEO técnico, mantenimiento web y landings por tarea, bolsa de horas o capacidad mensual. White label, sin sumar un cargo full time."
-    />
+    <!-- Sin meta description fija: cada ruta emite la suya desde <SEO>. Una fija
+         aquí quedaba duplicada en el HTML prerenderizado (66 de 68 páginas con la
+         misma descripción y 56 con dos), y Google mostraba la genérica. -->
     <link rel="icon" type="image/png" href="/favicon.png" />
     <link rel="shortcut icon" type="image/png" href="/favicon.png" />
     <link rel="apple-touch-icon" href="/favicon.png" />
-    <meta name="theme-color" content="#242322" />
+    <meta name="theme-color" content="#1b1a2b" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <!-- Fuentes del sistema Ferova. Van aquí y no como @import en el CSS: el
+         @import encadenaba la descarga detrás del CSS y bloqueaba el render. -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@500;600;700&family=Manrope:wght@400;500;600;700;800&family=IBM+Plex+Mono:wght@400;500&display=swap" />
 
     <!--
       hreflang, canonical, og:url, og:locale, og:type y twitter:* NO se declaran
@@ -36,6 +38,13 @@
         "logo": "https://seoparaecommerce.co/favicon.png",
         "description": "Capacidad técnica white label para agencias por tarea, bolsa de horas o capacidad mensual, sin sumar un cargo full time.",
         "foundingDate": "2022",
+        "address": {
+          "@type": "PostalAddress",
+          "streetAddress": "Cra. 7 #158-78, Torre 2, Oficina 1002 (North Point)",
+          "addressLocality": "Bogotá",
+          "addressRegion": "Bogotá D.C.",
+          "addressCountry": "CO"
+        },
         "founder": { "@type": "Person", "name": "María Fernanda Calderón Osorio" },
         "subOrganization": { "@id": "https://seoparaecommerce.co/#professional-service" },
         "areaServed": [
@@ -57,7 +66,10 @@
           "https://www.instagram.com/mafe.ferova/",
           "https://www.facebook.com/mafecalderon.SEO",
           "https://www.tiktok.com/@mafe.ferova",
-          "https://www.youtube.com/@FerovaAgency"
+          "https://www.youtube.com/@FerovaAgency",
+          "https://techbehemoths.com/company/ferova",
+          "https://share.google/SuMRS9Yzv1Od4d3iK",
+          "https://www.notion.com/es/@ferova"
         ],
         "knowsAbout": [
           "Technical SEO",
@@ -84,8 +96,9 @@
         "description": "SEO técnico y producción web white label por tarea, bolsa de horas o capacidad mensual para clientes de agencias.",
         "address": {
           "@type": "PostalAddress",
+          "streetAddress": "Cra. 7 #158-78, Torre 2, Oficina 1002 (North Point)",
           "addressLocality": "Bogotá",
-          "addressRegion": "Cundinamarca",
+          "addressRegion": "Bogotá D.C.",
           "addressCountry": "CO"
         },
         "areaServed": [
@@ -99,6 +112,7 @@
           "name": "María Fernanda Calderón Osorio",
           "jobTitle": "Founder & CEO"
         },
+        "hasMap": "https://share.google/SuMRS9Yzv1Od4d3iK",
         "telephone": "+17866894686",
         "email": "gerencia@seoparaecommerce.co",
         "sameAs": [
@@ -106,7 +120,10 @@
           "https://www.instagram.com/mafe.ferova/",
           "https://www.facebook.com/mafecalderon.SEO",
           "https://www.tiktok.com/@mafe.ferova",
-          "https://www.youtube.com/@FerovaAgency"
+          "https://www.youtube.com/@FerovaAgency",
+          "https://techbehemoths.com/company/ferova",
+          "https://share.google/SuMRS9Yzv1Od4d3iK",
+          "https://www.notion.com/es/@ferova"
         ],
         "knowsAbout": [
           "Technical SEO",

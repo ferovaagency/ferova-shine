@@ -10,7 +10,7 @@ import { getSupabase } from "@/integrations/supabase/lazy";
  *
  * ⚠️ Nunca lanza: si la tabla aún no existe (se crea en el backend Lovable
  * Cloud) o la red falla, el flujo del usuario NO se interrumpe. El lead siempre
- * tiene además su canal primario (WhatsApp / Brevo).
+ * tiene además su canal primario (WhatsApp).
  */
 export type LeadSource = "contact" | "diagnostic" | "ai_advisor" | "newsletter" | "tool";
 

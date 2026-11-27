@@ -473,3 +473,95 @@ export const SEO_SPECIALTIES: Record<Lang, Record<SeoSpecialtyKind, SeoSpecialty
   en: EN,
   pt: ES,
 };
+
+/**
+ * /seo-por-horas — página de la modalidad por horas (solo español).
+ *
+ * Existe porque "seo por horas" y "expertos seo por horas" traen más de la
+ * mitad de los clics orgánicos del sitio (Search Console, ago–nov 2026) y
+ * /precios, que los recibía, redirigía a /contacto. Precios y condiciones son
+ * los mismos de /seo-para-agencias: si cambian allá, cambian aquí.
+ */
+export const SEO_HOURS_ES: SeoSpecialtyContent = {
+  path: "/seo-por-horas",
+  metaTitle: "SEO por horas para agencias: bloque de 20 horas | Ferova",
+  eyebrow: "SEO POR HORAS · PARA AGENCIAS",
+  title: "SEO por horas para agencias: capacidad senior sin sumar un cargo.",
+  description:
+    "SEO técnico por horas para agencias: 20 horas senior al mes por USD 1.250 para auditorías, migraciones y correcciones, en marca blanca y sin contrato largo.",
+  problem:
+    "Un SEO técnico de tiempo completo no se justifica cuando los proyectos llegan por picos: una migración este mes, dos auditorías el siguiente. Las horas sueltas de alguien que no conoce a tus clientes terminan en entregables que tu equipo no puede explicar. Un bloque mensual de horas te da capacidad senior estable, con el mismo criterio en todos tus proyectos, sin contratar.",
+  outcomes: [
+    "Horas senior disponibles cada mes para repartir entre los clientes de tu agencia.",
+    "Un mismo criterio técnico en auditorías, migraciones, correcciones y revisiones.",
+    "Entregables en marca blanca que tu equipo revisa antes de que lleguen al cliente.",
+    "Sin contratos largos ni cuota de entrada.",
+  ],
+  deliverables: [
+    { title: "Auditorías y diagnósticos", description: "Rastreo, indexación, renderizado, datos estructurados y Core Web Vitals, con hallazgos priorizados y el logo de tu agencia." },
+    { title: "Arquitectura de catálogo", description: "Categorías, facetas, filtros, paginación, variantes de producto y enlazado interno para tiendas con miles de URLs." },
+    { title: "Migraciones de plataforma", description: "Inventario, equivalencias, redirects, QA en staging y monitoreo después del lanzamiento en Shopify, WooCommerce y WordPress." },
+    { title: "Correcciones, revisiones y landing pages", description: "Implementación y revisión de cambios técnicos, y landing pages que tu agencia entrega como propias." },
+  ],
+  process: [
+    { title: "Brief", time: "día 0", description: "Me cuentas los clientes, los objetivos y las fechas. Acordamos por escrito el rol, la visibilidad y cómo se reparten las horas." },
+    { title: "NDA y accesos", time: "día 1", description: "Firmo tu NDA antes de entrar a cualquier cuenta. Compartes Search Console, analítica y la plataforma de cada cliente." },
+    { title: "Prioridades del mes", description: "Ordenamos las tareas por impacto: qué va primero, qué entrega cada una y cómo se acepta." },
+    { title: "Entrega y soporte", time: "continuo", description: "Cada entregable llega primero a tu equipo. Lo explico y acompaño la implementación durante el mes." },
+  ],
+  pricing: {
+    kicker: "PRECIOS",
+    title: "Precios publicados. Sin llamada previa para conocer la cifra.",
+    intro: "El bloque de horas es la forma más flexible de trabajar con Ferova. Si tienes una tarea puntual, también puedes contratar la auditoría o el trabajo por sitio. Sin contratos largos ni cuota de entrada.",
+    serviceName: "SEO técnico por horas para agencias",
+    plans: [
+      { name: "Bloque de 20 horas", price: 1250, unit: "al mes", description: "Veinte horas senior al mes para auditorías, arquitectura, migraciones, correcciones y revisiones entre tus clientes." },
+      { name: "Auditoría técnica", price: 750, unit: "por sitio", description: "Auditoría técnica de un sitio, entregada bajo tu marca con un plan de acción priorizado." },
+      { name: "Por sitio, agencias nuevas", price: 500, unit: "al mes", description: "SEO técnico continuo para el sitio de un cliente, para agencias que empiezan su primer proyecto conmigo." },
+    ],
+    guarantee: "Garantía por escrito: si el entregable no se puede revender a tu cliente tal cual, bajo tu marca, no se cobra.",
+    currencyNote: "Precios en dólares estadounidenses (USD), facturados en USD.",
+  },
+  longform: [
+    {
+      heading: "Cuándo conviene contratar SEO por horas",
+      paragraphs: [
+        "El modelo por horas sirve cuando tu agencia ya vende SEO o desarrollo web y necesita criterio técnico senior varias veces al mes, pero no lo suficiente para un cargo de tiempo completo. Es el caso típico de agencias de performance, de desarrollo o de ecommerce con varios clientes activos.",
+        "Si solo necesitas una entrega concreta, como la auditoría de un sitio o el QA de una migración, te conviene más la tarea con precio cerrado. Si tienes un cliente que necesita trabajo continuo, el plan por sitio es más simple de presupuestar.",
+      ],
+    },
+    {
+      heading: "En qué se usan las horas del bloque",
+      paragraphs: [
+        "Las horas se reparten entre tus clientes según las prioridades que acordamos al inicio de cada mes. Estos son los usos más comunes:",
+      ],
+      bullets: [
+        "Auditorías técnicas y revisiones de indexación.",
+        "Planeación y QA de migraciones entre plataformas.",
+        "Arquitectura de catálogos y navegación facetada.",
+        "Revisión de cambios antes de publicar y corrección de errores técnicos.",
+        "Landing pages y apoyo web relacionado con SEO.",
+      ],
+    },
+    {
+      heading: "Por horas, por tarea o por sitio",
+      paragraphs: [
+        "Las tres modalidades tienen el mismo nivel técnico y la misma garantía. Cambia la forma de presupuestar: el bloque de horas te da flexibilidad para varios clientes, la tarea fija el precio de una entrega concreta y el plan por sitio cubre el trabajo continuo de un solo cliente.",
+      ],
+    },
+  ],
+  faqs: [
+    { question: "¿Cuánto cuesta el SEO por horas?", answer: "El bloque de 20 horas senior cuesta USD 1.250 al mes. También puedes contratar una auditoría técnica por USD 750 por sitio, o el trabajo continuo por sitio para agencias nuevas por USD 500 al mes." },
+    { question: "¿Qué puedo pedir dentro del bloque de horas?", answer: "Auditorías, arquitectura de catálogos, migraciones, correcciones técnicas, revisiones antes de publicar y landing pages. Las horas se reparten entre tus clientes según las prioridades del mes." },
+    { question: "¿Hay contrato largo o cuota de entrada?", answer: "No. En Ferova no pedimos contratos largos ni cobramos cuota de entrada. Pagas el bloque del mes que contratas." },
+    { question: "¿Puedes trabajar en marca blanca?", answer: "Sí. Puede ser marca blanca total, soporte interno o participación visible ante el cliente, según lo que acordemos por escrito." },
+    { question: "¿Firmas NDA?", answer: "Sí, antes de recibir cualquier dato o acceso del cliente. Puedo firmar el NDA de tu agencia o proponer uno." },
+    { question: "¿Con qué plataformas trabajas?", answer: "Shopify, WooCommerce y WordPress, incluidas las migraciones entre ellas." },
+  ],
+  relatedLinks: [
+    { label: "SEO marca blanca para agencias", to: "/seo-para-agencias" },
+    { label: "Auditoría SEO técnica", to: "/auditoria-seo-tecnica" },
+    { label: "Migraciones SEO", to: "/migraciones-seo" },
+    { label: "SEO para ecommerce", to: "/servicios/seo-ecommerce" },
+  ],
+};

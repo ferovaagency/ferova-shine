@@ -2,8 +2,23 @@
   "$schema": "https://openapi.vercel.sh/vercel.json",
   "redirects": [
     {
+      "source": "/pt/blog/:slug",
+      "destination": "/blog/:slug",
+      "permanent": true
+    },
+    {
+      "source": "/pt/blog",
+      "destination": "/blog",
+      "permanent": true
+    },
+    {
+      "source": "/about",
+      "destination": "/sobre-nosotros",
+      "permanent": true
+    },
+    {
       "source": "/services",
-      "destination": "/en",
+      "destination": "/en/white-label-seo-for-agencies",
       "permanent": true
     },
     {
@@ -13,67 +28,57 @@
     },
     {
       "source": "/pricing",
-      "destination": "/en/contact",
+      "destination": "/en/white-label-seo-for-agencies",
       "permanent": true
     },
     {
       "source": "/precios",
-      "destination": "/contacto",
+      "destination": "/seo-por-horas",
       "permanent": true
     },
     {
       "source": "/en/pricing",
-      "destination": "/en/contact",
+      "destination": "/en/white-label-seo-for-agencies",
       "permanent": true
     },
     {
       "source": "/pt/precos",
-      "destination": "/pt/contato",
-      "permanent": true
-    },
-    {
-      "source": "/newsletter",
-      "destination": "/",
-      "permanent": true
-    },
-    {
-      "source": "/en/newsletter",
-      "destination": "/en",
+      "destination": "/seo-por-horas",
       "permanent": true
     },
     {
       "source": "/pt/newsletter",
-      "destination": "/pt",
+      "destination": "/newsletter",
       "permanent": true
     },
     {
       "source": "/newsletter/archivo",
-      "destination": "/",
+      "destination": "/newsletter",
       "permanent": true
     },
     {
       "source": "/en/newsletter/archive",
-      "destination": "/en",
+      "destination": "/en/newsletter",
       "permanent": true
     },
     {
       "source": "/pt/newsletter/arquivo",
-      "destination": "/pt",
+      "destination": "/newsletter",
       "permanent": true
     },
     {
       "source": "/newsletter-pro",
-      "destination": "/",
+      "destination": "/newsletter",
       "permanent": true
     },
     {
       "source": "/en/newsletter-pro",
-      "destination": "/en",
+      "destination": "/en/newsletter",
       "permanent": true
     },
     {
       "source": "/pt/newsletter-pro",
-      "destination": "/pt",
+      "destination": "/newsletter",
       "permanent": true
     },
     {
@@ -88,7 +93,7 @@
     },
     {
       "source": "/pt/recursos/analisador-contratos",
-      "destination": "/pt/recursos",
+      "destination": "/recursos",
       "permanent": true
     },
     {
@@ -103,7 +108,7 @@
     },
     {
       "source": "/pt/recursos/comparador-propostas",
-      "destination": "/pt/recursos",
+      "destination": "/recursos",
       "permanent": true
     },
     {
@@ -118,7 +123,7 @@
     },
     {
       "source": "/pt/recursos/ferramentas",
-      "destination": "/pt/recursos",
+      "destination": "/recursos",
       "permanent": true
     },
     {
@@ -133,7 +138,7 @@
     },
     {
       "source": "/pt/recursos/ferramentas/calculadora-valor-hora-freelancer",
-      "destination": "/pt/recursos",
+      "destination": "/recursos",
       "permanent": true
     },
     {
@@ -148,187 +153,187 @@
     },
     {
       "source": "/pt/recursos/briefing-newsletter",
-      "destination": "/pt/recursos",
+      "destination": "/recursos",
       "permanent": true
     },
     {
       "source": "/newsletter/edicion/:slug",
-      "destination": "/",
+      "destination": "/newsletter",
       "permanent": true
     },
     {
       "source": "/en/newsletter/edition/:slug",
-      "destination": "/en",
+      "destination": "/en/newsletter",
       "permanent": true
     },
     {
       "source": "/pt/newsletter/edicao/:slug",
-      "destination": "/pt",
+      "destination": "/newsletter",
       "permanent": true
     },
     {
       "source": "/consultoria-estrategica",
-      "destination": "/",
+      "destination": "/seo-para-agencias",
       "permanent": true
     },
     {
       "source": "/en/strategy-advisory",
-      "destination": "/en",
+      "destination": "/en/white-label-seo-for-agencies",
       "permanent": true
     },
     {
       "source": "/pt/consultoria-estrategica",
-      "destination": "/pt",
+      "destination": "/seo-para-agencias",
       "permanent": true
     },
     {
       "source": "/capacitacion-ia",
-      "destination": "/",
+      "destination": "https://ferova.com.co/soluciones/automatizacion-ia",
       "permanent": true
     },
     {
       "source": "/en/ai-training",
-      "destination": "/en",
+      "destination": "https://ferova.com.co/en/solutions/ai-automation",
       "permanent": true
     },
     {
       "source": "/pt/treinamento-ia",
-      "destination": "/pt",
+      "destination": "https://ferova.com.co/soluciones/automatizacion-ia",
       "permanent": true
     },
     {
       "source": "/servicios/asesorias-marketing",
-      "destination": "/",
+      "destination": "/seo-para-agencias",
       "permanent": true
     },
     {
       "source": "/en/services/marketing-consulting",
-      "destination": "/en",
+      "destination": "/en/white-label-seo-for-agencies",
       "permanent": true
     },
     {
       "source": "/pt/consultorias",
-      "destination": "/pt",
+      "destination": "/seo-para-agencias",
       "permanent": true
     },
     {
       "source": "/servicios/optimizacion-linkedin",
-      "destination": "/",
+      "destination": "/sobre-nosotros",
       "permanent": true
     },
     {
       "source": "/en/services/linkedin-optimization",
-      "destination": "/en",
+      "destination": "/en/about-me",
       "permanent": true
     },
     {
       "source": "/pt/linkedin",
-      "destination": "/pt",
+      "destination": "/sobre-nosotros",
       "permanent": true
     },
     {
       "source": "/servicios/contenido-linkedin",
-      "destination": "/",
+      "destination": "/sobre-nosotros",
       "permanent": true
     },
     {
       "source": "/en/services/linkedin-content",
-      "destination": "/en",
+      "destination": "/en/about-me",
       "permanent": true
     },
     {
       "source": "/pt/conteudo-linkedin",
-      "destination": "/pt",
+      "destination": "/sobre-nosotros",
       "permanent": true
     },
     {
       "source": "/servicios/diseno-web",
-      "destination": "/",
+      "destination": "/seo-para-agencias",
       "permanent": true
     },
     {
       "source": "/en/services/web-design",
-      "destination": "/en",
+      "destination": "/en/white-label-seo-for-agencies",
       "permanent": true
     },
     {
       "source": "/pt/design-web",
-      "destination": "/pt",
+      "destination": "/seo-para-agencias",
       "permanent": true
     },
     {
       "source": "/soluciones",
-      "destination": "/",
+      "destination": "/auditoria-seo-tecnica",
       "permanent": true
     },
     {
       "source": "/en/solutions",
-      "destination": "/en",
+      "destination": "/en/technical-seo-audit-services",
       "permanent": true
     },
     {
       "source": "/pt/solucoes",
-      "destination": "/pt",
+      "destination": "/auditoria-seo-tecnica",
       "permanent": true
     },
     {
       "source": "/soluciones/diagnostico-empresarial",
-      "destination": "/",
+      "destination": "/auditoria-seo-tecnica",
       "permanent": true
     },
     {
       "source": "/en/solutions/business-diagnosis",
-      "destination": "/en",
+      "destination": "/en/technical-seo-audit-services",
       "permanent": true
     },
     {
       "source": "/pt/solucoes/diagnostico-empresarial",
-      "destination": "/pt",
+      "destination": "/auditoria-seo-tecnica",
       "permanent": true
     },
     {
       "source": "/metodo-ferova",
-      "destination": "/",
+      "destination": "/sobre-nosotros",
       "permanent": true
     },
     {
       "source": "/en/ferova-method",
-      "destination": "/en",
+      "destination": "/en/about-me",
       "permanent": true
     },
     {
       "source": "/pt/metodo-ferova",
-      "destination": "/pt",
+      "destination": "/sobre-nosotros",
       "permanent": true
     },
     {
       "source": "/servicios",
-      "destination": "/",
+      "destination": "/seo-para-agencias",
       "permanent": true
     },
     {
       "source": "/en/services",
-      "destination": "/en",
+      "destination": "/en/white-label-seo-for-agencies",
       "permanent": true
     },
     {
       "source": "/pt/servicos",
-      "destination": "/pt",
+      "destination": "/seo-para-agencias",
       "permanent": true
     },
     {
       "source": "/productos",
-      "destination": "/",
+      "destination": "https://ferova.com.co/productos/ferova-one",
       "permanent": true
     },
     {
       "source": "/en/products",
-      "destination": "/en",
+      "destination": "https://ferova.com.co/en/products/ferova-one",
       "permanent": true
     },
     {
       "source": "/pt/produtos",
-      "destination": "/pt",
+      "destination": "https://ferova.com.co/productos/ferova-one",
       "permanent": true
     },
     {
@@ -343,7 +348,7 @@
     },
     {
       "source": "/pt/ferramentas",
-      "destination": "/pt/recursos",
+      "destination": "/recursos",
       "permanent": true
     },
     {
@@ -353,7 +358,7 @@
     },
     {
       "source": "/en/about",
-      "destination": "/sobre-nosotros",
+      "destination": "/en/about-me",
       "permanent": true
     },
     {
@@ -511,12 +516,12 @@
     },
     {
       "source": "/como-aumentar-visitas-sitio-web-2025",
-      "destination": "/",
+      "destination": "/blog",
       "permanent": true
     },
     {
       "source": "/como-aumentar-visitas-sitio-web-2025/",
-      "destination": "/",
+      "destination": "/blog",
       "permanent": true
     },
     {
@@ -571,7 +576,7 @@
     },
     {
       "source": "/asesoria-de-marketing-1-a-1/",
-      "destination": "/servicios/asesorias-marketing",
+      "destination": "/seo-para-agencias",
       "permanent": true
     },
     {
@@ -606,97 +611,100 @@
     },
     {
       "source": "/category/guias-de-usuario/",
-      "destination": "/",
+      "destination": "/blog",
       "permanent": true
     },
     {
       "source": "/servicios/pauta-digital",
-      "destination": "/consultoria-estrategica",
+      "destination": "/blog/servicio-pauta-digital-ecommerce",
       "permanent": true
     },
     {
       "source": "/services/digital-ads",
-      "destination": "/en/strategy-advisory",
+      "destination": "/en/blog",
       "permanent": true
     },
     {
       "source": "/en/services/digital-ads",
-      "destination": "/en/strategy-advisory",
+      "destination": "/en/blog",
       "permanent": true
     },
     {
       "source": "/pt/anuncios-digitais",
-      "destination": "/pt/consultoria-estrategica",
+      "destination": "/blog/servicio-pauta-digital-ecommerce",
       "permanent": true
     },
     {
       "source": "/servicios/diseno-logos",
-      "destination": "/servicios/diseno-web",
+      "destination": "/seo-para-agencias",
       "permanent": true
     },
     {
       "source": "/services/logo-design",
-      "destination": "/en/services/web-design",
+      "destination": "/en/white-label-seo-for-agencies",
       "permanent": true
     },
     {
       "source": "/en/services/logo-design",
-      "destination": "/en/services/web-design",
+      "destination": "/en/white-label-seo-for-agencies",
       "permanent": true
     },
     {
       "source": "/pt/design-logos",
-      "destination": "/pt/design-web",
+      "destination": "/seo-para-agencias",
       "permanent": true
     },
     {
       "source": "/servicios/web-economica",
-      "destination": "/servicios/diseno-web",
+      "destination": "/seo-para-agencias",
       "permanent": true
     },
     {
       "source": "/en/services/starter-web",
-      "destination": "/en/services/web-design",
+      "destination": "/en/white-label-seo-for-agencies",
       "permanent": true
     },
     {
       "source": "/pt/web-economica",
-      "destination": "/pt/design-web",
+      "destination": "/seo-para-agencias",
       "permanent": true
     },
     {
       "source": "/servicios/whatsapp-business",
-      "destination": "/consultoria-estrategica",
+      "destination": "https://ferova.com.co/soluciones/automatizacion-ia",
       "permanent": true
     },
     {
       "source": "/services/whatsapp-business",
-      "destination": "/en/strategy-advisory",
+      "destination": "https://ferova.com.co/en/solutions/ai-automation",
       "permanent": true
     },
     {
       "source": "/pt/whatsapp-business",
-      "destination": "/pt/consultoria-estrategica",
+      "destination": "https://ferova.com.co/soluciones/automatizacion-ia",
       "permanent": true
     },
     {
       "source": "/servicios/whatsapp-ia-bot",
-      "destination": "/consultoria-estrategica",
+      "destination": "https://ferova.com.co/soluciones/automatizacion-ia",
       "permanent": true
     },
     {
       "source": "/services/whatsapp-ai-bot",
-      "destination": "/en/strategy-advisory",
+      "destination": "https://ferova.com.co/en/solutions/ai-automation",
       "permanent": true
     },
     {
       "source": "/pt/whatsapp-ia-bot",
-      "destination": "/pt/consultoria-estrategica",
+      "destination": "https://ferova.com.co/soluciones/automatizacion-ia",
       "permanent": true
     }
   ],
   "rewrites": [
-    { "source": "/portafolio", "destination": "/portafolio/index.html" },
+    {
+      "source": "/portafolio",
+      "destination": "/portafolio/index.html"
+    },
     {
       "source": "/(.*)",
       "destination": "/index.html"

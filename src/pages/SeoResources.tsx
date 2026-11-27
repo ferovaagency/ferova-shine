@@ -1,10 +1,11 @@
 import { Link } from "react-router-dom";
-import { ArrowRight, Bot, FileSearch, GitBranch, Library, Network } from "lucide-react";
+import { Bot, FileSearch, GitBranch, Library, Network } from "lucide-react";
 import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
 import SEO from "@/components/SEO";
 import { SEO_EDITORIAL } from "@/content/seoEditorial";
-import type { Lang } from "@/config/routes";
+import { SITE_ORIGIN, type Lang } from "@/config/routes";
+import { CtaBand, Eyebrow, FeraButton, FxLink, IconTile, PageHero, Section, SectionHeading } from "@/components/fx/primitives";
 
 /**
  * Página de recursos, la MISMA en los dos idiomas.
@@ -88,83 +89,86 @@ const COPY = {
 export default function SeoResources({ lang = "es" }: { lang?: Lang }) {
   const t = COPY[lang === "en" ? "en" : "es"];
   const isEn = lang === "en";
+  const crumbs = [{ name: t.home, path: isEn ? "/en" : "/" }, { name: t.crumb, path: t.path }];
+  const reading = SEO_EDITORIAL.slice(0, 6);
+
+  const collectionLd = {
+    "@context": "https://schema.org",
+    "@type": "CollectionPage",
+    name: t.seoTitle,
+    description: t.seoDesc,
+    url: `${SITE_ORIGIN}${t.path}`,
+    inLanguage: isEn ? "en" : "es",
+    isPartOf: { "@type": "WebSite", url: SITE_ORIGIN },
+    mainEntity: {
+      "@type": "ItemList",
+      itemListElement: [
+        ...t.collections.map((c) => ({ name: c.title, url: `${SITE_ORIGIN}${c.href}` })),
+        ...reading.map((post) => ({ name: isEn ? post.titleEn : post.title, url: `${SITE_ORIGIN}${t.blog}/${post.slug}` })),
+        { name: t.toolsTitle, url: `${SITE_ORIGIN}${TOOL}` },
+      ].map((item, index) => ({ "@type": "ListItem", position: index + 1, ...item })),
+    },
+  };
 
   return (
-    <div className="seo-brand personal-interior-page min-h-screen text-slate-950">
+    <div className="fx-site min-h-screen">
       <SEO
         title={t.seoTitle}
         description={t.seoDesc}
         path={t.path}
         lang={lang}
-        breadcrumbs={[{ name: t.home, path: isEn ? "/en" : "/" }, { name: t.crumb, path: t.path }]}
+        breadcrumbs={crumbs}
+        jsonLd={collectionLd}
       />
       <Header lang={lang} />
 
-      <main className="pt-20">
-        <section className="bg-[#541014] py-20 text-white md:py-28">
-          <div className="container mx-auto max-w-6xl px-4 md:px-6">
-            <p className="text-xs font-bold uppercase tracking-[.22em] text-[#e0bd52]">{t.eyebrow}</p>
-            <h1 className="mt-5 max-w-4xl font-display text-4xl font-bold tracking-tight md:text-6xl">{t.h1}</h1>
-            <p className="mt-7 max-w-3xl text-lg leading-8 text-white/70">{t.lede}</p>
-          </div>
-        </section>
+      <main id="contenido-principal" className="pt-20">
+        <PageHero eyebrow={t.eyebrow} title={t.h1} intro={t.lede} breadcrumbs={crumbs.slice(1)} lang={lang} />
 
-        <section className="py-20 md:py-28">
-          <div className="container mx-auto max-w-6xl px-4 md:px-6">
-            <p className="seo-kicker">{t.exploreKicker}</p>
-            <div className="mt-10 grid gap-5 md:grid-cols-2 lg:grid-cols-3">
-              {t.collections.map((c, i) => {
-                const Icon = ICONS[i] ?? FileSearch;
-                return (
-                  <Link key={c.title} to={c.href} className="seo-bento-card group rounded-3xl p-7">
-                    <Icon className="h-7 w-7 text-[#6a4c30]" />
-                    <h2 className="mt-7 font-display text-2xl font-bold">{c.title}</h2>
-                    <p className="mt-3 leading-7 text-slate-600">{c.text}</p>
-                    <span className="mt-6 inline-flex items-center gap-2 font-semibold text-[#6a4c30]">
-                      {t.seeMore} <ArrowRight className="h-4 w-4 transition group-hover:translate-x-1" />
-                    </span>
+        <Section>
+          <Eyebrow>{t.exploreKicker}</Eyebrow>
+          <ul className="mt-10 grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+            {t.collections.map((c, i) => {
+              const Icon = ICONS[i] ?? FileSearch;
+              return (
+                <li key={c.title}>
+                  <Link to={c.href} className="panel-card group flex h-full flex-col">
+                    <IconTile icon={Icon} />
+                    <h2 className="text-2xl">{c.title}</h2>
+                    <p className="fx-muted mt-3 leading-relaxed">{c.text}</p>
+                    <span className="mt-auto pt-6 font-semibold text-[#541014] group-hover:underline">{t.seeMore} →</span>
                   </Link>
-                );
-              })}
-            </div>
-          </div>
-        </section>
+                </li>
+              );
+            })}
+          </ul>
+        </Section>
 
-        <section className="bg-[#f4eadb] py-20 md:py-24">
-          <div className="container mx-auto max-w-6xl px-4 md:px-6">
-            <div className="flex flex-col justify-between gap-5 md:flex-row md:items-end">
-              <div>
-                <p className="seo-kicker">{t.readingKicker}</p>
-                <h2 className="mt-4 font-display text-3xl font-bold md:text-5xl">{t.readingTitle}</h2>
-              </div>
-              <Link to={t.blog} className="inline-flex items-center gap-2 font-semibold text-[#6a4c30]">
-                {t.allPosts} <ArrowRight className="h-4 w-4" />
-              </Link>
-            </div>
-            <div className="mt-10 grid gap-5 md:grid-cols-3">
-              {SEO_EDITORIAL.slice(0, 6).map((post) => (
-                <Link key={post.slug} to={`${t.blog}/${post.slug}`} className="seo-bento-card rounded-2xl p-6">
-                  <span className="text-xs font-bold uppercase tracking-wider text-[#8c6905]">{t.categoryLabel[post.category]}</span>
-                  <h3 className="mt-4 font-display text-xl font-bold">{isEn ? post.titleEn : post.title}</h3>
-                  <p className="mt-3 text-sm leading-6 text-slate-600">{isEn ? post.excerptEn : post.excerpt}</p>
+        <Section tone="surface">
+          <div className="flex flex-col justify-between gap-6 md:flex-row md:items-end">
+            <SectionHeading eyebrow={t.readingKicker} title={t.readingTitle} />
+            <FxLink to={t.blog} variant="outline" className="shrink-0">{t.allPosts}</FxLink>
+          </div>
+          <ul className="mt-12 grid gap-4 md:grid-cols-2 lg:grid-cols-3">
+            {reading.map((post) => (
+              <li key={post.slug}>
+                <Link to={`${t.blog}/${post.slug}`} className="link-tile !p-6">
+                  <span className="fx-muted block text-sm font-semibold">{t.categoryLabel[post.category]}</span>
+                  <h3 className="mt-3 text-xl leading-snug">{isEn ? post.titleEn : post.title}</h3>
+                  <p className="fx-muted mt-3 text-sm leading-relaxed">{isEn ? post.excerptEn : post.excerpt}</p>
                 </Link>
-              ))}
-            </div>
-          </div>
-        </section>
+              </li>
+            ))}
+          </ul>
+        </Section>
 
-        <section className="py-20">
-          <div className="container mx-auto flex max-w-5xl flex-col items-start justify-between gap-8 rounded-3xl bg-[#3c3c3b] px-8 py-12 text-white md:flex-row md:items-center md:px-12">
-            <div>
-              <Bot className="h-8 w-8 text-[#e0bd52]" />
-              <h2 className="mt-6 font-display text-3xl font-bold">{t.toolsTitle}</h2>
-              <p className="mt-3 max-w-2xl text-white/70">{t.toolsLede}</p>
-            </div>
-            <Link to={TOOL} className="seo-primary-button shrink-0">
-              {t.toolsCta} <ArrowRight className="h-4 w-4" />
-            </Link>
-          </div>
-        </section>
+        <CtaBand
+          title={<><Bot aria-hidden="true" className="mx-auto mb-6 block h-9 w-9 text-[#ffe7a3]" />{t.toolsTitle}</>}
+          body={t.toolsLede}
+        >
+          <FxLink to={TOOL}>{t.toolsCta}</FxLink>
+          <FeraButton variant="outline" source={`resources_${isEn ? "en" : "es"}_final`}>{isEn ? "Talk to Fera" : "Hablar con Fera"}</FeraButton>
+        </CtaBand>
       </main>
       <Footer lang={lang} />
     </div>

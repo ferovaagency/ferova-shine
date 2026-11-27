@@ -1,18 +1,20 @@
-import { useEffect, useRef } from "react";
+import type { ReactNode } from "react";
 import { Link } from "react-router-dom";
-import { ArrowRight } from "lucide-react";
+import { ArrowUpRight } from "lucide-react";
 import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
 import SEO from "@/components/SEO";
 import { SITE_ORIGIN } from "@/config/routes";
-import "./white-label-landing.css";
+import { FeraButton, PageHero, Panel, Section, SectionHeading } from "@/components/fx/primitives";
 import {
   WL_HERO, WL_STATS, WL_INTRO, WL_SCOPE, WL_COST, WL_RISK, WL_MODELS,
   WL_BRAND, WL_FEROVA, WL_FRAMEWORK, WL_CHANNELS, WL_RELATED, WL_FINAL, WL_SEO,
-  type Frag,
+  type Frag, type Rung,
 } from "@/content/whiteLabelVsInHouse";
 
 const LINKEDIN = "https://www.linkedin.com/in/maria-fer-calderon/";
+const MONO = { fontFamily: '"IBM Plex Mono", ui-monospace, monospace' };
+const POPPINS = { fontFamily: "Poppins, system-ui, sans-serif" };
 
 /** Renderiza un párrafo con enlaces internos sobre el texto literal. */
 function P({ frags, className }: { frags: Frag[]; className?: string }) {
@@ -22,7 +24,7 @@ function P({ frags, className }: { frags: Frag[]; className?: string }) {
         typeof f === "string" ? (
           f
         ) : (
-          <Link key={i} to={f.to} className="wl-il">
+          <Link key={i} to={f.to} className="font-semibold text-[var(--fx-primary)] underline decoration-[#c0930e] underline-offset-[0.2em]">
             {f.text}
           </Link>
         ),
@@ -31,75 +33,65 @@ function P({ frags, className }: { frags: Frag[]; className?: string }) {
   );
 }
 
-const SECTIONS = ["top", "scope", "cost", "risk", "models", "brand", "ferova", "reach"];
+/** Subapartado: etiqueta a la izquierda, H3 y texto a la derecha. */
+function Sub({ tag, title, children }: { tag: string; title: string; children: ReactNode }) {
+  return (
+    <div className="grid gap-3 border-t pt-8 md:grid-cols-[14rem_minmax(0,1fr)] md:gap-10" style={{ borderColor: "var(--fx-border)" }}>
+      <p className="text-sm font-semibold uppercase tracking-[0.06em] text-[var(--fx-accent)]" style={POPPINS}>
+        {tag}
+      </p>
+      <div>
+        <h3 className="text-xl sm:text-2xl">{title}</h3>
+        <div className="fx-muted mt-3 leading-relaxed sm:text-lg">{children}</div>
+      </div>
+    </div>
+  );
+}
+
+/** Escalera de costos: la barra es proporcional al rango y solo decorativa. */
+function Ladder({ rungs }: { rungs: Rung[] }) {
+  return (
+    <div className="mt-6 grid gap-3">
+      {rungs.map((r) => (
+        <div
+          key={r.label}
+          className="grid grid-cols-[1fr_auto] items-center gap-4 rounded-xl px-5 py-4"
+          style={{
+            background: `linear-gradient(90deg, rgb(255 255 255 / 16%) ${r.bar}, rgb(255 255 255 / 6%) ${r.bar})`,
+          }}
+        >
+          <span>{r.label}</span>
+          <span className="whitespace-nowrap font-semibold tabular-nums" style={POPPINS}>
+            {r.value}
+          </span>
+        </div>
+      ))}
+    </div>
+  );
+}
+
+/** Banda vino de cierre (misma pieza visual que CtaBand) con etiqueta sobre el titular. */
+function ClosingBand({ eyebrow, title, children }: { eyebrow: string; title: ReactNode; children: ReactNode }) {
+  return (
+    <section className="cta-band on-dark">
+      <div className="mx-auto flex w-full max-w-5xl flex-col items-center px-5 py-20 text-center sm:px-8 sm:py-28">
+        <p className="eyebrow-pill mb-6">{eyebrow}</p>
+        <h2 className="max-w-[22ch] text-4xl leading-[1.15] sm:text-5xl">{title}</h2>
+        <div className="mt-10 flex flex-wrap justify-center gap-3">{children}</div>
+      </div>
+    </section>
+  );
+}
 
 /**
- * Landing /en/white-label-seo-vs-in-house.
+ * Landing /en/white-label-seo-vs-in-house con el sistema de diseño de Ferova.
  *
- * No usa PositioningPage: la maquetación es de una sola pieza. El texto es
- * literal del documento aprobado (src/content/whiteLabelVsInHouse.ts) y todo el
- * movimiento es presentación: aparición al scroll, barra de progreso, parallax
- * suave del hero y raíl de secciones. Todo respeta prefers-reduced-motion.
+ * No usa PositioningPage: el texto es literal del documento aprobado
+ * (src/content/whiteLabelVsInHouse.ts). Se compone con las piezas del sistema:
+ * héroe índigo, cifras en case-card, secciones alternas, un bloque oscuro para
+ * los costos y banda vino de cierre.
  */
 export default function WhiteLabelVsInHouse() {
-  const progRef = useRef<HTMLDivElement>(null);
-  const heroBgRef = useRef<HTMLDivElement>(null);
-
-  useEffect(() => {
-    const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-
-    // Aparición al entrar en viewport.
-    const els = Array.from(document.querySelectorAll<HTMLElement>(".wl-rv, .wl-rung"));
-    let io: IntersectionObserver | undefined;
-    if (reduce) {
-      els.forEach((el) => el.classList.add("is-in"));
-    } else {
-      io = new IntersectionObserver(
-        (entries) =>
-          entries.forEach((e) => {
-            if (e.isIntersecting) {
-              e.target.classList.add("is-in");
-              io?.unobserve(e.target);
-            }
-          }),
-        { rootMargin: "0px 0px -12% 0px", threshold: 0.08 },
-      );
-      els.forEach((el) => io!.observe(el));
-    }
-
-    // Progreso + parallax.
-    const onScroll = () => {
-      const h = document.documentElement;
-      const pct = h.scrollTop / (h.scrollHeight - h.clientHeight || 1);
-      if (progRef.current) progRef.current.style.width = `${pct * 100}%`;
-      if (heroBgRef.current && !reduce) {
-        heroBgRef.current.style.transform = `scale(1.06) translateY(${h.scrollTop * 0.14}px)`;
-      }
-    };
-    window.addEventListener("scroll", onScroll, { passive: true });
-    onScroll();
-
-    // Punto activo del raíl.
-    const dots = Array.from(document.querySelectorAll<HTMLAnchorElement>(".wl-rail a"));
-    const secs = SECTIONS.map((id) => document.getElementById(id));
-    const io2 = new IntersectionObserver(
-      (entries) =>
-        entries.forEach((e) => {
-          if (!e.isIntersecting) return;
-          const i = secs.indexOf(e.target as HTMLElement);
-          dots.forEach((d, j) => d.classList.toggle("is-on", j === i));
-        }),
-      { threshold: 0.2, rootMargin: "-25% 0px -55% 0px" },
-    );
-    secs.forEach((s) => s && io2.observe(s));
-
-    return () => {
-      io?.disconnect();
-      io2.disconnect();
-      window.removeEventListener("scroll", onScroll);
-    };
-  }, []);
-
   const articleLd = {
     "@context": "https://schema.org",
     "@type": "Article",
@@ -118,9 +110,10 @@ export default function WhiteLabelVsInHouse() {
     address: { "@type": "PostalAddress", addressLocality: "Bogotá", addressCountry: "CO" },
     sameAs: [LINKEDIN],
   };
+  const crumbs = [{ name: "White label vs in-house", path: WL_SEO.path }];
 
   return (
-    <div className="wl seo-brand min-h-screen">
+    <div className="fx-site min-h-screen">
       <SEO
         title={WL_SEO.title}
         description={WL_SEO.description}
@@ -128,312 +121,232 @@ export default function WhiteLabelVsInHouse() {
         lang="en"
         type="article"
         jsonLd={[articleLd, personLd]}
-        breadcrumbs={[
-          { name: "Home", path: "/en" },
-          { name: "White label vs in-house", path: WL_SEO.path },
-        ]}
+        breadcrumbs={[{ name: "Home", path: "/en" }, ...crumbs]}
       />
       <Header lang="en" />
 
-      <div className="wl-prog" ref={progRef} aria-hidden="true" />
-      <nav className="wl-rail" aria-label="Sections">
-        {SECTIONS.map((id, i) => (
-          <a key={id} href={`#${id}`} className={i === 0 ? "is-on" : undefined} aria-label={id} />
-        ))}
-      </nav>
-
-      <main id="contenido-principal">
+      <main id="contenido-principal" className="pt-20">
         {/* ---------- hero ---------- */}
-        <header className="wl-hero" id="top">
-          {WL_HERO.heroImage && (
-            <div
-              className="wl-hero-bg"
-              ref={heroBgRef}
-              style={{ backgroundImage: `url('${WL_HERO.heroImage}')` }}
-              aria-hidden="true"
-            />
-          )}
-          <div className="wl-hero-veil" aria-hidden="true" />
-          <div className="wl-wrap">
-            <p className="wl-eyebrow wl-rv">{WL_HERO.eyebrow}</p>
-            <h1 className="wl-rv wl-d1">
-              {WL_HERO.h1a}
-              <em>{WL_HERO.h1b}</em>
-            </h1>
-            <p className="wl-lede wl-rv wl-d2">{WL_HERO.lede}</p>
-            <div className="wl-cta-row wl-rv wl-d3">
-              <a href="#reach" className="seo-primary-button" data-cta="hero">
-                {WL_HERO.ctaPrimary} <ArrowRight className="h-4 w-4" />
-              </a>
-              <a href="#cost" className="seo-secondary-button">
-                {WL_HERO.ctaSecondary}
-              </a>
-            </div>
-          </div>
-        </header>
+        <div id="top">
+          <PageHero
+            align="left"
+            lang="en"
+            breadcrumbs={crumbs}
+            eyebrow={WL_HERO.eyebrow}
+            title={
+              <>
+                {WL_HERO.h1a}
+                <em className="not-italic text-[#ffe7a3]">{WL_HERO.h1b}</em>
+              </>
+            }
+            intro={WL_HERO.lede}
+          >
+            <a href="#reach" className="fx-btn" data-cta="hero">
+              {WL_HERO.ctaPrimary} <ArrowUpRight aria-hidden="true" />
+            </a>
+            <a href="#cost" className="fx-btn fx-btn--outline">
+              {WL_HERO.ctaSecondary}
+            </a>
+          </PageHero>
+        </div>
 
         {/* ---------- tira de cifras ---------- */}
-        <section className="wl-strip">
-          <div className="wl-wrap">
-            {WL_STATS.map((s, i) => (
-              <div key={s.n} className={`wl-stat wl-rv wl-d${i}`}>
-                <p className="n">{s.n}</p>
-                <p className="l">{s.l}</p>
+        <Section tone="surface">
+          <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
+            {WL_STATS.map((s) => (
+              <div key={s.n} className="case-card">
+                <strong className="!mt-0">{s.n}</strong>
+                <p className="fx-muted mt-3 text-sm leading-relaxed">{s.l}</p>
               </div>
             ))}
           </div>
-        </section>
+        </Section>
 
         {/* ---------- intro ---------- */}
-        <section className="wl-s">
-          <div className="wl-wrap wl-two">
-            <div className="wl-rv">
-              <p className="wl-kick">{WL_INTRO.kick}</p>
-              <h2>{WL_INTRO.h2}</h2>
-            </div>
-            <div className="wl-rv wl-d1">
+        <Section>
+          <div className="grid gap-10 lg:grid-cols-2 lg:gap-20">
+            <SectionHeading eyebrow={WL_INTRO.kick} title={WL_INTRO.h2} />
+            <div className="fx-muted space-y-4 leading-relaxed sm:text-lg">
               <P frags={WL_INTRO.p1} />
-              <P frags={WL_INTRO.p2} className="wl-p" />
+              <P frags={WL_INTRO.p2} />
             </div>
           </div>
-        </section>
+        </Section>
 
         {/* ---------- alcance ---------- */}
-        <section className="wl-s wl-s--white" id="scope">
-          <div className="wl-wrap">
-            <div className="wl-rv">
-              <p className="wl-kick">{WL_SCOPE.kick}</p>
-              <h2>{WL_SCOPE.h2}</h2>
-              <p className="wl-p wl-col">{WL_SCOPE.lead}</p>
-            </div>
+        <Section tone="surface" id="scope">
+          <SectionHeading eyebrow={WL_SCOPE.kick} title={WL_SCOPE.h2} />
+          <p className="fx-muted mt-6 max-w-3xl leading-relaxed sm:text-lg">{WL_SCOPE.lead}</p>
+          <div className="mt-12 grid gap-10">
             {WL_SCOPE.subs.map((s) => (
-              <div className="wl-sub wl-rv" key={s.tag}>
-                <p className="wl-tag">{s.tag}</p>
-                <div>
-                  <h3>{s.h3}</h3>
-                  <P frags={s.body} className="wl-p" />
-                </div>
-              </div>
+              <Sub key={s.tag} tag={s.tag} title={s.h3}>
+                <P frags={s.body} />
+              </Sub>
             ))}
           </div>
-        </section>
+        </Section>
 
-        {/* ---------- costo ---------- */}
-        <section className="wl-s wl-s--ink" id="cost">
-          <div className="wl-wrap">
-            <div className="wl-rv">
-              <p className="wl-kick">{WL_COST.kick}</p>
-              <h2>{WL_COST.h2}</h2>
-              <p className="wl-p wl-col">{WL_COST.lead}</p>
-            </div>
+        {/* ---------- costo (bloque oscuro de énfasis) ---------- */}
+        <Section tone="ink" id="cost">
+          <SectionHeading eyebrow={WL_COST.kick} title={WL_COST.h2} />
+          <p className="fx-muted mt-6 max-w-3xl leading-relaxed sm:text-lg">{WL_COST.lead}</p>
 
-            <div className="wl-face wl-rv wl-d1">
-              <div className="a">
-                <h3>{WL_COST.inHouse.h3}</h3>
-                <p>{WL_COST.inHouse.intro}</p>
-                <div className="wl-ladder">
-                  {WL_COST.inHouse.rungs.map((r, i) => (
-                    <div
-                      key={r.label}
-                      className={`wl-rung wl-rv wl-d${i}`}
-                      style={{ ["--wl-bar" as string]: r.bar }}
-                    >
-                      <span>{r.label}</span>
-                      <span className="v">{r.value}</span>
-                    </div>
-                  ))}
-                </div>
-                <p style={{ marginTop: 20 }}>{WL_COST.inHouse.outro}</p>
-              </div>
-              <div className="b">
-                <h3>{WL_COST.wholesale.h3}</h3>
-                <P frags={WL_COST.wholesale.body} />
-                <div className="wl-ladder">
-                  {WL_COST.wholesale.rungs.map((r, i) => (
-                    <div
-                      key={r.label}
-                      className={`wl-rung wl-rv wl-d${i}`}
-                      style={{ ["--wl-bar" as string]: r.bar }}
-                    >
-                      <span>{r.label}</span>
-                      <span className="v">{r.value}</span>
-                    </div>
-                  ))}
-                </div>
-              </div>
-            </div>
-
-            <div className="wl-mid wl-rv">
-              <p>{WL_COST.mid.text}</p>
-              <a href="#reach" className="seo-primary-button" data-cta="mid">
-                {WL_COST.mid.label} <ArrowRight className="h-4 w-4" />
-              </a>
-            </div>
+          <div className="mt-12 grid gap-5 lg:grid-cols-2">
+            <Panel>
+              <h3>{WL_COST.inHouse.h3}</h3>
+              <p className="fx-muted mt-3 leading-relaxed">{WL_COST.inHouse.intro}</p>
+              <Ladder rungs={WL_COST.inHouse.rungs} />
+              <p className="fx-muted mt-5 leading-relaxed">{WL_COST.inHouse.outro}</p>
+            </Panel>
+            <Panel>
+              <h3>{WL_COST.wholesale.h3}</h3>
+              <P frags={WL_COST.wholesale.body} className="fx-muted mt-3 leading-relaxed" />
+              <Ladder rungs={WL_COST.wholesale.rungs} />
+            </Panel>
           </div>
-        </section>
 
-        {/* ---------- riesgo ---------- */}
-        <section className="wl-s" id="risk">
-          <div className="wl-wrap wl-two">
-            <div className="wl-rv">
-              <p className="wl-kick">{WL_RISK.kick}</p>
-              <h2>{WL_RISK.h2}</h2>
-            </div>
-            <div className="wl-rv wl-d1">
-              <p>{WL_RISK.lead}</p>
-            </div>
-          </div>
-          <div className="wl-wrap">
-            {WL_RISK.subs.map((s) => (
-              <div className="wl-sub wl-rv" key={s.tag}>
-                <p className="wl-tag">{s.tag}</p>
-                <div>
-                  <h3>{s.h3}</h3>
-                  <p className="wl-p">{s.body}</p>
-                </div>
-              </div>
-            ))}
-          </div>
-        </section>
-
-        {/* ---------- modalidades ---------- */}
-        <section className="wl-s wl-s--sand" id="models">
-          <div className="wl-wrap">
-            <div className="wl-rv">
-              <p className="wl-kick">{WL_MODELS.kick}</p>
-              <h2>{WL_MODELS.h2}</h2>
-              <P frags={WL_MODELS.lead} className="wl-p wl-col" />
-            </div>
-            <div className="wl-cards">
-              {WL_MODELS.cards.map((c, i) => (
-                <div className={`wl-card wl-rv wl-d${i}`} key={c.num}>
-                  <p className="num">{c.num}</p>
-                  <h3>{c.h3}</h3>
-                  <p>{c.p}</p>
-                </div>
-              ))}
-            </div>
-            {WL_MODELS.subs.map((s) => (
-              <div className="wl-sub wl-rv" key={s.tag}>
-                <p className="wl-tag">{s.tag}</p>
-                <div>
-                  <h3>{s.h3}</h3>
-                  <P frags={s.body} className="wl-p" />
-                </div>
-              </div>
-            ))}
-          </div>
-        </section>
-
-        {/* ---------- integración ---------- */}
-        <section className="wl-s wl-s--white" id="brand">
-          <div className="wl-wrap">
-            <div className="wl-rv">
-              <p className="wl-kick">{WL_BRAND.kick}</p>
-              <h2>{WL_BRAND.h2}</h2>
-              <p className="wl-p wl-col">{WL_BRAND.lead}</p>
-            </div>
-            <div className="wl-steps">
-              {WL_BRAND.steps.map((s, i) => (
-                <div className={`wl-step wl-rv wl-d${i}`} key={s.n}>
-                  <p className="n">{s.n}</p>
-                  <div>
-                    <h3>{s.h3}</h3>
-                    <p>{s.p}</p>
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
-        </section>
-
-        {/* ---------- en la práctica ---------- */}
-        <section className="wl-s wl-s--dark" id="ferova">
-          <div className="wl-wrap">
-            <div className="wl-rv">
-              <p className="wl-kick">{WL_FEROVA.kick}</p>
-              <h2>{WL_FEROVA.h2}</h2>
-              <p className="wl-p wl-col">{WL_FEROVA.lead}</p>
-            </div>
-            <div className="wl-face wl-rv wl-d1">
-              <div className="a">
-                <h3>{WL_FEROVA.left.h3}</h3>
-                <P frags={WL_FEROVA.left.body} />
-              </div>
-              <div className="b">
-                <h3>{WL_FEROVA.right.h3}</h3>
-                <P frags={WL_FEROVA.right.body} />
-              </div>
-            </div>
-          </div>
-        </section>
-
-        {/* ---------- marco de decisión ---------- */}
-        <section className="wl-s">
-          <div className="wl-wrap wl-two">
-            <div className="wl-rv">
-              <p className="wl-kick">{WL_FRAMEWORK.kick}</p>
-              <h2>{WL_FRAMEWORK.h2}</h2>
-            </div>
-            <div className="wl-rv wl-d1">
-              <p>{WL_FRAMEWORK.p1}</p>
-              <P frags={WL_FRAMEWORK.p2} className="wl-p" />
-            </div>
-          </div>
-        </section>
-
-        {/* ---------- canales + relacionados ---------- */}
-        <section className="wl-s wl-s--sand" id="reach">
-          <div className="wl-wrap">
-            <div className="wl-rv">
-              <p className="wl-kick">{WL_CHANNELS.kick}</p>
-              <h2>{WL_CHANNELS.h2}</h2>
-            </div>
-            <div className="wl-ch-grid">
-              {WL_CHANNELS.items.map((c, i) => {
-                const isMail = c.href.startsWith("mailto:");
-                return (
-                  <a
-                    key={c.n}
-                    className={`wl-ch wl-rv wl-d${i}`}
-                    href={c.href}
-                    target={isMail ? undefined : "_blank"}
-                    rel={isMail ? undefined : "noopener noreferrer"}
-                    data-cta={`channel-${c.n.toLowerCase()}`}
-                  >
-                    <p className="n">{c.n}</p>
-                    <p className="dd">{c.dd}</p>
-                    <span className="go">{c.go} →</span>
-                  </a>
-                );
-              })}
-            </div>
-
-            <p className="wl-kick wl-rv" style={{ marginTop: 52 }}>
-              Related
+          <div className="mt-10 flex flex-wrap items-center justify-between gap-6 rounded-[1.25rem] border p-8" style={{ borderColor: "var(--fx-border)" }}>
+            <p className="max-w-[40ch] text-xl font-semibold md:text-2xl" style={POPPINS}>
+              {WL_COST.mid.text}
             </p>
-            <ul className="wl-rel wl-rv">
-              {WL_RELATED.map((r) => (
-                <li key={r.to}>
-                  <Link to={r.to}>{r.label}</Link>
-                </li>
-              ))}
-            </ul>
-          </div>
-        </section>
-
-        {/* ---------- cierre ---------- */}
-        <section className="wl-final">
-          <div className="wl-wrap">
-            <div className="wl-rv">
-              <p className="wl-eyebrow">{WL_FINAL.eyebrow}</p>
-              <h2 style={{ marginTop: 14 }}>{WL_FINAL.h2}</h2>
-            </div>
-            <a href="#reach" className="seo-primary-button wl-rv wl-d1" data-cta="final">
-              {WL_FINAL.label} <ArrowRight className="h-4 w-4" />
+            <a href="#reach" className="fx-btn shrink-0" data-cta="mid">
+              {WL_COST.mid.label} <ArrowUpRight aria-hidden="true" />
             </a>
           </div>
-        </section>
+        </Section>
+
+        {/* ---------- riesgo ---------- */}
+        <Section id="risk">
+          <div className="grid gap-10 lg:grid-cols-2 lg:gap-20">
+            <SectionHeading eyebrow={WL_RISK.kick} title={WL_RISK.h2} />
+            <p className="fx-muted leading-relaxed sm:text-lg lg:self-end">{WL_RISK.lead}</p>
+          </div>
+          <div className="mt-12 grid gap-10">
+            {WL_RISK.subs.map((s) => (
+              <Sub key={s.tag} tag={s.tag} title={s.h3}>
+                <p>{s.body}</p>
+              </Sub>
+            ))}
+          </div>
+        </Section>
+
+        {/* ---------- modalidades ---------- */}
+        <Section tone="surface" id="models">
+          <SectionHeading eyebrow={WL_MODELS.kick} title={WL_MODELS.h2} />
+          <P frags={WL_MODELS.lead} className="fx-muted mt-6 max-w-3xl leading-relaxed sm:text-lg" />
+          <div className="mt-12 grid gap-5 md:grid-cols-3">
+            {WL_MODELS.cards.map((c) => (
+              <Panel key={c.num}>
+                <p className="mb-6 text-sm text-[var(--fx-accent)]" style={MONO}>
+                  {c.num}
+                </p>
+                <h3>{c.h3}</h3>
+                <p className="fx-muted mt-3 leading-relaxed">{c.p}</p>
+              </Panel>
+            ))}
+          </div>
+          <div className="mt-14 grid gap-10">
+            {WL_MODELS.subs.map((s) => (
+              <Sub key={s.tag} tag={s.tag} title={s.h3}>
+                <P frags={s.body} />
+              </Sub>
+            ))}
+          </div>
+        </Section>
+
+        {/* ---------- integración ---------- */}
+        <Section id="brand">
+          <SectionHeading eyebrow={WL_BRAND.kick} title={WL_BRAND.h2} />
+          <p className="fx-muted mt-6 max-w-3xl leading-relaxed sm:text-lg">{WL_BRAND.lead}</p>
+          <div className="mt-12 grid gap-5 lg:grid-cols-2">
+            {WL_BRAND.steps.map((s) => (
+              <Panel key={s.n} className="flex gap-5">
+                <span className="process__number" aria-hidden="true">
+                  {s.n}
+                </span>
+                <div>
+                  <h3>{s.h3}</h3>
+                  <p className="fx-muted mt-3 leading-relaxed">{s.p}</p>
+                </div>
+              </Panel>
+            ))}
+          </div>
+        </Section>
+
+        {/* ---------- en la práctica ---------- */}
+        <Section tone="surface" id="ferova">
+          <SectionHeading eyebrow={WL_FEROVA.kick} title={WL_FEROVA.h2} />
+          <p className="fx-muted mt-6 max-w-3xl leading-relaxed sm:text-lg">{WL_FEROVA.lead}</p>
+          <div className="mt-12 grid gap-5 lg:grid-cols-2">
+            <Panel>
+              <h3>{WL_FEROVA.left.h3}</h3>
+              <P frags={WL_FEROVA.left.body} className="fx-muted mt-3 leading-relaxed" />
+            </Panel>
+            <Panel>
+              <h3>{WL_FEROVA.right.h3}</h3>
+              <P frags={WL_FEROVA.right.body} className="fx-muted mt-3 leading-relaxed" />
+            </Panel>
+          </div>
+        </Section>
+
+        {/* ---------- marco de decisión ---------- */}
+        <Section>
+          <div className="grid gap-10 lg:grid-cols-2 lg:gap-20">
+            <SectionHeading eyebrow={WL_FRAMEWORK.kick} title={WL_FRAMEWORK.h2} />
+            <div className="fx-muted space-y-4 leading-relaxed sm:text-lg">
+              <p>{WL_FRAMEWORK.p1}</p>
+              <P frags={WL_FRAMEWORK.p2} />
+            </div>
+          </div>
+        </Section>
+
+        {/* ---------- canales + relacionados ---------- */}
+        <Section tone="surface" id="reach">
+          <SectionHeading eyebrow={WL_CHANNELS.kick} title={WL_CHANNELS.h2} />
+          <div className="mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+            {WL_CHANNELS.items.map((c) => {
+              const isMail = c.href.startsWith("mailto:");
+              return (
+                <a
+                  key={c.n}
+                  className="link-tile"
+                  href={c.href}
+                  target={isMail ? undefined : "_blank"}
+                  rel={isMail ? undefined : "noopener noreferrer"}
+                  data-cta={`channel-${c.n.toLowerCase()}`}
+                >
+                  <p className="text-lg font-semibold" style={POPPINS}>
+                    {c.n}
+                  </p>
+                  <p className="fx-muted mt-2 break-words text-sm leading-6">{c.dd}</p>
+                  <span className="mt-4 inline-flex items-center gap-1 text-sm font-semibold">{c.go} →</span>
+                </a>
+              );
+            })}
+          </div>
+
+          <p className="eyebrow-pill mb-6 mt-14">Related</p>
+          <ul className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+            {WL_RELATED.map((r) => (
+              <li key={r.to}>
+                <Link to={r.to} className="link-tile flex items-center justify-between gap-4 font-semibold">
+                  {r.label}
+                  <ArrowUpRight aria-hidden="true" className="h-5 w-5 shrink-0" />
+                </Link>
+              </li>
+            ))}
+          </ul>
+        </Section>
+
+        {/* ---------- cierre ---------- */}
+        <ClosingBand eyebrow={WL_FINAL.eyebrow} title={WL_FINAL.h2}>
+          <a href="#reach" className="fx-btn" data-cta="final">
+            {WL_FINAL.label} <ArrowUpRight aria-hidden="true" />
+          </a>
+          <FeraButton variant="outline" source="wl_vs_inhouse_final">
+            Talk to Fera
+          </FeraButton>
+        </ClosingBand>
       </main>
       <Footer lang="en" />
     </div>

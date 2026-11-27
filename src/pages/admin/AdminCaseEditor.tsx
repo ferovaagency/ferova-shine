@@ -3,6 +3,7 @@ import { Link, useNavigate, useParams } from "react-router-dom";
 import { AlertCircle, ArrowLeft, CheckCircle2, Loader2, Plus, Save, Send, Sparkles, Trash2 } from "lucide-react";
 import { toast } from "sonner";
 import AdminLayout from "@/components/admin/AdminLayout";
+import { Chip, toneFor } from "@/components/admin/Chip";
 import { supabase } from "@/integrations/supabase/client";
 import { caseCms, type CaseResultHighlight, type CmsCaseStudy, type ContentStatus } from "@/integrations/supabase/cms-types";
 import { casesData } from "@/pages/CasosDeExito";
@@ -26,7 +27,9 @@ const EMPTY_FORM: FormState = {
   last_observation_at: null,
 };
 
-const fieldClass = "mt-1.5 w-full rounded-xl border border-border bg-background px-3 py-2.5 text-sm text-foreground outline-none transition-colors focus:border-gold/60";
+const fieldClass = "admin-field";
+
+const STATUS_LABEL: Record<ContentStatus, string> = { draft: "Borrador", in_review: "En revisión", approved: "Aprobado", scheduled: "Programado", published: "Publicado", archived: "Archivado" };
 
 export default function AdminCaseEditor() {
   const { id } = useParams<{ id: string }>();
@@ -171,16 +174,16 @@ export default function AdminCaseEditor() {
     <AdminLayout title={id ? "Editar caso" : "Nuevo caso"}>
       <div className="mb-6 flex flex-wrap items-center justify-between gap-3">
         <Link to="/admin/casos" className="inline-flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground"><ArrowLeft className="h-4 w-4" /> Volver a casos</Link>
-        <span className="rounded-full bg-muted px-3 py-1 text-xs font-medium text-muted-foreground">Estado: {status.replace("_", " ")}</span>
+        <Chip tone={toneFor(status)}>Estado: {STATUS_LABEL[status] ?? status}</Chip>
       </div>
 
-      {migrationPending && <div className="glass-card mb-6 flex items-start gap-3 border border-amber-500/30 p-4 text-sm"><AlertCircle className="mt-0.5 h-4 w-4 shrink-0 text-amber-500" /><p>La interfaz está lista, pero la migración del CMS debe aplicarse antes de guardar este caso.</p></div>}
-      {isLegacy && <div className="mb-6 rounded-xl border border-amber-500/25 bg-amber-500/10 p-4 text-sm">Este caso ya aparece en el sitio como contenido heredado. Genéralo, revísalo y guárdalo para convertirlo en un caso administrable sin cambiar su URL.</div>}
+      {migrationPending && <div className="admin-alert mb-5" role="status"><AlertCircle className="mt-0.5 h-4 w-4 shrink-0" aria-hidden="true" /><p>La interfaz está lista, pero la migración del CMS debe aplicarse antes de guardar este caso.</p></div>}
+      {isLegacy && <div className="admin-alert admin-alert--info mb-5">Este caso ya aparece en el sitio como contenido heredado. Genéralo, revísalo y guárdalo para convertirlo en un caso administrable sin cambiar su URL.</div>}
 
       <form onSubmit={submit} className="grid gap-6 xl:grid-cols-[minmax(0,1fr)_320px]">
         <div className="space-y-6">
-          <section className="glass-card p-5 sm:p-6">
-            <h2 className="font-display text-lg font-semibold">Identidad y contexto</h2>
+          <section className="admin-card">
+            <h2 className="admin-card__title">Identidad y contexto</h2>
             <div className="mt-5 grid gap-4 sm:grid-cols-2">
               <Field label="Slug *"><input className={fieldClass} value={form.slug} onChange={(e) => update("slug", e.target.value)} placeholder="seo-ecommerce-marca" /></Field>
               <Field label="Cliente público"><input className={fieldClass} value={form.client_public_name ?? ""} onChange={(e) => update("client_public_name", e.target.value)} placeholder="Déjalo vacío si es confidencial" /></Field>
@@ -194,8 +197,8 @@ export default function AdminCaseEditor() {
             </div>
           </section>
 
-          <section className="glass-card space-y-5 p-5 sm:p-6">
-            <h2 className="font-display text-lg font-semibold">Narrativa verificable</h2>
+          <section className="admin-card space-y-5">
+            <h2 className="admin-card__title">Narrativa verificable</h2>
             <Field label="Resumen *"><textarea rows={3} className={fieldClass} value={form.summary} onChange={(e) => update("summary", e.target.value)} /></Field>
             <Field label="Reto"><textarea rows={4} className={fieldClass} value={form.challenge} onChange={(e) => update("challenge", e.target.value)} /></Field>
             <Field label="Diagnóstico"><textarea rows={4} className={fieldClass} value={form.diagnosis} onChange={(e) => update("diagnosis", e.target.value)} /></Field>
@@ -204,35 +207,35 @@ export default function AdminCaseEditor() {
             <Field label="Limitaciones"><textarea rows={3} className={fieldClass} value={form.limitations ?? ""} onChange={(e) => update("limitations", e.target.value)} placeholder="Aclara atribución, periodos incompletos o factores externos." /></Field>
           </section>
 
-          <section className="glass-card p-5 sm:p-6">
-            <div className="flex items-center justify-between gap-4"><div><h2 className="font-display text-lg font-semibold">Resultados publicados</h2><p className="mt-1 text-sm text-muted-foreground">Añade solo métricas que puedas respaldar.</p></div><button type="button" onClick={addResult} className="inline-flex shrink-0 items-center gap-2 rounded-lg border border-border px-3 py-2 text-sm hover:border-primary/40"><Plus className="h-4 w-4" /> Añadir</button></div>
+          <section className="admin-card">
+            <div className="flex items-center justify-between gap-4"><div><h2 className="admin-card__title">Resultados publicados</h2><p className="mt-1 text-sm text-muted-foreground">Añade solo métricas que puedas respaldar.</p></div><button type="button" onClick={addResult} className="admin-btn admin-btn--ghost admin-btn--sm shrink-0"><Plus className="h-4 w-4" /> Añadir</button></div>
             <div className="mt-5 space-y-3">
-              {form.result_highlights.length === 0 && <div className="rounded-xl border border-dashed border-border p-6 text-center text-sm text-muted-foreground">Aún no has añadido resultados. Puedes guardar el caso como borrador.</div>}
-              {form.result_highlights.map((item, index) => <div key={index} className="grid gap-3 rounded-xl border border-border p-4 sm:grid-cols-[1fr_140px_1fr_auto] sm:items-end"><Field label="Indicador"><input className={fieldClass} value={item.label} onChange={(event) => updateResult(index, "label", event.target.value)} placeholder="Tráfico orgánico" /></Field><Field label="Valor"><input className={fieldClass} value={item.value} onChange={(event) => updateResult(index, "value", event.target.value)} placeholder="+48 %" /></Field><Field label="Contexto"><input className={fieldClass} value={item.context ?? ""} onChange={(event) => updateResult(index, "context", event.target.value)} placeholder="Comparación interanual" /></Field><button type="button" onClick={() => removeResult(index)} aria-label={`Eliminar resultado ${index + 1}`} className="mb-0.5 rounded-lg border border-border p-2.5 text-muted-foreground hover:border-destructive/40 hover:text-destructive"><Trash2 className="h-4 w-4" /></button></div>)}
+              {form.result_highlights.length === 0 && <div className="rounded-xl border border-dashed border-[#cfd5e4] p-6 text-center text-sm text-muted-foreground">Aún no has añadido resultados. Puedes guardar el caso como borrador.</div>}
+              {form.result_highlights.map((item, index) => <div key={index} className="grid gap-3 rounded-xl bg-[#f7f8fc] p-4 sm:grid-cols-[1fr_140px_1fr_auto] sm:items-end"><Field label="Indicador"><input className={fieldClass} value={item.label} onChange={(event) => updateResult(index, "label", event.target.value)} placeholder="Tráfico orgánico" /></Field><Field label="Valor"><input className={fieldClass} value={item.value} onChange={(event) => updateResult(index, "value", event.target.value)} placeholder="+48 %" /></Field><Field label="Contexto"><input className={fieldClass} value={item.context ?? ""} onChange={(event) => updateResult(index, "context", event.target.value)} placeholder="Comparación interanual" /></Field><button type="button" onClick={() => removeResult(index)} aria-label={`Eliminar resultado ${index + 1}`} className="admin-icon-btn admin-icon-btn--danger mb-0.5"><Trash2 className="h-4 w-4" /></button></div>)}
             </div>
           </section>
         </div>
 
         <aside className="space-y-5">
-          <section className="glass-card p-5">
-            <h2 className="flex items-center gap-2 font-semibold"><Sparkles className="h-4 w-4" /> Generador editorial</h2>
+          <section className="admin-card">
+            <h2 className="admin-card__title flex items-center gap-2"><Sparkles className="h-4 w-4 text-[#c0930e]" aria-hidden="true" /> Generador editorial</h2>
             <p className="mt-2 text-xs leading-5 text-muted-foreground">Pega hechos, entregables y contexto. La IA organiza la narrativa, pero no debe inventar clientes, cifras ni evidencia.</p>
             <textarea rows={7} className={fieldClass} value={generationNotes} onChange={(event) => setGenerationNotes(event.target.value)} placeholder="Qué necesitaba la agencia, qué se entregó, duración, tecnología, resultados medidos y limitaciones…" />
-            <button type="button" onClick={() => void generateCase()} disabled={generating} className="mt-3 inline-flex w-full items-center justify-center gap-2 rounded-xl border border-border px-4 py-2.5 text-sm font-medium disabled:opacity-50">{generating ? <Loader2 className="h-4 w-4 animate-spin" /> : <Sparkles className="h-4 w-4" />} Generar caso completo</button>
+            <button type="button" onClick={() => void generateCase()} disabled={generating} className="admin-btn admin-btn--ghost admin-btn--block mt-3">{generating ? <Loader2 className="h-4 w-4 animate-spin" /> : <Sparkles className="h-4 w-4" />} Generar caso completo</button>
           </section>
-          <section className="glass-card p-5">
-            <h2 className="font-semibold">Flujo editorial</h2>
+          <section className="admin-card">
+            <h2 className="admin-card__title">Flujo editorial</h2>
             <p className="mt-2 text-sm text-muted-foreground">Guardar no publica. El caso necesita consentimiento válido, evidencia y aprobación.</p>
             <div className="mt-5 space-y-2">
-              <button type="submit" disabled={saving || migrationPending} className="inline-flex w-full items-center justify-center gap-2 rounded-xl border border-border px-4 py-2.5 text-sm font-medium hover:bg-accent disabled:opacity-50"><Save className="h-4 w-4" /> Guardar borrador</button>
-              <button type="button" disabled={saving || migrationPending} onClick={() => void save("in_review")} className="inline-flex w-full items-center justify-center gap-2 rounded-xl bg-primary px-4 py-2.5 text-sm font-medium text-primary-foreground disabled:opacity-50">{saving ? <Loader2 className="h-4 w-4 animate-spin" /> : <CheckCircle2 className="h-4 w-4" />} Enviar a revisión</button>
+              <button type="submit" disabled={saving || migrationPending} className="admin-btn admin-btn--ghost admin-btn--block"><Save className="h-4 w-4" /> Guardar borrador</button>
+              <button type="button" disabled={saving || migrationPending} onClick={() => void save("in_review")} className="admin-btn admin-btn--indigo admin-btn--block">{saving ? <Loader2 className="h-4 w-4 animate-spin" /> : <CheckCircle2 className="h-4 w-4" />} Enviar a revisión</button>
             </div>
           </section>
-          <section className="glass-card p-5">
-            <h2 className="font-semibold">Consentimiento y publicación</h2>
+          <section className="admin-card">
+            <h2 className="admin-card__title">Consentimiento y publicación</h2>
             <Field label="Persona que autoriza"><input className={fieldClass} value={consentName} onChange={(e) => setConsentName(e.target.value)} placeholder="Nombre del cliente o representante" /></Field>
-            <label className="mt-4 flex items-start gap-3 text-sm text-muted-foreground"><input type="checkbox" className="mt-1" checked={consentConfirmed} onChange={(e) => setConsentConfirmed(e.target.checked)} /><span>Confirmo que existe autorización para publicar la narrativa y los resultados incluidos.</span></label>
-            <button type="button" disabled={saving || migrationPending || !id || status === "published"} onClick={() => void publish()} className="mt-5 inline-flex w-full items-center justify-center gap-2 rounded-xl bg-emerald-600 px-4 py-2.5 text-sm font-medium text-white disabled:opacity-50"><Send className="h-4 w-4" /> {status === "published" ? "Publicado" : "Aprobar y publicar"}</button>
+            <label className="mt-4 flex items-start gap-3 text-sm text-muted-foreground"><input type="checkbox" className="mt-1 h-4 w-4 accent-[#541014]" checked={consentConfirmed} onChange={(e) => setConsentConfirmed(e.target.checked)} /><span>Confirmo que existe autorización para publicar la narrativa y los resultados incluidos.</span></label>
+            <button type="button" disabled={saving || migrationPending || !id || status === "published"} onClick={() => void publish()} className="admin-btn admin-btn--block mt-5"><Send className="h-4 w-4" /> {status === "published" ? "Publicado" : "Aprobar y publicar"}</button>
           </section>
         </aside>
       </form>
@@ -241,5 +244,5 @@ export default function AdminCaseEditor() {
 }
 
 function Field({ label, hint, children }: { label: string; hint?: string; children: React.ReactNode }) {
-  return <label className="block text-sm font-medium text-foreground">{label}{hint && <span className="ml-2 text-xs font-normal text-muted-foreground">{hint}</span>}{children}</label>;
+  return <label className="admin-label">{label}{hint && <small className="ml-2">{hint}</small>}{children}</label>;
 }

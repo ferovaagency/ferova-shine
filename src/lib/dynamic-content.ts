@@ -17,6 +17,7 @@
 
 import {
   BLOG_I18N_COLUMNS,
+  BLOG_SITE_FILTER_REST,
   hasEnglishVariant,
   hasHtmlInTextFields,
   pickVariant,
@@ -29,6 +30,10 @@ export interface BlogPostRow extends BlogRowI18n {
   author: string;
   category: string;
   created_at: string;
+  cover_image?: string | null;
+  keyword?: string | null;
+  published_at?: string | null;
+  updated_at?: string | null;
 }
 
 /** Una variante publicable: idioma + ruta real + los campos ya saneados. */
@@ -44,6 +49,10 @@ export interface BlogVariant {
   author: string;
   category: string;
   created_at: string;
+  cover_image: string | null;
+  keyword: string | null;
+  published_at: string | null;
+  updated_at: string | null;
   /** Rutas hermanas del mismo artículo (mismo slug, otra traducción). */
   alternates: Partial<Record<"es" | "en", string>>;
 }
@@ -151,8 +160,8 @@ export async function fetchDynamicContent(
   // published_at <= now (mismo filtro que src/pages/Blog.tsx).
   const blogUrl =
     `${supabaseUrl}/rest/v1/blog_posts` +
-    `?select=slug,language,author,category,created_at,${BLOG_I18N_COLUMNS}` +
-    `&active=eq.true&published_at=lte.${now}`;
+    `?select=slug,language,author,category,created_at,cover_image,keyword,published_at,updated_at,${BLOG_I18N_COLUMNS}` +
+    `&active=eq.true&published_at=lte.${now}&${BLOG_SITE_FILTER_REST}`;
 
   let posts: BlogPostRow[];
   let editions: { slug: string }[];
@@ -221,7 +230,14 @@ export function buildBlogVariants(posts: BlogPostRow[], scope: string): BlogVari
     if (english) alternates.en = BLOG_PATHS.en(row.slug);
 
     const base = pickVariant(row, "es")!; // columnas base de la fila
+    const extra = {
+      cover_image: row.cover_image ?? null,
+      keyword: row.keyword ?? null,
+      published_at: row.published_at ?? null,
+      updated_at: row.updated_at ?? null,
+    };
     variants.push({
+      ...extra,
       lang: baseLang,
       slug: row.slug,
       path: BLOG_PATHS[baseLang](row.slug),
@@ -235,6 +251,7 @@ export function buildBlogVariants(posts: BlogPostRow[], scope: string): BlogVari
     if (english) {
       const en = pickVariant(row, "en")!;
       variants.push({
+        ...extra,
         lang: "en",
         slug: row.slug,
         path: BLOG_PATHS.en(row.slug),

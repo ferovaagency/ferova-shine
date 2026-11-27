@@ -1,6 +1,7 @@
 import { defineConfig, loadEnv, type Plugin } from "vite";
 import react from "@vitejs/plugin-react-swc";
 import path from "path";
+import fs from "fs";
 import { componentTagger } from "lovable-tagger";
 import { vitePrerenderPlugin } from "vite-prerender-plugin";
 // Fuente única de rutas — el prerender ahora se deriva del registro central
@@ -87,6 +88,36 @@ function seoBuildPlugin(env: Record<string, string>): Plugin {
   };
 }
 
+/**
+ * Publica las reglas de Fera (/fera-reglas.md) desde CLAUDE.md.
+ *
+ * La parte entre FERA:BEGIN y FERA:END es la fuente única de las reglas
+ * editoriales, de SEO y de GEO que aplica el generador de contenido
+ * (supabase/functions/blog-article-generator). Se emite como archivo estático
+ * en cada build y se sirve también en dev, así no hay una copia a mano.
+ */
+function feraRulesPlugin(): Plugin {
+  const extract = () => {
+    const text = fs.readFileSync(path.resolve(__dirname, "CLAUDE.md"), "utf8");
+    const begin = text.indexOf("<!-- FERA:BEGIN -->");
+    const end = text.indexOf("<!-- FERA:END -->");
+    if (begin < 0 || end <= begin) throw new Error("CLAUDE.md no tiene el bloque FERA:BEGIN/FERA:END");
+    return `${text.slice(begin + "<!-- FERA:BEGIN -->".length, end).trim()}\n`;
+  };
+  return {
+    name: "ferova-fera-rules",
+    configureServer(server) {
+      server.middlewares.use("/fera-reglas.md", (_req, res) => {
+        res.setHeader("content-type", "text/markdown; charset=utf-8");
+        res.end(extract());
+      });
+    },
+    generateBundle() {
+      this.emitFile({ type: "asset", fileName: "fera-reglas.md", source: extract() });
+    },
+  };
+}
+
 // https://vitejs.dev/config/
 export default defineConfig(({ mode }) => {
   const env = loadEnv(mode, process.cwd(), "");
@@ -97,6 +128,7 @@ export default defineConfig(({ mode }) => {
     },
     plugins: [
       react(),
+      feraRulesPlugin(),
       mode === "development" && componentTagger(),
       mode !== "development" && seoBuildPlugin(env),
       mode !== "development" && enablePrerender && vitePrerenderPlugin({

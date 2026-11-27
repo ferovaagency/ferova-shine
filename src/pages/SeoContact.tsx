@@ -1,10 +1,20 @@
 import { useCallback, useEffect, useMemo } from "react";
 import { useSearchParams } from "react-router-dom";
-import { Bot, CheckCircle2, LockKeyhole, MessageSquareText } from "lucide-react";
+import { Bot, CheckCircle2, LockKeyhole, MapPin, MessageSquareText, type LucideIcon } from "lucide-react";
 import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
 import SEO from "@/components/SEO";
 import { trackEvent } from "@/lib/analytics";
+import { IconTile, PageHero, Panel, Section } from "@/components/fx/primitives";
+
+const contactLd = {
+  "@context": "https://schema.org",
+  "@type": "ContactPage",
+  name: "Cotizar SEO por horas o tareas con Fera",
+  url: "https://seoparaecommerce.co/contacto",
+  inLanguage: "es",
+  about: { "@type": "Organization", name: "Ferova Agency", email: "gerencia@seoparaecommerce.co" },
+};
 
 const engagement: Record<string, string> = {
   tarea: "una tarea cerrada",
@@ -31,31 +41,51 @@ export default function SeoContact() {
   }, [openFera]);
 
   return (
-    <div className="seo-brand agency-site min-h-screen">
-      <SEO title="Cotizar SEO por horas o tareas con Fera | Ferova" description="Conversa con Fera para organizar la habilidad, el volumen y la fecha que necesita tu agencia. Recibe alcance, precio y disponibilidad sin agendar una asesoría." path="/contacto" lang="es" breadcrumbs={[{ name: "Inicio", path: "/" }, { name: "Cotizar con Fera", path: "/contacto" }]} />
+    <div className="fx-site min-h-screen">
+      <SEO title="Cotizar SEO por horas o tareas con Fera | Ferova" description="Conversa con Fera para organizar la habilidad, el volumen y la fecha que necesita tu agencia. Recibe alcance, precio y disponibilidad sin agendar una asesoría." path="/contacto" lang="es" jsonLd={contactLd} breadcrumbs={[{ name: "Inicio", path: "/" }, { name: "Cotizar con Fera", path: "/contacto" }]} />
       <Header lang="es" />
       <main id="contenido-principal" className="pt-20">
-        <section className="agency-contact-hero">
-          <div className="container mx-auto max-w-5xl px-4 text-center md:px-6">
-            <h1>Tu cotización empieza conversando con Fera.</h1>
-            <p className="mx-auto">Cuéntale qué capacidad necesita tu agencia. Fera organiza el brief y deja lista la información para que una persona confirme alcance, precio y disponibilidad.</p>
-            <button type="button" onClick={openFera} className="seo-primary-button"><Bot className="h-4 w-4" /> Abrir Fera y cotizar</button>
-          </div>
-        </section>
-        <section className="py-14 md:py-20">
-          <div className="container mx-auto grid max-w-4xl gap-px overflow-hidden rounded-2xl border border-[#6a4c30]/20 bg-[#6a4c30]/20 px-0 sm:grid-cols-3">
+        <PageHero
+          eyebrow="Cotizar con Fera"
+          title="Tu cotización empieza conversando con Fera."
+          intro="Cuéntale qué capacidad necesita tu agencia. Fera organiza el brief y deja lista la información para que una persona confirme alcance, precio y disponibilidad."
+          breadcrumbs={[{ name: "Cotizar con Fera", path: "/contacto" }]}
+        >
+          <button type="button" onClick={openFera} className="fx-btn"><Bot aria-hidden="true" /> Abrir Fera y cotizar</button>
+        </PageHero>
+
+        <Section>
+          <div className="grid gap-5 md:grid-cols-3">
             <Step icon={MessageSquareText} title="Describe la necesidad" text="Habilidad, volumen, plataforma, fecha y forma de colaboración." />
             <Step icon={CheckCircle2} title="Fera ordena el brief" text="Te pregunta solo lo necesario para preparar una cotización útil." />
             <Step icon={LockKeyhole} title="Una persona confirma" text="Revisamos el alcance y respondemos con precio y disponibilidad." />
           </div>
-          <p className="mx-auto mt-6 max-w-2xl px-4 text-center text-sm text-slate-600">Fera es un sistema de IA y puede equivocarse. No toma decisiones económicas ni reemplaza la revisión humana. No compartas contraseñas ni información sensible.</p>
-        </section>
+        </Section>
+
+        <Section tone="surface">
+          <div className="grid gap-8 lg:grid-cols-[1fr_1fr] lg:items-center lg:gap-16">
+            <Panel className="flex items-start gap-4">
+              <MapPin aria-hidden="true" className="mt-0.5 h-5 w-5 shrink-0 text-[#541014]" />
+              <div>
+                <p className="font-semibold">Oficina en North Point, Torre 2, Of. 1002</p>
+                <p className="fx-muted mt-1 text-sm">Cra. 7 #158-78, Bogotá · Visitas con cita previa.</p>
+              </div>
+            </Panel>
+            <p className="fx-muted text-sm leading-relaxed">Fera es un sistema de IA y puede equivocarse. No toma decisiones económicas ni reemplaza la revisión humana. No compartas contraseñas ni información sensible.</p>
+          </div>
+        </Section>
       </main>
       <Footer lang="es" />
     </div>
   );
 }
 
-function Step({ icon: Icon, title, text }: { icon: typeof Bot; title: string; text: string }) {
-  return <div className="bg-white p-6 text-left"><Icon className="h-5 w-5 text-[#9a7410]" /><h2 className="mt-4 text-base font-semibold text-[#541014]">{title}</h2><p className="mt-2 text-sm leading-6 text-slate-600">{text}</p></div>;
+function Step({ icon, title, text }: { icon: LucideIcon; title: string; text: string }) {
+  return (
+    <Panel>
+      <IconTile icon={icon} />
+      <h2 className="text-xl leading-snug">{title}</h2>
+      <p className="fx-muted mt-3 leading-relaxed">{text}</p>
+    </Panel>
+  );
 }

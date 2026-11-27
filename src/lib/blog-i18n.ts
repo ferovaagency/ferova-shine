@@ -110,6 +110,18 @@ export function pickVariant(row: BlogRowI18n, lang: "es" | "en"): BlogVariant | 
   };
 }
 
+/**
+ * Sitios cuyos artículos publica ESTE repo.
+ *
+ * `blog_posts` es compartida con ferova.com.co (y otros portales). Sin este
+ * filtro, seoparaecommerce.co publicaba también los artículos de Ferova: mismo
+ * texto en dos dominios, en el sitemap y en el prerender. Toda consulta pública
+ * o del admin a `blog_posts` debe filtrar por aquí.
+ */
+export const BLOG_SITE_ORIGINS = ["seoparaecommerce.co", "seoforecommerces.co"] as const;
+/** Mismo filtro en formato REST de PostgREST (`site_origin=in.(...)`). */
+export const BLOG_SITE_FILTER_REST = `site_origin=in.(${BLOG_SITE_ORIGINS.join(",")})`;
+
 /** Columnas que hay que pedirle al REST para poder armar las tres variantes. */
 export const BLOG_I18N_COLUMNS =
   "title,content,excerpt,meta_title,meta_description," +

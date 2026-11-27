@@ -1,27 +1,65 @@
 import { Link } from "react-router-dom";
-import { ArrowRight, ArrowUpRight, CheckCircle2, FileSearch, GitBranch, Network, ShieldCheck } from "lucide-react";
+import type { ReactNode } from "react";
+import { ArrowUpRight, CheckCircle2, FileSearch, GitBranch, Network, ShieldCheck } from "lucide-react";
 import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
 import SEO from "@/components/SEO";
-import { SEO_SPECIALTIES, SEO_SPECIALTY_UI, type SeoSpecialtyKind } from "@/content/seoSpecialties";
+import { SEO_SPECIALTIES, SEO_SPECIALTY_UI, type SeoSpecialtyContent, type SeoSpecialtyKind } from "@/content/seoSpecialties";
 import type { Lang } from "@/config/routes";
+import { CaseGrid } from "@/components/fx/CaseGrid";
+import { portfolioUrl } from "@/data/portfolio";
+import {
+  CheckList,
+  FaqList,
+  FeraButton,
+  FxLink,
+  IconTile,
+  PageHero,
+  Panel,
+  ProcessSteps,
+  Section,
+  SectionHeading,
+  StatusBadge,
+  faqSchema,
+} from "@/components/fx/primitives";
 
 const ICONS = [FileSearch, Network, ShieldCheck, GitBranch];
+const MONO = { fontFamily: '"IBM Plex Mono", ui-monospace, monospace' };
 
-export default function SeoSpecialtyPage({ kind, lang = "es" }: { kind: SeoSpecialtyKind; lang?: Lang }) {
-  const content = SEO_SPECIALTIES[lang][kind];
+/** Banda vino de cierre (misma pieza visual que CtaBand) con etiqueta sobre el titular. */
+function ClosingBand({ eyebrow, title, children }: { eyebrow: string; title: ReactNode; children: ReactNode }) {
+  return (
+    <section className="cta-band on-dark">
+      <div className="mx-auto flex w-full max-w-5xl flex-col items-center px-5 py-20 text-center sm:px-8 sm:py-28">
+        <p className="eyebrow-pill mb-6">{eyebrow}</p>
+        <h2 className="text-4xl leading-[1.15] sm:text-5xl">{title}</h2>
+        <div className="mt-10 flex flex-wrap justify-center gap-3">{children}</div>
+      </div>
+    </section>
+  );
+}
+
+/**
+ * Página de especialidad (agencias, auditoría, migraciones; ES y EN) con el
+ * sistema de diseño de Ferova: héroe índigo, secciones alternas, precios en
+ * tarjetas, preguntas en acordeón y banda vino de cierre.
+ */
+export default function SeoSpecialtyPage({
+  kind,
+  content: contentOverride,
+  lang = "es",
+}: {
+  kind?: SeoSpecialtyKind;
+  /** Página de un solo idioma fuera de las especialidades (p. ej. /seo-por-horas). */
+  content?: SeoSpecialtyContent;
+  lang?: Lang;
+}) {
+  const content = contentOverride ?? SEO_SPECIALTIES[lang][kind ?? "agencies"];
   const ui = SEO_SPECIALTY_UI[lang];
-  const faqLd = {
-    "@context": "https://schema.org",
-    "@type": "FAQPage",
-    mainEntity: content.faqs.map((faq) => ({
-      "@type": "Question",
-      name: faq.question,
-      acceptedAnswer: { "@type": "Answer", text: faq.answer },
-    })),
-  };
+  const en = lang === "en";
+  const faqLd = faqSchema(content.faqs.map((faq) => [faq.question, faq.answer]));
 
-  const usd = new Intl.NumberFormat(lang === "en" ? "en-US" : "es-CO", { maximumFractionDigits: 0 });
+  const usd = new Intl.NumberFormat(en ? "en-US" : "es-CO", { maximumFractionDigits: 0 });
   const serviceLd = content.pricing
     ? {
         "@context": "https://schema.org",
@@ -34,7 +72,7 @@ export default function SeoSpecialtyPage({ kind, lang = "es" }: { kind: SeoSpeci
         provider: {
           "@type": "Person",
           name: "María Fernanda Calderón",
-          url: `https://seoparaecommerce.co${lang === "en" ? "/en/about-me" : "/sobre-nosotros"}`,
+          url: `https://seoparaecommerce.co${en ? "/en/about-me" : "/sobre-nosotros"}`,
         },
         offers: content.pricing.plans.map((plan) => ({
           "@type": "Offer",
@@ -46,183 +84,166 @@ export default function SeoSpecialtyPage({ kind, lang = "es" }: { kind: SeoSpeci
       }
     : null;
 
+  const contactPath = en ? "/en/contact" : "/contacto";
+  const crumbs = [{ name: content.eyebrow, path: content.path }];
+
+  // Alterna blanco / lavanda según las secciones que existan en esta pieza.
+  let sectionIndex = 0;
+  const nextTone = (): "default" | "surface" => (sectionIndex++ % 2 === 0 ? "default" : "surface");
+
   return (
-    <div className="seo-brand min-h-screen bg-background text-foreground">
+    <div className="fx-site min-h-screen">
       <SEO
         title={content.metaTitle ?? `${content.title} | ${ui.siteName}`}
         description={content.description}
         path={content.path}
         lang={lang}
         jsonLd={serviceLd ? [serviceLd, faqLd] : faqLd}
-        breadcrumbs={[
-          { name: ui.home, path: lang === "en" ? "/en" : "/" },
-          { name: content.eyebrow, path: content.path },
-        ]}
+        breadcrumbs={[{ name: ui.home, path: en ? "/en" : "/" }, ...crumbs]}
       />
       <Header lang={lang} />
 
-      <main className="pt-20">
-        <section className="relative overflow-hidden bg-[#541014] py-20 text-white md:py-28">
-          <div className="absolute inset-0 opacity-50 [background-image:radial-gradient(circle_at_20%_20%,rgba(192,147,14,.36),transparent_36%),radial-gradient(circle_at_80%_70%,rgba(106,76,48,.3),transparent_32%)]" />
-          <div className="container relative mx-auto max-w-6xl px-4 md:px-6">
-            <p className="mb-6 text-xs font-semibold tracking-[0.22em] text-[#e0bd52]">{content.eyebrow}</p>
-            <h1 className="max-w-5xl text-4xl font-bold leading-[1.05] md:text-6xl lg:text-7xl">{content.title}</h1>
-            <p className="mt-7 max-w-3xl text-lg leading-relaxed text-slate-300 md:text-xl">{content.description}</p>
-            <div className="mt-9 flex flex-col gap-3 sm:flex-row">
-              <Link to={lang === "en" ? "/en/contact" : "/contacto"} className="seo-primary-button inline-flex items-center justify-center gap-2">
-                {ui.ctaPrimary} <ArrowRight className="h-4 w-4" />
-              </Link>
-              <Link to={lang === "en" ? "/en/case-studies" : "/casos-de-exito"} className="seo-secondary-button inline-flex items-center justify-center">{ui.ctaSecondary}</Link>
-            </div>
-          </div>
-        </section>
+      <main id="contenido-principal" className="pt-20">
+        <PageHero eyebrow={content.eyebrow} title={content.title} intro={content.description} breadcrumbs={crumbs} lang={lang}>
+          <FxLink to={contactPath}>{ui.ctaPrimary}</FxLink>
+          <FxLink to={en ? "/en/case-studies" : "/casos-de-exito"} variant="outline">
+            {ui.ctaSecondary}
+          </FxLink>
+        </PageHero>
 
-        <section className="border-b border-border bg-card py-16 md:py-20">
-          <div className="container mx-auto grid max-w-6xl gap-10 px-4 md:grid-cols-[.85fr_1.15fr] md:px-6">
-            <div><p className="seo-kicker">{ui.problemKicker}</p><h2 className="mt-3 text-3xl md:text-4xl">{ui.problemTitle}</h2></div>
-            <p className="text-lg leading-relaxed text-muted-foreground">{content.problem}</p>
-          </div>
-        </section>
+        <Section tone={nextTone()}>
+          <SectionHeading eyebrow={ui.problemKicker} title={ui.problemTitle} intro={content.problem} />
+        </Section>
 
-        <section className="py-20 md:py-28">
-          <div className="container mx-auto max-w-6xl px-4 md:px-6">
-            <p className="seo-kicker">{ui.deliverablesKicker}</p>
-            <h2 className="mt-3 max-w-3xl text-3xl md:text-5xl">{ui.deliverablesTitle}</h2>
-            <div className="mt-12 grid gap-5 md:grid-cols-2">
-              {content.deliverables.map((item, index) => {
-                const Icon = ICONS[index] ?? CheckCircle2;
-                return <article key={item.title} className="rounded-2xl border border-border bg-card p-7">
-                  <Icon className="h-6 w-6 text-[#6a4c30]" />
-                  <h3 className="mt-8 text-xl">{item.title}</h3>
-                  <p className="mt-3 leading-relaxed text-muted-foreground">{item.description}</p>
-                </article>;
-              })}
-            </div>
+        <Section tone={nextTone()}>
+          <SectionHeading eyebrow={ui.deliverablesKicker} title={ui.deliverablesTitle} />
+          <div className="mt-12 grid gap-5 md:grid-cols-2">
+            {content.deliverables.map((item, index) => (
+              <Panel key={item.title}>
+                <IconTile icon={ICONS[index] ?? CheckCircle2} />
+                <h3>{item.title}</h3>
+                <p className="fx-muted mt-3 leading-relaxed">{item.description}</p>
+              </Panel>
+            ))}
           </div>
-        </section>
+        </Section>
 
-        <section className="bg-[#f4eadb] py-20 text-[#3c3c3b] md:py-24">
-          <div className="container mx-auto max-w-6xl px-4 md:px-6">
-            <div className="grid gap-10 lg:grid-cols-2">
-              <div><p className="seo-kicker">{ui.outcomesKicker}</p><h2 className="mt-3 text-3xl md:text-5xl">{ui.outcomesTitle}</h2></div>
-              <div className="space-y-4">
-                {content.outcomes.map((outcome) => <div key={outcome} className="flex gap-3 rounded-xl bg-white p-5 shadow-sm"><CheckCircle2 className="mt-0.5 h-5 w-5 shrink-0 text-[#8c6905]" /><p>{outcome}</p></div>)}
-              </div>
-            </div>
+        <Section tone={nextTone()}>
+          <div className="grid gap-10 lg:grid-cols-2 lg:gap-20">
+            <SectionHeading eyebrow={ui.outcomesKicker} title={ui.outcomesTitle} />
+            <CheckList items={content.outcomes} />
           </div>
-        </section>
+        </Section>
 
-        <section className="py-20 md:py-28">
-          <div className="container mx-auto max-w-6xl px-4 md:px-6">
-            <p className="seo-kicker">{ui.processKicker}</p><h2 className="mt-3 text-3xl md:text-5xl">{ui.processTitle}</h2>
-            <div className="mt-12 grid gap-8 md:grid-cols-3">
-              {content.process.map((step, index) => <article key={step.title} className="border-t-2 border-[#c0930e] pt-6"><span className="font-mono text-sm text-[#6a4c30]">0{index + 1}{step.time ? ` · ${step.time}` : ""}</span><h3 className="mt-5 text-xl">{step.title}</h3><p className="mt-3 leading-relaxed text-muted-foreground">{step.description}</p></article>)}
-            </div>
+        <Section tone={nextTone()}>
+          <div className="grid gap-10 lg:grid-cols-[0.85fr_1.15fr] lg:gap-16">
+            <SectionHeading eyebrow={ui.processKicker} title={ui.processTitle} />
+            <ProcessSteps
+              steps={content.process.map((step) => ({
+                title: step.title,
+                body: (
+                  <>
+                    {step.time ? (
+                      <p className="mb-2 text-sm" style={MONO}>
+                        {step.time}
+                      </p>
+                    ) : null}
+                    <p>{step.description}</p>
+                  </>
+                ),
+              }))}
+            />
           </div>
-        </section>
+        </Section>
 
         {content.longform && content.longform.length > 0 && (
-          <section className="border-t border-border py-20 md:py-24">
-            <div className="container mx-auto max-w-3xl space-y-14 px-4 md:px-6">
+          <Section tone={nextTone()} narrow>
+            <div className="fx-prose">
               {content.longform.map((block) => (
                 <article key={block.heading}>
-                  <h2 className="text-3xl md:text-4xl">{block.heading}</h2>
-                  <div className="mt-5 space-y-4 text-lg leading-relaxed text-muted-foreground">
-                    {block.paragraphs.map((paragraph) => <p key={paragraph}>{paragraph}</p>)}
+                  <h2>{block.heading}</h2>
+                  <div className="fx-muted">
+                    {block.paragraphs.map((paragraph) => (
+                      <p key={paragraph}>{paragraph}</p>
+                    ))}
                   </div>
-                  {block.bullets && (
-                    <ul className="mt-5 space-y-3">
-                      {block.bullets.map((bullet) => (
-                        <li key={bullet} className="flex gap-3 leading-relaxed"><CheckCircle2 className="mt-1 h-5 w-5 shrink-0 text-[#8c6905]" />{bullet}</li>
-                      ))}
-                    </ul>
-                  )}
+                  {block.bullets && <CheckList items={block.bullets} className="mt-5" />}
                 </article>
               ))}
             </div>
-          </section>
+          </Section>
         )}
 
         {content.proof && (
-          <section className="bg-[#f4eadb] py-20 text-[#3c3c3b] md:py-24">
-            <div className="container mx-auto max-w-6xl px-4 md:px-6">
-              <p className="seo-kicker">{content.proof.kicker}</p>
-              <h2 className="mt-3 max-w-3xl text-3xl md:text-5xl">{content.proof.title}</h2>
-              <div className="mt-10 grid gap-5 md:grid-cols-2">
-                {content.proof.items.map((item) => (
-                  <article key={item.label} className="rounded-2xl bg-white p-7 shadow-sm">
-                    <p className="text-xs font-semibold uppercase tracking-[0.16em] text-[#6a4c30]">{item.label}</p>
-                    <p className="mt-4 text-3xl font-bold md:text-4xl">{item.before} → {item.after}</p>
-                    <p className="mt-1 text-sm font-semibold">{item.metric}</p>
-                    <p className="mt-4 leading-relaxed text-muted-foreground">{item.context}</p>
-                  </article>
-                ))}
-              </div>
-              <p className="mt-6 max-w-4xl text-sm leading-relaxed text-muted-foreground">{content.proof.note}</p>
-              <a href={content.proof.cta.href} className="mt-6 inline-flex items-center gap-2 border-b border-[#c0930e] pb-0.5 font-semibold text-[#541014]">
-                {content.proof.cta.label} <ArrowUpRight className="h-4 w-4" />
-              </a>
+          <Section tone={nextTone()}>
+            {/* Los casos son los del portafolio de Ferova (src/data/portfolio.ts). */}
+            <SectionHeading eyebrow={content.proof.kicker} title={content.proof.title} />
+            <div className="mt-12">
+              <CaseGrid lang={lang} />
             </div>
-          </section>
+            <a href={portfolioUrl(lang === "en" ? "en" : "es")} className="fx-text-link mt-8" target="_blank" rel="noopener">
+              {content.proof.cta.label} <ArrowUpRight aria-hidden="true" />
+            </a>
+          </Section>
         )}
 
         {content.pricing && (
-          <section id="pricing" className="py-20 md:py-28">
-            <div className="container mx-auto max-w-6xl px-4 md:px-6">
-              <p className="seo-kicker">{content.pricing.kicker}</p>
-              <h2 className="mt-3 max-w-3xl text-3xl md:text-5xl">{content.pricing.title}</h2>
-              <p className="mt-5 max-w-3xl text-lg leading-relaxed text-muted-foreground">{content.pricing.intro}</p>
-              <div className="mt-12 grid gap-5 md:grid-cols-3">
-                {content.pricing.plans.map((plan) => (
-                  <article key={plan.name} className="flex flex-col rounded-2xl border border-border bg-card p-7">
-                    <h3 className="text-xl">{plan.name}</h3>
-                    <p className="mt-5"><span className="text-4xl font-bold">USD {usd.format(plan.price)}</span> <span className="text-muted-foreground">{plan.unit}</span></p>
-                    <p className="mt-4 leading-relaxed text-muted-foreground">{plan.description}</p>
-                  </article>
-                ))}
-              </div>
-              <div className="mt-6 flex gap-3 rounded-2xl border border-[#c0930e] bg-[#fbf6ea] p-6">
-                <ShieldCheck className="mt-0.5 h-6 w-6 shrink-0 text-[#8c6905]" />
-                <p className="leading-relaxed">{content.pricing.guarantee}</p>
-              </div>
-              <p className="mt-4 text-sm text-muted-foreground">{content.pricing.currencyNote}</p>
+          <Section tone={nextTone()} id="pricing">
+            <SectionHeading eyebrow={content.pricing.kicker} title={content.pricing.title} intro={content.pricing.intro} />
+            <div className="mt-12 grid gap-5 md:grid-cols-3">
+              {content.pricing.plans.map((plan) => (
+                <Panel key={plan.name} className="flex flex-col">
+                  <h3>{plan.name}</h3>
+                  <p className="mt-5 flex flex-wrap items-baseline gap-3">
+                    <span className="text-4xl font-semibold" style={{ fontFamily: "Poppins, system-ui, sans-serif", letterSpacing: "-0.04em" }}>
+                      USD {usd.format(plan.price)}
+                    </span>
+                    <StatusBadge>{plan.unit}</StatusBadge>
+                  </p>
+                  <p className="fx-muted mt-4 leading-relaxed">{plan.description}</p>
+                </Panel>
+              ))}
             </div>
-          </section>
+            <Panel className="mt-6 flex gap-4">
+              <ShieldCheck aria-hidden="true" className="mt-0.5 h-6 w-6 shrink-0 text-[#c0930e]" />
+              <p className="leading-relaxed">{content.pricing.guarantee}</p>
+            </Panel>
+            <p className="fx-muted mt-4 text-sm">{content.pricing.currencyNote}</p>
+          </Section>
         )}
 
-        <section className="border-y border-border bg-card py-20">
-          <div className="container mx-auto max-w-4xl px-4 md:px-6">
-            <p className="seo-kicker">{ui.faqKicker}</p>
-            <div className="mt-8 divide-y divide-border">
-              {content.faqs.map((faq) => <article key={faq.question} className="py-6"><h2 className="text-xl">{faq.question}</h2><p className="mt-3 leading-relaxed text-muted-foreground">{faq.answer}</p></article>)}
-            </div>
+        <Section tone={nextTone()}>
+          <div className="grid gap-12 lg:grid-cols-[0.9fr_1.1fr] lg:gap-20">
+            <h2 className="max-w-[22ch] text-3xl lowercase leading-tight first-letter:uppercase sm:text-4xl lg:text-5xl lg:leading-[1.15]">
+              {ui.faqKicker}
+            </h2>
+            <FaqList items={content.faqs.map((faq) => [faq.question, faq.answer] as [string, string])} />
           </div>
-        </section>
+        </Section>
 
         {/* Enlaces internos relacionados. Se omite si la pieza no los declara. */}
         {content.relatedLinks && content.relatedLinks.length > 0 && (
-          <section className="border-t border-border bg-card py-12">
-            <div className="container mx-auto max-w-6xl px-4 md:px-6">
-              <p className="seo-kicker">{ui.relatedKicker}</p>
-              <ul className="mt-5 flex flex-wrap gap-x-6 gap-y-3">
-                {content.relatedLinks.map((r) => (
-                  <li key={r.to}>
-                    <Link to={r.to} className="border-b border-[#c0930e] pb-0.5 font-semibold text-[#541014]">
-                      {r.label}
-                    </Link>
-                  </li>
-                ))}
-              </ul>
-            </div>
-          </section>
+          <Section tone={nextTone()}>
+            <p className="eyebrow-pill mb-6">{ui.relatedKicker}</p>
+            <ul className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+              {content.relatedLinks.map((r) => (
+                <li key={r.to}>
+                  <Link to={r.to} className="link-tile flex items-center justify-between gap-4 font-semibold">
+                    {r.label}
+                    <ArrowUpRight aria-hidden="true" className="h-5 w-5 shrink-0" />
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </Section>
         )}
 
-        <section className="bg-[#541014] py-20 text-white">
-          <div className="container mx-auto flex max-w-6xl flex-col items-start justify-between gap-8 px-4 md:flex-row md:items-end md:px-6">
-            <div><p className="text-xs font-semibold tracking-[0.22em] text-[#e0bd52]">{ui.nextKicker}</p><h2 className="mt-4 max-w-3xl text-3xl md:text-5xl">{ui.nextTitle}</h2></div>
-            <Link to={lang === "en" ? "/en/contact" : "/contacto"} className="seo-primary-button shrink-0">{ui.ctaPrimary}</Link>
-          </div>
-        </section>
+        <ClosingBand eyebrow={ui.nextKicker} title={ui.nextTitle}>
+          <FeraButton source={`specialty_${kind}_final`}>{ui.ctaPrimary}</FeraButton>
+          <FxLink to={contactPath} variant="outline">
+            {en ? "Go to contact" : "Ir a contacto"}
+          </FxLink>
+        </ClosingBand>
       </main>
       <Footer lang={lang} />
     </div>

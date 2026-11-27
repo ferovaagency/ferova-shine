@@ -24,6 +24,10 @@ export interface PrerenderPost {
   created_at: string;
   meta_title: string | null;
   meta_description: string | null;
+  cover_image?: string | null;
+  keyword?: string | null;
+  published_at?: string | null;
+  updated_at?: string | null;
   /** Rutas hermanas del mismo artículo, para los hreflang. */
   alternates?: Partial<Record<"es" | "en", string>>;
 }
@@ -44,4 +48,18 @@ export function getPrerenderPost(lang: string, slug: string | undefined): Preren
 
 export function prerenderPostCount(): number {
   return posts.size;
+}
+
+/**
+ * true solo durante el build. `window` existe en el prerender (lo crean los
+ * polyfills), así que no sirve para saber si estamos en el navegador.
+ */
+let prerendering = false;
+
+export function markPrerendering(): void {
+  prerendering = true;
+}
+
+export function isPrerendering(): boolean {
+  return prerendering;
 }

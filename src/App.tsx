@@ -5,7 +5,6 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route, Navigate, useLocation } from "react-router-dom";
 import { StaticRouter } from "react-router-dom/server";
 import ExitIntentPopup from "@/components/ui/exit-intent-popup";
-import SocialProofToasts from "@/components/ui/social-proof-toasts";
 import { lazy, Suspense } from "react";
 // Lazy: react-markdown (dependencia transitiva) toca `document` en tiempo de
 // import, lo que romperia el SSG.
@@ -40,7 +39,6 @@ import CasoDetalle from "./pages/CasoDetalle";
 import Contacto from "./pages/Contacto";
 import Blog from "./pages/Blog";
 import BlogPost from "./pages/BlogPost";
-import SobreNosotros from "./pages/SobreNosotros";
 import VCard from "./pages/VCard";
 import Privacidad from "./pages/Privacidad";
 import Cookies from "./pages/Cookies";
@@ -52,10 +50,12 @@ import GeoParaVtex from "./pages/GeoParaVtex";
 import EstudioVisibilidadIA from "./pages/EstudioVisibilidadIA";
 import CalculadoraVisibilidadIA from "./pages/CalculadoraVisibilidadIA";
 import SeoSpecialtyPage from "./pages/SeoSpecialtyPage";
+import { SEO_HOURS_ES } from "./content/seoSpecialties";
 import PositioningPage from "./pages/PositioningPage";
 import BestProvidersPage from "./pages/BestProvidersPage";
 import WhiteLabelVsInHouse from "./pages/WhiteLabelVsInHouse";
 import SeoAbout from "./pages/SeoAbout";
+import SeoNewsletter from "./pages/SeoNewsletter";
 import SeoEcommerceEs from "./pages/SeoEcommerceEs";
 import SeoCases from "./pages/SeoCases";
 import SeoResources from "./pages/SeoResources";
@@ -99,6 +99,7 @@ const AppRoutes = ({ hostLang }: { hostLang: "es" | "en" | "pt" }) => (
 
     <Route path="/servicios/seo-ecommerce" element={<SeoEcommerceEs />} />
     <Route path="/seo-para-agencias" element={<SeoSpecialtyPage kind="agencies" lang="es" />} />
+    <Route path="/seo-por-horas" element={<SeoSpecialtyPage content={SEO_HOURS_ES} lang="es" />} />
     <Route path="/auditoria-seo-tecnica" element={<SeoSpecialtyPage kind="audit" lang="es" />} />
     <Route path="/migraciones-seo" element={<SeoSpecialtyPage kind="migrations" lang="es" />} />
     {/* Equivalentes en inglés — slugs alineados a keyword verificada (ver seoSpecialties.ts) */}
@@ -138,9 +139,12 @@ const AppRoutes = ({ hostLang }: { hostLang: "es" | "en" | "pt" }) => (
     <Route path="/admin/newsletter" element={<Suspense fallback={null}><AdminGuard><NewsletterAdminPage /></AdminGuard></Suspense>} />
     <Route path="/recursos" element={<SeoResources lang="es" />} />
     <Route path="/resources" element={<SeoResources lang="en" />} />
+    <Route path="/newsletter" element={<SeoNewsletter lang="es" />} />
+    <Route path="/en/newsletter" element={<SeoNewsletter lang="en" />} />
     <Route path="/sobre-nosotros" element={<SeoAbout lang="es" />} />
     <Route path="/en/about-me" element={<SeoAbout lang="en" />} />
-    <Route path="/about" element={<SobreNosotros lang={hostLang} />} />
+    {/* /about era una página antigua de Ferova Agency duplicada de /sobre-nosotros. */}
+    <Route path="/about" element={<Navigate replace to="/sobre-nosotros" />} />
     <Route path="/terminos" element={<Terminos lang={hostLang} />} />
     <Route path="/terms" element={<Terminos lang={hostLang} />} />
     <Route path="/servicios/whatsapp-business" element={<Navigate replace to="/" />} />
@@ -242,10 +246,11 @@ const GlobalWidgets = ({ hostLang }: { hostLang: "es" | "en" | "pt" }) => {
       : pathname === "/pt" || pathname.startsWith("/pt/")
         ? "pt"
         : hostLang;
+  // El admin es una herramienta interna: sin Fera, popups ni aviso de cookies.
+  if (pathname === "/admin" || pathname.startsWith("/admin/") || pathname.startsWith("/newsletter/admin")) return null;
   return (
     <ClientOnly>
       <ExitIntentPopup lang={lang} />
-      <SocialProofToasts lang={lang} />
       <AiAdvisorChat lang={lang} />
       <CookieBanner lang={lang} />
       <ChatWidget lang={lang} />

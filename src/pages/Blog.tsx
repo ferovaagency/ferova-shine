@@ -5,10 +5,12 @@ import Footer from '@/components/layout/Footer';
 import AdBanner from '@/components/ui/ad-banner';
 import ReadingProgress from '@/components/ui/reading-progress';
 import { SkeletonBlogCard } from '@/components/ui/skeleton-card';
-import { Clock, ArrowRight, User, Search } from 'lucide-react';
-import { Input } from '@/components/ui/input';
+import { Search } from 'lucide-react';
 import { getSupabase } from '@/integrations/supabase/lazy';
 import SEO from '@/components/SEO';
+import { BLOG_SITE_ORIGINS } from '@/lib/blog-i18n';
+import { SITE_ORIGIN } from '@/config/routes';
+import { CtaBand, FeraButton, FxLink, PageHero, Section } from '@/components/fx/primitives';
 
 interface Props { lang?: 'es' | 'en' | 'pt'; }
 
@@ -20,6 +22,8 @@ interface BlogPost {
   date: string;
   readTime: string;
   category: string;
+  cover?: string;
+  publishedAt?: string;
 }
 
 const staticPosts: Record<string, BlogPost[]> = {
@@ -43,6 +47,7 @@ const estimateReadTime = (content: string) => {
 const Blog = ({ lang = 'es' }: Props) => {
   const [loading, setLoading] = useState(true);
   const [search, setSearch] = useState('');
+  const [category, setCategory] = useState<string | null>(null);
   const [dbPosts, setDbPosts] = useState<BlogPost[]>([]);
 
   useEffect(() => {
@@ -51,9 +56,10 @@ const Blog = ({ lang = 'es' }: Props) => {
         const supabase = await getSupabase();
         const { data } = await supabase
           .from('blog_posts')
-          .select('slug, title, excerpt, author, category, content, created_at, published_at')
+          .select('slug, title, excerpt, author, category, content, created_at, published_at, cover_image')
           .eq('language', lang === 'en' ? 'en' : 'es')
           .eq('active', true)
+          .in('site_origin', [...BLOG_SITE_ORIGINS])
           .lte('published_at', new Date().toISOString())
           .order('published_at', { ascending: false })
           .limit(50);
@@ -67,6 +73,8 @@ const Blog = ({ lang = 'es' }: Props) => {
             date: new Date(p.created_at).toLocaleDateString(lang === 'pt' ? 'pt-BR' : lang === 'en' ? 'en-US' : 'es-ES', { day: 'numeric', month: 'short', year: 'numeric' }),
             readTime: estimateReadTime(p.content || ''),
             category: p.category || 'General',
+            cover: p.cover_image || undefined,
+            publishedAt: p.published_at || undefined,
           })));
         }
       } catch {
@@ -79,8 +87,10 @@ const Blog = ({ lang = 'es' }: Props) => {
   }, [lang]);
 
   const allPosts = [...dbPosts, ...(staticPosts[lang] ?? staticPosts['es'])];
+  const categories = [...new Set(allPosts.map((post) => post.category))];
 
   const filtered = allPosts.filter((post) => {
+    if (category && post.category !== category) return false;
     if (!search.trim()) return true;
     const q = search.toLowerCase();
     return post.title.toLowerCase().includes(q) || post.excerpt.toLowerCase().includes(q) || post.category.toLowerCase().includes(q);
@@ -92,58 +102,92 @@ const Blog = ({ lang = 'es' }: Props) => {
     ? { t: 'Blog de E-commerce — SEO, Web Apps e IA | Ferova', d: 'Guias e estratégias para crescer sua loja virtual: SEO, conversão, web apps e IA para e-commerce.', p: '/pt/blog' }
     : { t: 'Blog de E-commerce — SEO, Web Apps e IA | Ferova', d: 'Guías y estrategias para hacer crecer tu tienda online: SEO, conversión, web apps e IA para e-commerce.', p: '/blog' };
 
+  const ui = lang === 'en'
+    ? { home: 'Home', homePath: '/en', intro: 'Resources, guides and strategies to master SEO and e-commerce.', search: 'Search by topic, keyword or category...', none: 'No articles found.', more: 'Read more', all: 'All', filters: 'Blog categories', closeTitle: 'Tell me what you need to solve.', closeBody: 'We start from the work. The collaboration model follows the real scope.', cta: 'Talk to Fera', secondary: 'White-label SEO for agencies', secondaryPath: '/en/white-label-seo-for-agencies' }
+    : lang === 'pt'
+    ? { home: 'Início', homePath: '/', intro: 'Recursos, guias e estratégias para dominar o SEO e o e-commerce.', search: 'Buscar por tema, palavra-chave ou categoria...', none: 'Nenhum artigo encontrado.', more: 'Ler mais', all: 'Todos', filters: 'Categorias do blog', closeTitle: 'Conte o que você precisa resolver.', closeBody: 'Começamos pelo trabalho. O modelo de colaboração parte do escopo real.', cta: 'Falar com a Fera', secondary: 'SEO para agências', secondaryPath: '/seo-para-agencias' }
+    : { home: 'Inicio', homePath: '/', intro: 'Recursos, guías y estrategias para dominar el SEO y el e-commerce.', search: 'Buscar por tema, keyword o categoría...', none: 'No se encontraron artículos.', more: 'Leer más', all: 'Todos', filters: 'Categorías del blog', closeTitle: 'Cuéntame qué necesitas resolver.', closeBody: 'Empezamos por el trabajo. La modalidad la definimos a partir del alcance real.', cta: 'Hablar con Fera', secondary: 'SEO para agencias', secondaryPath: '/seo-para-agencias' };
+
+  const breadcrumbs = [{ name: ui.home, path: ui.homePath }, { name: 'Blog', path: seo.p }];
+  const blogSchema = {
+    '@context': 'https://schema.org',
+    '@type': 'Blog',
+    '@id': `${SITE_ORIGIN}${seo.p}#blog`,
+    name: seo.t,
+    url: `${SITE_ORIGIN}${seo.p}`,
+    inLanguage: lang,
+    publisher: { '@type': 'Organization', name: 'Ferova', url: SITE_ORIGIN },
+    blogPost: allPosts.slice(0, 20).map((post) => ({
+      '@type': 'BlogPosting',
+      headline: post.title,
+      url: `${SITE_ORIGIN}${seo.p}/${post.slug}`,
+      author: { '@type': post.author === 'Ferova Agency' ? 'Organization' : 'Person', name: post.author },
+      ...(post.publishedAt ? { datePublished: post.publishedAt } : {}),
+      ...(post.cover ? { image: post.cover } : {}),
+    })),
+  };
+
   return (
-    <>
-      <SEO title={seo.t} description={seo.d} path={seo.p} lang={lang} />
+    <div className="fx-site min-h-screen">
+      <SEO title={seo.t} description={seo.d} path={seo.p} lang={lang} breadcrumbs={breadcrumbs} jsonLd={blogSchema} />
       <ReadingProgress />
       <Header currentLang={lang} />
-      <main className="pt-20">
-        <section className="py-6 md:py-8 text-center relative grid-pattern">
-          <div className="absolute inset-0" style={{ background: 'radial-gradient(ellipse at 50% 30%, hsla(45, 86%, 40%, 0.06), transparent 60%)' }} />
-          <div className="container mx-auto px-4 md:px-6 relative z-10">
-            <h1 className="text-3xl md:text-4xl lg:text-5xl font-display font-bold mb-3">Blog</h1>
-            <p className="text-muted-foreground text-base max-w-xl mx-auto mb-4">
-              {lang === 'es' ? 'Recursos, guías y estrategias para dominar el SEO y el e-commerce.' : lang === 'pt' ? 'Recursos, guias e estratégias para dominar o SEO e o e-commerce.' : 'Resources, guides and strategies to master SEO and e-commerce.'}
-            </p>
-            <div className="max-w-md mx-auto relative">
-              <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
-              <Input value={search} onChange={(e) => setSearch(e.target.value)} placeholder={lang === 'es' ? 'Buscar por tema, keyword o categoría...' : lang === 'pt' ? 'Buscar por tema, palavra-chave ou categoria...' : 'Search by topic, keyword or category...'} className="pl-9" />
-            </div>
-          </div>
-        </section>
+      <main id="contenido-principal" className="pt-20">
+        <PageHero eyebrow={lang === 'en' ? 'SEO · E-commerce · AI' : 'SEO · E-commerce · IA'} title="Blog" intro={ui.intro} breadcrumbs={breadcrumbs.slice(1)} lang={lang}>
+          <label className="flex min-h-12 w-full max-w-md items-center gap-3 rounded-full border border-white/25 bg-white/10 px-5 sm:min-w-[28rem]">
+            <Search aria-hidden="true" className="h-5 w-5 shrink-0 text-[#d3d0e4]" />
+            <span className="sr-only">{ui.search}</span>
+            <input type="search" value={search} onChange={(e) => setSearch(e.target.value)} placeholder={ui.search} className="min-h-12 w-full bg-transparent text-white outline-none placeholder:text-[#d3d0e4]" />
+          </label>
+        </PageHero>
 
-        <section className="py-8 md:py-12">
-          <div className="container mx-auto px-4 md:px-6">
-            <div className="max-w-4xl mx-auto space-y-6">
-              {loading ? (
-                <><SkeletonBlogCard /><SkeletonBlogCard /><SkeletonBlogCard /></>
-              ) : filtered.length === 0 ? (
-                <p className="text-center text-muted-foreground py-12">
-                  {lang === 'es' ? 'No se encontraron artículos.' : lang === 'pt' ? 'Nenhum artigo encontrado.' : 'No articles found.'}
-                </p>
-              ) : filtered.map((post, i) => (
-                <Link key={`${post.slug}-${i}`} to={`${lang === 'es' ? '/blog' : lang === 'pt' ? '/pt/blog' : '/en/blog'}/${post.slug}`} className="glass-card p-6 md:p-8 block hover:border-gold/30 transition-all duration-300 group">
-                  <div className="flex items-center gap-3 mb-4">
-                    <span className="text-xs px-3 py-1 rounded-full font-medium" style={{ background: 'hsla(45, 86%, 40%, 0.1)', color: 'hsl(45, 86%, 40%)' }}>{post.category}</span>
-                    <span className="text-muted-foreground text-xs flex items-center gap-1"><Clock className="w-3 h-3" /> {post.readTime}</span>
-                  </div>
-                  <h2 className="text-xl font-display font-bold mb-3 text-foreground group-hover:text-gold transition-colors">{post.title}</h2>
-                  <p className="text-muted-foreground text-sm leading-relaxed mb-4">{post.excerpt}</p>
-                  <div className="flex items-center justify-between">
-                    <div className="flex items-center gap-2 text-muted-foreground text-xs"><User className="w-3 h-3" /> {post.author} · {post.date}</div>
-                    <span className="inline-flex items-center gap-1 text-gold text-sm font-medium group-hover:gap-2 transition-all">
-                      {lang === 'es' ? 'Leer más' : lang === 'pt' ? 'Ler mais' : 'Read more'} <ArrowRight className="w-4 h-4" />
-                    </span>
-                  </div>
-                </Link>
+        <Section>
+          {categories.length > 1 ? (
+            <div className="mb-10 flex flex-wrap gap-2" role="group" aria-label={ui.filters}>
+              {[null, ...categories].map((item) => (
+                <button key={item ?? 'all'} type="button" aria-pressed={category === item} onClick={() => setCategory(item)} className="pill-filter">
+                  {item ?? ui.all}
+                </button>
               ))}
-              <AdBanner slot="blog-list-bottom" className="mt-8" />
             </div>
-          </div>
-        </section>
+          ) : null}
+
+          {loading ? (
+            <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3"><SkeletonBlogCard /><SkeletonBlogCard /><SkeletonBlogCard /></div>
+          ) : filtered.length === 0 ? (
+            <p role="status" className="fx-muted py-12 text-center">{ui.none}</p>
+          ) : (
+            <ul className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+              {filtered.map((post, i) => (
+                <li key={`${post.slug}-${i}`}>
+                  <Link to={`${seo.p}/${post.slug}`} className="post-card group">
+                    {post.cover ? (
+                      <img src={post.cover} alt="" loading="lazy" width={1600} height={1000} className="aspect-[16/10] w-full object-cover" />
+                    ) : (
+                      <span className="post-card__cover" aria-hidden="true">{post.category}</span>
+                    )}
+                    <span className="flex flex-1 flex-col p-7">
+                      <span className="fx-muted text-sm">{[post.category, post.date, post.readTime].join(' · ')}</span>
+                      <span className="mt-2 text-xl font-semibold leading-snug" style={{ fontFamily: 'Poppins, system-ui, sans-serif' }}>{post.title}</span>
+                      {post.excerpt ? <span className="fx-muted mt-3 line-clamp-3 leading-relaxed">{post.excerpt}</span> : null}
+                      <span className="fx-muted mt-4 text-sm">{post.author}</span>
+                      <span className="mt-auto pt-5 font-semibold text-[#541014] group-hover:underline">{ui.more} →</span>
+                    </span>
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          )}
+          <AdBanner slot="blog-list-bottom" className="mt-12" />
+        </Section>
+
+        <CtaBand title={ui.closeTitle} body={ui.closeBody}>
+          <FeraButton source={`blog_index_${lang}_final`}>{ui.cta}</FeraButton>
+          <FxLink to={ui.secondaryPath} variant="outline">{ui.secondary}</FxLink>
+        </CtaBand>
       </main>
       <Footer currentLang={lang} />
-    </>
+    </div>
   );
 };
 
