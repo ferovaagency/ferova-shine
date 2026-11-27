@@ -484,11 +484,11 @@ export const SEO_SPECIALTIES: Record<Lang, Record<SeoSpecialtyKind, SeoSpecialty
  */
 export const SEO_HOURS_ES: SeoSpecialtyContent = {
   path: "/seo-por-horas",
-  metaTitle: "SEO por horas para agencias: bloque de 20 horas | Ferova",
+  metaTitle: "SEO por horas para agencias: USD 62,50 la hora | Ferova",
   eyebrow: "SEO POR HORAS · PARA AGENCIAS",
   title: "SEO por horas para agencias: capacidad senior sin sumar un cargo.",
   description:
-    "SEO técnico por horas para agencias: 20 horas senior al mes por USD 1.250 para auditorías, migraciones y correcciones, en marca blanca y sin contrato largo.",
+    "SEO técnico por horas para agencias: USD 62,50 la hora y paquetes de 5, 10 y 20 horas para auditorías, migraciones y correcciones, todo en marca blanca.",
   problem:
     "Un SEO técnico de tiempo completo no se justifica cuando los proyectos llegan por picos: una migración este mes, dos auditorías el siguiente. Las horas sueltas de alguien que no conoce a tus clientes terminan en entregables que tu equipo no puede explicar. Un bloque mensual de horas te da capacidad senior estable, con el mismo criterio en todos tus proyectos, sin contratar.",
   outcomes: [
@@ -512,12 +512,15 @@ export const SEO_HOURS_ES: SeoSpecialtyContent = {
   pricing: {
     kicker: "PRECIOS",
     title: "Precios publicados. Sin llamada previa para conocer la cifra.",
-    intro: "El bloque de horas es la forma más flexible de trabajar con Ferova. Si tienes una tarea puntual, también puedes contratar la auditoría o el trabajo por sitio. Sin contratos largos ni cuota de entrada.",
+    intro: "La hora senior cuesta USD 62,50, el mismo valor del bloque de 20 horas. Contratas la hora suelta o un paquete según lo que necesite tu agencia. Para una entrega cerrada también está la auditoría técnica (USD 750 por sitio) o el trabajo continuo por sitio (USD 500 al mes). Sin contratos largos ni cuota de entrada.",
     serviceName: "SEO técnico por horas para agencias",
+    // Precio por hora = bloque de 20 horas / 20 (USD 1.250 / 20 = USD 62,50).
+    // Los paquetes menores mantienen el mismo valor por hora.
     plans: [
+      { name: "1 hora", price: 62.5, unit: "por hora", description: "Para una consulta técnica, una revisión puntual o resolver una duda concreta de un cliente." },
+      { name: "Paquete de 5 horas", price: 312.5, unit: "por paquete", description: "Para una tarea acotada: revisar redirecciones, corregir errores de indexación o auditar una plantilla." },
+      { name: "Paquete de 10 horas", price: 625, unit: "por paquete", description: "Para varias tareas en un mes o el acompañamiento técnico de un proyecto." },
       { name: "Bloque de 20 horas", price: 1250, unit: "al mes", description: "Veinte horas senior al mes para auditorías, arquitectura, migraciones, correcciones y revisiones entre tus clientes." },
-      { name: "Auditoría técnica", price: 750, unit: "por sitio", description: "Auditoría técnica de un sitio, entregada bajo tu marca con un plan de acción priorizado." },
-      { name: "Por sitio, agencias nuevas", price: 500, unit: "al mes", description: "SEO técnico continuo para el sitio de un cliente, para agencias que empiezan su primer proyecto conmigo." },
     ],
     guarantee: "Garantía por escrito: si el entregable no se puede revender a tu cliente tal cual, bajo tu marca, no se cobra.",
     currencyNote: "Precios en dólares estadounidenses (USD), facturados en USD.",
@@ -551,7 +554,8 @@ export const SEO_HOURS_ES: SeoSpecialtyContent = {
     },
   ],
   faqs: [
-    { question: "¿Cuánto cuesta el SEO por horas?", answer: "El bloque de 20 horas senior cuesta USD 1.250 al mes. También puedes contratar una auditoría técnica por USD 750 por sitio, o el trabajo continuo por sitio para agencias nuevas por USD 500 al mes." },
+    { question: "¿Cuánto cuesta el SEO por horas?", answer: "La hora senior cuesta USD 62,50. Puedes contratar una hora suelta, un paquete de 5 horas (USD 312,50), uno de 10 horas (USD 625) o el bloque de 20 horas (USD 1.250 al mes)." },
+    { question: "¿Qué pasa si necesito una entrega cerrada en lugar de horas?", answer: "Para eso está la auditoría técnica, por USD 750 por sitio, o el trabajo continuo por sitio para agencias nuevas, por USD 500 al mes. Las condiciones están en la página de SEO marca blanca para agencias." },
     { question: "¿Qué puedo pedir dentro del bloque de horas?", answer: "Auditorías, arquitectura de catálogos, migraciones, correcciones técnicas, revisiones antes de publicar y landing pages. Las horas se reparten entre tus clientes según las prioridades del mes." },
     { question: "¿Hay contrato largo o cuota de entrada?", answer: "No. En Ferova no pedimos contratos largos ni cobramos cuota de entrada. Pagas el bloque del mes que contratas." },
     { question: "¿Puedes trabajar en marca blanca?", answer: "Sí. Puede ser marca blanca total, soporte interno o participación visible ante el cliente, según lo que acordemos por escrito." },

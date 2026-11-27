@@ -259,13 +259,22 @@ const EXTERNAL_LINKS: { section: Section; title: string; url: string; desc: stri
 
 /** "1250" → "1.250" (separador de miles en español), sin depender de ICU. */
 function formatUsd(n: number): string {
-  return `USD ${String(n).replace(/\B(?=(\d{3})+(?!\d))/g, ".")}`;
+  const [int, dec] = n.toFixed(2).split(".");
+  const miles = int.replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+  return `USD ${miles}${dec === "00" ? "" : `,${dec}`}`;
 }
 
 function header(): string {
   const pricing = S.es.agencies.pricing;
   const plans = pricing?.plans ?? [];
-  const priceLines = plans.map((p) => `- ${p.name}: ${formatUsd(p.price)} ${p.unit}. ${p.description}`);
+  const line = (p: { name: string; price: number; unit: string; description: string }) =>
+    `- ${p.name}: ${formatUsd(p.price)} ${p.unit}. ${p.description}`;
+  const priceLines = plans.map(line);
+  // /seo-por-horas publica la hora suelta y paquetes; el bloque de 20 h ya está arriba.
+  const listed = new Set(plans.map((p) => `${p.price}|${p.unit}`));
+  const hourLines = (SEO_HOURS_ES.pricing?.plans ?? [])
+    .filter((p) => !listed.has(`${p.price}|${p.unit}`))
+    .map(line);
 
   return [
     `# Ferova · ${FOUNDER.name}, Fractional SEO`,
@@ -279,6 +288,9 @@ function header(): string {
     `${pricing?.intro ?? ""}`.trim(),
     "",
     ...priceLines,
+    ...(hourLines.length
+      ? ["", `SEO por horas (${SITE_ORIGIN}${SEO_HOURS_ES.path}), al mismo valor por hora que el bloque de 20 horas:`, "", ...hourLines]
+      : []),
     "",
     [pricing?.guarantee, pricing?.currencyNote].filter(Boolean).join(" "),
   ].join("\n");

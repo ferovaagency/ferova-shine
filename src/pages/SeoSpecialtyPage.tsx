@@ -59,7 +59,12 @@ export default function SeoSpecialtyPage({
   const en = lang === "en";
   const faqLd = faqSchema(content.faqs.map((faq) => [faq.question, faq.answer]));
 
-  const usd = new Intl.NumberFormat(en ? "en-US" : "es-CO", { maximumFractionDigits: 0 });
+  const locale = en ? "en-US" : "es-CO";
+  // Enteros sin decimales (USD 1.250); con centavos, siempre dos (USD 62,50).
+  const usd = {
+    format: (value: number) =>
+      new Intl.NumberFormat(locale, Number.isInteger(value) ? { maximumFractionDigits: 0 } : { minimumFractionDigits: 2, maximumFractionDigits: 2 }).format(value),
+  };
   const serviceLd = content.pricing
     ? {
         "@context": "https://schema.org",
@@ -190,7 +195,11 @@ export default function SeoSpecialtyPage({
         {content.pricing && (
           <Section tone={nextTone()} id="pricing">
             <SectionHeading eyebrow={content.pricing.kicker} title={content.pricing.title} intro={content.pricing.intro} />
-            <div className="mt-12 grid gap-5 md:grid-cols-3">
+            <div
+              className={`mt-12 grid gap-5 ${
+                content.pricing.plans.length === 4 ? "md:grid-cols-2 xl:grid-cols-4" : content.pricing.plans.length % 3 === 0 ? "md:grid-cols-3" : "md:grid-cols-2"
+              }`}
+            >
               {content.pricing.plans.map((plan) => (
                 <Panel key={plan.name} className="flex flex-col">
                   <h3>{plan.name}</h3>

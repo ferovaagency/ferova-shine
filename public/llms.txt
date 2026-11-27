@@ -12,6 +12,12 @@ Tres formas de trabajar con Ferova. Sin contratos largos ni cuota de entrada. Lo
 - Bloque de 20 horas: USD 1.250 al mes. Veinte horas senior al mes para auditorías, arquitectura, migraciones, correcciones y revisiones entre tus clientes.
 - Por sitio, agencias nuevas: USD 500 al mes. SEO técnico continuo para el sitio de un cliente, para agencias que empiezan su primer proyecto conmigo.
 
+SEO por horas (https://seoparaecommerce.co/seo-por-horas), al mismo valor por hora que el bloque de 20 horas:
+
+- 1 hora: USD 62,50 por hora. Para una consulta técnica, una revisión puntual o resolver una duda concreta de un cliente.
+- Paquete de 5 horas: USD 312,50 por paquete. Para una tarea acotada: revisar redirecciones, corregir errores de indexación o auditar una plantilla.
+- Paquete de 10 horas: USD 625 por paquete. Para varias tareas en un mes o el acompañamiento técnico de un proyecto.
+
 Garantía por escrito: si el entregable no se puede revender a tu cliente tal cual, bajo tu marca, no se cobra. Precios en dólares estadounidenses (USD), facturados en USD.
 
 ## Servicios
@@ -20,7 +26,7 @@ Garantía por escrito: si el entregable no se puede revender a tu cliente tal cu
 - [Ecommerce SEO (EN)](https://seoparaecommerce.co/en/services/ecommerce-seo): SEO for online stores aimed at Google rankings and at being cited by ChatGPT, Perplexity and AI Overviews, with GEO included.
 - [SEO marca blanca para agencias](https://seoparaecommerce.co/seo-para-agencias): Servicio de SEO marca blanca para agencias: auditorías, arquitectura de catálogos y migraciones entregadas bajo tu marca, con tu logo en cada reporte. Trabajo técnico senior de María Fernanda Calderón, Fractional SEO en Ferova, con precios publicados y garantía por escrito.
 - [White label SEO for agencies (EN)](https://seoparaecommerce.co/en/white-label-seo-for-agencies): White label SEO services for agencies: audits, catalogue architecture and platform migrations delivered under your brand, with your logo on every report. Senior technical work by María Fernanda Calderón, Fractional SEO at Ferova, with published prices and a written guarantee.
-- [SEO por horas para agencias](https://seoparaecommerce.co/seo-por-horas): SEO técnico por horas para agencias: 20 horas senior al mes por USD 1.250 para auditorías, migraciones y correcciones, en marca blanca y sin contrato largo.
+- [SEO por horas para agencias](https://seoparaecommerce.co/seo-por-horas): SEO técnico por horas para agencias: USD 62,50 la hora y paquetes de 5, 10 y 20 horas para auditorías, migraciones y correcciones, todo en marca blanca.
 - [Auditoría SEO técnica](https://seoparaecommerce.co/auditoria-seo-tecnica): Una auditoría técnica profunda para convertir problemas de rastreo, indexación, arquitectura y rendimiento en un plan de decisiones priorizado.
 - [Technical SEO audit services (EN)](https://seoparaecommerce.co/en/technical-seo-audit-services): A deep technical audit that turns crawling, indexation, architecture and performance problems into a prioritised set of decisions.
 - [Migraciones SEO](https://seoparaecommerce.co/migraciones-seo): Planificación, inventario, mapeo de URLs, QA y monitoreo para reducir el riesgo SEO antes, durante y después de una migración.
