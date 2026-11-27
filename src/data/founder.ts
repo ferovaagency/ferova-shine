@@ -30,11 +30,21 @@ export type Credential = {
   issued: string;
   /** AAAA-MM, solo si la credencial vence. */
   expires?: string;
-  kind: "diplomado" | "certificado";
+  kind: "profesional" | "diplomado" | "certificado";
 };
 
-/** Orden: más reciente primero. */
+/** Orden: título profesional y luego lo más reciente primero. */
 export const CREDENTIALS: Credential[] = [
+  {
+    // Confirmado por Mafe (nov 2026): graduada en junio de 2025.
+    name: {
+      es: "Profesional en Mercadeo y Estrategia Comercial",
+      en: "Bachelor's degree in Marketing and Commercial Strategy",
+    },
+    issuer: "Universidad EAN",
+    issued: "2025-06",
+    kind: "profesional",
+  },
   {
     name: { es: "Creación de Sistemas en Notion", en: "Building Systems in Notion" },
     detail: { es: "Notion Academy: Workflows y Essentials", en: "Notion Academy: Workflows and Essentials" },

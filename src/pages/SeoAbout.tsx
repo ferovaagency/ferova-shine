@@ -155,7 +155,8 @@ export default function SeoAbout({ lang = "es" }: { lang?: Lang }) {
     hasCredential: CREDENTIALS.map((credential) => ({
       "@type": "EducationalOccupationalCredential",
       name: credential.name[lk],
-      credentialCategory: credential.kind === "diplomado" ? "Diploma" : "Certificate",
+      credentialCategory:
+        credential.kind === "profesional" ? "Degree" : credential.kind === "diplomado" ? "Diploma" : "Certificate",
       dateCreated: credential.issued,
       ...(credential.expires ? { expires: credential.expires } : {}),
       recognizedBy: { "@type": "Organization", name: credential.issuer },
