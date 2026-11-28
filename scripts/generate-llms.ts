@@ -26,7 +26,7 @@ import { readFileSync, writeFileSync } from "node:fs";
 import { fileURLToPath } from "node:url";
 import { dirname, resolve } from "node:path";
 import { ROUTES, LANGS, SITE_ORIGIN, type Lang } from "../src/config/routes";
-import { SEO_SPECIALTIES, SEO_HOURS_ES } from "../src/content/seoSpecialties";
+import { SEO_SPECIALTIES, SEO_HOURS_ES, HOLIDAY_COVERAGE } from "../src/content/seoSpecialties";
 import { POSITIONING } from "../src/content/positioning";
 import { PERSONAL_HOME } from "../src/content/personalHome";
 import { WL_SEO } from "../src/content/whiteLabelVsInHouse";
@@ -72,6 +72,12 @@ const ENTRIES: Record<string, Entry> = {
     section: "servicios",
     title: { es: "SEO por horas para agencias" },
     desc: { es: SEO_HOURS_ES.description },
+  },
+  // Campaña de temporada: la descripción ya lleva las fechas y el precio de la página.
+  "cobertura-seo-vacaciones": {
+    section: "servicios",
+    title: { es: "Cobertura SEO en vacaciones para agencias", en: "Holiday SEO coverage for agencies (EN)" },
+    desc: { es: HOLIDAY_COVERAGE.es.description, en: HOLIDAY_COVERAGE.en.description },
   },
   "auditoria-seo-tecnica": {
     section: "servicios",

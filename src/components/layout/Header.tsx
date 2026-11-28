@@ -28,6 +28,7 @@ const NAV: Record<"es" | "en" | "pt", NavCfg> = {
         items: [
           { label: "SEO para agencias (marca blanca)", href: "/seo-para-agencias" },
           { label: "SEO por horas", href: "/seo-por-horas" },
+          { label: "Cobertura SEO en vacaciones", href: "/cobertura-seo-vacaciones" },
           { label: "Auditoría SEO técnica", href: "/auditoria-seo-tecnica" },
           { label: "Migraciones SEO", href: "/migraciones-seo" },
           { label: "SEO para ecommerce", href: "/servicios/seo-ecommerce" },
@@ -65,6 +66,7 @@ const NAV: Record<"es" | "en" | "pt", NavCfg> = {
         href: "/en/white-label-seo-for-agencies",
         items: [
           { label: "White-label SEO for agencies", href: "/en/white-label-seo-for-agencies" },
+          { label: "Holiday SEO coverage", href: "/en/holiday-seo-coverage" },
           { label: "Technical SEO audits", href: "/en/technical-seo-audit-services" },
           { label: "SEO migrations", href: "/en/seo-migration-services" },
           { label: "Ecommerce SEO", href: "/en/services/ecommerce-seo" },

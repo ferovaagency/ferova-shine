@@ -2,6 +2,76 @@
   "$schema": "https://openapi.vercel.sh/vercel.json",
   "redirects": [
     {
+      "source": "/blog/wordpress-vs-magento-ecommerce",
+      "destination": "/migraciones-seo",
+      "permanent": true
+    },
+    {
+      "source": "/en/blog/wordpress-vs-magento-ecommerce",
+      "destination": "/en/seo-migration-services",
+      "permanent": true
+    },
+    {
+      "source": "/blog/servicios-seo-ecommerce",
+      "destination": "/servicios/seo-ecommerce",
+      "permanent": true
+    },
+    {
+      "source": "/en/blog/servicios-seo-ecommerce",
+      "destination": "/en/services/ecommerce-seo",
+      "permanent": true
+    },
+    {
+      "source": "/en/blog/servicios-seo-ecommerce-2",
+      "destination": "/en/services/ecommerce-seo",
+      "permanent": true
+    },
+    {
+      "source": "/blog/servicio-pauta-digital-ecommerce",
+      "destination": "/servicios/seo-ecommerce",
+      "permanent": true
+    },
+    {
+      "source": "/en/blog/servicio-pauta-digital-ecommerce",
+      "destination": "/en/services/ecommerce-seo",
+      "permanent": true
+    },
+    {
+      "source": "/blog/google-ads-vs-meta-ads-ecommerce",
+      "destination": "/servicios/seo-ecommerce",
+      "permanent": true
+    },
+    {
+      "source": "/en/blog/google-ads-vs-meta-ads-ecommerce",
+      "destination": "/en/services/ecommerce-seo",
+      "permanent": true
+    },
+    {
+      "source": "/blog/creacion-sitios-web-empresas-colombia",
+      "destination": "/seo-para-agencias",
+      "permanent": true
+    },
+    {
+      "source": "/en/blog/creacion-sitios-web-empresas-colombia",
+      "destination": "/en/white-label-seo-for-agencies",
+      "permanent": true
+    },
+    {
+      "source": "/pt/blog/creacion-sitios-web-empresas-colombia",
+      "destination": "/seo-para-agencias",
+      "permanent": true
+    },
+    {
+      "source": "/blog/link-building-gestoria-asesoria",
+      "destination": "/blog",
+      "permanent": true
+    },
+    {
+      "source": "/en/blog/link-building-gestoria-asesoria",
+      "destination": "/en/blog",
+      "permanent": true
+    },
+    {
       "source": "/pt/blog/:slug",
       "destination": "/blog/:slug",
       "permanent": true
@@ -546,7 +616,7 @@
     },
     {
       "source": "/google-ads-vs-meta-ads-2025",
-      "destination": "/blog/google-ads-vs-meta-ads-ecommerce",
+      "destination": "/servicios/seo-ecommerce",
       "permanent": true
     },
     {
@@ -616,7 +686,7 @@
     },
     {
       "source": "/servicios/pauta-digital",
-      "destination": "/blog/servicio-pauta-digital-ecommerce",
+      "destination": "/servicios/seo-ecommerce",
       "permanent": true
     },
     {
@@ -631,7 +701,7 @@
     },
     {
       "source": "/pt/anuncios-digitais",
-      "destination": "/blog/servicio-pauta-digital-ecommerce",
+      "destination": "/servicios/seo-ecommerce",
       "permanent": true
     },
     {

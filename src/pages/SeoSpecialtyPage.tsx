@@ -103,6 +103,7 @@ export default function SeoSpecialtyPage({
         description={content.description}
         path={content.path}
         lang={lang}
+        image={content.ogImage}
         jsonLd={serviceLd ? [serviceLd, faqLd] : faqLd}
         breadcrumbs={[{ name: ui.home, path: en ? "/en" : "/" }, ...crumbs]}
       />

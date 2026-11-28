@@ -134,6 +134,9 @@ export const ROUTES: RouteDef[] = [
   // "seo por horas" / "expertos seo por horas": más de la mitad de los clics (GSC ago–nov 2026).
   { id: "seo-por-horas", type: "service", indexable: true, prerender: true, priority: 0.9,
     paths: { es: "/seo-por-horas" } },
+  // Campaña de temporada (19 dic 2026 – 6 ene 2027). Revisar después del 6 de enero.
+  { id: "cobertura-seo-vacaciones", type: "service", indexable: true, prerender: true, priority: 0.8, changefreq: "weekly",
+    paths: { es: "/cobertura-seo-vacaciones", en: "/en/holiday-seo-coverage" } },
   { id: "auditoria-seo-tecnica", type: "service", indexable: true, prerender: true, priority: 0.9,
     paths: { es: "/auditoria-seo-tecnica", en: "/en/technical-seo-audit-services" } },
 
