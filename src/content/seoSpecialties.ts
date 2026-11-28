@@ -599,7 +599,7 @@ export const HOLIDAY_COVERAGE: Record<"es" | "en", SeoSpecialtyContent> = {
     eyebrow: "COBERTURA SEO EN VACACIONES · 19 DIC – 6 ENE",
     title: "Cobertura SEO en vacaciones: tus clientes atendidos mientras tu equipo descansa.",
     description:
-      "Cobertura SEO en vacaciones para agencias: monitoreo diario, urgencias técnicas y tareas programadas del 19 de diciembre al 6 de enero por USD 900 con 15 horas.",
+      "Mantenimiento web y SEO de tus clientes en vacaciones: monitoreo diario, urgencias técnicas y tareas del 19 de diciembre al 6 de enero por USD 900, 15 horas.",
     problem:
       "Las agencias cierran o bajan el ritmo entre Navidad y Reyes, pero los sitios de sus clientes siguen publicados, vendiendo y recibiendo cambios. Un error de indexación, una caída o un despliegue mal hecho en esas semanas puede pasar días sin que nadie lo vea. La cobertura SEO en vacaciones es un servicio de Ferova en el que María Fernanda Calderón, Fractional SEO en Ferova, monitorea y atiende los sitios de los clientes de tu agencia del 19 de diciembre de 2026 al 6 de enero de 2027, para que el equipo descanse sin dejar a nadie sin respaldo.",
     outcomes: [
@@ -648,6 +648,13 @@ export const HOLIDAY_COVERAGE: Record<"es" | "en", SeoSpecialtyContent> = {
         ],
       },
       {
+        heading: "Mantenimiento web y SEO en marca blanca mientras tu agencia descansa",
+        paragraphs: [
+          "Muchas agencias resuelven diciembre con un servicio de mantenimiento web, pero el mantenimiento web solo actualiza plugins y copias de seguridad: no mira si Google dejó de indexar páginas, si una redirección rompió una categoría o si el sitemap quedó vacío después de un cambio. La cobertura de Ferova junta las dos cosas: mantenimiento web y SEO técnico para los sitios de tus clientes, en marca blanca, solo durante las semanas en que tu equipo no está.",
+          "Sirve para agencias de marketing, de desarrollo o de ecommerce que trabajan con WordPress, WooCommerce o Shopify y no quieren contratar un plan de mantenimiento web mensual solo para cubrir las vacaciones.",
+        ],
+      },
+      {
         heading: "Cuándo conviene contratar cobertura externa",
         paragraphs: [
           "Conviene cuando tus clientes tienen tiendas que venden en diciembre, sitios con cambios frecuentes o compromisos de entrega en esas fechas, y nadie de tu equipo va a estar disponible. Con la cobertura de Ferova, una persona con criterio técnico senior revisa los sitios cada día y actúa si algo se rompe, con las prioridades que dejaste definidas.",
@@ -663,6 +670,8 @@ export const HOLIDAY_COVERAGE: Record<"es" | "en", SeoSpecialtyContent> = {
       { question: "¿Firmas NDA?", answer: "Sí, antes de recibir cualquier dato o acceso de tus clientes." },
       { question: "¿Con qué plataformas trabajas?", answer: "Shopify, WooCommerce y WordPress." },
       { question: "¿Hay cupos?", answer: "Sí, los cupos son limitados y dependen de la disponibilidad. Conviene reservar antes del 19 de diciembre para dejar accesos y alcance listos." },
+      { question: "¿Puedo contratar el mantenimiento web y SEO de mis clientes solo por las vacaciones?", answer: "Sí. La cobertura es un servicio de temporada, del 19 de diciembre al 6 de enero, sin plan mensual ni contrato largo. Incluye mantenimiento web y SEO técnico de los sitios que me asignes, con 15 horas de trabajo." },
+      { question: "¿En qué se diferencia de un plan de mantenimiento web?", answer: "Un plan de mantenimiento web suele cubrir actualizaciones, copias de seguridad y seguridad. Esta cobertura suma la parte de SEO: indexación, errores de rastreo, redirecciones y alertas de Search Console, además de las tareas que tu agencia deja programadas." },
     ],
     relatedLinks: [
       { label: "SEO por horas para agencias", to: "/seo-por-horas" },
@@ -677,7 +686,7 @@ export const HOLIDAY_COVERAGE: Record<"es" | "en", SeoSpecialtyContent> = {
     eyebrow: "HOLIDAY SEO COVERAGE · DEC 19 – JAN 6",
     title: "Holiday SEO coverage: your clients looked after while your team is away.",
     description:
-      "Holiday SEO coverage for agencies: daily monitoring, urgent technical fixes and scheduled work from December 19 to January 6 for USD 900 with 15 hours included.",
+      "Holiday website maintenance and SEO for agency clients: daily monitoring, urgent fixes and scheduled work from December 19 to January 6, USD 900 with 15 hours.",
     problem:
       "Agencies slow down or close between Christmas and early January, but client sites keep selling, changing and getting crawled. An indexing error, an outage or a bad deploy in those weeks can sit unnoticed for days. Holiday SEO coverage is a Ferova service in which María Fernanda Calderón, Fractional SEO at Ferova, monitors and handles your agency's client sites from December 19, 2026 to January 6, 2027, so your team can take a real break without leaving clients unprotected.",
     outcomes: [
@@ -726,6 +735,13 @@ export const HOLIDAY_COVERAGE: Record<"es" | "en", SeoSpecialtyContent> = {
         ],
       },
       {
+        heading: "Holiday website maintenance and outsourced SEO, white label",
+        paragraphs: [
+          "Many agencies cover December with a website maintenance plan, but website maintenance usually means plugin updates and backups. It doesn't check whether Google stopped indexing pages, whether a redirect broke a category or whether the sitemap went empty after a change. Ferova's coverage combines both: website maintenance and technical SEO for your client sites, white label, only for the weeks your team is away.",
+          "It fits marketing, development and ecommerce agencies working on WordPress, WooCommerce or Shopify that would rather outsource SEO and maintenance for the holidays than sign a monthly maintenance plan.",
+        ],
+      },
+      {
         heading: "When outside coverage makes sense",
         paragraphs: [
           "It makes sense when your clients run stores that sell in December, sites that change often, or commitments that fall in those dates, and nobody on your team will be available. With Ferova's coverage, someone with senior technical judgement checks the sites every day and acts if something breaks, following the priorities you set.",
@@ -741,6 +757,8 @@ export const HOLIDAY_COVERAGE: Record<"es" | "en", SeoSpecialtyContent> = {
       { question: "Do you sign an NDA?", answer: "Yes, before I receive any client data or access." },
       { question: "Which platforms do you work with?", answer: "Shopify, WooCommerce and WordPress." },
       { question: "Are spots limited?", answer: "Yes, spots are limited and based on availability. Booking before December 19 leaves time to set up access and scope." },
+      { question: "Can I outsource SEO and website maintenance just for the holidays?", answer: "Yes. Holiday coverage is a seasonal service from December 19 to January 6, with no monthly plan or long-term contract. It covers website maintenance and technical SEO for the sites you assign, with 15 hours of work included." },
+      { question: "Is this a white label website maintenance service?", answer: "It can be. I work under your agency's name, only with your team, unless we agree in writing that I can talk to the client. It also covers the SEO side that maintenance plans usually skip: indexing, crawl errors, redirects and Search Console alerts." },
     ],
     relatedLinks: [
       { label: "White label SEO for agencies", to: "/en/white-label-seo-for-agencies" },
