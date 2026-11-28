@@ -23,6 +23,7 @@ const Footer = ({ currentLang, lang }: FooterProps) => {
       servLinks: [
         { name: 'SEO para agencias (white label)', href: '/seo-para-agencias' },
         { name: 'SEO por horas', href: '/seo-por-horas' },
+        { name: 'Cobertura SEO en vacaciones', href: '/cobertura-seo-vacaciones' },
         { name: 'Auditoría SEO técnica', href: '/auditoria-seo-tecnica' },
         { name: 'Migraciones SEO', href: '/migraciones-seo' },
         { name: 'SEO para ecommerce', href: '/servicios/seo-ecommerce' },
@@ -49,6 +50,7 @@ const Footer = ({ currentLang, lang }: FooterProps) => {
       rights: 'All rights reserved.',
       servLinks: [
         { name: 'White-label SEO for agencies', href: '/en/white-label-seo-for-agencies' },
+        { name: 'Holiday SEO coverage', href: '/en/holiday-seo-coverage' },
         { name: 'White label vs in-house', href: '/en/white-label-seo-vs-in-house' },
         { name: 'Technical SEO audit services', href: '/en/technical-seo-audit-services' },
         { name: 'SEO migration services', href: '/en/seo-migration-services' },

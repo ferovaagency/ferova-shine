@@ -50,7 +50,7 @@ import GeoParaVtex from "./pages/GeoParaVtex";
 import EstudioVisibilidadIA from "./pages/EstudioVisibilidadIA";
 import CalculadoraVisibilidadIA from "./pages/CalculadoraVisibilidadIA";
 import SeoSpecialtyPage from "./pages/SeoSpecialtyPage";
-import { SEO_HOURS_ES } from "./content/seoSpecialties";
+import { HOLIDAY_COVERAGE, SEO_HOURS_ES } from "./content/seoSpecialties";
 import PositioningPage from "./pages/PositioningPage";
 import BestProvidersPage from "./pages/BestProvidersPage";
 import WhiteLabelVsInHouse from "./pages/WhiteLabelVsInHouse";
@@ -100,6 +100,8 @@ const AppRoutes = ({ hostLang }: { hostLang: "es" | "en" | "pt" }) => (
     <Route path="/servicios/seo-ecommerce" element={<SeoEcommerceEs />} />
     <Route path="/seo-para-agencias" element={<SeoSpecialtyPage kind="agencies" lang="es" />} />
     <Route path="/seo-por-horas" element={<SeoSpecialtyPage content={SEO_HOURS_ES} lang="es" />} />
+    <Route path="/cobertura-seo-vacaciones" element={<SeoSpecialtyPage content={HOLIDAY_COVERAGE.es} lang="es" />} />
+    <Route path="/en/holiday-seo-coverage" element={<SeoSpecialtyPage content={HOLIDAY_COVERAGE.en} lang="en" />} />
     <Route path="/auditoria-seo-tecnica" element={<SeoSpecialtyPage kind="audit" lang="es" />} />
     <Route path="/migraciones-seo" element={<SeoSpecialtyPage kind="migrations" lang="es" />} />
     {/* Equivalentes en inglés — slugs alineados a keyword verificada (ver seoSpecialties.ts) */}
